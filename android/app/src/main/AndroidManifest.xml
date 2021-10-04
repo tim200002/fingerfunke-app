@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.fingerfunke_app">
+    package="app.fingerfunke.fingerfunke">
    <application
         android:label="fingerfunke_app"
         android:icon="@mipmap/ic_launcher">

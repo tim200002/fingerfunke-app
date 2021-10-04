@@ -1,4 +1,4 @@
-package com.example.fingerfunke_app
+package app.fingerfunke.fingerfunke
 
 import io.flutter.embedding.android.FlutterActivity
 
