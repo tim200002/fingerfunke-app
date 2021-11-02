@@ -1,0 +1,1 @@
+class KeyNotFoundException implements Exception {}
