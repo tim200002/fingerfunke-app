@@ -1,72 +1,56 @@
-import 'package:flutter/material.dart';
-
-// Import the firebase_core plugin
+import 'package:fingerfunke_app/app.dart';
+import 'package:fingerfunke_app/cubits/cubit/authentication_cubit.dart';
+import 'package:fingerfunke_app/view/create_account/view/create_account_view.dart';
+import 'package:fingerfunke_app/view/splash/view/splash_page.dart';
+import 'package:fingerfunke_app/view/unauthenticated/view/unauthenticated_page.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(App());
+  await Firebase.initializeApp();
+  runApp(AppInflater());
 }
 
-class App extends StatefulWidget {
-  _AppState createState() => _AppState();
-}
+class AppInflater extends StatelessWidget {
+  AppInflater({Key? key}) : super(key: key);
 
-class _AppState extends State<App> {
-  // Set default `_initialized` and `_error` state to false
-  bool _initialized = false;
-  bool _error = false;
+  final GlobalKey<NavigatorState> _navigator = GlobalKey<NavigatorState>();
 
-  // Define an async function to initialize FlutterFire
-  void initializeFlutterFire() async {
-    try {
-      // Wait for Firebase to initialize and set `_initialized` state to true
-      await Firebase.initializeApp();
-      setState(() {
-        _initialized = true;
-      });
-    } catch (e) {
-      // Set `_error` state to true if Firebase initialization fails
-      setState(() {
-        _error = true;
-      });
-    }
-  }
-
-  @override
-  void initState() {
-    initializeFlutterFire();
-    super.initState();
+  void mapStateChangeToNavigationEvent(AuthenticationState state) {
+    state.whenOrNull(
+      unauthenticated: () {
+        _navigator.currentState!
+            .pushAndRemoveUntil(UnauthenticatedPage.route(), (_) => false);
+      },
+      signedInAnonymously: () {
+        _navigator.currentState!.pushAndRemoveUntil(App.route(), (_) => false);
+      },
+      signedIn: (_) => _navigator.currentState!
+          .pushAndRemoveUntil(App.route(), (_) => false),
+      signedInButNoUserDocumentCreated: () {
+        _navigator.currentState!.pushAndRemoveUntil(App.route(), (_) => false);
+        _navigator.currentState!.push(CreateAccountView.route());
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    // Show error message if initialization failed
-    if (_error) {
-      return Test("Error");
-    }
-
-    // Show a loader until FlutterFire is initialized
-    if (!_initialized) {
-      return Test("Loading");
-    }
-
-    return Test("funktioniert");
-  }
-}
-
-class Test extends StatelessWidget {
-  Test(this.text, {Key? key}) : super(key: key);
-  final String text;
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        title: text,
-        home: Scaffold(
-          appBar: AppBar(),
-          body: Center(
-            child: Text(text),
-          ),
-        ));
+    return BlocProvider(
+      create: (context) => AuthenticationCubit(),
+      child: Builder(
+        builder: (context) {
+          BlocProvider.of<AuthenticationCubit>(context)
+              .connectListener(mapStateChangeToNavigationEvent);
+          return MaterialApp(
+            navigatorKey: _navigator,
+            debugShowCheckedModeBanner: false,
+            onGenerateRoute: (_) => SplashPage.route(),
+          );
+        },
+      ),
+    );
   }
 }
