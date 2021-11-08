@@ -1,5 +1,6 @@
 import 'package:fingerfunke_app/app.dart';
 import 'package:fingerfunke_app/cubits/cubit/authentication_cubit.dart';
+import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:fingerfunke_app/view/create_account/view/create_account_view.dart';
 import 'package:fingerfunke_app/view/splash/view/splash_page.dart';
 import 'package:fingerfunke_app/view/unauthenticated/view/unauthenticated_page.dart';
@@ -46,6 +47,7 @@ class AppInflater extends StatelessWidget {
               .connectListener(mapStateChangeToNavigationEvent);
           return MaterialApp(
             navigatorKey: _navigator,
+            theme: AppTheme.mainTheme,
             debugShowCheckedModeBanner: false,
             onGenerateRoute: (_) => SplashPage.route(),
           );
