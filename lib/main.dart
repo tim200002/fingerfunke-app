@@ -1,5 +1,6 @@
 import 'package:fingerfunke_app/app.dart';
 import 'package:fingerfunke_app/cubits/cubit/authentication_cubit.dart';
+import 'package:fingerfunke_app/routes.dart';
 import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:fingerfunke_app/view/create_account/view/create_account_view.dart';
 import 'package:fingerfunke_app/view/splash/view/splash_page.dart';
@@ -46,6 +47,7 @@ class AppInflater extends StatelessWidget {
           BlocProvider.of<AuthenticationCubit>(context)
               .connectListener(mapStateChangeToNavigationEvent);
           return MaterialApp(
+            routes: routes,
             navigatorKey: _navigator,
             theme: AppTheme.mainTheme,
             debugShowCheckedModeBanner: false,

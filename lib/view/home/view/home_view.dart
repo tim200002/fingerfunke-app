@@ -1,5 +1,6 @@
 import 'package:fingerfunke_app/utils/dev_tools.dart';
 import 'package:fingerfunke_app/view/post_feed/view/post_feed_view.dart';
+import 'package:fingerfunke_app/view/saved/view/saved_page.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatelessWidget {
@@ -41,11 +42,11 @@ class HomeView extends StatelessWidget {
       appBar: AppBar(
         title: _DEMOPlaceIndicator(),
         leading: IconButton(
-            onPressed: () => DevTools.showToDoSnackbar(context),
+            onPressed: () => Navigator.pushNamed(context, '/account'),
             icon: const Icon(Icons.menu)),
         actions: [
           IconButton(
-              onPressed: () => DevTools.showToDoSnackbar(context),
+              onPressed: () => Navigator.pushNamed(context, '/saved'),
               icon: const Icon(Icons.bookmark_outlined))
         ],
       ),
