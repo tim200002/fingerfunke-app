@@ -1,7 +1,5 @@
-import 'package:fingerfunke_app/cubits/cubit/authentication_cubit.dart';
 import 'package:fingerfunke_app/view/home/view/home_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);

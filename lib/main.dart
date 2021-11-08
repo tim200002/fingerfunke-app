@@ -1,5 +1,5 @@
 import 'package:fingerfunke_app/app.dart';
-import 'package:fingerfunke_app/cubits/cubit/authentication_cubit.dart';
+import 'package:fingerfunke_app/cubits/authentication_cubit/authentication_cubit.dart';
 import 'package:fingerfunke_app/routes.dart';
 import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:fingerfunke_app/view/create_account/view/create_account_view.dart';

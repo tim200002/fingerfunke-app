@@ -1,11 +1,11 @@
 import 'package:fingerfunke_app/utils/dev_tools.dart';
 import 'package:fingerfunke_app/view/post_feed/view/post_feed_view.dart';
-import 'package:fingerfunke_app/view/saved/view/saved_page.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
 
+  // ignore: non_constant_identifier_names
   Widget _DEMOPlaceIndicator() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -61,7 +61,7 @@ class HomeView extends StatelessWidget {
         child: const Icon(Icons.add_rounded),
       ),
       bottomNavigationBar: BottomAppBar(
-          shape: CircularNotchedRectangle(), //shape of notch
+          shape: const CircularNotchedRectangle(), //shape of notch
           notchMargin:
               5, //notche margin between floating button and bottom appbar
           child: Row(
