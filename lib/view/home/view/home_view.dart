@@ -1,4 +1,5 @@
 import 'package:fingerfunke_app/utils/dev_tools.dart';
+import 'package:fingerfunke_app/view/post_feed/view/post_feed_view.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatelessWidget {
@@ -47,6 +48,11 @@ class HomeView extends StatelessWidget {
               onPressed: () => DevTools.showToDoSnackbar(context),
               icon: const Icon(Icons.bookmark_outlined))
         ],
+      ),
+      body: const Padding(
+        // todo define global edge padding
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        child: PostFeedView(),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
