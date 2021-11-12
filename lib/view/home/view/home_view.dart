@@ -1,3 +1,4 @@
+import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:fingerfunke_app/utils/dev_tools.dart';
 import 'package:fingerfunke_app/view/post_feed/view/post_feed_view.dart';
 import 'package:fingerfunke_app/view/saved/view/saved_page.dart';
@@ -51,8 +52,7 @@ class HomeView extends StatelessWidget {
         ],
       ),
       body: const Padding(
-        // todo define global edge padding
-        padding: EdgeInsets.symmetric(horizontal: 20),
+        padding: EdgeInsets.symmetric(horizontal: AppTheme.PADDING_SIDE),
         child: PostFeedView(),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
