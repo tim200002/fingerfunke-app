@@ -31,7 +31,7 @@ class AppInflater extends StatelessWidget {
       },
       signedIn: (_) => _navigator.currentState!
           .pushAndRemoveUntil(App.route(), (_) => false),
-      signedInButNoUserDocumentCreated: () {
+      signedInButNoUserDocumentCreated: (_) {
         _navigator.currentState!.pushAndRemoveUntil(App.route(), (_) => false);
         _navigator.currentState!.push(CreateAccountView.route());
       },

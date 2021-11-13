@@ -10,16 +10,4 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => const HomeView();
-
-  /*@override
-  Widget build(BuildContext context) {
-    final AuthenticationState state =
-        BlocProvider.of<AuthenticationCubit>(context).state;
-    return Scaffold(
-      appBar: AppBar(),
-      body: Center(
-        child: Text("App in state $state"),
-      ),
-    );
-  }*/
 }
