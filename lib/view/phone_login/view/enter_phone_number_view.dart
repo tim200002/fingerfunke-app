@@ -14,12 +14,20 @@ class EnterPhoneNumberView extends StatelessWidget {
     return Form(
       key: _formKey,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Text("Please enter your phone Number"),
+          Text(
+            "Enter your phone number",
+            style: Theme.of(context).textTheme.headline4,
+          ),
           Padding(
-            padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.only(bottom: 20, top: 15),
+              child: Text(
+                  "We will send you a verification code once you entered your phone nnumber")),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 40),
             child: TextFormField(
+              decoration: const InputDecoration(labelText: "mobile number"),
               keyboardType: TextInputType.phone,
               validator: (number) => FormValidator.validatePhoneNumber(number),
               controller: _phoneInputController,
@@ -30,10 +38,7 @@ class EnterPhoneNumberView extends StatelessWidget {
             return state.maybeWhen(
               enterPhoneNumber: (isLoading) {
                 if (isLoading) {
-                  return const ElevatedButton(
-                    onPressed: null,
-                    child: CircularProgressIndicator.adaptive(),
-                  );
+                  return Center(child: CircularProgressIndicator.adaptive());
                 } else {
                   return ElevatedButton(
                     onPressed: () {
