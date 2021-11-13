@@ -20,8 +20,9 @@ class AppTheme {
           secondary: Colors.teal[100]!,
           onSecondary: Colors.black),
       textTheme: TextTheme(
-          headline4: TextStyle(
-              fontWeight: FontWeight.bold, fontSize: 22, color: Colors.black)),
+          headline3: TextStyle(
+              fontWeight: FontWeight.bold, fontSize: 26, color: Colors.black),
+          headline4: TextStyle(fontWeight: FontWeight.bold, fontSize: 22, color: Colors.black)),
       appBarTheme: const AppBarTheme(elevation: 0, centerTitle: true, backgroundColor: Colors.transparent, foregroundColor: Colors.black));
 
   static const double PADDING_SIDE = 20;
