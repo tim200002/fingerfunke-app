@@ -19,10 +19,11 @@ class AppTheme {
           primary: Colors.red,
           secondary: Colors.teal[100]!,
           onSecondary: Colors.black),
-      textTheme: TextTheme(
+      textTheme: const TextTheme(
           headline4: TextStyle(
               fontWeight: FontWeight.bold, fontSize: 22, color: Colors.black)),
       appBarTheme: const AppBarTheme(elevation: 0, centerTitle: true, backgroundColor: Colors.transparent, foregroundColor: Colors.black));
 
+  // ignore: constant_identifier_names
   static const double PADDING_SIDE = 20;
 }

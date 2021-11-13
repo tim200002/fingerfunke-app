@@ -20,7 +20,7 @@ class CreateAccountView extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
+          const Text(
               "Hi um zu starten brauchen wir deinen Namen. Gerne darfst du auch ein Profilbild hochladen, damit andere dich besser erkennen"),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -38,7 +38,7 @@ class CreateAccountView extends StatelessWidget {
                         BlocProvider.of<AuthenticationCubit>(context),
                   );
                 },
-                child: Text("Los gehts")),
+                child: const Text("Los gehts")),
           )
         ],
       ),

@@ -54,6 +54,10 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     });
   }
 
+  Future<void> signOut() async {
+    await _autheticationRepository.signOut();
+  }
+
   void _notifyListeners(AuthenticationState state) {
     for (var observer in _listeners) {
       observer(state);

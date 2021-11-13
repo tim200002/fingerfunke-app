@@ -1,3 +1,4 @@
+import 'package:fingerfunke_app/view/my_account/subpages/manage_account/view/manage_account_page.dart';
 import 'package:fingerfunke_app/view/my_account/view/my_account_page.dart';
 import 'package:fingerfunke_app/view/saved/view/saved_page.dart';
 
@@ -7,4 +8,5 @@ import 'package:fingerfunke_app/view/saved/view/saved_page.dart';
 final routes = {
   '/saved': (context) => const SavedPage(),
   '/account': (context) => const MyAccountPage(),
+  '/manageAccount': (context) => const ManageAccountPage()
 };

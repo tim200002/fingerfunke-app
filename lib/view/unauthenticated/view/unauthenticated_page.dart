@@ -31,7 +31,7 @@ class UnauthenticatedPage extends StatelessWidget {
           ]));
 
   Widget _loginSection(BuildContext context) => Padding(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
