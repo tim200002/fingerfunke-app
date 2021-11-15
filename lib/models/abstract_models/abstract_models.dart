@@ -12,7 +12,7 @@ abstract class DocumentSerializable {
 }
 
 class DatabaseDocument extends Equatable implements DocumentSerializable {
-  final UserID id;
+  final FirestoreId id;
 
   const DatabaseDocument({required this.id});
 

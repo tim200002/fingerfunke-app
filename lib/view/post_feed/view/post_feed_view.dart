@@ -1,4 +1,6 @@
-import 'package:fingerfunke_app/utils/dev_tools.dart';
+import 'package:fingerfunke_app/models/post/post.dart';
+import 'package:fingerfunke_app/services/pagination/post_pagination_service_impl.dart';
+import 'package:fingerfunke_app/view/paginated_list/view/paginated_list.dart';
 import 'package:flutter/material.dart';
 
 class PostFeedView extends StatelessWidget {
@@ -7,7 +9,11 @@ class PostFeedView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-        borderRadius: BorderRadius.circular(10),
-        child: DevTools.placeholder("PostFeed"));
+      borderRadius: BorderRadius.circular(10),
+      child: PaginatedList<Post>(
+        firestorePaginationService: PostPaginationServiceImpl(),
+        itemBuilder: (post) => Text(post.title),
+      ),
+    );
   }
 }

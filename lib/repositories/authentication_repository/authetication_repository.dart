@@ -42,7 +42,7 @@ abstract class AutheticationRepository {
   /// Return the current state of sign in (loggedOut, anonymously or with credentials)
   SIGN_IN_STATE getSignInState();
 
-  UserID? getUserId();
+  FirestoreId? getUserId();
 
   /// Returns stream of the SIGN_IN_STATE of current User
   ///

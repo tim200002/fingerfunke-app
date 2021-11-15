@@ -7,7 +7,7 @@ class UserInfo extends DatabaseDocument {
   final String name;
   final Link? picture;
 
-  const UserInfo({required UserID id, required this.name, this.picture})
+  const UserInfo({required FirestoreId id, required this.name, this.picture})
       : super(id: id);
 
   @override
@@ -34,7 +34,7 @@ class User extends UserInfo {
   final GENDER? gender;
 
   const User(
-      {required UserID id,
+      {required FirestoreId id,
       required String name,
       Link? picture,
       this.age,
@@ -43,7 +43,7 @@ class User extends UserInfo {
 
   @override
   Map<String, dynamic> toMap({bool includeId = false}) {
-    return {...super.toMap(), 'age': age, 'gender': gender};
+    return {...super.toMap(includeId: includeId), 'age': age, 'gender': gender};
   }
 
   factory User.fromMap(Map<String, dynamic> map) {

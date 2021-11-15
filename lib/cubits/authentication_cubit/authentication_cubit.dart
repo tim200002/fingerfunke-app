@@ -78,7 +78,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
 
       case SIGN_IN_STATE.signedIn:
         {
-          final UserID? userID = _autheticationRepository.getUserId();
+          final FirestoreId? userID = _autheticationRepository.getUserId();
           if (userID != null) {
             try {
               final User user = await _userRepository.getUser(userID);

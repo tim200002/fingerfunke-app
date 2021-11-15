@@ -15,7 +15,12 @@ class MyAccountPage extends StatelessWidget {
       body: BlocBuilder<AuthenticationCubit, AuthenticationState>(
         builder: (context, state) => state.maybeWhen(
             signedIn: (_) => Column(
-                  children: const [TopBar(), TopList(), BottomList()],
+                  children: const [
+                    TopBar(),
+                    TopList(),
+                    BottomList(),
+                    DevelopementList()
+                  ],
                 ),
             signedInAnonymously: () => Column(
                   children: const [TopList()],
@@ -101,6 +106,30 @@ class TopList extends StatelessWidget {
             text: "Account verwalten",
             onPressed: () {
               Navigator.of(context).pushNamed("/manageAccount");
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class DevelopementList extends StatelessWidget {
+  const DevelopementList({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SettingsButton(
+            text: "Developement utils",
+            onPressed: () {
+              Navigator.of(context).pushNamed("/developementUtils");
             },
           ),
         ],

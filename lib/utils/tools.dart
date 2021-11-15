@@ -30,4 +30,33 @@ class Tools {
   static String readableTimeFromTimeOfDay(TimeOfDay timeOfDay) {
     return timeOfDay.toString().substring(10, 15);
   }
+
+  static T stringToEnum<T>(String s, List<T> values) {
+    for (T value in values) {
+      if (value.toString().toLowerCase().split(".").last == s.toLowerCase()) {
+        return value;
+      }
+    }
+    throw Exception(
+        "error during serialization: enum entry '" + s + "' not found");
+  }
+
+  static String enumToString(dynamic value) {
+    return value.toString().toLowerCase().split(".").last;
+  }
+
+  static List<T>? jsonListToList<T>(List<dynamic>? list,
+      {T Function(dynamic element)? transformElement}) {
+    if (list == null) {
+      return null;
+    }
+
+    return list.map((element) {
+      if (transformElement == null) {
+        return element as T;
+      } else {
+        return transformElement(element);
+      }
+    }).toList();
+  }
 }
