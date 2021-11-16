@@ -1,3 +1,4 @@
+import 'package:fingerfunke_app/utils/exceptions.dart';
 import 'package:fingerfunke_app/utils/form_validator.dart';
 import 'package:fingerfunke_app/view/phone_login/cubit/phone_login_cubit.dart';
 import 'package:flutter/material.dart';
@@ -20,10 +21,11 @@ class EnterPhoneNumberView extends StatelessWidget {
             "Enter your phone number",
             style: Theme.of(context).textTheme.headline4,
           ),
-          Padding(
-              padding: const EdgeInsets.only(bottom: 20, top: 15),
-              child: Text(
-                  "We will send you a verification code once you entered your phone nnumber")),
+          const Padding(
+            padding: EdgeInsets.only(bottom: 20, top: 15),
+            child: Text(
+                "We will send you a verification code once you entered your phone nnumber"),
+          ),
           Padding(
             padding: const EdgeInsets.only(bottom: 40),
             child: TextFormField(
@@ -38,7 +40,8 @@ class EnterPhoneNumberView extends StatelessWidget {
             return state.maybeWhen(
               enterPhoneNumber: (isLoading) {
                 if (isLoading) {
-                  return Center(child: CircularProgressIndicator.adaptive());
+                  return const Center(
+                      child: CircularProgressIndicator.adaptive());
                 } else {
                   return ElevatedButton(
                     onPressed: () {
@@ -51,7 +54,7 @@ class EnterPhoneNumberView extends StatelessWidget {
                   );
                 }
               },
-              orElse: () => ErrorWidget("State should not be possible"),
+              orElse: () => ErrorWidget(InvalidStateException()),
             );
           })
         ],

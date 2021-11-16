@@ -12,6 +12,6 @@ class AuthenticationState with _$AuthenticationState {
 
   const factory AuthenticationState.signedIn({required User user}) = _SignedIn;
 
-  const factory AuthenticationState.signedInButNoUserDocumentCreated() =
-      _SignedInButNoUserDocumentCreated;
+  const factory AuthenticationState.signedInButNoUserDocumentCreated(
+      {required String userId}) = _SignedInButNoUserDocumentCreated;
 }

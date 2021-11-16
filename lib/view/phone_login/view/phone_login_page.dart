@@ -27,10 +27,11 @@ class PhoneLoginPage extends StatelessWidget {
               bottom: 50),
           child: Column(
             children: [
-              Expanded(
-                  child: Center(
-                child: Text("TODO: Illustration"),
-              )),
+              const Expanded(
+                child: Center(
+                  child: Text("TODO: Illustration"),
+                ),
+              ),
               BlocProvider<PhoneLoginCubit>(
                 create: (BuildContext context) => PhoneLoginCubit(),
                 child: BlocBuilder<PhoneLoginCubit, PhoneLoginState>(

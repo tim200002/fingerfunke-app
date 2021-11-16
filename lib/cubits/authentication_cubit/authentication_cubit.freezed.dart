@@ -35,8 +35,11 @@ class _$AuthenticationStateTearOff {
     );
   }
 
-  _SignedInButNoUserDocumentCreated signedInButNoUserDocumentCreated() {
-    return const _SignedInButNoUserDocumentCreated();
+  _SignedInButNoUserDocumentCreated signedInButNoUserDocumentCreated(
+      {required String userId}) {
+    return _SignedInButNoUserDocumentCreated(
+      userId: userId,
+    );
   }
 }
 
@@ -51,7 +54,7 @@ mixin _$AuthenticationState {
     required TResult Function() unauthenticated,
     required TResult Function() signedInAnonymously,
     required TResult Function(User user) signedIn,
-    required TResult Function() signedInButNoUserDocumentCreated,
+    required TResult Function(String userId) signedInButNoUserDocumentCreated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -60,7 +63,7 @@ mixin _$AuthenticationState {
     TResult Function()? unauthenticated,
     TResult Function()? signedInAnonymously,
     TResult Function(User user)? signedIn,
-    TResult Function()? signedInButNoUserDocumentCreated,
+    TResult Function(String userId)? signedInButNoUserDocumentCreated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -69,7 +72,7 @@ mixin _$AuthenticationState {
     TResult Function()? unauthenticated,
     TResult Function()? signedInAnonymously,
     TResult Function(User user)? signedIn,
-    TResult Function()? signedInButNoUserDocumentCreated,
+    TResult Function(String userId)? signedInButNoUserDocumentCreated,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -168,7 +171,7 @@ class _$_Unintialized implements _Unintialized {
     required TResult Function() unauthenticated,
     required TResult Function() signedInAnonymously,
     required TResult Function(User user) signedIn,
-    required TResult Function() signedInButNoUserDocumentCreated,
+    required TResult Function(String userId) signedInButNoUserDocumentCreated,
   }) {
     return uninitialized();
   }
@@ -180,7 +183,7 @@ class _$_Unintialized implements _Unintialized {
     TResult Function()? unauthenticated,
     TResult Function()? signedInAnonymously,
     TResult Function(User user)? signedIn,
-    TResult Function()? signedInButNoUserDocumentCreated,
+    TResult Function(String userId)? signedInButNoUserDocumentCreated,
   }) {
     return uninitialized?.call();
   }
@@ -192,7 +195,7 @@ class _$_Unintialized implements _Unintialized {
     TResult Function()? unauthenticated,
     TResult Function()? signedInAnonymously,
     TResult Function(User user)? signedIn,
-    TResult Function()? signedInButNoUserDocumentCreated,
+    TResult Function(String userId)? signedInButNoUserDocumentCreated,
     required TResult orElse(),
   }) {
     if (uninitialized != null) {
@@ -294,7 +297,7 @@ class _$_Unaunthenticated implements _Unaunthenticated {
     required TResult Function() unauthenticated,
     required TResult Function() signedInAnonymously,
     required TResult Function(User user) signedIn,
-    required TResult Function() signedInButNoUserDocumentCreated,
+    required TResult Function(String userId) signedInButNoUserDocumentCreated,
   }) {
     return unauthenticated();
   }
@@ -306,7 +309,7 @@ class _$_Unaunthenticated implements _Unaunthenticated {
     TResult Function()? unauthenticated,
     TResult Function()? signedInAnonymously,
     TResult Function(User user)? signedIn,
-    TResult Function()? signedInButNoUserDocumentCreated,
+    TResult Function(String userId)? signedInButNoUserDocumentCreated,
   }) {
     return unauthenticated?.call();
   }
@@ -318,7 +321,7 @@ class _$_Unaunthenticated implements _Unaunthenticated {
     TResult Function()? unauthenticated,
     TResult Function()? signedInAnonymously,
     TResult Function(User user)? signedIn,
-    TResult Function()? signedInButNoUserDocumentCreated,
+    TResult Function(String userId)? signedInButNoUserDocumentCreated,
     required TResult orElse(),
   }) {
     if (unauthenticated != null) {
@@ -420,7 +423,7 @@ class _$_SignedInAnonymously implements _SignedInAnonymously {
     required TResult Function() unauthenticated,
     required TResult Function() signedInAnonymously,
     required TResult Function(User user) signedIn,
-    required TResult Function() signedInButNoUserDocumentCreated,
+    required TResult Function(String userId) signedInButNoUserDocumentCreated,
   }) {
     return signedInAnonymously();
   }
@@ -432,7 +435,7 @@ class _$_SignedInAnonymously implements _SignedInAnonymously {
     TResult Function()? unauthenticated,
     TResult Function()? signedInAnonymously,
     TResult Function(User user)? signedIn,
-    TResult Function()? signedInButNoUserDocumentCreated,
+    TResult Function(String userId)? signedInButNoUserDocumentCreated,
   }) {
     return signedInAnonymously?.call();
   }
@@ -444,7 +447,7 @@ class _$_SignedInAnonymously implements _SignedInAnonymously {
     TResult Function()? unauthenticated,
     TResult Function()? signedInAnonymously,
     TResult Function(User user)? signedIn,
-    TResult Function()? signedInButNoUserDocumentCreated,
+    TResult Function(String userId)? signedInButNoUserDocumentCreated,
     required TResult orElse(),
   }) {
     if (signedInAnonymously != null) {
@@ -567,7 +570,7 @@ class _$_SignedIn implements _SignedIn {
     required TResult Function() unauthenticated,
     required TResult Function() signedInAnonymously,
     required TResult Function(User user) signedIn,
-    required TResult Function() signedInButNoUserDocumentCreated,
+    required TResult Function(String userId) signedInButNoUserDocumentCreated,
   }) {
     return signedIn(user);
   }
@@ -579,7 +582,7 @@ class _$_SignedIn implements _SignedIn {
     TResult Function()? unauthenticated,
     TResult Function()? signedInAnonymously,
     TResult Function(User user)? signedIn,
-    TResult Function()? signedInButNoUserDocumentCreated,
+    TResult Function(String userId)? signedInButNoUserDocumentCreated,
   }) {
     return signedIn?.call(user);
   }
@@ -591,7 +594,7 @@ class _$_SignedIn implements _SignedIn {
     TResult Function()? unauthenticated,
     TResult Function()? signedInAnonymously,
     TResult Function(User user)? signedIn,
-    TResult Function()? signedInButNoUserDocumentCreated,
+    TResult Function(String userId)? signedInButNoUserDocumentCreated,
     required TResult orElse(),
   }) {
     if (signedIn != null) {
@@ -659,6 +662,7 @@ abstract class _$SignedInButNoUserDocumentCreatedCopyWith<$Res> {
           _SignedInButNoUserDocumentCreated value,
           $Res Function(_SignedInButNoUserDocumentCreated) then) =
       __$SignedInButNoUserDocumentCreatedCopyWithImpl<$Res>;
+  $Res call({String userId});
 }
 
 /// @nodoc
@@ -673,28 +677,50 @@ class __$SignedInButNoUserDocumentCreatedCopyWithImpl<$Res>
   @override
   _SignedInButNoUserDocumentCreated get _value =>
       super._value as _SignedInButNoUserDocumentCreated;
+
+  @override
+  $Res call({
+    Object? userId = freezed,
+  }) {
+    return _then(_SignedInButNoUserDocumentCreated(
+      userId: userId == freezed
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_SignedInButNoUserDocumentCreated
     implements _SignedInButNoUserDocumentCreated {
-  const _$_SignedInButNoUserDocumentCreated();
+  const _$_SignedInButNoUserDocumentCreated({required this.userId});
+
+  @override
+  final String userId;
 
   @override
   String toString() {
-    return 'AuthenticationState.signedInButNoUserDocumentCreated()';
+    return 'AuthenticationState.signedInButNoUserDocumentCreated(userId: $userId)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _SignedInButNoUserDocumentCreated);
+            other is _SignedInButNoUserDocumentCreated &&
+            (identical(other.userId, userId) || other.userId == userId));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, userId);
+
+  @JsonKey(ignore: true)
+  @override
+  _$SignedInButNoUserDocumentCreatedCopyWith<_SignedInButNoUserDocumentCreated>
+      get copyWith => __$SignedInButNoUserDocumentCreatedCopyWithImpl<
+          _SignedInButNoUserDocumentCreated>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -703,9 +729,9 @@ class _$_SignedInButNoUserDocumentCreated
     required TResult Function() unauthenticated,
     required TResult Function() signedInAnonymously,
     required TResult Function(User user) signedIn,
-    required TResult Function() signedInButNoUserDocumentCreated,
+    required TResult Function(String userId) signedInButNoUserDocumentCreated,
   }) {
-    return signedInButNoUserDocumentCreated();
+    return signedInButNoUserDocumentCreated(userId);
   }
 
   @override
@@ -715,9 +741,9 @@ class _$_SignedInButNoUserDocumentCreated
     TResult Function()? unauthenticated,
     TResult Function()? signedInAnonymously,
     TResult Function(User user)? signedIn,
-    TResult Function()? signedInButNoUserDocumentCreated,
+    TResult Function(String userId)? signedInButNoUserDocumentCreated,
   }) {
-    return signedInButNoUserDocumentCreated?.call();
+    return signedInButNoUserDocumentCreated?.call(userId);
   }
 
   @override
@@ -727,11 +753,11 @@ class _$_SignedInButNoUserDocumentCreated
     TResult Function()? unauthenticated,
     TResult Function()? signedInAnonymously,
     TResult Function(User user)? signedIn,
-    TResult Function()? signedInButNoUserDocumentCreated,
+    TResult Function(String userId)? signedInButNoUserDocumentCreated,
     required TResult orElse(),
   }) {
     if (signedInButNoUserDocumentCreated != null) {
-      return signedInButNoUserDocumentCreated();
+      return signedInButNoUserDocumentCreated(userId);
     }
     return orElse();
   }
@@ -782,6 +808,11 @@ class _$_SignedInButNoUserDocumentCreated
 
 abstract class _SignedInButNoUserDocumentCreated
     implements AuthenticationState {
-  const factory _SignedInButNoUserDocumentCreated() =
+  const factory _SignedInButNoUserDocumentCreated({required String userId}) =
       _$_SignedInButNoUserDocumentCreated;
+
+  String get userId;
+  @JsonKey(ignore: true)
+  _$SignedInButNoUserDocumentCreatedCopyWith<_SignedInButNoUserDocumentCreated>
+      get copyWith => throw _privateConstructorUsedError;
 }

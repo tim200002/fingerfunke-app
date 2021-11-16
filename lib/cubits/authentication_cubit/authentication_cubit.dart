@@ -21,9 +21,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
             authenticationRepository ?? AuthenticaionRepositoryImpl(),
         _userRepository = userRepository ?? UserRepositoryImpl(),
         super(const AuthenticationState.uninitialized()) {
-    final SIGN_IN_STATE signInState = _autheticationRepository.getSignInState();
-    _mapSignInStateToState(signInState)
-        .then((autheticationState) => emit(autheticationState));
+    forceNewState();
 
     // subscribe to changes in the authentication state
     _autheticationRepository
@@ -33,9 +31,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
       AuthenticationState authenticationState =
           await _mapSignInStateToState(signInState);
       emit(authenticationState);
-      for (var observer in _listeners) {
-        observer(authenticationState);
-      }
+      _notifyListeners(authenticationState);
     });
   }
 
@@ -48,6 +44,24 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
   /// ToDo in the debugger why are there so many closure
   void connectListener(Function(AuthenticationState) onNewState) {
     _listeners.add(onNewState);
+  }
+
+  void forceNewState() async {
+    final SIGN_IN_STATE signInState = _autheticationRepository.getSignInState();
+    _mapSignInStateToState(signInState).then((autheticationState) {
+      emit(autheticationState);
+      _notifyListeners(autheticationState);
+    });
+  }
+
+  Future<void> signOut() async {
+    await _autheticationRepository.signOut();
+  }
+
+  void _notifyListeners(AuthenticationState state) {
+    for (var observer in _listeners) {
+      observer(state);
+    }
   }
 
   Future<AuthenticationState> _mapSignInStateToState(
@@ -70,8 +84,8 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
               final User user = await _userRepository.getUser(userID);
               return AuthenticationState.signedIn(user: user);
             } on UserNotFoundException catch (_) {
-              return const AuthenticationState
-                  .signedInButNoUserDocumentCreated();
+              return AuthenticationState.signedInButNoUserDocumentCreated(
+                  userId: userID);
             } catch (e) {
               //! Todo
               throw Exception();

@@ -1,5 +1,5 @@
 import 'package:fingerfunke_app/app.dart';
-import 'package:fingerfunke_app/cubits/cubit/authentication_cubit.dart';
+import 'package:fingerfunke_app/cubits/authentication_cubit/authentication_cubit.dart';
 import 'package:fingerfunke_app/routes.dart';
 import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:fingerfunke_app/view/create_account/view/create_account_view.dart';
@@ -31,9 +31,9 @@ class AppInflater extends StatelessWidget {
       },
       signedIn: (_) => _navigator.currentState!
           .pushAndRemoveUntil(App.route(), (_) => false),
-      signedInButNoUserDocumentCreated: () {
-        _navigator.currentState!.pushAndRemoveUntil(App.route(), (_) => false);
-        _navigator.currentState!.push(CreateAccountView.route());
+      signedInButNoUserDocumentCreated: (_) {
+        _navigator.currentState!
+            .pushAndRemoveUntil(CreateAccountView.route(), (_) => false);
       },
     );
   }
