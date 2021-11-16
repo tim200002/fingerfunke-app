@@ -10,9 +10,11 @@ class PostFeedView extends StatelessWidget {
     return /* ClipRRect(
         borderRadius: BorderRadius.circular(10),
         child: */
-        ListView.builder(
-            clipBehavior: Clip.none,
-            itemCount: 4,
-            itemBuilder: (_, i) => PostFeedItem());
+        ClipRect(
+          
+            child: ListView.builder(
+                clipBehavior: Clip.none,
+                itemCount: 5,
+                itemBuilder: (_, i) => PostFeedItem()));
   }
 }

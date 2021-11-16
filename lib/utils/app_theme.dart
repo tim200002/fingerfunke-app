@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   static final mainTheme = ThemeData(
@@ -19,11 +20,14 @@ class AppTheme {
           primary: Colors.red,
           secondary: Colors.teal[100]!,
           onSecondary: Colors.black),
-      textTheme: TextTheme(
+      textTheme: const TextTheme(
           headline3: TextStyle(
               fontWeight: FontWeight.bold, fontSize: 26, color: Colors.black),
           headline4: TextStyle(fontWeight: FontWeight.bold, fontSize: 22, color: Colors.black)),
       appBarTheme: const AppBarTheme(elevation: 0, centerTitle: true, backgroundColor: Colors.transparent, foregroundColor: Colors.black));
+
+  static TextStyle textStyleAccent({TextStyle? style}) =>
+      GoogleFonts.calistoga(textStyle: style);
 
   static const double PADDING_SIDE = 20;
 }

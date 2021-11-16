@@ -1,3 +1,4 @@
+import 'package:fingerfunke_app/routes.dart';
 import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:fingerfunke_app/utils/dev_tools.dart';
 import 'package:fingerfunke_app/view/post_feed/view/post_feed_view.dart';
@@ -43,11 +44,11 @@ class HomeView extends StatelessWidget {
       appBar: AppBar(
         title: _DEMOPlaceIndicator(),
         leading: IconButton(
-            onPressed: () => Navigator.pushNamed(context, '/account'),
+            onPressed: () => Navigator.pushNamed(context, accountRoute),
             icon: const Icon(Icons.menu)),
         actions: [
           IconButton(
-              onPressed: () => Navigator.pushNamed(context, '/saved'),
+              onPressed: () => Navigator.pushNamed(context, savedRoute),
               icon: const Icon(Icons.bookmark_outlined))
         ],
       ),
