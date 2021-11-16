@@ -92,11 +92,10 @@ class PageScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
+    return Scaffold(
       appBar: appBar,
       body: _content(),
       extendBodyBehindAppBar: extendBodyBehindAppBar ?? false,
-    ));
+    );
   }
 }

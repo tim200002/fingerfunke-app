@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   static final mainTheme = ThemeData(
+      canvasColor: Colors.white,
       textButtonTheme: TextButtonThemeData(
           style: ButtonStyle(
               padding: MaterialStateProperty.all<EdgeInsets>(
@@ -11,7 +12,7 @@ class AppTheme {
           style: ButtonStyle(
               elevation: MaterialStateProperty.all<double>(0),
               padding: MaterialStateProperty.all<EdgeInsets>(
-                  const EdgeInsets.all(20)),
+                  const EdgeInsets.all(13)),
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5.0),
