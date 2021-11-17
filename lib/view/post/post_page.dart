@@ -7,6 +7,14 @@ import 'package:flutter/material.dart';
 class PostPage extends StatelessWidget {
   const PostPage({Key? key}) : super(key: key);
 
+  static const List<BoxShadow> _cardShadow = [
+    BoxShadow(
+        color: Color(0xff6161616), //Colors.grey[700]!,
+        offset: Offset(0, 3),
+        spreadRadius: -2,
+        blurRadius: 7)
+  ];
+
   static final Widget _contentCardDecoration = Transform.translate(
       offset: const Offset(0, 1),
       child: Container(
@@ -19,16 +27,9 @@ class PostPage extends StatelessWidget {
     return Container(
         margin: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(100),
-          boxShadow: [
-            BoxShadow(
-                color: Colors.grey[700]!,
-                offset: const Offset(0, 3),
-                spreadRadius: -2,
-                blurRadius: 7)
-          ],
-        ),
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(100),
+            boxShadow: _cardShadow),
         child: IconButton(
             onPressed: () => Navigator.of(context).pop(),
             icon: const Icon(Icons.close)));

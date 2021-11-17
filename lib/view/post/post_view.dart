@@ -1,4 +1,5 @@
 import 'package:fingerfunke_app/utils/app_theme.dart';
+import 'package:fingerfunke_app/view/comments/comments_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -113,6 +114,10 @@ class PostView extends StatelessWidget {
         _tagsSection(context),
         _descriptionSection(context),
         _actionsSection(context),
+        const Padding(
+          padding: EdgeInsets.only(top: 20, bottom: 20),
+          child: CommentsView(),
+        )
       ],
     );
   }

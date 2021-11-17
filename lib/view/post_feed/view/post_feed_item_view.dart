@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 class PostFeedItem extends StatelessWidget {
   const PostFeedItem({Key? key}) : super(key: key);
 
-  Widget _PLACEHOLDER_authorImage() {
+  static Widget _PLACEHOLDER_authorImage() {
     return Container(
       height: 27,
       width: 27,
@@ -19,7 +19,7 @@ class PostFeedItem extends StatelessWidget {
     );
   }
 
-  Widget _authorInfo(BuildContext context) {
+  static Widget authorInfo(BuildContext context) {
     return Row(mainAxisAlignment: MainAxisAlignment.start, children: [
       Padding(
           padding: const EdgeInsets.only(right: 6),
@@ -65,7 +65,7 @@ class PostFeedItem extends StatelessWidget {
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
                 )),
-            _authorInfo(context)
+            authorInfo(context)
           ],
         ),
       ),
