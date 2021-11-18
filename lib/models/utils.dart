@@ -5,7 +5,6 @@ Map<String, dynamic> docToMap(DocumentSnapshot document) {
   // data format which asks us to directly psecify the type <Map<String, dynamic>>
   Map<String, dynamic> result =
       (document as DocumentSnapshot<Map<String, dynamic>>).data() ?? {};
-
   result.addAll({'id': document.id});
   return result;
 }

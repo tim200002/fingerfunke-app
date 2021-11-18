@@ -1,2 +1,4 @@
 typedef Link = String;
-typedef UserID = String;
+typedef FirestoreId = String;
+typedef UnixMs = int;
+typedef GeoHash = String;

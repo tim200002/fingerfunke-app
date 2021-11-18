@@ -77,7 +77,7 @@ class AuthenticaionRepositoryImpl implements AutheticationRepository {
 
   @override
   String? getUserId() {
-    final UserID? userId = _firebaseAuth.currentUser?.uid;
+    final FirestoreId? userId = _firebaseAuth.currentUser?.uid;
     return userId;
   }
 

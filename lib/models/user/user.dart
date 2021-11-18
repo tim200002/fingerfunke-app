@@ -7,7 +7,7 @@ class UserInfo extends DatabaseDocument {
   final String name;
   final Link? picture;
 
-  const UserInfo({required UserID id, required this.name, this.picture})
+  const UserInfo({required FirestoreId id, required this.name, this.picture})
       : super(id: id);
 
   @override
@@ -25,6 +25,9 @@ class UserInfo extends DatabaseDocument {
 
   factory UserInfo.fromDoc(DocumentSnapshot document) =>
       UserInfo.fromMap(docToMap(document));
+
+  @override
+  List<Object?> get props => [id, name, picture];
 }
 
 enum GENDER { male, female, divers }
@@ -34,7 +37,7 @@ class User extends UserInfo {
   final GENDER? gender;
 
   const User(
-      {required UserID id,
+      {required FirestoreId id,
       required String name,
       Link? picture,
       this.age,
@@ -43,7 +46,7 @@ class User extends UserInfo {
 
   @override
   Map<String, dynamic> toMap({bool includeId = false}) {
-    return {...super.toMap(), 'age': age, 'gender': gender};
+    return {...super.toMap(includeId: includeId), 'age': age, 'gender': gender};
   }
 
   factory User.fromMap(Map<String, dynamic> map) {
@@ -57,4 +60,7 @@ class User extends UserInfo {
 
   factory User.fromDoc(DocumentSnapshot document) =>
       User.fromMap(docToMap(document));
+
+  @override
+  List<Object?> get props => [id, name, picture, age, gender];
 }
