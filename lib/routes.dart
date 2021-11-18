@@ -12,7 +12,7 @@ const savedRoute = "/saved";
 const accountRoute = "/account";
 const postRoute = "/post";
 const manageAccountRoute = "/manageAccount";
-const developementUtilsRoute ="/developementUtils"
+const developementUtilsRoute = "/developementUtils";
 
 final routes = {
   savedRoute: (context) => const SavedPage(),

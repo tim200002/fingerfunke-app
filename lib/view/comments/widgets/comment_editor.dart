@@ -9,22 +9,23 @@ class CommentEditor extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-            child: Container(
-          decoration: BoxDecoration(
-            color: Colors.grey.shade200,
-            borderRadius: BorderRadius.circular(30),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.grey.shade200,
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: TextField(
+              decoration: InputDecoration(
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: 7, horizontal: 15),
+                  border: InputBorder.none,
+                  labelText: "neuer Kommentar",
+                  suffixIcon: IconButton(
+                      onPressed: () => DevTools.showToDoSnackbar(context),
+                      icon: Icon(Icons.video_call_rounded))),
+            ),
           ),
-          child: TextField(
-            decoration: InputDecoration(
-                contentPadding:
-                    EdgeInsets.symmetric(vertical: 7, horizontal: 15),
-                border: InputBorder.none,
-                labelText: "neuer Kommentar",
-                suffixIcon: IconButton(
-                    onPressed: () => DevTools.showToDoSnackbar(context),
-                    icon: Icon(Icons.video_call_rounded))),
-          ),
-        )),
+        ),
         Padding(
           padding: EdgeInsets.only(left: 5),
           child: IconButton(
