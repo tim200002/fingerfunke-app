@@ -1,13 +1,13 @@
 import 'package:fingerfunke_app/services/pagination/firestore_pagination_service.dart';
 import 'package:fingerfunke_app/utils/tools.dart';
-import 'package:fingerfunke_app/view/paginated_list/cubit/paginatedlist_cubit.dart';
+import 'package:fingerfunke_app/view/paginated_list/bloc/paginated_list_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PaginatedList<T> extends StatelessWidget {
   final FirestorePaginationService _paginationService;
   final Function(T) _itemBuilder;
-  const PaginatedList(
+  PaginatedList(
       {required FirestorePaginationService firestorePaginationService,
       required Function(T) itemBuilder,
       Key? key})
@@ -19,10 +19,10 @@ class PaginatedList<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          PaginatedlistCubit<T>(paginationService: _paginationService),
+          PaginatedListBloc<T>(paginationService: _paginationService),
       child: Builder(
         builder: (context) =>
-            BlocListener<PaginatedlistCubit<T>, PaginatedlistState<T>>(
+            BlocListener<PaginatedListBloc<T>, PaginatedListState<T>>(
           listener: (context, state) {
             if (state.isLoading) {
               Tools.showSnackbar(context, "loading new posts");
@@ -31,19 +31,21 @@ class PaginatedList<T> extends StatelessWidget {
               Tools.showSnackbar(context, "reached End");
             }
           },
-          child: BlocBuilder<PaginatedlistCubit<T>, PaginatedlistState<T>>(
-            buildWhen: (prev, curr) => prev.items != curr.items,
+          child: BlocBuilder<PaginatedListBloc<T>, PaginatedListState<T>>(
             builder: (context, state) =>
-                NotificationListener<ScrollEndNotification>(
-              onNotification: (scrollEnd) {
-                var metrics = scrollEnd.metrics;
-                if (metrics.atEdge && metrics.pixels != 0) {
-                  BlocProvider.of<PaginatedlistCubit>(context).requestNewPage();
+                NotificationListener<ScrollNotification>(
+              onNotification: (ScrollNotification scrollInfo) {
+                if (!state.isLoading &&
+                    scrollInfo.metrics.pixels ==
+                        scrollInfo.metrics.maxScrollExtent) {
+                  BlocProvider.of<PaginatedListBloc<T>>(context)
+                      .add(RequestNewPage<T>());
                 }
                 return true;
               },
               child: ListView.builder(
                 itemCount: state.items.length,
+                reverse: true,
                 itemBuilder: (context, index) =>
                     _itemBuilder(state.items[index]),
               ),

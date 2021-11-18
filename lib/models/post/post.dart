@@ -68,6 +68,20 @@ class Post extends DatabaseDocument {
 
   factory Post.fromDoc(DocumentSnapshot document) =>
       Post.fromMap(docToMap(document));
+
+  @override
+  List<Object> get props => [
+        id,
+        type,
+        author,
+        title,
+        description,
+        creationTime,
+        visibility,
+        location,
+        postPlace,
+        media
+      ];
 }
 
 class PostWithoutId {

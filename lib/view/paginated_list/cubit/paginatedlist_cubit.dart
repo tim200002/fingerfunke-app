@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:fingerfunke_app/models/post/post.dart';
 import 'package:fingerfunke_app/services/pagination/firestore_pagination_service.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -20,7 +19,6 @@ class PaginatedlistCubit<T> extends Cubit<PaginatedlistState<T>> {
         _paginationService.getItemsStream().listen((items) {
       emit(state.copyWith(items: items as List<T>));
     });
-
     requestNewPage();
   }
 

@@ -25,6 +25,9 @@ class UserInfo extends DatabaseDocument {
 
   factory UserInfo.fromDoc(DocumentSnapshot document) =>
       UserInfo.fromMap(docToMap(document));
+
+  @override
+  List<Object?> get props => [id, name, picture];
 }
 
 enum GENDER { male, female, divers }
@@ -57,4 +60,7 @@ class User extends UserInfo {
 
   factory User.fromDoc(DocumentSnapshot document) =>
       User.fromMap(docToMap(document));
+
+  @override
+  List<Object?> get props => [id, name, picture, age, gender];
 }

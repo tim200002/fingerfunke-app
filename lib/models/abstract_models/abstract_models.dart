@@ -38,7 +38,7 @@ class DatabaseDocument extends Equatable implements DocumentSerializable {
   }
 
   @override
-  List<Object> get props => [id];
+  List<Object?> get props => [id];
 }
 
 class UserGeneratedDocument extends DatabaseDocument {

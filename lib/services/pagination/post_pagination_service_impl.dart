@@ -6,13 +6,16 @@ import 'package:fingerfunke_app/services/pagination/firestore_pagination_service
 
 class PostPaginationServiceImpl extends FirestorePaginationService<Post> {
   PostPaginationServiceImpl(
-      {FirebaseFirestore? firestore, int paginationDistance = 20})
+      {FirebaseFirestore? firestore, int paginationDistance = 1})
       : super(paginationDistance: paginationDistance, firestore: firestore);
 
   @override
   Future<bool> requestNewPage() async {
     Completer<bool> didReachEndCompleter = Completer();
-    Query firestoreQuery = firestore.collection('posts');
+    Query firestoreQuery = firestore
+        .collection('posts')
+        .orderBy('creationTime', descending: true)
+        .limit(paginationDistance);
 
     //If last Document is specified, we need to start Pagination after last Document
     if (lastDocument != null) {
@@ -26,8 +29,6 @@ class PostPaginationServiceImpl extends FirestorePaginationService<Post> {
         firestoreQuery.snapshots().listen((currentPageSnapshot) {
       // were we able to receive more documents
       if (currentPageSnapshot.docs.isNotEmpty) {
-        var test = currentPageSnapshot.docs.map(
-            (QueryDocumentSnapshot postDocument) => Post.fromDoc(postDocument));
         List<Post> posts = currentPageSnapshot.docs.map(
           (QueryDocumentSnapshot postDocument) {
             Post post = Post.fromDoc(postDocument);
