@@ -2,29 +2,25 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fingerfunke_app/models/abstract_models/abstract_models.dart';
 import 'package:fingerfunke_app/models/utils.dart';
 import 'package:fingerfunke_app/utils/type_aliases.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'user.g.dart';
+
+@JsonSerializable(explicitToJson: true)
 class UserInfo extends DatabaseDocument {
   final String name;
   final Link? picture;
 
   const UserInfo({required FirestoreId id, required this.name, this.picture})
       : super(id: id);
-
   @override
-  Map<String, dynamic> toMap({bool includeId = false}) {
-    return {
-      ...super.toMap(includeId: includeId),
-      'name': name,
-      'picture': picture
-    };
-  }
+  Map<String, dynamic> toJson() => _$UserInfoToJson(this);
 
-  factory UserInfo.fromMap(Map<String, dynamic> map) {
-    return UserInfo(id: map['id'], name: map['name'], picture: map['picture']);
-  }
+  factory UserInfo.fromJson(Map<String, dynamic> map) =>
+      _$UserInfoFromJson(map);
 
   factory UserInfo.fromDoc(DocumentSnapshot document) =>
-      UserInfo.fromMap(docToMap(document));
+      UserInfo.fromJson(documentSnaphsotToJson(document));
 
   @override
   List<Object?> get props => [id, name, picture];
@@ -32,6 +28,7 @@ class UserInfo extends DatabaseDocument {
 
 enum GENDER { male, female, divers }
 
+@JsonSerializable(explicitToJson: true)
 class User extends UserInfo {
   final int? age;
   final GENDER? gender;
@@ -45,21 +42,12 @@ class User extends UserInfo {
       : super(id: id, name: name, picture: picture);
 
   @override
-  Map<String, dynamic> toMap({bool includeId = false}) {
-    return {...super.toMap(includeId: includeId), 'age': age, 'gender': gender};
-  }
+  Map<String, dynamic> toJson() => _$UserToJson(this);
 
-  factory User.fromMap(Map<String, dynamic> map) {
-    return User(
-        id: map['id'],
-        name: map['name'],
-        picture: map['picture'],
-        age: map['age'],
-        gender: map['gender']);
-  }
+  factory User.fromJson(Map<String, dynamic> map) => _$UserFromJson(map);
 
   factory User.fromDoc(DocumentSnapshot document) =>
-      User.fromMap(docToMap(document));
+      User.fromJson(documentSnaphsotToJson(document));
 
   @override
   List<Object?> get props => [id, name, picture, age, gender];
