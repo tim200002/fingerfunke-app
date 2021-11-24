@@ -20,11 +20,11 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<void> createUser(User user) async {
-    await _userCollection.doc(user.id).set(user.toMap());
+    await _userCollection.doc(user.id).set(user.toJson());
   }
 
   @override
   Future<void> updateUser(User updatedUser) async {
-    await _userCollection.doc(updatedUser.id).update(updatedUser.toMap());
+    await _userCollection.doc(updatedUser.id).update(updatedUser.toJson());
   }
 }
