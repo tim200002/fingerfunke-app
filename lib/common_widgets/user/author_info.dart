@@ -1,4 +1,4 @@
-import 'package:fingerfunke_app/common_widgets/user/user_image.dart';
+import 'package:fingerfunke_app/common_widgets/image/user_image/user_image.dart';
 import 'package:fingerfunke_app/models/user/user.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +11,13 @@ class AuthorInfo extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        const Padding(padding: EdgeInsets.only(right: 6), child: UserImage()),
+        Padding(
+          padding: const EdgeInsets.only(right: 6),
+          child: UserImage(
+            _userInfo.picture,
+            diameter: 27,
+          ),
+        ),
         Text(
           _userInfo.name,
           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
