@@ -14,9 +14,9 @@ class TextComment extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
+        children: const [
           //Text(text),
-          const AuthorInfo(
+          AuthorInfo(
             UserInfo(id: "test", name: "test"),
           ),
         ],
