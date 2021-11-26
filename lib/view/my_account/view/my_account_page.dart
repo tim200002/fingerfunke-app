@@ -1,3 +1,4 @@
+import 'package:fingerfunke_app/common_widgets/image/user_image/user_image.dart';
 import 'package:fingerfunke_app/cubits/authentication_cubit/authentication_cubit.dart';
 import 'package:fingerfunke_app/utils/exceptions.dart';
 import 'package:flutter/material.dart';
@@ -46,12 +47,9 @@ class TopBar extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Container(
-                        height: 80,
-                        width: 80,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: Colors.red),
+                      UserImage(
+                        user.picture,
+                        diameter: 80,
                       ),
                       Container(
                         width: 10,
