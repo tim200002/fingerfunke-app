@@ -23,6 +23,8 @@ class MediaCacheImpl implements MediaCache {
       if (event is FileInfo && !completer.isCompleted) {
         completer.complete(event.file);
       }
+    }).onError((error, stacktrace) {
+      completer.completeError(error, stacktrace);
     });
 
     return completer.future;

@@ -21,7 +21,7 @@ class VideoPlaybackCubit extends Cubit<VideoPlaybackState> {
       if (loop) {
         controller.setLooping(true);
       }
-    }).onError((error, stackTrace) {
+    }).catchError((error, stackTrace) {
       print(error);
       print(stackTrace);
       emit(VideoPlaybackState.error(error));

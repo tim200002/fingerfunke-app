@@ -1,5 +1,6 @@
 import 'package:fingerfunke_app/cache/media_cache/media_cache.dart';
-import 'package:flutter_cache_manager/file.dart';
+import 'package:fingerfunke_app/common_widgets/image/cubit/network_image_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:fingerfunke_app/cache/media_cache/media_cache.impl.dart';
 import 'package:flutter/material.dart';
@@ -17,32 +18,19 @@ class NetworkPlaceholderImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final NetworkImageCubit cubit = NetworkImageCubit(imageUrl);
     return SizedBox(
       width: width?.toDouble(),
       height: height?.toDouble(),
-      child: FutureBuilder(
-        future: _mediaCache.getSingleImageFile(imageUrl,
-            maxHeight: height, maxWidth: width),
-        builder: (context, AsyncSnapshot<File> snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.waiting:
-              return Image(
-                image: placeholder,
-              );
-            case ConnectionState.done:
-              {
-                if (snapshot.hasError) {
-                  return const Text("Error");
-                } else {
-                  return Image(
-                    image: FileImage(snapshot.data!),
-                  );
-                }
-              }
-            default:
-              return Text("Error");
-          }
-        },
+      child: BlocBuilder<NetworkImageCubit, NetworkImageState>(
+        bloc: cubit,
+        builder: (context, state) => state.when(
+          loading: () => Image(
+            image: placeholder,
+          ),
+          imageLoaded: (file) => Image(image: FileImage(file)),
+          error: (error) => ErrorWidget(error),
+        ),
       ),
     );
   }

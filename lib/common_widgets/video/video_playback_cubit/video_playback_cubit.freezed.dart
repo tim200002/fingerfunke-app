@@ -29,7 +29,7 @@ class _$VideoPlaybackStateTearOff {
     );
   }
 
-  _Error error(Object? error) {
+  _Error error(Object error) {
     return _Error(
       error,
     );
@@ -47,7 +47,7 @@ mixin _$VideoPlaybackState {
     required TResult Function(
             VideoPlayerController videoPlayerController, bool isPlaying)
         playing,
-    required TResult Function(Object? error) error,
+    required TResult Function(Object error) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -56,7 +56,7 @@ mixin _$VideoPlaybackState {
     TResult Function(
             VideoPlayerController videoPlayerController, bool isPlaying)?
         playing,
-    TResult Function(Object? error)? error,
+    TResult Function(Object error)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -65,7 +65,7 @@ mixin _$VideoPlaybackState {
     TResult Function(
             VideoPlayerController videoPlayerController, bool isPlaying)?
         playing,
-    TResult Function(Object? error)? error,
+    TResult Function(Object error)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -155,7 +155,7 @@ class _$_Initializing implements _Initializing {
     required TResult Function(
             VideoPlayerController videoPlayerController, bool isPlaying)
         playing,
-    required TResult Function(Object? error) error,
+    required TResult Function(Object error) error,
   }) {
     return initializing();
   }
@@ -167,7 +167,7 @@ class _$_Initializing implements _Initializing {
     TResult Function(
             VideoPlayerController videoPlayerController, bool isPlaying)?
         playing,
-    TResult Function(Object? error)? error,
+    TResult Function(Object error)? error,
   }) {
     return initializing?.call();
   }
@@ -179,7 +179,7 @@ class _$_Initializing implements _Initializing {
     TResult Function(
             VideoPlayerController videoPlayerController, bool isPlaying)?
         playing,
-    TResult Function(Object? error)? error,
+    TResult Function(Object error)? error,
     required TResult orElse(),
   }) {
     if (initializing != null) {
@@ -304,7 +304,7 @@ class _$_Playing implements _Playing {
     required TResult Function(
             VideoPlayerController videoPlayerController, bool isPlaying)
         playing,
-    required TResult Function(Object? error) error,
+    required TResult Function(Object error) error,
   }) {
     return playing(videoPlayerController, isPlaying);
   }
@@ -316,7 +316,7 @@ class _$_Playing implements _Playing {
     TResult Function(
             VideoPlayerController videoPlayerController, bool isPlaying)?
         playing,
-    TResult Function(Object? error)? error,
+    TResult Function(Object error)? error,
   }) {
     return playing?.call(videoPlayerController, isPlaying);
   }
@@ -328,7 +328,7 @@ class _$_Playing implements _Playing {
     TResult Function(
             VideoPlayerController videoPlayerController, bool isPlaying)?
         playing,
-    TResult Function(Object? error)? error,
+    TResult Function(Object error)? error,
     required TResult orElse(),
   }) {
     if (playing != null) {
@@ -387,7 +387,7 @@ abstract class _Playing implements VideoPlaybackState {
 abstract class _$ErrorCopyWith<$Res> {
   factory _$ErrorCopyWith(_Error value, $Res Function(_Error) then) =
       __$ErrorCopyWithImpl<$Res>;
-  $Res call({Object? error});
+  $Res call({Object error});
 }
 
 /// @nodoc
@@ -404,7 +404,10 @@ class __$ErrorCopyWithImpl<$Res> extends _$VideoPlaybackStateCopyWithImpl<$Res>
     Object? error = freezed,
   }) {
     return _then(_Error(
-      error == freezed ? _value.error : error,
+      error == freezed
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as Object,
     ));
   }
 }
@@ -415,7 +418,7 @@ class _$_Error implements _Error {
   const _$_Error(this.error);
 
   @override
-  final Object? error;
+  final Object error;
 
   @override
   String toString() {
@@ -446,7 +449,7 @@ class _$_Error implements _Error {
     required TResult Function(
             VideoPlayerController videoPlayerController, bool isPlaying)
         playing,
-    required TResult Function(Object? error) error,
+    required TResult Function(Object error) error,
   }) {
     return error(this.error);
   }
@@ -458,7 +461,7 @@ class _$_Error implements _Error {
     TResult Function(
             VideoPlayerController videoPlayerController, bool isPlaying)?
         playing,
-    TResult Function(Object? error)? error,
+    TResult Function(Object error)? error,
   }) {
     return error?.call(this.error);
   }
@@ -470,7 +473,7 @@ class _$_Error implements _Error {
     TResult Function(
             VideoPlayerController videoPlayerController, bool isPlaying)?
         playing,
-    TResult Function(Object? error)? error,
+    TResult Function(Object error)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -515,9 +518,9 @@ class _$_Error implements _Error {
 }
 
 abstract class _Error implements VideoPlaybackState {
-  const factory _Error(Object? error) = _$_Error;
+  const factory _Error(Object error) = _$_Error;
 
-  Object? get error;
+  Object get error;
   @JsonKey(ignore: true)
   _$ErrorCopyWith<_Error> get copyWith => throw _privateConstructorUsedError;
 }

@@ -16,8 +16,7 @@ class VideoPlaybackView extends StatelessWidget {
                   child: CircularProgressIndicator(),
                 ),
             playing: (controller, _) => VideoPlayer(controller),
-            //!ToDo
-            error: (error) => ErrorWidget(error!)),
+            error: (error) => ErrorWidget(error)),
       ),
     );
   }
