@@ -1,7 +1,10 @@
 import 'package:fingerfunke_app/utils/app_theme.dart';
+import 'package:fingerfunke_app/utils/exceptions.dart';
 import 'package:fingerfunke_app/view/comments/comments_view.dart';
+import 'package:fingerfunke_app/view/post/cubit/post_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PostView extends StatelessWidget {
   const PostView({Key? key}) : super(key: key);
@@ -31,24 +34,15 @@ class PostView extends StatelessWidget {
         ));
   }
 
-  Widget _descriptionSection(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 10),
-      child: Text("Est nobis maiores accusantium optio autem est." +
-          "Ut et aut modi explicabo. Voluptate consequuntur tempore qui" +
-          "deserunt qui deserunt. Consequatur quo fugit officiis mollitia." +
-          "Itaque libero cupiditate voluptas porro." +
-          "In placeat ab numquam. Voluptates non ut ut qui molestiae." +
-          "Et itaque facere ducimus. Sunt ut commodi eius ex.\n" +
-          "Ipsum eos quam perspiciatis. Ullam aperiam praesentium ut non in." +
-          "Quia omnis quaerat dolor vel molestiae accusamus quas nihil." +
-          "Aliquam quae sunt voluptatum est quasi esse. Ducimus doloremque" +
-          "qui temporibus qui hic deleniti. In quis corporis laborum esse." +
-          "Qui iure laborum aspernatur." +
-          "Molestias ducimus saepe quibusdam debitis facilis dicta cumque." +
-          "A inventore ipsum accusamus laudantium beatae debitis. Ipsum" +
-          "molestiae autem exercitationem distinctio aperiam accusamus vel." +
-          "Qui dolor quia ex tenetur ut dolor recusandae."),
+  Widget _descriptionSection() {
+    return BlocBuilder<PostCubit, PostState>(
+      //ToDo implement build when
+      builder: (context, state) => state.maybeWhen(
+          normal: (post) => Padding(
+                padding: EdgeInsets.symmetric(vertical: 10),
+                child: Text(post.description),
+              ),
+          orElse: () => ErrorWidget(InvalidStateException())),
     );
   }
 
@@ -112,7 +106,7 @@ class PostView extends StatelessWidget {
         ),
         _dateTimeSection(context),
         _tagsSection(context),
-        _descriptionSection(context),
+        _descriptionSection(),
         _actionsSection(context),
         const Padding(
           padding: EdgeInsets.only(top: 20, bottom: 20),
