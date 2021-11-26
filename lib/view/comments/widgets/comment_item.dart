@@ -1,5 +1,6 @@
+import 'package:fingerfunke_app/common_widgets/user/author_info.dart';
+import 'package:fingerfunke_app/models/user/user.dart';
 import 'package:fingerfunke_app/utils/dev_tools.dart';
-import 'package:fingerfunke_app/view/post_feed/view/post_feed_item_view.dart';
 import 'package:flutter/material.dart';
 
 class CommentItem extends StatelessWidget {
@@ -17,11 +18,14 @@ class CommentItem extends StatelessWidget {
         child: Stack(
           children: [
             DevTools.placeholder("Video Comment", dark: true),
-            Align(
+            const Align(
                 alignment: Alignment.bottomLeft,
                 child: Padding(
-                    padding: const EdgeInsets.all(_commentPadding),
-                    child: PostFeedItem.authorInfo(context)))
+                  padding: EdgeInsets.all(_commentPadding),
+                  child: AuthorInfo(
+                    UserInfo(id: "test", name: "test"),
+                  ),
+                ))
           ],
         ));
   }
@@ -33,7 +37,12 @@ class CommentItem extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [Text(text), PostFeedItem.authorInfo(context)],
+        children: [
+          Text(text),
+          const AuthorInfo(
+            UserInfo(id: "test", name: "test"),
+          ),
+        ],
       ),
     );
   }

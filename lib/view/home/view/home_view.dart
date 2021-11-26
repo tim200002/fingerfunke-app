@@ -63,17 +63,18 @@ class HomeView extends StatelessWidget {
         child: const Icon(Icons.add_rounded),
       ),
       bottomNavigationBar: BottomAppBar(
-          shape: const CircularNotchedRectangle(), //shape of notch
-          notchMargin:
-              5, //notche margin between floating button and bottom appbar
-          child: Row(
-            //children inside bottom appbar
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              _bottomNavItem(context, title: "Events", icon: Icons.mood),
-              _bottomNavItem(context, title: "Gruppen", icon: Icons.people),
-            ],
-          )),
+        shape: const CircularNotchedRectangle(), //shape of notch
+        notchMargin:
+            5, //notche margin between floating button and bottom appbar
+        child: Row(
+          //children inside bottom appbar
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            _bottomNavItem(context, title: "Events", icon: Icons.mood),
+            _bottomNavItem(context, title: "Gruppen", icon: Icons.people),
+          ],
+        ),
+      ),
     );
   }
 }

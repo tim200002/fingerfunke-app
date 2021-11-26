@@ -1,3 +1,4 @@
+import 'package:fingerfunke_app/models/post/post.dart';
 import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:fingerfunke_app/utils/dev_tools.dart';
 import 'package:fingerfunke_app/utils/util_widgets/page_screen.dart';

@@ -1,46 +1,37 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
-import 'package:fingerfunke_app/models/errors_and_exceptions.dart';
 import 'package:fingerfunke_app/models/user/user.dart';
 import 'package:fingerfunke_app/models/utils.dart';
 import 'package:fingerfunke_app/utils/type_aliases.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'abstract_models.serialize.dart';
+part 'abstract_models.g.dart';
 
 abstract class DocumentSerializable {
-  Map<String, dynamic> toMap({bool includeId = false});
+  Map<String, dynamic> toJson();
 }
 
+@JsonSerializable(explicitToJson: true)
 class DatabaseDocument extends Equatable implements DocumentSerializable {
-  final UserID id;
+  final FirestoreId id;
 
   const DatabaseDocument({required this.id});
 
   @override
-  Map<String, dynamic> toMap({bool includeId = false}) {
-    final Map<String, dynamic> serialized = {};
-    if (includeId) {
-      serialized.addAll({'id': id});
-    }
-    return serialized;
-  }
+  Map<String, dynamic> toJson() => _$DatabaseDocumentToJson(this);
 
-  factory DatabaseDocument.fromMap(Map<String, dynamic> map) {
-    String? id = map['id'];
-    if (id == null) {
-      throw KeyNotFoundException();
-    }
-    return DatabaseDocument(id: id);
-  }
+  factory DatabaseDocument.fromJson(Map<String, dynamic> map) =>
+      _$DatabaseDocumentFromJson(map);
 
   factory DatabaseDocument.fromDoc(DocumentSnapshot document) {
-    return DatabaseDocument.fromMap(docToMap(document));
+    return DatabaseDocument.fromJson(documentSnaphsotToJson(document));
   }
 
   @override
-  List<Object> get props => [id];
+  List<Object?> get props => [id];
 }
 
+@JsonSerializable(explicitToJson: true)
 class UserGeneratedDocument extends DatabaseDocument {
   final UserInfo author;
 
@@ -48,18 +39,14 @@ class UserGeneratedDocument extends DatabaseDocument {
       : super(id: id);
 
   @override
-  Map<String, dynamic> toMap({bool includeId = false}) {
-    return {
-      ...super.toMap(includeId: includeId),
-      'author': author.toMap(includeId: true)
-    };
-  }
+  Map<String, dynamic> toJson() => _$UserGeneratedDocumentToJson(this);
 
-  factory UserGeneratedDocument.fromMap(Map<String, dynamic> map) {
-    return UserGeneratedDocument(
-        id: map['id'], author: UserInfo.fromMap(map['author']));
-  }
+  factory UserGeneratedDocument.fromJson(Map<String, dynamic> map) =>
+      _$UserGeneratedDocumentFromJson(map);
 
   factory UserGeneratedDocument.fromDoc(DocumentSnapshot document) =>
-      UserGeneratedDocument.fromMap(docToMap(document));
+      UserGeneratedDocument.fromJson(documentSnaphsotToJson(document));
+
+  @override
+  List<Object?> get props => [id, author];
 }
