@@ -20,7 +20,7 @@ class DevelopementUtilFunctionsPage extends StatelessWidget {
                   BlocProvider.of<AuthenticationCubit>(context)
                       .state
                       .whenOrNull(signedIn: (user) => user);
-              PostRepositoryImpl().createPost(PostWithoutId(
+              PostRepositoryImpl().createPost(Post.createWithId(
                   type: post_type.event,
                   author: currentUser!,
                   title: "Test post",
@@ -28,9 +28,8 @@ class DevelopementUtilFunctionsPage extends StatelessWidget {
                   description:
                       "Dieser post ist ein post der nur zu testzwecken um ${DateTime.now().toString()} erstellt wurde",
                   location: "ToDO Location",
-                  media: [],
-                  postPlace: "Todo Post Place",
-                  creationTime: DateTime.now().millisecondsSinceEpoch));
+                  media: const [],
+                  creationTime: DateTime.now()));
             },
             child: const Text("CreateRandomPost"),
           )

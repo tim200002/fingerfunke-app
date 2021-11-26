@@ -10,3 +10,8 @@ Map<String, dynamic> documentSnaphsotToJson(DocumentSnapshot documentSnapshot) {
   }
   return (documentSnapshot as DocumentSnapshot<Map<String, dynamic>>).data()!;
 }
+
+int dateToJson(DateTime date) => date.millisecondsSinceEpoch;
+
+DateTime dateFromJson(int millisecondsSinceEpoch) =>
+    DateTime.fromMillisecondsSinceEpoch(millisecondsSinceEpoch);

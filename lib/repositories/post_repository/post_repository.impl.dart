@@ -14,12 +14,7 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Future<void> createPost(PostWithoutId post) async {
-    final String id = uuid.v4();
-    await _postCollection.doc(id).set(
-          Post.fromJson(
-            {...post.toJson(), 'id': id},
-          ).toJson(),
-        );
+  Future<void> createPost(Post post) async {
+    await _postCollection.doc(post.id).set(post.toJson());
   }
 }
