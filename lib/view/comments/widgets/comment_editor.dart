@@ -17,20 +17,20 @@ class CommentEditor extends StatelessWidget {
             child: TextField(
               decoration: InputDecoration(
                   contentPadding:
-                      EdgeInsets.symmetric(vertical: 7, horizontal: 15),
+                      const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
                   border: InputBorder.none,
                   labelText: "neuer Kommentar",
                   suffixIcon: IconButton(
                       onPressed: () => DevTools.showToDoSnackbar(context),
-                      icon: Icon(Icons.video_call_rounded))),
+                      icon: const Icon(Icons.video_call_rounded))),
             ),
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(left: 5),
+          padding: const EdgeInsets.only(left: 5),
           child: IconButton(
               onPressed: () => DevTools.showToDoSnackbar(context),
-              icon: Icon(Icons.send_rounded)),
+              icon: const Icon(Icons.send_rounded)),
         )
       ],
     );
