@@ -13,7 +13,7 @@ class PostFeedItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.pushNamed(context, postRoute),
+      onTap: () => Navigator.pushNamed(context, postRoute, arguments: _post.id),
       child: Container(
         padding: const EdgeInsets.all(13),
         decoration: BoxDecoration(

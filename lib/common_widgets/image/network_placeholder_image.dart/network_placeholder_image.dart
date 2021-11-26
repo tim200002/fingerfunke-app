@@ -1,18 +1,15 @@
-import 'package:fingerfunke_app/cache/media_cache/media_cache.dart';
 import 'package:fingerfunke_app/common_widgets/image/cubit/network_image_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:fingerfunke_app/cache/media_cache/media_cache.impl.dart';
 import 'package:flutter/material.dart';
 import 'package:fingerfunke_app/utils/type_aliases.dart';
 
 class NetworkPlaceholderImage extends StatelessWidget {
   final Link imageUrl;
-  final MediaCache _mediaCache = MediaCacheImpl();
   final AssetImage placeholder;
   final int? height;
   final int? width;
-  NetworkPlaceholderImage(this.imageUrl, this.placeholder,
+  const NetworkPlaceholderImage(this.imageUrl, this.placeholder,
       {Key? key, this.height, this.width})
       : super(key: key);
 

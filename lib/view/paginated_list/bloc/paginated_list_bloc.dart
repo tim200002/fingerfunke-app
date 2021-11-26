@@ -36,10 +36,12 @@ class PaginatedListBloc<T>
     add(RequestNewPage<T>());
   }
 
+  // ignore: avoid_shadowing_type_parameters
   EventTransformer<T> debounce<T>(Duration duration) {
     return (events, mapper) => events.debounceTime(duration).flatMap(mapper);
   }
 
+  // ignore: avoid_shadowing_type_parameters
   EventTransformer<T> throttle<T>(Duration duration) {
     return (events, mapper) =>
         events.throttle((_) => TimerStream(true, duration)).flatMap(mapper);
