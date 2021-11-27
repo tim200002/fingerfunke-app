@@ -6,16 +6,29 @@ import 'package:fingerfunke_app/services/pagination/firestore_pagination_service
 
 class PostPaginationServiceImpl extends FirestorePaginationService<Post> {
   PostPaginationServiceImpl(
-      {FirebaseFirestore? firestore, int paginationDistance = 1})
+      {FirebaseFirestore? firestore, int paginationDistance = 10})
       : super(paginationDistance: paginationDistance, firestore: firestore);
 
   @override
   Future<bool> requestNewPage() async {
     Completer<bool> didReachEndCompleter = Completer();
-    Query firestoreQuery = firestore
+    Query helperQuery = firestore
         .collection('posts')
         .orderBy('creationTime', descending: true)
         .limit(paginationDistance);
+
+    if (lastDocument != null) {
+      helperQuery = helperQuery.startAfterDocument(lastDocument!);
+    }
+
+    QueryDocumentSnapshot endDocumentOfThisQuery =
+        (await helperQuery.get()).docs.last;
+
+    Query firestoreQuery = firestore
+        .collection('posts')
+        .orderBy('creationTime', descending: true)
+        //ToDo check if end at works when during activity last document has been deleted
+        .endAtDocument(endDocumentOfThisQuery);
 
     //If last Document is specified, we need to start Pagination after last Document
     if (lastDocument != null) {
@@ -41,7 +54,7 @@ class PostPaginationServiceImpl extends FirestorePaginationService<Post> {
         bool pageExists = currentPageIndex < allReceivedPages.length;
 
         if (pageExists) {
-          // If we are working on exisitn page just update the elements
+          // If we are working on existing page just update the elements
           allReceivedPages[currentPageIndex] = posts;
         } else {
           // Create new page

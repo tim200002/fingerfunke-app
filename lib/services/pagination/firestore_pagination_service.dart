@@ -35,6 +35,7 @@ abstract class FirestorePaginationService<T> {
       subscription.cancel();
     }
     subscriptionStack = [];
+    lastDocument = null;
   }
 
   List<T> concatenatePagesToList() {

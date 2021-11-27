@@ -27,10 +27,10 @@ class PostView extends StatelessWidget {
 
   Widget _tagWidget(String text) {
     return Padding(
-        padding: EdgeInsets.only(right: 10),
+        padding: const EdgeInsets.only(right: 10),
         child: Text(
           "#$text",
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ));
   }
 

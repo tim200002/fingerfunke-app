@@ -23,7 +23,7 @@ class DevelopementUtilFunctionsPage extends StatelessWidget {
               PostRepositoryImpl().createPost(Post.createWithId(
                   type: post_type.event,
                   author: currentUser!,
-                  title: "Test post",
+                  title: "Test post ${DateTime.now().second}",
                   visibility: post_visibility.visible,
                   description:
                       "Dieser post ist ein post der nur zu testzwecken um ${DateTime.now().toString()} erstellt wurde",

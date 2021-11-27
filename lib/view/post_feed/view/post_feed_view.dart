@@ -13,8 +13,10 @@ class PostFeedView extends StatelessWidget {
       borderRadius: BorderRadius.circular(10),
       child: PaginatedList<Post>(
         firestorePaginationService: PostPaginationServiceImpl(),
-        itemBuilder: (post) => PostFeedItem(post),
-        reverse: true,
+        itemBuilder: (post) => PostFeedItem(
+          post,
+        ),
+        reverse: false,
       ),
     );
   }

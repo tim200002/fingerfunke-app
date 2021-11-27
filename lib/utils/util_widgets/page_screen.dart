@@ -54,7 +54,8 @@ class PageScreen extends StatelessWidget {
                                       bottom: headerBottom == null
                                           ? null
                                           : PreferredSize(
-                                              preferredSize: Size.fromHeight(0),
+                                              preferredSize:
+                                                  const Size.fromHeight(0),
                                               child: headerBottom!),
                                       automaticallyImplyLeading: false,
                                       elevation: 0,
