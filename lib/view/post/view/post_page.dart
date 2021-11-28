@@ -52,13 +52,19 @@ class PostPage extends StatelessWidget {
       children: [
         BlocProvider(
           create: (_) => PostCubit(postId),
-          child: Container(
-            color: Colors.white,
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppTheme.PADDING_SIDE,
-            ),
-            child: const PostView(),
-          ),
+          child: Builder(builder: (context) {
+            return AnimatedSwitcher(
+              duration: Duration(milliseconds: 100),
+              child: BlocBuilder<PostCubit, PostState>(
+                builder: (context, state) => state.when(
+                  loading: () => const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                  normal: (_) => const PostView(),
+                ),
+              ),
+            );
+          }),
         )
       ],
     );

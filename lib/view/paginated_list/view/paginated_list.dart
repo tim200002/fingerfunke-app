@@ -6,13 +6,24 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PaginatedList<T> extends StatelessWidget {
   final FirestorePaginationService _paginationService;
+
+  /// function envoked on each list item to create widget given the data
   final Widget Function(T) _itemBuilder;
+
+  /// message displayed when list reached last element
+  final String? endMessage;
+
+  /// optional function to turn on and off shrinkWrap depending on the number of items in the list
+  /// this is currently needed to shrink the list down in the comment section
+  final bool Function(int)? shouldShrinkWrap;
 
   final bool reverse;
   const PaginatedList(
       {required FirestorePaginationService firestorePaginationService,
       required Widget Function(T) itemBuilder,
       this.reverse = false,
+      this.endMessage,
+      this.shouldShrinkWrap,
       Key? key})
       : _paginationService = firestorePaginationService,
         _itemBuilder = itemBuilder,
@@ -41,18 +52,22 @@ class PaginatedList<T> extends StatelessWidget {
             // is list is loading add one last item, showing loading indicator
             final listItemCount = state.items.length +
                 (state.isLoading || state.reachedEnd ? 1 : 0);
-            print("list item count $listItemCount");
             return ListView.builder(
               itemCount: listItemCount,
+              shrinkWrap: shouldShrinkWrap != null
+                  ? shouldShrinkWrap!(listItemCount)
+                  : false,
               reverse: reverse,
               itemBuilder: (context, index) {
                 //Check if we reached bottom of list
                 if (currentElementIsIndicator(
                     state.items.length, listItemCount, index)) {
                   if (state.isLoading) {
-                    return const CircularProgressIndicator();
+                    return const Center(child: CircularProgressIndicator());
                   } else {
-                    return const Text("End of Dataset");
+                    return endMessage != null
+                        ? Center(child: Text(endMessage!))
+                        : Container();
                   }
                 }
                 return CreationAwareWidget(

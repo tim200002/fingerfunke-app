@@ -21,6 +21,6 @@ final routes = {
   accountRoute: (context) => const MyAccountPage(),
   manageAccountRoute: (context) => const ManageAccountPage(),
   postEditorRoute: (context) => const PostEditorPage(),
-  postRoute: (context) => PostPage(),
+  postRoute: (context) => const PostPage(),
   developementUtilsRoute: (context) => const DevelopementUtilFunctionsPage()
 };

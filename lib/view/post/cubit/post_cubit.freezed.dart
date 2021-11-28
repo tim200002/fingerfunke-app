@@ -14,8 +14,8 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$PostCubitStateTearOff {
-  const _$PostCubitStateTearOff();
+class _$PostStateTearOff {
+  const _$PostStateTearOff();
 
   _Loading loading() {
     return const _Loading();
@@ -29,7 +29,7 @@ class _$PostCubitStateTearOff {
 }
 
 /// @nodoc
-const $PostCubitState = _$PostCubitStateTearOff();
+const $PostState = _$PostStateTearOff();
 
 /// @nodoc
 mixin _$PostState {
@@ -74,16 +74,14 @@ mixin _$PostState {
 }
 
 /// @nodoc
-abstract class $PostCubitStateCopyWith<$Res> {
-  factory $PostCubitStateCopyWith(
-          PostState value, $Res Function(PostState) then) =
-      _$PostCubitStateCopyWithImpl<$Res>;
+abstract class $PostStateCopyWith<$Res> {
+  factory $PostStateCopyWith(PostState value, $Res Function(PostState) then) =
+      _$PostStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$PostCubitStateCopyWithImpl<$Res>
-    implements $PostCubitStateCopyWith<$Res> {
-  _$PostCubitStateCopyWithImpl(this._value, this._then);
+class _$PostStateCopyWithImpl<$Res> implements $PostStateCopyWith<$Res> {
+  _$PostStateCopyWithImpl(this._value, this._then);
 
   final PostState _value;
   // ignore: unused_field
@@ -97,7 +95,7 @@ abstract class _$LoadingCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$LoadingCopyWithImpl<$Res> extends _$PostCubitStateCopyWithImpl<$Res>
+class __$LoadingCopyWithImpl<$Res> extends _$PostStateCopyWithImpl<$Res>
     implements _$LoadingCopyWith<$Res> {
   __$LoadingCopyWithImpl(_Loading _value, $Res Function(_Loading) _then)
       : super(_value, (v) => _then(v as _Loading));
@@ -108,12 +106,18 @@ class __$LoadingCopyWithImpl<$Res> extends _$PostCubitStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Loading implements _Loading {
+class _$_Loading with DiagnosticableTreeMixin implements _Loading {
   const _$_Loading();
 
   @override
-  String toString() {
-    return 'PostCubitState.loading()';
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'PostState.loading()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties..add(DiagnosticsProperty('type', 'PostState.loading'));
   }
 
   @override
@@ -200,7 +204,7 @@ abstract class _$NormalCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$NormalCopyWithImpl<$Res> extends _$PostCubitStateCopyWithImpl<$Res>
+class __$NormalCopyWithImpl<$Res> extends _$PostStateCopyWithImpl<$Res>
     implements _$NormalCopyWith<$Res> {
   __$NormalCopyWithImpl(_Normal _value, $Res Function(_Normal) _then)
       : super(_value, (v) => _then(v as _Normal));
@@ -223,15 +227,23 @@ class __$NormalCopyWithImpl<$Res> extends _$PostCubitStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Normal implements _Normal {
+class _$_Normal with DiagnosticableTreeMixin implements _Normal {
   const _$_Normal(this.post);
 
   @override
   final Post post;
 
   @override
-  String toString() {
-    return 'PostCubitState.normal(post: $post)';
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'PostState.normal(post: $post)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'PostState.normal'))
+      ..add(DiagnosticsProperty('post', post));
   }
 
   @override
@@ -239,12 +251,11 @@ class _$_Normal implements _Normal {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _Normal &&
-            const DeepCollectionEquality().equals(other.post, post));
+            (identical(other.post, post) || other.post == post));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(post));
+  int get hashCode => Object.hash(runtimeType, post);
 
   @JsonKey(ignore: true)
   @override

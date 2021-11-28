@@ -21,10 +21,10 @@ Post _$PostFromJson(Map<String, dynamic> json) => Post(
 Map<String, dynamic> _$PostToJson(Post instance) => <String, dynamic>{
       'id': instance.id,
       'author': instance.author.toJson(),
+      'creationTime': dateToJson(instance.creationTime),
       'type': _$post_typeEnumMap[instance.type],
       'title': instance.title,
       'description': instance.description,
-      'creationTime': dateToJson(instance.creationTime),
       'visibility': _$post_visibilityEnumMap[instance.visibility],
       'location': instance.location,
       'media': instance.media,
