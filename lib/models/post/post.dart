@@ -18,8 +18,6 @@ class Post extends UserGeneratedDocument {
   final String title;
   final String description;
 
-  @JsonKey(toJson: dateToJson, fromJson: dateFromJson)
-  final DateTime creationTime;
   final post_visibility visibility;
 
   final String location;
@@ -33,12 +31,12 @@ class Post extends UserGeneratedDocument {
       required UserInfo author,
       required this.title,
       required this.description,
-      required this.creationTime,
+      required DateTime creationTime,
       required this.visibility,
       required this.location,
       //required this.postPlace,
       required this.media})
-      : super(id: id, author: author);
+      : super(id: id, author: author, creationTime: creationTime);
 
   @override
   Map<String, dynamic> toJson() => _$PostToJson(this);
@@ -53,7 +51,6 @@ class Post extends UserGeneratedDocument {
           required UserInfo author,
           required String title,
           required String description,
-          required DateTime creationTime,
           required post_visibility visibility,
           required String location,
           //required GeoHash postPlace,
@@ -64,7 +61,7 @@ class Post extends UserGeneratedDocument {
           author: author,
           title: title,
           description: description,
-          creationTime: creationTime,
+          creationTime: DateTime.now(),
           visibility: visibility,
           location: location,
           media: media);

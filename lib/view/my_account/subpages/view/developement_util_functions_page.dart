@@ -21,15 +21,15 @@ class DevelopementUtilFunctionsPage extends StatelessWidget {
                       .state
                       .whenOrNull(signedIn: (user) => user);
               PostRepositoryImpl().createPost(Post.createWithId(
-                  type: post_type.event,
-                  author: currentUser!,
-                  title: "Test post",
-                  visibility: post_visibility.visible,
-                  description:
-                      "Dieser post ist ein post der nur zu testzwecken um ${DateTime.now().toString()} erstellt wurde",
-                  location: "ToDO Location",
-                  media: const [],
-                  creationTime: DateTime.now()));
+                type: post_type.event,
+                author: currentUser!,
+                title: "Test post ${DateTime.now().second}",
+                visibility: post_visibility.visible,
+                description:
+                    "Dieser post ist ein post der nur zu testzwecken um ${DateTime.now().toString()} erstellt wurde",
+                location: "ToDO Location",
+                media: const [],
+              ));
             },
             child: const Text("CreateRandomPost"),
           )

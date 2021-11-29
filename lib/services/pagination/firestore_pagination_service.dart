@@ -1,50 +1,157 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 
 abstract class FirestorePaginationService<T> {
-  @protected
   final int paginationDistance;
-  @protected
   final FirebaseFirestore firestore;
-  @protected
-  final StreamController<List<T>> itemsStreamController =
+  final StreamController<List<T>> _itemsStreamController =
       StreamController<List<T>>();
-  @protected
-  List<StreamSubscription> subscriptionStack = [];
+  List<StreamSubscription> _subscriptionStack = [];
 
-  // last document retrieved from firestore, this is the starting point for next query
-  @protected
+  /// Subscription is only used when list has been empty at beginning
+  /// Then we use this to subscribe to a change when list becomes not empty
+  /// after that we can start fetching normal using requestNewPage()
+  StreamSubscription? _firstElementSubscription;
+
+  /// Firestore query to collection.
+  /// Should already include all necessary ordering
+  final Query _startQuery;
+
+  /// mapper function for each documentSnapshot this function is invoked to return matching object
+  final T Function(QueryDocumentSnapshot document) _mapper;
+
+  /// last document retrieved from firestore, this is the starting point for next query
   DocumentSnapshot? lastDocument;
-  // list of all received pages, each page is ideally a list of length pagination Distance
-  @protected
-  List<List<T>> allReceivedPages = [];
 
-  FirestorePaginationService(
-      {FirebaseFirestore? firestore, this.paginationDistance = 20})
-      : firestore = firestore ?? FirebaseFirestore.instance;
+  /// list of all received pages, each page is ideally a list of length pagination Distance
+  List<List<T>> _allReceivedPages = [];
+
+  FirestorePaginationService(this._startQuery, this._mapper,
+      {required this.firestore, this.paginationDistance = 20});
 
   // requests new page and adds elements to pagination
   // returns false if no new posts could be found
-  //! Todo this could probably be written in a generic way for most cases
-  Future<bool> requestNewPage();
+  Future<bool> requestNewPage() async {
+    Completer<bool> didReachEndCompleter = Completer();
+    //------------------------------------------------------
+    // This part finds the first and last document for each query
+    Query helperQuery = _startQuery.limit(paginationDistance);
 
-  void dispose() {
-    for (var subscription in subscriptionStack) {
-      subscription.cancel();
+    if (lastDocument != null) {
+      helperQuery = helperQuery.startAfterDocument(lastDocument!);
     }
-    subscriptionStack = [];
+
+    QueryDocumentSnapshot? endDocumentOfThisQuery;
+    final documents = (await helperQuery.get()).docs;
+    if (documents.isNotEmpty) {
+      endDocumentOfThisQuery = documents.last;
+    }
+    // Special case when query returns empty we subscribe to see if elements are added later
+    else {
+      _firstElementSubscription =
+          _startQuery.limit(1).snapshots().listen((firstElementSnapshot) {
+        if (firstElementSnapshot.docs.isNotEmpty) {
+          _firstElementCallback();
+        }
+      });
+      return true;
+    }
+    //------------------------------------------------------------------------
+
+    //------------------------------------------------------------------------
+    // construct new query limited to start and end -> elements can be included in the middle
+    // if not start is provided elements can also be included at the front
+    Query firestoreQuery = _startQuery
+        //ToDo check if end at works when during activity last document has been deleted
+        .endAtDocument(endDocumentOfThisQuery);
+
+    //If last Document is specified, we need to start Pagination after last Document
+    if (lastDocument != null) {
+      firestoreQuery = firestoreQuery.startAfterDocument(lastDocument!);
+    }
+    //-----------------------------------------------------------------------
+
+    int currentPageIndex = _allReceivedPages.length;
+
+    // create a listener function to listen for this specific page
+    StreamSubscription currentPageListener = firestoreQuery.snapshots().listen(
+      (currentPageSnapshot) {
+        // were we able to receive more documents
+        if (currentPageSnapshot.docs.isNotEmpty) {
+          List<T> elements = currentPageSnapshot.docs
+              .map(
+                  (QueryDocumentSnapshot postDocument) => _mapper(postDocument))
+              .toList();
+
+          // check if we are working on an already exisiting page (currentPageIndex < number of pages)
+          // or if we have to create a new page
+          bool pageExists = currentPageIndex < _allReceivedPages.length;
+
+          if (pageExists) {
+            // If we are working on existing page just update the elements
+            _allReceivedPages[currentPageIndex] = elements;
+          } else {
+            // Create new page
+            _allReceivedPages.add(elements);
+          }
+
+          List<T> allElements = _concatenatePagesToList();
+          _emitUpdatedValues(allElements);
+
+          // check if we are on last page and if so update last document to right value
+          if (currentPageIndex == _allReceivedPages.length - 1) {
+            lastDocument = currentPageSnapshot.docs.last;
+          }
+
+          // determine if we received full page, or if this page is (currently at least) the last one
+          // return true if there are more posts
+          if (!didReachEndCompleter.isCompleted) {
+            didReachEndCompleter.complete(elements.length < paginationDistance);
+          }
+        } else {
+          // if there are no documents in this snapshot there are in theory two explanations
+          // 1) We reached end and there are just no more elements to query for -> however this case is already handled
+          //    in the first part of this functio -> can be ignored
+          //
+          // 2) All Elements in the current page have been deleted -> we will ignore this for now since it shouldnt have
+          //    any negative effects besided performance
+
+        }
+      },
+    );
+    _subscriptionStack.add(currentPageListener);
+    return didReachEndCompleter.future;
   }
 
-  List<T> concatenatePagesToList() {
-    return allReceivedPages.fold<List<T>>(
+  void dispose() {
+    _firstElementSubscription?.cancel();
+    for (var subscription in _subscriptionStack) {
+      subscription.cancel();
+    }
+    _subscriptionStack = [];
+    _firstElementSubscription = null;
+    lastDocument = null;
+    _allReceivedPages = [];
+  }
+
+  List<T> _concatenatePagesToList() {
+    return _allReceivedPages.fold<List<T>>(
         [], (previousValue, pageItems) => previousValue..addAll(pageItems));
   }
 
-  void emitUpdatedValues(List<T> items) {
-    itemsStreamController.add(items);
+  void _emitUpdatedValues(List<T> items) {
+    _itemsStreamController.add(items);
   }
 
-  Stream<List<T>> getItemsStream() => itemsStreamController.stream;
+  /// Used when list was empty initially
+  /// We subscribe to change in not being empty
+  /// When list receives first element this callbacl is triggered
+  /// it cancels the subscription to the list and fetches the list now normally using requestNewPage()
+  void _firstElementCallback() {
+    _firstElementSubscription?.cancel();
+    requestNewPage();
+  }
+
+  Stream<List<T>> getItemsStream() => _itemsStreamController.stream;
 }

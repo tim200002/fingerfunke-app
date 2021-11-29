@@ -35,7 +35,11 @@ class DatabaseDocument extends Equatable implements DocumentSerializable {
 class UserGeneratedDocument extends DatabaseDocument {
   final UserInfo author;
 
-  const UserGeneratedDocument({required id, required this.author})
+  @JsonKey(toJson: dateToJson, fromJson: dateFromJson)
+  final DateTime creationTime;
+
+  const UserGeneratedDocument(
+      {required id, required this.author, required this.creationTime})
       : super(id: id);
 
   @override

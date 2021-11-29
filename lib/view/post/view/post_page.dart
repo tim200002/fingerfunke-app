@@ -1,9 +1,10 @@
-import 'package:fingerfunke_app/models/post/post.dart';
 import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:fingerfunke_app/utils/dev_tools.dart';
 import 'package:fingerfunke_app/utils/util_widgets/page_screen.dart';
-import 'package:fingerfunke_app/view/post/post_view.dart';
+import 'package:fingerfunke_app/view/post/cubit/post_cubit.dart';
+import 'package:fingerfunke_app/view/post/view/post_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PostPage extends StatelessWidget {
   const PostPage({Key? key}) : super(key: key);
@@ -38,22 +39,34 @@ class PostPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final postId = ModalRoute.of(context)!.settings.arguments as String;
     return PageScreen(
-        appBar: AppBar(leading: _closeButton(context)),
-        extendBodyBehindAppBar: true,
-        headerHeight: 200,
-        sidePadding: 0,
-        roundedBody: false,
-        roundedHeader: false,
-        header: DevTools.placeholder("Video"),
-        headerBottom: _contentCardDecoration,
-        children: [
-          Container(
-              color: Colors.white,
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppTheme.PADDING_SIDE,
+      appBar: AppBar(leading: _closeButton(context)),
+      extendBodyBehindAppBar: true,
+      headerHeight: 200,
+      sidePadding: 0,
+      roundedBody: false,
+      roundedHeader: false,
+      header: DevTools.placeholder("Video"),
+      headerBottom: _contentCardDecoration,
+      children: [
+        BlocProvider(
+          create: (_) => PostCubit(postId),
+          child: Builder(builder: (context) {
+            return AnimatedSwitcher(
+              duration: Duration(milliseconds: 100),
+              child: BlocBuilder<PostCubit, PostState>(
+                builder: (context, state) => state.when(
+                  loading: () => const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                  normal: (_) => const PostView(),
+                ),
               ),
-              child: PostView())
-        ]);
+            );
+          }),
+        )
+      ],
+    );
   }
 }

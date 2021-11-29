@@ -4,7 +4,6 @@ import 'package:fingerfunke_app/common_widgets/user/author_info.dart';
 import 'package:fingerfunke_app/models/post/post.dart';
 import 'package:fingerfunke_app/routes.dart';
 import 'package:fingerfunke_app/utils/app_theme.dart';
-import 'package:fingerfunke_app/utils/dev_tools.dart';
 import 'package:flutter/material.dart';
 
 class PostFeedItem extends StatelessWidget {
@@ -14,7 +13,7 @@ class PostFeedItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.pushNamed(context, postRoute),
+      onTap: () => Navigator.pushNamed(context, postRoute, arguments: _post.id),
       child: Container(
         padding: const EdgeInsets.all(13),
         decoration: BoxDecoration(
@@ -38,14 +37,15 @@ class PostFeedItem extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-                constraints: const BoxConstraints(minHeight: 100),
-                child: Text(
-                  _post.title,
-                  style: AppTheme.textStyleAccent(
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 20),
-                  ),
-                )),
+              constraints: const BoxConstraints(minHeight: 100),
+              child: Text(
+                _post.title,
+                style: AppTheme.textStyleAccent(
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 20),
+                ),
+              ),
+            ),
             AuthorInfo(_post.author)
           ],
         ),
