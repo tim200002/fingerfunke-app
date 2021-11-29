@@ -2,6 +2,7 @@ import 'package:fingerfunke_app/common_widgets/user/author_info.dart';
 import 'package:fingerfunke_app/models/message/message.dart';
 import 'package:fingerfunke_app/models/user/user.dart';
 import 'package:fingerfunke_app/utils/dev_tools.dart';
+import 'package:fingerfunke_app/view/comment_feed/comment_feed.dart';
 import 'package:fingerfunke_app/view/fullscreen_video/view/fullscreen_video_page.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +11,6 @@ class VideoComment extends StatelessWidget {
   const VideoComment(this.message, {Key? key}) : super(key: key);
 
   static const double _commentPadding = 8;
-  static const double _commentHeight = 120;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class VideoComment extends StatelessWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: SizedBox(
-            height: _commentHeight,
+            height: CommentFeed.commentHeight,
             child: Stack(
               children: [
                 DevTools.placeholder("Video Comment", dark: true),

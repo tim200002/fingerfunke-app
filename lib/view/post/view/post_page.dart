@@ -1,4 +1,3 @@
-import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:fingerfunke_app/utils/dev_tools.dart';
 import 'package:fingerfunke_app/utils/util_widgets/page_screen.dart';
 import 'package:fingerfunke_app/view/post/cubit/post_cubit.dart';
@@ -11,7 +10,7 @@ class PostPage extends StatelessWidget {
 
   static const List<BoxShadow> _cardShadow = [
     BoxShadow(
-        color: Color(0xff6161616), //Colors.grey[700]!,
+        color: Color(0xFF919191),
         offset: Offset(0, 3),
         spreadRadius: -2,
         blurRadius: 7)
@@ -44,7 +43,6 @@ class PostPage extends StatelessWidget {
       appBar: AppBar(leading: _closeButton(context)),
       extendBodyBehindAppBar: true,
       headerHeight: 200,
-      sidePadding: 0,
       roundedBody: false,
       roundedHeader: false,
       header: DevTools.placeholder("Video"),
@@ -54,7 +52,7 @@ class PostPage extends StatelessWidget {
           create: (_) => PostCubit(postId),
           child: Builder(builder: (context) {
             return AnimatedSwitcher(
-              duration: Duration(milliseconds: 100),
+              duration: const Duration(milliseconds: 100),
               child: BlocBuilder<PostCubit, PostState>(
                 builder: (context, state) => state.when(
                   loading: () => const Center(
