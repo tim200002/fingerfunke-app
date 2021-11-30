@@ -24,11 +24,14 @@ class CommentFeedWithEditor extends StatelessWidget {
         ),
         BlocBuilder<AuthenticationCubit, AuthenticationState>(
           builder: (context, state) => state.maybeWhen(
-              signedIn: (_) => Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: CommentEditor(_postId),
-                  ),
-              orElse: () => Container()),
+            signedIn: (_) => Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: CommentEditor(_postId),
+            ),
+            orElse: () => const Center(
+              child: Text("You can only send messages when you are logged in"),
+            ),
+          ),
         )
       ],
     );
