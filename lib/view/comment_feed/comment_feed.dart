@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:fingerfunke_app/utils/type_aliases.dart';
 
 class CommentFeed extends StatelessWidget {
+  static const double commentHeight = 120;
   const CommentFeed(this._postId, {Key? key}) : super(key: key);
 
   final FirestoreId _postId;

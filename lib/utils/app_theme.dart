@@ -31,5 +31,5 @@ class AppTheme {
       GoogleFonts.calistoga(textStyle: style);
 
   // ignore: constant_identifier_names
-  static const double PADDING_SIDE = 20;
+  static const double PADDING_SIDE = 12;
 }
