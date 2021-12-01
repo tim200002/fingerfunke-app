@@ -17,6 +17,7 @@ class PostFeedView extends StatelessWidget {
           post,
         ),
         reverse: false,
+        endMessage: "there are no more events",
       ),
     );
   }
