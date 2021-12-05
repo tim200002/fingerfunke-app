@@ -1,4 +1,6 @@
+import 'package:fingerfunke_app/common_widgets/helper_widgets.dart';
 import 'package:fingerfunke_app/utils/dev_tools.dart';
+import 'package:fingerfunke_app/view/video_recorder/view/video_recorder_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -53,17 +55,22 @@ class PEInfoSection extends StatelessWidget {
   }
 
   Widget _mediaSection(BuildContext context) {
-    return Container(
-      width: 125,
-      height: 210,
-      decoration: BoxDecoration(
-        color: Colors.teal.shade100,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Center(
-        child: Text("TODO:\nPostVideo"),
-      ),
-    );
+    return InkWell(
+        onTap: () => Navigator.push(context, VideoRecorderPage.route()),
+        child: HelperWidgets.materialHero(
+          tag: VideoRecorderPage.video_hero_tag,
+          child: Container(
+            width: 125,
+            height: 210,
+            decoration: BoxDecoration(
+              color: Colors.teal.shade100,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: const Center(
+              child: Text("TODO:\nPostVideo"),
+            ),
+          ),
+        ));
   }
 
   Widget _eventInfo(BuildContext context) {

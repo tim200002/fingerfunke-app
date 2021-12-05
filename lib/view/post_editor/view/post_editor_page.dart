@@ -1,5 +1,5 @@
 import 'package:fingerfunke_app/utils/dev_tools.dart';
-import 'package:fingerfunke_app/view/post_editor/pe_info_section.dart';
+import 'package:fingerfunke_app/view/post_editor/view/pe_info_section.dart';
 import 'package:flutter/material.dart';
 
 const TITLE_MAX_CHARACTERS = 160;

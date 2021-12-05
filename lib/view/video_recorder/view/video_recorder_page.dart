@@ -1,0 +1,56 @@
+import 'package:fingerfunke_app/common_widgets/helper_widgets.dart';
+import 'package:fingerfunke_app/utils/dev_tools.dart';
+import 'package:flutter/material.dart';
+
+class VideoRecorderPage extends StatelessWidget {
+  static const video_hero_tag = "video_recorder_video";
+
+  const VideoRecorderPage({Key? key}) : super(key: key);
+
+  static Route route({Key? key}) {
+    return MaterialPageRoute<void>(
+        builder: (_) => VideoRecorderPage(key: key),
+        settings: const RouteSettings(name: "VideoEditor"));
+  }
+
+  Widget _cameraView(BuildContext context) {
+    return DevTools.placeholder(
+      "Video Recorder",
+      color: Colors.teal.shade100,
+    );
+  }
+
+  Widget _recordButton(BuildContext context) {
+    return InkWell(
+        onTap: () => DevTools.showToDoSnackbar(context),
+        child: Container(
+            padding: EdgeInsets.all(17),
+            decoration: BoxDecoration(
+                color: Colors.red, borderRadius: BorderRadius.circular(50)),
+            child: Icon(
+              Icons.camera_rounded,
+              color: Colors.white,
+            )));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return HelperWidgets.materialHero(
+        tag: video_hero_tag,
+        child: Scaffold(
+          appBar: AppBar(
+              leading: IconButton(
+                  icon: const Icon(Icons.close_rounded),
+                  onPressed: () => Navigator.of(context).pop())),
+          extendBodyBehindAppBar: true,
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerFloat,
+          floatingActionButton: _recordButton(context),
+          body: Stack(
+            children: [
+              _cameraView(context),
+            ],
+          ),
+        ));
+  }
+}
