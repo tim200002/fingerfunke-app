@@ -14,8 +14,10 @@ class MyAccountPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return PageScreen(
       appBar: AppBar(
-        title: const Text("Mein Account"),
-      ),
+          title: const Text("Mein Account"),
+          leading: IconButton(
+              onPressed: () => Navigator.of(context).pop(),
+              icon: const Icon(Icons.close))),
       body: BlocBuilder<AuthenticationCubit, AuthenticationState>(
         builder: (context, state) => state.maybeWhen(
             signedIn: (_) => ListView(
@@ -36,7 +38,7 @@ class MyAccountPage extends StatelessWidget {
 }
 
 class _ProfileSection extends StatelessWidget {
-  static const double userImageSize = 70;
+  static const double userImageSize = 65;
   const _ProfileSection({
     Key? key,
   }) : super(key: key);
