@@ -15,13 +15,12 @@ enum asset_state { processing, ready }
 class Asset extends UserGeneratedDocument {
   final asset_type type;
   final asset_state state;
-  final String? assetId;
+  
 
   const Asset(
       {required FirestoreId id,
       required UserInfo author,
       required DateTime creationTime,
-      this.assetId,
       required this.type,
       required this.state})
       : super(id: id, author: author, creationTime: creationTime);
@@ -37,7 +36,7 @@ class Asset extends UserGeneratedDocument {
 
 @JsonSerializable(explicitToJson: true)
 class VideoAsset extends Asset {
-  final String assetId;
+  final String? assetId;
   const VideoAsset(
       {required FirestoreId id,
       required UserInfo author,

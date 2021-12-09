@@ -36,7 +36,7 @@ VideoAsset _$VideoAssetFromJson(Map<String, dynamic> json) => VideoAsset(
       id: json['id'] as String,
       author: UserInfo.fromJson(json['author'] as Map<String, dynamic>),
       creationTime: dateFromJson(json['creationTime'] as int),
-      assetId: json['id'] as String,
+      assetId: json['assetId'] as String?,
       state: $enumDecode(_$asset_stateEnumMap, json['state']),
     );
 

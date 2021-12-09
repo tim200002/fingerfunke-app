@@ -21,10 +21,10 @@ class VideoRepositoryImpl implements VideoRepository {
       }
 
   @override
-  Future<Map<String, dynamic>> createVideoAsset() async {
+  Future<Map<String, dynamic>> createVideoAsset(UserInfo author) async {
     // ToDo Error Handling
     HttpsCallable callable = _functions.httpsCallable('mux-createMuxAsset');
-    final results = await callable({'author': UserInfo(id: "test", name: "test").toJson()});
+    final results = await callable({'author': author.toJson()});
     return results.data;
   }
 
@@ -56,5 +56,10 @@ class VideoRepositoryImpl implements VideoRepository {
   @override
   Stream<VideoAsset> subscribeToTemporaryAsset(String id){
       return _temporaryCollection.doc(id).snapshots().map((documentSnapshot) => VideoAsset.fromDoc(documentSnapshot));
+  }
+
+  @override
+  Future<void> deleteTemporaryAsset(String id) {
+    return _temporaryCollection.doc(id).delete();
   }
 }
