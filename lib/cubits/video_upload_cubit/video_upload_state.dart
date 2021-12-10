@@ -6,5 +6,5 @@ class VideoUploadState with _$VideoUploadState {
   const factory VideoUploadState.uploading(Uint8List? thumbnail) = _Uploading;
   const factory VideoUploadState.processing(Uint8List? thumbnail) = _Processing;
   const factory VideoUploadState.uploaded(Uint8List? thumbnail, VideoAsset asset) = _Uploaded;
-  const factory VideoUploadState.error(Object error) = _Error;
+  const factory VideoUploadState.error(Uint8List? thumbnail,Object error) = _Error;
 }

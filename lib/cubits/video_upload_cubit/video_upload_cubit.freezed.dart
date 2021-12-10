@@ -40,8 +40,9 @@ class _$VideoUploadStateTearOff {
     );
   }
 
-  _Error error(Object error) {
+  _Error error(Uint8List? thumbnail, Object error) {
     return _Error(
+      thumbnail,
       error,
     );
   }
@@ -58,7 +59,7 @@ mixin _$VideoUploadState {
     required TResult Function(Uint8List? thumbnail) uploading,
     required TResult Function(Uint8List? thumbnail) processing,
     required TResult Function(Uint8List? thumbnail, VideoAsset asset) uploaded,
-    required TResult Function(Object error) error,
+    required TResult Function(Uint8List? thumbnail, Object error) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -67,7 +68,7 @@ mixin _$VideoUploadState {
     TResult Function(Uint8List? thumbnail)? uploading,
     TResult Function(Uint8List? thumbnail)? processing,
     TResult Function(Uint8List? thumbnail, VideoAsset asset)? uploaded,
-    TResult Function(Object error)? error,
+    TResult Function(Uint8List? thumbnail, Object error)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -76,7 +77,7 @@ mixin _$VideoUploadState {
     TResult Function(Uint8List? thumbnail)? uploading,
     TResult Function(Uint8List? thumbnail)? processing,
     TResult Function(Uint8List? thumbnail, VideoAsset asset)? uploaded,
-    TResult Function(Object error)? error,
+    TResult Function(Uint8List? thumbnail, Object error)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -169,7 +170,7 @@ class _$_Initial implements _Initial {
     required TResult Function(Uint8List? thumbnail) uploading,
     required TResult Function(Uint8List? thumbnail) processing,
     required TResult Function(Uint8List? thumbnail, VideoAsset asset) uploaded,
-    required TResult Function(Object error) error,
+    required TResult Function(Uint8List? thumbnail, Object error) error,
   }) {
     return initial();
   }
@@ -181,7 +182,7 @@ class _$_Initial implements _Initial {
     TResult Function(Uint8List? thumbnail)? uploading,
     TResult Function(Uint8List? thumbnail)? processing,
     TResult Function(Uint8List? thumbnail, VideoAsset asset)? uploaded,
-    TResult Function(Object error)? error,
+    TResult Function(Uint8List? thumbnail, Object error)? error,
   }) {
     return initial?.call();
   }
@@ -193,7 +194,7 @@ class _$_Initial implements _Initial {
     TResult Function(Uint8List? thumbnail)? uploading,
     TResult Function(Uint8List? thumbnail)? processing,
     TResult Function(Uint8List? thumbnail, VideoAsset asset)? uploaded,
-    TResult Function(Object error)? error,
+    TResult Function(Uint8List? thumbnail, Object error)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -315,7 +316,7 @@ class _$_Uploading implements _Uploading {
     required TResult Function(Uint8List? thumbnail) uploading,
     required TResult Function(Uint8List? thumbnail) processing,
     required TResult Function(Uint8List? thumbnail, VideoAsset asset) uploaded,
-    required TResult Function(Object error) error,
+    required TResult Function(Uint8List? thumbnail, Object error) error,
   }) {
     return uploading(thumbnail);
   }
@@ -327,7 +328,7 @@ class _$_Uploading implements _Uploading {
     TResult Function(Uint8List? thumbnail)? uploading,
     TResult Function(Uint8List? thumbnail)? processing,
     TResult Function(Uint8List? thumbnail, VideoAsset asset)? uploaded,
-    TResult Function(Object error)? error,
+    TResult Function(Uint8List? thumbnail, Object error)? error,
   }) {
     return uploading?.call(thumbnail);
   }
@@ -339,7 +340,7 @@ class _$_Uploading implements _Uploading {
     TResult Function(Uint8List? thumbnail)? uploading,
     TResult Function(Uint8List? thumbnail)? processing,
     TResult Function(Uint8List? thumbnail, VideoAsset asset)? uploaded,
-    TResult Function(Object error)? error,
+    TResult Function(Uint8List? thumbnail, Object error)? error,
     required TResult orElse(),
   }) {
     if (uploading != null) {
@@ -467,7 +468,7 @@ class _$_Processing implements _Processing {
     required TResult Function(Uint8List? thumbnail) uploading,
     required TResult Function(Uint8List? thumbnail) processing,
     required TResult Function(Uint8List? thumbnail, VideoAsset asset) uploaded,
-    required TResult Function(Object error) error,
+    required TResult Function(Uint8List? thumbnail, Object error) error,
   }) {
     return processing(thumbnail);
   }
@@ -479,7 +480,7 @@ class _$_Processing implements _Processing {
     TResult Function(Uint8List? thumbnail)? uploading,
     TResult Function(Uint8List? thumbnail)? processing,
     TResult Function(Uint8List? thumbnail, VideoAsset asset)? uploaded,
-    TResult Function(Object error)? error,
+    TResult Function(Uint8List? thumbnail, Object error)? error,
   }) {
     return processing?.call(thumbnail);
   }
@@ -491,7 +492,7 @@ class _$_Processing implements _Processing {
     TResult Function(Uint8List? thumbnail)? uploading,
     TResult Function(Uint8List? thumbnail)? processing,
     TResult Function(Uint8List? thumbnail, VideoAsset asset)? uploaded,
-    TResult Function(Object error)? error,
+    TResult Function(Uint8List? thumbnail, Object error)? error,
     required TResult orElse(),
   }) {
     if (processing != null) {
@@ -624,7 +625,7 @@ class _$_Uploaded implements _Uploaded {
     required TResult Function(Uint8List? thumbnail) uploading,
     required TResult Function(Uint8List? thumbnail) processing,
     required TResult Function(Uint8List? thumbnail, VideoAsset asset) uploaded,
-    required TResult Function(Object error) error,
+    required TResult Function(Uint8List? thumbnail, Object error) error,
   }) {
     return uploaded(thumbnail, asset);
   }
@@ -636,7 +637,7 @@ class _$_Uploaded implements _Uploaded {
     TResult Function(Uint8List? thumbnail)? uploading,
     TResult Function(Uint8List? thumbnail)? processing,
     TResult Function(Uint8List? thumbnail, VideoAsset asset)? uploaded,
-    TResult Function(Object error)? error,
+    TResult Function(Uint8List? thumbnail, Object error)? error,
   }) {
     return uploaded?.call(thumbnail, asset);
   }
@@ -648,7 +649,7 @@ class _$_Uploaded implements _Uploaded {
     TResult Function(Uint8List? thumbnail)? uploading,
     TResult Function(Uint8List? thumbnail)? processing,
     TResult Function(Uint8List? thumbnail, VideoAsset asset)? uploaded,
-    TResult Function(Object error)? error,
+    TResult Function(Uint8List? thumbnail, Object error)? error,
     required TResult orElse(),
   }) {
     if (uploaded != null) {
@@ -712,7 +713,7 @@ abstract class _Uploaded implements VideoUploadState {
 abstract class _$ErrorCopyWith<$Res> {
   factory _$ErrorCopyWith(_Error value, $Res Function(_Error) then) =
       __$ErrorCopyWithImpl<$Res>;
-  $Res call({Object error});
+  $Res call({Uint8List? thumbnail, Object error});
 }
 
 /// @nodoc
@@ -726,9 +727,14 @@ class __$ErrorCopyWithImpl<$Res> extends _$VideoUploadStateCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? thumbnail = freezed,
     Object? error = freezed,
   }) {
     return _then(_Error(
+      thumbnail == freezed
+          ? _value.thumbnail
+          : thumbnail // ignore: cast_nullable_to_non_nullable
+              as Uint8List?,
       error == freezed
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -740,14 +746,16 @@ class __$ErrorCopyWithImpl<$Res> extends _$VideoUploadStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Error implements _Error {
-  const _$_Error(this.error);
+  const _$_Error(this.thumbnail, this.error);
 
+  @override
+  final Uint8List? thumbnail;
   @override
   final Object error;
 
   @override
   String toString() {
-    return 'VideoUploadState.error(error: $error)';
+    return 'VideoUploadState.error(thumbnail: $thumbnail, error: $error)';
   }
 
   @override
@@ -755,12 +763,14 @@ class _$_Error implements _Error {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _Error &&
+            (identical(other.thumbnail, thumbnail) ||
+                other.thumbnail == thumbnail) &&
             const DeepCollectionEquality().equals(other.error, error));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(error));
+  int get hashCode => Object.hash(
+      runtimeType, thumbnail, const DeepCollectionEquality().hash(error));
 
   @JsonKey(ignore: true)
   @override
@@ -774,9 +784,9 @@ class _$_Error implements _Error {
     required TResult Function(Uint8List? thumbnail) uploading,
     required TResult Function(Uint8List? thumbnail) processing,
     required TResult Function(Uint8List? thumbnail, VideoAsset asset) uploaded,
-    required TResult Function(Object error) error,
+    required TResult Function(Uint8List? thumbnail, Object error) error,
   }) {
-    return error(this.error);
+    return error(thumbnail, this.error);
   }
 
   @override
@@ -786,9 +796,9 @@ class _$_Error implements _Error {
     TResult Function(Uint8List? thumbnail)? uploading,
     TResult Function(Uint8List? thumbnail)? processing,
     TResult Function(Uint8List? thumbnail, VideoAsset asset)? uploaded,
-    TResult Function(Object error)? error,
+    TResult Function(Uint8List? thumbnail, Object error)? error,
   }) {
-    return error?.call(this.error);
+    return error?.call(thumbnail, this.error);
   }
 
   @override
@@ -798,11 +808,11 @@ class _$_Error implements _Error {
     TResult Function(Uint8List? thumbnail)? uploading,
     TResult Function(Uint8List? thumbnail)? processing,
     TResult Function(Uint8List? thumbnail, VideoAsset asset)? uploaded,
-    TResult Function(Object error)? error,
+    TResult Function(Uint8List? thumbnail, Object error)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error(this.error);
+      return error(thumbnail, this.error);
     }
     return orElse();
   }
@@ -849,8 +859,9 @@ class _$_Error implements _Error {
 }
 
 abstract class _Error implements VideoUploadState {
-  const factory _Error(Object error) = _$_Error;
+  const factory _Error(Uint8List? thumbnail, Object error) = _$_Error;
 
+  Uint8List? get thumbnail;
   Object get error;
   @JsonKey(ignore: true)
   _$ErrorCopyWith<_Error> get copyWith => throw _privateConstructorUsedError;

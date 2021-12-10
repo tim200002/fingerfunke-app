@@ -24,10 +24,11 @@ class PostEditorPage extends StatelessWidget {
                     return const Text("Loading Video");
                   } else {
                     return VideoUploadTile(
-                      snapshot.data as File,
-                      currentUser,
-                      width: 100,
-                      height: 100,
+                      video: snapshot.data as File,
+                      author: currentUser,
+                      onAbort: (){},
+                      width: 200,
+                      height: 200,
                     );
                   }
                 },
