@@ -10,6 +10,7 @@ import 'package:fingerfunke_app/repositories/video_repository/video_repository.d
 import 'package:fingerfunke_app/repositories/video_repository/video_repository.impl.dart';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:uuid/uuid.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
 part 'video_upload_state.dart';
@@ -19,6 +20,7 @@ class VideoUploadCubit extends Cubit<VideoUploadState> {
   final UserInfo author;
   final VideoRepository _videoRepository = VideoRepositoryImpl();
   final File video;
+  final String id = const Uuid().v4();
   CancelToken? _cancelToken;
   StreamSubscription<VideoAsset>? _assetSubscription;
   Uint8List? thumbnail;
@@ -27,18 +29,22 @@ class VideoUploadCubit extends Cubit<VideoUploadState> {
   VideoUploadCubit(this.video, this.author)
       : super(const VideoUploadState.initial()) {
     createThumbnail();
-    //uploadVideo();
-    emit(VideoUploadState.error(thumbnail, Exception()));
+    uploadVideo();
   }
 
   Future<void> uploadVideo() async {
-    if (_canUploadVideo()) {
-      // To not create new assets when only the upload failed the upload url and asssetId are cached
-      if (uploadUrl == null || assetId == null) {
-        await _createAsset();
+    try{
+      if (_canUploadVideo()) {
+        // To not create new assets when only the upload failed the upload url and asssetId are cached
+        if (uploadUrl == null || assetId == null) {
+          await _createAsset();
+        }
+        _uploadVideoToMux();
       }
-      _uploadVideoToMux();
+    }catch(err){
+      emit(VideoUploadState.error(thumbnail, err));
     }
+    
   }
 
   @override
@@ -90,7 +96,16 @@ class VideoUploadCubit extends Cubit<VideoUploadState> {
       _cancelToken = null;
       completer.complete();
     }).catchError((error, stackTrace) {
-      completer.completeError(error, stackTrace);
+      if(error is DioError){
+        if(error.type == DioErrorType.cancel){
+           print("dio request has been sucessfully canceled");
+        }else{
+          completer.completeError(error, stackTrace);
+        }
+      }else{
+        completer.completeError(error, stackTrace);
+      }
+      
     });
     return completer.future;
   }
@@ -119,8 +134,7 @@ class VideoUploadCubit extends Cubit<VideoUploadState> {
           uploading: (state) => emit(state.copyWith(thumbnail: thumbnail)),
           processing: (state) => emit(state.copyWith(thumbnail: thumbnail)),
           uploaded: (state) => emit(state.copyWith(thumbnail: thumbnail)),
-          error: (state) => emit(state.copyWith(thumbnail: thumbnail))
-          );
+          error: (state) => emit(state.copyWith(thumbnail: thumbnail)));
     }).catchError(
       (err) => print("Could not create thumbnail for video"),
     );

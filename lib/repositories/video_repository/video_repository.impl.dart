@@ -15,10 +15,13 @@ class VideoRepositoryImpl implements VideoRepository {
   late final CollectionReference _temporaryCollection;
   final _dio = Dio();
 
-  VideoRepositoryImpl({FirebaseFunctions? functions, FirebaseFirestore? firestore})
-      : _functions = functions ?? FirebaseFunctions.instanceFor(region: 'europe-west3'), _firestore = firestore??FirebaseFirestore.instance{
-        _temporaryCollection = _firestore.collection('temporary_assets');
-      }
+  VideoRepositoryImpl(
+      {FirebaseFunctions? functions, FirebaseFirestore? firestore})
+      : _functions =
+            functions ?? FirebaseFunctions.instanceFor(region: 'europe-west3'),
+        _firestore = firestore ?? FirebaseFirestore.instance {
+    _temporaryCollection = _firestore.collection('temporary_assets');
+  }
 
   @override
   Future<Map<String, dynamic>> createVideoAsset(UserInfo author) async {
@@ -43,8 +46,8 @@ class VideoRepositoryImpl implements VideoRepository {
         data: file.openRead(),
         cancelToken: token,
         options: options, onSendProgress: (int sent, int total) {
-      streamController.add(((sent / total)*100).toInt());
-      print(((sent / total)*100).toInt());
+      streamController.add(((sent / total) * 100).toInt());
+      print(((sent / total) * 100).toInt());
     });
 
     return VideoUploadResponse(
@@ -52,10 +55,13 @@ class VideoRepositoryImpl implements VideoRepository {
         progress: streamController.stream,
         cancelToke: token);
   }
-  
+
   @override
-  Stream<VideoAsset> subscribeToTemporaryAsset(String id){
-      return _temporaryCollection.doc(id).snapshots().map((documentSnapshot) => VideoAsset.fromDoc(documentSnapshot));
+  Stream<VideoAsset> subscribeToTemporaryAsset(String id) {
+    return _temporaryCollection
+        .doc(id)
+        .snapshots()
+        .map((documentSnapshot) => VideoAsset.fromDoc(documentSnapshot));
   }
 
   @override

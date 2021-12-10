@@ -7,17 +7,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class VideoUploadTile extends StatelessWidget {
-  final File video;
-  final UserInfo author;
-  final Function onAbort;
+  final Function(String) onAbort;
   final double height;
   final double width;
+
+  final VideoUploadCubit cubit;
 
   static const double abortButtonRadius = 20;
 
   const VideoUploadTile(
-      {required this.video,
-      required this.author,
+      {
+      required this.cubit,
       required this.onAbort,
       required this.width,
       required this.height,
@@ -31,7 +31,7 @@ class VideoUploadTile extends StatelessWidget {
         radius: abortButtonRadius,
         backgroundColor: Colors.redAccent,
         child: IconButton(
-          onPressed: () => onAbort(),
+          onPressed: () => onAbort(cubit.id),
           icon: const Icon(
             Icons.close,
           ),
@@ -88,13 +88,12 @@ class VideoUploadTile extends StatelessWidget {
         children: [
           getImage(thumbnail),
           IconButton(
-            iconSize: min(height, width)/2,
+            iconSize: min(height, width) / 2,
             icon: const Icon(
               Icons.restart_alt,
             ),
             color: Colors.redAccent,
-            onPressed: () =>
-                BlocProvider.of<VideoUploadCubit>(context).uploadVideo(),
+            onPressed: () => cubit.uploadVideo(),
           ),
           abortButton()
         ],
@@ -104,17 +103,14 @@ class VideoUploadTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => VideoUploadCubit(video, author),
-      child: Builder(
-        builder: (context) => BlocBuilder<VideoUploadCubit, VideoUploadState>(
-            builder: (context, state) => state.when(
-                  initial: () => loadingTile(null),
-                  uploading: (thumb) => loadingTile(thumb),
-                  processing: (thumb) => loadingTile(thumb),
-                  uploaded: (thumb, _) => uploadedTile(thumb),
-                  error: (thumb, error) => errorTile(thumb, context),
-                )),
+    return BlocBuilder<VideoUploadCubit, VideoUploadState>(
+      bloc: cubit,
+      builder: (context, state) => state.when(
+        initial: () => loadingTile(null),
+        uploading: (thumb) => loadingTile(thumb),
+        processing: (thumb) => loadingTile(thumb),
+        uploaded: (thumb, _) => uploadedTile(thumb),
+        error: (thumb, error) => errorTile(thumb, context),
       ),
     );
   }
