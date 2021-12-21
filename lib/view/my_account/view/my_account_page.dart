@@ -24,12 +24,17 @@ class MyAccountPage extends StatelessWidget {
                   children: const [
                     _ProfileSection(),
                     _AccountSection(),
+                    _AppSettingsSection(),
                     _InfoSection(),
                     _DevToolsSection()
                   ],
                 ),
             signedInAnonymously: () => ListView(
-                  children: const [_AccountSection()],
+                  children: const [
+                    _AccountSection(),
+                    _AppSettingsSection(),
+                    _InfoSection(),
+                  ],
                 ),
             orElse: () => ErrorWidget(InvalidStateException())),
       ),
@@ -128,7 +133,9 @@ class _InfoSection extends StatelessWidget {
         SettingsTile(
             title: "Lizenzen",
             leading: const Icon(Icons.gavel_outlined),
-            onPressed: (context) {}),
+            onPressed: (context) {
+              Navigator.of(context).pushNamed("/licenses");
+            }),
       ],
     );
   }
@@ -177,6 +184,27 @@ class _DevToolsSection extends StatelessWidget {
             Navigator.of(context).pushNamed("/developementUtils");
           },
         ),
+      ],
+    );
+  }
+}
+
+class _AppSettingsSection extends StatelessWidget {
+  const _AppSettingsSection({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return _SettingsSection(
+      title: "App",
+      tiles: [
+        SettingsTile(
+            title: "Einstellungen",
+            leading: const Icon(Icons.settings),
+            onPressed: (context) {
+              Navigator.of(context).pushNamed("/settings");
+            }),
       ],
     );
   }
