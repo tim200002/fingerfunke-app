@@ -1,4 +1,6 @@
+import 'package:fingerfunke_app/view/my_account/subpages/licenses/view/oss_licenses_page.dart';
 import 'package:fingerfunke_app/view/my_account/subpages/manage_account/view/manage_account_page.dart';
+import 'package:fingerfunke_app/view/my_account/subpages/settings/view/settings_page.dart';
 import 'package:fingerfunke_app/view/my_account/subpages/view/developement_util_functions_page.dart';
 import 'package:fingerfunke_app/view/my_account/view/my_account_page.dart';
 import 'package:fingerfunke_app/view/post_editor/post_editor_page.dart';
@@ -15,6 +17,8 @@ const postRoute = "/post";
 const manageAccountRoute = "/manageAccount";
 const postEditorRoute = "/create";
 const developementUtilsRoute = "/developementUtils";
+const licensesRoute = "/licenses";
+const settingsRoute = "/settings";
 
 final routes = {
   savedRoute: (context) => const SavedPage(),
@@ -22,5 +26,7 @@ final routes = {
   manageAccountRoute: (context) => const ManageAccountPage(),
   postEditorRoute: (context) => const PostEditorPage(),
   postRoute: (context) => const PostPage(),
-  developementUtilsRoute: (context) => const DevelopementUtilFunctionsPage()
+  developementUtilsRoute: (context) => const DevelopementUtilFunctionsPage(),
+  licensesRoute: (context) =>  const OssLicensesPage(),
+  settingsRoute: (context) => const SettingsPage()
 };
