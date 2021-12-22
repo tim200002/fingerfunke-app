@@ -59,9 +59,7 @@ class HomeView extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        onPressed: () => ExceptionView.navigate(context,
-            exception: Exception(
-                "Hello")), //Navigator.pushNamed(context, postEditorRoute),
+        onPressed: () => Navigator.pushNamed(context, postEditorRoute),
         child: const Icon(Icons.add_rounded),
       ),
       bottomNavigationBar: BottomAppBar(

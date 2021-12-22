@@ -1,59 +1,83 @@
-import 'package:fingerfunke_app/app.dart';
-import 'package:fingerfunke_app/view/error/technical_view.dart';
 import 'package:flutter/material.dart';
 
-class ExceptionView extends StatelessWidget {
-  final Exception exception;
-  const ExceptionView({Key? key, required this.exception}) : super(key: key);
+part 'widgets/technical_view.dart';
 
+class ExceptionView extends StatelessWidget {
+  final Object exception;
+  final StackTrace? trace;
+  final bool closable;
+
+  /// This is a widget for displaying a general error to the user
+  ///
+  /// A custom error object [exception] needs to be supplied. Additionally,
+  /// a [trace] of what happend can be appended. When displaying the Widget as
+  /// it's own page, you might want to enable the [closable] flag which allows
+  /// 'pop'-ing the widget if the current context allows.
+  const ExceptionView(
+      {Key? key, required this.exception, this.trace, this.closable = false})
+      : super(key: key);
+
+  /// Route to the ExceptionView widget on a seperate page
+  ///
+  /// Note: When using this function, the [closable] flag is true by default,
+  /// since the widget will be pushed to the navigation stack
   static void navigate(BuildContext context,
-      {required Exception exception, bool closable = true}) {
+      {required Object exception, StackTrace? trace, bool closable = true}) {
     Navigator.of(context).push(MaterialPageRoute<void>(
-        builder: (ctx) => Scaffold(
-            appBar: closable && Navigator.of(context).canPop()
-                ? AppBar(
-                    leading: IconButton(
-                        onPressed: () => Navigator.of(ctx).pop(),
-                        icon: const Icon(Icons.close_rounded)),
-                  )
-                : null,
-            body: ExceptionView(
+        builder: (ctx) => ExceptionView(
               exception: exception,
-            ))));
+              trace: trace,
+              closable: closable,
+            )));
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-              padding: const EdgeInsets.symmetric(vertical: 50),
-              child: Center(
-                child: Image.asset(
-                    "assets/img/illustrations/undraw/undraw_fixing_bugs.png",
-                    height: 150),
-              )),
-          Text("Oh no :/",
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headline3),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            "Ein unerwarteter Fehler ist aufgetreten.\n Wir haben den Fehler erfasst und machen uns gleich an die Arbeit",
-            textAlign: TextAlign.center,
-            //style: Theme.of(context).textTheme.headline3
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          TechnicalExceptionView(exception: exception)
-        ],
-      ),
-    );
+    final bool showClose = closable && Navigator.of(context).canPop();
+    return Scaffold(
+        appBar: AppBar(
+          //title: Text("😳"),
+          leading: showClose
+              ? IconButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  icon: const Icon(Icons.close_rounded))
+              : null,
+        ),
+        extendBodyBehindAppBar: true,
+        body: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: SingleChildScrollView(
+              child: Column(
+                //mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Padding(
+                      padding: const EdgeInsets.only(top: 140, bottom: 60),
+                      child: Center(
+                        child: Image.asset(
+                            "assets/img/illustrations/undraw/undraw_fixing_bugs.png",
+                            height: 150),
+                      )),
+                  Text("Oh no :/",
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.headline3),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Text(
+                    "Ein unerwarteter Fehler ist aufgetreten.\n Wir haben den Fehler erfasst und machen uns gleich an die Arbeit",
+                    textAlign: TextAlign.center,
+                    //style: Theme.of(context).textTheme.headline3
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  _TechnicalExceptionView(
+                    exception: exception,
+                    trace: trace,
+                  ),
+                ],
+              ),
+            )));
   }
 }
