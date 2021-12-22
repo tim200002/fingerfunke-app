@@ -28,7 +28,10 @@ class PostEditorPage extends StatelessWidget {
 
   Widget _success(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(), body: DevTools.placeholder("pop this view"));
+        appBar: AppBar(),
+        body: const Center(
+          child: Text("Post erstellt!"),
+        ));
   }
 
   Widget _error(BuildContext context) {
@@ -53,10 +56,12 @@ class PostEditorPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<PostEditorCubit>(
       create: (context) => PostEditorCubit(),
-      child: BlocBuilder<PostEditorCubit, PostEditorState>(
+      child: BlocConsumer<PostEditorCubit, PostEditorState>(
+          listener: (context, state) =>
+              state.whenOrNull(submitted: () => Navigator.of(context).pop()),
           builder: (context, state) => state.when(
               loading: () => _loading(context, message: "loading"),
-              editing: (post) => PostEditingView(post: post),
+              editing: (post, _) => PostEditingView(post: post),
               error: (message) => _error(context),
               submitted: () => _success(context),
               submitting: () => _loading(context, message: "submitting"))),

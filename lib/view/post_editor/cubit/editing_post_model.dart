@@ -4,6 +4,9 @@ import 'package:fingerfunke_app/utils/type_aliases.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+/// extension on DateTime to allow easier setting of its date
+/// and time indipendently. Additionally offers simple conversions into
+/// formatted strings
 extension FDateTime on DateTime {
   static DateFormat dateFormat = DateFormat("dd.MM.yyyy");
   static DateFormat timeFormat = DateFormat("HH:mm");
@@ -20,6 +23,8 @@ extension FDateTime on DateTime {
   TimeOfDay get timeOfDay => TimeOfDay.fromDateTime(this);
 }
 
+/// class to be used for creating posts with the post editor.
+/// Has to be kept in sync with the actual post class
 class EditingPost {
   final FirestoreId? id;
   final UserInfo? author;
@@ -35,6 +40,8 @@ class EditingPost {
   final String? recTime;
   final DateTime eveTime;
 
+  /// create an editable post. Note that this holds data for both
+  /// Event and Recurrent to allow easier conversion
   EditingPost(
       {this.id,
       this.author,
@@ -55,6 +62,7 @@ class EditingPost {
         this.descriptionController =
             descriptionController ?? TextEditingController(text: description);
 
+  // check if the instance can be converted into a [Post] object
   bool _isValidPost() {
     return id != null &&
         author != null &&
@@ -67,12 +75,19 @@ class EditingPost {
     //maybe check if media empty
   }
 
+  // check if the instance can be converted into a [Event] object
   bool _isValidEvent() {
     return id != null && eveTime != null;
   }
 
+  // check if the instance can be converted into a [Recurrent] object
   bool _isValidRecurrent() {
     return _isValidPost() && recTime != null;
+  }
+
+  // check if the instance is valid regarding to the selected post type
+  bool isValid() {
+    return isEvent ? _isValidEvent() : _isValidRecurrent();
   }
 
   bool get isEvent => type == post_type.event;

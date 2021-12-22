@@ -21,9 +21,10 @@ class _$PostEditorStateTearOff {
     return const _Loading();
   }
 
-  _Editing editing(EditingPost post) {
+  _Editing editing(EditingPost post, bool invalid) {
     return _Editing(
       post,
+      invalid,
     );
   }
 
@@ -50,7 +51,7 @@ mixin _$PostEditorState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(EditingPost post) editing,
+    required TResult Function(EditingPost post, bool invalid) editing,
     required TResult Function() submitting,
     required TResult Function() submitted,
     required TResult Function(String message) error,
@@ -59,7 +60,7 @@ mixin _$PostEditorState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(EditingPost post)? editing,
+    TResult Function(EditingPost post, bool invalid)? editing,
     TResult Function()? submitting,
     TResult Function()? submitted,
     TResult Function(String message)? error,
@@ -68,7 +69,7 @@ mixin _$PostEditorState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(EditingPost post)? editing,
+    TResult Function(EditingPost post, bool invalid)? editing,
     TResult Function()? submitting,
     TResult Function()? submitted,
     TResult Function(String message)? error,
@@ -161,7 +162,7 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(EditingPost post) editing,
+    required TResult Function(EditingPost post, bool invalid) editing,
     required TResult Function() submitting,
     required TResult Function() submitted,
     required TResult Function(String message) error,
@@ -173,7 +174,7 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(EditingPost post)? editing,
+    TResult Function(EditingPost post, bool invalid)? editing,
     TResult Function()? submitting,
     TResult Function()? submitted,
     TResult Function(String message)? error,
@@ -185,7 +186,7 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(EditingPost post)? editing,
+    TResult Function(EditingPost post, bool invalid)? editing,
     TResult Function()? submitting,
     TResult Function()? submitted,
     TResult Function(String message)? error,
@@ -246,7 +247,7 @@ abstract class _Loading implements PostEditorState {
 abstract class _$EditingCopyWith<$Res> {
   factory _$EditingCopyWith(_Editing value, $Res Function(_Editing) then) =
       __$EditingCopyWithImpl<$Res>;
-  $Res call({EditingPost post});
+  $Res call({EditingPost post, bool invalid});
 }
 
 /// @nodoc
@@ -261,12 +262,17 @@ class __$EditingCopyWithImpl<$Res> extends _$PostEditorStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? post = freezed,
+    Object? invalid = freezed,
   }) {
     return _then(_Editing(
       post == freezed
           ? _value.post
           : post // ignore: cast_nullable_to_non_nullable
               as EditingPost,
+      invalid == freezed
+          ? _value.invalid
+          : invalid // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -274,14 +280,16 @@ class __$EditingCopyWithImpl<$Res> extends _$PostEditorStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Editing implements _Editing {
-  const _$_Editing(this.post);
+  const _$_Editing(this.post, this.invalid);
 
   @override
   final EditingPost post;
+  @override
+  final bool invalid;
 
   @override
   String toString() {
-    return 'PostEditorState.editing(post: $post)';
+    return 'PostEditorState.editing(post: $post, invalid: $invalid)';
   }
 
   @override
@@ -289,11 +297,12 @@ class _$_Editing implements _Editing {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _Editing &&
-            (identical(other.post, post) || other.post == post));
+            (identical(other.post, post) || other.post == post) &&
+            (identical(other.invalid, invalid) || other.invalid == invalid));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, post);
+  int get hashCode => Object.hash(runtimeType, post, invalid);
 
   @JsonKey(ignore: true)
   @override
@@ -304,38 +313,38 @@ class _$_Editing implements _Editing {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(EditingPost post) editing,
+    required TResult Function(EditingPost post, bool invalid) editing,
     required TResult Function() submitting,
     required TResult Function() submitted,
     required TResult Function(String message) error,
   }) {
-    return editing(post);
+    return editing(post, invalid);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(EditingPost post)? editing,
+    TResult Function(EditingPost post, bool invalid)? editing,
     TResult Function()? submitting,
     TResult Function()? submitted,
     TResult Function(String message)? error,
   }) {
-    return editing?.call(post);
+    return editing?.call(post, invalid);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(EditingPost post)? editing,
+    TResult Function(EditingPost post, bool invalid)? editing,
     TResult Function()? submitting,
     TResult Function()? submitted,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (editing != null) {
-      return editing(post);
+      return editing(post, invalid);
     }
     return orElse();
   }
@@ -382,9 +391,10 @@ class _$_Editing implements _Editing {
 }
 
 abstract class _Editing implements PostEditorState {
-  const factory _Editing(EditingPost post) = _$_Editing;
+  const factory _Editing(EditingPost post, bool invalid) = _$_Editing;
 
   EditingPost get post;
+  bool get invalid;
   @JsonKey(ignore: true)
   _$EditingCopyWith<_Editing> get copyWith =>
       throw _privateConstructorUsedError;
@@ -432,7 +442,7 @@ class _$_Submitting implements _Submitting {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(EditingPost post) editing,
+    required TResult Function(EditingPost post, bool invalid) editing,
     required TResult Function() submitting,
     required TResult Function() submitted,
     required TResult Function(String message) error,
@@ -444,7 +454,7 @@ class _$_Submitting implements _Submitting {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(EditingPost post)? editing,
+    TResult Function(EditingPost post, bool invalid)? editing,
     TResult Function()? submitting,
     TResult Function()? submitted,
     TResult Function(String message)? error,
@@ -456,7 +466,7 @@ class _$_Submitting implements _Submitting {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(EditingPost post)? editing,
+    TResult Function(EditingPost post, bool invalid)? editing,
     TResult Function()? submitting,
     TResult Function()? submitted,
     TResult Function(String message)? error,
@@ -553,7 +563,7 @@ class _$_Submitted implements _Submitted {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(EditingPost post) editing,
+    required TResult Function(EditingPost post, bool invalid) editing,
     required TResult Function() submitting,
     required TResult Function() submitted,
     required TResult Function(String message) error,
@@ -565,7 +575,7 @@ class _$_Submitted implements _Submitted {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(EditingPost post)? editing,
+    TResult Function(EditingPost post, bool invalid)? editing,
     TResult Function()? submitting,
     TResult Function()? submitted,
     TResult Function(String message)? error,
@@ -577,7 +587,7 @@ class _$_Submitted implements _Submitted {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(EditingPost post)? editing,
+    TResult Function(EditingPost post, bool invalid)? editing,
     TResult Function()? submitting,
     TResult Function()? submitted,
     TResult Function(String message)? error,
@@ -696,7 +706,7 @@ class _$_Error implements _Error {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(EditingPost post) editing,
+    required TResult Function(EditingPost post, bool invalid) editing,
     required TResult Function() submitting,
     required TResult Function() submitted,
     required TResult Function(String message) error,
@@ -708,7 +718,7 @@ class _$_Error implements _Error {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(EditingPost post)? editing,
+    TResult Function(EditingPost post, bool invalid)? editing,
     TResult Function()? submitting,
     TResult Function()? submitted,
     TResult Function(String message)? error,
@@ -720,7 +730,7 @@ class _$_Error implements _Error {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(EditingPost post)? editing,
+    TResult Function(EditingPost post, bool invalid)? editing,
     TResult Function()? submitting,
     TResult Function()? submitted,
     TResult Function(String message)? error,

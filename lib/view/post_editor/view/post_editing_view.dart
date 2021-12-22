@@ -1,12 +1,16 @@
 import 'package:fingerfunke_app/common_widgets/helper_widgets.dart';
+import 'package:fingerfunke_app/cubits/authentication_cubit/authentication_cubit.dart';
 import 'package:fingerfunke_app/models/post/post.dart';
+import 'package:fingerfunke_app/models/user/user.dart';
 import 'package:fingerfunke_app/utils/dev_tools.dart';
+import 'package:fingerfunke_app/utils/tools.dart';
 import 'package:fingerfunke_app/utils/util_widgets/text_input_dialog.dart';
 import 'package:fingerfunke_app/view/post_editor/cubit/editing_post_model.dart';
 import 'package:fingerfunke_app/view/post_editor/cubit/post_editor_cubit.dart';
 import 'package:fingerfunke_app/view/video_recorder/view/video_recorder_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/src/provider.dart';
 
 const titleMaxCharacters = 160;
@@ -181,7 +185,7 @@ class PostEditingView extends StatelessWidget {
       minLines: 1,
       maxLines: 3,
       maxLength: titleMaxCharacters,
-      controller: post.descriptionController,
+      controller: post.titleController,
       onEditingComplete: () => print("text edited"),
       onChanged: (val) => context
           .read<PostEditorCubit>()
@@ -245,9 +249,20 @@ class PostEditingView extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.send_rounded),
-        onPressed: () => context.read<PostEditorCubit>().submit(post),
+      floatingActionButton: BlocListener<PostEditorCubit, PostEditorState>(
+        listener: (context, state) => state.whenOrNull(editing: (_, invalid) {
+          if (invalid) Tools.showSnackbar(context, "Bitte alles ausfüllen");
+        }),
+        child: FloatingActionButton(
+          child: const Icon(Icons.send_rounded),
+          onPressed: () {
+            final User? currentUser = context
+                .read<AuthenticationCubit>()
+                .state
+                .whenOrNull(signedIn: (user) => user);
+            context.read<PostEditorCubit>().submit(post, currentUser);
+          },
+        ),
       ),
     );
   }
