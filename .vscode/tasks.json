@@ -1,0 +1,40 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build freezed files",
+            "command": "flutter",
+            "args": [
+                "pub",
+                "run",
+                "build_runner",
+                "build",
+                "--delete-conflicting-outputs"
+            ],
+            "type": "shell",
+            "problemMatcher": []
+        },
+        {
+            "label": "set launcher icons",
+            "command": "flutter",
+            "args": [
+                "pub",
+                "run",
+                "flutter_launcher_icons:main"
+            ],
+            "type": "shell",
+            "problemMatcher": []
+        },
+        {
+            "label": "update open source licenses",
+            "command": "flutter",
+            "args": [
+                "pub",
+                "run",
+                "flutter_oss_licenses:generate.dart"
+            ],
+            "type": "shell",
+            "problemMatcher": []
+        }
+    ]
+}

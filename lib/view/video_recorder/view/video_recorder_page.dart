@@ -3,7 +3,7 @@ import 'package:fingerfunke_app/utils/dev_tools.dart';
 import 'package:flutter/material.dart';
 
 class VideoRecorderPage extends StatelessWidget {
-  static const video_hero_tag = "video_recorder_video";
+  static const videoHeroTag = "video_recorder_video";
 
   const VideoRecorderPage({Key? key}) : super(key: key);
 
@@ -27,7 +27,7 @@ class VideoRecorderPage extends StatelessWidget {
             padding: EdgeInsets.all(17),
             decoration: BoxDecoration(
                 color: Colors.red, borderRadius: BorderRadius.circular(50)),
-            child: Icon(
+            child: const Icon(
               Icons.camera_rounded,
               color: Colors.white,
             )));
@@ -35,18 +35,17 @@ class VideoRecorderPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return HelperWidgets.materialHero(
-        tag: video_hero_tag,
-        child: Scaffold(
-          appBar: AppBar(
-              leading: IconButton(
-                  icon: const Icon(Icons.close_rounded),
-                  onPressed: () => Navigator.of(context).pop())),
-          extendBodyBehindAppBar: true,
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerFloat,
-          floatingActionButton: _recordButton(context),
-          body: Stack(
+    return Scaffold(
+        appBar: AppBar(
+            leading: IconButton(
+                icon: const Icon(Icons.close_rounded),
+                onPressed: () => Navigator.of(context).pop())),
+        extendBodyBehindAppBar: true,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: _recordButton(context),
+        body: HelperWidgets.materialHero(
+          tag: videoHeroTag,
+          child: Stack(
             children: [
               _cameraView(context),
             ],

@@ -1,62 +1,65 @@
 import 'package:fingerfunke_app/utils/dev_tools.dart';
-import 'package:fingerfunke_app/view/post_editor/view/pe_info_section.dart';
+import 'package:fingerfunke_app/view/post_editor/cubit/post_editor_cubit.dart';
+import 'package:fingerfunke_app/view/post_editor/view/post_editing_view.dart';
 import 'package:flutter/material.dart';
-
-const TITLE_MAX_CHARACTERS = 160;
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PostEditorPage extends StatelessWidget {
-  const PostEditorPage({Key? key}) : super(key: key);
+  /// pass a postID if you want to edit an existing post
+  const PostEditorPage({Key? key, String? postID}) : super(key: key);
 
-  Widget _titleField(BuildContext context) {
-    return TextField(
-      style: Theme.of(context).textTheme.headline3,
-      minLines: 1,
-      maxLines: 3,
-      maxLength: TITLE_MAX_CHARACTERS,
-      decoration: InputDecoration(
-          counterText: "",
-          border: InputBorder.none,
-          hintText: "Titel des Posts",
-          hintStyle: Theme.of(context)
-              .textTheme
-              .headline3
-              ?.copyWith(color: Colors.grey)),
-    );
+  Widget _loading(BuildContext context, {required String message}) {
+    return Scaffold(
+        body: Center(
+            child: Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const CircularProgressIndicator.adaptive(),
+        Padding(
+            padding: const EdgeInsets.only(top: 30),
+            child: Text(
+              message,
+              textAlign: TextAlign.center,
+            ))
+      ],
+    )));
   }
 
-  Widget _descriptionField(BuildContext context) {
-    return const TextField(
-        maxLines: null,
-        decoration: InputDecoration(
-            border: InputBorder.none,
-            hintText: "Beschreibe dein Event",
-            hintStyle: TextStyle(color: Colors.grey)));
+  Widget _success(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(), body: DevTools.placeholder("pop this view"));
+  }
+
+  Widget _error(BuildContext context) {
+    return Scaffold(
+        body: Center(
+            child: Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: const [
+        Icon(Icons.warning_rounded, color: Colors.red), //TODO fix color
+        Padding(
+            padding: EdgeInsets.only(top: 30),
+            child: Text(
+              "Error saving post",
+              textAlign: TextAlign.center,
+            ))
+      ],
+    )));
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          title: Text("neuer Post"),
-          leading: IconButton(
-              icon: const Icon(Icons.close_rounded),
-              onPressed: () => Navigator.of(context).pop())),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: ListView(
-          children: [
-            const PEInfoSection(),
-            const SizedBox(height: 30),
-            _titleField(context),
-            //const SizedBox(height: 10),
-            _descriptionField(context)
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.send_rounded),
-        onPressed: () => DevTools.showToDoSnackbar(context),
-      ),
+    return BlocProvider<PostEditorCubit>(
+      create: (context) => PostEditorCubit(),
+      child: BlocBuilder<PostEditorCubit, PostEditorState>(
+          builder: (context, state) => state.when(
+              loading: () => _loading(context, message: "loading"),
+              editing: (post) => PostEditingView(post: post),
+              error: (message) => _error(context),
+              submitted: () => _success(context),
+              submitting: () => _loading(context, message: "submitting"))),
     );
   }
 }
