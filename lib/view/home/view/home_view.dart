@@ -1,6 +1,7 @@
 import 'package:fingerfunke_app/routes.dart';
 import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:fingerfunke_app/utils/dev_tools.dart';
+import 'package:fingerfunke_app/view/error/exception_view.dart';
 import 'package:fingerfunke_app/view/post_feed/view/post_feed_view.dart';
 import 'package:flutter/material.dart';
 
@@ -58,7 +59,9 @@ class HomeView extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.pushNamed(context, postEditorRoute),
+        onPressed: () => ExceptionView.navigate(context,
+            exception: Exception(
+                "Hello")), //Navigator.pushNamed(context, postEditorRoute),
         child: const Icon(Icons.add_rounded),
       ),
       bottomNavigationBar: BottomAppBar(
