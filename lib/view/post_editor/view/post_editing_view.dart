@@ -247,7 +247,7 @@ class PostEditingView extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.send_rounded),
-        onPressed: () => DevTools.showToDoSnackbar(context),
+        onPressed: () => context.read<PostEditorCubit>().submit(post),
       ),
     );
   }

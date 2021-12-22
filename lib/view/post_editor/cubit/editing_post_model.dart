@@ -132,6 +132,6 @@ class EditingPost {
         description: descriptionController.text,
         visibility: visibility!,
         location: location!,
-        media: media!);
+        media: media);
   }
 }

@@ -26,5 +26,8 @@ class PostEditorCubit extends Cubit<PostEditorState> {
     }
   }
 
-  submit(EditingPost post) {}
+  submit(EditingPost post) {
+    emit(const PostEditorState.loading());
+    emit(const PostEditorState.error("not implemented"));
+  }
 }
