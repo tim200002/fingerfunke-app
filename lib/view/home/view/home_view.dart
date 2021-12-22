@@ -1,6 +1,7 @@
 import 'package:fingerfunke_app/routes.dart';
 import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:fingerfunke_app/utils/dev_tools.dart';
+import 'package:fingerfunke_app/view/error/exception_view.dart';
 import 'package:fingerfunke_app/view/post_feed/view/post_feed_view.dart';
 import 'package:flutter/material.dart';
 
