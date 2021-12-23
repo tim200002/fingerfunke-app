@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fingerfunke_app/models/abstract_models/abstract_models.dart';
+import 'package:fingerfunke_app/models/asset/asset.dart';
 import 'package:fingerfunke_app/models/utils.dart';
 import 'package:fingerfunke_app/utils/type_aliases.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -9,7 +10,7 @@ part 'user.g.dart';
 @JsonSerializable(explicitToJson: true)
 class UserInfo extends DatabaseDocument {
   final String name;
-  final Link? picture;
+  final ImageAsset? picture;
 
   const UserInfo({required FirestoreId id, required this.name, this.picture})
       : super(id: id);
@@ -36,7 +37,7 @@ class User extends UserInfo {
   const User(
       {required FirestoreId id,
       required String name,
-      Link? picture,
+      ImageAsset? picture,
       this.age,
       this.gender})
       : super(id: id, name: name, picture: picture);

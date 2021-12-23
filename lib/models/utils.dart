@@ -15,3 +15,4 @@ int dateToJson(DateTime date) => date.millisecondsSinceEpoch;
 
 DateTime dateFromJson(int millisecondsSinceEpoch) =>
     DateTime.fromMillisecondsSinceEpoch(millisecondsSinceEpoch);
+

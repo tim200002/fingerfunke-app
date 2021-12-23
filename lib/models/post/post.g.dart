@@ -15,19 +15,21 @@ Post _$PostFromJson(Map<String, dynamic> json) => Post(
       creationTime: dateFromJson(json['creationTime'] as int),
       visibility: $enumDecode(_$post_visibilityEnumMap, json['visibility']),
       location: json['location'] as String,
-      media: (json['media'] as List<dynamic>).map((e) => e as String).toList(),
+      media: (json['media'] as List<dynamic>)
+          .map((e) => Asset.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$PostToJson(Post instance) => <String, dynamic>{
       'id': instance.id,
-      'author': instance.author.toJson(),
       'creationTime': dateToJson(instance.creationTime),
+      'author': instance.author.toJson(),
       'type': _$post_typeEnumMap[instance.type],
       'title': instance.title,
       'description': instance.description,
       'visibility': _$post_visibilityEnumMap[instance.visibility],
       'location': instance.location,
-      'media': instance.media,
+      'media': instance.media.map((e) => e.toJson()).toList(),
     };
 
 const _$post_typeEnumMap = {

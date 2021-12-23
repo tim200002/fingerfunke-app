@@ -16,8 +16,8 @@ VideoMessage _$VideoMessageFromJson(Map<String, dynamic> json) => VideoMessage(
 Map<String, dynamic> _$VideoMessageToJson(VideoMessage instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'author': instance.author.toJson(),
       'creationTime': dateToJson(instance.creationTime),
+      'author': instance.author.toJson(),
       'video': instance.video,
     };
 
@@ -31,7 +31,7 @@ TextMessage _$TextMessageFromJson(Map<String, dynamic> json) => TextMessage(
 Map<String, dynamic> _$TextMessageToJson(TextMessage instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'author': instance.author.toJson(),
       'creationTime': dateToJson(instance.creationTime),
+      'author': instance.author.toJson(),
       'text': instance.text,
     };

@@ -24,10 +24,10 @@ class VideoRepositoryImpl implements VideoRepository {
   }
 
   @override
-  Future<Map<String, dynamic>> createVideoAsset(UserInfo author) async {
+  Future<Map<String, dynamic>> createVideoAsset() async {
     // ToDo Error Handling
     HttpsCallable callable = _functions.httpsCallable('mux-createMuxAsset');
-    final results = await callable({'author': author.toJson()});
+    final results = await callable();
     return results.data;
   }
 
@@ -67,5 +67,25 @@ class VideoRepositoryImpl implements VideoRepository {
   @override
   Future<void> deleteTemporaryAsset(String id) {
     return _temporaryCollection.doc(id).delete();
+  }
+
+  @override
+  String createPlaybackUrl(VideoAsset video) {
+    return "https://stream.mux.com/${video.assetId}.m3u8";
+  }
+
+  @override
+  String createThumbnailUrl(VideoAsset video, {int? height, int? width, bool smartcrop = false}) {
+    String url = "https://image.mux.com/${video.assetId}/thumbnail.jpg?";
+    if(height!=null){
+      url+="height=$height&";
+    }
+    if(width!=null){
+      url+="width=$width&";
+    }
+    if(smartcrop){
+      url+="fit_mode=smartcrop&";
+    }
+    return url;
   }
 }

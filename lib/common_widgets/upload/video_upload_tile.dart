@@ -1,8 +1,6 @@
-import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
 import 'package:fingerfunke_app/cubits/video_upload_cubit/video_upload_cubit.dart';
-import 'package:fingerfunke_app/models/user/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -22,45 +22,41 @@ class PostEditorPage extends StatelessWidget {
               appBar: AppBar(),
               body: BlocBuilder<PostEditorProtoCubit, PostEditorProtoState>(
                   builder: (context, state) {
-                return Column(
-                  children: state.videoUploadCubits.map((videoUploadCubit) {
+                return Wrap(
+                  children: [...state.videoUploadCubits.map((videoUploadCubit) {
                     return VideoUploadTile(
                       cubit: videoUploadCubit,
                       onAbort: (id) {BlocProvider.of<PostEditorProtoCubit>(context).deleteVideo(id);},
                       width: 200,
                       height: 200,
                     );
-                  }).toList(),
+                  }).toList(), 
+                  
+                FutureBuilder(
+                  future:Tools.getImageFileFromAssets('vid/mux_test_video.mp4'),
+                  builder: (context, snapshot){
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Container();
+                    } else { 
+                      return  ElevatedButton(onPressed: ()=>BlocProvider.of<PostEditorProtoCubit>(context).addVideo(snapshot.data as File), child: Text("+"),);
+                    }
+                  }
+                ),],
                 );
               }),
-              floatingActionButton: FutureBuilder(
-                future:Tools.getImageFileFromAssets('vid/mux_test_video.mp4'),
-                builder: (context, snapshot){
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Container();
-                  } else { 
-                    return  FloatingActionButton(onPressed: ()=>BlocProvider.of<PostEditorProtoCubit>(context).addVideo(snapshot.data as File));
-                  }
+              floatingActionButton: FloatingActionButton(child: const Icon(Icons.send), onPressed: (){
+                if(BlocProvider.of<PostEditorProtoCubit>(context).readyToUpload()){
+                  //Create Post
+                }else{
+                  Tools.showSnackbar(context, "Please wait until  assets are uploaded");
                 }
+              },)
               ),
             ),
           ),
-        ),
+
         orElse: () => Container(),
       ),
     );
   }
 }
-
-/**
-floatingActionButton: FutureBuilder(
-future:
-    Tools.getImageFileFromAssets('vid/mux_test_video.mp4'),
-builder: (context, snapshot) {
-  if (snapshot.connectionState == ConnectionState.waiting) {
-    return Container();
-  } else { 
-    return BlocBuilder FloatingActionButton(onPressed: ()=>BlocProvider.of<PostEditorProtoCubit>(context).addVideo(snapshot.data as File, ))
-  }}
-  )
- */

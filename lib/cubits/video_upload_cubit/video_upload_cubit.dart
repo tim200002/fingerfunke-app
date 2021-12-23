@@ -28,7 +28,7 @@ class VideoUploadCubit extends Cubit<VideoUploadState> {
   String? uploadUrl;
   VideoUploadCubit(this.video, this.author)
       : super(const VideoUploadState.initial()) {
-    createThumbnail();
+    _createThumbnail();
     uploadVideo();
   }
 
@@ -73,7 +73,7 @@ class VideoUploadCubit extends Cubit<VideoUploadState> {
     emit(VideoUploadState.uploading(thumbnail));
     Map<String, dynamic>? assetResponse;
     try {
-      assetResponse = await _videoRepository.createVideoAsset(author);
+      assetResponse = await _videoRepository.createVideoAsset();
     } catch (err) {
       // Todo it would be better if we were able to cancel the cloud function ourselves
       if (!isClosed) {
@@ -127,16 +127,16 @@ class VideoUploadCubit extends Cubit<VideoUploadState> {
     });
   }
 
-  void createThumbnail() {
-    VideoThumbnail.thumbnailData(video: video.path, quality: 50).then((thumb) {
-      thumbnail = thumb;
+  Future<void> _createThumbnail() async{
+    try{
+      thumbnail = await VideoThumbnail.thumbnailData(video: video.path, quality: 50);
       state.mapOrNull(
-          uploading: (state) => emit(state.copyWith(thumbnail: thumbnail)),
-          processing: (state) => emit(state.copyWith(thumbnail: thumbnail)),
-          uploaded: (state) => emit(state.copyWith(thumbnail: thumbnail)),
-          error: (state) => emit(state.copyWith(thumbnail: thumbnail)));
-    }).catchError(
-      (err) => print("Could not create thumbnail for video"),
-    );
+      uploading: (state) => emit(state.copyWith(thumbnail: thumbnail)),
+      processing: (state) => emit(state.copyWith(thumbnail: thumbnail)),
+      uploaded: (state) => emit(state.copyWith(thumbnail: thumbnail)),
+      error: (state) => emit(state.copyWith(thumbnail: thumbnail)));
+    }catch(err){
+      print("Could not create thumbnail for video");
+    }
   }
 }
