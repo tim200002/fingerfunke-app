@@ -6,27 +6,32 @@ import 'package:fingerfunke_app/utils/type_aliases.dart';
 
 class NetworkPlaceholderImage extends StatelessWidget {
   final Link imageUrl;
-  final AssetImage placeholder;
+  final Widget placeholder;
   final int? height;
   final int? width;
+  final BoxFit? fit;
   const NetworkPlaceholderImage(this.imageUrl, this.placeholder,
-      {Key? key, this.height, this.width})
+      {Key? key, this.height, this.width, this.fit})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final NetworkImageCubit cubit = NetworkImageCubit(imageUrl);
-    return SizedBox(
-      width: width?.toDouble(),
-      height: height?.toDouble(),
-      child: BlocBuilder<NetworkImageCubit, NetworkImageState>(
-        bloc: cubit,
-        builder: (context, state) => state.when(
-          loading: () => Image(
-            image: placeholder,
+    return BlocProvider(
+      create: (context) => NetworkImageCubit(imageUrl),
+      child: Builder(
+        builder: (context) => SizedBox(
+          width: width?.toDouble(),
+          height: height?.toDouble(),
+          child: BlocBuilder<NetworkImageCubit, NetworkImageState>(
+            builder: (context, state) => AnimatedSwitcher(
+              duration: const Duration(milliseconds: 100),
+              child: state.when(
+                loading: () => placeholder,
+                imageLoaded: (file) => Image(image: FileImage(file),fit: fit,),
+                error: (error) => ErrorWidget(error),
+              ),
+            ),
           ),
-          imageLoaded: (file) => Image(image: FileImage(file)),
-          error: (error) => ErrorWidget(error),
         ),
       ),
     );

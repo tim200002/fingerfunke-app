@@ -1,6 +1,5 @@
 import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:fingerfunke_app/utils/exceptions.dart';
-import 'package:fingerfunke_app/view/comment_feed/comment_feed.dart';
 import 'package:fingerfunke_app/view/comment_feed/comment_feed_with_editor.dart';
 import 'package:fingerfunke_app/view/post/cubit/post_cubit.dart';
 import 'package:flutter/material.dart';

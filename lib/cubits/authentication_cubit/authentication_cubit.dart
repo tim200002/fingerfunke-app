@@ -88,7 +88,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
                   userId: userID);
             } catch (e) {
               //! Todo
-              throw Exception();
+              rethrow;
             }
           } else {
             //! Das ist jetzt böse. Ich bin offiziell signed In aber keine ID
