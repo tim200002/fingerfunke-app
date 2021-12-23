@@ -3,6 +3,7 @@ import 'package:fingerfunke_app/models/user/user.dart';
 import 'package:fingerfunke_app/utils/type_aliases.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:uuid/uuid.dart';
 
 /// extension on DateTime to allow easier setting of its date
 /// and time indipendently. Additionally offers simple conversions into
@@ -27,7 +28,7 @@ extension FDateTime on DateTime {
 /// Has to be kept in sync with the actual post class
 class EditingPost {
   final FirestoreId? id;
-  final UserInfo? author;
+  //final UserInfo? author;
   final DateTime? creationTime;
 
   final post_type type;
@@ -44,7 +45,7 @@ class EditingPost {
   /// Event and Recurrent to allow easier conversion
   EditingPost(
       {this.id,
-      this.author,
+      //this.author,
       this.creationTime,
       this.type = post_type.event,
       String title = "",
@@ -64,20 +65,13 @@ class EditingPost {
 
   // check if the instance can be converted into a [Post] object
   bool _isValidPost() {
-    return id != null &&
-        author != null &&
-        creationTime != null &&
-        //type != null &&
-        //titleController.text != null &&
-        //description != null &&
-        visibility != null &&
-        location != null;
+    return location != null;
     //maybe check if media empty
   }
 
   // check if the instance can be converted into a [Event] object
   bool _isValidEvent() {
-    return id != null && eveTime != null;
+    return _isValidPost();
   }
 
   // check if the instance can be converted into a [Recurrent] object
@@ -92,6 +86,7 @@ class EditingPost {
 
   bool get isEvent => type == post_type.event;
   bool get isRecurrent => type == post_type.recurrent;
+  bool get editingExistent => id != null;
 
   EditingPost copyWith(
       {FirestoreId? id,
@@ -107,7 +102,7 @@ class EditingPost {
       List<Link>? media}) {
     return EditingPost(
         id: id ?? this.id,
-        author: author ?? this.author,
+        //author: author ?? this.author,
         creationTime: creationTime ?? this.creationTime,
         type: type ?? this.type,
         titleController: titleController,
@@ -122,7 +117,7 @@ class EditingPost {
   factory EditingPost.fromPost(Post post) {
     return EditingPost(
       id: post.id,
-      author: post.author,
+      //author: post.author,
       creationTime: post.creationTime,
       type: post.type,
       title: post.title,
@@ -133,19 +128,19 @@ class EditingPost {
     );
   }
 
-  Post toPost() {
+  Post toPost(User author) {
     if (!_isValidPost()) {
       throw Exception("Post is not a valid Event. Can't be created");
     }
 
     return Post(
-        id: id!,
-        author: author!,
-        creationTime: creationTime!,
+        id: id ?? const Uuid().v4(),
+        author: author,
+        creationTime: creationTime ?? DateTime.now(),
         type: type,
         title: titleController.text,
         description: descriptionController.text,
-        visibility: visibility!,
+        visibility: visibility ?? post_visibility.visible,
         location: location!,
         media: media);
   }

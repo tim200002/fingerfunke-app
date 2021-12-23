@@ -28,10 +28,7 @@ class PostEditorPage extends StatelessWidget {
 
   Widget _success(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
-        body: const Center(
-          child: Text("Post erstellt!"),
-        ));
+        appBar: AppBar(), body: const Center(child: Icon(Icons.check)));
   }
 
   Widget _error(BuildContext context) {

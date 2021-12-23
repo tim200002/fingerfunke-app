@@ -215,10 +215,19 @@ class PostEditingView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text(post.isEvent ? "neues Event" : "neue Gruppe"),
-          leading: IconButton(
-              icon: const Icon(Icons.close_rounded),
-              onPressed: () => Navigator.of(context).pop())),
+        title: Text(post.isEvent ? "neues Event" : "neue Gruppe"),
+        leading: IconButton(
+          icon: const Icon(Icons.close_rounded),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        actions: [
+          if (post.editingExistent)
+            IconButton(
+                onPressed: () =>
+                    context.read<PostEditorCubit>().deletePost(post.id!),
+                icon: const Icon(Icons.delete_outline))
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: ListView(

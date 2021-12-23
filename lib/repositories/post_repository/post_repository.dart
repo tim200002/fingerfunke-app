@@ -7,4 +7,8 @@ abstract class PostRepository {
   Future<void> createPost(Post post);
 
   Stream<Post> subscribeToPost(FirestoreId postId);
+
+  Future<Post> getPost(FirestoreId postId);
+
+  Future<void> deletePost(FirestoreId postId);
 }

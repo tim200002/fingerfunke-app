@@ -21,10 +21,10 @@ class _$PostEditorStateTearOff {
     return const _Loading();
   }
 
-  _Editing editing(EditingPost post, bool invalid) {
+  _Editing editing(EditingPost post, {bool invalid = false}) {
     return _Editing(
       post,
-      invalid,
+      invalid: invalid,
     );
   }
 
@@ -269,7 +269,7 @@ class __$EditingCopyWithImpl<$Res> extends _$PostEditorStateCopyWithImpl<$Res>
           ? _value.post
           : post // ignore: cast_nullable_to_non_nullable
               as EditingPost,
-      invalid == freezed
+      invalid: invalid == freezed
           ? _value.invalid
           : invalid // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -280,10 +280,11 @@ class __$EditingCopyWithImpl<$Res> extends _$PostEditorStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Editing implements _Editing {
-  const _$_Editing(this.post, this.invalid);
+  const _$_Editing(this.post, {this.invalid = false});
 
   @override
   final EditingPost post;
+  @JsonKey(defaultValue: false)
   @override
   final bool invalid;
 
@@ -391,7 +392,7 @@ class _$_Editing implements _Editing {
 }
 
 abstract class _Editing implements PostEditorState {
-  const factory _Editing(EditingPost post, bool invalid) = _$_Editing;
+  const factory _Editing(EditingPost post, {bool invalid}) = _$_Editing;
 
   EditingPost get post;
   bool get invalid;

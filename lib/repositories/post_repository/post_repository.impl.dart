@@ -25,4 +25,14 @@ class PostRepositoryImpl implements PostRepository {
           (DocumentSnapshot doc) => Post.fromDoc(doc),
         );
   }
+
+  @override
+  Future<Post> getPost(FirestoreId postId) {
+    return _postCollection.doc(postId).get().then((doc) => Post.fromDoc(doc));
+  }
+
+  @override
+  Future<void> deletePost(FirestoreId postId) {
+    return _postCollection.doc(postId).delete();
+  }
 }
