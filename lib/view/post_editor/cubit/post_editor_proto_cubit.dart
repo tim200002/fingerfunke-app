@@ -13,7 +13,7 @@ class PostEditorProtoCubit extends Cubit<PostEditorProtoState> {
   PostEditorProtoCubit(this.author) : super(const PostEditorProtoState([]));
 
   void addVideo(File video) {
-    final VideoUploadCubit newCubit = VideoUploadCubit(video, author);
+    final VideoUploadCubit newCubit = VideoUploadCubit.fromFile(video, author);
     emit(state
         .copyWith(videoUploadCubits: [...state.videoUploadCubits, newCubit]));
   }

@@ -91,7 +91,7 @@ class PostEditingView extends StatelessWidget {
                 post.copyWith(
                   uploadCubits: [
                     ...post.uploadCubits,
-                    VideoUploadCubit(video, author)
+                    VideoUploadCubit.fromFile(video, author)
                   ],
                 ),
               );

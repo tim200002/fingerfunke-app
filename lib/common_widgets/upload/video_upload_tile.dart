@@ -91,7 +91,7 @@ class VideoUploadTile extends StatelessWidget {
               Icons.restart_alt,
             ),
             color: Colors.redAccent,
-            onPressed: () => cubit.uploadVideo(),
+            onPressed: () => cubit.retryUpload(),
           ),
           abortButton()
         ],
@@ -105,10 +105,10 @@ class VideoUploadTile extends StatelessWidget {
       bloc: cubit,
       builder: (context, state) => state.when(
         initial: () => loadingTile(null),
-        uploading: (thumb) => loadingTile(thumb),
-        processing: (thumb) => loadingTile(thumb),
+        uploading: (_, thumb) => loadingTile(thumb),
+        processing: (_, thumb) => loadingTile(thumb),
         uploaded: (thumb, _) => uploadedTile(thumb),
-        error: (thumb, error) => errorTile(thumb, context),
+        error: (error, thumb, _) => errorTile(thumb, context),
       ),
     );
   }

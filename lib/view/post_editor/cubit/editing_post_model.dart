@@ -126,7 +126,7 @@ class EditingPost {
         eveTime: eveTime ?? this.eveTime);
   }
   // ToDo but this requires changes with VideoUploadCubit
-  /*
+  
   factory EditingPost.fromPost(Post post) {
     return EditingPost(
       id: post.id,
@@ -137,10 +137,11 @@ class EditingPost {
       description: post.description,
       visibility: post.visibility,
       location: post.location,
-      uploadCubits: post.media,
+      // ToDo update for other types of assets
+      uploadCubits: post.media.map((asset) => VideoUploadCubit.fromExistingAsset(asset as VideoAsset, post.author)).toList(),
     );
   }
-  */
+
 
   Post toPost(User author) {
     if (!_isValidPost()) {
@@ -149,7 +150,7 @@ class EditingPost {
 
     List<Asset> medias = [];
     for (var uploadCubit in uploadCubits) { 
-      medias.add(uploadCubit.getAsset());
+      medias.add(uploadCubit.asset);
     }
 
     return Post(
