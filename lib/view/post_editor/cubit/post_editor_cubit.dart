@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:fingerfunke_app/models/post/post.dart';
 import 'package:fingerfunke_app/models/user/user.dart';
-import 'package:fingerfunke_app/repositories/post_repository/post_repository.dart';
 import 'package:fingerfunke_app/repositories/post_repository/post_repository.impl.dart';
+import 'package:fingerfunke_app/utils/exceptions.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:uuid/uuid.dart';
 import 'editing_post_model.dart';
@@ -40,10 +40,33 @@ class PostEditorCubit extends Cubit<PostEditorState> {
         visibility: post_visibility.visible,
         location: "Bielefeld (null)");
     if (!post.isValid()) return emit(PostEditorState.editing(post, true));
-
+    _disposeCubits();
     emit(const PostEditorState.submitting());
     PostRepositoryImpl().createPost(post.toPost()).then(
         (value) => emit(const PostEditorState.submitted()),
         onError: (msg) => emit(PostEditorState.error(msg)));
+  }
+
+  void abortVideoUpload(String cubitId) {
+    state.maybeMap(
+        editing: (state) {
+          final cubitToDelete = state.post.uploadCubits
+              .firstWhere((cubit) => cubit.id == cubitId);
+          cubitToDelete.close();
+          emit(state.copyWith(
+              post: state.post.copyWith(
+                  uploadCubits: state.post.uploadCubits
+                      .where((cubit) => cubit.id != cubitId)
+                      .toList())));
+        },
+        orElse: () => InvalidStateException());
+  }
+
+  void _disposeCubits() {
+    state.whenOrNull(editing: (post, _) {
+      for (var cubit in post.uploadCubits) {
+        cubit.close();
+      }
+    });
   }
 }

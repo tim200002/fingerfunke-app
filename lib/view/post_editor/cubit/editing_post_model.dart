@@ -1,3 +1,5 @@
+import 'package:fingerfunke_app/cubits/video_upload_cubit/video_upload_cubit.dart';
+import 'package:fingerfunke_app/models/asset/asset.dart';
 import 'package:fingerfunke_app/models/post/post.dart';
 import 'package:fingerfunke_app/models/user/user.dart';
 import 'package:fingerfunke_app/utils/type_aliases.dart';
@@ -35,7 +37,7 @@ class EditingPost {
   final TextEditingController descriptionController;
   final post_visibility? visibility;
   final String? location;
-  final List<Link> media;
+  final List<VideoUploadCubit> uploadCubits;
 
   final String? recTime;
   final DateTime eveTime;
@@ -55,7 +57,7 @@ class EditingPost {
       this.location,
       this.recTime,
       DateTime? eveTime,
-      this.media = const []})
+      this.uploadCubits = const []})
       : this.eveTime = eveTime ?? DateTime.now(),
         this.titleController =
             titleController ?? TextEditingController(text: title),
@@ -87,6 +89,16 @@ class EditingPost {
 
   // check if the instance is valid regarding to the selected post type
   bool isValid() {
+    // there must be at least one asset
+    if(uploadCubits.isEmpty){
+      return false;
+    }
+    // in both all Assets must be created before allowed to send of
+    for (var uploadCubit in uploadCubits) { 
+      if(!uploadCubit.hasUploaded()) {
+        return false;
+      }
+    }
     return isEvent ? _isValidEvent() : _isValidRecurrent();
   }
 
@@ -104,7 +116,7 @@ class EditingPost {
       String? recTime, // time of the recurrent
       DateTime? eveTime, // time  of the event
       String? location,
-      List<Link>? media}) {
+      List<VideoUploadCubit>? uploadCubits}) {
     return EditingPost(
         id: id ?? this.id,
         author: author ?? this.author,
@@ -114,11 +126,12 @@ class EditingPost {
         descriptionController: descriptionController,
         visibility: visibility ?? this.visibility,
         location: location ?? this.location,
-        media: media ?? this.media,
+        uploadCubits: uploadCubits ?? this.uploadCubits,
         recTime: recTime ?? this.recTime,
         eveTime: eveTime ?? this.eveTime);
   }
-
+  // ToDo but this requires changes with VideoUploadCubit
+  /*
   factory EditingPost.fromPost(Post post) {
     return EditingPost(
       id: post.id,
@@ -129,13 +142,19 @@ class EditingPost {
       description: post.description,
       visibility: post.visibility,
       location: post.location,
-      media: post.media,
+      uploadCubits: post.media,
     );
   }
+  */
 
   Post toPost() {
     if (!_isValidPost()) {
       throw Exception("Post is not a valid Event. Can't be created");
+    }
+
+    List<Asset> medias = [];
+    for (var uploadCubit in uploadCubits) { 
+      medias.add(uploadCubit.getAsset());
     }
 
     return Post(
@@ -147,6 +166,6 @@ class EditingPost {
         description: descriptionController.text,
         visibility: visibility!,
         location: location!,
-        media: media);
+        media: medias);
   }
 }

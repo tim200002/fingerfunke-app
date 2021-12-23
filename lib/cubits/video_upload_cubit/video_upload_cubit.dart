@@ -16,6 +16,8 @@ import 'package:video_thumbnail/video_thumbnail.dart';
 part 'video_upload_state.dart';
 part 'video_upload_cubit.freezed.dart';
 
+class AssetNotAvailableException implements Exception {}
+
 class VideoUploadCubit extends Cubit<VideoUploadState> {
   final UserInfo author;
   final VideoRepository _videoRepository = VideoRepositoryImpl();
@@ -33,7 +35,7 @@ class VideoUploadCubit extends Cubit<VideoUploadState> {
   }
 
   Future<void> uploadVideo() async {
-    try{
+    try {
       if (_canUploadVideo()) {
         // To not create new assets when only the upload failed the upload url and asssetId are cached
         if (uploadUrl == null || assetId == null) {
@@ -41,10 +43,9 @@ class VideoUploadCubit extends Cubit<VideoUploadState> {
         }
         _uploadVideoToMux();
       }
-    }catch(err){
+    } catch (err) {
       emit(VideoUploadState.error(thumbnail, err));
     }
-    
   }
 
   @override
@@ -96,16 +97,15 @@ class VideoUploadCubit extends Cubit<VideoUploadState> {
       _cancelToken = null;
       completer.complete();
     }).catchError((error, stackTrace) {
-      if(error is DioError){
-        if(error.type == DioErrorType.cancel){
-           print("dio request has been sucessfully canceled");
-        }else{
+      if (error is DioError) {
+        if (error.type == DioErrorType.cancel) {
+          print("dio request has been sucessfully canceled");
+        } else {
           completer.completeError(error, stackTrace);
         }
-      }else{
+      } else {
         completer.completeError(error, stackTrace);
       }
-      
     });
     return completer.future;
   }
@@ -127,16 +127,27 @@ class VideoUploadCubit extends Cubit<VideoUploadState> {
     });
   }
 
-  Future<void> _createThumbnail() async{
-    try{
-      thumbnail = await VideoThumbnail.thumbnailData(video: video.path, quality: 50);
+  Future<void> _createThumbnail() async {
+    try {
+      thumbnail =
+          await VideoThumbnail.thumbnailData(video: video.path, quality: 50);
       state.mapOrNull(
-      uploading: (state) => emit(state.copyWith(thumbnail: thumbnail)),
-      processing: (state) => emit(state.copyWith(thumbnail: thumbnail)),
-      uploaded: (state) => emit(state.copyWith(thumbnail: thumbnail)),
-      error: (state) => emit(state.copyWith(thumbnail: thumbnail)));
-    }catch(err){
+          uploading: (state) => emit(state.copyWith(thumbnail: thumbnail)),
+          processing: (state) => emit(state.copyWith(thumbnail: thumbnail)),
+          uploaded: (state) => emit(state.copyWith(thumbnail: thumbnail)),
+          error: (state) => emit(state.copyWith(thumbnail: thumbnail)));
+    } catch (err) {
       print("Could not create thumbnail for video");
     }
+  }
+
+  bool hasUploaded() {
+    return state.maybeWhen(uploaded: (_, __) => true, orElse: () => false);
+  }
+
+  VideoAsset getAsset() {
+    return state.maybeWhen(
+        uploaded: (_, asset) => asset,
+        orElse: () => throw AssetNotAvailableException());
   }
 }

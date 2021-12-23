@@ -71,12 +71,12 @@ class VideoRepositoryImpl implements VideoRepository {
 
   @override
   String createPlaybackUrl(VideoAsset video) {
-    return "https://stream.mux.com/${video.assetId}.m3u8";
+    return "https://stream.mux.com/${video.playbackId}.m3u8";
   }
 
   @override
   String createThumbnailUrl(VideoAsset video, {int? height, int? width, bool smartcrop = false}) {
-    String url = "https://image.mux.com/${video.assetId}/thumbnail.jpg?";
+    String url = "https://image.mux.com/${video.playbackId}/thumbnail.jpg?";
     if(height!=null){
       url+="height=$height&";
     }
