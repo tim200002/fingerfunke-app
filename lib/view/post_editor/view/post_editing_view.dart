@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:fingerfunke_app/common_widgets/helper_widgets.dart';
+import 'package:fingerfunke_app/common_widgets/upload/video_upload_tile.dart';
 import 'package:fingerfunke_app/cubits/authentication_cubit/authentication_cubit.dart';
+import 'package:fingerfunke_app/cubits/video_upload_cubit/video_upload_cubit.dart';
 import 'package:fingerfunke_app/models/post/post.dart';
 import 'package:fingerfunke_app/models/user/user.dart';
-import 'package:fingerfunke_app/utils/dev_tools.dart';
+import 'package:fingerfunke_app/utils/exceptions.dart';
 import 'package:fingerfunke_app/utils/tools.dart';
 import 'package:fingerfunke_app/utils/util_widgets/text_input_dialog.dart';
 import 'package:fingerfunke_app/view/post_editor/cubit/editing_post_model.dart';
@@ -11,7 +15,6 @@ import 'package:fingerfunke_app/view/video_recorder/view/video_recorder_page.dar
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/src/provider.dart';
 
 const titleMaxCharacters = 160;
 
@@ -26,8 +29,9 @@ class PostEditingView extends StatelessWidget {
       required bool selected}) {
     final Color color = selected ? Colors.black : Colors.grey;
     return InkWell(
-        onTap: onPressed,
-        child: Column(children: [
+      onTap: onPressed,
+      child: Column(
+        children: [
           Icon(
             icon,
             color: color,
@@ -40,7 +44,9 @@ class PostEditingView extends StatelessWidget {
                     fontWeight:
                         selected ? FontWeight.bold : FontWeight.normal)),
           )
-        ]));
+        ],
+      ),
+    );
   }
 
   Widget _metaInfoButton(BuildContext context,
@@ -48,8 +54,9 @@ class PostEditingView extends StatelessWidget {
       required IconData icon,
       required String text}) {
     return InkWell(
-        onTap: onPressed,
-        child: Row(children: [
+      onTap: onPressed,
+      child: Row(
+        children: [
           Icon(icon),
           Expanded(
             child: Padding(
@@ -63,26 +70,56 @@ class PostEditingView extends StatelessWidget {
                       style: const TextStyle(fontWeight: FontWeight.bold)),
                 )),
           )
-        ]));
+        ],
+      ),
+    );
   }
 
   Widget _mediaSection(BuildContext context) {
     return InkWell(
-        onTap: () => Navigator.push(context, VideoRecorderPage.route()),
-        child: HelperWidgets.materialHero(
-          tag: VideoRecorderPage.videoHeroTag,
-          child: Container(
-            width: 125,
-            height: 210,
-            decoration: BoxDecoration(
-              color: Colors.teal.shade100,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: const Center(
-              child: Text("TODO:\nPostVideo"),
-            ),
-          ),
-        ));
+      onTap: () async {
+        File? video =
+            await Navigator.push<File?>(context, VideoRecorderPage.route());
+        if (video != null) {
+          final User author = context
+              .read<AuthenticationCubit>()
+              .state
+              .maybeWhen(
+                  signedIn: (user) => user,
+                  orElse: () => throw InvalidPermissionException());
+          context.read<PostEditorCubit>().changePostInfo(
+                post.copyWith(
+                  uploadCubits: [
+                    ...post.uploadCubits,
+                    VideoUploadCubit(video, author)
+                  ],
+                ),
+              );
+        }
+      },
+      child: HelperWidgets.materialHero(
+        tag: VideoRecorderPage.videoHeroTag,
+        child: (post.uploadCubits.isNotEmpty)
+            ? VideoUploadTile(
+                cubit: post.uploadCubits[0],
+                onAbort: (cubitId) =>
+                    context.read<PostEditorCubit>().abortVideoUpload(cubitId),
+                width: 125,
+                height: 210,
+              )
+            : Container(
+                width: 125,
+                height: 210,
+                decoration: BoxDecoration(
+                  color: Colors.teal.shade100,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: const Center(
+                  child: Text("TODO:\nPostVideo"),
+                ),
+              ),
+      ),
+    );
   }
 
   Widget _eventInfo(BuildContext context) {
@@ -203,12 +240,14 @@ class PostEditingView extends StatelessWidget {
 
   Widget _descriptionField(BuildContext context) {
     return TextField(
-        maxLines: null,
-        controller: post.descriptionController,
-        decoration: const InputDecoration(
-            border: InputBorder.none,
-            hintText: "Beschreibe deinen Post",
-            hintStyle: TextStyle(color: Colors.grey)));
+      maxLines: null,
+      controller: post.descriptionController,
+      decoration: const InputDecoration(
+        border: InputBorder.none,
+        hintText: "Beschreibe deinen Post",
+        hintStyle: TextStyle(color: Colors.grey),
+      ),
+    );
   }
 
   @override

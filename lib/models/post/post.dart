@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fingerfunke_app/models/abstract_models/abstract_models.dart';
+import 'package:fingerfunke_app/models/asset/asset.dart';
 import 'package:fingerfunke_app/models/user/user.dart';
 import 'package:fingerfunke_app/models/utils.dart';
 import 'package:fingerfunke_app/utils/type_aliases.dart';
@@ -23,7 +24,7 @@ class Post extends UserGeneratedDocument {
   final String location;
   //final GeoHash postPlace;
 
-  final List<Link> media;
+  final List<Asset> media;
 
   const Post(
       {required FirestoreId id,
@@ -54,7 +55,7 @@ class Post extends UserGeneratedDocument {
           required post_visibility visibility,
           required String location,
           //required GeoHash postPlace,
-          required List<Link> media}) =>
+          required List<Asset> media}) =>
       Post(
           id: const Uuid().v4(),
           type: type,
@@ -80,3 +81,4 @@ class Post extends UserGeneratedDocument {
         media
       ];
 }
+

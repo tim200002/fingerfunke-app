@@ -1,4 +1,3 @@
-import 'package:fingerfunke_app/utils/dev_tools.dart';
 import 'package:fingerfunke_app/view/post_editor/cubit/post_editor_cubit.dart';
 import 'package:fingerfunke_app/view/post_editor/view/post_editing_view.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +20,7 @@ class PostEditorPage extends StatelessWidget {
             child: Text(
               message,
               textAlign: TextAlign.center,
-            ))
+            ),)
       ],
     )));
   }
@@ -33,20 +32,23 @@ class PostEditorPage extends StatelessWidget {
 
   Widget _error(BuildContext context) {
     return Scaffold(
-        body: Center(
-            child: Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisSize: MainAxisSize.min,
-      children: const [
-        Icon(Icons.warning_rounded, color: Colors.red), //TODO fix color
-        Padding(
-            padding: EdgeInsets.only(top: 30),
-            child: Text(
-              "Error saving post",
-              textAlign: TextAlign.center,
-            ))
-      ],
-    )));
+      body: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: const [
+            Icon(Icons.warning_rounded, color: Colors.red), //TODO fix color
+            Padding(
+              padding: EdgeInsets.only(top: 30),
+              child: Text(
+                "Error saving post",
+                textAlign: TextAlign.center,
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 
   @override

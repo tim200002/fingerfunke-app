@@ -37,63 +37,71 @@ class PageScreen extends StatelessWidget {
 
   Widget _content() {
     return Container(
-        alignment: Alignment.topCenter,
-        child: LayoutBuilder(
-            builder: (context, c) => Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Expanded(
-                      child: ClipRRect(
+      alignment: Alignment.topCenter,
+      child: LayoutBuilder(
+        builder: (context, c) => Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(roundedBody ? 12.0 : 0),
+                child: CustomScrollView(
+                  slivers: [
+                    if (header != null)
+                      SliverAppBar(
+                        bottom: headerBottom == null
+                            ? null
+                            : PreferredSize(
+                                preferredSize: const Size.fromHeight(0),
+                                child: headerBottom!),
+                        automaticallyImplyLeading: false,
+                        elevation: 0,
+                        backgroundColor: Colors.transparent,
+                        expandedHeight:
+                            headerHeight ?? (c.maxWidth * 0.5).clamp(300, 400),
+                        flexibleSpace: ClipRRect(
                           borderRadius:
-                              BorderRadius.circular(roundedBody ? 12.0 : 0),
-                          child: CustomScrollView(slivers: [
-                            if (header != null)
-                              SliverAppBar(
-                                  bottom: headerBottom == null
-                                      ? null
-                                      : PreferredSize(
-                                          preferredSize:
-                                              const Size.fromHeight(0),
-                                          child: headerBottom!),
-                                  automaticallyImplyLeading: false,
-                                  elevation: 0,
-                                  backgroundColor: Colors.transparent,
-                                  expandedHeight: headerHeight ??
-                                      (c.maxWidth * 0.5).clamp(300, 400),
-                                  flexibleSpace: ClipRRect(
-                                    borderRadius: BorderRadius.circular(
-                                        roundedHeader ? 12.0 : 0),
-                                    child: FlexibleSpaceBar(
-                                        //collapseMode: CollapseMode.none,
-                                        background: header),
-                                  )), //expandedHeight: 600,
-                            if (body != null)
-                              SliverFillRemaining(
-                                  child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: AppTheme.PADDING_SIDE),
-                                child: body,
-                              )),
-                            if (children != null)
-                              SliverList(
-                                  delegate: SliverChildListDelegate([
-                                Container(
-                                  height: 20,
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: AppTheme.PADDING_SIDE),
-                                  alignment: Alignment.topCenter,
-                                  child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.stretch,
-                                      children: children ?? []),
-                                ),
-                              ])),
-                          ])),
-                    )
+                              BorderRadius.circular(roundedHeader ? 12.0 : 0),
+                          child: FlexibleSpaceBar(
+                              //collapseMode: CollapseMode.none,
+                              background: header),
+                        ),
+                      ), //expandedHeight: 600,
+                    if (body != null)
+                      SliverFillRemaining(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: AppTheme.PADDING_SIDE),
+                          child: body,
+                        ),
+                      ),
+                    if (children != null)
+                      SliverList(
+                        delegate: SliverChildListDelegate(
+                          [
+                            Container(
+                              height: 20,
+                            ),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: AppTheme.PADDING_SIDE),
+                              alignment: Alignment.topCenter,
+                              child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: children ?? []),
+                            ),
+                          ],
+                        ),
+                      ),
                   ],
-                )));
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 
   @override

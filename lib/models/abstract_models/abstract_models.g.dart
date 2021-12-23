@@ -16,6 +16,18 @@ Map<String, dynamic> _$DatabaseDocumentToJson(DatabaseDocument instance) =>
       'id': instance.id,
     };
 
+GeneratedDocument _$GeneratedDocumentFromJson(Map<String, dynamic> json) =>
+    GeneratedDocument(
+      id: json['id'],
+      creationTime: dateFromJson(json['creationTime'] as int),
+    );
+
+Map<String, dynamic> _$GeneratedDocumentToJson(GeneratedDocument instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'creationTime': dateToJson(instance.creationTime),
+    };
+
 UserGeneratedDocument _$UserGeneratedDocumentFromJson(
         Map<String, dynamic> json) =>
     UserGeneratedDocument(
@@ -28,6 +40,6 @@ Map<String, dynamic> _$UserGeneratedDocumentToJson(
         UserGeneratedDocument instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'author': instance.author.toJson(),
       'creationTime': dateToJson(instance.creationTime),
+      'author': instance.author.toJson(),
     };

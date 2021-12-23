@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:fingerfunke_app/common_widgets/helper_widgets.dart';
 import 'package:fingerfunke_app/utils/dev_tools.dart';
+import 'package:fingerfunke_app/utils/tools.dart';
 import 'package:flutter/material.dart';
 
 class VideoRecorderPage extends StatelessWidget {
@@ -7,8 +10,8 @@ class VideoRecorderPage extends StatelessWidget {
 
   const VideoRecorderPage({Key? key}) : super(key: key);
 
-  static Route route({Key? key}) {
-    return MaterialPageRoute<void>(
+  static Route<File?> route({Key? key}) {
+    return MaterialPageRoute(
         builder: (_) => VideoRecorderPage(key: key),
         settings: const RouteSettings(name: "VideoEditor"));
   }
@@ -22,7 +25,12 @@ class VideoRecorderPage extends StatelessWidget {
 
   Widget _recordButton(BuildContext context) {
     return InkWell(
-        onTap: () => DevTools.showToDoSnackbar(context),
+        onTap: () async {
+          DevTools.showToDoSnackbar(context);
+         final File video = await Tools.getImageFileFromAssets('vid/mux_test_video.mp4');
+         Navigator.of(context).pop(video);
+
+        } ,
         child: Container(
             padding: EdgeInsets.all(17),
             decoration: BoxDecoration(
@@ -30,7 +38,7 @@ class VideoRecorderPage extends StatelessWidget {
             child: const Icon(
               Icons.camera_rounded,
               color: Colors.white,
-            )));
+            ),),);
   }
 
   @override
