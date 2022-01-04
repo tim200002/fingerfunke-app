@@ -60,6 +60,27 @@ class VideoRecorderCubit extends Cubit<VideoRecorderState> {
         onError: _emitError);
   }
 
+  void deleteRecording(VideoPlayerController controller, String filePath) {
+    _emitLoading();
+    controller.dispose().then(
+        (_) => _deleteRecording(filePath)
+            .then((_) => openCamera(), onError: _emitError),
+        onError: _emitError);
+  }
+
+  @override
+  Future<void> close() {
+    state.whenOrNull(
+        camera: (controller, _) => controller.dispose(),
+        recording: (controller, _) => controller.dispose(),
+        viewing: (path, vidController) {
+          _deleteRecording(path);
+          vidController.dispose();
+        });
+
+    return super.close();
+  }
+
   /// helper function to emit an error state with less code
   void _emitError(dynamic error) => emit(VideoRecorderState.error(error));
 
@@ -83,6 +104,10 @@ class VideoRecorderCubit extends Cubit<VideoRecorderState> {
     await videoPlayerController.setLooping(true);
     await videoPlayerController.play();
     return videoPlayerController;
+  }
+
+  Future<void> _deleteRecording(String filePath) async {
+    await File(filePath).delete();
   }
 
   Future<CameraController> _prepareCamera(CameraSettings settings) async {

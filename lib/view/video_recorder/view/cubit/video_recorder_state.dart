@@ -6,7 +6,7 @@ class CameraSettings {
   bool timer;
 
   CameraSettings(
-      {this.frontCamera = false, this.flash = false, this.timer = false});
+      {this.frontCamera = true, this.flash = false, this.timer = false});
 
   CameraSettings copyWith({bool? frontCamera, bool? flash, bool? timer}) {
     return CameraSettings(

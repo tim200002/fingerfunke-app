@@ -2,6 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:fingerfunke_app/utils/dev_tools.dart';
 import 'package:fingerfunke_app/view/video_recorder/view/cubit/video_recorder_cubit.dart';
 import 'package:fingerfunke_app/view/video_recorder/view/video_recorder_page.dart';
+import 'package:fingerfunke_app/view/video_recorder/view/widgets/record_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/src/provider.dart';
 
@@ -44,10 +45,7 @@ class CameraView extends StatelessWidget {
         ),
         extendBodyBehindAppBar: true,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.redAccent.shade200,
-          foregroundColor: Colors.white,
-          child: const Icon(Icons.camera_rounded),
+        floatingActionButton: RecordButton.startButton(
           onPressed: () =>
               context.read<VideoRecorderCubit>().startRecording(controller),
         ),
