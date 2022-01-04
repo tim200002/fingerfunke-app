@@ -7,5 +7,17 @@ part 'video_recorder_state.dart';
 part 'video_recorder_cubit.freezed.dart';
 
 class VideoRecorderCubit extends Cubit<VideoRecorderState> {
-  VideoRecorderCubit() : super(VideoRecorderState.initial());
+  VideoRecorderCubit() : super(const VideoRecorderState.loading()) {
+    prepareRecording();
+  }
+
+  void prepareRecording() async {
+    final cameras = await availableCameras();
+    final mainCam =
+        cameras.firstWhere((c) => c.lensDirection == CameraLensDirection.back);
+    final _cameraController = CameraController(mainCam, ResolutionPreset.max);
+    await _cameraController.initialize();
+    await _cameraController.prepareForVideoRecording();
+    emit(VideoRecorderState.previewing(_cameraController));
+  }
 }
