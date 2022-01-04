@@ -3,7 +3,7 @@ part of 'video_recorder_cubit.dart';
 @freezed
 class VideoRecorderState with _$VideoRecorderState {
   const factory VideoRecorderState.loading() = _Loading;
-  const factory VideoRecorderState.error(String msg) = _Error;
+  const factory VideoRecorderState.error(dynamic err) = _Error;
 
   const factory VideoRecorderState.previewing(CameraController controller) =
       _Previewing;

@@ -38,16 +38,22 @@ class VideoRecorderPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<VideoRecorderCubit>(
         create: (context) => VideoRecorderCubit(),
-        child: Scaffold(
-            body: BlocBuilder<VideoRecorderCubit, VideoRecorderState>(
-                builder: (context, state) => state.when(
-                    loading: () => const LoadingView(),
-                    error: (msg) => DevTools.placeholder("use error widget"),
-                    previewing: (controller) =>
-                        PreviewingView(controller: controller),
-                    recording: (controller, time) =>
-                        RecordingView(startTime: time, controller: controller),
-                    viewing: (path, videoController) => ViewingView(
-                        filePath: path, videoController: videoController)))));
+        child: Theme(
+          data: Theme.of(context).copyWith(
+              appBarTheme: Theme.of(context)
+                  .appBarTheme
+                  .copyWith(foregroundColor: Colors.white)),
+          child: Scaffold(
+              body: BlocBuilder<VideoRecorderCubit, VideoRecorderState>(
+                  builder: (context, state) => state.when(
+                      loading: () => const LoadingView(),
+                      error: (msg) => DevTools.placeholder("use error widget"),
+                      previewing: (controller) =>
+                          PreviewingView(controller: controller),
+                      recording: (controller, time) => RecordingView(
+                          startTime: time, controller: controller),
+                      viewing: (path, videoController) => ViewingView(
+                          filePath: path, videoController: videoController)))),
+        ));
   }
 }

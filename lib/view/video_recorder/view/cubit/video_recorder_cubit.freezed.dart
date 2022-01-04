@@ -21,9 +21,9 @@ class _$VideoRecorderStateTearOff {
     return const _Loading();
   }
 
-  _Error error(String msg) {
+  _Error error(dynamic err) {
     return _Error(
-      msg,
+      err,
     );
   }
 
@@ -56,7 +56,7 @@ mixin _$VideoRecorderState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(String msg) error,
+    required TResult Function(dynamic err) error,
     required TResult Function(CameraController controller) previewing,
     required TResult Function(CameraController controller, int startTime)
         recording,
@@ -68,7 +68,7 @@ mixin _$VideoRecorderState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(String msg)? error,
+    TResult Function(dynamic err)? error,
     TResult Function(CameraController controller)? previewing,
     TResult Function(CameraController controller, int startTime)? recording,
     TResult Function(String filepath, VideoPlayerController videoController)?
@@ -78,7 +78,7 @@ mixin _$VideoRecorderState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(String msg)? error,
+    TResult Function(dynamic err)? error,
     TResult Function(CameraController controller)? previewing,
     TResult Function(CameraController controller, int startTime)? recording,
     TResult Function(String filepath, VideoPlayerController videoController)?
@@ -173,7 +173,7 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(String msg) error,
+    required TResult Function(dynamic err) error,
     required TResult Function(CameraController controller) previewing,
     required TResult Function(CameraController controller, int startTime)
         recording,
@@ -188,7 +188,7 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(String msg)? error,
+    TResult Function(dynamic err)? error,
     TResult Function(CameraController controller)? previewing,
     TResult Function(CameraController controller, int startTime)? recording,
     TResult Function(String filepath, VideoPlayerController videoController)?
@@ -201,7 +201,7 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(String msg)? error,
+    TResult Function(dynamic err)? error,
     TResult Function(CameraController controller)? previewing,
     TResult Function(CameraController controller, int startTime)? recording,
     TResult Function(String filepath, VideoPlayerController videoController)?
@@ -263,7 +263,7 @@ abstract class _Loading implements VideoRecorderState {
 abstract class _$ErrorCopyWith<$Res> {
   factory _$ErrorCopyWith(_Error value, $Res Function(_Error) then) =
       __$ErrorCopyWithImpl<$Res>;
-  $Res call({String msg});
+  $Res call({dynamic err});
 }
 
 /// @nodoc
@@ -277,13 +277,13 @@ class __$ErrorCopyWithImpl<$Res> extends _$VideoRecorderStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? msg = freezed,
+    Object? err = freezed,
   }) {
     return _then(_Error(
-      msg == freezed
-          ? _value.msg
-          : msg // ignore: cast_nullable_to_non_nullable
-              as String,
+      err == freezed
+          ? _value.err
+          : err // ignore: cast_nullable_to_non_nullable
+              as dynamic,
     ));
   }
 }
@@ -291,14 +291,14 @@ class __$ErrorCopyWithImpl<$Res> extends _$VideoRecorderStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Error implements _Error {
-  const _$_Error(this.msg);
+  const _$_Error(this.err);
 
   @override
-  final String msg;
+  final dynamic err;
 
   @override
   String toString() {
-    return 'VideoRecorderState.error(msg: $msg)';
+    return 'VideoRecorderState.error(err: $err)';
   }
 
   @override
@@ -306,11 +306,12 @@ class _$_Error implements _Error {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _Error &&
-            (identical(other.msg, msg) || other.msg == msg));
+            const DeepCollectionEquality().equals(other.err, err));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, msg);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(err));
 
   @JsonKey(ignore: true)
   @override
@@ -321,7 +322,7 @@ class _$_Error implements _Error {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(String msg) error,
+    required TResult Function(dynamic err) error,
     required TResult Function(CameraController controller) previewing,
     required TResult Function(CameraController controller, int startTime)
         recording,
@@ -329,27 +330,27 @@ class _$_Error implements _Error {
             String filepath, VideoPlayerController videoController)
         viewing,
   }) {
-    return error(msg);
+    return error(err);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(String msg)? error,
+    TResult Function(dynamic err)? error,
     TResult Function(CameraController controller)? previewing,
     TResult Function(CameraController controller, int startTime)? recording,
     TResult Function(String filepath, VideoPlayerController videoController)?
         viewing,
   }) {
-    return error?.call(msg);
+    return error?.call(err);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(String msg)? error,
+    TResult Function(dynamic err)? error,
     TResult Function(CameraController controller)? previewing,
     TResult Function(CameraController controller, int startTime)? recording,
     TResult Function(String filepath, VideoPlayerController videoController)?
@@ -357,7 +358,7 @@ class _$_Error implements _Error {
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error(msg);
+      return error(err);
     }
     return orElse();
   }
@@ -404,9 +405,9 @@ class _$_Error implements _Error {
 }
 
 abstract class _Error implements VideoRecorderState {
-  const factory _Error(String msg) = _$_Error;
+  const factory _Error(dynamic err) = _$_Error;
 
-  String get msg;
+  dynamic get err;
   @JsonKey(ignore: true)
   _$ErrorCopyWith<_Error> get copyWith => throw _privateConstructorUsedError;
 }
@@ -477,7 +478,7 @@ class _$_Previewing implements _Previewing {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(String msg) error,
+    required TResult Function(dynamic err) error,
     required TResult Function(CameraController controller) previewing,
     required TResult Function(CameraController controller, int startTime)
         recording,
@@ -492,7 +493,7 @@ class _$_Previewing implements _Previewing {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(String msg)? error,
+    TResult Function(dynamic err)? error,
     TResult Function(CameraController controller)? previewing,
     TResult Function(CameraController controller, int startTime)? recording,
     TResult Function(String filepath, VideoPlayerController videoController)?
@@ -505,7 +506,7 @@ class _$_Previewing implements _Previewing {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(String msg)? error,
+    TResult Function(dynamic err)? error,
     TResult Function(CameraController controller)? previewing,
     TResult Function(CameraController controller, int startTime)? recording,
     TResult Function(String filepath, VideoPlayerController videoController)?
@@ -642,7 +643,7 @@ class _$_Recording implements _Recording {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(String msg) error,
+    required TResult Function(dynamic err) error,
     required TResult Function(CameraController controller) previewing,
     required TResult Function(CameraController controller, int startTime)
         recording,
@@ -657,7 +658,7 @@ class _$_Recording implements _Recording {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(String msg)? error,
+    TResult Function(dynamic err)? error,
     TResult Function(CameraController controller)? previewing,
     TResult Function(CameraController controller, int startTime)? recording,
     TResult Function(String filepath, VideoPlayerController videoController)?
@@ -670,7 +671,7 @@ class _$_Recording implements _Recording {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(String msg)? error,
+    TResult Function(dynamic err)? error,
     TResult Function(CameraController controller)? previewing,
     TResult Function(CameraController controller, int startTime)? recording,
     TResult Function(String filepath, VideoPlayerController videoController)?
@@ -808,7 +809,7 @@ class _$_Viewing implements _Viewing {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(String msg) error,
+    required TResult Function(dynamic err) error,
     required TResult Function(CameraController controller) previewing,
     required TResult Function(CameraController controller, int startTime)
         recording,
@@ -823,7 +824,7 @@ class _$_Viewing implements _Viewing {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(String msg)? error,
+    TResult Function(dynamic err)? error,
     TResult Function(CameraController controller)? previewing,
     TResult Function(CameraController controller, int startTime)? recording,
     TResult Function(String filepath, VideoPlayerController videoController)?
@@ -836,7 +837,7 @@ class _$_Viewing implements _Viewing {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(String msg)? error,
+    TResult Function(dynamic err)? error,
     TResult Function(CameraController controller)? previewing,
     TResult Function(CameraController controller, int startTime)? recording,
     TResult Function(String filepath, VideoPlayerController videoController)?
