@@ -16,8 +16,28 @@ class VideoRecorderCubit extends Cubit<VideoRecorderState> {
 
   void openCamera() {
     _emitLoading();
-    _prepareCamera().then(
-        (controller) => emit(VideoRecorderState.previewing(controller)),
+    final settings = CameraSettings();
+    _prepareCamera(settings).then(
+        (controller) => emit(VideoRecorderState.camera(controller, settings)),
+        onError: (err) => _emitError);
+  }
+
+  void toggleTimer(CameraController controller, CameraSettings settings) {
+    settings = settings.copyWith(timer: !settings.timer);
+    //controller..setFlashMode(settings.flash ? FlashMode.torch : FlashMode.off);
+    emit(VideoRecorderState.camera(controller, settings));
+  }
+
+  void toggleFlash(CameraController controller, CameraSettings settings) {
+    settings = settings.copyWith(flash: !settings.flash);
+    controller.setFlashMode(settings.flash ? FlashMode.torch : FlashMode.off);
+    emit(VideoRecorderState.camera(controller, settings));
+  }
+
+  void toggleCamera(CameraController controller, CameraSettings settings) {
+    settings = settings.copyWith(frontCamera: !settings.frontCamera);
+    _prepareCamera(settings).then(
+        (controller) => emit(VideoRecorderState.camera(controller, settings)),
         onError: (err) => _emitError);
   }
 
@@ -53,6 +73,7 @@ class VideoRecorderCubit extends Cubit<VideoRecorderState> {
 
   Future<String> _finishRecording(CameraController controller) async {
     final file = await controller.stopVideoRecording();
+    controller.dispose();
     return file.path;
   }
 
@@ -64,11 +85,15 @@ class VideoRecorderCubit extends Cubit<VideoRecorderState> {
     return videoPlayerController;
   }
 
-  Future<CameraController> _prepareCamera() async {
+  Future<CameraController> _prepareCamera(CameraSettings settings) async {
     final cameras = await availableCameras();
-    final mainCam =
-        cameras.firstWhere((c) => c.lensDirection == CameraLensDirection.front);
-    final _cameraController = CameraController(mainCam, ResolutionPreset.max);
+    final mainCam = cameras.firstWhere((c) =>
+        c.lensDirection ==
+        (settings.frontCamera
+            ? CameraLensDirection.front
+            : CameraLensDirection.back));
+    final _cameraController =
+        CameraController(mainCam, ResolutionPreset.max, enableAudio: false);
     await _cameraController.initialize();
     await _cameraController.prepareForVideoRecording();
     return _cameraController;

@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:fingerfunke_app/utils/dev_tools.dart';
 import 'package:fingerfunke_app/view/video_recorder/view/cubit/video_recorder_cubit.dart';
-import 'package:fingerfunke_app/view/video_recorder/view/widgets/previewing_view.dart';
+import 'package:fingerfunke_app/view/video_recorder/view/widgets/camera_view.dart';
 import 'package:fingerfunke_app/view/video_recorder/view/widgets/recording_view.dart';
 import 'package:fingerfunke_app/view/video_recorder/view/widgets/viewing_view.dart';
 import 'package:flutter/material.dart';
@@ -48,8 +48,8 @@ class VideoRecorderPage extends StatelessWidget {
                   builder: (context, state) => state.when(
                       loading: () => const LoadingView(),
                       error: (msg) => DevTools.placeholder("use error widget"),
-                      previewing: (controller) =>
-                          PreviewingView(controller: controller),
+                      camera: (controller, settings) => CameraView(
+                          controller: controller, settings: settings),
                       recording: (controller, time) => RecordingView(
                           startTime: time, controller: controller),
                       viewing: (path, videoController) => ViewingView(
