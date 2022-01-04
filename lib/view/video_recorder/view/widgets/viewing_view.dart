@@ -24,7 +24,7 @@ class ViewingView extends StatelessWidget {
         floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.send_rounded),
           onPressed: () =>
-              DevTools.showToDoSnackbar(context, message: "upload video"),
+              DevTools.showToDoSnackbar(context, message: "process video"),
         ),
         extendBodyBehindAppBar: true,
         body: VideoPlayer(videoController));

@@ -15,18 +15,23 @@ class VideoRecorderCubit extends Cubit<VideoRecorderState> {
   }
 
   void openCamera() {
+    _emitLoading();
     _prepareCamera().then(
         (controller) => emit(VideoRecorderState.previewing(controller)),
         onError: (err) => _emitError);
   }
 
   void startRecording(CameraController controller) {
+    //We might have to discuss whether to add a 'loading transition'.
+    //in my opinion the 'lag' is short enough to not require it
+    //_emitLoading();
     _prepareRecording(controller).then(
         (time) => emit(VideoRecorderState.recording(controller, time)),
         onError: _emitError);
   }
 
   void stopRecording(CameraController controller) {
+    _emitLoading();
     _finishRecording(controller).then(
         (path) => _preparePlayback(path).then(
             (videoController) =>
@@ -37,6 +42,9 @@ class VideoRecorderCubit extends Cubit<VideoRecorderState> {
 
   /// helper function to emit an error state with less code
   void _emitError(dynamic error) => emit(VideoRecorderState.error(error));
+
+  /// helper function to emit a loading state with less code
+  void _emitLoading() => emit(const VideoRecorderState.loading());
 
   Future<UnixMs> _prepareRecording(CameraController controller) async {
     await controller.startVideoRecording();
