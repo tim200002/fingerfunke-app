@@ -45,6 +45,8 @@ class CameraView extends StatelessWidget {
         extendBodyBehindAppBar: true,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.redAccent.shade200,
+          foregroundColor: Colors.white,
           child: const Icon(Icons.camera_rounded),
           onPressed: () =>
               context.read<VideoRecorderCubit>().startRecording(controller),
