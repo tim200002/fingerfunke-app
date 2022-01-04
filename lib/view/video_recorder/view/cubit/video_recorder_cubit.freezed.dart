@@ -40,9 +40,10 @@ class _$VideoRecorderStateTearOff {
     );
   }
 
-  _Viewing viewing(String filepath) {
+  _Viewing viewing(String filepath, VideoPlayerController videoController) {
     return _Viewing(
       filepath,
+      videoController,
     );
   }
 }
@@ -59,7 +60,9 @@ mixin _$VideoRecorderState {
     required TResult Function(CameraController controller) previewing,
     required TResult Function(CameraController controller, int startTime)
         recording,
-    required TResult Function(String filepath) viewing,
+    required TResult Function(
+            String filepath, VideoPlayerController videoController)
+        viewing,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -68,7 +71,8 @@ mixin _$VideoRecorderState {
     TResult Function(String msg)? error,
     TResult Function(CameraController controller)? previewing,
     TResult Function(CameraController controller, int startTime)? recording,
-    TResult Function(String filepath)? viewing,
+    TResult Function(String filepath, VideoPlayerController videoController)?
+        viewing,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -77,7 +81,8 @@ mixin _$VideoRecorderState {
     TResult Function(String msg)? error,
     TResult Function(CameraController controller)? previewing,
     TResult Function(CameraController controller, int startTime)? recording,
-    TResult Function(String filepath)? viewing,
+    TResult Function(String filepath, VideoPlayerController videoController)?
+        viewing,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -172,7 +177,9 @@ class _$_Loading implements _Loading {
     required TResult Function(CameraController controller) previewing,
     required TResult Function(CameraController controller, int startTime)
         recording,
-    required TResult Function(String filepath) viewing,
+    required TResult Function(
+            String filepath, VideoPlayerController videoController)
+        viewing,
   }) {
     return loading();
   }
@@ -184,7 +191,8 @@ class _$_Loading implements _Loading {
     TResult Function(String msg)? error,
     TResult Function(CameraController controller)? previewing,
     TResult Function(CameraController controller, int startTime)? recording,
-    TResult Function(String filepath)? viewing,
+    TResult Function(String filepath, VideoPlayerController videoController)?
+        viewing,
   }) {
     return loading?.call();
   }
@@ -196,7 +204,8 @@ class _$_Loading implements _Loading {
     TResult Function(String msg)? error,
     TResult Function(CameraController controller)? previewing,
     TResult Function(CameraController controller, int startTime)? recording,
-    TResult Function(String filepath)? viewing,
+    TResult Function(String filepath, VideoPlayerController videoController)?
+        viewing,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -316,7 +325,9 @@ class _$_Error implements _Error {
     required TResult Function(CameraController controller) previewing,
     required TResult Function(CameraController controller, int startTime)
         recording,
-    required TResult Function(String filepath) viewing,
+    required TResult Function(
+            String filepath, VideoPlayerController videoController)
+        viewing,
   }) {
     return error(msg);
   }
@@ -328,7 +339,8 @@ class _$_Error implements _Error {
     TResult Function(String msg)? error,
     TResult Function(CameraController controller)? previewing,
     TResult Function(CameraController controller, int startTime)? recording,
-    TResult Function(String filepath)? viewing,
+    TResult Function(String filepath, VideoPlayerController videoController)?
+        viewing,
   }) {
     return error?.call(msg);
   }
@@ -340,7 +352,8 @@ class _$_Error implements _Error {
     TResult Function(String msg)? error,
     TResult Function(CameraController controller)? previewing,
     TResult Function(CameraController controller, int startTime)? recording,
-    TResult Function(String filepath)? viewing,
+    TResult Function(String filepath, VideoPlayerController videoController)?
+        viewing,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -468,7 +481,9 @@ class _$_Previewing implements _Previewing {
     required TResult Function(CameraController controller) previewing,
     required TResult Function(CameraController controller, int startTime)
         recording,
-    required TResult Function(String filepath) viewing,
+    required TResult Function(
+            String filepath, VideoPlayerController videoController)
+        viewing,
   }) {
     return previewing(controller);
   }
@@ -480,7 +495,8 @@ class _$_Previewing implements _Previewing {
     TResult Function(String msg)? error,
     TResult Function(CameraController controller)? previewing,
     TResult Function(CameraController controller, int startTime)? recording,
-    TResult Function(String filepath)? viewing,
+    TResult Function(String filepath, VideoPlayerController videoController)?
+        viewing,
   }) {
     return previewing?.call(controller);
   }
@@ -492,7 +508,8 @@ class _$_Previewing implements _Previewing {
     TResult Function(String msg)? error,
     TResult Function(CameraController controller)? previewing,
     TResult Function(CameraController controller, int startTime)? recording,
-    TResult Function(String filepath)? viewing,
+    TResult Function(String filepath, VideoPlayerController videoController)?
+        viewing,
     required TResult orElse(),
   }) {
     if (previewing != null) {
@@ -629,7 +646,9 @@ class _$_Recording implements _Recording {
     required TResult Function(CameraController controller) previewing,
     required TResult Function(CameraController controller, int startTime)
         recording,
-    required TResult Function(String filepath) viewing,
+    required TResult Function(
+            String filepath, VideoPlayerController videoController)
+        viewing,
   }) {
     return recording(controller, startTime);
   }
@@ -641,7 +660,8 @@ class _$_Recording implements _Recording {
     TResult Function(String msg)? error,
     TResult Function(CameraController controller)? previewing,
     TResult Function(CameraController controller, int startTime)? recording,
-    TResult Function(String filepath)? viewing,
+    TResult Function(String filepath, VideoPlayerController videoController)?
+        viewing,
   }) {
     return recording?.call(controller, startTime);
   }
@@ -653,7 +673,8 @@ class _$_Recording implements _Recording {
     TResult Function(String msg)? error,
     TResult Function(CameraController controller)? previewing,
     TResult Function(CameraController controller, int startTime)? recording,
-    TResult Function(String filepath)? viewing,
+    TResult Function(String filepath, VideoPlayerController videoController)?
+        viewing,
     required TResult orElse(),
   }) {
     if (recording != null) {
@@ -718,7 +739,7 @@ abstract class _Recording implements VideoRecorderState {
 abstract class _$ViewingCopyWith<$Res> {
   factory _$ViewingCopyWith(_Viewing value, $Res Function(_Viewing) then) =
       __$ViewingCopyWithImpl<$Res>;
-  $Res call({String filepath});
+  $Res call({String filepath, VideoPlayerController videoController});
 }
 
 /// @nodoc
@@ -734,12 +755,17 @@ class __$ViewingCopyWithImpl<$Res>
   @override
   $Res call({
     Object? filepath = freezed,
+    Object? videoController = freezed,
   }) {
     return _then(_Viewing(
       filepath == freezed
           ? _value.filepath
           : filepath // ignore: cast_nullable_to_non_nullable
               as String,
+      videoController == freezed
+          ? _value.videoController
+          : videoController // ignore: cast_nullable_to_non_nullable
+              as VideoPlayerController,
     ));
   }
 }
@@ -747,14 +773,16 @@ class __$ViewingCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Viewing implements _Viewing {
-  const _$_Viewing(this.filepath);
+  const _$_Viewing(this.filepath, this.videoController);
 
   @override
   final String filepath;
+  @override
+  final VideoPlayerController videoController;
 
   @override
   String toString() {
-    return 'VideoRecorderState.viewing(filepath: $filepath)';
+    return 'VideoRecorderState.viewing(filepath: $filepath, videoController: $videoController)';
   }
 
   @override
@@ -763,11 +791,13 @@ class _$_Viewing implements _Viewing {
         (other.runtimeType == runtimeType &&
             other is _Viewing &&
             (identical(other.filepath, filepath) ||
-                other.filepath == filepath));
+                other.filepath == filepath) &&
+            (identical(other.videoController, videoController) ||
+                other.videoController == videoController));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, filepath);
+  int get hashCode => Object.hash(runtimeType, filepath, videoController);
 
   @JsonKey(ignore: true)
   @override
@@ -782,9 +812,11 @@ class _$_Viewing implements _Viewing {
     required TResult Function(CameraController controller) previewing,
     required TResult Function(CameraController controller, int startTime)
         recording,
-    required TResult Function(String filepath) viewing,
+    required TResult Function(
+            String filepath, VideoPlayerController videoController)
+        viewing,
   }) {
-    return viewing(filepath);
+    return viewing(filepath, videoController);
   }
 
   @override
@@ -794,9 +826,10 @@ class _$_Viewing implements _Viewing {
     TResult Function(String msg)? error,
     TResult Function(CameraController controller)? previewing,
     TResult Function(CameraController controller, int startTime)? recording,
-    TResult Function(String filepath)? viewing,
+    TResult Function(String filepath, VideoPlayerController videoController)?
+        viewing,
   }) {
-    return viewing?.call(filepath);
+    return viewing?.call(filepath, videoController);
   }
 
   @override
@@ -806,11 +839,12 @@ class _$_Viewing implements _Viewing {
     TResult Function(String msg)? error,
     TResult Function(CameraController controller)? previewing,
     TResult Function(CameraController controller, int startTime)? recording,
-    TResult Function(String filepath)? viewing,
+    TResult Function(String filepath, VideoPlayerController videoController)?
+        viewing,
     required TResult orElse(),
   }) {
     if (viewing != null) {
-      return viewing(filepath);
+      return viewing(filepath, videoController);
     }
     return orElse();
   }
@@ -857,9 +891,11 @@ class _$_Viewing implements _Viewing {
 }
 
 abstract class _Viewing implements VideoRecorderState {
-  const factory _Viewing(String filepath) = _$_Viewing;
+  const factory _Viewing(
+      String filepath, VideoPlayerController videoController) = _$_Viewing;
 
   String get filepath;
+  VideoPlayerController get videoController;
   @JsonKey(ignore: true)
   _$ViewingCopyWith<_Viewing> get copyWith =>
       throw _privateConstructorUsedError;

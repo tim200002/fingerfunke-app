@@ -10,7 +10,8 @@ class VideoRecorderState with _$VideoRecorderState {
   const factory VideoRecorderState.recording(
       CameraController controller, UnixMs startTime) = _Recording;
 
-  const factory VideoRecorderState.viewing(String filepath) = _Viewing;
+  const factory VideoRecorderState.viewing(
+      String filepath, VideoPlayerController videoController) = _Viewing;
 
   //for simplicity these states are covered by 'loading' for now
   //const factory VideoRecorderState.saving() = _Saving;

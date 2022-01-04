@@ -6,6 +6,8 @@ class LoadingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DevTools.placeholder("recording loading view");
+    return const Center(
+      child: CircularProgressIndicator.adaptive(),
+    );
   }
 }
