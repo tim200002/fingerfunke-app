@@ -14,8 +14,7 @@ class VideoUploadTile extends StatelessWidget {
   static const double abortButtonRadius = 20;
 
   const VideoUploadTile(
-      {
-      required this.cubit,
+      {required this.cubit,
       required this.onAbort,
       required this.width,
       required this.height,
@@ -25,33 +24,36 @@ class VideoUploadTile extends StatelessWidget {
   Widget abortButton() {
     return Align(
       alignment: Alignment.topRight,
-      child: CircleAvatar(
-        radius: abortButtonRadius,
-        backgroundColor: Colors.redAccent,
-        child: IconButton(
-          onPressed: () => onAbort(cubit.id),
-          icon: const Icon(
-            Icons.close,
-          ),
+      child: /*Container(
+        margin: EdgeInsets.all(5),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: Colors.green,
+        ),
+        child: */
+          IconButton(
+        padding: EdgeInsets.all(10),
+        onPressed: () => onAbort(cubit.id),
+        icon: const Icon(
+          Icons.close_rounded,
         ),
       ),
     );
   }
 
   Widget getImage(Uint8List? thumbnail) {
-    if (thumbnail != null) {
-      return Image(
-        image: MemoryImage(thumbnail),
-        height: height - abortButtonRadius,
-        width: width - abortButtonRadius,
-        fit: BoxFit.cover,
-      );
-    }
-    return Container(
-      color: Colors.grey,
-      height: height - abortButtonRadius,
-      width: width - abortButtonRadius,
-    );
+    return ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: Container(
+            color: Colors.grey,
+            child: (thumbnail == null)
+                ? null
+                : Image(
+                    image: MemoryImage(thumbnail),
+                    height: height,
+                    width: width,
+                    fit: BoxFit.cover,
+                  )));
   }
 
   Widget loadingTile(Uint8List? thumbnail) {
