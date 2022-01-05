@@ -1,6 +1,8 @@
 import 'package:fingerfunke_app/utils/dev_tools.dart';
 import 'package:flutter/material.dart';
 
+/// Widget to consume the `Loading` state of the `VideoRecorderCubit`.
+/// Might need additional styling to allow for more natural transitions
 class LoadingView extends StatelessWidget {
   const LoadingView({Key? key}) : super(key: key);
 

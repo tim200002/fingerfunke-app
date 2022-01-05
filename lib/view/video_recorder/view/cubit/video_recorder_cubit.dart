@@ -9,11 +9,18 @@ import 'package:video_player/video_player.dart';
 part 'video_recorder_state.dart';
 part 'video_recorder_cubit.freezed.dart';
 
+/// Cubit for recording video with the accompaniing editor. Allows the
+/// seamless transition between previewing, recording and viewing the result
+/// while handling the management of resources and memory
 class VideoRecorderCubit extends Cubit<VideoRecorderState> {
   VideoRecorderCubit() : super(const VideoRecorderState.loading()) {
     openCamera();
   }
 
+  /// emit `camera` state after preparing the camera controllers.
+  /// Interjects the `loading` state
+  ///
+  /// Emits the `error` state if any exception occurs
   void openCamera() {
     _emitLoading();
     final settings = CameraSettings();
@@ -22,18 +29,21 @@ class VideoRecorderCubit extends Cubit<VideoRecorderState> {
         onError: (err) => _emitError);
   }
 
+  /// emit the `camera` state after changing the CameraSettings object
   void toggleTimer(CameraController controller, CameraSettings settings) {
     settings = settings.copyWith(timer: !settings.timer);
     //controller..setFlashMode(settings.flash ? FlashMode.torch : FlashMode.off);
     emit(VideoRecorderState.camera(controller, settings));
   }
 
+  /// emit the `camera` state after changing the CameraSettings object
   void toggleFlash(CameraController controller, CameraSettings settings) {
     settings = settings.copyWith(flash: !settings.flash);
     controller.setFlashMode(settings.flash ? FlashMode.torch : FlashMode.off);
     emit(VideoRecorderState.camera(controller, settings));
   }
 
+  /// emit the `camera` state after changing the CameraSettings object
   void toggleCamera(CameraController controller, CameraSettings settings) {
     settings = settings.copyWith(frontCamera: !settings.frontCamera);
     _prepareCamera(settings).then(
@@ -41,6 +51,11 @@ class VideoRecorderCubit extends Cubit<VideoRecorderState> {
         onError: (err) => _emitError);
   }
 
+  /// emit `recording` state after preparing for recording.
+  /// Does not utilize the loading state, as this process seems to be
+  /// sufficiently fast and no disposing of relevant objects is neccessary
+  ///
+  /// Emits the `error` state if any exception occurs
   void startRecording(CameraController controller) {
     //We might have to discuss whether to add a 'loading transition'.
     //in my opinion the 'lag' is short enough to not require it
@@ -50,6 +65,10 @@ class VideoRecorderCubit extends Cubit<VideoRecorderState> {
         onError: _emitError);
   }
 
+  /// emit `viewing` state after finishing and saving the recording to file.
+  /// Interjects the `loading` state
+  ///
+  /// Emits the `error` state if any exception occurs
   void stopRecording(CameraController controller) {
     _emitLoading();
     _finishRecording(controller).then(
@@ -60,6 +79,11 @@ class VideoRecorderCubit extends Cubit<VideoRecorderState> {
         onError: _emitError);
   }
 
+  /// emit `camera` state after deleting the recording and disposing the
+  /// viewing controllers.
+  /// Interjects the `loading` state
+  ///
+  /// Emits the `error` state if any exception occurs
   void deleteRecording(VideoPlayerController controller, String filePath) {
     _emitLoading();
     controller.dispose().then(
@@ -68,6 +92,9 @@ class VideoRecorderCubit extends Cubit<VideoRecorderState> {
         onError: _emitError);
   }
 
+  /// emit `submitted` state after disposing viewing controllers.
+  ///
+  /// Emits the `error` state if any exception occurs
   void submitRecording(VideoPlayerController controller, String filePath) {
     _emitLoading();
     controller.dispose().then(

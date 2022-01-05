@@ -8,6 +8,8 @@ import 'package:provider/src/provider.dart';
 
 const videoLenghSec = 10;
 
+/// Widget to consume the `Recording` state of the `VideoRecorderCubit`.
+/// Is present while a video is actively being recorded
 class RecordingView extends StatelessWidget {
   final CameraController controller;
   final UnixMs startTime;

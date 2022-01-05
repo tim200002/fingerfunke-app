@@ -11,6 +11,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'widgets/loading_view.dart';
 
+/// This is the UI for recording video content within the App. The result will
+/// be passed back through the Navigator as a `File` object.
+/// The Widget allows the user to record, and then view a custom video
 class VideoRecorderPage extends StatelessWidget {
   static const videoHeroTag = "video_recorder_video";
 

@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 
+/// Button to enable the user to record video with an upper time limit in
+/// seconds [maxSeconds].
+/// The button will show the user how much time is left for his recording and
+/// trigger the [onPressed] function automatically after the time has elapsed
 class RecordButton extends StatefulWidget {
-  static const Color color = Colors.greenAccent;
+  static const Color color = Color(0xFFB2DFDB); // Colors.teal.shade100;
   static const double size = 80;
   static const double _margin = 10;
   static const heroTag = "video_recorder_button";
 
   final int maxSeconds;
   final Function() onPressed;
-  //final Function()? onFinished;
   const RecordButton(
       {Key? key, required this.maxSeconds, required this.onPressed})
       : super(key: key);

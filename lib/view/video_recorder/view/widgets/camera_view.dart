@@ -6,6 +6,9 @@ import 'package:fingerfunke_app/view/video_recorder/view/widgets/record_button.d
 import 'package:flutter/material.dart';
 import 'package:provider/src/provider.dart';
 
+/// Widget to consume the `Previewing` state of the `VideoRecorderCubit`.
+/// Shows the current capture of the selected camera and allows the user to
+/// change different parameters for the camera.
 class CameraView extends StatelessWidget {
   final CameraController controller;
   final CameraSettings settings;

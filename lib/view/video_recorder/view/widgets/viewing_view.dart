@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/src/provider.dart';
 import 'package:video_player/video_player.dart';
 
+/// Widget to consume the `Viewing` state of the `VideoRecorderCubit`.
+/// Allows the user to view, and then submit or reject the video that was
+/// recorded
 class ViewingView extends StatelessWidget {
   final String filePath;
   final VideoPlayerController videoController;
