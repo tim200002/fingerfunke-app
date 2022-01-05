@@ -22,10 +22,10 @@ class ViewingView extends StatelessWidget {
           title: const Text('Preview'),
         ),
         floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.send_rounded),
-          onPressed: () =>
-              DevTools.showToDoSnackbar(context, message: "process video"),
-        ),
+            child: const Icon(Icons.send_rounded),
+            onPressed: () => context
+                .read<VideoRecorderCubit>()
+                .submitRecording(videoController, filePath)),
         extendBodyBehindAppBar: true,
         body: VideoPlayer(videoController));
   }

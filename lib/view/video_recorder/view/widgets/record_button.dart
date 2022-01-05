@@ -8,12 +8,9 @@ class RecordButton extends StatefulWidget {
 
   final int maxSeconds;
   final Function() onPressed;
-  final Function()? onFinished;
+  //final Function()? onFinished;
   const RecordButton(
-      {Key? key,
-      required this.maxSeconds,
-      required this.onPressed,
-      this.onFinished})
+      {Key? key, required this.maxSeconds, required this.onPressed})
       : super(key: key);
 
   @override
@@ -49,7 +46,7 @@ class _RecordButtonState extends State<RecordButton>
   @override
   void initState() {
     _controller.addStatusListener((status) {
-      if (status == AnimationStatus.completed) widget.onFinished?.call();
+      if (status == AnimationStatus.completed) widget.onPressed.call();
     });
     super.initState();
   }

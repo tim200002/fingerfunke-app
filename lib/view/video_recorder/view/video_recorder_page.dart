@@ -44,10 +44,18 @@ class VideoRecorderPage extends StatelessWidget {
                   .appBarTheme
                   .copyWith(foregroundColor: Colors.white)),
           child: Scaffold(
-              body: BlocBuilder<VideoRecorderCubit, VideoRecorderState>(
+              body: BlocConsumer<VideoRecorderCubit, VideoRecorderState>(
+                  listener: (context, state) {
+                    state.whenOrNull(
+                      submitted: (path) =>
+                          Navigator.of(context).pop(File(path)),
+                    );
+                  },
                   builder: (context, state) => state.when(
                       loading: () => const LoadingView(),
                       error: (msg) => DevTools.placeholder("use error widget"),
+                      submitted: (msg) =>
+                          DevTools.placeholder("this should not be reachable"),
                       camera: (controller, settings) => CameraView(
                           controller: controller, settings: settings),
                       recording: (controller, time) => RecordingView(

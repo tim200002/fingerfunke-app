@@ -68,6 +68,13 @@ class VideoRecorderCubit extends Cubit<VideoRecorderState> {
         onError: _emitError);
   }
 
+  void submitRecording(VideoPlayerController controller, String filePath) {
+    _emitLoading();
+    controller.dispose().then(
+        (_) => emit(VideoRecorderState.submitted(filePath)),
+        onError: _emitError);
+  }
+
   @override
   Future<void> close() {
     state.whenOrNull(
@@ -94,7 +101,7 @@ class VideoRecorderCubit extends Cubit<VideoRecorderState> {
 
   Future<String> _finishRecording(CameraController controller) async {
     final file = await controller.stopVideoRecording();
-    controller.dispose();
+    await controller.dispose();
     return file.path;
   }
 

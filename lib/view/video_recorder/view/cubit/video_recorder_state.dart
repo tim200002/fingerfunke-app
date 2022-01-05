@@ -25,12 +25,8 @@ class VideoRecorderState with _$VideoRecorderState {
       CameraController controller, CameraSettings cameraSettings) = _Previewing;
   const factory VideoRecorderState.recording(
       CameraController controller, UnixMs startTime) = _Recording;
-
   const factory VideoRecorderState.viewing(
       String filepath, VideoPlayerController videoController) = _Viewing;
-
-  //for simplicity these states are covered by 'loading' for now
-  //const factory VideoRecorderState.saving() = _Saving;
-  //const factory VideoRecorderState.sending(String filepath) = _Sending;
-
+  const factory VideoRecorderState.submitted(
+      String filePath) = _Submitted;
 }

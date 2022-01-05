@@ -64,7 +64,7 @@ class _ProfileSection extends StatelessWidget {
                               //fit: StackFit.passthrough,
                               children: [
                                 UserImage(
-                                  user.picture!.downloadUrl,
+                                  user.picture?.downloadUrl,
                                   diameter: userImageSize.round(),
                                 ),
                                 Align(
