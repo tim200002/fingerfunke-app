@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
+  // TODO: change variable to function, to allow for Textsize change
   static final mainTheme = ThemeData(
       canvasColor: Colors.white,
       textButtonTheme: TextButtonThemeData(
@@ -26,6 +27,24 @@ class AppTheme {
               fontWeight: FontWeight.bold, fontSize: 26, color: Colors.black),
           headline4: TextStyle(fontWeight: FontWeight.bold, fontSize: 22, color: Colors.black)),
       appBarTheme: const AppBarTheme(elevation: 0, centerTitle: true, backgroundColor: Colors.transparent, foregroundColor: Colors.black));
+
+  static final darkTheme = ThemeData.dark().copyWith(
+    textButtonTheme: TextButtonThemeData(
+        style: ButtonStyle(
+            padding: MaterialStateProperty.all<EdgeInsets>(
+                const EdgeInsets.all(20)))),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ButtonStyle(
+            elevation: MaterialStateProperty.all<double>(0),
+            padding: MaterialStateProperty.all<EdgeInsets>(
+                const EdgeInsets.all(13)),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                    side: const BorderSide(color: Colors.red))))),
+  );
+
+
 
   static TextStyle textStyleAccent({TextStyle? style}) =>
       GoogleFonts.calistoga(textStyle: style);
