@@ -114,9 +114,7 @@ class PostEditingView extends StatelessWidget {
                   color: Colors.teal.shade100,
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: const Center(
-                  child: Text("TODO:\nPostVideo"),
-                ),
+                child: const Center(child: Icon(Icons.add_a_photo_outlined)),
               ),
       ),
     );

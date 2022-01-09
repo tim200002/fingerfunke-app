@@ -1,10 +1,19 @@
 import 'dart:io';
 
-import 'package:fingerfunke_app/common_widgets/helper_widgets.dart';
+import 'package:camera/camera.dart';
 import 'package:fingerfunke_app/utils/dev_tools.dart';
-import 'package:fingerfunke_app/utils/tools.dart';
+import 'package:fingerfunke_app/view/video_recorder/view/cubit/video_recorder_cubit.dart';
+import 'package:fingerfunke_app/view/video_recorder/view/widgets/camera_view.dart';
+import 'package:fingerfunke_app/view/video_recorder/view/widgets/recording_view.dart';
+import 'package:fingerfunke_app/view/video_recorder/view/widgets/viewing_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'widgets/loading_view.dart';
+
+/// This is the UI for recording video content within the App. The result will
+/// be passed back through the Navigator as a `File` object.
+/// The Widget allows the user to record, and then view a custom video
 class VideoRecorderPage extends StatelessWidget {
   static const videoHeroTag = "video_recorder_video";
 
@@ -16,48 +25,46 @@ class VideoRecorderPage extends StatelessWidget {
         settings: const RouteSettings(name: "VideoEditor"));
   }
 
-  Widget _cameraView(BuildContext context) {
-    return DevTools.placeholder(
-      "Video Recorder",
-      color: Colors.teal.shade100,
+  static Widget fullScreenCameraPreview(
+      double aspectRatio, CameraController controller) {
+    var scale = aspectRatio * controller.value.aspectRatio;
+
+    return Transform.scale(
+      scale: scale < 1 ? 1 / scale : scale,
+      child: Center(
+        child: CameraPreview(controller),
+      ),
     );
-  }
-
-  Widget _recordButton(BuildContext context) {
-    return InkWell(
-        onTap: () async {
-          DevTools.showToDoSnackbar(context);
-         final File video = await Tools.getImageFileFromAssets('vid/mux_test_video.mp4');
-         Navigator.of(context).pop(video);
-
-        } ,
-        child: Container(
-            padding: EdgeInsets.all(17),
-            decoration: BoxDecoration(
-                color: Colors.red, borderRadius: BorderRadius.circular(50)),
-            child: const Icon(
-              Icons.camera_rounded,
-              color: Colors.white,
-            ),),);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-            leading: IconButton(
-                icon: const Icon(Icons.close_rounded),
-                onPressed: () => Navigator.of(context).pop())),
-        extendBodyBehindAppBar: true,
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: _recordButton(context),
-        body: HelperWidgets.materialHero(
-          tag: videoHeroTag,
-          child: Stack(
-            children: [
-              _cameraView(context),
-            ],
-          ),
+    return BlocProvider<VideoRecorderCubit>(
+        create: (context) => VideoRecorderCubit(),
+        child: Theme(
+          data: Theme.of(context).copyWith(
+              appBarTheme: Theme.of(context)
+                  .appBarTheme
+                  .copyWith(foregroundColor: Colors.white)),
+          child: Scaffold(
+              body: BlocConsumer<VideoRecorderCubit, VideoRecorderState>(
+                  listener: (context, state) {
+                    state.whenOrNull(
+                      submitted: (path) =>
+                          Navigator.of(context).pop(File(path)),
+                    );
+                  },
+                  builder: (context, state) => state.when(
+                      loading: () => const LoadingView(),
+                      error: (msg) => DevTools.placeholder("use error widget"),
+                      submitted: (msg) =>
+                          DevTools.placeholder("this should not be reachable"),
+                      camera: (controller, settings) => CameraView(
+                          controller: controller, settings: settings),
+                      recording: (controller, time) => RecordingView(
+                          startTime: time, controller: controller),
+                      viewing: (path, videoController) => ViewingView(
+                          filePath: path, videoController: videoController)))),
         ));
   }
 }
