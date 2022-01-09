@@ -1,4 +1,8 @@
+import 'package:fingerfunke_app/common_widgets/image/network_placeholder_image.dart/network_placeholder_image.dart';
+import 'package:fingerfunke_app/models/asset/asset.dart';
+import 'package:fingerfunke_app/repositories/video_repository/video_repository.impl.dart';
 import 'package:fingerfunke_app/utils/dev_tools.dart';
+import 'package:fingerfunke_app/utils/util_widgets/loading_page.dart';
 import 'package:fingerfunke_app/utils/util_widgets/page_screen.dart';
 import 'package:fingerfunke_app/view/post/cubit/post_cubit.dart';
 import 'package:fingerfunke_app/view/post/view/post_view.dart';
@@ -17,12 +21,14 @@ class PostPage extends StatelessWidget {
   ];
 
   static final Widget _contentCardDecoration = Transform.translate(
-      offset: const Offset(0, 1),
-      child: Container(
-          height: 15,
-          decoration: const BoxDecoration(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
-              color: Colors.white)));
+    offset: const Offset(0, 1),
+    child: Container(
+      height: 15,
+      decoration: const BoxDecoration(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
+          color: Colors.white),
+    ),
+  );
 
   Widget _closeButton(BuildContext context) {
     return Container(
@@ -39,32 +45,27 @@ class PostPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final postId = ModalRoute.of(context)!.settings.arguments as String;
-    return PageScreen(
-      appBar: AppBar(leading: _closeButton(context)),
-      extendBodyBehindAppBar: true,
-      headerHeight: 200,
-      roundedBody: false,
-      roundedHeader: false,
-      header: DevTools.placeholder("Video"),
-      headerBottom: _contentCardDecoration,
-      children: [
-        BlocProvider(
-          create: (_) => PostCubit(postId),
-          child: Builder(builder: (context) {
-            return AnimatedSwitcher(
-              duration: const Duration(milliseconds: 100),
-              child: BlocBuilder<PostCubit, PostState>(
-                builder: (context, state) => state.when(
-                  loading: () => const Center(
-                    child: CircularProgressIndicator(),
+    return BlocProvider(
+      create: (_) => PostCubit(postId),
+      child: Builder(
+          builder: (context) => AnimatedSwitcher(
+                duration: const Duration(milliseconds: 100),
+                child: BlocBuilder<PostCubit, PostState>(
+                  builder: (context, state) => state.when(
+                    loading: () => const LoadingPage(),
+                    normal: (post) => PageScreen(
+                      appBar: AppBar(leading: _closeButton(context)),
+                      extendBodyBehindAppBar: true,
+                      headerHeight: 200,
+                      roundedBody: false,
+                      roundedHeader: false,
+                      header: NetworkPlaceholderImage(VideoRepositoryImpl().createThumbnailUrl(post.media[0] as VideoAsset), Container(color: Colors.grey,), width: MediaQuery.of(context).size.width.toInt(),),
+                      headerBottom: _contentCardDecoration,
+                      children: const [PostView()],
+                    ),
                   ),
-                  normal: (_) => const PostView(),
                 ),
-              ),
-            );
-          }),
-        )
-      ],
+              )),
     );
   }
 }

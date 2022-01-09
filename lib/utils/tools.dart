@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 
 class Tools {
   static showSnackbar(BuildContext context, String message) {
@@ -58,5 +62,14 @@ class Tools {
         return transformElement(element);
       }
     }).toList();
+  }
+
+  static Future<File> getImageFileFromAssets(String path) async{
+    final byteData = await rootBundle.load('assets/$path');
+
+    final file = File('${(await getTemporaryDirectory()).path}/mux_test_video.mp4');
+    await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+
+    return file;
   }
 }

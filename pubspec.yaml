@@ -52,6 +52,13 @@ dependencies:
   video_player: ^2.2.7
   settings_ui: ^1.0.0
   flutter_dotenv: ^5.0.2
+  intl: ^0.17.0
+  cloud_functions: ^3.2.1
+  dio: ^4.0.4
+  mime: ^1.0.1
+  path_provider: ^2.0.7
+  video_thumbnail: ^0.4.3
+  camera: ^0.9.4+5
   shared_preferences: ^2.0.9
   url_launcher: ^6.0.17
   modal_bottom_sheet: ^2.0.0
@@ -88,6 +95,7 @@ flutter:
     - assets/img/placeholder/
     - assets/img/illustrations/undraw/
     - assets/img/brand/
+    - assets/vid/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

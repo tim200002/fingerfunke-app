@@ -15,6 +15,8 @@ abstract class DocumentSerializable {
 class DatabaseDocument extends Equatable implements DocumentSerializable {
   final FirestoreId id;
 
+
+
   const DatabaseDocument({required this.id});
 
   @override
@@ -32,15 +34,34 @@ class DatabaseDocument extends Equatable implements DocumentSerializable {
 }
 
 @JsonSerializable(explicitToJson: true)
-class UserGeneratedDocument extends DatabaseDocument {
-  final UserInfo author;
-
+class GeneratedDocument extends DatabaseDocument{
   @JsonKey(toJson: dateToJson, fromJson: dateFromJson)
   final DateTime creationTime;
 
+  const GeneratedDocument(
+  {required id, required this.creationTime})
+  : super(id: id);
+
+  @override
+  Map<String, dynamic> toJson() => _$GeneratedDocumentToJson(this);
+
+  factory GeneratedDocument.fromJson(Map<String, dynamic> map) =>
+      _$GeneratedDocumentFromJson(map);
+
+  factory GeneratedDocument.fromDoc(DocumentSnapshot document) =>
+      GeneratedDocument.fromJson(documentSnaphsotToJson(document));
+
+  @override
+  List<Object?> get props => [id, creationTime];
+}
+
+@JsonSerializable(explicitToJson: true)
+class UserGeneratedDocument extends GeneratedDocument {
+  final UserInfo author;
+
   const UserGeneratedDocument(
-      {required id, required this.author, required this.creationTime})
-      : super(id: id);
+      {required id, required this.author, required DateTime creationTime})
+      : super(id: id, creationTime: creationTime);
 
   @override
   Map<String, dynamic> toJson() => _$UserGeneratedDocumentToJson(this);
@@ -52,5 +73,5 @@ class UserGeneratedDocument extends DatabaseDocument {
       UserGeneratedDocument.fromJson(documentSnaphsotToJson(document));
 
   @override
-  List<Object?> get props => [id, author];
+  List<Object?> get props => [id, author, creationTime];
 }

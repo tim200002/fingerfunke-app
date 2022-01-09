@@ -10,7 +10,7 @@ import 'package:uuid/uuid.dart';
 part 'message.g.dart';
 
 enum message_type { video, text }
-const message_typeEnumMap = {
+const _messageTypeEnumMap = {
   message_type.video: 'video',
   message_type.text: 'text',
 };
@@ -39,7 +39,7 @@ class Message extends UserGeneratedDocument {
   }
 
   factory Message.fromJson(Map<String, dynamic> map) {
-    switch ($enumDecode(_$message_typeEnumMap, map['type'])) {
+    switch ($enumDecode(_messageTypeEnumMap, map['type'])) {
       case message_type.video:
         {
           return VideoMessage.fromJson(map);
@@ -83,7 +83,7 @@ class VideoMessage extends Message {
       'id': id,
       'author': author.toJson(),
       'creationTime': dateToJson(creationTime),
-      'type': _$message_typeEnumMap[message_type.video],
+      'type': _messageTypeEnumMap[message_type.video],
       'video': video
     };
   }
@@ -135,7 +135,7 @@ class TextMessage extends Message {
       'id': id,
       'author': author.toJson(),
       'creationTime': dateToJson(creationTime),
-      'type': _$message_typeEnumMap[message_type.text],
+      'type': _messageTypeEnumMap[message_type.text],
       'text': text
     };
   }

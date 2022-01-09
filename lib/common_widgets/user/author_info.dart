@@ -14,7 +14,7 @@ class AuthorInfo extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(right: 6),
           child: UserImage(
-            _userInfo.picture,
+            _userInfo.picture?.downloadUrl,
             diameter: 27,
           ),
         ),
