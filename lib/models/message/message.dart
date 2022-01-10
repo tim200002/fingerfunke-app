@@ -7,8 +7,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:fingerfunke_app/utils/type_aliases.dart';
 import 'package:uuid/uuid.dart';
 
-part 'message.g.dart';
-
 enum message_type { video, text }
 const _messageTypeEnumMap = {
   message_type.video: 'video',
@@ -62,7 +60,6 @@ class Message extends UserGeneratedDocument {
   List<Object?> get props => [id, type, author, creationTime];
 }
 
-@JsonSerializable(explicitToJson: true)
 class VideoMessage extends Message {
   final Link video;
 
@@ -114,7 +111,6 @@ class VideoMessage extends Message {
   List<Object?> get props => [id, type, author, creationTime, video];
 }
 
-@JsonSerializable(explicitToJson: true)
 class TextMessage extends Message {
   final String text;
 
