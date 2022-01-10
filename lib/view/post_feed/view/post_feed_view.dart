@@ -9,16 +9,16 @@ class PostFeedView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
+    return /*ClipRRect(
       borderRadius: BorderRadius.circular(10),
-      child: PaginatedList<Post>(
-        firestorePaginationService: PostPaginationService(),
-        itemBuilder: (post) => PostFeedItem(
-          post,
-        ),
-        reverse: false,
-        endMessage: "there are no more events",
+      child:*/
+        PaginatedList<Post>(
+      firestorePaginationService: PostPaginationService(),
+      itemBuilder: (post) => PostFeedItem(
+        post,
       ),
+      reverse: false,
+      endMessage: "there are no more events",
     );
   }
 }

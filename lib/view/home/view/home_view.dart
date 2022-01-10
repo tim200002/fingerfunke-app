@@ -17,7 +17,7 @@ class HomeView extends StatelessWidget {
           padding: EdgeInsets.only(right: 5),
           child: Icon(Icons.place_rounded),
         ),
-        Text("Olymp")
+        Text("Berlin")
       ],
     );
   }

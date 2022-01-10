@@ -53,6 +53,7 @@ class PaginatedList<T> extends StatelessWidget {
             final listItemCount = state.items.length +
                 (state.isLoading || state.reachedEnd ? 1 : 0);
             return ListView.builder(
+              //clipBehavior: Clip.none,
               itemCount: listItemCount,
               shrinkWrap: shouldShrinkWrap != null
                   ? shouldShrinkWrap!(listItemCount)
