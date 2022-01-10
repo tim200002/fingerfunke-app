@@ -1,9 +1,11 @@
 import 'package:fingerfunke_app/common_widgets/image/network_placeholder_image.dart/network_placeholder_image.dart';
 import 'package:fingerfunke_app/models/asset/asset.dart';
+import 'package:fingerfunke_app/models/message/message.dart';
 import 'package:fingerfunke_app/repositories/video_repository/video_repository.impl.dart';
-import 'package:fingerfunke_app/utils/dev_tools.dart';
+import 'package:fingerfunke_app/services/pagination/message_pagination_service.dart';
 import 'package:fingerfunke_app/utils/util_widgets/loading_page.dart';
 import 'package:fingerfunke_app/utils/util_widgets/page_screen.dart';
+import 'package:fingerfunke_app/view/paginated_list/bloc/paginated_list_bloc.dart';
 import 'package:fingerfunke_app/view/post/cubit/post_cubit.dart';
 import 'package:fingerfunke_app/view/post/view/post_view.dart';
 import 'package:flutter/material.dart';
@@ -45,27 +47,47 @@ class PostPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final postId = ModalRoute.of(context)!.settings.arguments as String;
-    return BlocProvider(
-      create: (_) => PostCubit(postId),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<PostCubit>(
+          create: (_) => PostCubit(postId),
+        ),
+        // it makes sense to already provide the chat message cubit here
+        // so that when opening the chat initial messages are typically already loaded
+        // therefore we require the cubit to be instantly built -> lazy is set to false
+        BlocProvider(
+          create: (_) => PaginatedListBloc<Message>(
+              paginationService: MessagePaginationService(postId)),
+              lazy: false,
+        )
+      ],
       child: Builder(
-          builder: (context) => AnimatedSwitcher(
-                duration: const Duration(milliseconds: 100),
-                child: BlocBuilder<PostCubit, PostState>(
-                  builder: (context, state) => state.when(
-                    loading: () => const LoadingPage(),
-                    normal: (post) => PageScreen(
-                      appBar: AppBar(leading: _closeButton(context)),
-                      extendBodyBehindAppBar: true,
-                      headerHeight: 200,
-                      roundedBody: false,
-                      roundedHeader: false,
-                      header: NetworkPlaceholderImage(VideoRepositoryImpl().createThumbnailUrl(post.media[0] as VideoAsset), Container(color: Colors.grey,), width: MediaQuery.of(context).size.width.toInt(),),
-                      headerBottom: _contentCardDecoration,
-                      children: const [PostView()],
-                    ),
+        builder: (context) => AnimatedSwitcher(
+          duration: const Duration(milliseconds: 100),
+          child: BlocBuilder<PostCubit, PostState>(
+            builder: (context, state) => state.when(
+              loading: (_) => const LoadingPage(),
+              normal: (post) => PageScreen(
+                appBar: AppBar(leading: _closeButton(context)),
+                extendBodyBehindAppBar: true,
+                headerHeight: 200,
+                roundedBody: false,
+                roundedHeader: false,
+                header: NetworkPlaceholderImage(
+                  VideoRepositoryImpl()
+                      .createThumbnailUrl(post.media[0] as VideoAsset),
+                  Container(
+                    color: Colors.grey,
                   ),
+                  width: MediaQuery.of(context).size.width.toInt(),
                 ),
-              )),
+                headerBottom: _contentCardDecoration,
+                children:  [PostView(postId)],
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

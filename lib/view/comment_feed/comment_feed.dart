@@ -1,5 +1,4 @@
 import 'package:fingerfunke_app/models/message/message.dart';
-import 'package:fingerfunke_app/services/pagination/message_pagination_service.dart';
 import 'package:fingerfunke_app/view/comment_feed/widgets/text_comment.dart';
 import 'package:fingerfunke_app/view/comment_feed/widgets/video_comment.dart';
 import 'package:fingerfunke_app/view/paginated_list/view/paginated_list.dart';
@@ -18,7 +17,7 @@ class CommentFeed extends StatelessWidget {
       context: context,
       removeTop: true,
       child: PaginatedList<Message>(
-        firestorePaginationService: MessagePaginationService(_postId),
+        //firestorePaginationService: MessagePaginationService(_postId),
         itemBuilder: (message) {
           switch (message.type) {
             case message_type.text:

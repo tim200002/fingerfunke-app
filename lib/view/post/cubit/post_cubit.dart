@@ -17,7 +17,7 @@ class PostCubit extends Cubit<PostState> {
   late final StreamSubscription _postSubscription;
   PostCubit(FirestoreId postId, {PostRepository? postRepository})
       : _postRepository = postRepository ?? PostRepositoryImpl(),
-        super(const PostState.loading()) {
+        super(PostState.loading(postId)) {
     _postSubscription =
         _postRepository.subscribeToPost(postId).listen((Post post) {
       emit(PostState.normal(post));
