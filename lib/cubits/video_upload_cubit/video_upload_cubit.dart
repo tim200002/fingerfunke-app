@@ -11,6 +11,7 @@ import 'package:fingerfunke_app/models/user/user.dart';
 import 'package:fingerfunke_app/repositories/video_repository/video_repository.dart';
 import 'package:fingerfunke_app/repositories/video_repository/video_repository.impl.dart';
 import 'package:fingerfunke_app/utils/exceptions.dart';
+import 'package:flutter/material.dart';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:uuid/uuid.dart';
@@ -46,7 +47,7 @@ class VideoUploadCubit extends Cubit<VideoUploadState> {
     _uploadVideo(video);
   }
 
-  /// Sometimes we just want to be able to show an already existing asset
+  /// Sometimes we just want to be able to show an already existing asset (mainly when editing a post)
   /// This allows us to do this while keeping same function set mainly possibility to delete video
   VideoUploadCubit.fromExistingAsset(VideoAsset videoAsset, this.author)
       : super(const VideoUploadState.initial()) {
@@ -165,8 +166,9 @@ class VideoUploadCubit extends Cubit<VideoUploadState> {
 
   Future<void> _createThumbnailFromVideoFile(File video) async {
     try {
-      final Uint8List? thumbnail =
+      final Uint8List? thumbnailData =
           await VideoThumbnail.thumbnailData(video: video.path, quality: 50);
+      final ImageProvider? thumbnail = thumbnailData!=null?MemoryImage(thumbnailData):null;
       _updateThumbnail(thumbnail);
     } catch (err) {
       print("Could not create thumbnail from video file");
@@ -177,8 +179,7 @@ class VideoUploadCubit extends Cubit<VideoUploadState> {
     try {
       final String downloadUrl =
           _videoRepository.createThumbnailUrl(videoAsset);
-      final thumbnailFile = await _mediaCache.getSingleFile(downloadUrl);
-      final Uint8List thumbnail = await thumbnailFile.readAsBytes();
+      final thumbnail = await _mediaCache.getSingleImageFile(downloadUrl);
       _updateThumbnail(thumbnail);
     } catch (err) {
       print("Could not create thumbnail from Asset");
@@ -186,8 +187,8 @@ class VideoUploadCubit extends Cubit<VideoUploadState> {
   }
 
   /// return thumbnail information from current state
-  Uint8List? get thumbail {
-    Uint8List? thumbnail;
+  ImageProvider? get thumbail {
+    ImageProvider? thumbnail;
     state.whenOrNull(
         uploading: (_, thumb) => thumbnail = thumb,
         processing: (_, thumb) => thumbnail = thumb,
@@ -197,7 +198,7 @@ class VideoUploadCubit extends Cubit<VideoUploadState> {
   }
 
   /// update thumbnail by reemiiting current state just with updated thmbnail data
-  void _updateThumbnail(Uint8List? thumbnail) {
+  void _updateThumbnail(ImageProvider? thumbnail) {
     state.mapOrNull(
         uploading: (state) => emit(state.copyWith(thumbnail: thumbnail)),
         processing: (state) => emit(state.copyWith(thumbnail: thumbnail)),

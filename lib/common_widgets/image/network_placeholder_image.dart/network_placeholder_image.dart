@@ -28,7 +28,7 @@ class NetworkPlaceholderImage extends StatelessWidget {
               child: state.when(
                 loading: () => placeholder,
                 imageLoaded: (file) => Image(
-                  image: FileImage(file),
+                  image: file,
                   fit: fit,
                   width: width?.toDouble(),
                   height: height?.toDouble(),

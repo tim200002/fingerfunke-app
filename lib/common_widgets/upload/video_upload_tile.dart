@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'dart:typed_data';
 import 'package:fingerfunke_app/cubits/video_upload_cubit/video_upload_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,22 +40,24 @@ class VideoUploadTile extends StatelessWidget {
     );
   }
 
-  Widget getImage(Uint8List? thumbnail) {
+  Widget getImage(ImageProvider? thumbnail) {
     return ClipRRect(
-        borderRadius: BorderRadius.circular(10),
-        child: Container(
-            color: Colors.grey,
-            child: (thumbnail == null)
-                ? null
-                : Image(
-                    image: MemoryImage(thumbnail),
-                    height: height,
-                    width: width,
-                    fit: BoxFit.cover,
-                  )));
+      borderRadius: BorderRadius.circular(10),
+      child: Container(
+        color: Colors.grey,
+        child: (thumbnail == null)
+            ? null
+            : Image(
+                image: thumbnail,
+                height: height,
+                width: width,
+                fit: BoxFit.cover,
+              ),
+      ),
+    );
   }
 
-  Widget loadingTile(Uint8List? thumbnail) {
+  Widget loadingTile(ImageProvider? thumbnail) {
     return SizedBox(
       width: width,
       height: height,
@@ -68,7 +69,7 @@ class VideoUploadTile extends StatelessWidget {
     );
   }
 
-  Widget uploadedTile(Uint8List? thumbnail) {
+  Widget uploadedTile(ImageProvider? thumbnail) {
     return SizedBox(
       width: width,
       height: height,
@@ -79,7 +80,7 @@ class VideoUploadTile extends StatelessWidget {
     );
   }
 
-  Widget errorTile(Uint8List? thumbnail, context) {
+  Widget errorTile(ImageProvider? thumbnail, context) {
     return SizedBox(
       width: width,
       height: height,

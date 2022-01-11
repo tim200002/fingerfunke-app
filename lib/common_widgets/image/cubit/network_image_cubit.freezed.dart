@@ -21,7 +21,7 @@ class _$NetworkImageStateTearOff {
     return const _Loading();
   }
 
-  _ImageLoaded imageLoaded(File image) {
+  _ImageLoaded imageLoaded(ImageProvider<Object> image) {
     return _ImageLoaded(
       image,
     );
@@ -42,21 +42,21 @@ mixin _$NetworkImageState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(File image) imageLoaded,
+    required TResult Function(ImageProvider<Object> image) imageLoaded,
     required TResult Function(Object error) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(File image)? imageLoaded,
+    TResult Function(ImageProvider<Object> image)? imageLoaded,
     TResult Function(Object error)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(File image)? imageLoaded,
+    TResult Function(ImageProvider<Object> image)? imageLoaded,
     TResult Function(Object error)? error,
     required TResult orElse(),
   }) =>
@@ -141,7 +141,7 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(File image) imageLoaded,
+    required TResult Function(ImageProvider<Object> image) imageLoaded,
     required TResult Function(Object error) error,
   }) {
     return loading();
@@ -151,7 +151,7 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(File image)? imageLoaded,
+    TResult Function(ImageProvider<Object> image)? imageLoaded,
     TResult Function(Object error)? error,
   }) {
     return loading?.call();
@@ -161,7 +161,7 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(File image)? imageLoaded,
+    TResult Function(ImageProvider<Object> image)? imageLoaded,
     TResult Function(Object error)? error,
     required TResult orElse(),
   }) {
@@ -215,7 +215,7 @@ abstract class _$ImageLoadedCopyWith<$Res> {
   factory _$ImageLoadedCopyWith(
           _ImageLoaded value, $Res Function(_ImageLoaded) then) =
       __$ImageLoadedCopyWithImpl<$Res>;
-  $Res call({File image});
+  $Res call({ImageProvider<Object> image});
 }
 
 /// @nodoc
@@ -237,7 +237,7 @@ class __$ImageLoadedCopyWithImpl<$Res>
       image == freezed
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
-              as File,
+              as ImageProvider<Object>,
     ));
   }
 }
@@ -248,7 +248,7 @@ class _$_ImageLoaded implements _ImageLoaded {
   const _$_ImageLoaded(this.image);
 
   @override
-  final File image;
+  final ImageProvider<Object> image;
 
   @override
   String toString() {
@@ -275,7 +275,7 @@ class _$_ImageLoaded implements _ImageLoaded {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(File image) imageLoaded,
+    required TResult Function(ImageProvider<Object> image) imageLoaded,
     required TResult Function(Object error) error,
   }) {
     return imageLoaded(image);
@@ -285,7 +285,7 @@ class _$_ImageLoaded implements _ImageLoaded {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(File image)? imageLoaded,
+    TResult Function(ImageProvider<Object> image)? imageLoaded,
     TResult Function(Object error)? error,
   }) {
     return imageLoaded?.call(image);
@@ -295,7 +295,7 @@ class _$_ImageLoaded implements _ImageLoaded {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(File image)? imageLoaded,
+    TResult Function(ImageProvider<Object> image)? imageLoaded,
     TResult Function(Object error)? error,
     required TResult orElse(),
   }) {
@@ -341,9 +341,9 @@ class _$_ImageLoaded implements _ImageLoaded {
 }
 
 abstract class _ImageLoaded implements NetworkImageState {
-  const factory _ImageLoaded(File image) = _$_ImageLoaded;
+  const factory _ImageLoaded(ImageProvider<Object> image) = _$_ImageLoaded;
 
-  File get image;
+  ImageProvider<Object> get image;
   @JsonKey(ignore: true)
   _$ImageLoadedCopyWith<_ImageLoaded> get copyWith =>
       throw _privateConstructorUsedError;
@@ -412,7 +412,7 @@ class _$_Error implements _Error {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(File image) imageLoaded,
+    required TResult Function(ImageProvider<Object> image) imageLoaded,
     required TResult Function(Object error) error,
   }) {
     return error(this.error);
@@ -422,7 +422,7 @@ class _$_Error implements _Error {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(File image)? imageLoaded,
+    TResult Function(ImageProvider<Object> image)? imageLoaded,
     TResult Function(Object error)? error,
   }) {
     return error?.call(this.error);
@@ -432,7 +432,7 @@ class _$_Error implements _Error {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(File image)? imageLoaded,
+    TResult Function(ImageProvider<Object> image)? imageLoaded,
     TResult Function(Object error)? error,
     required TResult orElse(),
   }) {
