@@ -1,6 +1,6 @@
 import 'package:fingerfunke_app/cubits/authentication_cubit/authentication_cubit.dart';
 import 'package:fingerfunke_app/models/message/message.dart';
-import 'package:fingerfunke_app/view/chat/view/chat_message.dart';
+import 'package:fingerfunke_app/view/chat/widgets/chat_message.dart';
 import 'package:fingerfunke_app/view/chat/widgets/chat_editor/chat_editor.dart';
 import 'package:fingerfunke_app/view/error/exception_view.dart';
 import 'package:fingerfunke_app/view/paginated_list/cubit/paginated_list_cubit.dart';
@@ -52,7 +52,7 @@ class ChatPage extends StatelessWidget {
               signedIn: (user) =>
                   ChatEditor(postId: arguments.postId, author: user),
               orElse: () =>
-                  Text("You must have an account ro participate in this chat"))
+                  const Text("You must have an account ro participate in this chat"))
         ],
       ),
     );

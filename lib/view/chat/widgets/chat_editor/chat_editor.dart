@@ -21,7 +21,7 @@ class ChatEditor extends StatelessWidget {
             BlocProvider.of<ChatEditorCubit>(context);
         return BlocBuilder<ChatEditorCubit, ChatEditorState>(
           builder: (context, state) => Padding(
-            padding: const EdgeInsets.only(left: 8.0, bottom: 8.0),
+            padding: const EdgeInsets.only(left: 8.0, bottom: 8.0, top: 8.0),
             child: Row(
               children: [
                 Expanded(
