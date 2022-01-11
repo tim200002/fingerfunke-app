@@ -5,7 +5,7 @@ import 'package:fingerfunke_app/repositories/video_repository/video_repository.i
 import 'package:fingerfunke_app/services/pagination/message_pagination_service.dart';
 import 'package:fingerfunke_app/utils/util_widgets/loading_page.dart';
 import 'package:fingerfunke_app/utils/util_widgets/page_screen.dart';
-import 'package:fingerfunke_app/view/paginated_list/bloc/paginated_list_bloc.dart';
+import 'package:fingerfunke_app/view/paginated_list/cubit/paginated_list_cubit.dart';
 import 'package:fingerfunke_app/view/post/cubit/post_cubit.dart';
 import 'package:fingerfunke_app/view/post/view/post_view.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +56,7 @@ class PostPage extends StatelessWidget {
         // so that when opening the chat initial messages are typically already loaded
         // therefore we require the cubit to be instantly built -> lazy is set to false
         BlocProvider(
-          create: (_) => PaginatedListBloc<Message>(
+          create: (_) => PaginatedListCubit<Message>(
               paginationService: MessagePaginationService(postId)),
               lazy: false,
         )

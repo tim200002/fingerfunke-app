@@ -4,8 +4,7 @@ import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:fingerfunke_app/utils/exceptions.dart';
 import 'package:fingerfunke_app/view/chat/view/chat_page.dart';
 import 'package:fingerfunke_app/view/comment_feed/comment_feed_with_editor.dart';
-import 'package:fingerfunke_app/view/paginated_list/bloc/paginated_list_bloc.dart';
-import 'package:fingerfunke_app/view/paginated_list/view/paginated_list.dart';
+import 'package:fingerfunke_app/view/paginated_list/cubit/paginated_list_cubit.dart';
 import 'package:fingerfunke_app/view/post/cubit/post_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -96,7 +95,7 @@ class PostView extends StatelessWidget {
                   label: Text("Ich bin dabei"))),
           Expanded(
               child: TextButton.icon(
-                  onPressed: () => Navigator.of(context).pushNamed(chatRoute, arguments: ChatArguments(postId: postId, paginatedListBloc: BlocProvider.of<PaginatedListBloc<Message>>(context))),
+                  onPressed: () => Navigator.of(context).pushNamed(chatRoute, arguments: ChatArguments(postId: postId, paginatedListCubit: BlocProvider.of<PaginatedListCubit<Message>>(context))),
                   icon: Icon(Icons.share_rounded),
                   label: Text("share")))
         ],
