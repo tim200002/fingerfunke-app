@@ -3,7 +3,6 @@ import 'package:fingerfunke_app/routes.dart';
 import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:fingerfunke_app/utils/exceptions.dart';
 import 'package:fingerfunke_app/view/chat/view/chat_page.dart';
-import 'package:fingerfunke_app/view/comment_feed/comment_feed_with_editor.dart';
 import 'package:fingerfunke_app/view/paginated_list/cubit/paginated_list_cubit.dart';
 import 'package:fingerfunke_app/view/post/cubit/post_cubit.dart';
 import 'package:flutter/material.dart';
@@ -103,20 +102,7 @@ class PostView extends StatelessWidget {
     );
   }
 
-  Widget _commentsSection(BuildContext context) {
-    final PostState state = BlocProvider.of<PostCubit>(context).state;
-    return Padding(
-      padding: const EdgeInsets.only(top: 20, bottom: 20),
-      child: ConstrainedBox(
-        constraints:
-            BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.6),
-        child: state.maybeWhen(
-          normal: (post) => CommentFeedWithEditor(post.id),
-          orElse: () => ErrorWidget(InvalidStateException),
-        ),
-      ),
-    );
-  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -133,7 +119,6 @@ class PostView extends StatelessWidget {
         _tagsSection(context),
         _descriptionSection(),
         _actionsSection(context),
-        _commentsSection(context)
       ],
     );
   }
