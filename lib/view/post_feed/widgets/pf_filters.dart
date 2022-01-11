@@ -5,7 +5,7 @@ class PostFeedFilters extends StatelessWidget {
 
   Widget _switchSection({required IconData icon, bool selected = false}) {
     return Container(
-        color: selected ? Colors.black : Colors.grey.shade300,
+        color: selected ? Colors.black : Colors.grey.shade200,
         padding: EdgeInsets.all(5),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 6),
@@ -50,7 +50,10 @@ class PostFeedFilters extends StatelessWidget {
               for (String s in ["sport", "kultur", "theater", "relax"])
                 Padding(
                   padding: const EdgeInsets.only(right: 5),
-                  child: Chip(label: Text("#$s")),
+                  child: Chip(
+                    label: Text("#$s"),
+                    backgroundColor: Colors.grey.shade200,
+                  ),
                 ),
             ],
           )),

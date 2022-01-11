@@ -1,7 +1,10 @@
 import 'dart:ui';
 
+import 'package:fingerfunke_app/common_widgets/image/network_placeholder_image.dart/network_placeholder_image.dart';
 import 'package:fingerfunke_app/common_widgets/user/author_info.dart';
+import 'package:fingerfunke_app/models/asset/asset.dart';
 import 'package:fingerfunke_app/models/post/post.dart';
+import 'package:fingerfunke_app/repositories/video_repository/video_repository.impl.dart';
 import 'package:fingerfunke_app/routes.dart';
 import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:fingerfunke_app/utils/tools.dart';
@@ -11,17 +14,28 @@ class PostFeedItem extends StatelessWidget {
   final Post _post;
   const PostFeedItem(this._post, {Key? key}) : super(key: key);
 
+  Widget _postImage(BuildContext context) {
+    return _post.media.isEmpty
+        ? const Center(
+            child: Icon(
+              Icons.image,
+              color: Colors.white,
+            ),
+          )
+        : NetworkPlaceholderImage(
+            VideoRepositoryImpl()
+                .createThumbnailUrl(_post.media[0] as VideoAsset),
+            Container(
+              color: Colors.grey,
+            ),
+            fit: BoxFit.cover,
+            width: MediaQuery.of(context).size.width.toInt(),
+          );
+  }
+
   Widget _imageSection(BuildContext context) {
     return Container(
-      height: 110,
-      color: Colors.teal.shade100,
-      child: const Center(
-        child: Icon(
-          Icons.image,
-          color: Colors.white,
-        ),
-      ),
-    );
+        height: 110, color: Colors.teal.shade100, child: _postImage(context));
   }
 
   Widget _infoSection(BuildContext context) {

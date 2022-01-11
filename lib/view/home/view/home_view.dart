@@ -57,7 +57,7 @@ class HomeView extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: AppTheme.PADDING_SIDE),
         child: PostFeedView(),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.pushNamed(context, postEditorRoute),
         child: const Icon(Icons.add_rounded),
@@ -70,8 +70,11 @@ class HomeView extends StatelessWidget {
           //children inside bottom appbar
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            _bottomNavItem(context, title: "Events", icon: Icons.mood),
-            _bottomNavItem(context, title: "Gruppen", icon: Icons.people),
+            _bottomNavItem(context, title: "Events", icon: Icons.home),
+            _bottomNavItem(context,
+                title: "Events", icon: Icons.favorite_rounded),
+            _bottomNavItem(context,
+                title: "Gruppen", icon: Icons.account_circle),
           ],
         ),
       ),
