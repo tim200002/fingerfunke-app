@@ -1,4 +1,5 @@
 import 'package:fingerfunke_app/models/user/user.dart';
+import 'package:fingerfunke_app/utils/tools.dart';
 import 'package:fingerfunke_app/view/chat/widgets/chat_editor/cubit/chat_editor_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:fingerfunke_app/utils/type_aliases.dart';
@@ -42,8 +43,11 @@ class ChatEditor extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                  onPressed:
-                      state.isValid ? () => chatEditorCubit.postMessage() : null,
+                  onPressed: state.isValid
+                      ? () => chatEditorCubit.postMessage().onError((_, __) =>
+                          Tools.showSnackbar(context,
+                              "Sorry wir konnten deine Nachricht leider nicht absenden"))
+                      : null,
                   icon: const Icon(Icons.send_rounded),
                 ),
               ],

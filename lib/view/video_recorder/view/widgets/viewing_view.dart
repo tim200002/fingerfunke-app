@@ -1,4 +1,3 @@
-import 'package:fingerfunke_app/utils/dev_tools.dart';
 import 'package:fingerfunke_app/view/video_recorder/view/cubit/video_recorder_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/src/provider.dart';

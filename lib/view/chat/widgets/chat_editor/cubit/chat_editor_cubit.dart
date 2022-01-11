@@ -26,14 +26,15 @@ class ChatEditorCubit extends Cubit<ChatEditorState> {
     }
   }
 
-  void postMessage() {
+  Future<void> postMessage() async {
     if (state.isValid) {
-      _messageRepository.createMessage(
-          postId,
-          TextMessage.createWithId(
-              author: author, text: state.controller.text));
+      final tempMessage = state.controller.text;
       state.controller.clear();
       emit(state.copyWith(isValid: false));
+      await _messageRepository.createMessage(
+        postId,
+        TextMessage.createWithId(author: author, text: tempMessage),
+      );
     }
   }
 
