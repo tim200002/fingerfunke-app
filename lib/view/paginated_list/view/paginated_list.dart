@@ -1,12 +1,9 @@
 import 'package:fingerfunke_app/common_widgets/creation_aware_widget/creation_aware_widget.dart';
-import 'package:fingerfunke_app/services/pagination/firestore_pagination_service.dart';
-import 'package:fingerfunke_app/view/paginated_list/bloc/paginated_list_bloc.dart';
+import 'package:fingerfunke_app/view/paginated_list/cubit/paginated_list_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PaginatedList<T> extends StatelessWidget {
-  final FirestorePaginationService _paginationService;
-
   /// function envoked on each list item to create widget given the data
   final Widget Function(T) _itemBuilder;
 
@@ -18,73 +15,76 @@ class PaginatedList<T> extends StatelessWidget {
   final bool Function(int)? shouldShrinkWrap;
 
   final bool reverse;
+
+  /// what to show when list is loading new elements
+  final Widget? loadingIndicator;
+
   const PaginatedList(
-      {required FirestorePaginationService firestorePaginationService,
-      required Widget Function(T) itemBuilder,
+      {required Widget Function(T) itemBuilder,
       this.reverse = false,
       this.endMessage,
       this.shouldShrinkWrap,
+      this.loadingIndicator,
       Key? key})
-      : _paginationService = firestorePaginationService,
-        _itemBuilder = itemBuilder,
+      : _itemBuilder = itemBuilder,
         super(key: key);
 
-  bool shouldLoadNewItems(
-      PaginatedListState<T> state, int currentIndex, int listItemCount) {
-    return currentIndex == listItemCount - 2 &&
-        !state.isLoading &&
-        !state.reachedEnd;
+  /// if the current element created equals the last element of the list it is clear that we must load new ones
+  /// 
+  /// If we would have reached end last element is not creation aware, could therefoe never trigger this
+  /// ToDo we could look out for a better algorithm which fetches beforehand depending on pagination distance
+  bool _shouldLoadNewItems(PaginatedListState<T> state, int currentIndex) {
+    return currentIndex == state.items.length-1;
   }
 
-  bool currentElementIsIndicator(numberOfRealItems, listItemCount, index) {
-    return numberOfRealItems != listItemCount && index == listItemCount - 1;
+  bool _currentElementIsIndicator(PaginatedListState<T> state, int index) {
+    return
+        // we are in a state where we could show an indicator (loading or reached End)
+        state.items.length != state.itemCount &&
+            // the current index is the end, therefore the indicator
+            index == state.itemCount - 1;
   }
+
+  Widget? _createIndicator(PaginatedListState<T> state) {
+    if (state.isLoading) {
+      return loadingIndicator;
+    } else {
+      return endMessage != null ? Center(child: Text(endMessage!)) : null;
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) =>
-          PaginatedListBloc<T>(paginationService: _paginationService),
-      child: Builder(
-        builder: (context) =>
-            BlocBuilder<PaginatedListBloc<T>, PaginatedListState<T>>(
-          builder: (context, state) {
-            // is list is loading add one last item, showing loading indicator
-            final listItemCount = state.items.length +
-                (state.isLoading || state.reachedEnd ? 1 : 0);
-            return ListView.builder(
-              //clipBehavior: Clip.none,
-              itemCount: listItemCount,
-              shrinkWrap: shouldShrinkWrap != null
-                  ? shouldShrinkWrap!(listItemCount)
-                  : false,
-              reverse: reverse,
-              itemBuilder: (context, index) {
-                //Check if we reached bottom of list
-                if (currentElementIsIndicator(
-                    state.items.length, listItemCount, index)) {
-                  if (state.isLoading) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else {
-                    return endMessage != null
-                        ? Center(child: Text(endMessage!))
-                        : Container();
+    return BlocBuilder<PaginatedListCubit<T>, PaginatedListState<T>>(
+      builder: (context, state) {
+        return ListView.builder(
+          itemCount: state.itemCount,
+          shrinkWrap: shouldShrinkWrap != null
+              ? shouldShrinkWrap!(state.itemCount)
+              : false,
+          reverse: reverse,
+          itemBuilder: (context, index) {
+            //Check if we reached bottom of list
+            // if yes shown indicator
+            if (_currentElementIsIndicator(state, index)) {
+              return _createIndicator(state) ?? Container();
+            } 
+            // if not create element
+            else {
+              return CreationAwareWidget(
+                child: _itemBuilder(state.items[index]),
+                onItemCreated: () {
+                  if (_shouldLoadNewItems(state, index)) {
+                    BlocProvider.of<PaginatedListCubit<T>>(context)
+                        .requestNewPage();
                   }
-                }
-                return CreationAwareWidget(
-                  child: _itemBuilder(state.items[index]),
-                  onItemCreated: () {
-                    if (shouldLoadNewItems(state, index, listItemCount)) {
-                      BlocProvider.of<PaginatedListBloc<T>>(context)
-                          .add(RequestNewPage<T>());
-                    }
-                  },
-                );
-              },
-            );
+                },
+              );
+            }
           },
-        ),
-      ),
+        );
+      },
     );
   }
 }

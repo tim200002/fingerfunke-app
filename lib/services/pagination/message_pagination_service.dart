@@ -5,7 +5,7 @@ import 'package:fingerfunke_app/utils/type_aliases.dart';
 
 class MessagePaginationService extends FirestorePaginationService<Message> {
   MessagePaginationService(FirestoreId postId,
-      {FirebaseFirestore? firestore, int paginationDistance = 10})
+      {FirebaseFirestore? firestore, int paginationDistance = 20})
       : super(
             (firestore ?? FirebaseFirestore.instance)
                 .collection('posts')

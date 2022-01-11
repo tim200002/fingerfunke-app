@@ -1,3 +1,4 @@
+import 'package:fingerfunke_app/view/chat/view/chat_page.dart';
 import 'package:fingerfunke_app/view/my_account/subpages/licenses/view/oss_licenses_page.dart';
 import 'package:fingerfunke_app/view/my_account/subpages/manage_account/view/manage_account_page.dart';
 import 'package:fingerfunke_app/view/my_account/subpages/settings/view/settings_page.dart';
@@ -19,6 +20,8 @@ const postEditorRoute = "/create";
 const developementUtilsRoute = "/developementUtils";
 const licensesRoute = "/licenses";
 const settingsRoute = "/settings";
+const chatRoute = "/chat";
+
 
 final routes = {
   savedRoute: (context) => const SavedPage(),
@@ -28,5 +31,6 @@ final routes = {
   postRoute: (context) => const PostPage(),
   developementUtilsRoute: (context) => const DevelopementUtilFunctionsPage(),
   licensesRoute: (context) =>  const OssLicensesPage(),
-  settingsRoute: (context) => const SettingsPage()
+  settingsRoute: (context) => const SettingsPage(),
+  chatRoute: (context) => const ChatPage()
 };

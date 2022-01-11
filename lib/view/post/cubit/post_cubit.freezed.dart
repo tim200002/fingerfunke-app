@@ -17,8 +17,10 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$PostStateTearOff {
   const _$PostStateTearOff();
 
-  _Loading loading() {
-    return const _Loading();
+  _Loading loading(String postId) {
+    return _Loading(
+      postId,
+    );
   }
 
   _Normal normal(Post post) {
@@ -35,19 +37,19 @@ const $PostState = _$PostStateTearOff();
 mixin _$PostState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loading,
+    required TResult Function(String postId) loading,
     required TResult Function(Post post) normal,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
+    TResult Function(String postId)? loading,
     TResult Function(Post post)? normal,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
+    TResult Function(String postId)? loading,
     TResult Function(Post post)? normal,
     required TResult orElse(),
   }) =>
@@ -92,6 +94,7 @@ class _$PostStateCopyWithImpl<$Res> implements $PostStateCopyWith<$Res> {
 abstract class _$LoadingCopyWith<$Res> {
   factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) then) =
       __$LoadingCopyWithImpl<$Res>;
+  $Res call({String postId});
 }
 
 /// @nodoc
@@ -102,60 +105,84 @@ class __$LoadingCopyWithImpl<$Res> extends _$PostStateCopyWithImpl<$Res>
 
   @override
   _Loading get _value => super._value as _Loading;
+
+  @override
+  $Res call({
+    Object? postId = freezed,
+  }) {
+    return _then(_Loading(
+      postId == freezed
+          ? _value.postId
+          : postId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_Loading with DiagnosticableTreeMixin implements _Loading {
-  const _$_Loading();
+  const _$_Loading(this.postId);
+
+  @override
+  final String postId;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PostState.loading()';
+    return 'PostState.loading(postId: $postId)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'PostState.loading'));
+    properties
+      ..add(DiagnosticsProperty('type', 'PostState.loading'))
+      ..add(DiagnosticsProperty('postId', postId));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Loading);
+        (other.runtimeType == runtimeType &&
+            other is _Loading &&
+            (identical(other.postId, postId) || other.postId == postId));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, postId);
+
+  @JsonKey(ignore: true)
+  @override
+  _$LoadingCopyWith<_Loading> get copyWith =>
+      __$LoadingCopyWithImpl<_Loading>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loading,
+    required TResult Function(String postId) loading,
     required TResult Function(Post post) normal,
   }) {
-    return loading();
+    return loading(postId);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
+    TResult Function(String postId)? loading,
     TResult Function(Post post)? normal,
   }) {
-    return loading?.call();
+    return loading?.call(postId);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
+    TResult Function(String postId)? loading,
     TResult Function(Post post)? normal,
     required TResult orElse(),
   }) {
     if (loading != null) {
-      return loading();
+      return loading(postId);
     }
     return orElse();
   }
@@ -193,7 +220,12 @@ class _$_Loading with DiagnosticableTreeMixin implements _Loading {
 }
 
 abstract class _Loading implements PostState {
-  const factory _Loading() = _$_Loading;
+  const factory _Loading(String postId) = _$_Loading;
+
+  String get postId;
+  @JsonKey(ignore: true)
+  _$LoadingCopyWith<_Loading> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -265,7 +297,7 @@ class _$_Normal with DiagnosticableTreeMixin implements _Normal {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loading,
+    required TResult Function(String postId) loading,
     required TResult Function(Post post) normal,
   }) {
     return normal(post);
@@ -274,7 +306,7 @@ class _$_Normal with DiagnosticableTreeMixin implements _Normal {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
+    TResult Function(String postId)? loading,
     TResult Function(Post post)? normal,
   }) {
     return normal?.call(post);
@@ -283,7 +315,7 @@ class _$_Normal with DiagnosticableTreeMixin implements _Normal {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
+    TResult Function(String postId)? loading,
     TResult Function(Post post)? normal,
     required TResult orElse(),
   }) {

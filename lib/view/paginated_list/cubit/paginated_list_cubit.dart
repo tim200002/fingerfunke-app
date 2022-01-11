@@ -3,26 +3,28 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:fingerfunke_app/services/pagination/firestore_pagination_service.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:logger/logger.dart';
 
-part 'paginatedlist_state.dart';
-part 'paginatedlist_cubit.freezed.dart';
+part 'paginated_list_state.dart';
+part 'paginated_list_cubit.freezed.dart';
 
-class PaginatedlistCubit<T> extends Cubit<PaginatedlistState<T>> {
+class PaginatedListCubit<T> extends Cubit<PaginatedListState<T>> {
   final FirestorePaginationService _paginationService;
-
   late final StreamSubscription _itemsStreamSubscription;
-  PaginatedlistCubit({required FirestorePaginationService paginationService})
+
+  final Logger _logger = Logger();
+  PaginatedListCubit({required FirestorePaginationService paginationService})
       : _paginationService = paginationService,
-        super(PaginatedlistState<T>(
+        super(PaginatedListState<T>(
             items: [], isLoading: true, reachedEnd: false)) {
-    _itemsStreamSubscription =
-        _paginationService.getItemsStream().listen((items) {
-      emit(state.copyWith(items: items as List<T>));
-    });
+    _itemsStreamSubscription = _paginationService.getItemsStream().listen(
+          (items) => emit(state.copyWith(items: items as List<T>)),
+        );
     requestNewPage();
   }
 
   Future<void> requestNewPage() async {
+    _logger.i("Paginated list, load new page");
     emit(state.copyWith(isLoading: true));
     bool hasReachedEnd = await _paginationService.requestNewPage();
     emit(state.copyWith(isLoading: false, reachedEnd: hasReachedEnd));

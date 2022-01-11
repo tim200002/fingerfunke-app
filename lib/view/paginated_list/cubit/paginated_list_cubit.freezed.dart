@@ -2,7 +2,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'paginatedlist_cubit.dart';
+part of 'paginated_list_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,8 +14,8 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$PaginatedlistStateTearOff {
-  const _$PaginatedlistStateTearOff();
+class _$PaginatedListStateTearOff {
+  const _$PaginatedListStateTearOff();
 
   _PaginatedlistState<T> call<T>(
       {required List<T> items,
@@ -30,35 +30,35 @@ class _$PaginatedlistStateTearOff {
 }
 
 /// @nodoc
-const $PaginatedlistState = _$PaginatedlistStateTearOff();
+const $PaginatedListState = _$PaginatedListStateTearOff();
 
 /// @nodoc
-mixin _$PaginatedlistState<T> {
+mixin _$PaginatedListState<T> {
   List<T> get items => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   bool get reachedEnd => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $PaginatedlistStateCopyWith<T, PaginatedlistState<T>> get copyWith =>
+  $PaginatedListStateCopyWith<T, PaginatedListState<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $PaginatedlistStateCopyWith<T, $Res> {
-  factory $PaginatedlistStateCopyWith(PaginatedlistState<T> value,
-          $Res Function(PaginatedlistState<T>) then) =
-      _$PaginatedlistStateCopyWithImpl<T, $Res>;
+abstract class $PaginatedListStateCopyWith<T, $Res> {
+  factory $PaginatedListStateCopyWith(PaginatedListState<T> value,
+          $Res Function(PaginatedListState<T>) then) =
+      _$PaginatedListStateCopyWithImpl<T, $Res>;
   $Res call({List<T> items, bool isLoading, bool reachedEnd});
 }
 
 /// @nodoc
-class _$PaginatedlistStateCopyWithImpl<T, $Res>
-    implements $PaginatedlistStateCopyWith<T, $Res> {
-  _$PaginatedlistStateCopyWithImpl(this._value, this._then);
+class _$PaginatedListStateCopyWithImpl<T, $Res>
+    implements $PaginatedListStateCopyWith<T, $Res> {
+  _$PaginatedListStateCopyWithImpl(this._value, this._then);
 
-  final PaginatedlistState<T> _value;
+  final PaginatedListState<T> _value;
   // ignore: unused_field
-  final $Res Function(PaginatedlistState<T>) _then;
+  final $Res Function(PaginatedListState<T>) _then;
 
   @override
   $Res call({
@@ -85,7 +85,7 @@ class _$PaginatedlistStateCopyWithImpl<T, $Res>
 
 /// @nodoc
 abstract class _$PaginatedlistStateCopyWith<T, $Res>
-    implements $PaginatedlistStateCopyWith<T, $Res> {
+    implements $PaginatedListStateCopyWith<T, $Res> {
   factory _$PaginatedlistStateCopyWith(_PaginatedlistState<T> value,
           $Res Function(_PaginatedlistState<T>) then) =
       __$PaginatedlistStateCopyWithImpl<T, $Res>;
@@ -95,7 +95,7 @@ abstract class _$PaginatedlistStateCopyWith<T, $Res>
 
 /// @nodoc
 class __$PaginatedlistStateCopyWithImpl<T, $Res>
-    extends _$PaginatedlistStateCopyWithImpl<T, $Res>
+    extends _$PaginatedListStateCopyWithImpl<T, $Res>
     implements _$PaginatedlistStateCopyWith<T, $Res> {
   __$PaginatedlistStateCopyWithImpl(_PaginatedlistState<T> _value,
       $Res Function(_PaginatedlistState<T>) _then)
@@ -129,9 +129,10 @@ class __$PaginatedlistStateCopyWithImpl<T, $Res>
 
 /// @nodoc
 
-class _$_PaginatedlistState<T> implements _PaginatedlistState<T> {
+class _$_PaginatedlistState<T> extends _PaginatedlistState<T> {
   const _$_PaginatedlistState(
-      {required this.items, required this.isLoading, required this.reachedEnd});
+      {required this.items, required this.isLoading, required this.reachedEnd})
+      : super._();
 
   @override
   final List<T> items;
@@ -142,7 +143,7 @@ class _$_PaginatedlistState<T> implements _PaginatedlistState<T> {
 
   @override
   String toString() {
-    return 'PaginatedlistState<$T>(items: $items, isLoading: $isLoading, reachedEnd: $reachedEnd)';
+    return 'PaginatedListState<$T>(items: $items, isLoading: $isLoading, reachedEnd: $reachedEnd)';
   }
 
   @override
@@ -168,11 +169,12 @@ class _$_PaginatedlistState<T> implements _PaginatedlistState<T> {
           this, _$identity);
 }
 
-abstract class _PaginatedlistState<T> implements PaginatedlistState<T> {
+abstract class _PaginatedlistState<T> extends PaginatedListState<T> {
   const factory _PaginatedlistState(
       {required List<T> items,
       required bool isLoading,
       required bool reachedEnd}) = _$_PaginatedlistState<T>;
+  const _PaginatedlistState._() : super._();
 
   @override
   List<T> get items;
