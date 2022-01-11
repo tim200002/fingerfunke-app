@@ -2,6 +2,7 @@ import 'package:fingerfunke_app/models/post/post.dart';
 import 'package:fingerfunke_app/services/pagination/post_pagination_service.dart';
 import 'package:fingerfunke_app/view/paginated_list/view/paginated_list.dart';
 import 'package:fingerfunke_app/view/post_feed/view/post_feed_item_view.dart';
+import 'package:fingerfunke_app/view/post_feed/widgets/pf_filters.dart';
 import 'package:flutter/material.dart';
 
 class PostFeedView extends StatelessWidget {
@@ -9,16 +10,23 @@ class PostFeedView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return /*ClipRRect(
-      borderRadius: BorderRadius.circular(10),
-      child:*/
-        PaginatedList<Post>(
-      firestorePaginationService: PostPaginationService(),
-      itemBuilder: (post) => PostFeedItem(
-        post,
-      ),
-      reverse: false,
-      endMessage: "there are no more events",
-    );
+    return ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            PostFeedFilters(),
+            Expanded(
+              child: PaginatedList<Post>(
+                firestorePaginationService: PostPaginationService(),
+                itemBuilder: (post) => PostFeedItem(
+                  post,
+                ),
+                reverse: false,
+                endMessage: "there are no more events",
+              ),
+            ),
+          ],
+        ));
   }
 }
