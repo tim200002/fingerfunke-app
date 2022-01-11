@@ -19,6 +19,7 @@ class CircularNetworkImage extends StatelessWidget {
         placeholder,
         width: diameter,
         height: diameter,
+        fit: BoxFit.cover,
       ),
     );
   }

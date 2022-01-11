@@ -17,6 +17,8 @@ class NetworkPlaceholderAssetImage extends StatelessWidget {
     return NetworkPlaceholderImage(
       imageUrl,
       Image(
+        width: width?.toDouble(),
+        height: height?.toDouble(),
         fit: fit,
         image: placeholder,
       ),
