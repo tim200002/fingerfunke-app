@@ -5,6 +5,7 @@ import 'package:fingerfunke_app/repositories/settings_repository/settings_reposi
 import 'package:fingerfunke_app/routes.dart';
 import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:fingerfunke_app/view/create_account/view/create_account_view.dart';
+import 'package:fingerfunke_app/view/image_upload/cubit/image_upload_cubit.dart';
 import 'package:fingerfunke_app/view/splash/view/splash_page.dart';
 import 'package:fingerfunke_app/view/unauthenticated/view/unauthenticated_page.dart';
 import 'package:firebase_core/firebase_core.dart';
