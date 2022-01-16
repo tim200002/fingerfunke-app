@@ -5,6 +5,7 @@ import 'package:fingerfunke_app/repositories/video_repository/video_repository.i
 import 'package:fingerfunke_app/services/pagination/message_pagination_service.dart';
 import 'package:fingerfunke_app/utils/util_widgets/loading_page.dart';
 import 'package:fingerfunke_app/utils/util_widgets/page_screen.dart';
+import 'package:fingerfunke_app/view/fullscreen_video/view/fullscreen_video_page.dart';
 import 'package:fingerfunke_app/view/paginated_list/cubit/paginated_list_cubit.dart';
 import 'package:fingerfunke_app/view/post/cubit/post_cubit.dart';
 import 'package:fingerfunke_app/view/post/view/post_view.dart';
@@ -74,7 +75,12 @@ class PostPage extends StatelessWidget {
                 roundedBody: false,
                 roundedHeader: false,
                 header: InkWell(
-                  onTap: () {},
+                  onTap: () => Navigator.of(context).push(
+                      FullscreenVideoPage.route(
+                          url: VideoRepositoryImpl().createPlaybackUrl((post
+                                  .media
+                                  .firstWhere((e) => e.type == asset_type.video)
+                              as VideoAsset)))),
                   child: Stack(children: [
                     NetworkPlaceholderImage(
                       VideoRepositoryImpl()
