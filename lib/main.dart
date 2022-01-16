@@ -31,7 +31,7 @@ class AppInflater extends StatelessWidget {
     state.whenOrNull(
       unauthenticated: () {
         _navigator.currentState!
-            .pushAndRemoveUntil(UnauthenticatedPage.route(), (_) => false);
+            .pushAndRemoveUntil(SplashPage.route(), (_) => false);
       },
       signedInAnonymously: () {
         _navigator.currentState!.pushAndRemoveUntil(App.route(), (_) => false);
@@ -40,7 +40,7 @@ class AppInflater extends StatelessWidget {
           .pushAndRemoveUntil(App.route(), (_) => false),
       signedInButNoUserDocumentCreated: (_) {
         _navigator.currentState!
-            .pushAndRemoveUntil(CreateAccountView.route(), (_) => false);
+            .pushAndRemoveUntil(SplashPage.route(), (_) => false);
       },
     );
   }
@@ -56,30 +56,28 @@ class AppInflater extends StatelessWidget {
           create: (context) => SettingsCubit(SettingsRepositoryImpl()),
         ),
       ],
-      child: BlocBuilder<SettingsCubit,SettingsState>(
-        builder: (context, state) {
-          BlocProvider.of<SettingsCubit>(context).loadSettings();
-          return Builder(
-            builder: (context) {
-              BlocProvider.of<AuthenticationCubit>(context)
-                  .connectListener(mapStateChangeToNavigationEvent);
+      child:
+          BlocBuilder<SettingsCubit, SettingsState>(builder: (context, state) {
+        BlocProvider.of<SettingsCubit>(context).loadSettings();
+        return Builder(
+          builder: (context) {
+            BlocProvider.of<AuthenticationCubit>(context)
+                .connectListener(mapStateChangeToNavigationEvent);
 
-              return state.when(
-                  initial: () {
-                return AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 250),
-                  child: buildLoadedApp(context, _navigator, ThemeMode.system),
-                );
-              }, loaded: (settings) {
-                return AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 250),
-                  child: buildLoadedApp(context, _navigator, settings.themeMode),
-                );
-              });
-            },
-          );
-        }
-      ),
+            return state.when(initial: () {
+              return AnimatedSwitcher(
+                duration: const Duration(milliseconds: 250),
+                child: buildLoadedApp(context, _navigator, ThemeMode.system),
+              );
+            }, loaded: (settings) {
+              return AnimatedSwitcher(
+                duration: const Duration(milliseconds: 250),
+                child: buildLoadedApp(context, _navigator, settings.themeMode),
+              );
+            });
+          },
+        );
+      }),
     );
   }
 }
@@ -88,7 +86,6 @@ Widget buildLoadedApp(context, _navigator, themeMode) {
   return MaterialApp(
     routes: routes,
     navigatorKey: _navigator,
-
     theme: AppTheme.mainTheme,
     darkTheme: AppTheme.darkTheme,
     themeMode: themeMode,

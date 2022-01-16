@@ -8,7 +8,7 @@ class PostFeedFilters extends StatelessWidget {
         color: selected ? Colors.black : Colors.grey.shade200,
         padding: EdgeInsets.all(5),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 6),
+          padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
           child: Icon(
             icon,
             size: 20,

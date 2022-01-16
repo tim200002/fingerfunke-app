@@ -5,6 +5,8 @@ const Color _primary = Color(0xFFFF2B4E);
 const Color _secondary = Color(0xFF8BC9C5); //Color(0xFF059F95);
 
 class AppTheme {
+  static Color get colorPrimary => _primary;
+
   // TODO: change variable to function, to allow for Textsize change
   static final mainTheme = ThemeData(
       canvasColor: Colors.white,
