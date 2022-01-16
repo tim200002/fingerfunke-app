@@ -39,6 +39,7 @@ class PostFeedFilters extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      clipBehavior: Clip.none,
       margin: EdgeInsets.only(bottom: 10),
       height: 50,
       child: SingleChildScrollView(

@@ -17,7 +17,7 @@ class HomeView extends StatelessWidget {
           padding: EdgeInsets.only(right: 5),
           child: Icon(Icons.place_rounded),
         ),
-        Text("Berlin")
+        Text("Ulm")
       ],
     );
   }
@@ -53,9 +53,10 @@ class HomeView extends StatelessWidget {
               icon: const Icon(Icons.bookmark_outlined))
         ],
       ),
-      body: const Padding(
-        padding: EdgeInsets.symmetric(horizontal: AppTheme.PADDING_SIDE),
-        child: PostFeedView(),
+      body: Container(
+        padding: const EdgeInsets.symmetric(horizontal: AppTheme.PADDING_SIDE),
+        clipBehavior: Clip.none,
+        child: const PostFeedView(),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
