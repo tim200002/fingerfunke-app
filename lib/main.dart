@@ -31,7 +31,7 @@ class AppInflater extends StatelessWidget {
     state.whenOrNull(
       unauthenticated: () {
         _navigator.currentState!
-            .pushAndRemoveUntil(SplashPage.route(), (_) => false);
+            .pushAndRemoveUntil(UnauthenticatedPage.route(), (_) => false);
       },
       signedInAnonymously: () {
         _navigator.currentState!.pushAndRemoveUntil(App.route(), (_) => false);
@@ -40,7 +40,7 @@ class AppInflater extends StatelessWidget {
           .pushAndRemoveUntil(App.route(), (_) => false),
       signedInButNoUserDocumentCreated: (_) {
         _navigator.currentState!
-            .pushAndRemoveUntil(SplashPage.route(), (_) => false);
+            .pushAndRemoveUntil(CreateAccountView.route(), (_) => false);
       },
     );
   }
