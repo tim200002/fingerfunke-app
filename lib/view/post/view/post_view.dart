@@ -61,24 +61,33 @@ class PostView extends StatelessWidget {
           //clipBehavior: Clip.none,
           shrinkWrap: true,
           scrollDirection: Axis.horizontal,
-          children: [for (int i = 0; i < 10; i++) _tagWidget("Item$i")],
+          children: [
+            for (String s in ["sport", "draußen"]) _tagWidget(s)
+          ],
         ),
       ),
     );
   }
 
   Widget _dateTimeSection(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 20),
-      child: Row(
-        children: [
-          Expanded(
-              child: _iconTextItem(
-                  icon: Icons.calendar_today_rounded, label: "42.11.2021")),
-          Expanded(
-              child: _iconTextItem(icon: Icons.schedule, label: "ab 18 Uhr"))
-        ],
-      ),
+    return BlocBuilder<PostCubit, PostState>(
+      //ToDo implement build when
+      builder: (context, state) => state.maybeWhen(
+          normal: (post) => Padding(
+                padding: EdgeInsets.symmetric(vertical: 20),
+                child: Row(
+                  children: [
+                    Expanded(
+                        child: _iconTextItem(
+                            icon: Icons.calendar_today_rounded,
+                            label: "18.01.2022")),
+                    Expanded(
+                        child: _iconTextItem(
+                            icon: Icons.schedule, label: "18 Uhr"))
+                  ],
+                ),
+              ),
+          orElse: () => ErrorWidget(InvalidStateException())),
     );
   }
 
@@ -94,7 +103,12 @@ class PostView extends StatelessWidget {
                   label: Text("Ich bin dabei"))),
           Expanded(
               child: TextButton.icon(
-                  onPressed: () => Navigator.of(context).pushNamed(chatRoute, arguments: ChatArguments(postId: postId, paginatedListCubit: BlocProvider.of<PaginatedListCubit<Message>>(context))),
+                  onPressed: () => Navigator.of(context).pushNamed(chatRoute,
+                      arguments: ChatArguments(
+                          postId: postId,
+                          paginatedListCubit:
+                              BlocProvider.of<PaginatedListCubit<Message>>(
+                                  context))),
                   icon: Icon(Icons.share_rounded),
                   label: Text("share")))
         ],
@@ -102,19 +116,21 @@ class PostView extends StatelessWidget {
     );
   }
 
-  
-
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(
-          "This an example title of the event",
-          style: AppTheme.textStyleAccent(
-              style:
-                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-        ),
+        BlocBuilder<PostCubit, PostState>(
+            //ToDo implement build when
+            builder: (context, state) => state.maybeWhen(
+                normal: (post) => Text(
+                      post.title,
+                      style: AppTheme.textStyleAccent(
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20)),
+                    ),
+                orElse: () => ErrorWidget(InvalidStateException()))),
         _dateTimeSection(context),
         _tagsSection(context),
         _descriptionSection(),

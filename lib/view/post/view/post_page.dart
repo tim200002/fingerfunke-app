@@ -58,7 +58,7 @@ class PostPage extends StatelessWidget {
         BlocProvider(
           create: (_) => PaginatedListCubit<Message>(
               paginationService: MessagePaginationService(postId)),
-              lazy: false,
+          lazy: false,
         )
       ],
       child: Builder(
@@ -73,16 +73,29 @@ class PostPage extends StatelessWidget {
                 headerHeight: 200,
                 roundedBody: false,
                 roundedHeader: false,
-                header: NetworkPlaceholderImage(
-                  VideoRepositoryImpl()
-                      .createThumbnailUrl(post.media[0] as VideoAsset),
-                  Container(
-                    color: Colors.grey,
-                  ),
-                  width: MediaQuery.of(context).size.width.toInt(),
+                header: InkWell(
+                  onTap: () {},
+                  child: Stack(children: [
+                    NetworkPlaceholderImage(
+                      VideoRepositoryImpl()
+                          .createThumbnailUrl(post.media[0] as VideoAsset),
+                      Container(
+                        color: Colors.grey,
+                      ),
+                      width: MediaQuery.of(context).size.width.toInt(),
+                      fit: BoxFit.cover,
+                    ),
+                    const Center(
+                      child: Icon(
+                        Icons.play_arrow_rounded,
+                        size: 70,
+                        color: Colors.white,
+                      ),
+                    )
+                  ]),
                 ),
                 headerBottom: _contentCardDecoration,
-                children:  [PostView(postId)],
+                children: [PostView(postId)],
               ),
             ),
           ),
