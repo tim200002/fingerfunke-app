@@ -92,7 +92,7 @@ class PostFeedItemBlur extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.only(bottom: 12),
       child: Container(
         decoration: BoxDecoration(boxShadow: const [
           BoxShadow(offset: Offset(0, 2), blurRadius: 10, spreadRadius: -7)
@@ -108,7 +108,7 @@ class PostFeedItemBlur extends StatelessWidget {
                   children: [
                     ColorFiltered(
                       colorFilter: ColorFilter.mode(
-                          Colors.white.withOpacity(0.6), BlendMode.lighten),
+                          Colors.white.withOpacity(0.7), BlendMode.hardLight),
                       child: _postImage(context),
                     ),
                     BackdropFilter(
