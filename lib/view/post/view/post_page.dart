@@ -101,7 +101,7 @@ class PostPage extends StatelessWidget {
                   ]),
                 ),
                 headerBottom: _contentCardDecoration,
-                children: [PostView(postId)],
+                body: PostView(postId),
               ),
             ),
           ),

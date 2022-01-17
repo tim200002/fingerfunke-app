@@ -99,7 +99,7 @@ class PostView extends StatelessWidget {
           Expanded(
               child: ElevatedButton.icon(
                   onPressed: () {},
-                  icon: Icon(Icons.bookmark_border_rounded),
+                  icon: Icon(Icons.check),
                   label: Text("Ich bin dabei"))),
           Expanded(
               child: TextButton.icon(
@@ -109,8 +109,73 @@ class PostView extends StatelessWidget {
                           paginatedListCubit:
                               BlocProvider.of<PaginatedListCubit<Message>>(
                                   context))),
-                  icon: Icon(Icons.share_rounded),
-                  label: Text("share")))
+                  icon: Icon(Icons.comment_rounded),
+                  label: Text("Kommentare")))
+        ],
+      ),
+    );
+  }
+
+  Widget _DEMOpeopleComing() {
+    final double size = 40;
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20),
+      child: Row(
+        children: [
+          const Padding(
+            padding: const EdgeInsets.only(right: 17),
+            child: Text(
+              "Interessiert:",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+          Stack(
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(left: 108, top: 10),
+                child: Text(
+                  "+5",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 60),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(50),
+                  child: Image.network(
+                    "https://thumbs.dreamstime.com/b/happy-person-portrait-smiling-woman-tanned-skin-curly-hair-happy-person-portrait-smiling-young-friendly-woman-197501184.jpg",
+                    height: size,
+                    width: size,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 30),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(50),
+                  child: Image.network(
+                    "https://thumbs.dreamstime.com/b/happy-person-portrait-smiling-woman-tanned-skin-curly-hair-happy-person-portrait-smiling-young-friendly-woman-197501184.jpg",
+                    height: size,
+                    width: size,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(50),
+                  child: Image.network(
+                    "https://thumbs.dreamstime.com/b/happy-person-portrait-smiling-woman-tanned-skin-curly-hair-happy-person-portrait-smiling-young-friendly-woman-197501184.jpg",
+                    height: size,
+                    width: size,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              )
+            ],
+          ),
         ],
       ),
     );
@@ -121,6 +186,16 @@ class PostView extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        Center(
+          child: Container(
+            margin: EdgeInsets.only(bottom: 10),
+            width: 50,
+            height: 7,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.grey.shade300),
+          ),
+        ),
         BlocBuilder<PostCubit, PostState>(
             //ToDo implement build when
             builder: (context, state) => state.maybeWhen(
@@ -134,6 +209,10 @@ class PostView extends StatelessWidget {
         _dateTimeSection(context),
         _tagsSection(context),
         _descriptionSection(),
+        Expanded(
+          child: Container(),
+        ),
+        _DEMOpeopleComing(),
         _actionsSection(context),
       ],
     );
