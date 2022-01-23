@@ -32,13 +32,16 @@ class PostView extends StatelessWidget {
     );
   }
 
-  Widget _tagWidget(String text) {
+  Widget _tagWidget(BuildContext context, String text) {
     return Padding(
       padding: const EdgeInsets.only(right: 5),
       child: Chip(
         // TODO extract widget
-        label: Text("#$text"),
-        backgroundColor: Colors.grey.shade200,
+        label: Text(
+          "#$text",
+          style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
+        ),
+        backgroundColor: Theme.of(context).colorScheme.surface,
       ),
     );
   }
@@ -48,10 +51,12 @@ class PostView extends StatelessWidget {
       //ToDo implement build when
       builder: (context, state) => state.maybeWhen(
           normal: (post) => Container(
-              constraints: const BoxConstraints(
-              ),
+                constraints: const BoxConstraints(),
                 padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Text(post.description, style: Theme.of(context).textTheme.bodyText1,),
+                child: Text(
+                  post.description,
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
               ),
           orElse: () => ErrorWidget(InvalidStateException())),
     );
@@ -66,7 +71,7 @@ class PostView extends StatelessWidget {
           //clipBehavior: Clip.none,
           shrinkWrap: true,
           scrollDirection: Axis.horizontal,
-          children: [for (int i = 0; i < 10; i++) _tagWidget("Item$i")],
+          children: [for (int i = 0; i < 10; i++) _tagWidget(context, "Item$i")],
         ),
       ),
     );
@@ -81,9 +86,11 @@ class PostView extends StatelessWidget {
           flex: 10,
           child: Text(
             "This an example title of the event",
-            style: Theme.of(context).textTheme.headline4,
+            style: Theme.of(context).textTheme.headline5,
           ),
         ),
+        // TODO add share functionality
+        /*
         Flexible(
           flex: 2,
           child: IconButton(
@@ -91,11 +98,12 @@ class PostView extends StatelessWidget {
               vertical: 5,
             ),
             alignment: Alignment.topCenter,
-            // TODO add share functionality
-            onPressed: () => Share.share('Check out this awesome event: https://fingerfunke.de'),
+            onPressed: () => Share.share(
+                'Check out this awesome event: https://fingerfunke.de'),
             icon: const Icon(Icons.share_rounded),
           ),
         ),
+         */
       ],
     );
   }

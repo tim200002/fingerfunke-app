@@ -28,18 +28,17 @@ class PostPage extends StatelessWidget {
       height: 15,
       decoration: const BoxDecoration(
           borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
-          color: Colors.white),
     ),
-  );
+  ));
 
   Widget _closeButton(BuildContext context) {
     return Container(
         margin: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.surface,
             borderRadius: BorderRadius.circular(100)),
         child: IconButton(
-            color: Colors.black,
+            color: Theme.of(context).colorScheme.onSurface,
             onPressed: () => Navigator.of(context).pop(),
             icon: const Icon(Icons.arrow_back)));
   }

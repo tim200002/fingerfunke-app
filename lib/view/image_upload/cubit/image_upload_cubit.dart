@@ -3,6 +3,8 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -21,7 +23,9 @@ class ImageUploadCubit extends Cubit<ImageUploadState> {
         initial: () {},
         loaded: (File file) async {
           File? cropped = await ImageCropper.cropImage(
-            sourcePath: file.path,
+              sourcePath: file.path,
+              cropStyle: CropStyle.circle,
+              aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
           );
           emit(Loaded(cropped ?? file));
         });

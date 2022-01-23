@@ -16,84 +16,90 @@ class ImageUploadModalContent extends StatelessWidget {
     );
   }
 }
+
 class ImageUploadWidget extends StatelessWidget {
   const ImageUploadWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return  BlocBuilder<ImageUploadCubit, ImageUploadState>(
+    return BlocBuilder<ImageUploadCubit, ImageUploadState>(
         builder: (context, state) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            state.when(
-                initial: () => Column(
-                  children: [
-                    ListTile(
-                      leading: const Icon(Icons.photo_camera),
-                      title: const Text('Camera'),
-                      onTap: () {
-                        BlocProvider.of<ImageUploadCubit>(context)
-                            .pickImage(ImageSource.camera);
-                      },
-                    ),
-                    ListTile(
-                      leading: const Icon(Icons.photo_library),
-                      title: const Text('Gallery'),
-                      onTap: () {
-                        BlocProvider.of<ImageUploadCubit>(context)
-                            .pickImage(ImageSource.gallery);
-                      },
-                    ),
-                  ],
-                ),
-                loaded: (file) => Column(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.all(16.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.2),
-                            spreadRadius: 5,
-                            blurRadius: 7,
-                            offset: const Offset(
-                                0, 3), // changes position of shadow
-                          ),
-                        ],
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          state.when(
+              initial: () => Column(
+                    children: [
+                      ListTile(
+                        leading: const Icon(Icons.photo_camera),
+                        title: const Text('Camera'),
+                        onTap: () {
+                          BlocProvider.of<ImageUploadCubit>(context)
+                              .pickImage(ImageSource.camera);
+                        },
                       ),
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8.0),
-                          child: Image.file(file)),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          TextButton(
-                            child: const Icon(Icons.crop),
-                            onPressed: () =>
+                      ListTile(
+                        leading: const Icon(Icons.photo_library),
+                        title: const Text('Gallery'),
+                        onTap: () {
+                          BlocProvider.of<ImageUploadCubit>(context)
+                              .pickImage(ImageSource.gallery);
+                        },
+                      ),
+                    ],
+                  ),
+              loaded: (file) => Column(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.all(16.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.2),
+                              spreadRadius: 5,
+                              blurRadius: 7,
+                              offset: const Offset(
+                                  0, 3),
+                            ),
+                          ],
+                        ),
+                        child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: AspectRatio(
+                                aspectRatio: 1,
+                                child: Image.file(
+                                  file,
+                                  fit: BoxFit.cover,
+                                ))),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            TextButton(
+                              child: const Icon(Icons.crop),
+                              onPressed: () =>
+                                  BlocProvider.of<ImageUploadCubit>(context)
+                                      .cropImage(),
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
                                 BlocProvider.of<ImageUploadCubit>(context)
-                                    .cropImage(),
-                          ),
-                          ElevatedButton(
-                            onPressed: () {
-                              BlocProvider.of<ImageUploadCubit>(context).send();
-                              Navigator.of(context).pop();
-                            },
-                            child: const Text('Sende Photo'),
-                          ),
-                        ],
+                                    .send();
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('Sende Photo'),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                )),
-          ],
-        );
-      }
-    );
+                    ],
+                  )),
+        ],
+      );
+    });
   }
 }
