@@ -79,8 +79,16 @@ class PageScreen extends StatelessWidget {
                       SliverList(
                         delegate: SliverChildListDelegate(
                           [
-                            Container(
-                              height: 20,
+                            Center(
+                              child: Container(
+                                margin: const EdgeInsets.only(bottom: 10),
+                                width: 45,
+                                height: 4,
+                                decoration: BoxDecoration(
+                                  color: Colors.black.withOpacity(0.6),
+                                  borderRadius: BorderRadius.circular(25)
+                                ),
+                              ),
                             ),
                             Container(
                               padding: const EdgeInsets.symmetric(

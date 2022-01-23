@@ -9,9 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fingerfunke_app/utils/type_aliases.dart';
+import 'package:share_plus/share_plus.dart';
 
 class PostView extends StatelessWidget {
   final FirestoreId postId;
+
   const PostView(this.postId, {Key? key}) : super(key: key);
 
   Widget _iconTextItem({required IconData icon, required String label}) {
@@ -32,10 +34,11 @@ class PostView extends StatelessWidget {
 
   Widget _tagWidget(String text) {
     return Padding(
-      padding: const EdgeInsets.only(right: 10),
-      child: Text(
-        "#$text",
-        style: const TextStyle(fontWeight: FontWeight.bold),
+      padding: const EdgeInsets.only(right: 5),
+      child: Chip(
+        // TODO extract widget
+        label: Text("#$text"),
+        backgroundColor: Colors.grey.shade200,
       ),
     );
   }
@@ -44,9 +47,11 @@ class PostView extends StatelessWidget {
     return BlocBuilder<PostCubit, PostState>(
       //ToDo implement build when
       builder: (context, state) => state.maybeWhen(
-          normal: (post) => Padding(
-                padding: EdgeInsets.symmetric(vertical: 10),
-                child: Text(post.description),
+          normal: (post) => Container(
+              constraints: const BoxConstraints(
+              ),
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Text(post.description, style: Theme.of(context).textTheme.bodyText1,),
               ),
           orElse: () => ErrorWidget(InvalidStateException())),
     );
@@ -54,7 +59,7 @@ class PostView extends StatelessWidget {
 
   Widget _tagsSection(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical: 10),
       child: SizedBox(
         height: 30,
         child: ListView(
@@ -67,9 +72,37 @@ class PostView extends StatelessWidget {
     );
   }
 
+  Widget _headerSection(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Flexible(
+          flex: 10,
+          child: Text(
+            "This an example title of the event",
+            style: Theme.of(context).textTheme.headline4,
+          ),
+        ),
+        Flexible(
+          flex: 2,
+          child: IconButton(
+            padding: const EdgeInsets.symmetric(
+              vertical: 5,
+            ),
+            alignment: Alignment.topCenter,
+            // TODO add share functionality
+            onPressed: () => Share.share('Check out this awesome event: https://fingerfunke.de'),
+            icon: const Icon(Icons.share_rounded),
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget _dateTimeSection(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 20),
+      padding: const EdgeInsets.symmetric(vertical: 20),
       child: Row(
         children: [
           Expanded(
@@ -84,37 +117,44 @@ class PostView extends StatelessWidget {
 
   Widget _actionsSection(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical: 10),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Expanded(
+          Flexible(
+              flex: 10,
+              fit: FlexFit.tight,
               child: ElevatedButton.icon(
                   onPressed: () {},
-                  icon: Icon(Icons.bookmark_border_rounded),
-                  label: Text("Ich bin dabei"))),
-          Expanded(
-              child: TextButton.icon(
-                  onPressed: () => Navigator.of(context).pushNamed(chatRoute, arguments: ChatArguments(postId: postId, paginatedListCubit: BlocProvider.of<PaginatedListCubit<Message>>(context))),
-                  icon: Icon(Icons.share_rounded),
-                  label: Text("share")))
+                  // TODO Change text and icon when user is added
+                  icon: const Icon(Icons.add),
+                  label: const Text("Ich bin dabei"))),
+          Flexible(
+              flex: 2,
+              child: Center(
+                child: IconButton(
+                  onPressed: () => Navigator.of(context).pushNamed(chatRoute,
+                      arguments: ChatArguments(
+                          postId: postId,
+                          paginatedListCubit:
+                              BlocProvider.of<PaginatedListCubit<Message>>(
+                                  context))),
+                  //TODO change to filled icon when date is bookmarked
+                  icon: const Icon(Icons.bookmark_border_rounded),
+                ),
+              ))
         ],
       ),
     );
   }
 
-  
-
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Text(
-          "This an example title of the event",
-          style: AppTheme.textStyleAccent(
-              style:
-                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-        ),
+        _headerSection(context),
         _dateTimeSection(context),
         _tagsSection(context),
         _descriptionSection(),

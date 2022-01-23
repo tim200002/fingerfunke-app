@@ -64,6 +64,7 @@ dependencies:
   modal_bottom_sheet: ^2.0.0
   image_cropper: ^1.4.1
   image_picker: ^0.8.4+4
+  share_plus: ^3.0.4
 
 dev_dependencies:
   flutter_test:

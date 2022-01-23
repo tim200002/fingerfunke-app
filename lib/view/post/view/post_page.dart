@@ -37,11 +37,11 @@ class PostPage extends StatelessWidget {
         margin: const EdgeInsets.all(8),
         decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(100),
-            boxShadow: _cardShadow),
+            borderRadius: BorderRadius.circular(100)),
         child: IconButton(
+            color: Colors.black,
             onPressed: () => Navigator.of(context).pop(),
-            icon: const Icon(Icons.close)));
+            icon: const Icon(Icons.arrow_back)));
   }
 
   @override
@@ -58,7 +58,7 @@ class PostPage extends StatelessWidget {
         BlocProvider(
           create: (_) => PaginatedListCubit<Message>(
               paginationService: MessagePaginationService(postId)),
-              lazy: false,
+          lazy: false,
         )
       ],
       child: Builder(
@@ -70,7 +70,7 @@ class PostPage extends StatelessWidget {
               normal: (post) => PageScreen(
                 appBar: AppBar(leading: _closeButton(context)),
                 extendBodyBehindAppBar: true,
-                headerHeight: 200,
+                headerHeight: MediaQuery.of(context).size.height.toDouble() / 4,
                 roundedBody: false,
                 roundedHeader: false,
                 header: NetworkPlaceholderImage(
@@ -79,10 +79,11 @@ class PostPage extends StatelessWidget {
                   Container(
                     color: Colors.grey,
                   ),
+                  fit: BoxFit.fitWidth,
                   width: MediaQuery.of(context).size.width.toInt(),
                 ),
                 headerBottom: _contentCardDecoration,
-                children:  [PostView(postId)],
+                children: [PostView(postId)],
               ),
             ),
           ),
