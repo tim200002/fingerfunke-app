@@ -20,6 +20,7 @@ class AppTheme {
   static const Color _dark_onPrimary = Color(0xffFFFFFF);
   static const Color _dark_secondary = Color(0xff048D86);
   static const Color _dark_secondaryVariant = Color(0xff95CCC9);
+  static const Color _dark_background = Color(0xff151414);
   static const Color _dark_onSecondary = Color(0xffFFFFFF);
   static const Color _dark_onSurface = Color(0xffF6F6F6);
 
@@ -64,6 +65,7 @@ class AppTheme {
       secondary: _dark_secondary,
       secondaryVariant: _dark_secondaryVariant,
       onSecondary: _dark_onSecondary,
+      background: _dark_background,
     ),
     appBarTheme: const AppBarTheme(
         elevation: 0,
