@@ -31,7 +31,7 @@ class VideoUploadTile extends StatelessWidget {
         ),
         child: */
           IconButton(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         onPressed: () => onAbort(cubit.id),
         icon: const Icon(
           Icons.close_rounded,
