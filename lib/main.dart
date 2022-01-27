@@ -56,30 +56,28 @@ class AppInflater extends StatelessWidget {
           create: (context) => SettingsCubit(SettingsRepositoryImpl()),
         ),
       ],
-      child: BlocBuilder<SettingsCubit,SettingsState>(
-        builder: (context, state) {
-          BlocProvider.of<SettingsCubit>(context).loadSettings();
-          return Builder(
-            builder: (context) {
-              BlocProvider.of<AuthenticationCubit>(context)
-                  .connectListener(mapStateChangeToNavigationEvent);
+      child:
+          BlocBuilder<SettingsCubit, SettingsState>(builder: (context, state) {
+        BlocProvider.of<SettingsCubit>(context).loadSettings();
+        return Builder(
+          builder: (context) {
+            BlocProvider.of<AuthenticationCubit>(context)
+                .connectListener(mapStateChangeToNavigationEvent);
 
-              return state.when(
-                  initial: () {
-                return AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 250),
-                  child: buildLoadedApp(context, _navigator, ThemeMode.system),
-                );
-              }, loaded: (settings) {
-                return AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 250),
-                  child: buildLoadedApp(context, _navigator, settings.themeMode),
-                );
-              });
-            },
-          );
-        }
-      ),
+            return state.when(initial: () {
+              return AnimatedSwitcher(
+                duration: const Duration(milliseconds: 250),
+                child: buildLoadedApp(context, _navigator, ThemeMode.system),
+              );
+            }, loaded: (settings) {
+              return AnimatedSwitcher(
+                duration: const Duration(milliseconds: 250),
+                child: buildLoadedApp(context, _navigator, settings.themeMode),
+              );
+            });
+          },
+        );
+      }),
     );
   }
 }
@@ -88,7 +86,6 @@ Widget buildLoadedApp(context, _navigator, themeMode) {
   return MaterialApp(
     routes: routes,
     navigatorKey: _navigator,
-
     theme: AppTheme.mainTheme,
     darkTheme: AppTheme.darkTheme,
     themeMode: themeMode,

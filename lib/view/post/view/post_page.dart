@@ -112,16 +112,19 @@ class PostPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ElevatedButton(
-                      style: ButtonStyle(
-                        padding: MaterialStateProperty.all(const EdgeInsets.all(10)),
-                        shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
+                        style: ButtonStyle(
+                          padding: MaterialStateProperty.all(
+                              const EdgeInsets.all(10)),
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
                           ),
+                          backgroundColor: MaterialStateProperty.all(
+                              Theme.of(context).colorScheme.onSurface),
+                          foregroundColor: MaterialStateProperty.all(
+                              Theme.of(context).colorScheme.surface),
                         ),
-                        backgroundColor: MaterialStateProperty.all(Theme.of(context).colorScheme.onSurface),
-                        foregroundColor: MaterialStateProperty.all(Theme.of(context).colorScheme.surface),
-                      ),
                         onPressed: () {
                           print("clicked");
                         },
@@ -315,7 +318,10 @@ class PostPage extends StatelessWidget {
                                   Padding(
                                     padding: const EdgeInsets.only(top: 24.0),
                                     child: Center(
-                                      child: state.maybeWhen(orElse: () => Container(), normal: (postState) => Text("Erstellt von ${postState.author.name}")),
+                                      child: state.maybeWhen(
+                                          orElse: () => Container(),
+                                          normal: (postState) => Text(
+                                              "Erstellt von ${postState.author.name}")),
                                     ),
                                   ),
                                 ],

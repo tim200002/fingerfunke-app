@@ -10,10 +10,16 @@
             "type": "dart"
         },
         {
-            "name": "run app (profile mode)",
+            "name": "run app | profile",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
+        },
+        {
+            "name": "run app | release",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
         }
     ]
 }
