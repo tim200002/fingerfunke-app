@@ -30,8 +30,12 @@ class ImageUploadCubit extends Cubit<ImageUploadState> {
   /// Select an image via gallery or camera
   Future<void> pickImage(ImageSource source) async {
     XFile? selected = await ImagePicker().pickImage(source: source);
-    final File file = File(selected!.path);
-    emit(Loaded(file));
+    if (selected == null) {
+      emit(const Initial());
+    } else {
+      final File file = File(selected.path);
+      emit(Loaded(file));
+    }
   }
 
   /// Remove image
