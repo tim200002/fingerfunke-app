@@ -52,17 +52,17 @@ class PostFeedItem extends StatelessWidget {
                 Text(
                   Tools.dateFromEpoch(
                       _post.creationTime.millisecondsSinceEpoch),
-                  style: TextStyle(fontWeight: FontWeight.w600),
+                  style: const TextStyle(fontWeight: FontWeight.w600),
                 ),
                 Text(
                     Tools.timeFromEpoch(
                             _post.creationTime.millisecondsSinceEpoch) +
                         " Uhr",
-                    style: TextStyle(fontWeight: FontWeight.w600)),
+                    style: const TextStyle(fontWeight: FontWeight.w600)),
               ],
             ),
             Container(
-              padding: EdgeInsets.only(top: 10, bottom: 10),
+              padding: const EdgeInsets.only(top: 10, bottom: 10),
               constraints: const BoxConstraints(minHeight: 60),
               child: Text(
                 _post.title,
@@ -78,7 +78,7 @@ class PostFeedItem extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(_post.location,
-                      style: TextStyle(fontWeight: FontWeight.w600)),
+                      style: const TextStyle(fontWeight: FontWeight.w600)),
                   const Padding(
                     padding: EdgeInsets.only(left: 5),
                     child: Icon(
