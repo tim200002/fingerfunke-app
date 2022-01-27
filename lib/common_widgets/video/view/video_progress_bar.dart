@@ -11,8 +11,11 @@ class VideoProgressBar extends StatelessWidget {
     return BlocBuilder<VideoPlaybackCubit, VideoPlaybackState>(
       builder: (context, state) => state.when(
           initializing: () => Container(),
-          playing: (controller, _) =>
-              VideoProgressIndicator(controller, allowScrubbing: false),
+          playing: (controller, _) => VideoProgressIndicator(
+                controller,
+                allowScrubbing: false,
+                padding: const EdgeInsets.all(0),
+              ),
           error: (_) => Container()),
     );
   }

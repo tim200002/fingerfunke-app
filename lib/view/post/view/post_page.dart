@@ -36,10 +36,7 @@ class PostPage extends StatelessWidget {
           child: Icon(
             icon,
             size: 28,
-            color: Theme
-                .of(context)
-                .colorScheme
-                .primary,
+            color: Theme.of(context).colorScheme.primary,
           ),
         ),
         Column(
@@ -51,15 +48,14 @@ class PostPage extends StatelessWidget {
                 )),
             subLabel != null
                 ? Text(
-              subLabel,
-              style: TextStyle(
-                  fontWeight: FontWeight.normal,
-                  color: Theme
-                      .of(context)
-                      .colorScheme
-                      .onSurface
-                      .withOpacity(0.5)),
-            )
+                    subLabel,
+                    style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurface
+                            .withOpacity(0.5)),
+                  )
                 : Container(),
           ],
         )
@@ -234,9 +230,8 @@ class PostPage extends StatelessWidget {
         // so that when opening the chat initial messages are typically already loaded
         // therefore we require the cubit to be instantly built -> lazy is set to false
         BlocProvider(
-          create: (_) =>
-              PaginatedListCubit<Message>(
-                  paginationService: MessagePaginationService(postId)),
+          create: (_) => PaginatedListCubit<Message>(
+              paginationService: MessagePaginationService(postId)),
           lazy: false,
         )
       ],

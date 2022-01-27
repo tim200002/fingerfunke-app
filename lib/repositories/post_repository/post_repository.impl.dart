@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fingerfunke_app/models/post/post.dart';
+import 'package:fingerfunke_app/models/user/user.dart';
 import 'package:fingerfunke_app/repositories/post_repository/post_repository.dart';
 import 'package:fingerfunke_app/utils/type_aliases.dart';
 
@@ -34,5 +35,10 @@ class PostRepositoryImpl implements PostRepository {
   @override
   Future<void> deletePost(FirestoreId postId) {
     return _postCollection.doc(postId).delete();
+  }
+
+  @override
+  Future<void> joinPost({required Post post, required UserInfo user})async{
+    
   }
 }

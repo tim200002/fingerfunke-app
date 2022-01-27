@@ -1,3 +1,4 @@
+import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class SplashPage extends StatelessWidget {
@@ -9,10 +10,14 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
+      backgroundColor: AppTheme.colorPrimary,
       body: Center(
-        child: Text("Splash"),
-      ),
+          child: Image.asset(
+        "assets/img/brand/icon_trans.png",
+        height: 150,
+        color: Colors.white,
+      )),
     );
   }
 }

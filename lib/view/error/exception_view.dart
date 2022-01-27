@@ -1,3 +1,4 @@
+import 'package:fingerfunke_app/utils/illustration.dart';
 import 'package:flutter/material.dart';
 
 part 'widgets/technical_view.dart';
@@ -54,10 +55,10 @@ class ExceptionView extends StatelessWidget {
                   Padding(
                       padding: const EdgeInsets.only(top: 140, bottom: 60),
                       child: Center(
-                        child: Image.asset(
-                            "assets/img/illustrations/undraw/undraw_fixing_bugs.png",
-                            height: 150),
-                      )),
+                          child: Illustration(
+                        Illustrations.fixingBugs,
+                        height: 150,
+                      ))),
                   Text("Oh no :/",
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.headline3),
