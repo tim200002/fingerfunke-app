@@ -60,7 +60,7 @@ class HomeView extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: primaryTEMP,
+        backgroundColor: Theme.of(context).primaryColor,
         onPressed: () => Navigator.pushNamed(context, postEditorRoute),
         child: const Icon(Icons.add_rounded),
       ),
