@@ -1,3 +1,4 @@
+import 'package:fingerfunke_app/common_widgets/helper_widgets.dart';
 import 'package:fingerfunke_app/common_widgets/image/network_placeholder_image.dart/network_placeholder_image.dart';
 import 'package:fingerfunke_app/models/asset/asset.dart';
 import 'package:fingerfunke_app/models/message/message.dart';
@@ -9,6 +10,7 @@ import 'package:fingerfunke_app/view/fullscreen_video/view/fullscreen_video_page
 import 'package:fingerfunke_app/view/paginated_list/cubit/paginated_list_cubit.dart';
 import 'package:fingerfunke_app/view/post/cubit/post_cubit.dart';
 import 'package:fingerfunke_app/view/post/view/post_view.dart';
+import 'package:fingerfunke_app/view/post_feed/view/post_feed_item_blur_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -82,14 +84,17 @@ class PostPage extends StatelessWidget {
                                   .firstWhere((e) => e.type == asset_type.video)
                               as VideoAsset)))),
                   child: Stack(children: [
-                    NetworkPlaceholderImage(
-                      VideoRepositoryImpl()
-                          .createThumbnailUrl(post.media[0] as VideoAsset),
-                      Container(
-                        color: Colors.grey,
+                    Hero(
+                      tag: PostFeedItemBlur.heroTag,
+                      child: NetworkPlaceholderImage(
+                        VideoRepositoryImpl()
+                            .createThumbnailUrl(post.media[0] as VideoAsset),
+                        Container(
+                          color: Colors.grey,
+                        ),
+                        width: MediaQuery.of(context).size.width.toInt(),
+                        fit: BoxFit.cover,
                       ),
-                      width: MediaQuery.of(context).size.width.toInt(),
-                      fit: BoxFit.cover,
                     ),
                     const Center(
                       child: Icon(

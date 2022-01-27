@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:fingerfunke_app/common_widgets/helper_widgets.dart';
 import 'package:fingerfunke_app/common_widgets/image/network_placeholder_image.dart/network_placeholder_image.dart';
 import 'package:fingerfunke_app/common_widgets/user/author_info.dart';
 import 'package:fingerfunke_app/models/asset/asset.dart';
@@ -11,6 +12,8 @@ import 'package:fingerfunke_app/utils/tools.dart';
 import 'package:flutter/material.dart';
 
 class PostFeedItemBlur extends StatelessWidget {
+  static const heroTag = "postcard_img";
+
   final Post _post;
   const PostFeedItemBlur(this._post, {Key? key}) : super(key: key);
 
@@ -109,7 +112,9 @@ class PostFeedItemBlur extends StatelessWidget {
                     ColorFiltered(
                       colorFilter: ColorFilter.mode(
                           Colors.white.withOpacity(0.7), BlendMode.hardLight),
-                      child: _postImage(context),
+                      child: Hero(
+                          tag: PostFeedItemBlur.heroTag,
+                          child: _postImage(context)),
                     ),
                     BackdropFilter(
                         filter: ImageFilter.blur(
