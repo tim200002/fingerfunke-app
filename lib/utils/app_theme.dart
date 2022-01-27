@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 /// Contains customized Theme
 class AppTheme {
-  static const Color _light_primary = Color(0xffE83D46);
+  static const Color _light_primary = Color(0xffFF6060);
   static const Color _light_primaryVariant = Color(0xffF0ACB0);
   static const Color _light_onPrimary =  Color(0xffFFFFFF);
   static const Color _light_secondary = Color(0xff048D86);
@@ -15,7 +15,7 @@ class AppTheme {
   static const Color _light_onBackground =  Color(0xff151515);
   static const Color _light_onSurface =  Color(0xff151515);
 
-  static const Color _dark_primary = Color(0xffE83D46);
+  static const Color _dark_primary = Color(0xffFF6060);
   static const Color _dark_primaryVariant = Color(0xffF0ACB0);
   static const Color _dark_onPrimary =  Color(0xffFFFFFF);
   static const Color _dark_secondary = Color(0xff048D86);
