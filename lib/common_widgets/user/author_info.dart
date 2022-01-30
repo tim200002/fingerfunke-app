@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 
 class AuthorInfo extends StatelessWidget {
   final UserInfo _userInfo;
-  const AuthorInfo(this._userInfo, {Key? key}) : super(key: key);
+  final Color? color;
+  const AuthorInfo(this._userInfo, {this.color, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,8 @@ class AuthorInfo extends StatelessWidget {
         ),
         Text(
           _userInfo.name,
-          style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+          style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14)
+              .copyWith(color: color),
         )
       ],
     );

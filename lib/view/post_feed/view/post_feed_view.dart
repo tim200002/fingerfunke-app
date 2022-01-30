@@ -7,6 +7,8 @@ import 'package:fingerfunke_app/view/post_feed/widgets/pf_filters.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'post_feed_item_image_view.dart';
+
 class PostFeedView extends StatelessWidget {
   const PostFeedView({Key? key}) : super(key: key);
 
@@ -24,7 +26,7 @@ class PostFeedView extends StatelessWidget {
                 paginationService: PostPaginationService(),
               ),
               child: PaginatedList<Post>(
-                itemBuilder: (post) => PostFeedItem(
+                itemBuilder: (post) => PostFeedImageItem(
                   post,
                   // ToDo ich habe das gemacht, weil sonst die Liste nicht immer richtig neu gebaut wurde
                   // ich verstehe aber eigentlich zu wenig von keys vielleicht gibt es auch bessere Lösungen
