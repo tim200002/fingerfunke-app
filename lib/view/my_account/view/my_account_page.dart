@@ -1,13 +1,12 @@
 import 'package:fingerfunke_app/common_widgets/image/user_image/user_image.dart';
 import 'package:fingerfunke_app/cubits/authentication_cubit/authentication_cubit.dart';
-import 'package:fingerfunke_app/utils/dev_tools.dart';
 import 'package:fingerfunke_app/utils/exceptions.dart';
 import 'package:fingerfunke_app/utils/util_widgets/floating_modal.dart';
 import 'package:fingerfunke_app/utils/util_widgets/page_screen.dart';
 import 'package:fingerfunke_app/view/image_upload/view/image_upload_modal_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:settings_ui/settings_ui.dart';
+import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 
 class MyAccountPage extends StatelessWidget {
   const MyAccountPage({Key? key}) : super(key: key);

@@ -13,24 +13,31 @@ class PostFeedView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        PostFeedFilters(),
-        Expanded(
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const PostFeedFilters(),
+          Expanded(
             child: BlocProvider(
-          create: (context) => PaginatedListCubit<Post>(
-            paginationService: PostPaginationService(),
-          ),
-          child: PaginatedList<Post>(
-              itemBuilder: (post) => PostFeedItemBlur(
-                    post,
-                  ),
-              reverse: false,
-              endMessage: "" //"there are no more events",
+              create: (context) => PaginatedListCubit<Post>(
+                paginationService: PostPaginationService(),
               ),
-        )),
-      ],
+              child: PaginatedList<Post>(
+                itemBuilder: (post) => PostFeedItem(
+                  post,
+                  // ToDo ich habe das gemacht, weil sonst die Liste nicht immer richtig neu gebaut wurde
+                  // ich verstehe aber eigentlich zu wenig von keys vielleicht gibt es auch bessere Lösungen
+                  key: ValueKey(post.id),
+                ),
+                reverse: false,
+                endMessage: "there are no more events",
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

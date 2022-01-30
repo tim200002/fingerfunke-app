@@ -25,9 +25,13 @@ class PaginatedListCubit<T> extends Cubit<PaginatedListState<T>> {
 
   Future<void> requestNewPage() async {
     _logger.i("Paginated list, load new page");
-    emit(state.copyWith(isLoading: true));
-    bool hasReachedEnd = await _paginationService.requestNewPage();
-    emit(state.copyWith(isLoading: false, reachedEnd: hasReachedEnd));
+    // ToDo Frage sollten wir das hier machen, für mich gibt es keinen Grund warum nicht
+    // es macht es halt minimimal intransparent, insbesondere da ich es in der Liste auch checke
+    if(!state.reachedEnd){
+      emit(state.copyWith(isLoading: true));
+      bool hasReachedEnd = await _paginationService.requestNewPage();
+      emit(state.copyWith(isLoading: false, reachedEnd: hasReachedEnd));
+    }
   }
 
   @override
