@@ -111,7 +111,7 @@ class PostEditingView extends StatelessWidget {
                 width: 125,
                 height: 210,
                 decoration: BoxDecoration(
-                  color: Colors.teal.shade100,
+                  color: Theme.of(context).colorScheme.primaryVariant,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: const Center(child: Icon(Icons.add_a_photo_outlined)),
@@ -216,7 +216,7 @@ class PostEditingView extends StatelessWidget {
 
   Widget _titleField(BuildContext context) {
     return TextFormField(
-      style: Theme.of(context).textTheme.headline3,
+      style: Theme.of(context).textTheme.headline5,
       minLines: 1,
       maxLines: 3,
       maxLength: titleMaxCharacters,
@@ -231,7 +231,7 @@ class PostEditingView extends StatelessWidget {
           hintText: "Titel des Posts",
           hintStyle: Theme.of(context)
               .textTheme
-              .headline3
+              .headline5
               ?.copyWith(color: Colors.grey)),
     );
   }
@@ -300,6 +300,7 @@ class PostEditingView extends StatelessWidget {
           if (invalid) Tools.showSnackbar(context, "Bitte alles ausfüllen");
         }),
         child: FloatingActionButton(
+          backgroundColor: Theme.of(context).colorScheme.primary,
           child: const Icon(Icons.send_rounded),
           onPressed: () {
             final User? currentUser = context
