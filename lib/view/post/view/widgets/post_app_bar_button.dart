@@ -8,7 +8,7 @@ Widget postAppBarButton({required BuildContext context, required IconData icon, 
             color: Theme.of(context).colorScheme.surface,
             borderRadius: BorderRadius.circular(100)),
         child: IconButton(
-            color: Theme.of(context).colorScheme.onSurface,
+            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.8),
             onPressed: onPressed,
             icon: Icon(icon))),
   );

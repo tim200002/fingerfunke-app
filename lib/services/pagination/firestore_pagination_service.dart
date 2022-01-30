@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:logger/logger.dart';
 
 abstract class FirestorePaginationService<T> {
   final int paginationDistance;
@@ -27,13 +28,17 @@ abstract class FirestorePaginationService<T> {
   /// list of all received pages, each page is ideally a list of length pagination Distance
   List<List<T>> _allReceivedPages = [];
 
+  final Logger _logger = Logger();
+
   FirestorePaginationService(this._startQuery, this._mapper,
       {required this.firestore, this.paginationDistance = 20});
 
   // requests new page and adds elements to pagination
-  // returns false if no new posts could be found
+  // returns true if no new posts could be found
   Future<bool> requestNewPage() async {
+    _logger.i("Firestore pagination service request new page. This is the ${_allReceivedPages.length} page");
     Completer<bool> didReachEndCompleter = Completer();
+    
     //------------------------------------------------------
     // This part finds the first and last document for each query
     Query helperQuery = _startQuery.limit(paginationDistance);
@@ -50,7 +55,7 @@ abstract class FirestorePaginationService<T> {
     // Special case when query returns empty we subscribe to see if elements are added later
     else {
       _firstElementSubscription =
-          _startQuery.limit(1).snapshots().listen((firstElementSnapshot) {
+          helperQuery.limit(1).snapshots().listen((firstElementSnapshot) {
         if (firstElementSnapshot.docs.isNotEmpty) {
           _firstElementCallback();
         }
@@ -77,6 +82,7 @@ abstract class FirestorePaginationService<T> {
     // create a listener function to listen for this specific page
     StreamSubscription currentPageListener = firestoreQuery.snapshots().listen(
       (currentPageSnapshot) {
+        _logger.i("Firesore pagination service read snapshots for page index: $currentPageIndex. This page contains ${currentPageSnapshot.docs.isNotEmpty?currentPageSnapshot.docs.length:"none"} Elements");
         // were we able to receive more documents
         if (currentPageSnapshot.docs.isNotEmpty) {
           List<T> elements = currentPageSnapshot.docs
