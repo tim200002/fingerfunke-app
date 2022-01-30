@@ -26,7 +26,7 @@ class AppTheme {
 
   static final ThemeData mainTheme = ThemeData(
     textTheme: _textTheme,
-    //canvasColor: Color(0xffebebeb),
+    canvasColor: Color(0xffffffff),
     colorScheme: const ColorScheme.light(
       primary: _light_primary,
       primaryVariant: _light_primaryVariant,
@@ -105,7 +105,7 @@ class AppTheme {
         fontSize: 60, fontWeight: FontWeight.w300, letterSpacing: -0.5),
     headline3: GoogleFonts.roboto(fontSize: 48, fontWeight: FontWeight.w600),
     headline4: GoogleFonts.roboto(
-        fontSize: 34, fontWeight: FontWeight.w400, letterSpacing: 0.25),
+        fontSize: 28, fontWeight: FontWeight.bold, letterSpacing: 0.25),
     headline5: GoogleFonts.roboto(fontSize: 24, fontWeight: FontWeight.bold),
     headline6: GoogleFonts.roboto(
         fontSize: 20, fontWeight: FontWeight.w500, letterSpacing: 0.15),
