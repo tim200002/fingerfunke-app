@@ -51,28 +51,31 @@ class ImageUploadWidget extends StatelessWidget {
                   ),
               loaded: (file) => Column(
                     children: [
-                      Container(
-                        margin: const EdgeInsets.all(16.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.2),
-                              spreadRadius: 5,
-                              blurRadius: 7,
-                              offset: const Offset(
-                                  0, 3),
-                            ),
-                          ],
+                      AspectRatio(
+                        aspectRatio: 1,
+                        child: Container(
+                          margin: const EdgeInsets.all(16.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.2),
+                                spreadRadius: 5,
+                                blurRadius: 7,
+                                offset: const Offset(
+                                    0, 3),
+                              ),
+                            ],
+                          ),
+                          child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: AspectRatio(
+                                  aspectRatio: 1,
+                                  child: Image.file(
+                                    file,
+                                    fit: BoxFit.cover,
+                                  ))),
                         ),
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.circular(8.0),
-                            child: AspectRatio(
-                                aspectRatio: 1,
-                                child: Image.file(
-                                  file,
-                                  fit: BoxFit.cover,
-                                ))),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
