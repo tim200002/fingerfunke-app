@@ -11,7 +11,7 @@ class AppTheme {
   static const Color _light_secondary = Color(0xff048D86);
   static const Color _light_secondaryVariant = Color(0xff95CCC9);
   static const Color _light_onSecondary = Color(0xffFFFFFF);
-  static const Color _light_background = Color(0xffF6F6F6);
+  static const Color _light_background = Color(0xffF1F1F1);
   static const Color _light_onBackground = Color(0xff151515);
   static const Color _light_onSurface = Color(0xff151515);
 
@@ -25,6 +25,8 @@ class AppTheme {
   static const Color _dark_onSurface = Color(0xffF6F6F6);
 
   static final ThemeData mainTheme = ThemeData(
+    textTheme: _textTheme,
+    canvasColor: Color(0xffffffff),
     colorScheme: const ColorScheme.light(
       primary: _light_primary,
       primaryVariant: _light_primaryVariant,
@@ -90,6 +92,9 @@ class AppTheme {
   static TextStyle textStyleAccent({TextStyle? style}) =>
       GoogleFonts.calistoga(textStyle: style);
 
+  static TextStyle textStyleCondensed({TextStyle? style}) =>
+      GoogleFonts.robotoCondensed(textStyle: style);
+
   // ignore: constant_identifier_names
   static const double PADDING_SIDE = 12;
 
@@ -98,10 +103,10 @@ class AppTheme {
         fontSize: 96, fontWeight: FontWeight.w300, letterSpacing: -1.5),
     headline2: GoogleFonts.roboto(
         fontSize: 60, fontWeight: FontWeight.w300, letterSpacing: -0.5),
-    headline3: GoogleFonts.roboto(fontSize: 48, fontWeight: FontWeight.w400),
+    headline3: GoogleFonts.roboto(fontSize: 48, fontWeight: FontWeight.w600),
     headline4: GoogleFonts.roboto(
-        fontSize: 34, fontWeight: FontWeight.w400, letterSpacing: 0.25),
-    headline5: GoogleFonts.roboto(fontSize: 24, fontWeight: FontWeight.w400),
+        fontSize: 28, fontWeight: FontWeight.bold, letterSpacing: 0.25),
+    headline5: GoogleFonts.roboto(fontSize: 24, fontWeight: FontWeight.bold),
     headline6: GoogleFonts.roboto(
         fontSize: 20, fontWeight: FontWeight.w500, letterSpacing: 0.15),
     subtitle1: GoogleFonts.roboto(

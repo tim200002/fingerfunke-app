@@ -7,7 +7,7 @@ class PostFeedFilters extends StatelessWidget {
       {required IconData icon, bool selected = false, bool right = false}) {
     return Container(
         decoration: BoxDecoration(
-          color: selected ? Colors.black : Colors.white,
+          color: selected ? Colors.black : Colors.transparent,
           borderRadius: BorderRadius.circular(30),
         ),
         padding: const EdgeInsets.all(5),
@@ -27,6 +27,7 @@ class PostFeedFilters extends StatelessWidget {
       padding: const EdgeInsets.only(right: 15),
       child: Container(
         decoration: BoxDecoration(
+          //color: Colors.white,
           border: Border.all(color: Colors.black),
           borderRadius: BorderRadius.circular(30),
         ),

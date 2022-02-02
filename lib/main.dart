@@ -66,7 +66,9 @@ class AppInflater extends StatelessWidget {
             return state.when(initial: () {
               return AnimatedSwitcher(
                 duration: const Duration(milliseconds: 250),
-                child: buildLoadedApp(context, _navigator, ThemeMode.system),
+                //ToDo: select light mode by default, as dark mode has some testing issues
+                child: buildLoadedApp(
+                    context, _navigator, ThemeMode.light), //ThemeMode.system),
               );
             }, loaded: (settings) {
               return AnimatedSwitcher(
