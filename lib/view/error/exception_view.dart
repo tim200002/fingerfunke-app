@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 part 'widgets/technical_view.dart';
 
 class ExceptionView extends StatelessWidget {
-  final Object exception;
+  final dynamic exception;
   final StackTrace? trace;
   final bool closable;
 
@@ -23,13 +23,17 @@ class ExceptionView extends StatelessWidget {
   /// Note: When using this function, the [closable] flag is true by default,
   /// since the widget will be pushed to the navigation stack
   static void navigate(BuildContext context,
-      {required Object exception, StackTrace? trace, bool closable = true}) {
+      {required dynamic exception, StackTrace? trace, bool closable = true}) {
     Navigator.of(context).push(MaterialPageRoute<void>(
         builder: (ctx) => ExceptionView(
               exception: exception,
               trace: trace,
               closable: closable,
             )));
+  }
+
+  static ExceptionView builder(dynamic exception) {
+    return ExceptionView(exception: exception);
   }
 
   @override
@@ -61,7 +65,7 @@ class ExceptionView extends StatelessWidget {
                       ))),
                   Text("Oh no :/",
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headline3),
+                      style: Theme.of(context).textTheme.headline4),
                   const SizedBox(
                     height: 10,
                   ),

@@ -29,7 +29,9 @@ class EnterPhoneNumberView extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: 40),
             child: TextFormField(
-              decoration: const InputDecoration(labelText: "mobile number"),
+              decoration: const InputDecoration(
+                  labelText:
+                      "mobile number (z.B. +49 160...)"), // prefixText: "+49"),
               keyboardType: TextInputType.phone,
               validator: (number) => FormValidator.validatePhoneNumber(number),
               controller: _phoneInputController,
