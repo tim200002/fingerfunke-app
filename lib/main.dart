@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:fingerfunke_app/app.dart';
 import 'package:fingerfunke_app/cubits/authentication_cubit/authentication_cubit.dart';
 import 'package:fingerfunke_app/cubits/settings_cubit/settings_cubit.dart';
@@ -7,6 +11,7 @@ import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:fingerfunke_app/view/create_account/view/create_account_view.dart';
 import 'package:fingerfunke_app/view/splash/view/splash_page.dart';
 import 'package:fingerfunke_app/view/unauthenticated/view/unauthenticated_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,7 +22,34 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
   await Firebase.initializeApp();
-  Logger.level = Level.verbose;
+
+  final Logger _logger = Logger();
+
+  // choose envrionment
+  switch (dotenv.env['FIREBASE_ENVIRONMENT']) {
+    case 'local':
+      {
+        _logger.i("Using local environment");
+        Logger.level = Level.debug;
+        await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
+        FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
+        FirebaseFunctions.instanceFor(region: 'europe-west3')
+            .useFunctionsEmulator('localhost', 5001);
+        break;
+      }
+    case 'production':
+      {
+        _logger.i("Using production environment");
+        Logger.level = Level.verbose;
+        break;
+      }
+    default:
+      {
+        _logger.e("An Environment must be provides either production or local");
+        exit(1);
+      }
+  }
+
   runApp(AppInflater());
 }
 
