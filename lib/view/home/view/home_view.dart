@@ -58,7 +58,7 @@ class HomeView extends StatelessWidget {
         clipBehavior: Clip.none,
         child: const PostFeedView(),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).colorScheme.primaryVariant,
         foregroundColor: Theme.of(context).colorScheme.onPrimary,
@@ -74,8 +74,8 @@ class HomeView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             _bottomNavItem(context, title: "Events", icon: Icons.home),
-            _bottomNavItem(context,
-                title: "Events", icon: Icons.favorite_rounded),
+            //_bottomNavItem(context,
+            //    title: "Events", icon: Icons.favorite_rounded),
             _bottomNavItem(context,
                 title: "Gruppen", icon: Icons.account_circle),
           ],
