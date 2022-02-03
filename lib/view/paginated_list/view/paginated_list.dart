@@ -51,11 +51,20 @@ class PaginatedList<T> extends StatelessWidget {
             index == state.itemCount - 1;
   }
 
-  Widget? _createIndicator(PaginatedListState<T> state) {
+  Widget? _createIndicator(PaginatedListState<T> state, BuildContext context) {
     if (state.isLoading) {
       return loadingIndicator;
     } else {
-      return endMessage != null ? Center(child: Text(endMessage!)) : null;
+      return endMessage != null ? Center(child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Container(
+            padding: const EdgeInsets.all(8.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25),
+              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.25),
+            ),
+            child: Text(endMessage!, style: TextStyle(color: Theme.of(context).colorScheme.background),)),
+      )) : null;
     }
   }
 
@@ -74,7 +83,7 @@ class PaginatedList<T> extends StatelessWidget {
             //Check if we reached bottom of list
             // if yes shown indicator
             if (_currentElementIsIndicator(state, index)) {
-              return _createIndicator(state) ?? Container();
+              return _createIndicator(state, context) ?? Container();
             } 
             // if not create element
             else {
