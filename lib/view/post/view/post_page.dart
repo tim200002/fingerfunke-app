@@ -1,10 +1,6 @@
 import 'dart:ui';
 
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fingerfunke_app/common_widgets/image/network_placeholder_image.dart/network_placeholder_image.dart';
-import 'package:fingerfunke_app/models/asset/asset.dart';
 import 'package:fingerfunke_app/models/message/message.dart';
-import 'package:fingerfunke_app/repositories/video_repository/video_repository.impl.dart';
 import 'package:fingerfunke_app/services/pagination/message_pagination_service.dart';
 import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:fingerfunke_app/utils/exceptions.dart';
@@ -13,9 +9,6 @@ import 'package:fingerfunke_app/view/chat/view/chat_page.dart';
 import 'package:fingerfunke_app/view/paginated_list/cubit/paginated_list_cubit.dart';
 import 'package:fingerfunke_app/view/post/cubit/post_cubit.dart';
 import 'package:fingerfunke_app/view/post/view/post_header.dart';
-import 'package:fingerfunke_app/view/post/view/widgets/post_app_bar_button.dart';
-import 'package:fingerfunke_app/view/post/view/widgets/visibility_controller.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -192,6 +185,7 @@ class PostPage extends StatelessWidget {
                   child: const Icon(Icons.chat_bubble_outline_rounded),
                   onPressed: () => Navigator.of(context).pushNamed(chatRoute,
                       arguments: ChatArguments(
+                          chatName: state.maybeWhen(normal: (post) => post.title, orElse: () => ""),
                           postId: postId,
                           paginatedListCubit:
                               BlocProvider.of<PaginatedListCubit<Message>>(
