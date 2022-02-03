@@ -82,6 +82,7 @@ class PostPage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         // TODO replace with actual post data
+        // TODO check if post is event, and change ui
         Expanded(
             child: _iconTextItem(
                 context: context,
