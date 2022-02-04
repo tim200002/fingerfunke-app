@@ -1,4 +1,5 @@
 import 'package:fingerfunke_app/repositories/authentication_repository/authetication_repository.dart';
+import 'package:fingerfunke_app/utils/illustration.dart';
 import 'package:fingerfunke_app/utils/tools.dart';
 import 'package:fingerfunke_app/view/phone_login/view/phone_login_page.dart';
 import 'package:flutter/material.dart';
@@ -15,15 +16,16 @@ class UnauthenticatedPage extends StatelessWidget {
       child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: const [
-            Text(
+          children: [
+            Illustration(Illustrations.party),
+            const Text(
               "Hi!",
               style: TextStyle(
                 fontSize: 50,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            Text("welcome to fingerfunke",
+            const Text("welcome to fingerfunke",
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,

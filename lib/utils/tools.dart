@@ -64,11 +64,13 @@ class Tools {
     }).toList();
   }
 
-  static Future<File> getImageFileFromAssets(String path) async{
+  static Future<File> getImageFileFromAssets(String path) async {
     final byteData = await rootBundle.load('assets/$path');
 
-    final file = File('${(await getTemporaryDirectory()).path}/mux_test_video.mp4');
-    await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+    final file =
+        File('${(await getTemporaryDirectory()).path}/mux_test_video.mp4');
+    await file.writeAsBytes(byteData.buffer
+        .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
 
     return file;
   }

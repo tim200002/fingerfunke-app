@@ -22,7 +22,7 @@ class MediaCacheImpl implements MediaCache {
     if(height == null && width == null){
       return imageProvider;
     }else {
-      return ResizeImage(imageProvider, width: width, height: height, allowUpscaling: true);
+      return ResizeImage(imageProvider, width: width, height: height, allowUpscaling: false);
     }
   }
 }

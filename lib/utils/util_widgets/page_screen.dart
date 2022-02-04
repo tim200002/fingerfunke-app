@@ -7,6 +7,7 @@ class PageScreen extends StatelessWidget {
   final Function? onRefresh;
   final Widget? header;
   final Widget? headerBottom;
+  final Widget? leading;
   final double? headerHeight;
   final double sidePadding;
   final List<Widget>? children;
@@ -27,7 +28,8 @@ class PageScreen extends StatelessWidget {
       this.roundedHeader = true,
       this.appBar,
       this.children,
-      this.body})
+      this.body,
+      this.leading})
       : super(key: key) {
     if (body == null && children == null || body != null && children != null) {
       throw Exception(
@@ -44,28 +46,37 @@ class PageScreen extends StatelessWidget {
           children: [
             Expanded(
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(roundedBody ? 12.0 : 0),
+                borderRadius: BorderRadius.circular(roundedBody ? 15.0 : 0),
                 child: CustomScrollView(
                   slivers: [
                     if (header != null)
                       SliverAppBar(
+                        automaticallyImplyLeading: false,
+                        leading: leading,
+                        elevation: 0,
+                        backgroundColor: Colors.transparent,
+                        stretch: true,
+                        // TODO https://github.com/flutter/flutter/issues/54059
+                        /*
+                        collapsedHeight: headerHeight ?? (c.maxWidth * 0.5).clamp(300, 400),
+                        expandedHeight: c.maxHeight,
+                         */
+                        expandedHeight: headerHeight ?? (c.maxWidth * 0.5).clamp(300, 400),
+                        flexibleSpace: ClipRRect(
+                          borderRadius:
+                              BorderRadius.circular(roundedHeader ? 15.0 : 0),
+                          child: FlexibleSpaceBar(
+                              stretchModes: const [
+                                StretchMode.zoomBackground,
+                              ],
+                              collapseMode: CollapseMode.parallax,
+                              background: header),
+                        ),
                         bottom: headerBottom == null
                             ? null
                             : PreferredSize(
-                                preferredSize: const Size.fromHeight(0),
-                                child: headerBottom!),
-                        automaticallyImplyLeading: false,
-                        elevation: 0,
-                        backgroundColor: Colors.transparent,
-                        expandedHeight:
-                            headerHeight ?? (c.maxWidth * 0.5).clamp(300, 400),
-                        flexibleSpace: ClipRRect(
-                          borderRadius:
-                              BorderRadius.circular(roundedHeader ? 12.0 : 0),
-                          child: FlexibleSpaceBar(
-                              //collapseMode: CollapseMode.none,
-                              background: header),
-                        ),
+                            preferredSize: const Size.fromHeight(0),
+                            child: headerBottom!),
                       ), //expandedHeight: 600,
                     if (body != null)
                       SliverFillRemaining(
@@ -79,9 +90,6 @@ class PageScreen extends StatelessWidget {
                       SliverList(
                         delegate: SliverChildListDelegate(
                           [
-                            Container(
-                              height: 20,
-                            ),
                             Container(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: AppTheme.PADDING_SIDE),

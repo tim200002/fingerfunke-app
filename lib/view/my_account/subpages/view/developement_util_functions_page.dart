@@ -21,8 +21,7 @@ class DevelopementUtilFunctionsPage extends StatelessWidget {
                   BlocProvider.of<AuthenticationCubit>(context)
                       .state
                       .whenOrNull(signedIn: (user) => user);
-              PostRepositoryImpl().createPost(Post.createWithId(
-                type: post_type.event,
+              PostRepositoryImpl().createPost(Event.createWithId(
                 author: currentUser!,
                 title: "Test post ${DateTime.now().second}",
                 visibility: post_visibility.visible,
@@ -30,6 +29,7 @@ class DevelopementUtilFunctionsPage extends StatelessWidget {
                     "Dieser post ist ein post der nur zu testzwecken um ${DateTime.now().toString()} erstellt wurde",
                 location: "ToDO Location",
                 media: [VideoAsset(id: "test", assetId: "9h00XEtc4P3TbTXvChyimCMkPAfbVbkEGNEkNh7jBCsc", creationTime: DateTime.now(),state: asset_state.ready)],
+                startTime: DateTime.now()
               ));
             },
             child: const Text("CreateRandomPost"),

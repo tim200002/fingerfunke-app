@@ -1,5 +1,7 @@
+import 'package:fingerfunke_app/cubits/authentication_cubit/authentication_cubit.dart';
 import 'package:fingerfunke_app/view/post_editor/cubit/post_editor_cubit.dart';
 import 'package:fingerfunke_app/view/post_editor/view/post_editing_view.dart';
+import 'package:fingerfunke_app/view/post_editor/view/widgets/not_signed_in_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,11 +18,12 @@ class PostEditorPage extends StatelessWidget {
       children: [
         const CircularProgressIndicator.adaptive(),
         Padding(
-            padding: const EdgeInsets.only(top: 30),
-            child: Text(
-              message,
-              textAlign: TextAlign.center,
-            ),)
+          padding: const EdgeInsets.only(top: 30),
+          child: Text(
+            message,
+            textAlign: TextAlign.center,
+          ),
+        )
       ],
     )));
   }
@@ -53,17 +56,21 @@ class PostEditorPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<PostEditorCubit>(
-      create: (context) => PostEditorCubit(),
-      child: BlocConsumer<PostEditorCubit, PostEditorState>(
-          listener: (context, state) =>
-              state.whenOrNull(submitted: () => Navigator.of(context).pop()),
-          builder: (context, state) => state.when(
-              loading: () => _loading(context, message: "loading"),
-              editing: (post, _) => PostEditingView(post: post),
-              error: (message) => _error(context),
-              submitted: () => _success(context),
-              submitting: () => _loading(context, message: "submitting"))),
-    );
+    return BlocBuilder<AuthenticationCubit, AuthenticationState>(
+        builder: (context, state) => state.maybeWhen(
+            orElse: () => const NotSignedInView(),
+            signedIn: (_) => BlocProvider<PostEditorCubit>(
+                  create: (context) => PostEditorCubit(),
+                  child: BlocConsumer<PostEditorCubit, PostEditorState>(
+                      listener: (context, state) => state.whenOrNull(
+                          submitted: () => Navigator.of(context).pop()),
+                      builder: (context, state) => state.when(
+                          loading: () => _loading(context, message: "loading"),
+                          editing: (post, _) => PostEditingView(post: post),
+                          error: (message) => _error(context),
+                          submitted: () => _success(context),
+                          submitting: () =>
+                              _loading(context, message: "submitting"))),
+                )));
   }
 }

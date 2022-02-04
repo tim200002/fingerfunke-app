@@ -20,28 +20,32 @@ class FullscreenVideoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: BlocProvider(
-        create: (context) =>
-            VideoPlaybackCubit(url: url, autoplay: true, loop: true),
-        child: Stack(
-          children: [
-            Builder(builder: (context) {
-              return GestureDetector(
-                  onTap: () =>
-                      BlocProvider.of<VideoPlaybackCubit>(context).togglePlay(),
-                  child: const VideoPlaybackView());
-            }),
-            const Align(
-              alignment: Alignment.bottomCenter,
-              child: VideoProgressBar(),
-            ),
-            const Align(
-              alignment: Alignment.center,
-              child: VideoPausedIndicator(),
-            )
-          ],
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(),
+        extendBody: false,
+        extendBodyBehindAppBar: true,
+        body: BlocProvider(
+          create: (context) =>
+              VideoPlaybackCubit(url: url, autoplay: true, loop: true),
+          child: Stack(
+            children: [
+              Builder(builder: (context) {
+                return GestureDetector(
+                    onTap: () => BlocProvider.of<VideoPlaybackCubit>(context)
+                        .togglePlay(),
+                    child: const VideoPlaybackView());
+              }),
+              const Align(
+                alignment: Alignment.topCenter,
+                child: VideoProgressBar(),
+              ),
+              const Align(
+                alignment: Alignment.center,
+                child: VideoPausedIndicator(),
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -11,7 +11,7 @@ class SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppTheme.colorPrimary,
+      backgroundColor: Theme.of(context).colorScheme.primary,
       body: Center(
           child: Image.asset(
         "assets/img/brand/icon_trans.png",

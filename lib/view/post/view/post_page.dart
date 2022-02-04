@@ -1,47 +1,112 @@
-import 'package:fingerfunke_app/common_widgets/image/network_placeholder_image.dart/network_placeholder_image.dart';
-import 'package:fingerfunke_app/models/asset/asset.dart';
+import 'dart:ui';
+
 import 'package:fingerfunke_app/models/message/message.dart';
-import 'package:fingerfunke_app/repositories/video_repository/video_repository.impl.dart';
 import 'package:fingerfunke_app/services/pagination/message_pagination_service.dart';
+import 'package:fingerfunke_app/utils/app_theme.dart';
+import 'package:fingerfunke_app/utils/exceptions.dart';
 import 'package:fingerfunke_app/utils/util_widgets/loading_page.dart';
-import 'package:fingerfunke_app/utils/util_widgets/page_screen.dart';
+import 'package:fingerfunke_app/view/chat/view/chat_page.dart';
 import 'package:fingerfunke_app/view/paginated_list/cubit/paginated_list_cubit.dart';
 import 'package:fingerfunke_app/view/post/cubit/post_cubit.dart';
-import 'package:fingerfunke_app/view/post/view/post_view.dart';
+import 'package:fingerfunke_app/view/post/view/post_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../routes.dart';
 
 class PostPage extends StatelessWidget {
   const PostPage({Key? key}) : super(key: key);
 
-  static const List<BoxShadow> _cardShadow = [
-    BoxShadow(
-        color: Color(0xFF919191),
-        offset: Offset(0, 3),
-        spreadRadius: -2,
-        blurRadius: 7)
-  ];
+  Widget _iconTextItem(
+      {required BuildContext context,
+      required IconData icon,
+      required String label,
+      String? subLabel}) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(right: 12.0),
+          child: Icon(
+            icon,
+            size: 28,
+            color: Theme.of(context).colorScheme.primary,
+          ),
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(label,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w900,
+                )),
+            subLabel != null
+                ? Text(
+                    subLabel,
+                    style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurface
+                            .withOpacity(0.5)),
+                  )
+                : Container(),
+          ],
+        )
+      ],
+    );
+  }
 
-  static final Widget _contentCardDecoration = Transform.translate(
-    offset: const Offset(0, 1),
-    child: Container(
-      height: 15,
-      decoration: const BoxDecoration(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
-          color: Colors.white),
-    ),
-  );
+  Widget _heading({required BuildContext context, required String name}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20.0),
+      child: Text(
+        name,
+        style: Theme.of(context).textTheme.headline5!.copyWith(
+            color: Theme.of(context).colorScheme.onSurface,
+            fontWeight: FontWeight.bold),
+      ),
+    );
+  }
 
-  Widget _closeButton(BuildContext context) {
-    return Container(
-        margin: const EdgeInsets.all(8),
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(100),
-            boxShadow: _cardShadow),
-        child: IconButton(
-            onPressed: () => Navigator.of(context).pop(),
-            icon: const Icon(Icons.close)));
+  Widget _dateTimeSection(BuildContext context, PostState state) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        // TODO replace with actual post data
+        // TODO check if post is event, and change ui
+        Expanded(
+            child: _iconTextItem(
+                context: context,
+                icon: Icons.calendar_today_rounded,
+                label: state.maybeWhen(
+                    normal: (post) => "23.21.2021", orElse: () => "No data"),
+                subLabel: state.maybeWhen(
+                    normal: (post) => "ab 18 Uhr", orElse: () => "No data"))),
+        Expanded(
+            child: _iconTextItem(
+                context: context,
+                icon: Icons.location_on_outlined,
+                label: state.maybeWhen(
+                    normal: (post) => "Sudetenstraße", orElse: () => "No data"),
+                subLabel: state.maybeWhen(
+                    normal: (post) => "89233 Neu-Ulm",
+                    orElse: () => "No data")))
+      ],
+    );
+  }
+
+  Widget _descriptionSection(BuildContext context, PostState state) {
+    return state.maybeWhen(
+        normal: (post) => Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              child: Text(
+                post.description,
+                style: Theme.of(context).textTheme.subtitle2,
+              ),
+            ),
+        orElse: () => ErrorWidget(InvalidStateException()));
   }
 
   @override
@@ -58,7 +123,7 @@ class PostPage extends StatelessWidget {
         BlocProvider(
           create: (_) => PaginatedListCubit<Message>(
               paginationService: MessagePaginationService(postId)),
-              lazy: false,
+          lazy: false,
         )
       ],
       child: Builder(
@@ -67,22 +132,65 @@ class PostPage extends StatelessWidget {
           child: BlocBuilder<PostCubit, PostState>(
             builder: (context, state) => state.when(
               loading: (_) => const LoadingPage(),
-              normal: (post) => PageScreen(
-                appBar: AppBar(leading: _closeButton(context)),
-                extendBodyBehindAppBar: true,
-                headerHeight: 200,
-                roundedBody: false,
-                roundedHeader: false,
-                header: NetworkPlaceholderImage(
-                  VideoRepositoryImpl()
-                      .createThumbnailUrl(post.media[0] as VideoAsset),
-                  Container(
-                    color: Colors.grey,
+              normal: (post) => Scaffold(
+                backgroundColor: Theme.of(context).colorScheme.surface,
+                body: SafeArea(
+                  child: CustomScrollView(
+                    slivers: <Widget>[
+                      const PostHeader(),
+                      SliverToBoxAdapter(
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.only(
+                                left: AppTheme.PADDING_SIDE + 8,
+                                right: AppTheme.PADDING_SIDE + 8,
+                                top: AppTheme.PADDING_SIDE,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  _heading(context: context, name: 'Details'),
+                                  _dateTimeSection(context, state),
+                                  _heading(
+                                      context: context, name: 'Beschreibung'),
+                                  _descriptionSection(context, state),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 24.0),
+                                    child: Center(
+                                      child: state.maybeWhen(
+                                          orElse: () => Container(),
+                                          normal: (postState) => Padding(
+                                                padding:
+                                                    const EdgeInsets.all(12.0),
+                                                child: Text(
+                                                  "Erstellt von ${postState.author.name}",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .caption,
+                                                ),
+                                              )),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  width: MediaQuery.of(context).size.width.toInt(),
                 ),
-                headerBottom: _contentCardDecoration,
-                children:  [PostView(postId)],
+                floatingActionButton: FloatingActionButton(
+                  child: const Icon(Icons.chat_bubble_outline_rounded),
+                  onPressed: () => Navigator.of(context).pushNamed(chatRoute,
+                      arguments: ChatArguments(
+                          chatName: state.maybeWhen(normal: (post) => post.title, orElse: () => ""),
+                          postId: postId,
+                          paginatedListCubit:
+                              BlocProvider.of<PaginatedListCubit<Message>>(
+                                  context))),
+                ),
               ),
             ),
           ),

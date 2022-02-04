@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fingerfunke_app/cubits/authentication_cubit/authentication_cubit.dart';
 import 'package:fingerfunke_app/models/message/message.dart';
 import 'package:fingerfunke_app/view/chat/widgets/chat_message.dart';
@@ -14,8 +15,9 @@ class InvalidMessageTypeExcpetion implements Exception {}
 class ChatArguments {
   final FirestoreId postId;
   final PaginatedListCubit<Message> paginatedListCubit;
+  final String? chatName;
 
-  ChatArguments({required this.postId, required this.paginatedListCubit});
+  ChatArguments({required this.postId, required this.paginatedListCubit, this.chatName});
 }
 
 class ChatPage extends StatelessWidget {
@@ -26,7 +28,9 @@ class ChatPage extends StatelessWidget {
     final ChatArguments arguments =
         ModalRoute.of(context)!.settings.arguments as ChatArguments;
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: AutoSizeText(arguments.chatName ?? "", maxLines: 1, minFontSize: 12,),
+      ),
       body: Column(
         children: [
           Expanded(

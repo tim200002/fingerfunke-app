@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:fingerfunke_app/utils/dev_tools.dart';
+import 'package:fingerfunke_app/view/error/exception_view.dart';
 import 'package:fingerfunke_app/view/video_recorder/view/cubit/video_recorder_cubit.dart';
 import 'package:fingerfunke_app/view/video_recorder/view/widgets/camera_view.dart';
 import 'package:fingerfunke_app/view/video_recorder/view/widgets/recording_view.dart';
@@ -56,7 +57,7 @@ class VideoRecorderPage extends StatelessWidget {
                   },
                   builder: (context, state) => state.when(
                       loading: () => const LoadingView(),
-                      error: (msg) => DevTools.placeholder("use error widget"),
+                      error: ExceptionView.builder,
                       submitted: (msg) =>
                           DevTools.placeholder("this should not be reachable"),
                       camera: (controller, settings) => CameraView(

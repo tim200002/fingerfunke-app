@@ -84,12 +84,12 @@ class EditingPost {
   // check if the instance is valid regarding to the selected post type
   bool isValid() {
     // there must be at least one asset
-    if(uploadCubits.isEmpty){
+    if (uploadCubits.isEmpty) {
       return false;
     }
     // in both all Assets must be created before allowed to send of
-    for (var uploadCubit in uploadCubits) { 
-      if(!uploadCubit.hasUploaded()) {
+    for (var uploadCubit in uploadCubits) {
+      if (!uploadCubit.hasUploaded()) {
         return false;
       }
     }
@@ -126,7 +126,7 @@ class EditingPost {
         eveTime: eveTime ?? this.eveTime);
   }
   // ToDo but this requires changes with VideoUploadCubit
-  
+
   factory EditingPost.fromPost(Post post) {
     return EditingPost(
       id: post.id,
@@ -138,10 +138,12 @@ class EditingPost {
       visibility: post.visibility,
       location: post.location,
       // ToDo update for other types of assets
-      uploadCubits: post.media.map((asset) => VideoUploadCubit.fromExistingAsset(asset as VideoAsset, post.author)).toList(),
+      uploadCubits: post.media
+          .map((asset) => VideoUploadCubit.fromExistingAsset(
+              asset as VideoAsset, post.author))
+          .toList(),
     );
   }
-
 
   Post toPost(User author) {
     if (!_isValidPost()) {
@@ -149,19 +151,37 @@ class EditingPost {
     }
 
     List<Asset> medias = [];
-    for (var uploadCubit in uploadCubits) { 
+    for (var uploadCubit in uploadCubits) {
       medias.add(uploadCubit.asset);
     }
 
-    return Post(
-        id: id ?? const Uuid().v4(),
-        author: author,
-        creationTime: creationTime ?? DateTime.now(),
-        type: type,
-        title: titleController.text,
-        description: descriptionController.text,
-        visibility: visibility ?? post_visibility.visible,
-        location: location!,
-        media: medias);
+    switch (type) {
+      case post_type.event:
+        return Event(
+            id: id ?? const Uuid().v4(),
+            author: author,
+            creationTime: creationTime ?? DateTime.now(),
+            title: titleController.text,
+            description: descriptionController.text,
+            visibility: visibility ?? post_visibility.visible,
+            location: location!,
+            media: medias,
+            //ToDo do this in the right way
+            startTime: DateTime.now());
+
+      case post_type.recurrent:
+        return Group(
+          id: id ?? const Uuid().v4(),
+          author: author,
+          creationTime: creationTime ?? DateTime.now(),
+          title: titleController.text,
+          description: descriptionController.text,
+          visibility: visibility ?? post_visibility.visible,
+          location: location!,
+          media: medias,
+        );
+      default:
+        throw InvalidPostTypeException();
+    }
   }
 }

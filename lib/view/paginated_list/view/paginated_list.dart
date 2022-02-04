@@ -2,6 +2,7 @@ import 'package:fingerfunke_app/common_widgets/creation_aware_widget/creation_aw
 import 'package:fingerfunke_app/view/paginated_list/cubit/paginated_list_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logger/logger.dart';
 
 class PaginatedList<T> extends StatelessWidget {
   /// function envoked on each list item to create widget given the data
@@ -19,7 +20,9 @@ class PaginatedList<T> extends StatelessWidget {
   /// what to show when list is loading new elements
   final Widget? loadingIndicator;
 
-  const PaginatedList(
+  final Logger _logger = Logger();
+
+  PaginatedList(
       {required Widget Function(T) itemBuilder,
       this.reverse = false,
       this.endMessage,
@@ -34,6 +37,9 @@ class PaginatedList<T> extends StatelessWidget {
   /// If we would have reached end last element is not creation aware, could therefoe never trigger this
   /// ToDo we could look out for a better algorithm which fetches beforehand depending on pagination distance
   bool _shouldLoadNewItems(PaginatedListState<T> state, int currentIndex) {
+    if(state.reachedEnd){
+      return false;
+    }
     return currentIndex == state.items.length-1;
   }
 
@@ -45,11 +51,20 @@ class PaginatedList<T> extends StatelessWidget {
             index == state.itemCount - 1;
   }
 
-  Widget? _createIndicator(PaginatedListState<T> state) {
+  Widget? _createIndicator(PaginatedListState<T> state, BuildContext context) {
     if (state.isLoading) {
       return loadingIndicator;
     } else {
-      return endMessage != null ? Center(child: Text(endMessage!)) : null;
+      return endMessage != null ? Center(child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Container(
+            padding: const EdgeInsets.all(8.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25),
+              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.25),
+            ),
+            child: Text(endMessage!, style: TextStyle(color: Theme.of(context).colorScheme.background),)),
+      )) : null;
     }
   }
 
@@ -68,7 +83,7 @@ class PaginatedList<T> extends StatelessWidget {
             //Check if we reached bottom of list
             // if yes shown indicator
             if (_currentElementIsIndicator(state, index)) {
-              return _createIndicator(state) ?? Container();
+              return _createIndicator(state, context) ?? Container();
             } 
             // if not create element
             else {

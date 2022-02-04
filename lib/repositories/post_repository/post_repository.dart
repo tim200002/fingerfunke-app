@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:fingerfunke_app/models/post/post.dart';
+import 'package:fingerfunke_app/models/user/user.dart';
 import 'package:fingerfunke_app/utils/type_aliases.dart';
 
 abstract class PostRepository {
@@ -11,4 +12,6 @@ abstract class PostRepository {
   Future<Post> getPost(FirestoreId postId);
 
   Future<void> deletePost(FirestoreId postId);
+
+  Future<void> joinPost({required Post post, required UserInfo user});
 }

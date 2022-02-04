@@ -23,20 +23,24 @@ class ChatEditor extends StatelessWidget {
           builder: (context, state) => Padding(
             padding: const EdgeInsets.only(left: 8.0, bottom: 8.0, top: 8.0),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.grey.shade200,
-                      borderRadius: BorderRadius.circular(30),
+                      borderRadius: BorderRadius.circular(25),
                     ),
                     child: TextField(
+                      minLines: 1,
+                      maxLines: 6,
+                      textCapitalization: TextCapitalization.sentences,
                       controller: state.controller,
                       decoration: const InputDecoration(
                         contentPadding:
-                            EdgeInsets.symmetric(vertical: 7, horizontal: 15),
+                            EdgeInsets.symmetric(vertical: 9, horizontal: 25),
                         border: InputBorder.none,
-                        labelText: "neue Nachricht",
+                        hintText: "neue Nachricht",
                       ),
                       onChanged: (_) => chatEditorCubit.validateInput(),
                     ),
@@ -48,7 +52,7 @@ class ChatEditor extends StatelessWidget {
                           Tools.showSnackbar(context,
                               "Sorry wir konnten deine Nachricht leider nicht absenden"))
                       : null,
-                  icon: const Icon(Icons.send_rounded),
+                  icon: Icon(Icons.send_rounded, color: Theme.of(context).colorScheme.primary,),
                 ),
               ],
             ),

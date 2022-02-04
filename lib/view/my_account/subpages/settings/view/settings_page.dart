@@ -4,7 +4,7 @@ import 'package:fingerfunke_app/view/my_account/subpages/settings/view/settings_
 import 'package:fingerfunke_app/view/my_account/subpages/settings/view/settings_theme_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:settings_ui/settings_ui.dart';
+import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 import 'package:intl/intl.dart';
 
 class SettingsPage extends StatefulWidget {
