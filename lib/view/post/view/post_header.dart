@@ -5,11 +5,12 @@ import 'package:fingerfunke_app/repositories/video_repository/video_repository.i
 import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:fingerfunke_app/utils/exceptions.dart';
 import 'package:fingerfunke_app/utils/util_widgets/floating_modal.dart';
-import 'package:fingerfunke_app/view/image_upload/view/image_upload_modal_content.dart';
+import 'package:fingerfunke_app/view/fullscreen_video/view/fullscreen_video_page.dart';
 import 'package:fingerfunke_app/view/post/cubit/post_cubit.dart';
 import 'package:fingerfunke_app/view/post/view/widgets/post_app_bar_button.dart';
 import 'package:fingerfunke_app/view/post/view/widgets/post_settings_modal_content.dart';
 import 'package:fingerfunke_app/view/post/view/widgets/visibility_controller.dart';
+import 'package:fingerfunke_app/view/post_feed/view/post_feed_item_blur_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -103,7 +104,7 @@ class PostHeader extends StatelessWidget {
         loading: (_) => Container(),
         normal: (post) => SliverAppBar(
           backgroundColor: Theme.of(context).colorScheme.background,
-          toolbarHeight: 60 + AppTheme.PADDING_SIDE ,
+          toolbarHeight: 60 + AppTheme.PADDING_SIDE,
           leadingWidth: 48 + AppTheme.PADDING_SIDE * 2,
           leading: Padding(
             padding: const EdgeInsets.only(
@@ -122,7 +123,12 @@ class PostHeader extends StatelessWidget {
                 top: 12.0 + AppTheme.PADDING_SIDE,
               ),
               child: postAppBarButton(
-                  context: context, icon: Icons.settings, onPressed: () => showFloatingModalBottomSheet(context: context, builder: (ctx) => PostSettingsModalContent(externalContext: context))),
+                  context: context,
+                  icon: Icons.settings,
+                  onPressed: () => showFloatingModalBottomSheet(
+                      context: context,
+                      builder: (ctx) =>
+                          PostSettingsModalContent(externalContext: context))),
             )
           ],
           pinned: true,
@@ -151,15 +157,36 @@ class PostHeader extends StatelessWidget {
                       padding: const EdgeInsets.only(bottom: 140.0),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(30.0),
-                        child: NetworkPlaceholderImage(
-                          VideoRepositoryImpl()
-                              .createThumbnailUrl(post.media[0] as VideoAsset),
-                          Container(
-                            color: Colors.grey,
-                          ),
-                          fit: BoxFit.fitWidth,
-                          width: MediaQuery.of(context).size.width.toInt(),
+                        child: InkWell(
+                          onTap: () => Navigator.of(context).push(
+                              FullscreenVideoPage.route(
+                                  url: VideoRepositoryImpl().createPlaybackUrl((post
+                                      .media
+                                      .firstWhere((e) => e.type == asset_type.video)
+                                  as VideoAsset)))),
+                          child: Stack(children: [
+                            Hero(
+                              tag: PostFeedItemBlur.heroTag,
+                              child: NetworkPlaceholderImage(
+                                VideoRepositoryImpl()
+                                    .createThumbnailUrl(post.media[0] as VideoAsset),
+                                Container(
+                                  color: Colors.grey,
+                                ),
+                                width: MediaQuery.of(context).size.width.toInt(),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            const Center(
+                              child: Icon(
+                                Icons.play_arrow_rounded,
+                                size: 70,
+                                color: Colors.white,
+                              ),
+                            )
+                          ]),
                         ),
+
                       ),
                     ),
                     Align(

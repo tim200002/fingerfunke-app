@@ -17,30 +17,39 @@ class CreateAccountView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text(
-              "Hi um zu starten brauchen wir deinen Namen. Gerne darfst du auch ein Profilbild hochladen, damit andere dich besser erkennen"),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
+      body: Padding(
+        padding: const EdgeInsets.all(28.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Text(
+                  "Hi", style: Theme.of(context).textTheme.headline2,),
+            ),
+
+            Text(
+                "um zu starten brauchen wir deinen Namen.\nGerne darfst du auch ein Profilbild hochladen, damit andere dich besser erkennen",  style: Theme.of(context).textTheme.headline6,),
+            TextField(
               controller: _userNameController,
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: OutlinedButton(
-                onPressed: () {
-                  _controller.createUser(
-                    name: _userNameController.text,
-                    authenticationCubit:
-                        BlocProvider.of<AuthenticationCubit>(context),
-                  );
-                },
-                child: const Text("Los gehts")),
-          )
-        ],
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: OutlinedButton(
+                    onPressed: () {
+                      _controller.createUser(
+                        name: _userNameController.text,
+                        authenticationCubit:
+                            BlocProvider.of<AuthenticationCubit>(context),
+                      );
+                    },
+                    child: const Text("Los gehts")),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
