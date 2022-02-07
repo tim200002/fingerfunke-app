@@ -7,6 +7,7 @@ import 'package:fingerfunke_app/repositories/video_repository/video_repository.i
 import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:fingerfunke_app/utils/tools.dart';
 import 'package:fingerfunke_app/utils/util_widgets/floating_modal.dart';
+import 'package:fingerfunke_app/view/fullscreen_video/view/fullscreen_video_page.dart';
 import 'package:fingerfunke_app/view/post/cubit/post_cubit.dart';
 import 'package:fingerfunke_app/view/post/view/widgets/post_app_bar_button.dart';
 import 'package:fingerfunke_app/view/post/view/widgets/post_settings_modal_content.dart';
