@@ -21,10 +21,19 @@ class _$PostEditorStateTearOff {
     return const _Loading();
   }
 
-  _Editing editing(EditingPost post, {bool invalid = false}) {
-    return _Editing(
-      post,
-      invalid: invalid,
+  _EditEvent editEvent(
+      {required EventEditorFields eventEditorFields, bool inputValid = false}) {
+    return _EditEvent(
+      eventEditorFields: eventEditorFields,
+      inputValid: inputValid,
+    );
+  }
+
+  _EditGroup editGroup(
+      {required GroupEditorFields groupEditorFields, bool inputValid = false}) {
+    return _EditGroup(
+      groupEditorFields: groupEditorFields,
+      inputValid: inputValid,
     );
   }
 
@@ -51,7 +60,12 @@ mixin _$PostEditorState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(EditingPost post, bool invalid) editing,
+    required TResult Function(
+            EventEditorFields eventEditorFields, bool inputValid)
+        editEvent,
+    required TResult Function(
+            GroupEditorFields groupEditorFields, bool inputValid)
+        editGroup,
     required TResult Function() submitting,
     required TResult Function() submitted,
     required TResult Function(String message) error,
@@ -60,7 +74,10 @@ mixin _$PostEditorState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(EditingPost post, bool invalid)? editing,
+    TResult Function(EventEditorFields eventEditorFields, bool inputValid)?
+        editEvent,
+    TResult Function(GroupEditorFields groupEditorFields, bool inputValid)?
+        editGroup,
     TResult Function()? submitting,
     TResult Function()? submitted,
     TResult Function(String message)? error,
@@ -69,7 +86,10 @@ mixin _$PostEditorState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(EditingPost post, bool invalid)? editing,
+    TResult Function(EventEditorFields eventEditorFields, bool inputValid)?
+        editEvent,
+    TResult Function(GroupEditorFields groupEditorFields, bool inputValid)?
+        editGroup,
     TResult Function()? submitting,
     TResult Function()? submitted,
     TResult Function(String message)? error,
@@ -79,7 +99,8 @@ mixin _$PostEditorState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Editing value) editing,
+    required TResult Function(_EditEvent value) editEvent,
+    required TResult Function(_EditGroup value) editGroup,
     required TResult Function(_Submitting value) submitting,
     required TResult Function(_Submitted value) submitted,
     required TResult Function(_Error value) error,
@@ -88,7 +109,8 @@ mixin _$PostEditorState {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
-    TResult Function(_Editing value)? editing,
+    TResult Function(_EditEvent value)? editEvent,
+    TResult Function(_EditGroup value)? editGroup,
     TResult Function(_Submitting value)? submitting,
     TResult Function(_Submitted value)? submitted,
     TResult Function(_Error value)? error,
@@ -97,7 +119,8 @@ mixin _$PostEditorState {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
-    TResult Function(_Editing value)? editing,
+    TResult Function(_EditEvent value)? editEvent,
+    TResult Function(_EditGroup value)? editGroup,
     TResult Function(_Submitting value)? submitting,
     TResult Function(_Submitted value)? submitted,
     TResult Function(_Error value)? error,
@@ -162,7 +185,12 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(EditingPost post, bool invalid) editing,
+    required TResult Function(
+            EventEditorFields eventEditorFields, bool inputValid)
+        editEvent,
+    required TResult Function(
+            GroupEditorFields groupEditorFields, bool inputValid)
+        editGroup,
     required TResult Function() submitting,
     required TResult Function() submitted,
     required TResult Function(String message) error,
@@ -174,7 +202,10 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(EditingPost post, bool invalid)? editing,
+    TResult Function(EventEditorFields eventEditorFields, bool inputValid)?
+        editEvent,
+    TResult Function(GroupEditorFields groupEditorFields, bool inputValid)?
+        editGroup,
     TResult Function()? submitting,
     TResult Function()? submitted,
     TResult Function(String message)? error,
@@ -186,7 +217,10 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(EditingPost post, bool invalid)? editing,
+    TResult Function(EventEditorFields eventEditorFields, bool inputValid)?
+        editEvent,
+    TResult Function(GroupEditorFields groupEditorFields, bool inputValid)?
+        editGroup,
     TResult Function()? submitting,
     TResult Function()? submitted,
     TResult Function(String message)? error,
@@ -202,7 +236,8 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Editing value) editing,
+    required TResult Function(_EditEvent value) editEvent,
+    required TResult Function(_EditGroup value) editGroup,
     required TResult Function(_Submitting value) submitting,
     required TResult Function(_Submitted value) submitted,
     required TResult Function(_Error value) error,
@@ -214,7 +249,8 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
-    TResult Function(_Editing value)? editing,
+    TResult Function(_EditEvent value)? editEvent,
+    TResult Function(_EditGroup value)? editGroup,
     TResult Function(_Submitting value)? submitting,
     TResult Function(_Submitted value)? submitted,
     TResult Function(_Error value)? error,
@@ -226,7 +262,8 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
-    TResult Function(_Editing value)? editing,
+    TResult Function(_EditEvent value)? editEvent,
+    TResult Function(_EditGroup value)? editGroup,
     TResult Function(_Submitting value)? submitting,
     TResult Function(_Submitted value)? submitted,
     TResult Function(_Error value)? error,
@@ -244,34 +281,35 @@ abstract class _Loading implements PostEditorState {
 }
 
 /// @nodoc
-abstract class _$EditingCopyWith<$Res> {
-  factory _$EditingCopyWith(_Editing value, $Res Function(_Editing) then) =
-      __$EditingCopyWithImpl<$Res>;
-  $Res call({EditingPost post, bool invalid});
+abstract class _$EditEventCopyWith<$Res> {
+  factory _$EditEventCopyWith(
+          _EditEvent value, $Res Function(_EditEvent) then) =
+      __$EditEventCopyWithImpl<$Res>;
+  $Res call({EventEditorFields eventEditorFields, bool inputValid});
 }
 
 /// @nodoc
-class __$EditingCopyWithImpl<$Res> extends _$PostEditorStateCopyWithImpl<$Res>
-    implements _$EditingCopyWith<$Res> {
-  __$EditingCopyWithImpl(_Editing _value, $Res Function(_Editing) _then)
-      : super(_value, (v) => _then(v as _Editing));
+class __$EditEventCopyWithImpl<$Res> extends _$PostEditorStateCopyWithImpl<$Res>
+    implements _$EditEventCopyWith<$Res> {
+  __$EditEventCopyWithImpl(_EditEvent _value, $Res Function(_EditEvent) _then)
+      : super(_value, (v) => _then(v as _EditEvent));
 
   @override
-  _Editing get _value => super._value as _Editing;
+  _EditEvent get _value => super._value as _EditEvent;
 
   @override
   $Res call({
-    Object? post = freezed,
-    Object? invalid = freezed,
+    Object? eventEditorFields = freezed,
+    Object? inputValid = freezed,
   }) {
-    return _then(_Editing(
-      post == freezed
-          ? _value.post
-          : post // ignore: cast_nullable_to_non_nullable
-              as EditingPost,
-      invalid: invalid == freezed
-          ? _value.invalid
-          : invalid // ignore: cast_nullable_to_non_nullable
+    return _then(_EditEvent(
+      eventEditorFields: eventEditorFields == freezed
+          ? _value.eventEditorFields
+          : eventEditorFields // ignore: cast_nullable_to_non_nullable
+              as EventEditorFields,
+      inputValid: inputValid == freezed
+          ? _value.inputValid
+          : inputValid // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -279,73 +317,87 @@ class __$EditingCopyWithImpl<$Res> extends _$PostEditorStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Editing implements _Editing {
-  const _$_Editing(this.post, {this.invalid = false});
+class _$_EditEvent implements _EditEvent {
+  const _$_EditEvent(
+      {required this.eventEditorFields, this.inputValid = false});
 
   @override
-  final EditingPost post;
+  final EventEditorFields eventEditorFields;
   @JsonKey(defaultValue: false)
   @override
-  final bool invalid;
+  final bool inputValid;
 
   @override
   String toString() {
-    return 'PostEditorState.editing(post: $post, invalid: $invalid)';
+    return 'PostEditorState.editEvent(eventEditorFields: $eventEditorFields, inputValid: $inputValid)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Editing &&
-            (identical(other.post, post) || other.post == post) &&
-            (identical(other.invalid, invalid) || other.invalid == invalid));
+            other is _EditEvent &&
+            (identical(other.eventEditorFields, eventEditorFields) ||
+                other.eventEditorFields == eventEditorFields) &&
+            (identical(other.inputValid, inputValid) ||
+                other.inputValid == inputValid));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, post, invalid);
+  int get hashCode => Object.hash(runtimeType, eventEditorFields, inputValid);
 
   @JsonKey(ignore: true)
   @override
-  _$EditingCopyWith<_Editing> get copyWith =>
-      __$EditingCopyWithImpl<_Editing>(this, _$identity);
+  _$EditEventCopyWith<_EditEvent> get copyWith =>
+      __$EditEventCopyWithImpl<_EditEvent>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(EditingPost post, bool invalid) editing,
+    required TResult Function(
+            EventEditorFields eventEditorFields, bool inputValid)
+        editEvent,
+    required TResult Function(
+            GroupEditorFields groupEditorFields, bool inputValid)
+        editGroup,
     required TResult Function() submitting,
     required TResult Function() submitted,
     required TResult Function(String message) error,
   }) {
-    return editing(post, invalid);
+    return editEvent(eventEditorFields, inputValid);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(EditingPost post, bool invalid)? editing,
+    TResult Function(EventEditorFields eventEditorFields, bool inputValid)?
+        editEvent,
+    TResult Function(GroupEditorFields groupEditorFields, bool inputValid)?
+        editGroup,
     TResult Function()? submitting,
     TResult Function()? submitted,
     TResult Function(String message)? error,
   }) {
-    return editing?.call(post, invalid);
+    return editEvent?.call(eventEditorFields, inputValid);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(EditingPost post, bool invalid)? editing,
+    TResult Function(EventEditorFields eventEditorFields, bool inputValid)?
+        editEvent,
+    TResult Function(GroupEditorFields groupEditorFields, bool inputValid)?
+        editGroup,
     TResult Function()? submitting,
     TResult Function()? submitted,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
-    if (editing != null) {
-      return editing(post, invalid);
+    if (editEvent != null) {
+      return editEvent(eventEditorFields, inputValid);
     }
     return orElse();
   }
@@ -354,50 +406,233 @@ class _$_Editing implements _Editing {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Editing value) editing,
+    required TResult Function(_EditEvent value) editEvent,
+    required TResult Function(_EditGroup value) editGroup,
     required TResult Function(_Submitting value) submitting,
     required TResult Function(_Submitted value) submitted,
     required TResult Function(_Error value) error,
   }) {
-    return editing(this);
+    return editEvent(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
-    TResult Function(_Editing value)? editing,
+    TResult Function(_EditEvent value)? editEvent,
+    TResult Function(_EditGroup value)? editGroup,
     TResult Function(_Submitting value)? submitting,
     TResult Function(_Submitted value)? submitted,
     TResult Function(_Error value)? error,
   }) {
-    return editing?.call(this);
+    return editEvent?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
-    TResult Function(_Editing value)? editing,
+    TResult Function(_EditEvent value)? editEvent,
+    TResult Function(_EditGroup value)? editGroup,
     TResult Function(_Submitting value)? submitting,
     TResult Function(_Submitted value)? submitted,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
-    if (editing != null) {
-      return editing(this);
+    if (editEvent != null) {
+      return editEvent(this);
     }
     return orElse();
   }
 }
 
-abstract class _Editing implements PostEditorState {
-  const factory _Editing(EditingPost post, {bool invalid}) = _$_Editing;
+abstract class _EditEvent implements PostEditorState {
+  const factory _EditEvent(
+      {required EventEditorFields eventEditorFields,
+      bool inputValid}) = _$_EditEvent;
 
-  EditingPost get post;
-  bool get invalid;
+  EventEditorFields get eventEditorFields;
+  bool get inputValid;
   @JsonKey(ignore: true)
-  _$EditingCopyWith<_Editing> get copyWith =>
+  _$EditEventCopyWith<_EditEvent> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$EditGroupCopyWith<$Res> {
+  factory _$EditGroupCopyWith(
+          _EditGroup value, $Res Function(_EditGroup) then) =
+      __$EditGroupCopyWithImpl<$Res>;
+  $Res call({GroupEditorFields groupEditorFields, bool inputValid});
+}
+
+/// @nodoc
+class __$EditGroupCopyWithImpl<$Res> extends _$PostEditorStateCopyWithImpl<$Res>
+    implements _$EditGroupCopyWith<$Res> {
+  __$EditGroupCopyWithImpl(_EditGroup _value, $Res Function(_EditGroup) _then)
+      : super(_value, (v) => _then(v as _EditGroup));
+
+  @override
+  _EditGroup get _value => super._value as _EditGroup;
+
+  @override
+  $Res call({
+    Object? groupEditorFields = freezed,
+    Object? inputValid = freezed,
+  }) {
+    return _then(_EditGroup(
+      groupEditorFields: groupEditorFields == freezed
+          ? _value.groupEditorFields
+          : groupEditorFields // ignore: cast_nullable_to_non_nullable
+              as GroupEditorFields,
+      inputValid: inputValid == freezed
+          ? _value.inputValid
+          : inputValid // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_EditGroup implements _EditGroup {
+  const _$_EditGroup(
+      {required this.groupEditorFields, this.inputValid = false});
+
+  @override
+  final GroupEditorFields groupEditorFields;
+  @JsonKey(defaultValue: false)
+  @override
+  final bool inputValid;
+
+  @override
+  String toString() {
+    return 'PostEditorState.editGroup(groupEditorFields: $groupEditorFields, inputValid: $inputValid)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _EditGroup &&
+            (identical(other.groupEditorFields, groupEditorFields) ||
+                other.groupEditorFields == groupEditorFields) &&
+            (identical(other.inputValid, inputValid) ||
+                other.inputValid == inputValid));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, groupEditorFields, inputValid);
+
+  @JsonKey(ignore: true)
+  @override
+  _$EditGroupCopyWith<_EditGroup> get copyWith =>
+      __$EditGroupCopyWithImpl<_EditGroup>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loading,
+    required TResult Function(
+            EventEditorFields eventEditorFields, bool inputValid)
+        editEvent,
+    required TResult Function(
+            GroupEditorFields groupEditorFields, bool inputValid)
+        editGroup,
+    required TResult Function() submitting,
+    required TResult Function() submitted,
+    required TResult Function(String message) error,
+  }) {
+    return editGroup(groupEditorFields, inputValid);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? loading,
+    TResult Function(EventEditorFields eventEditorFields, bool inputValid)?
+        editEvent,
+    TResult Function(GroupEditorFields groupEditorFields, bool inputValid)?
+        editGroup,
+    TResult Function()? submitting,
+    TResult Function()? submitted,
+    TResult Function(String message)? error,
+  }) {
+    return editGroup?.call(groupEditorFields, inputValid);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loading,
+    TResult Function(EventEditorFields eventEditorFields, bool inputValid)?
+        editEvent,
+    TResult Function(GroupEditorFields groupEditorFields, bool inputValid)?
+        editGroup,
+    TResult Function()? submitting,
+    TResult Function()? submitted,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) {
+    if (editGroup != null) {
+      return editGroup(groupEditorFields, inputValid);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_EditEvent value) editEvent,
+    required TResult Function(_EditGroup value) editGroup,
+    required TResult Function(_Submitting value) submitting,
+    required TResult Function(_Submitted value) submitted,
+    required TResult Function(_Error value) error,
+  }) {
+    return editGroup(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Loading value)? loading,
+    TResult Function(_EditEvent value)? editEvent,
+    TResult Function(_EditGroup value)? editGroup,
+    TResult Function(_Submitting value)? submitting,
+    TResult Function(_Submitted value)? submitted,
+    TResult Function(_Error value)? error,
+  }) {
+    return editGroup?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Loading value)? loading,
+    TResult Function(_EditEvent value)? editEvent,
+    TResult Function(_EditGroup value)? editGroup,
+    TResult Function(_Submitting value)? submitting,
+    TResult Function(_Submitted value)? submitted,
+    TResult Function(_Error value)? error,
+    required TResult orElse(),
+  }) {
+    if (editGroup != null) {
+      return editGroup(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _EditGroup implements PostEditorState {
+  const factory _EditGroup(
+      {required GroupEditorFields groupEditorFields,
+      bool inputValid}) = _$_EditGroup;
+
+  GroupEditorFields get groupEditorFields;
+  bool get inputValid;
+  @JsonKey(ignore: true)
+  _$EditGroupCopyWith<_EditGroup> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -443,7 +678,12 @@ class _$_Submitting implements _Submitting {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(EditingPost post, bool invalid) editing,
+    required TResult Function(
+            EventEditorFields eventEditorFields, bool inputValid)
+        editEvent,
+    required TResult Function(
+            GroupEditorFields groupEditorFields, bool inputValid)
+        editGroup,
     required TResult Function() submitting,
     required TResult Function() submitted,
     required TResult Function(String message) error,
@@ -455,7 +695,10 @@ class _$_Submitting implements _Submitting {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(EditingPost post, bool invalid)? editing,
+    TResult Function(EventEditorFields eventEditorFields, bool inputValid)?
+        editEvent,
+    TResult Function(GroupEditorFields groupEditorFields, bool inputValid)?
+        editGroup,
     TResult Function()? submitting,
     TResult Function()? submitted,
     TResult Function(String message)? error,
@@ -467,7 +710,10 @@ class _$_Submitting implements _Submitting {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(EditingPost post, bool invalid)? editing,
+    TResult Function(EventEditorFields eventEditorFields, bool inputValid)?
+        editEvent,
+    TResult Function(GroupEditorFields groupEditorFields, bool inputValid)?
+        editGroup,
     TResult Function()? submitting,
     TResult Function()? submitted,
     TResult Function(String message)? error,
@@ -483,7 +729,8 @@ class _$_Submitting implements _Submitting {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Editing value) editing,
+    required TResult Function(_EditEvent value) editEvent,
+    required TResult Function(_EditGroup value) editGroup,
     required TResult Function(_Submitting value) submitting,
     required TResult Function(_Submitted value) submitted,
     required TResult Function(_Error value) error,
@@ -495,7 +742,8 @@ class _$_Submitting implements _Submitting {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
-    TResult Function(_Editing value)? editing,
+    TResult Function(_EditEvent value)? editEvent,
+    TResult Function(_EditGroup value)? editGroup,
     TResult Function(_Submitting value)? submitting,
     TResult Function(_Submitted value)? submitted,
     TResult Function(_Error value)? error,
@@ -507,7 +755,8 @@ class _$_Submitting implements _Submitting {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
-    TResult Function(_Editing value)? editing,
+    TResult Function(_EditEvent value)? editEvent,
+    TResult Function(_EditGroup value)? editGroup,
     TResult Function(_Submitting value)? submitting,
     TResult Function(_Submitted value)? submitted,
     TResult Function(_Error value)? error,
@@ -564,7 +813,12 @@ class _$_Submitted implements _Submitted {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(EditingPost post, bool invalid) editing,
+    required TResult Function(
+            EventEditorFields eventEditorFields, bool inputValid)
+        editEvent,
+    required TResult Function(
+            GroupEditorFields groupEditorFields, bool inputValid)
+        editGroup,
     required TResult Function() submitting,
     required TResult Function() submitted,
     required TResult Function(String message) error,
@@ -576,7 +830,10 @@ class _$_Submitted implements _Submitted {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(EditingPost post, bool invalid)? editing,
+    TResult Function(EventEditorFields eventEditorFields, bool inputValid)?
+        editEvent,
+    TResult Function(GroupEditorFields groupEditorFields, bool inputValid)?
+        editGroup,
     TResult Function()? submitting,
     TResult Function()? submitted,
     TResult Function(String message)? error,
@@ -588,7 +845,10 @@ class _$_Submitted implements _Submitted {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(EditingPost post, bool invalid)? editing,
+    TResult Function(EventEditorFields eventEditorFields, bool inputValid)?
+        editEvent,
+    TResult Function(GroupEditorFields groupEditorFields, bool inputValid)?
+        editGroup,
     TResult Function()? submitting,
     TResult Function()? submitted,
     TResult Function(String message)? error,
@@ -604,7 +864,8 @@ class _$_Submitted implements _Submitted {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Editing value) editing,
+    required TResult Function(_EditEvent value) editEvent,
+    required TResult Function(_EditGroup value) editGroup,
     required TResult Function(_Submitting value) submitting,
     required TResult Function(_Submitted value) submitted,
     required TResult Function(_Error value) error,
@@ -616,7 +877,8 @@ class _$_Submitted implements _Submitted {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
-    TResult Function(_Editing value)? editing,
+    TResult Function(_EditEvent value)? editEvent,
+    TResult Function(_EditGroup value)? editGroup,
     TResult Function(_Submitting value)? submitting,
     TResult Function(_Submitted value)? submitted,
     TResult Function(_Error value)? error,
@@ -628,7 +890,8 @@ class _$_Submitted implements _Submitted {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
-    TResult Function(_Editing value)? editing,
+    TResult Function(_EditEvent value)? editEvent,
+    TResult Function(_EditGroup value)? editGroup,
     TResult Function(_Submitting value)? submitting,
     TResult Function(_Submitted value)? submitted,
     TResult Function(_Error value)? error,
@@ -707,7 +970,12 @@ class _$_Error implements _Error {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(EditingPost post, bool invalid) editing,
+    required TResult Function(
+            EventEditorFields eventEditorFields, bool inputValid)
+        editEvent,
+    required TResult Function(
+            GroupEditorFields groupEditorFields, bool inputValid)
+        editGroup,
     required TResult Function() submitting,
     required TResult Function() submitted,
     required TResult Function(String message) error,
@@ -719,7 +987,10 @@ class _$_Error implements _Error {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(EditingPost post, bool invalid)? editing,
+    TResult Function(EventEditorFields eventEditorFields, bool inputValid)?
+        editEvent,
+    TResult Function(GroupEditorFields groupEditorFields, bool inputValid)?
+        editGroup,
     TResult Function()? submitting,
     TResult Function()? submitted,
     TResult Function(String message)? error,
@@ -731,7 +1002,10 @@ class _$_Error implements _Error {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(EditingPost post, bool invalid)? editing,
+    TResult Function(EventEditorFields eventEditorFields, bool inputValid)?
+        editEvent,
+    TResult Function(GroupEditorFields groupEditorFields, bool inputValid)?
+        editGroup,
     TResult Function()? submitting,
     TResult Function()? submitted,
     TResult Function(String message)? error,
@@ -747,7 +1021,8 @@ class _$_Error implements _Error {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Editing value) editing,
+    required TResult Function(_EditEvent value) editEvent,
+    required TResult Function(_EditGroup value) editGroup,
     required TResult Function(_Submitting value) submitting,
     required TResult Function(_Submitted value) submitted,
     required TResult Function(_Error value) error,
@@ -759,7 +1034,8 @@ class _$_Error implements _Error {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
-    TResult Function(_Editing value)? editing,
+    TResult Function(_EditEvent value)? editEvent,
+    TResult Function(_EditGroup value)? editGroup,
     TResult Function(_Submitting value)? submitting,
     TResult Function(_Submitted value)? submitted,
     TResult Function(_Error value)? error,
@@ -771,7 +1047,8 @@ class _$_Error implements _Error {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
-    TResult Function(_Editing value)? editing,
+    TResult Function(_EditEvent value)? editEvent,
+    TResult Function(_EditGroup value)? editGroup,
     TResult Function(_Submitting value)? submitting,
     TResult Function(_Submitted value)? submitted,
     TResult Function(_Error value)? error,

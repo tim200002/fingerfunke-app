@@ -21,21 +21,22 @@ class RecordButton extends StatefulWidget {
 
   static Widget startButton({required Function() onPressed}) {
     return InkWell(
-        enableFeedback: false,
-        onTap: onPressed,
-        child: Hero(
-          tag: RecordButton.heroTag,
-          child: Container(
-            margin: const EdgeInsets.all(_margin),
-            width: RecordButton.size - _margin * 2,
-            height: RecordButton.size - _margin * 2,
-            //padding: const EdgeInsets.all(5),
-            decoration: BoxDecoration(
-                color: RecordButton.color,
-                borderRadius: BorderRadius.circular(RecordButton.size)),
-            child: const Icon(Icons.camera_rounded, color: Colors.white),
-          ),
-        ));
+      enableFeedback: false,
+      onTap: onPressed,
+      child: Hero(
+        tag: RecordButton.heroTag,
+        child: Container(
+          margin: const EdgeInsets.all(_margin),
+          width: RecordButton.size - _margin * 2,
+          height: RecordButton.size - _margin * 2,
+          //padding: const EdgeInsets.all(5),
+          decoration: BoxDecoration(
+              color: RecordButton.color,
+              borderRadius: BorderRadius.circular(RecordButton.size)),
+          child: const Icon(Icons.camera_rounded, color: Colors.white),
+        ),
+      ),
+    );
   }
 }
 

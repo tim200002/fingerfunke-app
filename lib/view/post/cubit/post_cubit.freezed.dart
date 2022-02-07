@@ -23,9 +23,10 @@ class _$PostStateTearOff {
     );
   }
 
-  _Normal normal(Post post) {
+  _Normal normal({required Post post, bool isJoining = false}) {
     return _Normal(
-      post,
+      post: post,
+      isJoining: isJoining,
     );
   }
 }
@@ -38,19 +39,19 @@ mixin _$PostState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String postId) loading,
-    required TResult Function(Post post) normal,
+    required TResult Function(Post post, bool isJoining) normal,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String postId)? loading,
-    TResult Function(Post post)? normal,
+    TResult Function(Post post, bool isJoining)? normal,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String postId)? loading,
-    TResult Function(Post post)? normal,
+    TResult Function(Post post, bool isJoining)? normal,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -121,23 +122,15 @@ class __$LoadingCopyWithImpl<$Res> extends _$PostStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Loading with DiagnosticableTreeMixin implements _Loading {
+class _$_Loading implements _Loading {
   const _$_Loading(this.postId);
 
   @override
   final String postId;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'PostState.loading(postId: $postId)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'PostState.loading'))
-      ..add(DiagnosticsProperty('postId', postId));
   }
 
   @override
@@ -160,7 +153,7 @@ class _$_Loading with DiagnosticableTreeMixin implements _Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String postId) loading,
-    required TResult Function(Post post) normal,
+    required TResult Function(Post post, bool isJoining) normal,
   }) {
     return loading(postId);
   }
@@ -169,7 +162,7 @@ class _$_Loading with DiagnosticableTreeMixin implements _Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String postId)? loading,
-    TResult Function(Post post)? normal,
+    TResult Function(Post post, bool isJoining)? normal,
   }) {
     return loading?.call(postId);
   }
@@ -178,7 +171,7 @@ class _$_Loading with DiagnosticableTreeMixin implements _Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String postId)? loading,
-    TResult Function(Post post)? normal,
+    TResult Function(Post post, bool isJoining)? normal,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -232,7 +225,7 @@ abstract class _Loading implements PostState {
 abstract class _$NormalCopyWith<$Res> {
   factory _$NormalCopyWith(_Normal value, $Res Function(_Normal) then) =
       __$NormalCopyWithImpl<$Res>;
-  $Res call({Post post});
+  $Res call({Post post, bool isJoining});
 }
 
 /// @nodoc
@@ -247,35 +240,35 @@ class __$NormalCopyWithImpl<$Res> extends _$PostStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? post = freezed,
+    Object? isJoining = freezed,
   }) {
     return _then(_Normal(
-      post == freezed
+      post: post == freezed
           ? _value.post
           : post // ignore: cast_nullable_to_non_nullable
               as Post,
+      isJoining: isJoining == freezed
+          ? _value.isJoining
+          : isJoining // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_Normal with DiagnosticableTreeMixin implements _Normal {
-  const _$_Normal(this.post);
+class _$_Normal implements _Normal {
+  const _$_Normal({required this.post, this.isJoining = false});
 
   @override
   final Post post;
+  @JsonKey(defaultValue: false)
+  @override
+  final bool isJoining;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PostState.normal(post: $post)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'PostState.normal'))
-      ..add(DiagnosticsProperty('post', post));
+  String toString() {
+    return 'PostState.normal(post: $post, isJoining: $isJoining)';
   }
 
   @override
@@ -283,11 +276,13 @@ class _$_Normal with DiagnosticableTreeMixin implements _Normal {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _Normal &&
-            (identical(other.post, post) || other.post == post));
+            (identical(other.post, post) || other.post == post) &&
+            (identical(other.isJoining, isJoining) ||
+                other.isJoining == isJoining));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, post);
+  int get hashCode => Object.hash(runtimeType, post, isJoining);
 
   @JsonKey(ignore: true)
   @override
@@ -298,29 +293,29 @@ class _$_Normal with DiagnosticableTreeMixin implements _Normal {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String postId) loading,
-    required TResult Function(Post post) normal,
+    required TResult Function(Post post, bool isJoining) normal,
   }) {
-    return normal(post);
+    return normal(post, isJoining);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String postId)? loading,
-    TResult Function(Post post)? normal,
+    TResult Function(Post post, bool isJoining)? normal,
   }) {
-    return normal?.call(post);
+    return normal?.call(post, isJoining);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String postId)? loading,
-    TResult Function(Post post)? normal,
+    TResult Function(Post post, bool isJoining)? normal,
     required TResult orElse(),
   }) {
     if (normal != null) {
-      return normal(post);
+      return normal(post, isJoining);
     }
     return orElse();
   }
@@ -358,9 +353,10 @@ class _$_Normal with DiagnosticableTreeMixin implements _Normal {
 }
 
 abstract class _Normal implements PostState {
-  const factory _Normal(Post post) = _$_Normal;
+  const factory _Normal({required Post post, bool isJoining}) = _$_Normal;
 
   Post get post;
+  bool get isJoining;
   @JsonKey(ignore: true)
   _$NormalCopyWith<_Normal> get copyWith => throw _privateConstructorUsedError;
 }

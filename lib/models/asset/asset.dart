@@ -21,7 +21,7 @@ const _assetStateEnumMap = {
 
 class InvalidAssetTypeException implements Exception {}
 
-class Asset extends GeneratedDocument{
+class Asset extends GeneratedDocument {
   final asset_type type;
   final asset_state state;
 
@@ -57,4 +57,3 @@ class Asset extends GeneratedDocument{
   factory Asset.fromDoc(DocumentSnapshot document) =>
       Asset.fromJson(documentSnaphsotToJson(document));
 }
-

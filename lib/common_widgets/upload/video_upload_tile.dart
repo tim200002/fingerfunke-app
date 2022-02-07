@@ -4,35 +4,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class VideoUploadTile extends StatelessWidget {
-  final Function(String) onAbort;
   final double height;
   final double width;
 
   final VideoUploadCubit cubit;
 
+  final Function(String) onDelete;
+
   static const double abortButtonRadius = 20;
 
   const VideoUploadTile(
       {required this.cubit,
-      required this.onAbort,
       required this.width,
       required this.height,
+      required this.onDelete,
       Key? key})
       : super(key: key);
 
   Widget abortButton() {
     return Align(
       alignment: Alignment.topRight,
-      child: /*Container(
-        margin: EdgeInsets.all(5),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: Colors.green,
-        ),
-        child: */
-          IconButton(
+      child: IconButton(
         padding: const EdgeInsets.all(10),
-        onPressed: () => onAbort(cubit.id),
+        onPressed: () => onDelete(cubit.id),
         icon: const Icon(
           Icons.close_rounded,
         ),

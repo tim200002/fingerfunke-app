@@ -17,7 +17,7 @@ const _postTypeEnumMap = {
 };
 
 enum post_visibility { visible, hidden }
-const _postVisibilityEnumMap = {
+const postVisibilityEnumMap = {
   post_visibility.visible: 'visible',
   post_visibility.hidden: 'hidden',
 };
@@ -40,6 +40,8 @@ class Post extends UserGeneratedDocument {
 
   final List<Asset> media;
 
+  final List<UserInfo> participants;
+
   const Post._(
       {required FirestoreId id,
       required this.type,
@@ -50,7 +52,8 @@ class Post extends UserGeneratedDocument {
       required this.visibility,
       required this.location,
       //required this.postPlace,
-      required this.media})
+      required this.media,
+      required this.participants})
       : super(id: id, author: author, creationTime: creationTime);
 
   @override
@@ -81,22 +84,32 @@ class Post extends UserGeneratedDocument {
     }
   }
 
-  factory Post.fromDoc(DocumentSnapshot document) =>
-        Post.fromJson(documentSnaphsotToJson(document));
-    @override
-    List<Object> get props => [
-          id,
-          type,
-          author,
-          title,
-          description,
-          creationTime,
-          visibility,
-          location,
-          // postPlace,
-          media
-        ];
-  
+  bool isUserParticipant(UserInfo? participant) {
+    if (participant == null) return false;
+    return participants.firstWhereOrNull((user) => user.id == participant.id) !=
+            null
+        ? true
+        : false;
   }
 
-  
+  bool isUserAuthor(UserInfo? user) {
+    if (user == null) return false;
+    return author.id == user.id;
+  }
+
+  factory Post.fromDoc(DocumentSnapshot document) =>
+      Post.fromJson(documentSnaphsotToJson(document));
+  @override
+  List<Object> get props => [
+        id,
+        type,
+        author,
+        title,
+        description,
+        creationTime,
+        visibility,
+        location,
+        // postPlace,
+        media
+      ];
+}

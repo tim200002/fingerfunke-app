@@ -7,7 +7,6 @@ import 'package:dio/dio.dart';
 import 'package:fingerfunke_app/cache/media_cache/media_cache.dart';
 import 'package:fingerfunke_app/cache/media_cache/media_cache.impl.dart';
 import 'package:fingerfunke_app/models/asset/asset.dart';
-import 'package:fingerfunke_app/models/user/user.dart';
 import 'package:fingerfunke_app/repositories/video_repository/video_repository.dart';
 import 'package:fingerfunke_app/repositories/video_repository/video_repository.impl.dart';
 import 'package:fingerfunke_app/utils/exceptions.dart';
@@ -23,11 +22,12 @@ part 'video_upload_cubit.freezed.dart';
 class AssetNotAvailableException implements Exception {}
 
 class VideoUploadCubit extends Cubit<VideoUploadState> {
-  final UserInfo author;
   final VideoRepository _videoRepository = VideoRepositoryImpl();
   final MediaCache _mediaCache = MediaCacheImpl();
-  // to distinguish between different instances of class
+  // to distinguish between different instances of this class
   final String id = const Uuid().v4();
+
+  final Function? _onVideoUploaded;
 
   // needed for uploading
   CancelToken? _cancelToken;
@@ -41,16 +41,20 @@ class VideoUploadCubit extends Cubit<VideoUploadState> {
   /// 2) Create temporary document in Firestore
   /// 3) upload Video to Mux
   /// 4) update temporary document once video has been updated
-  VideoUploadCubit.fromFile(File video, this.author)
-      : super(const VideoUploadState.initial()) {
+  VideoUploadCubit.fromFile(File video, {Function? onVideoUploaded})
+      : _onVideoUploaded = onVideoUploaded,
+        super(
+          const VideoUploadState.initial(),
+        ) {
     _createThumbnailFromVideoFile(video);
     _uploadVideo(video);
   }
 
   /// Sometimes we just want to be able to show an already existing asset (mainly when editing a post)
   /// This allows us to do this while keeping same function set mainly possibility to delete video
-  VideoUploadCubit.fromExistingAsset(VideoAsset videoAsset, this.author)
-      : super(const VideoUploadState.initial()) {
+  VideoUploadCubit.fromExistingAsset(VideoAsset videoAsset)
+      : _onVideoUploaded = null,
+        super(const VideoUploadState.initial()) {
     emit(VideoUploadState.uploaded(null, videoAsset));
     _createThumbnailFromNetworkAsset(videoAsset);
   }
@@ -92,6 +96,9 @@ class VideoUploadCubit extends Cubit<VideoUploadState> {
         emit(VideoUploadState.processing(video, thumbail));
         final videoAsset = await _waitForVideoReady(assetId!);
         emit(VideoUploadState.uploaded(thumbail, videoAsset));
+        if (_onVideoUploaded != null) {
+          _onVideoUploaded!();
+        }
       }
     } catch (err) {
       emit(VideoUploadState.error(err, thumbnail: thumbail));
@@ -168,7 +175,8 @@ class VideoUploadCubit extends Cubit<VideoUploadState> {
     try {
       final Uint8List? thumbnailData =
           await VideoThumbnail.thumbnailData(video: video.path, quality: 50);
-      final ImageProvider? thumbnail = thumbnailData!=null?MemoryImage(thumbnailData):null;
+      final ImageProvider? thumbnail =
+          thumbnailData != null ? MemoryImage(thumbnailData) : null;
       _updateThumbnail(thumbnail);
     } catch (err) {
       print("Could not create thumbnail from video file");

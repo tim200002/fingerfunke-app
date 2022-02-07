@@ -1,14 +1,16 @@
-import 'dart:ui';
-
 import 'package:fingerfunke_app/models/message/message.dart';
+import 'package:fingerfunke_app/models/post/post.dart';
 import 'package:fingerfunke_app/services/pagination/message_pagination_service.dart';
 import 'package:fingerfunke_app/utils/app_theme.dart';
-import 'package:fingerfunke_app/utils/exceptions.dart';
 import 'package:fingerfunke_app/utils/util_widgets/loading_page.dart';
 import 'package:fingerfunke_app/view/chat/view/chat_page.dart';
 import 'package:fingerfunke_app/view/paginated_list/cubit/paginated_list_cubit.dart';
 import 'package:fingerfunke_app/view/post/cubit/post_cubit.dart';
-import 'package:fingerfunke_app/view/post/view/post_header.dart';
+import 'package:fingerfunke_app/view/post/view/widgets/header_section.dart';
+import 'package:fingerfunke_app/view/post/view/widgets/author_section.dart';
+import 'package:fingerfunke_app/view/post/view/widgets/event_detail_section.dart';
+import 'package:fingerfunke_app/view/post/view/widgets/post_description_section.dart';
+import 'package:fingerfunke_app/view/post/view/widgets/section_heading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,98 +18,6 @@ import '../../../routes.dart';
 
 class PostPage extends StatelessWidget {
   const PostPage({Key? key}) : super(key: key);
-
-  Widget _iconTextItem(
-      {required BuildContext context,
-      required IconData icon,
-      required String label,
-      String? subLabel}) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(right: 12.0),
-          child: Icon(
-            icon,
-            size: 28,
-            color: Theme.of(context).colorScheme.primary,
-          ),
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(label,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w900,
-                )),
-            subLabel != null
-                ? Text(
-                    subLabel,
-                    style: TextStyle(
-                        fontWeight: FontWeight.normal,
-                        color: Theme.of(context)
-                            .colorScheme
-                            .onSurface
-                            .withOpacity(0.5)),
-                  )
-                : Container(),
-          ],
-        )
-      ],
-    );
-  }
-
-  Widget _heading({required BuildContext context, required String name}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20.0),
-      child: Text(
-        name,
-        style: Theme.of(context).textTheme.headline5!.copyWith(
-            color: Theme.of(context).colorScheme.onSurface,
-            fontWeight: FontWeight.bold),
-      ),
-    );
-  }
-
-  Widget _dateTimeSection(BuildContext context, PostState state) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        // TODO replace with actual post data
-        // TODO check if post is event, and change ui
-        Expanded(
-            child: _iconTextItem(
-                context: context,
-                icon: Icons.calendar_today_rounded,
-                label: state.maybeWhen(
-                    normal: (post) => "23.21.2021", orElse: () => "No data"),
-                subLabel: state.maybeWhen(
-                    normal: (post) => "ab 18 Uhr", orElse: () => "No data"))),
-        Expanded(
-            child: _iconTextItem(
-                context: context,
-                icon: Icons.location_on_outlined,
-                label: state.maybeWhen(
-                    normal: (post) => "Sudetenstraße", orElse: () => "No data"),
-                subLabel: state.maybeWhen(
-                    normal: (post) => "89233 Neu-Ulm",
-                    orElse: () => "No data")))
-      ],
-    );
-  }
-
-  Widget _descriptionSection(BuildContext context, PostState state) {
-    return state.maybeWhen(
-        normal: (post) => Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: Text(
-                post.description,
-                style: Theme.of(context).textTheme.subtitle2,
-              ),
-            ),
-        orElse: () => ErrorWidget(InvalidStateException()));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -132,12 +42,12 @@ class PostPage extends StatelessWidget {
           child: BlocBuilder<PostCubit, PostState>(
             builder: (context, state) => state.when(
               loading: (_) => const LoadingPage(),
-              normal: (post) => Scaffold(
+              normal: (post, _) => Scaffold(
                 backgroundColor: Theme.of(context).colorScheme.surface,
                 body: SafeArea(
                   child: CustomScrollView(
                     slivers: <Widget>[
-                      const PostHeader(),
+                      const HeaderSection(),
                       SliverToBoxAdapter(
                         child: Column(
                           children: [
@@ -150,28 +60,16 @@ class PostPage extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  _heading(context: context, name: 'Details'),
-                                  _dateTimeSection(context, state),
-                                  _heading(
-                                      context: context, name: 'Beschreibung'),
-                                  _descriptionSection(context, state),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 24.0),
-                                    child: Center(
-                                      child: state.maybeWhen(
-                                          orElse: () => Container(),
-                                          normal: (postState) => Padding(
-                                                padding:
-                                                    const EdgeInsets.all(12.0),
-                                                child: Text(
-                                                  "Erstellt von ${postState.author.name}",
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .caption,
-                                                ),
-                                              )),
-                                    ),
+                                  const SectionHeading('Details'),
+                                  post is Event
+                                      ? EventDetailSection(post)
+                                      : Container(),
+                                  const SectionHeading('Details'),
+                                  PostDescriptionSection(post),
+                                  const SizedBox(
+                                    height: 24,
                                   ),
+                                  AuthorSection(post.author)
                                 ],
                               ),
                             ),
@@ -183,13 +81,15 @@ class PostPage extends StatelessWidget {
                 ),
                 floatingActionButton: FloatingActionButton(
                   child: const Icon(Icons.chat_bubble_outline_rounded),
-                  onPressed: () => Navigator.of(context).pushNamed(chatRoute,
-                      arguments: ChatArguments(
-                          chatName: state.maybeWhen(normal: (post) => post.title, orElse: () => ""),
-                          postId: postId,
-                          paginatedListCubit:
-                              BlocProvider.of<PaginatedListCubit<Message>>(
-                                  context))),
+                  onPressed: () => Navigator.of(context).pushNamed(
+                    chatRoute,
+                    arguments: ChatArguments(
+                      chatName: post.title,
+                      postId: postId,
+                      paginatedListCubit:
+                          BlocProvider.of<PaginatedListCubit<Message>>(context),
+                    ),
+                  ),
                 ),
               ),
             ),

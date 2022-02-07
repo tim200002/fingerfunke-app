@@ -35,9 +35,9 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     });
   }
 
-  /// It is not possible to use a bloc listener to listen to state changes in pur specific case
+  /// It is not possible to use a bloc listener to listen to state changes in our specific case
   /// a bloc listener would miss some state changes
-  /// Therfore we provide out listeners to the bloc [onNewState] and with every state change
+  /// Therfore we provide our listeners to the bloc [onNewState] and with every state change
   /// we call these listeners ourself
   ///
   /// ToDo Can this be solved a better way

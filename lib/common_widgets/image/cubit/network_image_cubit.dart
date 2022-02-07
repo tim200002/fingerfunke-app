@@ -18,7 +18,9 @@ class NetworkImageCubit extends Cubit<NetworkImageState> {
       : _mediaCache = mediaCache ?? MediaCacheImpl(),
         super(const NetworkImageState.loading()) {
     _mediaCache
-        .getSingleImageFile(url,)// maxHeight: height, maxWidth: width)
+        .getSingleImageFile(
+          url,
+        ) // maxHeight: height, maxWidth: width)
         .then((image) => emit(NetworkImageState.imageLoaded(image)))
         .catchError((error, stacktrace) {
       emit(NetworkImageState.error(error));

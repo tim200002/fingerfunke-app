@@ -1,11 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fingerfunke_app/common_widgets/image/network_placeholder_image.dart/network_placeholder_image.dart';
+import 'package:fingerfunke_app/cubits/authentication_cubit/authentication_cubit.dart';
 import 'package:fingerfunke_app/models/asset/asset.dart';
+import 'package:fingerfunke_app/models/post/post.dart';
 import 'package:fingerfunke_app/repositories/video_repository/video_repository.impl.dart';
 import 'package:fingerfunke_app/utils/app_theme.dart';
-import 'package:fingerfunke_app/utils/exceptions.dart';
+import 'package:fingerfunke_app/utils/tools.dart';
 import 'package:fingerfunke_app/utils/util_widgets/floating_modal.dart';
-import 'package:fingerfunke_app/view/fullscreen_video/view/fullscreen_video_page.dart';
 import 'package:fingerfunke_app/view/post/cubit/post_cubit.dart';
 import 'package:fingerfunke_app/view/post/view/widgets/post_app_bar_button.dart';
 import 'package:fingerfunke_app/view/post/view/widgets/post_settings_modal_content.dart';
@@ -14,10 +15,61 @@ import 'package:fingerfunke_app/view/post_feed/view/post_feed_item_blur_view.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class PostHeader extends StatelessWidget {
-  const PostHeader({Key? key}) : super(key: key);
+class ElevatedButtonWithWidgetLeft extends StatelessWidget {
+  final String text;
+  final Widget widget;
+  final Function()? onPressed;
+  const ElevatedButtonWithWidgetLeft(
+      {required this.text,
+      required this.widget,
+      required this.onPressed,
+      Key? key})
+      : super(key: key);
 
-  Widget _contentCardHeader(BuildContext context, PostState state) {
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      style: ButtonStyle(
+        padding: MaterialStateProperty.all(
+          const EdgeInsets.symmetric(vertical: 8, horizontal: 30),
+        ),
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+        ),
+        backgroundColor:
+            MaterialStateProperty.all(Theme.of(context).colorScheme.onSurface),
+        foregroundColor:
+            MaterialStateProperty.all(Theme.of(context).colorScheme.surface),
+      ),
+      onPressed: () => onPressed?.call(),
+      child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 4.0),
+            child: widget,
+          ),
+          Text(text),
+        ],
+      ),
+    );
+  }
+}
+
+class HeaderSection extends StatelessWidget {
+  const HeaderSection({Key? key}) : super(key: key);
+
+  Widget _contentCardHeader(BuildContext context, Post post, bool isJoining) {
+    bool isParticipant = BlocProvider.of<AuthenticationCubit>(context)
+        .state
+        .maybeWhen(
+            signedIn: (currentUser) => post.isUserParticipant(currentUser),
+            orElse: () => false);
+    bool isLoggedIn = BlocProvider.of<AuthenticationCubit>(context)
+        .state
+        .maybeWhen(signedIn: (_) => true, orElse: () => false);
+
     return Container(
       margin: const EdgeInsets.only(left: 15, right: 15, bottom: 40),
       decoration: BoxDecoration(
@@ -32,54 +84,43 @@ class PostHeader extends StatelessWidget {
           ),
         ],
       ),
-      child: state.maybeWhen(
-        orElse: () => ErrorWidget(InvalidStateException()),
-        normal: (post) => Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              AutoSizeText(
-                post.title,
-                style: Theme.of(context)
-                    .textTheme
-                    .headline5!
-                    .copyWith(fontWeight: FontWeight.w600),
-                maxLines: 2,
-                minFontSize: 18,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton(
-                        style: ButtonStyle(
-                          padding: MaterialStateProperty.all(
-                              const EdgeInsets.symmetric(
-                                  vertical: 8, horizontal: 30)),
-                          shape: MaterialStateProperty.all(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
-                          backgroundColor: MaterialStateProperty.all(
-                              Theme.of(context).colorScheme.onSurface),
-                          foregroundColor: MaterialStateProperty.all(
-                              Theme.of(context).colorScheme.surface),
-                        ),
-                        onPressed: () {
-                          print("clicked");
-                        },
-                        child: Row(
-                          children: const [
-                            Padding(
-                              padding: EdgeInsets.only(right: 4.0),
-                              child: Icon(Icons.add),
-                            ),
-                            Text("Ich komme"),
-                          ],
-                        )),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AutoSizeText(
+              post.title,
+              style: Theme.of(context)
+                  .textTheme
+                  .headline5!
+                  .copyWith(fontWeight: FontWeight.w600),
+              maxLines: 2,
+              minFontSize: 18,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (!isParticipant) ...[
+                    isLoggedIn
+                        ? ElevatedButtonWithWidgetLeft(
+                            text: "Ich komme",
+                            widget: !isJoining
+                                ? const Icon(Icons.add)
+                                : const CircularProgressIndicator(),
+                            onPressed: () => BlocProvider.of<PostCubit>(context)
+                                .joinPost()
+                                .catchError(
+                                  (_) => Tools.showSnackbar(
+                                      context, "Oops something went wrong"),
+                                ),
+                          )
+                        : const ElevatedButtonWithWidgetLeft(
+                            text: "Ich komme",
+                            widget: Icon(Icons.add),
+                            onPressed: null),
                     Center(
                       child: IconButton(
                         onPressed: () => {},
@@ -88,10 +129,10 @@ class PostHeader extends StatelessWidget {
                       ),
                     )
                   ],
-                ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -102,7 +143,7 @@ class PostHeader extends StatelessWidget {
     return BlocBuilder<PostCubit, PostState>(
       builder: (context, state) => state.when(
         loading: (_) => Container(),
-        normal: (post) => SliverAppBar(
+        normal: (post, isJoining) => SliverAppBar(
           backgroundColor: Theme.of(context).colorScheme.background,
           toolbarHeight: 60 + AppTheme.PADDING_SIDE,
           leadingWidth: 48 + AppTheme.PADDING_SIDE * 2,
@@ -123,12 +164,15 @@ class PostHeader extends StatelessWidget {
                 top: 12.0 + AppTheme.PADDING_SIDE,
               ),
               child: postAppBarButton(
+                context: context,
+                icon: Icons.settings,
+                onPressed: () => showFloatingModalBottomSheet(
                   context: context,
-                  icon: Icons.settings,
-                  onPressed: () => showFloatingModalBottomSheet(
-                      context: context,
-                      builder: (ctx) =>
-                          PostSettingsModalContent(externalContext: context))),
+                  builder: (ctx) => PostSettingsModalContent(
+                    post: post,
+                  ),
+                ),
+              ),
             )
           ],
           pinned: true,
@@ -136,10 +180,11 @@ class PostHeader extends StatelessWidget {
           stretch: true,
           centerTitle: true,
           title: VisibilityController(
-              child: AutoSizeText(
-            state.maybeWhen(orElse: () => "", normal: (page) => page.title),
-            maxLines: 2,
-          )),
+            child: AutoSizeText(
+              post.title,
+              maxLines: 2,
+            ),
+          ),
           expandedHeight: MediaQuery.of(context).size.width.toDouble() + 80,
           flexibleSpace: Padding(
             padding: const EdgeInsets.all(AppTheme.PADDING_SIDE),
@@ -160,20 +205,21 @@ class PostHeader extends StatelessWidget {
                         child: InkWell(
                           onTap: () => Navigator.of(context).push(
                               FullscreenVideoPage.route(
-                                  url: VideoRepositoryImpl().createPlaybackUrl((post
-                                      .media
-                                      .firstWhere((e) => e.type == asset_type.video)
-                                  as VideoAsset)))),
+                                  url: VideoRepositoryImpl().createPlaybackUrl(
+                                      (post.media.firstWhere(
+                                              (e) => e.type == asset_type.video)
+                                          as VideoAsset)))),
                           child: Stack(children: [
                             Hero(
                               tag: PostFeedItemBlur.heroTag,
                               child: NetworkPlaceholderImage(
-                                VideoRepositoryImpl()
-                                    .createThumbnailUrl(post.media[0] as VideoAsset),
+                                VideoRepositoryImpl().createThumbnailUrl(
+                                    post.media[0] as VideoAsset),
                                 Container(
                                   color: Colors.grey,
                                 ),
-                                width: MediaQuery.of(context).size.width.toInt(),
+                                width:
+                                    MediaQuery.of(context).size.width.toInt(),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -186,12 +232,11 @@ class PostHeader extends StatelessWidget {
                             )
                           ]),
                         ),
-
                       ),
                     ),
                     Align(
                         alignment: Alignment.bottomCenter,
-                        child: _contentCardHeader(context, state)),
+                        child: _contentCardHeader(context, post, isJoining)),
                   ],
                 ),
               ),

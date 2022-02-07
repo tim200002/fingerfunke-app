@@ -28,3 +28,13 @@ You must also provide a valid `.env` file. The `.env.example` file is a blueprin
 |FIREBASE_ENVIRONMENT|Whether to use production backend or local emulator suite|local; production
 
 Now you are ready to start developing. Have fun and thanks for contributing :)
+
+# Releases
+
+Releases are named using [sematic versioning](https://semver.org/lang/de/) in addition with the current build number. A valid release tag would therefore look somehting like this `v1.2.4+2`. Please `tag` every release in Git and add meaningful release notes
+
+- Major release: A major release increments the first number. This is done when there are significant changes in the feature set of the App
+- Minor Release: A minor release increments the second nunber. This is done when new functionality has been added to the App
+- Patch release: A patch release icrements the third number. This is done when only bugs have been fixed
+
+The build number must automatically be incremented with every new release
