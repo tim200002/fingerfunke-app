@@ -1,12 +1,10 @@
 import 'dart:io';
 
-import 'package:camera/camera.dart';
-import 'package:fingerfunke_app/utils/dev_tools.dart';
 import 'package:fingerfunke_app/view/error/exception_view.dart';
 import 'package:fingerfunke_app/view/video_recorder/view/cubit/video_recorder_cubit.dart';
-import 'package:fingerfunke_app/view/video_recorder/view/widgets/camera_view.dart';
-import 'package:fingerfunke_app/view/video_recorder/view/widgets/recording_view.dart';
-import 'package:fingerfunke_app/view/video_recorder/view/widgets/viewing_view.dart';
+import 'package:fingerfunke_app/view/video_recorder/view/view/camera_view.dart';
+import 'package:fingerfunke_app/view/video_recorder/view/view/playback_view.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,6 +24,7 @@ class VideoRecorderPage extends StatelessWidget {
         settings: const RouteSettings(name: "VideoEditor"));
   }
 
+  /*
   static Widget fullScreenCameraPreview(
       double aspectRatio, CameraController controller) {
     var scale = aspectRatio * controller.value.aspectRatio;
@@ -36,7 +35,9 @@ class VideoRecorderPage extends StatelessWidget {
         child: CameraPreview(controller),
       ),
     );
+
   }
+   */
 
   @override
   Widget build(BuildContext context) {
@@ -48,24 +49,14 @@ class VideoRecorderPage extends StatelessWidget {
                   .appBarTheme
                   .copyWith(foregroundColor: Colors.white)),
           child: Scaffold(
-              body: BlocConsumer<VideoRecorderCubit, VideoRecorderState>(
-                  listener: (context, state) {
-                    state.whenOrNull(
-                      submitted: (path) =>
-                          Navigator.of(context).pop(File(path)),
-                    );
-                  },
-                  builder: (context, state) => state.when(
-                      loading: () => const LoadingView(),
-                      error: ExceptionView.builder,
-                      submitted: (msg) =>
-                          DevTools.placeholder("this should not be reachable"),
-                      camera: (controller, settings) => CameraView(
-                          controller: controller, settings: settings),
-                      recording: (controller, time) => RecordingView(
-                          startTime: time, controller: controller),
-                      viewing: (path, videoController) => ViewingView(
-                          filePath: path, videoController: videoController)))),
+            body: BlocBuilder<VideoRecorderCubit, VideoRecorderState>(
+              builder: (context, state) => state.when(
+                error: ExceptionView.builder,
+                camera: () => CameraView(),
+                viewing: (file) => PlaybackView(file),
+              ),
+            ),
+          ),
         ));
   }
 }

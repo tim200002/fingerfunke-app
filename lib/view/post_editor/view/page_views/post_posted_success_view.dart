@@ -5,7 +5,7 @@ class PostPostedSuccessView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 1), () {
       Navigator.of(context).pop();
     });
     return const Scaffold(body: Center(child: Icon(Icons.check)));

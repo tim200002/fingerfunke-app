@@ -17,41 +17,19 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$VideoRecorderStateTearOff {
   const _$VideoRecorderStateTearOff();
 
-  _Loading loading() {
-    return const _Loading();
-  }
-
   _Error error(dynamic err) {
     return _Error(
       err,
     );
   }
 
-  _Previewing camera(
-      CameraController controller, CameraSettings cameraSettings) {
-    return _Previewing(
-      controller,
-      cameraSettings,
-    );
+  _Camera camera() {
+    return const _Camera();
   }
 
-  _Recording recording(CameraController controller, int startTime) {
-    return _Recording(
-      controller,
-      startTime,
-    );
-  }
-
-  _Viewing viewing(String filepath, VideoPlayerController videoController) {
+  _Viewing viewing(File file) {
     return _Viewing(
-      filepath,
-      videoController,
-    );
-  }
-
-  _Submitted submitted(String filePath) {
-    return _Submitted(
-      filePath,
+      file,
     );
   }
 }
@@ -63,74 +41,45 @@ const $VideoRecorderState = _$VideoRecorderStateTearOff();
 mixin _$VideoRecorderState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loading,
     required TResult Function(dynamic err) error,
-    required TResult Function(
-            CameraController controller, CameraSettings cameraSettings)
-        camera,
-    required TResult Function(CameraController controller, int startTime)
-        recording,
-    required TResult Function(
-            String filepath, VideoPlayerController videoController)
-        viewing,
-    required TResult Function(String filePath) submitted,
+    required TResult Function() camera,
+    required TResult Function(File file) viewing,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
     TResult Function(dynamic err)? error,
-    TResult Function(
-            CameraController controller, CameraSettings cameraSettings)?
-        camera,
-    TResult Function(CameraController controller, int startTime)? recording,
-    TResult Function(String filepath, VideoPlayerController videoController)?
-        viewing,
-    TResult Function(String filePath)? submitted,
+    TResult Function()? camera,
+    TResult Function(File file)? viewing,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
     TResult Function(dynamic err)? error,
-    TResult Function(
-            CameraController controller, CameraSettings cameraSettings)?
-        camera,
-    TResult Function(CameraController controller, int startTime)? recording,
-    TResult Function(String filepath, VideoPlayerController videoController)?
-        viewing,
-    TResult Function(String filePath)? submitted,
+    TResult Function()? camera,
+    TResult Function(File file)? viewing,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Loading value) loading,
     required TResult Function(_Error value) error,
-    required TResult Function(_Previewing value) camera,
-    required TResult Function(_Recording value) recording,
+    required TResult Function(_Camera value) camera,
     required TResult Function(_Viewing value) viewing,
-    required TResult Function(_Submitted value) submitted,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
-    TResult Function(_Previewing value)? camera,
-    TResult Function(_Recording value)? recording,
+    TResult Function(_Camera value)? camera,
     TResult Function(_Viewing value)? viewing,
-    TResult Function(_Submitted value)? submitted,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
-    TResult Function(_Previewing value)? camera,
-    TResult Function(_Recording value)? recording,
+    TResult Function(_Camera value)? camera,
     TResult Function(_Viewing value)? viewing,
-    TResult Function(_Submitted value)? submitted,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -151,144 +100,6 @@ class _$VideoRecorderStateCopyWithImpl<$Res>
   final VideoRecorderState _value;
   // ignore: unused_field
   final $Res Function(VideoRecorderState) _then;
-}
-
-/// @nodoc
-abstract class _$LoadingCopyWith<$Res> {
-  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) then) =
-      __$LoadingCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$LoadingCopyWithImpl<$Res>
-    extends _$VideoRecorderStateCopyWithImpl<$Res>
-    implements _$LoadingCopyWith<$Res> {
-  __$LoadingCopyWithImpl(_Loading _value, $Res Function(_Loading) _then)
-      : super(_value, (v) => _then(v as _Loading));
-
-  @override
-  _Loading get _value => super._value as _Loading;
-}
-
-/// @nodoc
-
-class _$_Loading implements _Loading {
-  const _$_Loading();
-
-  @override
-  String toString() {
-    return 'VideoRecorderState.loading()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Loading);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() loading,
-    required TResult Function(dynamic err) error,
-    required TResult Function(
-            CameraController controller, CameraSettings cameraSettings)
-        camera,
-    required TResult Function(CameraController controller, int startTime)
-        recording,
-    required TResult Function(
-            String filepath, VideoPlayerController videoController)
-        viewing,
-    required TResult Function(String filePath) submitted,
-  }) {
-    return loading();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(dynamic err)? error,
-    TResult Function(
-            CameraController controller, CameraSettings cameraSettings)?
-        camera,
-    TResult Function(CameraController controller, int startTime)? recording,
-    TResult Function(String filepath, VideoPlayerController videoController)?
-        viewing,
-    TResult Function(String filePath)? submitted,
-  }) {
-    return loading?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(dynamic err)? error,
-    TResult Function(
-            CameraController controller, CameraSettings cameraSettings)?
-        camera,
-    TResult Function(CameraController controller, int startTime)? recording,
-    TResult Function(String filepath, VideoPlayerController videoController)?
-        viewing,
-    TResult Function(String filePath)? submitted,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Error value) error,
-    required TResult Function(_Previewing value) camera,
-    required TResult Function(_Recording value) recording,
-    required TResult Function(_Viewing value) viewing,
-    required TResult Function(_Submitted value) submitted,
-  }) {
-    return loading(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Error value)? error,
-    TResult Function(_Previewing value)? camera,
-    TResult Function(_Recording value)? recording,
-    TResult Function(_Viewing value)? viewing,
-    TResult Function(_Submitted value)? submitted,
-  }) {
-    return loading?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Error value)? error,
-    TResult Function(_Previewing value)? camera,
-    TResult Function(_Recording value)? recording,
-    TResult Function(_Viewing value)? viewing,
-    TResult Function(_Submitted value)? submitted,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Loading implements VideoRecorderState {
-  const factory _Loading() = _$_Loading;
 }
 
 /// @nodoc
@@ -353,17 +164,9 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loading,
     required TResult Function(dynamic err) error,
-    required TResult Function(
-            CameraController controller, CameraSettings cameraSettings)
-        camera,
-    required TResult Function(CameraController controller, int startTime)
-        recording,
-    required TResult Function(
-            String filepath, VideoPlayerController videoController)
-        viewing,
-    required TResult Function(String filePath) submitted,
+    required TResult Function() camera,
+    required TResult Function(File file) viewing,
   }) {
     return error(err);
   }
@@ -371,15 +174,9 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
     TResult Function(dynamic err)? error,
-    TResult Function(
-            CameraController controller, CameraSettings cameraSettings)?
-        camera,
-    TResult Function(CameraController controller, int startTime)? recording,
-    TResult Function(String filepath, VideoPlayerController videoController)?
-        viewing,
-    TResult Function(String filePath)? submitted,
+    TResult Function()? camera,
+    TResult Function(File file)? viewing,
   }) {
     return error?.call(err);
   }
@@ -387,15 +184,9 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
     TResult Function(dynamic err)? error,
-    TResult Function(
-            CameraController controller, CameraSettings cameraSettings)?
-        camera,
-    TResult Function(CameraController controller, int startTime)? recording,
-    TResult Function(String filepath, VideoPlayerController videoController)?
-        viewing,
-    TResult Function(String filePath)? submitted,
+    TResult Function()? camera,
+    TResult Function(File file)? viewing,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -407,12 +198,9 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Loading value) loading,
     required TResult Function(_Error value) error,
-    required TResult Function(_Previewing value) camera,
-    required TResult Function(_Recording value) recording,
+    required TResult Function(_Camera value) camera,
     required TResult Function(_Viewing value) viewing,
-    required TResult Function(_Submitted value) submitted,
   }) {
     return error(this);
   }
@@ -420,12 +208,9 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
-    TResult Function(_Previewing value)? camera,
-    TResult Function(_Recording value)? recording,
+    TResult Function(_Camera value)? camera,
     TResult Function(_Viewing value)? viewing,
-    TResult Function(_Submitted value)? submitted,
   }) {
     return error?.call(this);
   }
@@ -433,12 +218,9 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
-    TResult Function(_Previewing value)? camera,
-    TResult Function(_Recording value)? recording,
+    TResult Function(_Camera value)? camera,
     TResult Function(_Viewing value)? viewing,
-    TResult Function(_Submitted value)? submitted,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -457,126 +239,70 @@ abstract class _Error implements VideoRecorderState {
 }
 
 /// @nodoc
-abstract class _$PreviewingCopyWith<$Res> {
-  factory _$PreviewingCopyWith(
-          _Previewing value, $Res Function(_Previewing) then) =
-      __$PreviewingCopyWithImpl<$Res>;
-  $Res call({CameraController controller, CameraSettings cameraSettings});
+abstract class _$CameraCopyWith<$Res> {
+  factory _$CameraCopyWith(_Camera value, $Res Function(_Camera) then) =
+      __$CameraCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$PreviewingCopyWithImpl<$Res>
-    extends _$VideoRecorderStateCopyWithImpl<$Res>
-    implements _$PreviewingCopyWith<$Res> {
-  __$PreviewingCopyWithImpl(
-      _Previewing _value, $Res Function(_Previewing) _then)
-      : super(_value, (v) => _then(v as _Previewing));
+class __$CameraCopyWithImpl<$Res> extends _$VideoRecorderStateCopyWithImpl<$Res>
+    implements _$CameraCopyWith<$Res> {
+  __$CameraCopyWithImpl(_Camera _value, $Res Function(_Camera) _then)
+      : super(_value, (v) => _then(v as _Camera));
 
   @override
-  _Previewing get _value => super._value as _Previewing;
-
-  @override
-  $Res call({
-    Object? controller = freezed,
-    Object? cameraSettings = freezed,
-  }) {
-    return _then(_Previewing(
-      controller == freezed
-          ? _value.controller
-          : controller // ignore: cast_nullable_to_non_nullable
-              as CameraController,
-      cameraSettings == freezed
-          ? _value.cameraSettings
-          : cameraSettings // ignore: cast_nullable_to_non_nullable
-              as CameraSettings,
-    ));
-  }
+  _Camera get _value => super._value as _Camera;
 }
 
 /// @nodoc
 
-class _$_Previewing implements _Previewing {
-  const _$_Previewing(this.controller, this.cameraSettings);
-
-  @override
-  final CameraController controller;
-  @override
-  final CameraSettings cameraSettings;
+class _$_Camera implements _Camera {
+  const _$_Camera();
 
   @override
   String toString() {
-    return 'VideoRecorderState.camera(controller: $controller, cameraSettings: $cameraSettings)';
+    return 'VideoRecorderState.camera()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Previewing &&
-            (identical(other.controller, controller) ||
-                other.controller == controller) &&
-            (identical(other.cameraSettings, cameraSettings) ||
-                other.cameraSettings == cameraSettings));
+        (other.runtimeType == runtimeType && other is _Camera);
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, controller, cameraSettings);
-
-  @JsonKey(ignore: true)
-  @override
-  _$PreviewingCopyWith<_Previewing> get copyWith =>
-      __$PreviewingCopyWithImpl<_Previewing>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loading,
     required TResult Function(dynamic err) error,
-    required TResult Function(
-            CameraController controller, CameraSettings cameraSettings)
-        camera,
-    required TResult Function(CameraController controller, int startTime)
-        recording,
-    required TResult Function(
-            String filepath, VideoPlayerController videoController)
-        viewing,
-    required TResult Function(String filePath) submitted,
+    required TResult Function() camera,
+    required TResult Function(File file) viewing,
   }) {
-    return camera(controller, cameraSettings);
+    return camera();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
     TResult Function(dynamic err)? error,
-    TResult Function(
-            CameraController controller, CameraSettings cameraSettings)?
-        camera,
-    TResult Function(CameraController controller, int startTime)? recording,
-    TResult Function(String filepath, VideoPlayerController videoController)?
-        viewing,
-    TResult Function(String filePath)? submitted,
+    TResult Function()? camera,
+    TResult Function(File file)? viewing,
   }) {
-    return camera?.call(controller, cameraSettings);
+    return camera?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
     TResult Function(dynamic err)? error,
-    TResult Function(
-            CameraController controller, CameraSettings cameraSettings)?
-        camera,
-    TResult Function(CameraController controller, int startTime)? recording,
-    TResult Function(String filepath, VideoPlayerController videoController)?
-        viewing,
-    TResult Function(String filePath)? submitted,
+    TResult Function()? camera,
+    TResult Function(File file)? viewing,
     required TResult orElse(),
   }) {
     if (camera != null) {
-      return camera(controller, cameraSettings);
+      return camera();
     }
     return orElse();
   }
@@ -584,12 +310,9 @@ class _$_Previewing implements _Previewing {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Loading value) loading,
     required TResult Function(_Error value) error,
-    required TResult Function(_Previewing value) camera,
-    required TResult Function(_Recording value) recording,
+    required TResult Function(_Camera value) camera,
     required TResult Function(_Viewing value) viewing,
-    required TResult Function(_Submitted value) submitted,
   }) {
     return camera(this);
   }
@@ -597,12 +320,9 @@ class _$_Previewing implements _Previewing {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
-    TResult Function(_Previewing value)? camera,
-    TResult Function(_Recording value)? recording,
+    TResult Function(_Camera value)? camera,
     TResult Function(_Viewing value)? viewing,
-    TResult Function(_Submitted value)? submitted,
   }) {
     return camera?.call(this);
   }
@@ -610,12 +330,9 @@ class _$_Previewing implements _Previewing {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
-    TResult Function(_Previewing value)? camera,
-    TResult Function(_Recording value)? recording,
+    TResult Function(_Camera value)? camera,
     TResult Function(_Viewing value)? viewing,
-    TResult Function(_Submitted value)? submitted,
     required TResult orElse(),
   }) {
     if (camera != null) {
@@ -625,202 +342,15 @@ class _$_Previewing implements _Previewing {
   }
 }
 
-abstract class _Previewing implements VideoRecorderState {
-  const factory _Previewing(
-          CameraController controller, CameraSettings cameraSettings) =
-      _$_Previewing;
-
-  CameraController get controller;
-  CameraSettings get cameraSettings;
-  @JsonKey(ignore: true)
-  _$PreviewingCopyWith<_Previewing> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$RecordingCopyWith<$Res> {
-  factory _$RecordingCopyWith(
-          _Recording value, $Res Function(_Recording) then) =
-      __$RecordingCopyWithImpl<$Res>;
-  $Res call({CameraController controller, int startTime});
-}
-
-/// @nodoc
-class __$RecordingCopyWithImpl<$Res>
-    extends _$VideoRecorderStateCopyWithImpl<$Res>
-    implements _$RecordingCopyWith<$Res> {
-  __$RecordingCopyWithImpl(_Recording _value, $Res Function(_Recording) _then)
-      : super(_value, (v) => _then(v as _Recording));
-
-  @override
-  _Recording get _value => super._value as _Recording;
-
-  @override
-  $Res call({
-    Object? controller = freezed,
-    Object? startTime = freezed,
-  }) {
-    return _then(_Recording(
-      controller == freezed
-          ? _value.controller
-          : controller // ignore: cast_nullable_to_non_nullable
-              as CameraController,
-      startTime == freezed
-          ? _value.startTime
-          : startTime // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$_Recording implements _Recording {
-  const _$_Recording(this.controller, this.startTime);
-
-  @override
-  final CameraController controller;
-  @override
-  final int startTime;
-
-  @override
-  String toString() {
-    return 'VideoRecorderState.recording(controller: $controller, startTime: $startTime)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Recording &&
-            (identical(other.controller, controller) ||
-                other.controller == controller) &&
-            (identical(other.startTime, startTime) ||
-                other.startTime == startTime));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, controller, startTime);
-
-  @JsonKey(ignore: true)
-  @override
-  _$RecordingCopyWith<_Recording> get copyWith =>
-      __$RecordingCopyWithImpl<_Recording>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() loading,
-    required TResult Function(dynamic err) error,
-    required TResult Function(
-            CameraController controller, CameraSettings cameraSettings)
-        camera,
-    required TResult Function(CameraController controller, int startTime)
-        recording,
-    required TResult Function(
-            String filepath, VideoPlayerController videoController)
-        viewing,
-    required TResult Function(String filePath) submitted,
-  }) {
-    return recording(controller, startTime);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(dynamic err)? error,
-    TResult Function(
-            CameraController controller, CameraSettings cameraSettings)?
-        camera,
-    TResult Function(CameraController controller, int startTime)? recording,
-    TResult Function(String filepath, VideoPlayerController videoController)?
-        viewing,
-    TResult Function(String filePath)? submitted,
-  }) {
-    return recording?.call(controller, startTime);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(dynamic err)? error,
-    TResult Function(
-            CameraController controller, CameraSettings cameraSettings)?
-        camera,
-    TResult Function(CameraController controller, int startTime)? recording,
-    TResult Function(String filepath, VideoPlayerController videoController)?
-        viewing,
-    TResult Function(String filePath)? submitted,
-    required TResult orElse(),
-  }) {
-    if (recording != null) {
-      return recording(controller, startTime);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Error value) error,
-    required TResult Function(_Previewing value) camera,
-    required TResult Function(_Recording value) recording,
-    required TResult Function(_Viewing value) viewing,
-    required TResult Function(_Submitted value) submitted,
-  }) {
-    return recording(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Error value)? error,
-    TResult Function(_Previewing value)? camera,
-    TResult Function(_Recording value)? recording,
-    TResult Function(_Viewing value)? viewing,
-    TResult Function(_Submitted value)? submitted,
-  }) {
-    return recording?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Error value)? error,
-    TResult Function(_Previewing value)? camera,
-    TResult Function(_Recording value)? recording,
-    TResult Function(_Viewing value)? viewing,
-    TResult Function(_Submitted value)? submitted,
-    required TResult orElse(),
-  }) {
-    if (recording != null) {
-      return recording(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Recording implements VideoRecorderState {
-  const factory _Recording(CameraController controller, int startTime) =
-      _$_Recording;
-
-  CameraController get controller;
-  int get startTime;
-  @JsonKey(ignore: true)
-  _$RecordingCopyWith<_Recording> get copyWith =>
-      throw _privateConstructorUsedError;
+abstract class _Camera implements VideoRecorderState {
+  const factory _Camera() = _$_Camera;
 }
 
 /// @nodoc
 abstract class _$ViewingCopyWith<$Res> {
   factory _$ViewingCopyWith(_Viewing value, $Res Function(_Viewing) then) =
       __$ViewingCopyWithImpl<$Res>;
-  $Res call({String filepath, VideoPlayerController videoController});
+  $Res call({File file});
 }
 
 /// @nodoc
@@ -835,18 +365,13 @@ class __$ViewingCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? filepath = freezed,
-    Object? videoController = freezed,
+    Object? file = freezed,
   }) {
     return _then(_Viewing(
-      filepath == freezed
-          ? _value.filepath
-          : filepath // ignore: cast_nullable_to_non_nullable
-              as String,
-      videoController == freezed
-          ? _value.videoController
-          : videoController // ignore: cast_nullable_to_non_nullable
-              as VideoPlayerController,
+      file == freezed
+          ? _value.file
+          : file // ignore: cast_nullable_to_non_nullable
+              as File,
     ));
   }
 }
@@ -854,16 +379,14 @@ class __$ViewingCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Viewing implements _Viewing {
-  const _$_Viewing(this.filepath, this.videoController);
+  const _$_Viewing(this.file);
 
   @override
-  final String filepath;
-  @override
-  final VideoPlayerController videoController;
+  final File file;
 
   @override
   String toString() {
-    return 'VideoRecorderState.viewing(filepath: $filepath, videoController: $videoController)';
+    return 'VideoRecorderState.viewing(file: $file)';
   }
 
   @override
@@ -871,14 +394,11 @@ class _$_Viewing implements _Viewing {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _Viewing &&
-            (identical(other.filepath, filepath) ||
-                other.filepath == filepath) &&
-            (identical(other.videoController, videoController) ||
-                other.videoController == videoController));
+            (identical(other.file, file) || other.file == file));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, filepath, videoController);
+  int get hashCode => Object.hash(runtimeType, file);
 
   @JsonKey(ignore: true)
   @override
@@ -888,53 +408,33 @@ class _$_Viewing implements _Viewing {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loading,
     required TResult Function(dynamic err) error,
-    required TResult Function(
-            CameraController controller, CameraSettings cameraSettings)
-        camera,
-    required TResult Function(CameraController controller, int startTime)
-        recording,
-    required TResult Function(
-            String filepath, VideoPlayerController videoController)
-        viewing,
-    required TResult Function(String filePath) submitted,
+    required TResult Function() camera,
+    required TResult Function(File file) viewing,
   }) {
-    return viewing(filepath, videoController);
+    return viewing(file);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
     TResult Function(dynamic err)? error,
-    TResult Function(
-            CameraController controller, CameraSettings cameraSettings)?
-        camera,
-    TResult Function(CameraController controller, int startTime)? recording,
-    TResult Function(String filepath, VideoPlayerController videoController)?
-        viewing,
-    TResult Function(String filePath)? submitted,
+    TResult Function()? camera,
+    TResult Function(File file)? viewing,
   }) {
-    return viewing?.call(filepath, videoController);
+    return viewing?.call(file);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
     TResult Function(dynamic err)? error,
-    TResult Function(
-            CameraController controller, CameraSettings cameraSettings)?
-        camera,
-    TResult Function(CameraController controller, int startTime)? recording,
-    TResult Function(String filepath, VideoPlayerController videoController)?
-        viewing,
-    TResult Function(String filePath)? submitted,
+    TResult Function()? camera,
+    TResult Function(File file)? viewing,
     required TResult orElse(),
   }) {
     if (viewing != null) {
-      return viewing(filepath, videoController);
+      return viewing(file);
     }
     return orElse();
   }
@@ -942,12 +442,9 @@ class _$_Viewing implements _Viewing {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Loading value) loading,
     required TResult Function(_Error value) error,
-    required TResult Function(_Previewing value) camera,
-    required TResult Function(_Recording value) recording,
+    required TResult Function(_Camera value) camera,
     required TResult Function(_Viewing value) viewing,
-    required TResult Function(_Submitted value) submitted,
   }) {
     return viewing(this);
   }
@@ -955,12 +452,9 @@ class _$_Viewing implements _Viewing {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
-    TResult Function(_Previewing value)? camera,
-    TResult Function(_Recording value)? recording,
+    TResult Function(_Camera value)? camera,
     TResult Function(_Viewing value)? viewing,
-    TResult Function(_Submitted value)? submitted,
   }) {
     return viewing?.call(this);
   }
@@ -968,12 +462,9 @@ class _$_Viewing implements _Viewing {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
-    TResult Function(_Previewing value)? camera,
-    TResult Function(_Recording value)? recording,
+    TResult Function(_Camera value)? camera,
     TResult Function(_Viewing value)? viewing,
-    TResult Function(_Submitted value)? submitted,
     required TResult orElse(),
   }) {
     if (viewing != null) {
@@ -984,180 +475,10 @@ class _$_Viewing implements _Viewing {
 }
 
 abstract class _Viewing implements VideoRecorderState {
-  const factory _Viewing(
-      String filepath, VideoPlayerController videoController) = _$_Viewing;
+  const factory _Viewing(File file) = _$_Viewing;
 
-  String get filepath;
-  VideoPlayerController get videoController;
+  File get file;
   @JsonKey(ignore: true)
   _$ViewingCopyWith<_Viewing> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$SubmittedCopyWith<$Res> {
-  factory _$SubmittedCopyWith(
-          _Submitted value, $Res Function(_Submitted) then) =
-      __$SubmittedCopyWithImpl<$Res>;
-  $Res call({String filePath});
-}
-
-/// @nodoc
-class __$SubmittedCopyWithImpl<$Res>
-    extends _$VideoRecorderStateCopyWithImpl<$Res>
-    implements _$SubmittedCopyWith<$Res> {
-  __$SubmittedCopyWithImpl(_Submitted _value, $Res Function(_Submitted) _then)
-      : super(_value, (v) => _then(v as _Submitted));
-
-  @override
-  _Submitted get _value => super._value as _Submitted;
-
-  @override
-  $Res call({
-    Object? filePath = freezed,
-  }) {
-    return _then(_Submitted(
-      filePath == freezed
-          ? _value.filePath
-          : filePath // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$_Submitted implements _Submitted {
-  const _$_Submitted(this.filePath);
-
-  @override
-  final String filePath;
-
-  @override
-  String toString() {
-    return 'VideoRecorderState.submitted(filePath: $filePath)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Submitted &&
-            (identical(other.filePath, filePath) ||
-                other.filePath == filePath));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, filePath);
-
-  @JsonKey(ignore: true)
-  @override
-  _$SubmittedCopyWith<_Submitted> get copyWith =>
-      __$SubmittedCopyWithImpl<_Submitted>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() loading,
-    required TResult Function(dynamic err) error,
-    required TResult Function(
-            CameraController controller, CameraSettings cameraSettings)
-        camera,
-    required TResult Function(CameraController controller, int startTime)
-        recording,
-    required TResult Function(
-            String filepath, VideoPlayerController videoController)
-        viewing,
-    required TResult Function(String filePath) submitted,
-  }) {
-    return submitted(filePath);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(dynamic err)? error,
-    TResult Function(
-            CameraController controller, CameraSettings cameraSettings)?
-        camera,
-    TResult Function(CameraController controller, int startTime)? recording,
-    TResult Function(String filepath, VideoPlayerController videoController)?
-        viewing,
-    TResult Function(String filePath)? submitted,
-  }) {
-    return submitted?.call(filePath);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(dynamic err)? error,
-    TResult Function(
-            CameraController controller, CameraSettings cameraSettings)?
-        camera,
-    TResult Function(CameraController controller, int startTime)? recording,
-    TResult Function(String filepath, VideoPlayerController videoController)?
-        viewing,
-    TResult Function(String filePath)? submitted,
-    required TResult orElse(),
-  }) {
-    if (submitted != null) {
-      return submitted(filePath);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Error value) error,
-    required TResult Function(_Previewing value) camera,
-    required TResult Function(_Recording value) recording,
-    required TResult Function(_Viewing value) viewing,
-    required TResult Function(_Submitted value) submitted,
-  }) {
-    return submitted(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Error value)? error,
-    TResult Function(_Previewing value)? camera,
-    TResult Function(_Recording value)? recording,
-    TResult Function(_Viewing value)? viewing,
-    TResult Function(_Submitted value)? submitted,
-  }) {
-    return submitted?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Error value)? error,
-    TResult Function(_Previewing value)? camera,
-    TResult Function(_Recording value)? recording,
-    TResult Function(_Viewing value)? viewing,
-    TResult Function(_Submitted value)? submitted,
-    required TResult orElse(),
-  }) {
-    if (submitted != null) {
-      return submitted(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Submitted implements VideoRecorderState {
-  const factory _Submitted(String filePath) = _$_Submitted;
-
-  String get filePath;
-  @JsonKey(ignore: true)
-  _$SubmittedCopyWith<_Submitted> get copyWith =>
       throw _privateConstructorUsedError;
 }

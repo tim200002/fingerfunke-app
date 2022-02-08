@@ -78,6 +78,8 @@ class PostEditingView extends StatelessWidget {
                               if (!isEditingExisitingPost)
                                 const EventOrGroupSelectionButton(),
                               BlocBuilder<PostEditorCubit, PostEditorState>(
+                                buildWhen: (prev, curr) =>
+                                    prev.runtimeType != curr.runtimeType,
                                 builder: (context, state) => state.maybeWhen(
                                     editEvent: (_, __) =>
                                         const EventOnlyInformation(),
