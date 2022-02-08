@@ -1,4 +1,5 @@
 import 'package:fingerfunke_app/models/post/post.dart';
+import 'package:fingerfunke_app/utils/exceptions.dart';
 import 'package:fingerfunke_app/view/post_editor/cubit/post_editor_cubit.dart';
 import 'package:fingerfunke_app/view/post_editor/view/widgets/selectable_button.dart';
 import 'package:flutter/material.dart';
@@ -7,12 +8,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 /// Selection Button to switch between creating event and group
 /// Only visisble when we are not editing a given post (event cannot be turned into group and vice versa)
 class EventOrGroupSelectionButton extends StatelessWidget {
-  final post_type postType;
-  const EventOrGroupSelectionButton(this.postType, {Key? key})
-      : super(key: key);
+  const EventOrGroupSelectionButton({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
+  Widget _content(BuildContext context, post_type postType) {
     return Padding(
       padding: const EdgeInsets.only(top: 10, bottom: 35),
       child: Row(
@@ -33,6 +31,16 @@ class EventOrGroupSelectionButton extends StatelessWidget {
                   context.read<PostEditorCubit>().switchEditorMode()),
         ],
       ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<PostEditorCubit, PostEditorState>(
+      builder: (context, state) => state.maybeWhen(
+          editEvent: (_, __) => _content(context, post_type.event),
+          editGroup: (_, __) => _content(context, post_type.recurrent),
+          orElse: () => throw InvalidStateException()),
     );
   }
 }

@@ -1,32 +1,34 @@
+import 'package:equatable/equatable.dart';
 import 'package:fingerfunke_app/cubits/video_upload_cubit/video_upload_cubit.dart';
 import 'package:fingerfunke_app/models/asset/asset.dart';
 import 'package:fingerfunke_app/models/post/post.dart';
-import 'package:flutter/material.dart';
 
 part 'group_editor_fields.dart';
 part 'post_editor_fields.dart';
 
-class GeneralEditorFields {
-  final TextEditingController titleController;
-  final TextEditingController descriptionController;
+class InvalidEditorFieldTypeException implements Exception {}
+
+class GeneralEditorFields extends Equatable {
+  final String title;
+  final String description;
   final post_visibility visibility;
   final List<VideoUploadCubit> videoUploadCubits;
 
-  GeneralEditorFields._(
-      {required this.descriptionController,
-      required this.titleController,
+  const GeneralEditorFields._(
+      {required this.description,
+      required this.title,
       required this.videoUploadCubits,
       required this.visibility});
 
   GeneralEditorFields._createEmpty()
-      : titleController = TextEditingController(),
-        descriptionController = TextEditingController(),
+      : title = "",
+        description = "",
         visibility = post_visibility.visible,
         videoUploadCubits = [];
 
   GeneralEditorFields._fromPost(Post post)
-      : titleController = TextEditingController(text: post.title),
-        descriptionController = TextEditingController(text: post.description),
+      : title = post.title,
+        description = post.description,
         visibility = post.visibility,
         videoUploadCubits = post.media
             .map(
@@ -36,14 +38,29 @@ class GeneralEditorFields {
             )
             .toList();
 
-  GeneralEditorFields _copyWith(
-          {final post_visibility? visibility,
-          final List<VideoUploadCubit>? videoUploadCubits}) =>
-      GeneralEditorFields._(
-          descriptionController: descriptionController,
-          titleController: titleController,
-          videoUploadCubits: videoUploadCubits ?? this.videoUploadCubits,
-          visibility: visibility ?? this.visibility);
+  /// helper function to make copyiing of PostEditorFields and GroupEditorFiels easier
+  /// if we only want to copy values of the GeneralEditorFields class and do not know the instance of [fields]
+  static GeneralEditorFields copyWithHelper(GeneralEditorFields fields,
+      {String? title,
+      String? description,
+      post_visibility? visibility,
+      List<VideoUploadCubit>? videoUploadCubits}) {
+    if (fields is GroupEditorFields) {
+      return fields.copyWith(
+          title: title,
+          description: description,
+          visibility: visibility,
+          videoUploadCubits: videoUploadCubits);
+    } else if (fields is EventEditorFields) {
+      return fields.copyWith(
+          title: title,
+          description: description,
+          visibility: visibility,
+          videoUploadCubits: videoUploadCubits);
+    } else {
+      throw InvalidEditorFieldTypeException();
+    }
+  }
 
   bool _validate() {
     return _validateUploadCubits();
@@ -60,4 +77,8 @@ class GeneralEditorFields {
     }
     return true;
   }
+
+  @override
+  List<Object?> get props =>
+      [title, description, visibility, videoUploadCubits];
 }

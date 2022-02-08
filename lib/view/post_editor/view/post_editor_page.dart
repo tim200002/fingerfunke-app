@@ -71,20 +71,17 @@ class PostEditorPage extends StatelessWidget {
           create: (context) => PostEditorCubit(
               currentUser: user, postToBeEdited: arguments?.post),
           child: BlocBuilder<PostEditorCubit, PostEditorState>(
+              buildWhen: (prev, curr) => prev.runtimeType != curr.runtimeType,
               builder: (context, state) => state.when(
                   loading: () => _loading(context, message: "loading"),
                   editEvent: (fields, inputValid) => PostEditingView(
                         editorFields: fields,
-                        postType: post_type.event,
-                        inputValid: inputValid,
                         isEditingExisitingPost:
                             BlocProvider.of<PostEditorCubit>(context)
                                 .isEditingExistingPost,
                       ),
                   editGroup: (fields, inputValid) => PostEditingView(
                         editorFields: fields,
-                        postType: post_type.recurrent,
-                        inputValid: inputValid,
                         isEditingExisitingPost:
                             BlocProvider.of<PostEditorCubit>(context)
                                 .isEditingExistingPost,

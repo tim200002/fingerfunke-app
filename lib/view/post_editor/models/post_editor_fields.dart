@@ -4,14 +4,14 @@ class EventEditorFields extends GeneralEditorFields {
   final DateTime startTime;
 
   EventEditorFields._(
-      {required TextEditingController descriptionController,
-      required TextEditingController titleController,
+      {required String description,
+      required String title,
       required List<VideoUploadCubit> videoUploadCubits,
       required post_visibility visibility,
       required this.startTime})
       : super._(
-            descriptionController: descriptionController,
-            titleController: titleController,
+            description: description,
+            title: title,
             videoUploadCubits: videoUploadCubits,
             visibility: visibility);
 
@@ -25,18 +25,20 @@ class EventEditorFields extends GeneralEditorFields {
   EventEditorFields.fromGroupEditorFields(GroupEditorFields fields)
       : startTime = DateTime.now(),
         super._(
-            descriptionController: fields.descriptionController,
+            description: fields.description,
             visibility: fields.visibility,
-            titleController: fields.titleController,
+            title: fields.title,
             videoUploadCubits: fields.videoUploadCubits);
 
   EventEditorFields copyWith(
-          {final post_visibility? visibility,
-          final List<VideoUploadCubit>? videoUploadCubits,
-          final DateTime? startTime}) =>
+          {String? title,
+          String? description,
+          post_visibility? visibility,
+          List<VideoUploadCubit>? videoUploadCubits,
+          DateTime? startTime}) =>
       EventEditorFields._(
-          descriptionController: descriptionController,
-          titleController: titleController,
+          description: description ?? this.description,
+          title: title ?? this.title,
           videoUploadCubits: videoUploadCubits ?? this.videoUploadCubits,
           visibility: visibility ?? this.visibility,
           startTime: startTime ?? this.startTime);
@@ -44,4 +46,7 @@ class EventEditorFields extends GeneralEditorFields {
   bool validate() {
     return super._validate();
   }
+
+  @override
+  List<Object?> get props => [...super.props, startTime];
 }

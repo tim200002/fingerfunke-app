@@ -3,20 +3,17 @@ import 'dart:io';
 import 'package:fingerfunke_app/common_widgets/helper_widgets.dart';
 import 'package:fingerfunke_app/common_widgets/upload/video_upload_tile.dart';
 import 'package:fingerfunke_app/cubits/video_upload_cubit/video_upload_cubit.dart';
-
+import 'package:fingerfunke_app/utils/exceptions.dart';
 import 'package:fingerfunke_app/view/post_editor/cubit/post_editor_cubit.dart';
 import 'package:fingerfunke_app/view/video_recorder/view/video_recorder_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/src/provider.dart';
 
 /// Section which handles the upload of videos
 class VideoUploadSection extends StatelessWidget {
-  final List<VideoUploadCubit> uploadCubits;
-  const VideoUploadSection(this.uploadCubits, {Key? key}) : super(key: key);
+  const VideoUploadSection({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
+  Widget _content(List<VideoUploadCubit> uploadCubits, BuildContext context) {
     return InkWell(
       onTap: () async {
         File? video =
@@ -45,6 +42,16 @@ class VideoUploadSection extends StatelessWidget {
                 child: const Center(child: Icon(Icons.add_a_photo_outlined)),
               ),
       ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<PostEditorCubit, PostEditorState>(
+      builder: (context, state) => state.maybeWhen(
+          editEvent: (fields, _) => _content(fields.videoUploadCubits, context),
+          editGroup: (fields, _) => _content(fields.videoUploadCubits, context),
+          orElse: () => throw InvalidStateException()),
     );
   }
 }

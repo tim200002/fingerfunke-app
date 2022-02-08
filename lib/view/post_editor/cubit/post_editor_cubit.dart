@@ -189,8 +189,8 @@ class PostEditorCubit extends Cubit<PostEditorState> {
     if (postToBeEdited == null) {
       final event = Event.createWithId(
           author: currentUser,
-          title: fields.titleController.text,
-          description: fields.descriptionController.text,
+          title: fields.title,
+          description: fields.description,
           visibility: fields.visibility,
           location: "Darmstadt(null)",
           media: _videoUploadCubitsToAssetsHelper(fields.videoUploadCubits),
@@ -199,8 +199,8 @@ class PostEditorCubit extends Cubit<PostEditorState> {
     } else {
       await _postRepository.updatePost(postToBeEdited!.id,
           visibility: fields.visibility,
-          title: fields.titleController.text,
-          description: fields.titleController.text,
+          title: fields.title,
+          description: fields.title,
           media: _videoUploadCubitsToAssetsHelper(fields.videoUploadCubits),
           startTime: fields.startTime);
     }
@@ -214,8 +214,8 @@ class PostEditorCubit extends Cubit<PostEditorState> {
     if (postToBeEdited == null) {
       final group = Group.createWithId(
         author: currentUser,
-        title: fields.titleController.text,
-        description: fields.descriptionController.text,
+        title: fields.title,
+        description: fields.description,
         visibility: fields.visibility,
         location: "Darmstadt(null)",
         media: _videoUploadCubitsToAssetsHelper(fields.videoUploadCubits),
@@ -224,8 +224,8 @@ class PostEditorCubit extends Cubit<PostEditorState> {
     } else {
       await _postRepository.updatePost(postToBeEdited!.id,
           visibility: fields.visibility,
-          title: fields.titleController.text,
-          description: fields.titleController.text,
+          title: fields.title,
+          description: fields.title,
           media: _videoUploadCubitsToAssetsHelper(fields.videoUploadCubits));
     }
   }
