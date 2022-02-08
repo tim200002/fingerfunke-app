@@ -131,7 +131,7 @@ Widget buildLoadedApp(context, _navigator, themeMode) {
     navigatorKey: _navigator,
     theme: AppTheme.mainTheme,
     darkTheme: AppTheme.darkTheme,
-    themeMode: themeMode,
+    themeMode: ThemeMode.light, //TODO change back to themeMode
     debugShowCheckedModeBanner: false,
     onGenerateRoute: (_) => SplashPage.route(),
   );
