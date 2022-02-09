@@ -27,12 +27,14 @@ class PhoneLoginPage extends StatelessWidget {
               right: AppTheme.PADDING_SIDE,
               bottom: 50),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Expanded(
+              //if (MediaQuery.of(context).size.height > 100)
+              /*Expanded(
                 child: Center(
                   child: Illustration(Illustrations.login),
                 ),
-              ),
+              ),*/
               BlocProvider<PhoneLoginCubit>(
                 create: (BuildContext context) => PhoneLoginCubit(),
                 child: BlocBuilder<PhoneLoginCubit, PhoneLoginState>(

@@ -19,7 +19,7 @@ class CameraView extends StatefulWidget {
 class _CameraViewState extends State<CameraView> {
   CameraController? _controller;
   late final List<CameraDescription> _cameras;
-  int _currentCameraIndex = 0;
+  CameraLensDirection _direction = CameraLensDirection.front;
 
   @override
   void initState() {
@@ -32,20 +32,32 @@ class _CameraViewState extends State<CameraView> {
     if (_cameras.isEmpty) {
       throw Exception("There is no available camera");
     }
-    int cameraIndex = _cameras
-        .indexWhere((c) => c.lensDirection == CameraLensDirection.front);
+
+    await setCameraController(_direction);
+  }
+
+  Future<void> setCameraController(CameraLensDirection direction) async {
+    int cameraIndex = _cameras.indexWhere((c) => c.lensDirection == direction);
     if (cameraIndex == -1) {
       widget._logger.i(
-          "There is no front camera available, fallign back to availabe camera");
-      _currentCameraIndex = 0;
+          "There is no $direction camera available, fallign back to availabe camera");
+      cameraIndex = 0;
     }
-
-    _controller = CameraController(
-        _cameras[_currentCameraIndex], ResolutionPreset.max,
-        enableAudio: false);
+    if (_controller != null) {
+      await _controller?.dispose();
+      // ist das setzen eines neuen States hier wirklich nötig?
+      setState(() {
+        _controller = null;
+      });
+    }
+    setState(() {
+      _controller = CameraController(
+          _cameras[cameraIndex], ResolutionPreset.max,
+          enableAudio: false);
+    });
     await _controller!.initialize();
     setState(() {
-      _currentCameraIndex = cameraIndex;
+      _direction = direction;
     });
   }
 
@@ -60,7 +72,7 @@ class _CameraViewState extends State<CameraView> {
 
   Future<void> _toggleFlash() async {
     await _controller?.setFlashMode(
-        _controller!.value.flashMode == FlashMode.off
+        _controller!.value.flashMode != FlashMode.torch
             ? FlashMode.torch
             : FlashMode.off);
 
@@ -68,17 +80,9 @@ class _CameraViewState extends State<CameraView> {
   }
 
   Future<void> _toggleCamera() async {
-    await _controller?.dispose();
-    setState(() {
-      _controller = null;
-    });
-    final int newCameraDirection =
-        (_currentCameraIndex + 1) % min(_cameras.length, 2);
-    _controller = CameraController(
-        _cameras[newCameraDirection], ResolutionPreset.max,
-        enableAudio: false);
-
-    _controller!.initialize().then((value) => setState(() {}));
+    setCameraController(_direction == CameraLensDirection.back
+        ? CameraLensDirection.front
+        : CameraLensDirection.back);
   }
 
   Widget _fullScreenCameraPreview(
@@ -113,14 +117,16 @@ class _CameraViewState extends State<CameraView> {
                           ? const Icon(Icons.timer_3_rounded)
                           : const Icon(Icons.timer_off_rounded)),
                           */
-                      IconButton(
-                          onPressed: () => _toggleFlash(),
-                          icon: _controller!.value.flashMode == FlashMode.torch
-                              ? const Icon(Icons.flash_on_rounded)
-                              : const Icon(Icons.flash_off_rounded)),
+                      if (_direction == CameraLensDirection.back)
+                        IconButton(
+                            onPressed: () => _toggleFlash(),
+                            icon:
+                                _controller!.value.flashMode == FlashMode.torch
+                                    ? const Icon(Icons.flash_on_rounded)
+                                    : const Icon(Icons.flash_off_rounded)),
                       IconButton(
                           onPressed: () => _toggleCamera(),
-                          icon: _currentCameraIndex == 1
+                          icon: _direction == CameraLensDirection.front
                               ? const Icon(Icons.camera_front_rounded)
                               : const Icon(Icons.camera_rear_rounded))
                     ]
