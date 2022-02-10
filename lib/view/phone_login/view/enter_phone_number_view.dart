@@ -4,12 +4,17 @@ import 'package:fingerfunke_app/view/phone_login/cubit/phone_login_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class EnterPhoneNumberView extends StatelessWidget {
-  EnterPhoneNumberView({Key? key}) : super(key: key);
+class EnterPhoneNumberView extends StatefulWidget {
+  const EnterPhoneNumberView({Key? key}) : super(key: key);
 
-  //! This is of course not bloc but its way easier this way
+  @override
+  State<EnterPhoneNumberView> createState() => _EnterPhoneNumberViewState();
+}
+
+class _EnterPhoneNumberViewState extends State<EnterPhoneNumberView> {
   final _phoneInputController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -62,5 +67,11 @@ class EnterPhoneNumberView extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _phoneInputController.dispose();
+    super.dispose();
   }
 }

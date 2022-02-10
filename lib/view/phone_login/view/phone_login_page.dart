@@ -43,7 +43,7 @@ class PhoneLoginPage extends StatelessWidget {
                       previousState.runtimeType != state.runtimeType,
                   builder: (context, state) {
                     return state.map(
-                        enterPhoneNumber: (_) => EnterPhoneNumberView(),
+                        enterPhoneNumber: (_) => const EnterPhoneNumberView(),
                         enterCode: (_) => EnterCodeView(),
                         authenticated: (_) => const AuthenticatedView());
                   },
