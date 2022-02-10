@@ -15,7 +15,7 @@ class CameraView extends StatefulWidget {
   _CameraViewState createState() => _CameraViewState();
 }
 
-class _CameraViewState extends State<CameraView> {
+class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
   CameraController? _controller;
   CameraDescription? _camera;
   late final List<CameraDescription> _cameras;
@@ -23,6 +23,8 @@ class _CameraViewState extends State<CameraView> {
   @override
   void initState() {
     super.initState();
+    // check if null check is valid, I think yes because ensure intitialized in main
+    WidgetsBinding.instance!.addObserver(this);
     _initCamera();
   }
 
@@ -188,6 +190,27 @@ class _CameraViewState extends State<CameraView> {
   @override
   void dispose() {
     _controller?.dispose();
+    WidgetsBinding.instance!.removeObserver(this);
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.inactive) {
+      // App state changed before we got the chance to initialize.
+      if (_controller == null || !_controller!.value.isInitialized) {
+        return;
+      }
+      _controller!.dispose().then((value) {
+        setState(() {
+          _controller = null;
+        });
+        widget._logger
+            .i("App Lifecyle changed to background, realeasing camera");
+      });
+    } else if (state == AppLifecycleState.resumed) {
+      widget._logger.i("App Lifecyle changed to foreground, rebinding camera");
+      _setCameraController(_camera!.lensDirection);
+    }
   }
 }
