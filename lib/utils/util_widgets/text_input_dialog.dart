@@ -55,7 +55,7 @@ class _TextInputDialogState extends State<TextInputDialog> {
 
   Widget _textField(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(13),
+      padding: const EdgeInsets.all(13),
       decoration: BoxDecoration(
           color: Colors.grey.shade100, borderRadius: BorderRadius.circular(10)),
       child: TextField(
