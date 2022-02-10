@@ -71,7 +71,7 @@ class GeneralEditorFields extends Equatable {
       return false;
     }
     for (var cubit in videoUploadCubits) {
-      if (!cubit.hasUploaded()) {
+      if (!cubit.hasUploaded) {
         return false;
       }
     }

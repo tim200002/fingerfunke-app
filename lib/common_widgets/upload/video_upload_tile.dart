@@ -51,12 +51,13 @@ class VideoUploadTile extends StatelessWidget {
     );
   }
 
-  Widget loadingTile(ImageProvider? thumbnail) {
+  Widget loadingTile(ImageProvider? thumbnail, int progress) {
     return SizedBox(
       width: width,
       height: height,
       child: Stack(alignment: Alignment.center, children: [
         getImage(thumbnail),
+        Text(progress.toString()),
         const CircularProgressIndicator(),
         abortButton()
       ]),
@@ -74,7 +75,7 @@ class VideoUploadTile extends StatelessWidget {
     );
   }
 
-  Widget errorTile(ImageProvider? thumbnail, context) {
+  Widget uploadErrorTile(ImageProvider? thumbnail, context) {
     return SizedBox(
       width: width,
       height: height,
@@ -101,11 +102,11 @@ class VideoUploadTile extends StatelessWidget {
     return BlocBuilder<VideoUploadCubit, VideoUploadState>(
       bloc: cubit,
       builder: (context, state) => state.when(
-        initial: () => loadingTile(null),
-        uploading: (_, thumb) => loadingTile(thumb),
-        processing: (_, thumb) => loadingTile(thumb),
+        initial: () => loadingTile(null, 0),
+        uploading: (_, thumb, progress) => loadingTile(thumb, progress),
+        processing: (_, thumb) => loadingTile(thumb, 80),
         uploaded: (thumb, _) => uploadedTile(thumb),
-        error: (error, thumb, _) => errorTile(thumb, context),
+        uploadError: (error, _, thumb) => uploadErrorTile(thumb, context),
       ),
     );
   }

@@ -13,6 +13,7 @@ import 'package:fingerfunke_app/utils/exceptions.dart';
 import 'package:flutter/material.dart';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:logger/logger.dart';
 import 'package:uuid/uuid.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
@@ -28,6 +29,8 @@ class VideoUploadCubit extends Cubit<VideoUploadState> {
   final String id = const Uuid().v4();
 
   final Function? _onVideoUploaded;
+
+  final Logger _logger = Logger();
 
   // needed for uploading
   CancelToken? _cancelToken;
@@ -59,36 +62,55 @@ class VideoUploadCubit extends Cubit<VideoUploadState> {
     _createThumbnailFromNetworkAsset(videoAsset);
   }
 
-  VideoAsset get asset {
-    return state.maybeWhen(
-        uploaded: (_, asset) => asset,
-        orElse: () => throw AssetNotAvailableException());
-  }
-
   /// Retry upload when previous upload failed during upload stage
   ///
   /// Will reuse same Video previously used (if there is one)
   /// if there is no video this funciton will do nothing
   void retryUpload() {
     state.maybeWhen(
-        error: (_, __, video) {
-          if (video != null) {
-            _uploadVideo(video);
-          }
-        },
+        uploadError: (_, video, __) => _uploadVideo(video),
         orElse: () => throw InvalidStateException());
   }
 
+  VideoAsset get asset {
+    return state.maybeWhen(
+        uploaded: (_, asset) => asset,
+        orElse: () => throw AssetNotAvailableException());
+  }
+
   /// did this cubit sucesullfy upload its video
-  bool hasUploaded() {
+  bool get hasUploaded {
     return state.maybeWhen(uploaded: (_, __) => true, orElse: () => false);
+  }
+
+  /// helper function to check wheter current state even allows new upload started
+  ///
+  /// New uploads are only allowed in initial or error state
+  bool get _canUploadVideo {
+    return state.maybeWhen(
+        initial: () => true,
+        uploadError: (_, __, ___) => true,
+        orElse: () => false);
+  }
+
+  bool get _mustCleanUpTemporaryAsset => assetId != null;
+
+  /// return thumbnail information from current state
+  ImageProvider? get thumbail {
+    ImageProvider? thumbnail;
+    state.whenOrNull(
+        uploading: (_, thumb, __) => thumbnail = thumb,
+        processing: (_, thumb) => thumbnail = thumb,
+        uploaded: (thumb, _) => thumbnail = thumb,
+        uploadError: (_, __, thumb) => thumbnail = thumb);
+    return thumbnail;
   }
 
   Future<void> _uploadVideo(File video) async {
     try {
-      if (_canUploadVideo()) {
-        emit(VideoUploadState.uploading(video, thumbail));
-        // To not create new assets when only the upload failed the upload url and asssetId are cached
+      if (_canUploadVideo) {
+        emit(VideoUploadState.uploading(video, thumbail, 0));
+        // To prevent cerating new Asset when only upload failed, the Upload URL and assetIt are cached
         if (uploadUrl == null || assetId == null) {
           await _createAsset();
         }
@@ -100,45 +122,45 @@ class VideoUploadCubit extends Cubit<VideoUploadState> {
           _onVideoUploaded!();
         }
       }
+    } on DioError catch (err) {
+      switch (err.type) {
+        case DioErrorType.cancel:
+          {
+            _logger.i(
+                "Dio Request has been sucessfully cancelled. We will just remain in current state since cubit will be closed any moment");
+            return;
+          }
+        default:
+          {
+            rethrow;
+          }
+      }
     } catch (err) {
-      emit(VideoUploadState.error(err, thumbnail: thumbail));
+      emit(
+        VideoUploadState.uploadError(err, video: video, thumbnail: thumbail),
+      );
     }
   }
 
   /// create Mux Asset and store its values
   Future<void> _createAsset() async {
-    Map<String, dynamic>? assetResponse;
-    try {
-      assetResponse = await _videoRepository.createVideoAsset();
-    } catch (err) {
-      // Todo it would be better if we were able to cancel the cloud function ourselves
-      if (!isClosed) {
-        emit(VideoUploadState.error(err, thumbnail: thumbail));
-      }
+    Map<String, dynamic> assetResponse =
+        await _videoRepository.createVideoAsset();
 
-      rethrow;
-    }
     uploadUrl = assetResponse["uploadUrl"];
     assetId = assetResponse["id"];
   }
 
   /// upload video to Mux
   Future<void> _uploadVideoToMux(File video) async {
-    final uploadResponse = _videoRepository.uploadVideo(video, uploadUrl!);
-    _cancelToken = uploadResponse.cancelToke;
-    try {
-      await uploadResponse.response;
-    } catch (error) {
-      if (error is DioError) {
-        if (error.type == DioErrorType.cancel) {
-          print("dio request has been sucessfully canceled");
-        } else {
-          rethrow;
-        }
-      } else {
-        rethrow;
-      }
-    }
+    emit(VideoUploadState.uploading(video, thumbail, 0));
+    final uploadResponse = _videoRepository.uploadVideo(video, uploadUrl!,
+        onSendProgress: (progress, total) {
+      final int progressScaled = (progress / total * 80).toInt();
+      emit(VideoUploadState.uploading(video, thumbail, progressScaled));
+    });
+    _cancelToken = uploadResponse.cancelToken;
+    await uploadResponse.response;
   }
 
   /// subscribe to a temporary video asset in firestore
@@ -163,14 +185,6 @@ class VideoUploadCubit extends Cubit<VideoUploadState> {
     return completer.future;
   }
 
-  /// helper function to check wheter current state even allows new upload started
-  ///
-  /// New uploads are only allowed in initial or error state
-  bool _canUploadVideo() {
-    return state.maybeWhen(
-        initial: () => true, error: (_, __, ___) => true, orElse: () => false);
-  }
-
   Future<void> _createThumbnailFromVideoFile(File video) async {
     try {
       final Uint8List? thumbnailData =
@@ -179,7 +193,7 @@ class VideoUploadCubit extends Cubit<VideoUploadState> {
           thumbnailData != null ? MemoryImage(thumbnailData) : null;
       _updateThumbnail(thumbnail);
     } catch (err) {
-      print("Could not create thumbnail from video file");
+      _logger.e("Could not create thumbnail from video File");
     }
   }
 
@@ -190,19 +204,8 @@ class VideoUploadCubit extends Cubit<VideoUploadState> {
       final thumbnail = await _mediaCache.getSingleImageFile(downloadUrl);
       _updateThumbnail(thumbnail);
     } catch (err) {
-      print("Could not create thumbnail from Asset");
+      _logger.e("Could not create thumbnail from download URL of Asset");
     }
-  }
-
-  /// return thumbnail information from current state
-  ImageProvider? get thumbail {
-    ImageProvider? thumbnail;
-    state.whenOrNull(
-        uploading: (_, thumb) => thumbnail = thumb,
-        processing: (_, thumb) => thumbnail = thumb,
-        uploaded: (thumb, _) => thumbnail = thumb,
-        error: (_, thumb, __) => thumbnail = thumb);
-    return thumbnail;
   }
 
   /// update thumbnail by reemiiting current state just with updated thmbnail data
@@ -211,23 +214,21 @@ class VideoUploadCubit extends Cubit<VideoUploadState> {
         uploading: (state) => emit(state.copyWith(thumbnail: thumbnail)),
         processing: (state) => emit(state.copyWith(thumbnail: thumbnail)),
         uploaded: (state) => emit(state.copyWith(thumbnail: thumbnail)),
-        error: (state) => emit(state.copyWith(thumbnail: thumbnail)));
+        uploadError: (state) => emit(state.copyWith(thumbnail: thumbnail)));
   }
 
-  bool _mustCleanUpTemporaryAsset() => assetId != null;
-
   @override
-  Future<void> close() {
+  Future<void> close() async {
     _cancelToken?.cancel();
     _assetSubscription?.cancel();
 
-    if (_mustCleanUpTemporaryAsset()) {
+    if (_mustCleanUpTemporaryAsset) {
       _videoRepository
           .deleteTemporaryAsset(assetId!)
-          .then((_) => print("temporary asset deleted from firestore"))
+          .then((_) => _logger.i("temporary asset deleted from firestore"))
           .catchError(
-            (_) => print(
-                "Temporary Video Asset has not been deleted from Firestore"),
+            (_) => _logger
+                .i("Temporary Video Asset has not been deleted from Firestore"),
           );
     }
     return super.close();

@@ -2,12 +2,12 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:fingerfunke_app/models/asset/asset.dart';
-import 'package:fingerfunke_app/models/user/user.dart';
 
 abstract class VideoRepository {
   Future<Map<String, dynamic>> createVideoAsset();
 
-  VideoUploadResponse uploadVideo(File video, String uploadUrl);
+  VideoUploadResponse uploadVideo(File video, String uploadUrl,
+      {Function(int, int)? onSendProgress});
 
   Stream<VideoAsset> subscribeToTemporaryAsset(String id);
 
@@ -15,16 +15,13 @@ abstract class VideoRepository {
 
   String createPlaybackUrl(VideoAsset video);
 
-  String createThumbnailUrl(VideoAsset video,{int? height, int? width, bool smartcrop = false});
+  String createThumbnailUrl(VideoAsset video,
+      {int? height, int? width, bool smartcrop = false});
 }
 
 class VideoUploadResponse {
-  final Stream<int> progress;
-  final CancelToken cancelToke;
+  final CancelToken cancelToken;
   final Future<Response<dynamic>> response;
 
-  VideoUploadResponse(
-      {required this.progress,
-      required this.cancelToke,
-      required this.response});
+  VideoUploadResponse({required this.cancelToken, required this.response});
 }

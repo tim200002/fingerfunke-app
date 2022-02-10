@@ -31,9 +31,9 @@ class VideoRepositoryImpl implements VideoRepository {
   }
 
   @override
-  VideoUploadResponse uploadVideo(File file, String uploadUrl) {
+  VideoUploadResponse uploadVideo(File file, String uploadUrl,
+      {Function(int, int)? onSendProgress}) {
     CancelToken token = CancelToken();
-    final StreamController<int> streamController = StreamController();
     final Options options =
         Options(contentType: lookupMimeType(file.path), headers: {
       'Accept': "*/*",
@@ -44,15 +44,10 @@ class VideoRepositoryImpl implements VideoRepository {
         // ToDo find out if this stream is automatically closes when cancel token invoked
         data: file.openRead(),
         cancelToken: token,
-        options: options, onSendProgress: (int sent, int total) {
-      streamController.add(((sent / total) * 100).toInt());
-      print(((sent / total) * 100).toInt());
-    });
+        options: options,
+        onSendProgress: onSendProgress);
 
-    return VideoUploadResponse(
-        response: response,
-        progress: streamController.stream,
-        cancelToke: token);
+    return VideoUploadResponse(response: response, cancelToken: token);
   }
 
   @override
