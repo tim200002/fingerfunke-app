@@ -17,7 +17,17 @@ class VideoRecorderCubit extends Cubit<VideoRecorderState> {
     emit(VideoRecorderState.viewing(File(file.path)));
   }
 
+  void onCameraPermissionDenied() {
+    emit(const VideoRecorderState.missingPermission());
+  }
+
   void recordNewVideoClip() {
     emit(const VideoRecorderState.camera());
+  }
+
+  @override
+  void onError(Object error, StackTrace stackTrace) {
+    emit(VideoRecorderState.error(error));
+    super.onError(error, stackTrace);
   }
 }

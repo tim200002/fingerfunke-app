@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:fingerfunke_app/utils/tools.dart';
 import 'package:fingerfunke_app/view/video_recorder/view/cubit/video_recorder_cubit.dart';
 import 'package:fingerfunke_app/view/video_recorder/view/widgets/loading_view.dart';
 import 'package:flutter/material.dart';
@@ -32,28 +33,27 @@ class _PlaybackViewState extends State<PlaybackView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.close),
-          onPressed: () =>
-              BlocProvider.of<VideoRecorderCubit>(context).recordNewVideoClip(),
-        ),
-        title: const Text('Preview'),
-      ),
-      floatingActionButton: _controller.value.isInitialized
-          ? FloatingActionButton(
+    return _controller.value.isInitialized
+        ? Scaffold(
+            appBar: AppBar(
+              leading: IconButton(
+                icon: const Icon(Icons.close),
+                onPressed: () => BlocProvider.of<VideoRecorderCubit>(context)
+                    .recordNewVideoClip(),
+              ),
+              title: const Text('Preview'),
+            ),
+            floatingActionButton: FloatingActionButton(
               child: const Icon(Icons.send_rounded),
+              backgroundColor: Theme.of(context).colorScheme.primary,
               onPressed: () {
                 Navigator.of(context).pop(widget.file);
               },
-            )
-          : null,
-      body: _controller.value.isInitialized
-          ? VideoPlayer(_controller)
-          : const LoadingView(),
-      extendBodyBehindAppBar: true,
-    );
+            ),
+            body: VideoPlayer(_controller),
+            extendBodyBehindAppBar: true,
+          )
+        : Tools.loadingScaffold();
   }
 
   @override

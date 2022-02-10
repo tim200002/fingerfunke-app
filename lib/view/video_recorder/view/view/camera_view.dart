@@ -1,11 +1,10 @@
 import 'package:camera/camera.dart';
+import 'package:fingerfunke_app/utils/tools.dart';
 import 'package:fingerfunke_app/view/video_recorder/view/cubit/video_recorder_cubit.dart';
-import 'package:fingerfunke_app/view/video_recorder/view/widgets/loading_view.dart';
 import 'package:fingerfunke_app/view/video_recorder/view/widgets/new_record_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
-import 'dart:math';
 
 class CameraView extends StatefulWidget {
   CameraView({Key? key}) : super(key: key);
@@ -18,8 +17,8 @@ class CameraView extends StatefulWidget {
 
 class _CameraViewState extends State<CameraView> {
   CameraController? _controller;
+  CameraDescription? _camera;
   late final List<CameraDescription> _cameras;
-  CameraLensDirection _direction = CameraLensDirection.front;
 
   @override
   void initState() {
@@ -28,37 +27,71 @@ class _CameraViewState extends State<CameraView> {
   }
 
   Future<void> _initCamera() async {
-    _cameras = await availableCameras();
-    if (_cameras.isEmpty) {
-      throw Exception("There is no available camera");
+    try {
+      _cameras = await availableCameras();
+      if (_cameras.isEmpty) {
+        throw Exception("There is no available camera");
+      }
+    } catch (err, stackTrace) {
+      return BlocProvider.of<VideoRecorderCubit>(context)
+          .onError(err, stackTrace);
     }
 
-    await setCameraController(_direction);
+    await _setCameraController(CameraLensDirection.front);
   }
 
-  Future<void> setCameraController(CameraLensDirection direction) async {
+  Future<void> _setCameraController(CameraLensDirection direction) async {
+    try {
+      final CameraDescription tempCamera =
+          _getCameraDescriptionFromDirection(direction);
+
+      if (_controller != null) {
+        await _controller?.dispose();
+        // ist das setzen eines neuen States hier wirklich nötig?
+        setState(() {
+          _controller = null;
+        });
+      }
+
+      final newController = CameraController(tempCamera, ResolutionPreset.max,
+          enableAudio: false);
+
+      await newController.initialize();
+
+      setState(() {
+        _camera = tempCamera;
+        _controller = newController;
+      });
+    } on CameraException catch (err) {
+      switch (err.code) {
+        case "cameraPermission":
+          {
+            return BlocProvider.of<VideoRecorderCubit>(context)
+                .onCameraPermissionDenied();
+          }
+      }
+      rethrow;
+    } catch (err, stackTrace) {
+      return BlocProvider.of<VideoRecorderCubit>(context)
+          .onError(err, stackTrace);
+    }
+  }
+
+  CameraDescription _getCameraDescriptionFromDirection(
+      CameraLensDirection direction) {
     int cameraIndex = _cameras.indexWhere((c) => c.lensDirection == direction);
     if (cameraIndex == -1) {
-      widget._logger.i(
-          "There is no $direction camera available, fallign back to availabe camera");
-      cameraIndex = 0;
+      if (_camera != null) {
+        widget._logger.i(
+            "There is no $direction camera available, falling back to last used camera");
+        return _camera!;
+      } else {
+        widget._logger.i(
+            "There is no $direction camera available, fallign back to default camera (index 0)");
+        return _cameras[0];
+      }
     }
-    if (_controller != null) {
-      await _controller?.dispose();
-      // ist das setzen eines neuen States hier wirklich nötig?
-      setState(() {
-        _controller = null;
-      });
-    }
-    setState(() {
-      _controller = CameraController(
-          _cameras[cameraIndex], ResolutionPreset.max,
-          enableAudio: false);
-    });
-    await _controller!.initialize();
-    setState(() {
-      _direction = direction;
-    });
+    return _cameras[cameraIndex];
   }
 
   Future<void> _startRecording() async {
@@ -80,7 +113,7 @@ class _CameraViewState extends State<CameraView> {
   }
 
   Future<void> _toggleCamera() async {
-    setCameraController(_direction == CameraLensDirection.back
+    _setCameraController(_camera!.lensDirection == CameraLensDirection.back
         ? CameraLensDirection.front
         : CameraLensDirection.back);
   }
@@ -117,7 +150,7 @@ class _CameraViewState extends State<CameraView> {
                           ? const Icon(Icons.timer_3_rounded)
                           : const Icon(Icons.timer_off_rounded)),
                           */
-                      if (_direction == CameraLensDirection.back)
+                      if (_camera!.lensDirection == CameraLensDirection.back)
                         IconButton(
                             onPressed: () => _toggleFlash(),
                             icon:
@@ -126,7 +159,8 @@ class _CameraViewState extends State<CameraView> {
                                     : const Icon(Icons.flash_off_rounded)),
                       IconButton(
                           onPressed: () => _toggleCamera(),
-                          icon: _direction == CameraLensDirection.front
+                          icon: _camera!.lensDirection ==
+                                  CameraLensDirection.front
                               ? const Icon(Icons.camera_front_rounded)
                               : const Icon(Icons.camera_rear_rounded))
                     ]
@@ -148,7 +182,7 @@ class _CameraViewState extends State<CameraView> {
               child: _fullScreenCameraPreview(context, _controller!),
             ),
           )
-        : const LoadingView();
+        : Tools.loadingScaffold();
   }
 
   @override

@@ -27,4 +27,6 @@ class VideoRecorderState with _$VideoRecorderState {
 
   /// state that allows the viewing of the recorded video
   const factory VideoRecorderState.viewing(File file) = _Viewing;
+
+  const factory VideoRecorderState.missingPermission() = _MissingPermission;
 }

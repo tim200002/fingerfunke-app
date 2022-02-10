@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:fingerfunke_app/view/error/exception_view.dart';
 import 'package:fingerfunke_app/view/video_recorder/view/cubit/video_recorder_cubit.dart';
 import 'package:fingerfunke_app/view/video_recorder/view/view/camera_view.dart';
+import 'package:fingerfunke_app/view/video_recorder/view/view/missing_camera_permission_view.dart';
 import 'package:fingerfunke_app/view/video_recorder/view/view/playback_view.dart';
 
 import 'package:flutter/material.dart';
@@ -51,6 +52,7 @@ class VideoRecorderPage extends StatelessWidget {
           child: Scaffold(
             body: BlocBuilder<VideoRecorderCubit, VideoRecorderState>(
               builder: (context, state) => state.when(
+                missingPermission: () => const MissingCameraPermissionView(),
                 error: ExceptionView.builder,
                 camera: () => CameraView(),
                 viewing: (file) => PlaybackView(file),
