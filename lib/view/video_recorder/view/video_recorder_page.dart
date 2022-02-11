@@ -9,8 +9,6 @@ import 'package:fingerfunke_app/view/video_recorder/view/view/playback_view.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'widgets/loading_view.dart';
-
 /// This is the UI for recording video content within the App. The result will
 /// be passed back through the Navigator as a `File` object.
 /// The Widget allows the user to record, and then view a custom video
@@ -43,22 +41,23 @@ class VideoRecorderPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<VideoRecorderCubit>(
-        create: (context) => VideoRecorderCubit(),
-        child: Theme(
-          data: Theme.of(context).copyWith(
-              appBarTheme: Theme.of(context)
-                  .appBarTheme
-                  .copyWith(foregroundColor: Colors.white)),
-          child: Scaffold(
-            body: BlocBuilder<VideoRecorderCubit, VideoRecorderState>(
-              builder: (context, state) => state.when(
-                missingPermission: () => const MissingCameraPermissionView(),
-                error: ExceptionView.builder,
-                camera: () => CameraView(),
-                viewing: (file) => PlaybackView(file),
-              ),
+      create: (context) => VideoRecorderCubit(),
+      child: Theme(
+        data: Theme.of(context).copyWith(
+            appBarTheme: Theme.of(context)
+                .appBarTheme
+                .copyWith(foregroundColor: Colors.white)),
+        child: Scaffold(
+          body: BlocBuilder<VideoRecorderCubit, VideoRecorderState>(
+            builder: (context, state) => state.when(
+              missingPermission: () => const MissingCameraPermissionView(),
+              error: ExceptionView.builder,
+              camera: () => CameraView(),
+              viewing: (file) => PlaybackView(file),
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
