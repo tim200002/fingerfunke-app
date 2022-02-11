@@ -53,8 +53,14 @@ class PostFeedFilters extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              _eventsGroupsSwitch(),
-              for (String s in ["sport", "kultur", "theater", "relax"])
+              //_eventsGroupsSwitch(),
+              for (String s in [
+                "sport",
+                "kultur",
+                "theater",
+                "relax",
+                "lernen"
+              ])
                 Padding(
                   padding: const EdgeInsets.only(right: 5),
                   child: Container(

@@ -60,7 +60,7 @@ class PostPage extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const SectionHeading('Details'),
+                                  const SectionHeading('Infos'),
                                   post is Event
                                       ? EventDetailSection(post)
                                       : Container(),

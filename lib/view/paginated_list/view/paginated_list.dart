@@ -33,14 +33,14 @@ class PaginatedList<T> extends StatelessWidget {
         super(key: key);
 
   /// if the current element created equals the last element of the list it is clear that we must load new ones
-  /// 
+  ///
   /// If we would have reached end last element is not creation aware, could therefoe never trigger this
   /// ToDo we could look out for a better algorithm which fetches beforehand depending on pagination distance
   bool _shouldLoadNewItems(PaginatedListState<T> state, int currentIndex) {
-    if(state.reachedEnd){
+    if (state.reachedEnd) {
       return false;
     }
-    return currentIndex == state.items.length-1;
+    return currentIndex == state.items.length - 1;
   }
 
   bool _currentElementIsIndicator(PaginatedListState<T> state, int index) {
@@ -55,19 +55,28 @@ class PaginatedList<T> extends StatelessWidget {
     if (state.isLoading) {
       return loadingIndicator;
     } else {
-      return endMessage != null ? Center(child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Container(
-            padding: const EdgeInsets.all(8.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25),
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.25),
-            ),
-            child: Text(endMessage!, style: TextStyle(color: Theme.of(context).colorScheme.background),)),
-      )) : null;
+      return endMessage != null
+          ? Center(
+              child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Container(
+                  padding: const EdgeInsets.all(8.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25),
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onSurface
+                        .withOpacity(0.08),
+                  ),
+                  child: Text(
+                    endMessage!,
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.onBackground),
+                  )),
+            ))
+          : null;
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +93,7 @@ class PaginatedList<T> extends StatelessWidget {
             // if yes shown indicator
             if (_currentElementIsIndicator(state, index)) {
               return _createIndicator(state, context) ?? Container();
-            } 
+            }
             // if not create element
             else {
               return CreationAwareWidget(

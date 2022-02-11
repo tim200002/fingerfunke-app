@@ -102,34 +102,29 @@ class HeaderSection extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 5),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  if (!isParticipant) ...[
-                    isLoggedIn
-                        ? ElevatedButtonWithWidgetLeft(
-                            text: "Ich komme",
-                            widget: !isJoining
-                                ? const Icon(Icons.add)
-                                : const CircularProgressIndicator(),
-                            onPressed: () => BlocProvider.of<PostCubit>(context)
-                                .joinPost()
-                                .catchError(
-                                  (_) => Tools.showSnackbar(
-                                      context, "Oops something went wrong"),
-                                ),
-                          )
-                        : const ElevatedButtonWithWidgetLeft(
-                            text: "Ich komme",
-                            widget: Icon(Icons.add),
-                            onPressed: null),
-                    Center(
-                      child: IconButton(
-                        onPressed: () => {},
-                        //TODO change to filled icon when date is bookmarked
-                        icon: const Icon(Icons.bookmark_border_rounded),
-                      ),
-                    )
-                  ],
+                  ElevatedButtonWithWidgetLeft(
+                    text: isParticipant ? "Ich bin dabei" : "Ich komme",
+                    widget: !isJoining
+                        ? Icon(isParticipant ? Icons.check : Icons.add)
+                        : const CircularProgressIndicator(),
+                    onPressed: !isLoggedIn || isParticipant
+                        ? null
+                        : () => BlocProvider.of<PostCubit>(context)
+                            .joinPost()
+                            .catchError(
+                              (_) => Tools.showSnackbar(
+                                  context, "Oops something went wrong"),
+                            ),
+                  ),
+                  Center(
+                    child: IconButton(
+                      onPressed: () => {},
+                      //TODO change to filled icon when date is bookmarked
+                      icon: const Icon(Icons.bookmark_border_rounded),
+                    ),
+                  )
                 ],
               ),
             ),

@@ -23,17 +23,26 @@ class HomeView extends StatelessWidget {
   }
 
   Widget _bottomNavItem(BuildContext context,
-      {required String title, required IconData icon}) {
+      {required String title, required IconData icon, bool selected = false}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           IconButton(
-            icon: Icon(icon),
-            onPressed: () => DevTools.showToDoSnackbar(context),
+            icon: Icon(
+              icon,
+              color: selected ? null : Colors.grey[500],
+            ),
+            onPressed:
+                selected ? () {} : () => DevTools.showToDoSnackbar(context),
           ),
-          //Text(title),
+          Text(
+            title,
+            style: TextStyle(
+                fontWeight: selected ? FontWeight.bold : null,
+                color: selected ? null : Colors.grey[700]),
+          ),
         ],
       ),
     );
@@ -73,11 +82,13 @@ class HomeView extends StatelessWidget {
           //children inside bottom appbar
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            _bottomNavItem(context, title: "Events", icon: Icons.home),
+            _bottomNavItem(context,
+                title: "Events",
+                icon: Icons.local_activity_rounded,
+                selected: true),
             //_bottomNavItem(context,
             //    title: "Events", icon: Icons.favorite_rounded),
-            _bottomNavItem(context,
-                title: "Gruppen", icon: Icons.account_circle),
+            _bottomNavItem(context, title: "Gruppen", icon: Icons.groups),
           ],
         ),
       ),
