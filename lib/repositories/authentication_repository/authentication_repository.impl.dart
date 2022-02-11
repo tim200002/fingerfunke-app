@@ -3,17 +3,8 @@ part of 'authetication_repository.dart';
 class AuthenticaionRepositoryImpl implements AutheticationRepository {
   final FirebaseAuth _firebaseAuth;
 
-  final StreamController<SIGN_IN_STATE> _signInStateStreamController =
-      StreamController<SIGN_IN_STATE>.broadcast();
-
   AuthenticaionRepositoryImpl({FirebaseAuth? firebaseAuth})
-      : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance {
-    // Subscribe to changes in users signe in state
-    _firebaseAuth.authStateChanges().listen((_) {
-      final SIGN_IN_STATE signInState = getSignInState();
-      _signInStateStreamController.add(signInState);
-    });
-  }
+      : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
 
   @override
   Future<void> signInAnonymously() async {
@@ -66,13 +57,7 @@ class AuthenticaionRepositoryImpl implements AutheticationRepository {
   @override
   SIGN_IN_STATE getSignInState() {
     User? currentUser = _firebaseAuth.currentUser;
-    if (currentUser == null) {
-      return SIGN_IN_STATE.unauthenticated;
-    } else if (currentUser.isAnonymous) {
-      return SIGN_IN_STATE.signedInAnonymously;
-    } else {
-      return SIGN_IN_STATE.signedIn;
-    }
+    return _mapUserToSignInState(currentUser);
   }
 
   @override
@@ -83,6 +68,18 @@ class AuthenticaionRepositoryImpl implements AutheticationRepository {
 
   @override
   Stream<SIGN_IN_STATE> getSignInStateStream() {
-    return _signInStateStreamController.stream;
+    return _firebaseAuth
+        .authStateChanges()
+        .map((user) => _mapUserToSignInState(user));
+  }
+
+  SIGN_IN_STATE _mapUserToSignInState(User? user) {
+    if (user == null) {
+      return SIGN_IN_STATE.unauthenticated;
+    } else if (user.isAnonymous) {
+      return SIGN_IN_STATE.signedInAnonymously;
+    } else {
+      return SIGN_IN_STATE.signedIn;
+    }
   }
 }

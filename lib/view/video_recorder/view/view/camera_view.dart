@@ -47,23 +47,21 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
       final CameraDescription tempCamera =
           _getCameraDescriptionFromDirection(direction);
 
-      if (_controller != null) {
-        await _controller?.dispose();
-        // ist das setzen eines neuen States hier wirklich nötig?
-        setState(() {
-          _controller = null;
-        });
-      }
-
-      final newController = CameraController(tempCamera, ResolutionPreset.max,
+      final CameraController? _oldController = _controller;
+      final CameraController newController = CameraController(
+          tempCamera, ResolutionPreset.medium,
           enableAudio: false);
-
-      await newController.initialize();
-
       setState(() {
         _camera = tempCamera;
         _controller = newController;
       });
+
+      if (_oldController != null) {
+        await _oldController.dispose();
+      }
+
+      await newController.initialize();
+      setState(() {});
     } on CameraException catch (err) {
       switch (err.code) {
         case "cameraPermission":
@@ -189,22 +187,19 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
 
   @override
   void dispose() {
-    _controller?.dispose();
     WidgetsBinding.instance!.removeObserver(this);
+    _controller?.dispose().then((value) => widget._logger.i("Camera Disposed"));
+
     super.dispose();
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (_controller == null || !_controller!.value.isInitialized) {
+      return;
+    }
     if (state == AppLifecycleState.inactive) {
-      // App state changed before we got the chance to initialize.
-      if (_controller == null || !_controller!.value.isInitialized) {
-        return;
-      }
-      _controller!.dispose().then((value) {
-        setState(() {
-          _controller = null;
-        });
+      _controller!.dispose().then((_) {
         widget._logger
             .i("App Lifecyle changed to background, realeasing camera");
       });
