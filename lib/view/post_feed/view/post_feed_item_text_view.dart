@@ -75,7 +75,7 @@ class PostFeedItem extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(
           imageWidth - leftOffset + padding, padding, padding, padding),
       decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(14)),
+          color: Colors.grey[300], borderRadius: BorderRadius.circular(14)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -96,12 +96,16 @@ class PostFeedItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 15),
       child: InkWell(
-          onTap: () =>
-              Navigator.pushNamed(context, postRoute, arguments: _post.id),
-          child: Stack(alignment: Alignment.centerLeft, children: [
+        onTap: () =>
+            Navigator.pushNamed(context, postRoute, arguments: _post.id),
+        child: Stack(
+          alignment: Alignment.centerLeft,
+          children: [
             _contentSection(context),
             _imageSection(context),
-          ])),
+          ],
+        ),
+      ),
     );
   }
 }

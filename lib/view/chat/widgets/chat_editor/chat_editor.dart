@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fingerfunke_app/utils/type_aliases.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ChatEditor extends StatelessWidget {
+class ChatEditor extends StatefulWidget {
   final FirestoreId postId;
   final User author;
 
@@ -13,14 +13,21 @@ class ChatEditor extends StatelessWidget {
       : super(key: key);
 
   @override
+  State<ChatEditor> createState() => _ChatEditorState();
+}
+
+class _ChatEditorState extends State<ChatEditor> {
+  final TextEditingController _controller = TextEditingController();
+  @override
   Widget build(BuildContext context) {
     return BlocProvider<ChatEditorCubit>(
-      create: (_) => ChatEditorCubit(postId: postId, author: author),
-      child: Builder(builder: (context) {
-        final ChatEditorCubit chatEditorCubit =
-            BlocProvider.of<ChatEditorCubit>(context);
-        return BlocBuilder<ChatEditorCubit, ChatEditorState>(
-          builder: (context, state) => Padding(
+      create: (context) =>
+          ChatEditorCubit(postId: widget.postId, author: widget.author),
+      child: Builder(
+        builder: (context) {
+          final ChatEditorCubit chatEditorCubit =
+              BlocProvider.of<ChatEditorCubit>(context);
+          return Padding(
             padding: const EdgeInsets.only(left: 8.0, bottom: 8.0, top: 8.0),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -35,30 +42,44 @@ class ChatEditor extends StatelessWidget {
                       minLines: 1,
                       maxLines: 6,
                       textCapitalization: TextCapitalization.sentences,
-                      controller: state.controller,
+                      controller: _controller,
                       decoration: const InputDecoration(
                         contentPadding:
                             EdgeInsets.symmetric(vertical: 9, horizontal: 25),
                         border: InputBorder.none,
                         hintText: "neue Nachricht",
                       ),
-                      onChanged: (_) => chatEditorCubit.validateInput(),
+                      onChanged: (value) =>
+                          chatEditorCubit.validateMessage(value),
                     ),
                   ),
                 ),
-                IconButton(
-                  onPressed: state.isValid
-                      ? () => chatEditorCubit.postMessage().onError((_, __) =>
-                          Tools.showSnackbar(context,
-                              "Sorry wir konnten deine Nachricht leider nicht absenden"))
-                      : null,
-                  icon: Icon(Icons.send_rounded, color: Theme.of(context).colorScheme.primary,),
-                ),
+                BlocBuilder<ChatEditorCubit, ChatEditorState>(
+                  builder: (context, state) => IconButton(
+                    onPressed: state.isValid
+                        ? () => chatEditorCubit
+                            .postMessage(_controller.text)
+                            .then((_) => _controller.clear())
+                            .onError((_, __) => Tools.showSnackbar(context,
+                                "Sorry wir konnten deine Nachricht leider nicht absenden"))
+                        : null,
+                    icon: Icon(
+                      Icons.send_rounded,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                )
               ],
             ),
-          ),
-        );
-      }),
+          );
+        },
+      ),
     );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }

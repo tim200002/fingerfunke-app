@@ -7,6 +7,7 @@ import 'package:fingerfunke_app/cubits/authentication_cubit/authentication_cubit
 import 'package:fingerfunke_app/cubits/settings_cubit/settings_cubit.dart';
 import 'package:fingerfunke_app/repositories/settings_repository/settings_repository.dart';
 import 'package:fingerfunke_app/routes.dart';
+import 'package:fingerfunke_app/services/authentication/authentication_service.dart';
 import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:fingerfunke_app/view/create_account/view/create_account_view.dart';
 import 'package:fingerfunke_app/view/splash/view/splash_page.dart';
@@ -22,7 +23,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
   await Firebase.initializeApp();
-
   final Logger _logger = Logger();
 
   // choose envrionment
@@ -31,10 +31,15 @@ void main() async {
       {
         _logger.i("Using local environment");
         Logger.level = Level.debug;
-        await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
-        FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
+        String? emulatorIp = dotenv.env['EMULATOR_IP'];
+        if (emulatorIp == null) {
+          _logger.e("No IP for Emulator provided, falling back to localhost ");
+          emulatorIp = "localhost";
+        }
+        await FirebaseAuth.instance.useAuthEmulator(emulatorIp, 9099);
+        FirebaseFirestore.instance.useFirestoreEmulator(emulatorIp, 8080);
         FirebaseFunctions.instanceFor(region: 'europe-west3')
-            .useFunctionsEmulator('localhost', 5001);
+            .useFunctionsEmulator(emulatorIp, 5001);
         break;
       }
     case 'production':
@@ -78,10 +83,15 @@ class AppInflater extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AuthenticationService authService = AuthenticationService();
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => AuthenticationCubit(),
+          create: (context) => AuthenticationCubit()
+            // here to keep the Authentication Service always up to date with the cubit
+            // cubit is always source of truth
+            ..connectListener((authState) =>
+                authService.onAuthenticationStateChanged(authState)),
         ),
         BlocProvider(
           create: (context) => SettingsCubit(SettingsRepositoryImpl()),
@@ -121,7 +131,7 @@ Widget buildLoadedApp(context, _navigator, themeMode) {
     navigatorKey: _navigator,
     theme: AppTheme.mainTheme,
     darkTheme: AppTheme.darkTheme,
-    themeMode: themeMode,
+    themeMode: ThemeMode.light, //TODO change back to themeMode
     debugShowCheckedModeBanner: false,
     onGenerateRoute: (_) => SplashPage.route(),
   );

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:fingerfunke_app/models/user/user.dart';
 import 'package:fingerfunke_app/repositories/authentication_repository/authetication_repository.dart';
@@ -12,6 +14,8 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
   final AutheticationRepository _autheticationRepository;
   final UserRepository _userRepository;
 
+  StreamSubscription? _authenticationStreamListener;
+
   final List<Function(AuthenticationState)> _listeners = [];
 
   AuthenticationCubit(
@@ -24,10 +28,9 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     forceNewState();
 
     // subscribe to changes in the authentication state
-    _autheticationRepository
+    _authenticationStreamListener = _autheticationRepository
         .getSignInStateStream()
         .listen((SIGN_IN_STATE signInState) async {
-      //! ToDo Error Handling
       AuthenticationState authenticationState =
           await _mapSignInStateToState(signInState);
       emit(authenticationState);
@@ -35,9 +38,9 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     });
   }
 
-  /// It is not possible to use a bloc listener to listen to state changes in pur specific case
+  /// It is not possible to use a bloc listener to listen to state changes in our specific case
   /// a bloc listener would miss some state changes
-  /// Therfore we provide out listeners to the bloc [onNewState] and with every state change
+  /// Therfore we provide our listeners to the bloc [onNewState] and with every state change
   /// we call these listeners ourself
   ///
   /// ToDo Can this be solved a better way
@@ -97,5 +100,11 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
           }
         }
     }
+  }
+
+  @override
+  Future<void> close() {
+    _authenticationStreamListener?.cancel();
+    return super.close();
   }
 }

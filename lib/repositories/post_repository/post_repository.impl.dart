@@ -1,17 +1,24 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
+import 'package:fingerfunke_app/models/asset/asset.dart';
 import 'package:fingerfunke_app/models/post/post.dart';
-import 'package:fingerfunke_app/models/user/user.dart';
+import 'package:fingerfunke_app/models/utils.dart';
 import 'package:fingerfunke_app/repositories/post_repository/post_repository.dart';
 import 'package:fingerfunke_app/utils/type_aliases.dart';
+import 'dart:convert';
 
 class PostRepositoryImpl implements PostRepository {
   final FirebaseFirestore _firestore;
+  final FirebaseFunctions _functions;
   late final CollectionReference _postCollection;
 
-  PostRepositoryImpl({FirebaseFirestore? firestore})
-      : _firestore = firestore ?? FirebaseFirestore.instance {
+  PostRepositoryImpl(
+      {FirebaseFirestore? firestore, FirebaseFunctions? functions})
+      : _firestore = firestore ?? FirebaseFirestore.instance,
+        _functions =
+            functions ?? FirebaseFunctions.instanceFor(region: 'europe-west3') {
     _postCollection = _firestore.collection('posts');
   }
 
@@ -38,7 +45,41 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Future<void> joinPost({required Post post, required UserInfo user})async{
-    
+  Future<void> updatePost(FirestoreId postId,
+      {post_visibility? visibility,
+      String? title,
+      String? description,
+      String? location,
+      List<Asset>? media,
+      DateTime? startTime}) async {
+    final Map<String, dynamic> updateMap = {
+      'visibility':
+          visibility != null ? postVisibilityEnumMap[visibility] : null,
+      'title': title,
+      'description': description,
+      'location': location,
+      'media': media?.map((asset) => asset.toJson()).toList(),
+      'startTime': startTime != null ? dateToJson(startTime) : null
+    }..removeWhere((key, value) => value == null);
+
+    _postCollection.doc(postId).update(updateMap);
+  }
+
+  @override
+  Future<Post> joinPost({required FirestoreId postId}) async {
+    HttpsCallable callable = _functions.httpsCallable('post-joinPost');
+    final resp = await callable.call(postId);
+
+    final updatedPostResult = Post.fromJson(json.decode(resp.data));
+    return updatedPostResult;
+  }
+
+  @override
+  Future<Post> leavePost({required FirestoreId postId}) async {
+    HttpsCallable callable = _functions.httpsCallable('post-leavePost');
+    final resp = await callable.call(postId);
+
+    final updatedPostResult = Post.fromJson(resp.data());
+    return updatedPostResult;
   }
 }

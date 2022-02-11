@@ -17,10 +17,8 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$ChatEditorStateTearOff {
   const _$ChatEditorStateTearOff();
 
-  _ChatEditorState call(
-      {required TextEditingController controller, bool isValid = false}) {
+  _ChatEditorState call({bool isValid = false}) {
     return _ChatEditorState(
-      controller: controller,
       isValid: isValid,
     );
   }
@@ -31,7 +29,6 @@ const $ChatEditorState = _$ChatEditorStateTearOff();
 
 /// @nodoc
 mixin _$ChatEditorState {
-  TextEditingController get controller => throw _privateConstructorUsedError;
   bool get isValid => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -44,7 +41,7 @@ abstract class $ChatEditorStateCopyWith<$Res> {
   factory $ChatEditorStateCopyWith(
           ChatEditorState value, $Res Function(ChatEditorState) then) =
       _$ChatEditorStateCopyWithImpl<$Res>;
-  $Res call({TextEditingController controller, bool isValid});
+  $Res call({bool isValid});
 }
 
 /// @nodoc
@@ -58,14 +55,9 @@ class _$ChatEditorStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? controller = freezed,
     Object? isValid = freezed,
   }) {
     return _then(_value.copyWith(
-      controller: controller == freezed
-          ? _value.controller
-          : controller // ignore: cast_nullable_to_non_nullable
-              as TextEditingController,
       isValid: isValid == freezed
           ? _value.isValid
           : isValid // ignore: cast_nullable_to_non_nullable
@@ -81,7 +73,7 @@ abstract class _$ChatEditorStateCopyWith<$Res>
           _ChatEditorState value, $Res Function(_ChatEditorState) then) =
       __$ChatEditorStateCopyWithImpl<$Res>;
   @override
-  $Res call({TextEditingController controller, bool isValid});
+  $Res call({bool isValid});
 }
 
 /// @nodoc
@@ -97,14 +89,9 @@ class __$ChatEditorStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? controller = freezed,
     Object? isValid = freezed,
   }) {
     return _then(_ChatEditorState(
-      controller: controller == freezed
-          ? _value.controller
-          : controller // ignore: cast_nullable_to_non_nullable
-              as TextEditingController,
       isValid: isValid == freezed
           ? _value.isValid
           : isValid // ignore: cast_nullable_to_non_nullable
@@ -116,17 +103,15 @@ class __$ChatEditorStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_ChatEditorState implements _ChatEditorState {
-  const _$_ChatEditorState({required this.controller, this.isValid = false});
+  const _$_ChatEditorState({this.isValid = false});
 
-  @override
-  final TextEditingController controller;
   @JsonKey(defaultValue: false)
   @override
   final bool isValid;
 
   @override
   String toString() {
-    return 'ChatEditorState(controller: $controller, isValid: $isValid)';
+    return 'ChatEditorState(isValid: $isValid)';
   }
 
   @override
@@ -134,13 +119,11 @@ class _$_ChatEditorState implements _ChatEditorState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _ChatEditorState &&
-            (identical(other.controller, controller) ||
-                other.controller == controller) &&
             (identical(other.isValid, isValid) || other.isValid == isValid));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, controller, isValid);
+  int get hashCode => Object.hash(runtimeType, isValid);
 
   @JsonKey(ignore: true)
   @override
@@ -149,12 +132,8 @@ class _$_ChatEditorState implements _ChatEditorState {
 }
 
 abstract class _ChatEditorState implements ChatEditorState {
-  const factory _ChatEditorState(
-      {required TextEditingController controller,
-      bool isValid}) = _$_ChatEditorState;
+  const factory _ChatEditorState({bool isValid}) = _$_ChatEditorState;
 
-  @override
-  TextEditingController get controller;
   @override
   bool get isValid;
   @override

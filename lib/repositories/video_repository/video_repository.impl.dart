@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:fingerfunke_app/models/asset/asset.dart';
-import 'package:fingerfunke_app/models/user/user.dart';
 import 'package:fingerfunke_app/repositories/video_repository/video_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:mime/mime.dart';
@@ -32,9 +31,9 @@ class VideoRepositoryImpl implements VideoRepository {
   }
 
   @override
-  VideoUploadResponse uploadVideo(File file, String uploadUrl) {
+  VideoUploadResponse uploadVideo(File file, String uploadUrl,
+      {Function(int, int)? onSendProgress}) {
     CancelToken token = CancelToken();
-    final StreamController<int> streamController = StreamController();
     final Options options =
         Options(contentType: lookupMimeType(file.path), headers: {
       'Accept': "*/*",
@@ -45,15 +44,10 @@ class VideoRepositoryImpl implements VideoRepository {
         // ToDo find out if this stream is automatically closes when cancel token invoked
         data: file.openRead(),
         cancelToken: token,
-        options: options, onSendProgress: (int sent, int total) {
-      streamController.add(((sent / total) * 100).toInt());
-      print(((sent / total) * 100).toInt());
-    });
+        options: options,
+        onSendProgress: onSendProgress);
 
-    return VideoUploadResponse(
-        response: response,
-        progress: streamController.stream,
-        cancelToke: token);
+    return VideoUploadResponse(response: response, cancelToken: token);
   }
 
   @override
@@ -75,16 +69,17 @@ class VideoRepositoryImpl implements VideoRepository {
   }
 
   @override
-  String createThumbnailUrl(VideoAsset video, {int? height, int? width, bool smartcrop = false}) {
+  String createThumbnailUrl(VideoAsset video,
+      {int? height, int? width, bool smartcrop = false}) {
     String url = "https://image.mux.com/${video.playbackId}/thumbnail.jpg?";
-    if(height!=null){
-      url+="height=$height&";
+    if (height != null) {
+      url += "height=$height&";
     }
-    if(width!=null){
-      url+="width=$width&";
+    if (width != null) {
+      url += "width=$width&";
     }
-    if(smartcrop){
-      url+="fit_mode=smartcrop&";
+    if (smartcrop) {
+      url += "fit_mode=smartcrop&";
     }
     return url;
   }

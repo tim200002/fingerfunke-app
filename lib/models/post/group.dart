@@ -1,18 +1,18 @@
 part of 'post.dart';
 
 class Group extends Post {
-
-  const Group(
-      {required FirestoreId id,
-      required UserInfo author,
-      required String title,
-      required String description,
-      required DateTime creationTime,
-      required post_visibility visibility,
-      required String location,
-      //required this.postPlace,
-      required List<Asset> media,})
-      : super._(
+  const Group({
+    required FirestoreId id,
+    required UserInfo author,
+    required String title,
+    required String description,
+    required DateTime creationTime,
+    required post_visibility visibility,
+    required String location,
+    //required this.postPlace,
+    required List<Asset> media,
+    required List<UserInfo> participants,
+  }) : super._(
             id: id,
             type: post_type.recurrent,
             author: author,
@@ -21,7 +21,8 @@ class Group extends Post {
             creationTime: creationTime,
             visibility: visibility,
             location: location,
-            media: media);
+            media: media,
+            participants: participants);
 
   @override
   Map<String, dynamic> toJson() {
@@ -32,9 +33,10 @@ class Group extends Post {
       "type": _postTypeEnumMap[type],
       "title": title,
       "description": description,
-      "visibility": _postVisibilityEnumMap[visibility],
+      "visibility": postVisibilityEnumMap[visibility],
       "location": location,
       "media": media.map((e) => e.toJson()).toList(),
+      "participants": participants.map((user) => user.toJson()).toList(),
     };
   }
 
@@ -45,35 +47,41 @@ class Group extends Post {
       author: UserInfo.fromJson(map["author"] as Map<String, dynamic>),
       title: map["title"] as String,
       description: map["description"] as String,
-      visibility: $enumDecode(_postVisibilityEnumMap, map["visibility"]),
+      visibility: $enumDecode(postVisibilityEnumMap, map["visibility"]),
       location: map["location"] as String,
       media: (map['media'] as List<dynamic>)
           .map((e) => Asset.fromJson(e as Map<String, dynamic>))
           .toList(),
+      participants: (map["participants"] as List<dynamic>)
+          .map((participant) =>
+              UserInfo.fromJson(participant as Map<String, dynamic>))
+          .toList(),
     );
   }
-  
+
   factory Group.fromDoc(DocumentSnapshot document) =>
       Group.fromJson(documentSnaphsotToJson(document));
 
-  factory Group.createWithId(
-      {required UserInfo author,
-      required String title,
-      required String description,
-      required post_visibility visibility,
-      required String location,
-      //required GeoHash postPlace,
-      required List<Asset> media,
-      required DateTime startTime}) =>
-  Group(
-      id: const Uuid().v4(),
-      author: author,
-      title: title,
-      description: description,
-      creationTime: DateTime.now(),
-      visibility: visibility,
-      location: location,
-      media: media);
+  factory Group.createWithId({
+    required UserInfo author,
+    required String title,
+    required String description,
+    required post_visibility visibility,
+    required String location,
+    //required GeoHash postPlace,
+    required List<Asset> media,
+  }) =>
+      Group(
+        id: const Uuid().v4(),
+        author: author,
+        title: title,
+        description: description,
+        creationTime: DateTime.now(),
+        visibility: visibility,
+        location: location,
+        media: media,
+        participants: [author],
+      );
 
   @override
   List<Object> get props => [

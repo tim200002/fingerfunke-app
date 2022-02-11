@@ -4,35 +4,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class VideoUploadTile extends StatelessWidget {
-  final Function(String) onAbort;
   final double height;
   final double width;
 
   final VideoUploadCubit cubit;
 
+  final Function(String) onDelete;
+
   static const double abortButtonRadius = 20;
 
   const VideoUploadTile(
       {required this.cubit,
-      required this.onAbort,
       required this.width,
       required this.height,
+      required this.onDelete,
       Key? key})
       : super(key: key);
 
   Widget abortButton() {
     return Align(
       alignment: Alignment.topRight,
-      child: /*Container(
-        margin: EdgeInsets.all(5),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: Colors.green,
-        ),
-        child: */
-          IconButton(
+      child: IconButton(
         padding: const EdgeInsets.all(10),
-        onPressed: () => onAbort(cubit.id),
+        onPressed: () => onDelete(cubit.id),
         icon: const Icon(
           Icons.close_rounded,
         ),
@@ -57,12 +51,13 @@ class VideoUploadTile extends StatelessWidget {
     );
   }
 
-  Widget loadingTile(ImageProvider? thumbnail) {
+  Widget loadingTile(ImageProvider? thumbnail, int progress) {
     return SizedBox(
       width: width,
       height: height,
       child: Stack(alignment: Alignment.center, children: [
         getImage(thumbnail),
+        Text(progress.toString()),
         const CircularProgressIndicator(),
         abortButton()
       ]),
@@ -80,7 +75,7 @@ class VideoUploadTile extends StatelessWidget {
     );
   }
 
-  Widget errorTile(ImageProvider? thumbnail, context) {
+  Widget uploadErrorTile(ImageProvider? thumbnail, context) {
     return SizedBox(
       width: width,
       height: height,
@@ -107,11 +102,11 @@ class VideoUploadTile extends StatelessWidget {
     return BlocBuilder<VideoUploadCubit, VideoUploadState>(
       bloc: cubit,
       builder: (context, state) => state.when(
-        initial: () => loadingTile(null),
-        uploading: (_, thumb) => loadingTile(thumb),
-        processing: (_, thumb) => loadingTile(thumb),
+        initial: () => loadingTile(null, 0),
+        uploading: (_, thumb, progress) => loadingTile(thumb, progress),
+        processing: (_, thumb) => loadingTile(thumb, 80),
         uploaded: (thumb, _) => uploadedTile(thumb),
-        error: (error, thumb, _) => errorTile(thumb, context),
+        uploadError: (error, _, thumb) => uploadErrorTile(thumb, context),
       ),
     );
   }

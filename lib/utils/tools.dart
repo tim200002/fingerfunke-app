@@ -17,6 +17,15 @@ class Tools {
       );
   }
 
+  static loadingScaffold({bool? withAppBar}) {
+    return Scaffold(
+      appBar: withAppBar == true ? AppBar() : null,
+      body: const Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+  }
+
   static String dateFromEpoch(int epoch) {
     return DateFormat('dd.MM.yyyy')
         .format(DateTime.fromMillisecondsSinceEpoch(epoch));

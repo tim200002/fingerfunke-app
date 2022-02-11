@@ -21,10 +21,12 @@ class _$VideoUploadStateTearOff {
     return const _Initial();
   }
 
-  _Uploading uploading(File video, ImageProvider<Object>? thumbnail) {
+  _Uploading uploading(
+      File video, ImageProvider<Object>? thumbnail, int progress) {
     return _Uploading(
       video,
       thumbnail,
+      progress,
     );
   }
 
@@ -42,11 +44,12 @@ class _$VideoUploadStateTearOff {
     );
   }
 
-  _Error error(Object error, {ImageProvider<Object>? thumbnail, File? video}) {
-    return _Error(
+  _UploadError uploadError(Object error,
+      {required File video, ImageProvider<Object>? thumbnail}) {
+    return _UploadError(
       error,
-      thumbnail: thumbnail,
       video: video,
+      thumbnail: thumbnail,
     );
   }
 }
@@ -59,7 +62,8 @@ mixin _$VideoUploadState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(File video, ImageProvider<Object>? thumbnail)
+    required TResult Function(
+            File video, ImageProvider<Object>? thumbnail, int progress)
         uploading,
     required TResult Function(File video, ImageProvider<Object>? thumbnail)
         processing,
@@ -67,32 +71,36 @@ mixin _$VideoUploadState {
             ImageProvider<Object>? thumbnail, VideoAsset asset)
         uploaded,
     required TResult Function(
-            Object error, ImageProvider<Object>? thumbnail, File? video)
-        error,
+            Object error, File video, ImageProvider<Object>? thumbnail)
+        uploadError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(File video, ImageProvider<Object>? thumbnail)? uploading,
+    TResult Function(
+            File video, ImageProvider<Object>? thumbnail, int progress)?
+        uploading,
     TResult Function(File video, ImageProvider<Object>? thumbnail)? processing,
     TResult Function(ImageProvider<Object>? thumbnail, VideoAsset asset)?
         uploaded,
     TResult Function(
-            Object error, ImageProvider<Object>? thumbnail, File? video)?
-        error,
+            Object error, File video, ImageProvider<Object>? thumbnail)?
+        uploadError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(File video, ImageProvider<Object>? thumbnail)? uploading,
+    TResult Function(
+            File video, ImageProvider<Object>? thumbnail, int progress)?
+        uploading,
     TResult Function(File video, ImageProvider<Object>? thumbnail)? processing,
     TResult Function(ImageProvider<Object>? thumbnail, VideoAsset asset)?
         uploaded,
     TResult Function(
-            Object error, ImageProvider<Object>? thumbnail, File? video)?
-        error,
+            Object error, File video, ImageProvider<Object>? thumbnail)?
+        uploadError,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -102,7 +110,7 @@ mixin _$VideoUploadState {
     required TResult Function(_Uploading value) uploading,
     required TResult Function(_Processing value) processing,
     required TResult Function(_Uploaded value) uploaded,
-    required TResult Function(_Error value) error,
+    required TResult Function(_UploadError value) uploadError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -111,7 +119,7 @@ mixin _$VideoUploadState {
     TResult Function(_Uploading value)? uploading,
     TResult Function(_Processing value)? processing,
     TResult Function(_Uploaded value)? uploaded,
-    TResult Function(_Error value)? error,
+    TResult Function(_UploadError value)? uploadError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -120,7 +128,7 @@ mixin _$VideoUploadState {
     TResult Function(_Uploading value)? uploading,
     TResult Function(_Processing value)? processing,
     TResult Function(_Uploaded value)? uploaded,
-    TResult Function(_Error value)? error,
+    TResult Function(_UploadError value)? uploadError,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -182,7 +190,8 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(File video, ImageProvider<Object>? thumbnail)
+    required TResult Function(
+            File video, ImageProvider<Object>? thumbnail, int progress)
         uploading,
     required TResult Function(File video, ImageProvider<Object>? thumbnail)
         processing,
@@ -190,8 +199,8 @@ class _$_Initial implements _Initial {
             ImageProvider<Object>? thumbnail, VideoAsset asset)
         uploaded,
     required TResult Function(
-            Object error, ImageProvider<Object>? thumbnail, File? video)
-        error,
+            Object error, File video, ImageProvider<Object>? thumbnail)
+        uploadError,
   }) {
     return initial();
   }
@@ -200,13 +209,15 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(File video, ImageProvider<Object>? thumbnail)? uploading,
+    TResult Function(
+            File video, ImageProvider<Object>? thumbnail, int progress)?
+        uploading,
     TResult Function(File video, ImageProvider<Object>? thumbnail)? processing,
     TResult Function(ImageProvider<Object>? thumbnail, VideoAsset asset)?
         uploaded,
     TResult Function(
-            Object error, ImageProvider<Object>? thumbnail, File? video)?
-        error,
+            Object error, File video, ImageProvider<Object>? thumbnail)?
+        uploadError,
   }) {
     return initial?.call();
   }
@@ -215,13 +226,15 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(File video, ImageProvider<Object>? thumbnail)? uploading,
+    TResult Function(
+            File video, ImageProvider<Object>? thumbnail, int progress)?
+        uploading,
     TResult Function(File video, ImageProvider<Object>? thumbnail)? processing,
     TResult Function(ImageProvider<Object>? thumbnail, VideoAsset asset)?
         uploaded,
     TResult Function(
-            Object error, ImageProvider<Object>? thumbnail, File? video)?
-        error,
+            Object error, File video, ImageProvider<Object>? thumbnail)?
+        uploadError,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -237,7 +250,7 @@ class _$_Initial implements _Initial {
     required TResult Function(_Uploading value) uploading,
     required TResult Function(_Processing value) processing,
     required TResult Function(_Uploaded value) uploaded,
-    required TResult Function(_Error value) error,
+    required TResult Function(_UploadError value) uploadError,
   }) {
     return initial(this);
   }
@@ -249,7 +262,7 @@ class _$_Initial implements _Initial {
     TResult Function(_Uploading value)? uploading,
     TResult Function(_Processing value)? processing,
     TResult Function(_Uploaded value)? uploaded,
-    TResult Function(_Error value)? error,
+    TResult Function(_UploadError value)? uploadError,
   }) {
     return initial?.call(this);
   }
@@ -261,7 +274,7 @@ class _$_Initial implements _Initial {
     TResult Function(_Uploading value)? uploading,
     TResult Function(_Processing value)? processing,
     TResult Function(_Uploaded value)? uploaded,
-    TResult Function(_Error value)? error,
+    TResult Function(_UploadError value)? uploadError,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -280,7 +293,7 @@ abstract class _$UploadingCopyWith<$Res> {
   factory _$UploadingCopyWith(
           _Uploading value, $Res Function(_Uploading) then) =
       __$UploadingCopyWithImpl<$Res>;
-  $Res call({File video, ImageProvider<Object>? thumbnail});
+  $Res call({File video, ImageProvider<Object>? thumbnail, int progress});
 }
 
 /// @nodoc
@@ -297,6 +310,7 @@ class __$UploadingCopyWithImpl<$Res>
   $Res call({
     Object? video = freezed,
     Object? thumbnail = freezed,
+    Object? progress = freezed,
   }) {
     return _then(_Uploading(
       video == freezed
@@ -307,6 +321,10 @@ class __$UploadingCopyWithImpl<$Res>
           ? _value.thumbnail
           : thumbnail // ignore: cast_nullable_to_non_nullable
               as ImageProvider<Object>?,
+      progress == freezed
+          ? _value.progress
+          : progress // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -314,16 +332,18 @@ class __$UploadingCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Uploading implements _Uploading {
-  const _$_Uploading(this.video, this.thumbnail);
+  const _$_Uploading(this.video, this.thumbnail, this.progress);
 
   @override
   final File video;
   @override
   final ImageProvider<Object>? thumbnail;
+  @override
+  final int progress;
 
   @override
   String toString() {
-    return 'VideoUploadState.uploading(video: $video, thumbnail: $thumbnail)';
+    return 'VideoUploadState.uploading(video: $video, thumbnail: $thumbnail, progress: $progress)';
   }
 
   @override
@@ -333,11 +353,13 @@ class _$_Uploading implements _Uploading {
             other is _Uploading &&
             (identical(other.video, video) || other.video == video) &&
             (identical(other.thumbnail, thumbnail) ||
-                other.thumbnail == thumbnail));
+                other.thumbnail == thumbnail) &&
+            (identical(other.progress, progress) ||
+                other.progress == progress));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, video, thumbnail);
+  int get hashCode => Object.hash(runtimeType, video, thumbnail, progress);
 
   @JsonKey(ignore: true)
   @override
@@ -348,7 +370,8 @@ class _$_Uploading implements _Uploading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(File video, ImageProvider<Object>? thumbnail)
+    required TResult Function(
+            File video, ImageProvider<Object>? thumbnail, int progress)
         uploading,
     required TResult Function(File video, ImageProvider<Object>? thumbnail)
         processing,
@@ -356,42 +379,46 @@ class _$_Uploading implements _Uploading {
             ImageProvider<Object>? thumbnail, VideoAsset asset)
         uploaded,
     required TResult Function(
-            Object error, ImageProvider<Object>? thumbnail, File? video)
-        error,
+            Object error, File video, ImageProvider<Object>? thumbnail)
+        uploadError,
   }) {
-    return uploading(video, thumbnail);
+    return uploading(video, thumbnail, progress);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(File video, ImageProvider<Object>? thumbnail)? uploading,
+    TResult Function(
+            File video, ImageProvider<Object>? thumbnail, int progress)?
+        uploading,
     TResult Function(File video, ImageProvider<Object>? thumbnail)? processing,
     TResult Function(ImageProvider<Object>? thumbnail, VideoAsset asset)?
         uploaded,
     TResult Function(
-            Object error, ImageProvider<Object>? thumbnail, File? video)?
-        error,
+            Object error, File video, ImageProvider<Object>? thumbnail)?
+        uploadError,
   }) {
-    return uploading?.call(video, thumbnail);
+    return uploading?.call(video, thumbnail, progress);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(File video, ImageProvider<Object>? thumbnail)? uploading,
+    TResult Function(
+            File video, ImageProvider<Object>? thumbnail, int progress)?
+        uploading,
     TResult Function(File video, ImageProvider<Object>? thumbnail)? processing,
     TResult Function(ImageProvider<Object>? thumbnail, VideoAsset asset)?
         uploaded,
     TResult Function(
-            Object error, ImageProvider<Object>? thumbnail, File? video)?
-        error,
+            Object error, File video, ImageProvider<Object>? thumbnail)?
+        uploadError,
     required TResult orElse(),
   }) {
     if (uploading != null) {
-      return uploading(video, thumbnail);
+      return uploading(video, thumbnail, progress);
     }
     return orElse();
   }
@@ -403,7 +430,7 @@ class _$_Uploading implements _Uploading {
     required TResult Function(_Uploading value) uploading,
     required TResult Function(_Processing value) processing,
     required TResult Function(_Uploaded value) uploaded,
-    required TResult Function(_Error value) error,
+    required TResult Function(_UploadError value) uploadError,
   }) {
     return uploading(this);
   }
@@ -415,7 +442,7 @@ class _$_Uploading implements _Uploading {
     TResult Function(_Uploading value)? uploading,
     TResult Function(_Processing value)? processing,
     TResult Function(_Uploaded value)? uploaded,
-    TResult Function(_Error value)? error,
+    TResult Function(_UploadError value)? uploadError,
   }) {
     return uploading?.call(this);
   }
@@ -427,7 +454,7 @@ class _$_Uploading implements _Uploading {
     TResult Function(_Uploading value)? uploading,
     TResult Function(_Processing value)? processing,
     TResult Function(_Uploaded value)? uploaded,
-    TResult Function(_Error value)? error,
+    TResult Function(_UploadError value)? uploadError,
     required TResult orElse(),
   }) {
     if (uploading != null) {
@@ -438,11 +465,13 @@ class _$_Uploading implements _Uploading {
 }
 
 abstract class _Uploading implements VideoUploadState {
-  const factory _Uploading(File video, ImageProvider<Object>? thumbnail) =
+  const factory _Uploading(
+          File video, ImageProvider<Object>? thumbnail, int progress) =
       _$_Uploading;
 
   File get video;
   ImageProvider<Object>? get thumbnail;
+  int get progress;
   @JsonKey(ignore: true)
   _$UploadingCopyWith<_Uploading> get copyWith =>
       throw _privateConstructorUsedError;
@@ -522,7 +551,8 @@ class _$_Processing implements _Processing {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(File video, ImageProvider<Object>? thumbnail)
+    required TResult Function(
+            File video, ImageProvider<Object>? thumbnail, int progress)
         uploading,
     required TResult Function(File video, ImageProvider<Object>? thumbnail)
         processing,
@@ -530,8 +560,8 @@ class _$_Processing implements _Processing {
             ImageProvider<Object>? thumbnail, VideoAsset asset)
         uploaded,
     required TResult Function(
-            Object error, ImageProvider<Object>? thumbnail, File? video)
-        error,
+            Object error, File video, ImageProvider<Object>? thumbnail)
+        uploadError,
   }) {
     return processing(video, thumbnail);
   }
@@ -540,13 +570,15 @@ class _$_Processing implements _Processing {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(File video, ImageProvider<Object>? thumbnail)? uploading,
+    TResult Function(
+            File video, ImageProvider<Object>? thumbnail, int progress)?
+        uploading,
     TResult Function(File video, ImageProvider<Object>? thumbnail)? processing,
     TResult Function(ImageProvider<Object>? thumbnail, VideoAsset asset)?
         uploaded,
     TResult Function(
-            Object error, ImageProvider<Object>? thumbnail, File? video)?
-        error,
+            Object error, File video, ImageProvider<Object>? thumbnail)?
+        uploadError,
   }) {
     return processing?.call(video, thumbnail);
   }
@@ -555,13 +587,15 @@ class _$_Processing implements _Processing {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(File video, ImageProvider<Object>? thumbnail)? uploading,
+    TResult Function(
+            File video, ImageProvider<Object>? thumbnail, int progress)?
+        uploading,
     TResult Function(File video, ImageProvider<Object>? thumbnail)? processing,
     TResult Function(ImageProvider<Object>? thumbnail, VideoAsset asset)?
         uploaded,
     TResult Function(
-            Object error, ImageProvider<Object>? thumbnail, File? video)?
-        error,
+            Object error, File video, ImageProvider<Object>? thumbnail)?
+        uploadError,
     required TResult orElse(),
   }) {
     if (processing != null) {
@@ -577,7 +611,7 @@ class _$_Processing implements _Processing {
     required TResult Function(_Uploading value) uploading,
     required TResult Function(_Processing value) processing,
     required TResult Function(_Uploaded value) uploaded,
-    required TResult Function(_Error value) error,
+    required TResult Function(_UploadError value) uploadError,
   }) {
     return processing(this);
   }
@@ -589,7 +623,7 @@ class _$_Processing implements _Processing {
     TResult Function(_Uploading value)? uploading,
     TResult Function(_Processing value)? processing,
     TResult Function(_Uploaded value)? uploaded,
-    TResult Function(_Error value)? error,
+    TResult Function(_UploadError value)? uploadError,
   }) {
     return processing?.call(this);
   }
@@ -601,7 +635,7 @@ class _$_Processing implements _Processing {
     TResult Function(_Uploading value)? uploading,
     TResult Function(_Processing value)? processing,
     TResult Function(_Uploaded value)? uploaded,
-    TResult Function(_Error value)? error,
+    TResult Function(_UploadError value)? uploadError,
     required TResult orElse(),
   }) {
     if (processing != null) {
@@ -693,7 +727,8 @@ class _$_Uploaded implements _Uploaded {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(File video, ImageProvider<Object>? thumbnail)
+    required TResult Function(
+            File video, ImageProvider<Object>? thumbnail, int progress)
         uploading,
     required TResult Function(File video, ImageProvider<Object>? thumbnail)
         processing,
@@ -701,8 +736,8 @@ class _$_Uploaded implements _Uploaded {
             ImageProvider<Object>? thumbnail, VideoAsset asset)
         uploaded,
     required TResult Function(
-            Object error, ImageProvider<Object>? thumbnail, File? video)
-        error,
+            Object error, File video, ImageProvider<Object>? thumbnail)
+        uploadError,
   }) {
     return uploaded(thumbnail, asset);
   }
@@ -711,13 +746,15 @@ class _$_Uploaded implements _Uploaded {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(File video, ImageProvider<Object>? thumbnail)? uploading,
+    TResult Function(
+            File video, ImageProvider<Object>? thumbnail, int progress)?
+        uploading,
     TResult Function(File video, ImageProvider<Object>? thumbnail)? processing,
     TResult Function(ImageProvider<Object>? thumbnail, VideoAsset asset)?
         uploaded,
     TResult Function(
-            Object error, ImageProvider<Object>? thumbnail, File? video)?
-        error,
+            Object error, File video, ImageProvider<Object>? thumbnail)?
+        uploadError,
   }) {
     return uploaded?.call(thumbnail, asset);
   }
@@ -726,13 +763,15 @@ class _$_Uploaded implements _Uploaded {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(File video, ImageProvider<Object>? thumbnail)? uploading,
+    TResult Function(
+            File video, ImageProvider<Object>? thumbnail, int progress)?
+        uploading,
     TResult Function(File video, ImageProvider<Object>? thumbnail)? processing,
     TResult Function(ImageProvider<Object>? thumbnail, VideoAsset asset)?
         uploaded,
     TResult Function(
-            Object error, ImageProvider<Object>? thumbnail, File? video)?
-        error,
+            Object error, File video, ImageProvider<Object>? thumbnail)?
+        uploadError,
     required TResult orElse(),
   }) {
     if (uploaded != null) {
@@ -748,7 +787,7 @@ class _$_Uploaded implements _Uploaded {
     required TResult Function(_Uploading value) uploading,
     required TResult Function(_Processing value) processing,
     required TResult Function(_Uploaded value) uploaded,
-    required TResult Function(_Error value) error,
+    required TResult Function(_UploadError value) uploadError,
   }) {
     return uploaded(this);
   }
@@ -760,7 +799,7 @@ class _$_Uploaded implements _Uploaded {
     TResult Function(_Uploading value)? uploading,
     TResult Function(_Processing value)? processing,
     TResult Function(_Uploaded value)? uploaded,
-    TResult Function(_Error value)? error,
+    TResult Function(_UploadError value)? uploadError,
   }) {
     return uploaded?.call(this);
   }
@@ -772,7 +811,7 @@ class _$_Uploaded implements _Uploaded {
     TResult Function(_Uploading value)? uploading,
     TResult Function(_Processing value)? processing,
     TResult Function(_Uploaded value)? uploaded,
-    TResult Function(_Error value)? error,
+    TResult Function(_UploadError value)? uploadError,
     required TResult orElse(),
   }) {
     if (uploaded != null) {
@@ -794,86 +833,90 @@ abstract class _Uploaded implements VideoUploadState {
 }
 
 /// @nodoc
-abstract class _$ErrorCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) then) =
-      __$ErrorCopyWithImpl<$Res>;
-  $Res call({Object error, ImageProvider<Object>? thumbnail, File? video});
+abstract class _$UploadErrorCopyWith<$Res> {
+  factory _$UploadErrorCopyWith(
+          _UploadError value, $Res Function(_UploadError) then) =
+      __$UploadErrorCopyWithImpl<$Res>;
+  $Res call({Object error, File video, ImageProvider<Object>? thumbnail});
 }
 
 /// @nodoc
-class __$ErrorCopyWithImpl<$Res> extends _$VideoUploadStateCopyWithImpl<$Res>
-    implements _$ErrorCopyWith<$Res> {
-  __$ErrorCopyWithImpl(_Error _value, $Res Function(_Error) _then)
-      : super(_value, (v) => _then(v as _Error));
+class __$UploadErrorCopyWithImpl<$Res>
+    extends _$VideoUploadStateCopyWithImpl<$Res>
+    implements _$UploadErrorCopyWith<$Res> {
+  __$UploadErrorCopyWithImpl(
+      _UploadError _value, $Res Function(_UploadError) _then)
+      : super(_value, (v) => _then(v as _UploadError));
 
   @override
-  _Error get _value => super._value as _Error;
+  _UploadError get _value => super._value as _UploadError;
 
   @override
   $Res call({
     Object? error = freezed,
-    Object? thumbnail = freezed,
     Object? video = freezed,
+    Object? thumbnail = freezed,
   }) {
-    return _then(_Error(
+    return _then(_UploadError(
       error == freezed
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as Object,
+      video: video == freezed
+          ? _value.video
+          : video // ignore: cast_nullable_to_non_nullable
+              as File,
       thumbnail: thumbnail == freezed
           ? _value.thumbnail
           : thumbnail // ignore: cast_nullable_to_non_nullable
               as ImageProvider<Object>?,
-      video: video == freezed
-          ? _value.video
-          : video // ignore: cast_nullable_to_non_nullable
-              as File?,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_Error implements _Error {
-  const _$_Error(this.error, {this.thumbnail, this.video});
+class _$_UploadError implements _UploadError {
+  const _$_UploadError(this.error, {required this.video, this.thumbnail});
 
   @override
   final Object error;
   @override
-  final ImageProvider<Object>? thumbnail;
+  final File video;
   @override
-  final File? video;
+  final ImageProvider<Object>? thumbnail;
 
   @override
   String toString() {
-    return 'VideoUploadState.error(error: $error, thumbnail: $thumbnail, video: $video)';
+    return 'VideoUploadState.uploadError(error: $error, video: $video, thumbnail: $thumbnail)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Error &&
+            other is _UploadError &&
             const DeepCollectionEquality().equals(other.error, error) &&
+            (identical(other.video, video) || other.video == video) &&
             (identical(other.thumbnail, thumbnail) ||
-                other.thumbnail == thumbnail) &&
-            (identical(other.video, video) || other.video == video));
+                other.thumbnail == thumbnail));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(error), thumbnail, video);
+      const DeepCollectionEquality().hash(error), video, thumbnail);
 
   @JsonKey(ignore: true)
   @override
-  _$ErrorCopyWith<_Error> get copyWith =>
-      __$ErrorCopyWithImpl<_Error>(this, _$identity);
+  _$UploadErrorCopyWith<_UploadError> get copyWith =>
+      __$UploadErrorCopyWithImpl<_UploadError>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(File video, ImageProvider<Object>? thumbnail)
+    required TResult Function(
+            File video, ImageProvider<Object>? thumbnail, int progress)
         uploading,
     required TResult Function(File video, ImageProvider<Object>? thumbnail)
         processing,
@@ -881,42 +924,46 @@ class _$_Error implements _Error {
             ImageProvider<Object>? thumbnail, VideoAsset asset)
         uploaded,
     required TResult Function(
-            Object error, ImageProvider<Object>? thumbnail, File? video)
-        error,
+            Object error, File video, ImageProvider<Object>? thumbnail)
+        uploadError,
   }) {
-    return error(this.error, thumbnail, video);
+    return uploadError(error, video, thumbnail);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(File video, ImageProvider<Object>? thumbnail)? uploading,
+    TResult Function(
+            File video, ImageProvider<Object>? thumbnail, int progress)?
+        uploading,
     TResult Function(File video, ImageProvider<Object>? thumbnail)? processing,
     TResult Function(ImageProvider<Object>? thumbnail, VideoAsset asset)?
         uploaded,
     TResult Function(
-            Object error, ImageProvider<Object>? thumbnail, File? video)?
-        error,
+            Object error, File video, ImageProvider<Object>? thumbnail)?
+        uploadError,
   }) {
-    return error?.call(this.error, thumbnail, video);
+    return uploadError?.call(error, video, thumbnail);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(File video, ImageProvider<Object>? thumbnail)? uploading,
+    TResult Function(
+            File video, ImageProvider<Object>? thumbnail, int progress)?
+        uploading,
     TResult Function(File video, ImageProvider<Object>? thumbnail)? processing,
     TResult Function(ImageProvider<Object>? thumbnail, VideoAsset asset)?
         uploaded,
     TResult Function(
-            Object error, ImageProvider<Object>? thumbnail, File? video)?
-        error,
+            Object error, File video, ImageProvider<Object>? thumbnail)?
+        uploadError,
     required TResult orElse(),
   }) {
-    if (error != null) {
-      return error(this.error, thumbnail, video);
+    if (uploadError != null) {
+      return uploadError(error, video, thumbnail);
     }
     return orElse();
   }
@@ -928,9 +975,9 @@ class _$_Error implements _Error {
     required TResult Function(_Uploading value) uploading,
     required TResult Function(_Processing value) processing,
     required TResult Function(_Uploaded value) uploaded,
-    required TResult Function(_Error value) error,
+    required TResult Function(_UploadError value) uploadError,
   }) {
-    return error(this);
+    return uploadError(this);
   }
 
   @override
@@ -940,9 +987,9 @@ class _$_Error implements _Error {
     TResult Function(_Uploading value)? uploading,
     TResult Function(_Processing value)? processing,
     TResult Function(_Uploaded value)? uploaded,
-    TResult Function(_Error value)? error,
+    TResult Function(_UploadError value)? uploadError,
   }) {
-    return error?.call(this);
+    return uploadError?.call(this);
   }
 
   @override
@@ -952,23 +999,24 @@ class _$_Error implements _Error {
     TResult Function(_Uploading value)? uploading,
     TResult Function(_Processing value)? processing,
     TResult Function(_Uploaded value)? uploaded,
-    TResult Function(_Error value)? error,
+    TResult Function(_UploadError value)? uploadError,
     required TResult orElse(),
   }) {
-    if (error != null) {
-      return error(this);
+    if (uploadError != null) {
+      return uploadError(this);
     }
     return orElse();
   }
 }
 
-abstract class _Error implements VideoUploadState {
-  const factory _Error(Object error,
-      {ImageProvider<Object>? thumbnail, File? video}) = _$_Error;
+abstract class _UploadError implements VideoUploadState {
+  const factory _UploadError(Object error,
+      {required File video, ImageProvider<Object>? thumbnail}) = _$_UploadError;
 
   Object get error;
+  File get video;
   ImageProvider<Object>? get thumbnail;
-  File? get video;
   @JsonKey(ignore: true)
-  _$ErrorCopyWith<_Error> get copyWith => throw _privateConstructorUsedError;
+  _$UploadErrorCopyWith<_UploadError> get copyWith =>
+      throw _privateConstructorUsedError;
 }

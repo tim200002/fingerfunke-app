@@ -13,6 +13,7 @@ class Event extends Post {
       required String location,
       //required this.postPlace,
       required List<Asset> media,
+      required List<UserInfo> participants,
       required this.startTime})
       : super._(
             id: id,
@@ -23,7 +24,8 @@ class Event extends Post {
             creationTime: creationTime,
             visibility: visibility,
             location: location,
-            media: media);
+            media: media,
+            participants: participants);
 
   @override
   Map<String, dynamic> toJson() {
@@ -34,9 +36,10 @@ class Event extends Post {
       "type": _postTypeEnumMap[type],
       "title": title,
       "description": description,
-      "visibility": _postVisibilityEnumMap[visibility],
+      "visibility": postVisibilityEnumMap[visibility],
       "location": location,
       "media": media.map((e) => e.toJson()).toList(),
+      "participants": participants.map((user) => user.toJson()).toList(),
       "startTime": dateToJson(startTime)
     };
   }
@@ -45,13 +48,17 @@ class Event extends Post {
     return Event(
       id: map["id"] as String,
       creationTime: dateFromJson(map['creationTime'] as int),
-      author: UserInfo.fromJson(map["author"] as Map<String, dynamic>),
+      author: UserInfo.fromJson(map["author"]),
       title: map["title"] as String,
       description: map["description"] as String,
-      visibility: $enumDecode(_postVisibilityEnumMap, map["visibility"]),
+      visibility: $enumDecode(postVisibilityEnumMap, map["visibility"]),
       location: map["location"] as String,
       media: (map['media'] as List<dynamic>)
           .map((e) => Asset.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      participants: (map["participants"] as List<dynamic>)
+          .map((participant) =>
+              UserInfo.fromJson(participant as Map<String, dynamic>))
           .toList(),
       startTime: dateFromJson(map['startTime'] as int),
     );
@@ -78,6 +85,7 @@ class Event extends Post {
           visibility: visibility,
           location: location,
           media: media,
+          participants: [author],
           startTime: startTime);
 
   @override

@@ -13,7 +13,7 @@ abstract class FirestorePaginationService<T> {
   /// Subscription is only used when list has been empty at beginning
   /// Then we use this to subscribe to a change when list becomes not empty
   /// after that we can start fetching normal using requestNewPage()
-  StreamSubscription? _firstElementSubscription;
+  StreamSubscription? _emptyQuerySubscription;
 
   /// Firestore query to collection.
   /// Should already include all necessary ordering
@@ -36,107 +36,107 @@ abstract class FirestorePaginationService<T> {
   // requests new page and adds elements to pagination
   // returns true if no new posts could be found
   Future<bool> requestNewPage() async {
-    _logger.i("Firestore pagination service request new page. This is the ${_allReceivedPages.length} page");
+    _logger.i(
+        "Firestore pagination service request new page. This is the ${_allReceivedPages.length} page");
     Completer<bool> didReachEndCompleter = Completer();
-    
+
     //------------------------------------------------------
     // This part finds the first and last document for each query
-    Query helperQuery = _startQuery.limit(paginationDistance);
+    Query newQuery = _startQuery.limit(paginationDistance);
 
     if (lastDocument != null) {
-      helperQuery = helperQuery.startAfterDocument(lastDocument!);
+      newQuery = newQuery.startAfterDocument(lastDocument!);
     }
 
     QueryDocumentSnapshot? endDocumentOfThisQuery;
-    final documents = (await helperQuery.get()).docs;
-    if (documents.isNotEmpty) {
-      endDocumentOfThisQuery = documents.last;
-    }
+    final documents = (await newQuery.get()).docs;
+
     // Special case when query returns empty we subscribe to see if elements are added later
-    else {
-      _firstElementSubscription =
-          helperQuery.limit(1).snapshots().listen((firstElementSnapshot) {
+    if (documents.isEmpty) {
+      _logger.i(
+          "Empty Query subscription has been created since the current Query returned empty.");
+      _emptyQuerySubscription = newQuery.limit(1).snapshots().listen(
+          (firstElementSnapshot) {
         if (firstElementSnapshot.docs.isNotEmpty) {
-          _firstElementCallback();
+          _elementAddedToEmptyQueryCallback();
         }
-      });
+      },
+          onDone: () => _logger.i("Empty Query Subscription stream closed"),
+          onError: (err) => _logger.e(err));
       return true;
     }
+
     //------------------------------------------------------------------------
 
     //------------------------------------------------------------------------
     // construct new query limited to start and end -> elements can be included in the middle
     // if not start is provided elements can also be included at the front
-    Query firestoreQuery = _startQuery
-        //ToDo check if end at works when during activity last document has been deleted
-        .endAtDocument(endDocumentOfThisQuery);
+    endDocumentOfThisQuery = documents.last;
+    newQuery = newQuery.endAtDocument(endDocumentOfThisQuery);
 
-    //If last Document is specified, we need to start Pagination after last Document
-    if (lastDocument != null) {
-      firestoreQuery = firestoreQuery.startAfterDocument(lastDocument!);
-    }
     //-----------------------------------------------------------------------
 
     int currentPageIndex = _allReceivedPages.length;
 
     // create a listener function to listen for this specific page
-    StreamSubscription currentPageListener = firestoreQuery.snapshots().listen(
-      (currentPageSnapshot) {
-        _logger.i("Firesore pagination service read snapshots for page index: $currentPageIndex. This page contains ${currentPageSnapshot.docs.isNotEmpty?currentPageSnapshot.docs.length:"none"} Elements");
-        // were we able to receive more documents
-        if (currentPageSnapshot.docs.isNotEmpty) {
-          List<T> elements = currentPageSnapshot.docs
-              .map(
-                  (QueryDocumentSnapshot postDocument) => _mapper(postDocument))
-              .toList();
+    StreamSubscription currentPageListener = newQuery.snapshots().listen(
+        (currentPageSnapshot) {
+      _logger.i(
+          "Firesore pagination service read snapshots for page index: $currentPageIndex. This page contains ${currentPageSnapshot.docs.isNotEmpty ? currentPageSnapshot.docs.length : "none"} Elements");
+      // were we able to receive more documents
+      if (currentPageSnapshot.docs.isNotEmpty) {
+        List<T> elements = currentPageSnapshot.docs
+            .map((QueryDocumentSnapshot postDocument) => _mapper(postDocument))
+            .toList();
 
-          // check if we are working on an already exisiting page (currentPageIndex < number of pages)
-          // or if we have to create a new page
-          bool pageExists = currentPageIndex < _allReceivedPages.length;
+        // check if we are working on an already exisiting page (currentPageIndex < number of pages)
+        // or if we have to create a new page
+        bool pageExists = currentPageIndex < _allReceivedPages.length;
 
-          if (pageExists) {
-            // If we are working on existing page just update the elements
-            _allReceivedPages[currentPageIndex] = elements;
-          } else {
-            // Create new page
-            _allReceivedPages.add(elements);
-          }
-
-          List<T> allElements = _concatenatePagesToList();
-          _emitUpdatedValues(allElements);
-
-          // check if we are on last page and if so update last document to right value
-          if (currentPageIndex == _allReceivedPages.length - 1) {
-            lastDocument = currentPageSnapshot.docs.last;
-          }
-
-          // determine if we received full page, or if this page is (currently at least) the last one
-          // return true if there are more posts
-          if (!didReachEndCompleter.isCompleted) {
-            didReachEndCompleter.complete(elements.length < paginationDistance);
-          }
+        if (pageExists) {
+          // If we are working on existing page just update the elements
+          _allReceivedPages[currentPageIndex] = elements;
         } else {
-          // if there are no documents in this snapshot there are in theory two explanations
-          // 1) We reached end and there are just no more elements to query for -> however this case is already handled
-          //    in the first part of this functio -> can be ignored
-          //
-          // 2) All Elements in the current page have been deleted -> we will ignore this for now since it shouldnt have
-          //    any negative effects besided performance
-
+          // Create new page
+          _allReceivedPages.add(elements);
         }
-      },
-    );
+
+        List<T> allElements = _concatenatePagesToList();
+        _emitUpdatedValues(allElements);
+
+        // check if we are on last page and if so update last document to right value
+        if (currentPageIndex == _allReceivedPages.length - 1) {
+          lastDocument = currentPageSnapshot.docs.last;
+        }
+
+        // determine if we received full page, or if this page is (currently at least) the last one
+        // return true if there are more posts
+        if (!didReachEndCompleter.isCompleted) {
+          didReachEndCompleter.complete(elements.length < paginationDistance);
+        }
+      } else {
+        // if there are no documents in this snapshot there are in theory two explanations
+        // 1) We reached end and there are just no more elements to query for -> however this case is already handled
+        //    in the first part of this functio -> can be ignored
+        //
+        // 2) All Elements in the current page have been deleted -> we will ignore this for now since it shouldnt have
+        //    any negative effects besided performance
+
+      }
+    },
+        onDone: () => _logger.e("Pagination Stream Subscription closed"),
+        onError: (err) => _logger.e(err));
     _subscriptionStack.add(currentPageListener);
     return didReachEndCompleter.future;
   }
 
   void dispose() {
-    _firstElementSubscription?.cancel();
+    _emptyQuerySubscription?.cancel();
     for (var subscription in _subscriptionStack) {
       subscription.cancel();
     }
     _subscriptionStack = [];
-    _firstElementSubscription = null;
+    _emptyQuerySubscription = null;
     lastDocument = null;
     _allReceivedPages = [];
   }
@@ -154,8 +154,10 @@ abstract class FirestorePaginationService<T> {
   /// We subscribe to change in not being empty
   /// When list receives first element this callbacl is triggered
   /// it cancels the subscription to the list and fetches the list now normally using requestNewPage()
-  void _firstElementCallback() {
-    _firstElementSubscription?.cancel();
+  void _elementAddedToEmptyQueryCallback() {
+    _logger.i(
+        "An element has been added to the empty Query. Therefore Callback triggered");
+    _emptyQuerySubscription?.cancel();
     requestNewPage();
   }
 

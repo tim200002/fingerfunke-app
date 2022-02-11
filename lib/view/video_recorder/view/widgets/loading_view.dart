@@ -1,4 +1,3 @@
-import 'package:fingerfunke_app/utils/dev_tools.dart';
 import 'package:flutter/material.dart';
 
 /// Widget to consume the `Loading` state of the `VideoRecorderCubit`.

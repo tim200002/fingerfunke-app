@@ -39,13 +39,7 @@ class TextInputDialog extends StatefulWidget {
 }
 
 class _TextInputDialogState extends State<TextInputDialog> {
-  late TextEditingController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = TextEditingController();
-  }
+  final TextEditingController _controller = TextEditingController();
 
   @override
   void dispose() {
@@ -55,7 +49,7 @@ class _TextInputDialogState extends State<TextInputDialog> {
 
   Widget _textField(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(13),
+      padding: const EdgeInsets.all(13),
       decoration: BoxDecoration(
           color: Colors.grey.shade100, borderRadius: BorderRadius.circular(10)),
       child: TextField(
@@ -72,7 +66,7 @@ class _TextInputDialogState extends State<TextInputDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(widget.title),
-      contentPadding: EdgeInsets.only(top: 20, left: 20, right: 20),
+      contentPadding: const EdgeInsets.only(top: 20, left: 20, right: 20),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
