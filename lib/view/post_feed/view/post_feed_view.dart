@@ -2,8 +2,6 @@ import 'package:fingerfunke_app/models/post/post.dart';
 import 'package:fingerfunke_app/services/pagination/post_pagination_service.dart';
 import 'package:fingerfunke_app/view/paginated_list/cubit/paginated_list_cubit.dart';
 import 'package:fingerfunke_app/view/paginated_list/view/paginated_list.dart';
-import 'package:fingerfunke_app/view/post_feed/view/post_feed_item_text_view.dart';
-import 'package:fingerfunke_app/view/post_feed/widgets/pf_filters.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,7 +17,6 @@ class PostFeedView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const PostFeedFilters(),
           Expanded(
             child: BlocProvider(
               create: (context) => PaginatedListCubit<Post>(

@@ -55,6 +55,7 @@ dependencies:
   share_plus: ^3.0.4
   auto_size_text: ^3.0.0
   flutter_settings_ui: ^2.0.1
+  flutter_feather_icons: ^2.0.0+1
 
 dev_dependencies:
   flutter_test:
