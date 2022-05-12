@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:fingerfunke_app/common_widgets/helper_widgets.dart';
 import 'package:fingerfunke_app/common_widgets/image/network_placeholder_image.dart/network_placeholder_image.dart';
 import 'package:fingerfunke_app/common_widgets/user/author_info.dart';
 import 'package:fingerfunke_app/models/asset/asset.dart';

@@ -4,13 +4,12 @@ import 'package:bloc/bloc.dart';
 import 'package:fingerfunke_app/models/post/post.dart';
 import 'package:fingerfunke_app/repositories/post_repository/post_repository.dart';
 import 'package:fingerfunke_app/repositories/post_repository/post_repository.impl.dart';
-import 'package:fingerfunke_app/services/authentication/authentication_service.dart';
 import 'package:fingerfunke_app/utils/exceptions.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:fingerfunke_app/utils/type_aliases.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'post_state.dart';
 part 'post_cubit.freezed.dart';
+part 'post_state.dart';
 
 class PostCubit extends Cubit<PostState> {
   final PostRepository _postRepository;

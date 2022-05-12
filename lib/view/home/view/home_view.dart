@@ -1,9 +1,7 @@
 import 'package:fingerfunke_app/routes.dart';
 import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:fingerfunke_app/utils/dev_tools.dart';
-import 'package:fingerfunke_app/view/error/exception_view.dart';
-import 'package:fingerfunke_app/view/home/widgets/home_sidebar/home_sidebar_view.dart';
-import 'package:fingerfunke_app/view/my_account/view/my_account_page.dart';
+import 'package:fingerfunke_app/view/home/widgets/home_drawer/home_drawer_view.dart';
 import 'package:fingerfunke_app/view/post_feed/view/post_feed_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -75,41 +73,37 @@ class HomeView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: _DEMOPlaceIndicator(context),
-        /*leading: IconButton(
-            onPressed: () => Navigator.pushNamed(context, accountRoute),
-            icon: const Icon(Icons.menu)),*/
         actions: [
           IconButton(
-              onPressed: () => Navigator.pushNamed(context, savedRoute),
-              icon: const Icon(Icons.bookmark_outlined))
+              onPressed: () => DevTools.showToDoSnackbar(context),
+              icon: const Icon(FeatherIcons.calendar))
         ],
       ),
-      drawer: HomeSidebar(),
+      drawer: const HomeDrawer(),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: AppTheme.PADDING_SIDE),
         clipBehavior: Clip.none,
         child: const PostFeedView(),
       ),
       bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(), //shape of notch
-        notchMargin:
-            5, //notche margin between floating button and bottom appbar
         child: Row(
-          //children inside bottom appbar
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             _bottomNavItem(context,
                 title: "Entdecken",
                 icon: FeatherIcons.compass,
                 selected: true,
-                onPressed: () {}),
+                onPressed: () => DevTools.showToDoSnackbar(context)),
             _bottomNavItem(context,
                 title: "Erstellen",
                 icon: FeatherIcons.plus,
                 color: Theme.of(context).colorScheme.secondary,
-                onPressed: () => DevTools.showToDoSnackbar(context)),
+                onPressed: () =>
+                    Navigator.of(context).pushNamed(postEditorRoute)),
             _bottomNavItem(context,
-                title: "Merkliste", icon: FeatherIcons.heart, onPressed: () {}),
+                title: "Merkliste",
+                icon: FeatherIcons.heart,
+                onPressed: () => DevTools.showToDoSnackbar(context)),
           ],
         ),
       ),

@@ -1,4 +1,4 @@
-import 'dart:ui';
+// ignore_for_file: constant_identifier_names, deprecated_member_use
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -26,7 +26,7 @@ class AppTheme {
 
   static final ThemeData mainTheme = ThemeData(
     textTheme: _textTheme,
-    canvasColor: Color(0xffffffff),
+    canvasColor: const Color(0xffffffff),
     colorScheme: const ColorScheme.light(
       primary: _light_primary,
       primaryVariant: _light_primaryVariant,
@@ -95,7 +95,6 @@ class AppTheme {
   static TextStyle textStyleCondensed({TextStyle? style}) =>
       GoogleFonts.robotoCondensed(textStyle: style);
 
-  // ignore: constant_identifier_names
   static const double PADDING_SIDE = 12;
 
   static final TextTheme _textTheme = TextTheme(

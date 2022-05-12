@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:fingerfunke_app/utils/tools.dart';
 import 'package:fingerfunke_app/view/video_recorder/view/cubit/video_recorder_cubit.dart';
-import 'package:fingerfunke_app/view/video_recorder/view/widgets/loading_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';

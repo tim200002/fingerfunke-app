@@ -1,4 +1,3 @@
-import 'package:fingerfunke_app/app.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -22,9 +21,7 @@ class OssLicensesPage extends StatelessWidget {
       }
     }
     for (var key in lm.keys) {
-      ossLicenses[key] = {
-        'license': lm[key]!.join('\n')
-      };
+      ossLicenses[key] = {'license': lm[key]!.join('\n')};
     }
     return ossKeys..sort();
   }
@@ -38,7 +35,7 @@ class OssLicensesPage extends StatelessWidget {
         leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () => Navigator.of(context).pop()),
-      title: const Text("Lizenzen"),
+        title: const Text("Lizenzen"),
       ),
       body: FutureBuilder<List<String>>(
           future: _licenses,
@@ -55,13 +52,12 @@ class OssLicensesPage extends StatelessWidget {
                       title: Text('$key ${version ?? ''}'),
                       subtitle: desc != null ? Text(desc) : null,
                       trailing: const Icon(Icons.chevron_right),
-                      onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => MiscOssLicenseSingle(name: key, json: licenseJson)))
-                  );
+                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => MiscOssLicenseSingle(
+                              name: key, json: licenseJson))));
                 },
-                separatorBuilder: (context, index) => const Divider()
-            );
-          }
-      ),
+                separatorBuilder: (context, index) => const Divider());
+          }),
     );
   }
 }
@@ -75,7 +71,8 @@ class MiscOssLicenseSingle extends StatelessWidget {
   String? get licenseText => json['license'];
   String? get homepage => json['homepage'];
 
-  const MiscOssLicenseSingle({Key? key, required this.name , required this.json}) : super(key: key);
+  const MiscOssLicenseSingle({Key? key, required this.name, required this.json})
+      : super(key: key);
 
   String _bodyText() {
     final _licenseText = licenseText ?? 'No license provided';
@@ -95,30 +92,32 @@ class MiscOssLicenseSingle extends StatelessWidget {
           child: ListView(children: <Widget>[
             if (description != null)
               Padding(
-                  padding: const EdgeInsets.only(top: 12.0, left: 12.0, right: 12.0),
-                  child: Text(
-                      description!,
-                      style: Theme.of(context).textTheme.bodyText2!.copyWith(fontWeight: FontWeight.bold))
-              ),
+                  padding:
+                      const EdgeInsets.only(top: 12.0, left: 12.0, right: 12.0),
+                  child: Text(description!,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText2!
+                          .copyWith(fontWeight: FontWeight.bold))),
             if (homepage != null)
               Padding(
-                  padding: const EdgeInsets.only(top: 12.0, left: 12.0, right: 12.0),
+                  padding:
+                      const EdgeInsets.only(top: 12.0, left: 12.0, right: 12.0),
                   child: InkWell(
-                    child: Text(homepage!, style: const TextStyle(color: Colors.blue, decoration: TextDecoration.underline)),
+                    child: Text(homepage!,
+                        style: const TextStyle(
+                            color: Colors.blue,
+                            decoration: TextDecoration.underline)),
                     onTap: () => launch(homepage!),
-                  )
-              ),
-            if (description != null || homepage != null)
-              const Divider(),
+                  )),
+            if (description != null || homepage != null) const Divider(),
             Padding(
-              padding: const EdgeInsets.only(top: 12.0, left: 12.0, right: 12.0),
-              child: Text(
-                  _bodyText(),
-                  style: Theme.of(context).textTheme.bodyText2
-              ),
+              padding:
+                  const EdgeInsets.only(top: 12.0, left: 12.0, right: 12.0),
+              child: Text(_bodyText(),
+                  style: Theme.of(context).textTheme.bodyText2),
             ),
-          ])
-      ),
+          ])),
     );
   }
 }

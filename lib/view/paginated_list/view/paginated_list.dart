@@ -2,7 +2,6 @@ import 'package:fingerfunke_app/common_widgets/creation_aware_widget/creation_aw
 import 'package:fingerfunke_app/view/paginated_list/cubit/paginated_list_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:logger/logger.dart';
 
 class PaginatedList<T> extends StatelessWidget {
   /// function envoked on each list item to create widget given the data
@@ -19,8 +18,6 @@ class PaginatedList<T> extends StatelessWidget {
 
   /// what to show when list is loading new elements
   final Widget? loadingIndicator;
-
-  final Logger _logger = Logger();
 
   PaginatedList(
       {required Widget Function(T) itemBuilder,

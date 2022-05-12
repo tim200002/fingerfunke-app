@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names, unused_field
+
 import 'package:flutter/material.dart';
 
 /// A set of colors based on the

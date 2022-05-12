@@ -1,11 +1,9 @@
 import 'package:fingerfunke_app/utils/exceptions.dart';
 import 'package:fingerfunke_app/view/post_editor/cubit/post_editor_cubit.dart';
-import 'package:fingerfunke_app/view/post_editor/models/general_editor_fields.dart';
 import 'package:fingerfunke_app/view/post_editor/view/widgets/meta_info_button.dart';
 import 'package:flutter/material.dart';
 import 'package:fingerfunke_app/utils/extensions/date_time.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/src/provider.dart';
 
 /// Section with information which are only valid for an event
 class EventOnlyInformation extends StatelessWidget {

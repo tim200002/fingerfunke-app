@@ -1,5 +1,4 @@
 import 'package:fingerfunke_app/common_widgets/image/user_image/user_image.dart';
-import 'package:fingerfunke_app/models/asset/asset.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -11,9 +10,9 @@ import '../../../../utils/exceptions.dart';
 
 part './profile_section.dart';
 
-class HomeSidebar extends StatelessWidget {
+class HomeDrawer extends StatelessWidget {
   static const _borderRadius = Radius.circular(40);
-  const HomeSidebar({Key? key}) : super(key: key);
+  const HomeDrawer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

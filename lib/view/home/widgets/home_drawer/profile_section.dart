@@ -1,4 +1,4 @@
-part of "./home_sidebar_view.dart";
+part of 'home_drawer_view.dart';
 
 class _ProfileSection extends StatelessWidget {
   const _ProfileSection({Key? key}) : super(key: key);
@@ -33,7 +33,7 @@ class _ProfileSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
         borderRadius:
-            const BorderRadius.only(topRight: HomeSidebar._borderRadius),
+            const BorderRadius.only(topRight: HomeDrawer._borderRadius),
         onTap: () => Navigator.popAndPushNamed(context, accountRoute),
         child: Container(
           padding: const EdgeInsets.all(18),

@@ -1,10 +1,11 @@
 import 'package:bloc/bloc.dart';
+import 'package:fingerfunke_app/utils/logger.dart';
 import 'package:fingerfunke_app/utils/type_aliases.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:video_player/video_player.dart';
 
-part 'video_playback_state.dart';
 part 'video_playback_cubit.freezed.dart';
+part 'video_playback_state.dart';
 
 class VideoPlaybackCubit extends Cubit<VideoPlaybackState> {
   VideoPlaybackCubit(
@@ -22,8 +23,7 @@ class VideoPlaybackCubit extends Cubit<VideoPlaybackState> {
         controller.setLooping(true);
       }
     }).catchError((error, stackTrace) {
-      print(error);
-      print(stackTrace);
+      getLogger().e("error", error, stackTrace);
       emit(VideoPlaybackState.error(error));
     });
   }

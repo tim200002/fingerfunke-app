@@ -1,5 +1,4 @@
 import 'package:fingerfunke_app/utils/app_theme.dart';
-import 'package:fingerfunke_app/utils/illustration.dart';
 import 'package:fingerfunke_app/view/phone_login/cubit/phone_login_cubit.dart';
 import 'package:fingerfunke_app/view/phone_login/view/authenticated_view.dart';
 import 'package:fingerfunke_app/view/phone_login/view/enter_code_view.dart';
