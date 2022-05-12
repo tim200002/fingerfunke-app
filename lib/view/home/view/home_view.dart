@@ -2,6 +2,8 @@ import 'package:fingerfunke_app/routes.dart';
 import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:fingerfunke_app/utils/dev_tools.dart';
 import 'package:fingerfunke_app/view/error/exception_view.dart';
+import 'package:fingerfunke_app/view/home/widgets/home_sidebar/home_sidebar_view.dart';
+import 'package:fingerfunke_app/view/my_account/view/my_account_page.dart';
 import 'package:fingerfunke_app/view/post_feed/view/post_feed_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -73,15 +75,16 @@ class HomeView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: _DEMOPlaceIndicator(context),
-        leading: IconButton(
+        /*leading: IconButton(
             onPressed: () => Navigator.pushNamed(context, accountRoute),
-            icon: const Icon(Icons.menu)),
+            icon: const Icon(Icons.menu)),*/
         actions: [
           IconButton(
               onPressed: () => Navigator.pushNamed(context, savedRoute),
               icon: const Icon(Icons.bookmark_outlined))
         ],
       ),
+      drawer: HomeSidebar(),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: AppTheme.PADDING_SIDE),
         clipBehavior: Clip.none,
