@@ -25,15 +25,12 @@ class MyAccountPage extends StatelessWidget {
                   children: const [
                     _ProfileSection(),
                     _AccountSection(),
-                    _AppSettingsSection(),
                     _InfoSection(),
-                    _DevToolsSection()
                   ],
                 ),
             signedInAnonymously: () => ListView(
                   children: const [
                     _AccountSection(),
-                    _AppSettingsSection(),
                     _InfoSection(),
                   ],
                 ),
@@ -63,7 +60,10 @@ class _ProfileSection extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 10, right: 20),
                         child: InkWell(
-                          onTap: () =>  showFloatingModalBottomSheet(context: context, builder: (context) => const ImageUploadModalContent()),
+                          onTap: () => showFloatingModalBottomSheet(
+                              context: context,
+                              builder: (context) =>
+                                  const ImageUploadModalContent()),
                           child: SizedBox.square(
                             dimension: userImageSize,
                             child: Stack(
@@ -163,49 +163,6 @@ class _AccountSection extends StatelessWidget {
             Navigator.of(context).pushNamed("/manageAccount");
           },
         ),
-      ],
-    );
-  }
-}
-
-class _DevToolsSection extends StatelessWidget {
-  const _DevToolsSection({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return _SettingsSection(
-      title: "Entwicklung",
-      tiles: [
-        SettingsTile(
-          title: "Developement tools",
-          leading: const Icon(Icons.code_rounded),
-          onPressed: (context) {
-            Navigator.of(context).pushNamed("/developementUtils");
-          },
-        ),
-      ],
-    );
-  }
-}
-
-class _AppSettingsSection extends StatelessWidget {
-  const _AppSettingsSection({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return _SettingsSection(
-      title: "App",
-      tiles: [
-        SettingsTile(
-            title: "Einstellungen",
-            leading: const Icon(Icons.settings),
-            onPressed: (context) {
-              Navigator.of(context).pushNamed("/settings");
-            }),
       ],
     );
   }

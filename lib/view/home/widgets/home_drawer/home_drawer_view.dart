@@ -1,4 +1,5 @@
 import 'package:fingerfunke_app/common_widgets/image/user_image/user_image.dart';
+import 'package:fingerfunke_app/utils/dev_tools.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -33,25 +34,31 @@ class HomeDrawer extends StatelessWidget {
               ListTile(
                 leading: const Icon(FeatherIcons.users),
                 title: const Text('Gruppen'),
-                onTap: () {},
+                onTap: () => DevTools.showToDoSnackbar(context),,
               ),
-              const SizedBox(
-                height: 25,
-              ),
+              const SizedBox(height: 25),
               ListTile(
                 leading: const Icon(FeatherIcons.settings),
                 title: const Text('Einstellungen'),
-                onTap: () => {},
+                onTap: () =>
+                    Navigator.of(context).popAndPushNamed(settingsRoute),
               ),
               ListTile(
                 leading: const Icon(FeatherIcons.share2),
                 title: const Text('Social Media'),
-                onTap: () => {Navigator.of(context).pop()},
+                onTap: () => DevTools.showToDoSnackbar(context),
               ),
               ListTile(
                 leading: const Icon(FeatherIcons.info),
                 title: const Text('Informationen'),
-                onTap: () => {Navigator.of(context).pop()},
+                onTap: () => DevTools.showToDoSnackbar(context),
+              ),
+              const SizedBox(height: 25),
+              ListTile(
+                leading: const Icon(FeatherIcons.penTool),
+                title: const Text('DevTools'),
+                onTap: () =>
+                    Navigator.of(context).pushNamed(developementUtilsRoute),
               ),
             ],
           ),
