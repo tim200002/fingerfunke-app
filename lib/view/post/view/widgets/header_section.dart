@@ -61,18 +61,9 @@ class ElevatedButtonWithWidgetLeft extends StatelessWidget {
 class HeaderSection extends StatelessWidget {
   const HeaderSection({Key? key}) : super(key: key);
 
-  Widget _contentCardHeader(BuildContext context, Post post, bool isJoining) {
-    bool isParticipant = BlocProvider.of<AuthenticationCubit>(context)
-        .state
-        .maybeWhen(
-            signedIn: (currentUser) => post.isUserParticipant(currentUser),
-            orElse: () => false);
-    bool isLoggedIn = BlocProvider.of<AuthenticationCubit>(context)
-        .state
-        .maybeWhen(signedIn: (_) => true, orElse: () => false);
-
+  Widget _contentCardHeader(BuildContext context, Post post) {
     return Container(
-      margin: const EdgeInsets.only(left: 15, right: 15, bottom: 40),
+      margin: const EdgeInsets.only(left: 15, right: 15, bottom: 20),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(25.0),
@@ -99,37 +90,45 @@ class HeaderSection extends StatelessWidget {
               maxLines: 2,
               minFontSize: 18,
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ElevatedButtonWithWidgetLeft(
-                    text: isParticipant ? "Ich bin dabei" : "Ich komme",
-                    widget: !isJoining
-                        ? Icon(isParticipant ? Icons.check : Icons.add)
-                        : const CircularProgressIndicator(),
-                    onPressed: !isLoggedIn || isParticipant
-                        ? null
-                        : () => BlocProvider.of<PostCubit>(context)
-                            .joinPost()
-                            .catchError(
-                              (_) => Tools.showSnackbar(
-                                  context, "Oops something went wrong"),
-                            ),
-                  ),
-                  Center(
-                    child: IconButton(
-                      onPressed: () => {},
-                      //TODO change to filled icon when date is bookmarked
-                      icon: const Icon(Icons.bookmark_border_rounded),
-                    ),
-                  )
-                ],
-              ),
-            ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _postThumbnail(BuildContext context, Post post) {
+    const imgBorderRadius = Radius.circular(20);
+    return ClipRRect(
+      borderRadius: const BorderRadius.only(
+        bottomLeft: imgBorderRadius,
+        bottomRight: imgBorderRadius,
+      ),
+      child: InkWell(
+        onTap: () => Navigator.of(context).push(FullscreenVideoPage.route(
+            url: VideoRepositoryImpl().createPlaybackUrl(
+                (post.media.firstWhere((e) => e.type == asset_type.video)
+                    as VideoAsset)))),
+        child: Stack(children: [
+          Hero(
+            tag: PostFeedItemBlur.heroTag,
+            child: NetworkPlaceholderImage(
+              VideoRepositoryImpl()
+                  .createThumbnailUrl(post.media[0] as VideoAsset),
+              Container(
+                color: Colors.grey,
+              ),
+              width: MediaQuery.of(context).size.width.toInt(),
+              fit: BoxFit.cover,
+            ),
+          ),
+          const Center(
+            child: Icon(
+              Icons.play_arrow_rounded,
+              size: 70,
+              color: Colors.white,
+            ),
+          )
+        ]),
       ),
     );
   }
@@ -140,14 +139,14 @@ class HeaderSection extends StatelessWidget {
       builder: (context, state) => state.when(
         loading: (_) => Container(),
         normal: (post, isJoining) => SliverAppBar(
-          backgroundColor: Theme.of(context).colorScheme.background,
-          toolbarHeight: 60 + AppTheme.PADDING_SIDE,
+          //backgroundColor: Theme.of(context).colorScheme.background,
+          toolbarHeight: 60 + AppTheme.PADDING_SIDE + 12,
           leadingWidth: 48 + AppTheme.PADDING_SIDE * 2,
           leading: Padding(
             padding: const EdgeInsets.only(
-              left: 12.0 + AppTheme.PADDING_SIDE,
-              top: 12.0 + AppTheme.PADDING_SIDE,
-            ),
+                left: 12.0 + AppTheme.PADDING_SIDE,
+                top: 12.0 + AppTheme.PADDING_SIDE,
+                bottom: 12),
             child: postAppBarButton(
                 context: context,
                 icon: Icons.arrow_back_ios_rounded,
@@ -158,6 +157,7 @@ class HeaderSection extends StatelessWidget {
               padding: const EdgeInsets.only(
                 right: 12.0 + AppTheme.PADDING_SIDE,
                 top: 12.0 + AppTheme.PADDING_SIDE,
+                bottom: 12,
               ),
               child: postAppBarButton(
                 context: context,
@@ -182,80 +182,21 @@ class HeaderSection extends StatelessWidget {
             ),
           ),
           expandedHeight: MediaQuery.of(context).size.width.toDouble() + 80,
-          flexibleSpace: Padding(
-            padding: const EdgeInsets.all(AppTheme.PADDING_SIDE),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(30.0),
-              child: FlexibleSpaceBar(
-                stretchModes: const [
-                  StretchMode.zoomBackground,
-                ],
-                collapseMode: CollapseMode.parallax,
-                background: Stack(
-                  children: [
-                    Container(
-                      color: Theme.of(context).colorScheme.background,
-                      padding: const EdgeInsets.only(bottom: 140.0),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(30.0),
-                        child: InkWell(
-                          onTap: () => Navigator.of(context).push(
-                              FullscreenVideoPage.route(
-                                  url: VideoRepositoryImpl().createPlaybackUrl(
-                                      (post.media.firstWhere(
-                                              (e) => e.type == asset_type.video)
-                                          as VideoAsset)))),
-                          child: Stack(children: [
-                            Hero(
-                              tag: PostFeedItemBlur.heroTag,
-                              child: NetworkPlaceholderImage(
-                                VideoRepositoryImpl().createThumbnailUrl(
-                                    post.media[0] as VideoAsset),
-                                Container(
-                                  color: Colors.grey,
-                                ),
-                                width:
-                                    MediaQuery.of(context).size.width.toInt(),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            const Center(
-                              child: Icon(
-                                Icons.play_arrow_rounded,
-                                size: 70,
-                                color: Colors.white,
-                              ),
-                            )
-                          ]),
-                        ),
-                      ),
-                    ),
-                    Align(
-                        alignment: Alignment.bottomCenter,
-                        child: _contentCardHeader(context, post, isJoining)),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          bottom: PreferredSize(
-            preferredSize: const Size(0, 20),
-            child: Transform.translate(
-              offset: const Offset(0, 10),
-              child: Container(
-                clipBehavior: Clip.none,
-                color: Theme.of(context).colorScheme.surface,
-                child: Container(
-                  width: double.infinity,
-                  height: 20,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.background,
-                    borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(20.0),
-                        bottomRight: Radius.circular(20.0)),
-                  ),
-                ),
-              ),
+          flexibleSpace: FlexibleSpaceBar(
+            stretchModes: const [
+              StretchMode.zoomBackground,
+            ],
+            collapseMode: CollapseMode.parallax,
+            background: Stack(
+              children: [
+                Padding(
+                    //color: Theme.of(context).colorScheme.background,
+                    padding: const EdgeInsets.only(bottom: 100.0),
+                    child: _postThumbnail(context, post)),
+                Align(
+                    alignment: Alignment.bottomCenter,
+                    child: _contentCardHeader(context, post)),
+              ],
             ),
           ),
         ),
