@@ -1,11 +1,12 @@
 import 'package:fingerfunke_app/cubits/settings_cubit/settings_cubit.dart';
 import 'package:fingerfunke_app/utils/util_widgets/floating_modal.dart';
-import 'package:fingerfunke_app/view/my_account/subpages/settings/view/settings_language.dart';
-import 'package:fingerfunke_app/view/my_account/subpages/settings/view/settings_theme_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 import 'package:intl/intl.dart';
+
+import 'settings_language.dart';
+import 'settings_theme_page.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -22,7 +23,7 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   @override
-  void dispose(){
+  void dispose() {
     super.dispose();
   }
 

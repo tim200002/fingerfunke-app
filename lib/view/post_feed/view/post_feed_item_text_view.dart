@@ -95,7 +95,7 @@ class PostFeedItem extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 15),
       child: InkWell(
         onTap: () =>
-            Navigator.pushNamed(context, postRoute, arguments: _post.id),
+            Navigator.pushNamed(context, Routes.post, arguments: _post.id),
         child: Stack(
           alignment: Alignment.centerLeft,
           children: [

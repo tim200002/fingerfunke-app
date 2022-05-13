@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 
+import '../../app_info/app_info_page.dart';
+
 class MyAccountPage extends StatelessWidget {
   const MyAccountPage({Key? key}) : super(key: key);
 
@@ -25,13 +27,11 @@ class MyAccountPage extends StatelessWidget {
                   children: const [
                     _ProfileSection(),
                     _AccountSection(),
-                    _InfoSection(),
                   ],
                 ),
             signedInAnonymously: () => ListView(
                   children: const [
                     _AccountSection(),
-                    _InfoSection(),
                   ],
                 ),
             orElse: () => ErrorWidget(InvalidStateException())),
@@ -113,35 +113,6 @@ class _ProfileSection extends StatelessWidget {
   }
 }
 
-class _InfoSection extends StatelessWidget {
-  const _InfoSection({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return _SettingsSection(
-      title: "Informationen",
-      tiles: [
-        SettingsTile(
-            title: "Datenschutz",
-            leading: const Icon(Icons.privacy_tip_outlined),
-            onPressed: (context) {}),
-        SettingsTile(
-            title: "Impressum",
-            leading: const Icon(Icons.notes_rounded),
-            onPressed: (context) {}),
-        SettingsTile(
-            title: "Lizenzen",
-            leading: const Icon(Icons.gavel_outlined),
-            onPressed: (context) {
-              Navigator.of(context).pushNamed("/licenses");
-            }),
-      ],
-    );
-  }
-}
-
 class _AccountSection extends StatelessWidget {
   const _AccountSection({
     Key? key,
@@ -149,7 +120,7 @@ class _AccountSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _SettingsSection(
+    return FFSettingsSection(
       title: "Account",
       tiles: [
         SettingsTile(
@@ -165,29 +136,5 @@ class _AccountSection extends StatelessWidget {
         ),
       ],
     );
-  }
-}
-
-class _SettingsSection extends StatelessWidget {
-  static const _settingsTitlePadding = EdgeInsets.only(
-    top: 20,
-    left: 15.0,
-    right: 15.0,
-    bottom: 6.0,
-  );
-
-  final List<SettingsTile> tiles;
-  final String title;
-
-  _SettingsSection({required this.title, required this.tiles});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.only(bottom: 20),
-        child: Column(children: tiles));
-
-    /*SettingsSection(
-        tiles: tiles, title: title, titlePadding: _settingsTitlePadding);*/
   }
 }

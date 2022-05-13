@@ -34,14 +34,14 @@ class HomeDrawer extends StatelessWidget {
               ListTile(
                 leading: const Icon(FeatherIcons.users),
                 title: const Text('Gruppen'),
-                onTap: () => DevTools.showToDoSnackbar(context),,
+                onTap: () => DevTools.showToDoSnackbar(context),
               ),
               const SizedBox(height: 25),
               ListTile(
                 leading: const Icon(FeatherIcons.settings),
                 title: const Text('Einstellungen'),
                 onTap: () =>
-                    Navigator.of(context).popAndPushNamed(settingsRoute),
+                    Navigator.of(context).popAndPushNamed(Routes.settings),
               ),
               ListTile(
                 leading: const Icon(FeatherIcons.share2),
@@ -51,14 +51,14 @@ class HomeDrawer extends StatelessWidget {
               ListTile(
                 leading: const Icon(FeatherIcons.info),
                 title: const Text('Informationen'),
-                onTap: () => DevTools.showToDoSnackbar(context),
+                onTap: () => Navigator.of(context).pushNamed(Routes.about),
               ),
               const SizedBox(height: 25),
               ListTile(
                 leading: const Icon(FeatherIcons.penTool),
                 title: const Text('DevTools'),
                 onTap: () =>
-                    Navigator.of(context).pushNamed(developementUtilsRoute),
+                    Navigator.of(context).pushNamed(Routes.developementUtils),
               ),
             ],
           ),

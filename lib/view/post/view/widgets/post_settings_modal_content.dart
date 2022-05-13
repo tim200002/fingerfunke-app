@@ -39,7 +39,7 @@ class PostSettingsModalContent extends StatelessWidget {
             leading: const Icon(Icons.edit),
             title: const Text('Bearbeiten'),
             onTap: () {
-              Navigator.pushNamed(context, postEditorRoute,
+              Navigator.pushNamed(context, Routes.postEditor,
                       arguments: PostEditorArguments(post: post))
                   .then((_) => Navigator.of(context).pop());
             },

@@ -6,6 +6,9 @@ class MyLicensePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //TODO decide which licenses Page to use
-    return const LicensePage(applicationVersion: "1.0", applicationName: "Fingerfunke", applicationIcon: Image(image: AssetImage("assets/img/brand/logo.png")));
+    return const LicensePage(
+        applicationVersion: "1.0",
+        applicationName: "Fingerfunke",
+        applicationIcon: Image(image: AssetImage("assets/img/brand/logo.png")));
   }
 }

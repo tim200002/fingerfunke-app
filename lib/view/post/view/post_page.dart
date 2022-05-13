@@ -6,11 +6,10 @@ import 'package:fingerfunke_app/utils/util_widgets/loading_page.dart';
 import 'package:fingerfunke_app/view/chat/view/chat_page.dart';
 import 'package:fingerfunke_app/view/paginated_list/cubit/paginated_list_cubit.dart';
 import 'package:fingerfunke_app/view/post/cubit/post_cubit.dart';
-import 'package:fingerfunke_app/view/post/view/widgets/header_section.dart';
 import 'package:fingerfunke_app/view/post/view/widgets/author_section.dart';
 import 'package:fingerfunke_app/view/post/view/widgets/event_detail_section.dart';
+import 'package:fingerfunke_app/view/post/view/widgets/header_section.dart';
 import 'package:fingerfunke_app/view/post/view/widgets/post_description_section.dart';
-import 'package:fingerfunke_app/view/post/view/widgets/section_heading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -32,7 +31,7 @@ class PostPage extends StatelessWidget {
         .maybeWhen(signedIn: (_) => true, orElse: () => false);
     return ElevatedButton.icon(
       style: ButtonStyle(
-          minimumSize: MaterialStateProperty.all(Size(0, 55)),
+          minimumSize: MaterialStateProperty.all(const Size(0, 55)),
           elevation: MaterialStateProperty.all(10),
           foregroundColor: MaterialStateProperty.all(
               Theme.of(context).colorScheme.onPrimary),
@@ -47,7 +46,7 @@ class PostPage extends StatelessWidget {
             ? Icon(isParticipant ? Icons.check : Icons.add)
             : const SizedBox.square(
                 dimension: 24,
-                child: const CircularProgressIndicator(
+                child: CircularProgressIndicator(
                   color: Colors.white,
                 )),
       ),
@@ -131,7 +130,7 @@ class PostPage extends StatelessWidget {
                               child:
                                   const Icon(Icons.chat_bubble_outline_rounded),
                               onPressed: () => Navigator.of(context).pushNamed(
-                                    chatRoute,
+                                    Routes.chat,
                                     arguments: ChatArguments(
                                       chatName: post.title,
                                       postId: postId,

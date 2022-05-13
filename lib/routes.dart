@@ -1,36 +1,42 @@
+import 'package:fingerfunke_app/view/app_info/app_info_page.dart';
 import 'package:fingerfunke_app/view/chat/view/chat_page.dart';
-import 'package:fingerfunke_app/view/my_account/subpages/licenses/view/oss_licenses_page.dart';
-import 'package:fingerfunke_app/view/my_account/subpages/manage_account/view/manage_account_page.dart';
-import 'package:fingerfunke_app/view/my_account/subpages/settings/view/settings_page.dart';
-import 'package:fingerfunke_app/view/my_account/subpages/view/developement_util_functions_page.dart';
 import 'package:fingerfunke_app/view/my_account/view/my_account_page.dart';
 import 'package:fingerfunke_app/view/post/view/post_page.dart';
 import 'package:fingerfunke_app/view/post_editor/view/post_editor_page.dart';
 import 'package:fingerfunke_app/view/saved/view/saved_page.dart';
 
+import 'view/app_info/subpages/licenses/view/oss_licenses_page.dart';
+import 'view/app_info/subpages/manage_account/view/manage_account_page.dart';
+import 'view/app_info/subpages/settings/view/settings_page.dart';
+import 'view/app_info/subpages/view/developement_util_functions_page.dart';
+
 /// this variable holds the global routes that can be used within the app
 /// the widgets used with this routing should end with the suffix 'Page' to
 /// clarify how they're used
+class Routes {
+  static const saved = "/saved";
+  static const account = "/account";
+  static const post = "/post";
+  static const manageAccount = "/manageAccount";
+  static const postEditor = "/create";
+  static const developementUtils = "/developementUtils";
+  static const settings = "/settings";
 
-const savedRoute = "/saved";
-const accountRoute = "/account";
-const postRoute = "/post";
-const manageAccountRoute = "/manageAccount";
-const postEditorRoute = "/create";
-const developementUtilsRoute = "/developementUtils";
-const licensesRoute = "/licenses";
-const settingsRoute = "/settings";
-const chatRoute = "/chat";
+  static const about = "/about";
+  static const licenses = "/about/licenses";
 
+  static const chat = "/chat";
+}
 
 final routes = {
-  savedRoute: (context) => const SavedPage(),
-  accountRoute: (context) => const MyAccountPage(),
-  manageAccountRoute: (context) => const ManageAccountPage(),
-  postEditorRoute: (context) => const PostEditorPage(),
-  postRoute: (context) => const PostPage(),
-  developementUtilsRoute: (context) => const DevelopementUtilFunctionsPage(),
-  licensesRoute: (context) =>  const OssLicensesPage(),
-  settingsRoute: (context) => const SettingsPage(),
-  chatRoute: (context) => const ChatPage()
+  Routes.saved: (context) => const SavedPage(),
+  Routes.account: (context) => const MyAccountPage(),
+  Routes.manageAccount: (context) => const ManageAccountPage(),
+  Routes.postEditor: (context) => const PostEditorPage(),
+  Routes.post: (context) => const PostPage(),
+  Routes.developementUtils: (context) => const DevelopementUtilFunctionsPage(),
+  Routes.licenses: (context) => const OssLicensesPage(),
+  Routes.settings: (context) => const SettingsPage(),
+  Routes.about: (context) => const AppInfoPage(),
+  Routes.chat: (context) => const ChatPage()
 };

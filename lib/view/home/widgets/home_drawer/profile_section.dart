@@ -34,7 +34,7 @@ class _ProfileSection extends StatelessWidget {
     return InkWell(
         borderRadius:
             const BorderRadius.only(topRight: HomeDrawer._borderRadius),
-        onTap: () => Navigator.popAndPushNamed(context, accountRoute),
+        onTap: () => Navigator.popAndPushNamed(context, Routes.account),
         child: Container(
           padding: const EdgeInsets.all(18),
           decoration: BoxDecoration(

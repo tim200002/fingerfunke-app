@@ -99,7 +99,7 @@ class HomeView extends StatelessWidget {
                 icon: FeatherIcons.plus,
                 color: Theme.of(context).colorScheme.secondary,
                 onPressed: () =>
-                    Navigator.of(context).pushNamed(postEditorRoute)),
+                    Navigator.of(context).pushNamed(Routes.postEditor)),
             _bottomNavItem(context,
                 title: "Merkliste",
                 icon: FeatherIcons.heart,

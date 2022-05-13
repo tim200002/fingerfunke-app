@@ -1,6 +1,20 @@
 import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:flutter/material.dart';
 
+class PageAppBar extends AppBar {
+  PageAppBar(BuildContext context,
+      {Key? key,
+      required String title,
+      bool closable = false,
+      List<Widget>? actions})
+      : super(
+            key: key,
+            title: Text(title),
+            leading: IconButton(
+                onPressed: () => Navigator.of(context).pop(),
+                icon: Icon(closable ? Icons.close : Icons.arrow_back)));
+}
+
 class PageScreen extends StatelessWidget {
   static const double TOP_PADDING = 23;
 
@@ -61,7 +75,8 @@ class PageScreen extends StatelessWidget {
                         collapsedHeight: headerHeight ?? (c.maxWidth * 0.5).clamp(300, 400),
                         expandedHeight: c.maxHeight,
                          */
-                        expandedHeight: headerHeight ?? (c.maxWidth * 0.5).clamp(300, 400),
+                        expandedHeight:
+                            headerHeight ?? (c.maxWidth * 0.5).clamp(300, 400),
                         flexibleSpace: ClipRRect(
                           borderRadius:
                               BorderRadius.circular(roundedHeader ? 15.0 : 0),
@@ -75,8 +90,8 @@ class PageScreen extends StatelessWidget {
                         bottom: headerBottom == null
                             ? null
                             : PreferredSize(
-                            preferredSize: const Size.fromHeight(0),
-                            child: headerBottom!),
+                                preferredSize: const Size.fromHeight(0),
+                                child: headerBottom!),
                       ), //expandedHeight: 600,
                     if (body != null)
                       SliverFillRemaining(

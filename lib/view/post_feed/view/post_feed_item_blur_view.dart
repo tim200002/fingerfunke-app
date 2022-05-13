@@ -39,7 +39,8 @@ class PostFeedItemBlur extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(_post.location, style: TextStyle(fontWeight: FontWeight.w600)),
+        Text(_post.location,
+            style: const TextStyle(fontWeight: FontWeight.w600)),
         const Padding(
           padding: EdgeInsets.only(left: 5),
           child: Icon(
@@ -57,20 +58,20 @@ class PostFeedItemBlur extends StatelessWidget {
       children: [
         Text(
           Tools.dateFromEpoch(_post.creationTime.millisecondsSinceEpoch),
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         Text(
             " / " +
                 Tools.timeFromEpoch(_post.creationTime.millisecondsSinceEpoch) +
                 " Uhr",
-            style: TextStyle(fontWeight: FontWeight.bold)),
+            style: const TextStyle(fontWeight: FontWeight.bold)),
       ],
     );
   }
 
   Widget _infoSection(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -101,10 +102,10 @@ class PostFeedItemBlur extends StatelessWidget {
         ], borderRadius: BorderRadius.circular(5)),
         child: InkWell(
             onTap: () =>
-                Navigator.pushNamed(context, postRoute, arguments: _post.id),
+                Navigator.pushNamed(context, Routes.post, arguments: _post.id),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child: Container(
+              child: SizedBox(
                 height: 150,
                 child: Stack(
                   children: [

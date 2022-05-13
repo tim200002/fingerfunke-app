@@ -64,7 +64,7 @@ class PostFeedImageItem extends StatelessWidget {
   Widget _contentSection(BuildContext context) {
     const double padding = 12;
     return Container(
-      padding: EdgeInsets.fromLTRB(padding, 100, padding, padding),
+      padding: const EdgeInsets.fromLTRB(padding, 100, padding, padding),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
@@ -105,7 +105,7 @@ class PostFeedImageItem extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 15),
       child: InkWell(
           onTap: () =>
-              Navigator.pushNamed(context, postRoute, arguments: _post.id),
+              Navigator.pushNamed(context, Routes.post, arguments: _post.id),
           child: ClipRRect(
               borderRadius: BorderRadius.circular(14),
               child: Stack(alignment: Alignment.bottomCenter, children: [

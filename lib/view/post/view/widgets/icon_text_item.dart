@@ -19,7 +19,7 @@ class IconTextItem extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 20.0),
             child: Container(
-              padding: EdgeInsets.all(15),
+              padding: const EdgeInsets.all(15),
               decoration: BoxDecoration(
                   color: Colors.black.withOpacity(0.03),
                   borderRadius: BorderRadius.circular(20)),
