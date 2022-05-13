@@ -9,21 +9,19 @@ class EventDetailSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.min,
       children: [
-        Expanded(
-          child: IconTextItem(
-              icon: Icons.calendar_today_rounded,
-              label: event.startTime.dateString,
-              subLabel: "ab ${event.startTime.timeString} Uhr"),
-        ),
-        Expanded(
-          child: IconTextItem(
-              icon: Icons.location_on_outlined,
-              label: event.location,
-              subLabel: "ToDo"),
-        )
+        IconTextItem(
+            icon: Icons.calendar_today_rounded,
+            label: event.startTime.dateString,
+            subLabel: "ab ${event.startTime.timeString} Uhr"),
+        IconTextItem(
+            icon: Icons.location_on_outlined,
+            label: event.location,
+            subLabel: "ToDo"),
       ],
     );
   }

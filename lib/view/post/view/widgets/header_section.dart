@@ -59,11 +59,22 @@ class ElevatedButtonWithWidgetLeft extends StatelessWidget {
 }
 
 class HeaderSection extends StatelessWidget {
-  const HeaderSection({Key? key}) : super(key: key);
+  static const double titleHeight = 80 + 20;
 
-  Widget _contentCardHeader(BuildContext context, Post post) {
+  final double thumbnailHeight;
+  final double titleOverlap;
+
+  const HeaderSection(
+      {Key? key, this.thumbnailHeight = 350, this.titleOverlap = 30})
+      : super(key: key);
+
+  Widget _contentCardHeader(
+    BuildContext context,
+    Post post,
+  ) {
     return Container(
-      margin: const EdgeInsets.only(left: 15, right: 15, bottom: 20),
+      margin: EdgeInsets.only(
+          left: 15, right: 15, bottom: 20, top: thumbnailHeight - titleOverlap),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(25.0),
@@ -77,18 +88,20 @@ class HeaderSection extends StatelessWidget {
         ],
       ),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
           children: [
-            AutoSizeText(
+            Text(
               post.title,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
               style: Theme.of(context)
                   .textTheme
                   .headline5!
-                  .copyWith(fontWeight: FontWeight.w600),
+                  .copyWith(fontWeight: FontWeight.w600, height: 1.3),
               maxLines: 2,
-              minFontSize: 18,
             ),
           ],
         ),
@@ -181,7 +194,7 @@ class HeaderSection extends StatelessWidget {
               maxLines: 2,
             ),
           ),
-          expandedHeight: MediaQuery.of(context).size.width.toDouble() + 80,
+          expandedHeight: thumbnailHeight + titleHeight - titleOverlap,
           flexibleSpace: FlexibleSpaceBar(
             stretchModes: const [
               StretchMode.zoomBackground,
@@ -189,13 +202,10 @@ class HeaderSection extends StatelessWidget {
             collapseMode: CollapseMode.parallax,
             background: Stack(
               children: [
-                Padding(
-                    //color: Theme.of(context).colorScheme.background,
-                    padding: const EdgeInsets.only(bottom: 100.0),
+                SizedBox(
+                    height: thumbnailHeight,
                     child: _postThumbnail(context, post)),
-                Align(
-                    alignment: Alignment.bottomCenter,
-                    child: _contentCardHeader(context, post)),
+                _contentCardHeader(context, post),
               ],
             ),
           ),

@@ -10,40 +10,50 @@ class IconTextItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(right: 12.0),
-          child: Icon(
-            icon,
-            size: 28,
-            color: Theme.of(context).colorScheme.primary,
-          ),
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              label,
-              style: const TextStyle(
-                fontWeight: FontWeight.w900,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 20.0),
+            child: Container(
+              padding: EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.03),
+                  borderRadius: BorderRadius.circular(20)),
+              child: Icon(
+                icon,
+                size: 28,
+                color: Theme.of(context).colorScheme.primary,
               ),
             ),
-            if (subLabel != null)
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
               Text(
-                subLabel!,
-                style: TextStyle(
-                    fontWeight: FontWeight.normal,
-                    color: Theme.of(context)
-                        .colorScheme
-                        .onSurface
-                        .withOpacity(0.5)),
-              )
-          ],
-        )
-      ],
+                label,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+              if (subLabel != null)
+                Text(
+                  subLabel!,
+                  style: TextStyle(
+                      fontWeight: FontWeight.normal,
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withOpacity(0.5)),
+                )
+            ],
+          )
+        ],
+      ),
     );
   }
 }
