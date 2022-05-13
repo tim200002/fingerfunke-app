@@ -4,7 +4,29 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlaybackView extends StatelessWidget {
-  const VideoPlaybackView({Key? key}) : super(key: key);
+  final BoxFit fit;
+  final BorderRadius borderRadius;
+  const VideoPlaybackView(
+      {Key? key,
+      this.fit = BoxFit.contain,
+      this.borderRadius = BorderRadius.zero})
+      : super(key: key);
+
+  Widget _videoPlayer(
+    BuildContext context,
+    VideoPlayerController controller,
+  ) {
+    return SizedBox.expand(
+        child: FittedBox(
+      fit: fit,
+      child: SizedBox(
+        width: controller.value.size.width,
+        height: controller.value.size.height,
+        child: ClipRRect(
+            borderRadius: borderRadius, child: VideoPlayer(controller)),
+      ),
+    ));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +37,7 @@ class VideoPlaybackView extends StatelessWidget {
             initializing: () => const Center(
                   child: CircularProgressIndicator(),
                 ),
-            playing: (controller, _) => VideoPlayer(controller),
+            playing: (controller, _) => _videoPlayer(context, controller),
             error: (error) => ErrorWidget(error)),
       ),
     );

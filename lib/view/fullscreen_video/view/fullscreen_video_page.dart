@@ -6,7 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FullscreenVideoPage extends StatelessWidget {
-  const FullscreenVideoPage({required this.url, Key? key}) : super(key: key);
+  final BoxFit fit;
+  const FullscreenVideoPage(
+      {required this.url, Key? key, this.fit = BoxFit.contain})
+      : super(key: key);
 
   final String url;
 
@@ -20,31 +23,41 @@ class FullscreenVideoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(),
-        extendBody: false,
-        extendBodyBehindAppBar: true,
-        body: BlocProvider(
-          create: (context) =>
-              VideoPlaybackCubit(url: url, autoplay: true, loop: true),
-          child: Stack(
-            children: [
-              Builder(builder: (context) {
-                return GestureDetector(
-                    onTap: () => BlocProvider.of<VideoPlaybackCubit>(context)
-                        .togglePlay(),
-                    child: const VideoPlaybackView());
-              }),
-              const Align(
-                alignment: Alignment.topCenter,
-                child: VideoProgressBar(),
-              ),
-              const Align(
-                alignment: Alignment.center,
-                child: VideoPausedIndicator(),
-              )
-            ],
+    return Theme(
+      data: ThemeData(
+          brightness: Brightness.dark,
+          canvasColor: Colors.black,
+          appBarTheme: const AppBarTheme(
+              backgroundColor: Colors.transparent, elevation: 0)),
+      child: SafeArea(
+        child: Scaffold(
+          appBar: AppBar(),
+          extendBody: false,
+          extendBodyBehindAppBar: true,
+          body: BlocProvider(
+            create: (context) =>
+                VideoPlaybackCubit(url: url, autoplay: true, loop: true),
+            child: Stack(
+              children: [
+                Builder(builder: (context) {
+                  return GestureDetector(
+                      onTap: () => BlocProvider.of<VideoPlaybackCubit>(context)
+                          .togglePlay(),
+                      child: VideoPlaybackView(
+                          fit: fit,
+                          borderRadius: BorderRadius.circular(
+                              fit == BoxFit.contain ? 20 : 0)));
+                }),
+                const Align(
+                  alignment: Alignment.topCenter,
+                  child: VideoProgressBar(),
+                ),
+                const Align(
+                  alignment: Alignment.center,
+                  child: VideoPausedIndicator(),
+                )
+              ],
+            ),
           ),
         ),
       ),
