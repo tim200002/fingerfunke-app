@@ -1,9 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fingerfunke_app/common_widgets/image/network_placeholder_image.dart/network_placeholder_image.dart';
+import 'package:fingerfunke_app/cubits/authentication_cubit/authentication_cubit.dart';
 import 'package:fingerfunke_app/models/asset/asset.dart';
 import 'package:fingerfunke_app/models/post/post.dart';
 import 'package:fingerfunke_app/repositories/video_repository/video_repository.impl.dart';
 import 'package:fingerfunke_app/utils/app_theme.dart';
+import 'package:fingerfunke_app/utils/dev_tools.dart';
+import 'package:fingerfunke_app/utils/tools.dart';
 import 'package:fingerfunke_app/utils/util_widgets/floating_modal.dart';
 import 'package:fingerfunke_app/view/fullscreen_video/view/fullscreen_video_page.dart';
 import 'package:fingerfunke_app/view/post/cubit/post_cubit.dart';
@@ -59,10 +62,11 @@ class ElevatedButtonWithWidgetLeft extends StatelessWidget {
 class HeaderSection extends StatelessWidget {
   static const double titleHeight = 80 + 20;
 
+  final bool editing;
   final double thumbnailHeight;
   final double titleOverlap;
 
-  const HeaderSection(
+  const HeaderSection(this.editing,
       {Key? key, this.thumbnailHeight = 350, this.titleOverlap = 30})
       : super(key: key);
 
@@ -144,70 +148,76 @@ class HeaderSection extends StatelessWidget {
     );
   }
 
+  Widget _editContent(BuildContext context) {
+    return DevTools.placeholder("header");
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PostCubit, PostState>(
-      builder: (context, state) => state.when(
-        loading: (_) => Container(),
-        normal: (post, isJoining) => SliverAppBar(
-          //backgroundColor: Theme.of(context).colorScheme.background,
-          toolbarHeight: 60 + AppTheme.PADDING_SIDE + 12,
-          leadingWidth: 48 + AppTheme.PADDING_SIDE * 2,
-          leading: Padding(
-            padding: const EdgeInsets.only(
-                left: 12.0 + AppTheme.PADDING_SIDE,
-                top: 12.0 + AppTheme.PADDING_SIDE,
-                bottom: 12),
-            child: postAppBarButton(
-                context: context,
-                icon: Icons.arrow_back_ios_rounded,
-                onPressed: () => Navigator.of(context).pop()),
-          ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(
-                right: 12.0 + AppTheme.PADDING_SIDE,
-                top: 12.0 + AppTheme.PADDING_SIDE,
-                bottom: 12,
-              ),
-              child: postAppBarButton(
-                context: context,
-                icon: Icons.settings,
-                onPressed: () => showFloatingModalBottomSheet(
+    return SliverAppBar(
+      //backgroundColor: Theme.of(context).colorScheme.background,
+      toolbarHeight: 60 + AppTheme.PADDING_SIDE + 12,
+      leadingWidth: 48 + AppTheme.PADDING_SIDE * 2,
+      leading: Padding(
+        padding: const EdgeInsets.only(
+            left: 12.0 + AppTheme.PADDING_SIDE,
+            top: 12.0 + AppTheme.PADDING_SIDE,
+            bottom: 12),
+        child: postAppBarButton(
+            context: context,
+            icon: Icons.arrow_back_ios_rounded,
+            onPressed: () => Navigator.of(context).pop()),
+      ),
+      actions: editing
+          ? []
+          : [
+              Padding(
+                padding: const EdgeInsets.only(
+                  right: 12.0 + AppTheme.PADDING_SIDE,
+                  top: 12.0 + AppTheme.PADDING_SIDE,
+                  bottom: 12,
+                ),
+                child: postAppBarButton(
                   context: context,
-                  builder: (ctx) => PostSettingsModalContent(
-                    post: post,
+                  icon: Icons.settings,
+                  onPressed: () => showFloatingModalBottomSheet(
+                    context: context,
+                    builder: (_) => const PostSettingsModalContent(),
+                  ),
+                ),
+              )
+            ],
+      pinned: true,
+      floating: false,
+      stretch: true,
+      centerTitle: true,
+      /*title: VisibilityController(
+                  child: AutoSizeText(
+                    post.title,
+                    maxLines: 2,
+                  ),
+                ),*/
+      expandedHeight: thumbnailHeight + titleHeight - titleOverlap,
+      flexibleSpace: FlexibleSpaceBar(
+        stretchModes: const [
+          StretchMode.zoomBackground,
+        ],
+        collapseMode: CollapseMode.parallax,
+        background: editing
+            ? _editContent(context)
+            : BlocBuilder<PostCubit, PostState>(
+                builder: (context, state) => state.when(
+                  loading: (_) => const CircularProgressIndicator.adaptive(),
+                  normal: (post, isJoining) => Stack(
+                    children: [
+                      SizedBox(
+                          height: thumbnailHeight,
+                          child: _postThumbnail(context, post)),
+                      _contentCardHeader(context, post),
+                    ],
                   ),
                 ),
               ),
-            )
-          ],
-          pinned: true,
-          floating: false,
-          stretch: true,
-          centerTitle: true,
-          title: VisibilityController(
-            child: AutoSizeText(
-              post.title,
-              maxLines: 2,
-            ),
-          ),
-          expandedHeight: thumbnailHeight + titleHeight - titleOverlap,
-          flexibleSpace: FlexibleSpaceBar(
-            stretchModes: const [
-              StretchMode.zoomBackground,
-            ],
-            collapseMode: CollapseMode.parallax,
-            background: Stack(
-              children: [
-                SizedBox(
-                    height: thumbnailHeight,
-                    child: _postThumbnail(context, post)),
-                _contentCardHeader(context, post),
-              ],
-            ),
-          ),
-        ),
       ),
     );
   }
