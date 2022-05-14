@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fingerfunke_app/utils/extensions/date_time.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../cubit/post_cubit.dart';
+import '../../cubits/post_viewing_cubit/post_cubit.dart';
 
 class EventDetailSection extends StatelessWidget {
   final bool editing;

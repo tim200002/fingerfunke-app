@@ -1,17 +1,16 @@
 import 'package:fingerfunke_app/models/message/message.dart';
 import 'package:fingerfunke_app/services/pagination/message_pagination_service.dart';
 import 'package:fingerfunke_app/utils/app_theme.dart';
-import 'package:fingerfunke_app/utils/util_widgets/loading_page.dart';
 import 'package:fingerfunke_app/view/paginated_list/cubit/paginated_list_cubit.dart';
-import 'package:fingerfunke_app/view/post/cubit/post_cubit.dart';
-import 'package:fingerfunke_app/view/post/view/widgets/author_section.dart';
-import 'package:fingerfunke_app/view/post/view/widgets/header_section.dart';
-import 'package:fingerfunke_app/view/post/view/widgets/post_action_buttons.dart';
-import 'package:fingerfunke_app/view/post/view/widgets/post_description_section.dart';
+import 'package:fingerfunke_app/view/post/view/sections/author_section.dart';
+import 'package:fingerfunke_app/view/post/view/sections/header_section.dart';
+import 'package:fingerfunke_app/view/post/view/sections/post_action_buttons.dart';
+import 'package:fingerfunke_app/view/post/view/sections/post_description_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'widgets/event_detail_section.dart';
+import '../cubits/post_viewing_cubit/post_cubit.dart';
+import 'sections/event_detail_section.dart';
 
 class PostPage extends StatelessWidget {
   final bool editing;

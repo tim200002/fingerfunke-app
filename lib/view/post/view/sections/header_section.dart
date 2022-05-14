@@ -1,21 +1,17 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fingerfunke_app/common_widgets/image/network_placeholder_image.dart/network_placeholder_image.dart';
-import 'package:fingerfunke_app/cubits/authentication_cubit/authentication_cubit.dart';
 import 'package:fingerfunke_app/models/asset/asset.dart';
 import 'package:fingerfunke_app/models/post/post.dart';
 import 'package:fingerfunke_app/repositories/video_repository/video_repository.impl.dart';
 import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:fingerfunke_app/utils/dev_tools.dart';
-import 'package:fingerfunke_app/utils/tools.dart';
 import 'package:fingerfunke_app/utils/util_widgets/floating_modal.dart';
 import 'package:fingerfunke_app/view/fullscreen_video/view/fullscreen_video_page.dart';
-import 'package:fingerfunke_app/view/post/cubit/post_cubit.dart';
-import 'package:fingerfunke_app/view/post/view/widgets/post_app_bar_button.dart';
 import 'package:fingerfunke_app/view/post/view/widgets/post_settings_modal_content.dart';
-import 'package:fingerfunke_app/view/post/view/widgets/visibility_controller.dart';
 import 'package:fingerfunke_app/view/post_feed/view/post_feed_item_blur_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../cubits/post_viewing_cubit/post_cubit.dart';
 
 class ElevatedButtonWithWidgetLeft extends StatelessWidget {
   final String text;
@@ -55,6 +51,37 @@ class ElevatedButtonWithWidgetLeft extends StatelessWidget {
           Text(text),
         ],
       ),
+    );
+  }
+}
+
+class PostAppBarButton extends StatelessWidget {
+  final IconData icon;
+  final Function() onPressed;
+  const PostAppBarButton(
+      {Key? key, required this.icon, required this.onPressed})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AspectRatio(
+      aspectRatio: 1,
+      child: Container(
+          decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.10),
+                  spreadRadius: 0,
+                  blurRadius: 10,
+                  offset: const Offset(0, 6), // changes position of shadow
+                ),
+              ],
+              color: Theme.of(context).colorScheme.surface,
+              borderRadius: BorderRadius.circular(100)),
+          child: IconButton(
+              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.8),
+              onPressed: onPressed,
+              icon: Icon(icon))),
     );
   }
 }
@@ -163,8 +190,7 @@ class HeaderSection extends StatelessWidget {
             left: 12.0 + AppTheme.PADDING_SIDE,
             top: 12.0 + AppTheme.PADDING_SIDE,
             bottom: 12),
-        child: postAppBarButton(
-            context: context,
+        child: PostAppBarButton(
             icon: Icons.arrow_back_ios_rounded,
             onPressed: () => Navigator.of(context).pop()),
       ),
@@ -177,8 +203,7 @@ class HeaderSection extends StatelessWidget {
                   top: 12.0 + AppTheme.PADDING_SIDE,
                   bottom: 12,
                 ),
-                child: postAppBarButton(
-                  context: context,
+                child: PostAppBarButton(
                   icon: Icons.settings,
                   onPressed: () => showFloatingModalBottomSheet(
                     context: context,

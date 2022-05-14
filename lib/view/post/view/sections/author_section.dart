@@ -1,10 +1,7 @@
-import 'package:fingerfunke_app/models/user/user.dart';
-import 'package:fingerfunke_app/utils/dev_tools.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../utils/util_widgets/loading_page.dart';
-import '../../cubit/post_cubit.dart';
+import '../../cubits/post_viewing_cubit/post_cubit.dart';
 
 class AuthorSection extends StatelessWidget {
   final bool editing;
@@ -13,7 +10,7 @@ class AuthorSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return editing
-        ? DevTools.placeholder("authorSection")
+        ? Container()
         : BlocBuilder<PostCubit, PostState>(
             builder: (context, state) => state.when(
                 loading: (_) => const CircularProgressIndicator.adaptive(),
