@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../cubits/post_viewing_cubit/post_cubit.dart';
+import '../../cubits/post_viewer_cubit/post_cubit.dart';
 
 class AuthorSection extends StatelessWidget {
   final bool editing;

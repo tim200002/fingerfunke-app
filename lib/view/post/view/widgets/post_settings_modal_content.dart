@@ -4,7 +4,7 @@ import 'package:fingerfunke_app/view/post_editor/view/post_editor_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../cubits/post_viewing_cubit/post_cubit.dart';
+import '../../cubits/post_viewer_cubit/post_cubit.dart';
 
 class PostSettingsModalContent extends StatelessWidget {
   const PostSettingsModalContent({Key? key}) : super(key: key);

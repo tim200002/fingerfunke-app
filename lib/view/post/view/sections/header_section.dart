@@ -11,7 +11,7 @@ import 'package:fingerfunke_app/view/post_feed/view/post_feed_item_blur_view.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../cubits/post_viewing_cubit/post_cubit.dart';
+import '../../cubits/post_viewer_cubit/post_cubit.dart';
 
 class ElevatedButtonWithWidgetLeft extends StatelessWidget {
   final String text;

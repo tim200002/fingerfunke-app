@@ -4,7 +4,7 @@ import 'package:fingerfunke_app/common_widgets/helper_widgets.dart';
 import 'package:fingerfunke_app/common_widgets/upload/video_upload_tile.dart';
 import 'package:fingerfunke_app/cubits/video_upload_cubit/video_upload_cubit.dart';
 import 'package:fingerfunke_app/utils/exceptions.dart';
-import 'package:fingerfunke_app/view/post_editor/cubit/post_editor_cubit.dart';
+import 'package:fingerfunke_app/view/post/cubits/post_editor_cubit/post_editor_cubit.dart';
 import 'package:fingerfunke_app/view/video_recorder/view/video_recorder_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

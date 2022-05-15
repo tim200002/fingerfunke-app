@@ -1,6 +1,6 @@
 import 'package:fingerfunke_app/cubits/authentication_cubit/authentication_cubit.dart';
 import 'package:fingerfunke_app/models/post/post.dart';
-import 'package:fingerfunke_app/view/post_editor/cubit/post_editor_cubit.dart';
+import 'package:fingerfunke_app/view/post/cubits/post_editor_cubit/post_editor_cubit.dart';
 import 'package:fingerfunke_app/view/post_editor/view/page_views/post_editing_view.dart';
 import 'package:fingerfunke_app/view/post_editor/view/page_views/not_signed_in_view.dart';
 import 'package:fingerfunke_app/view/post_editor/view/page_views/post_posted_success_view.dart';

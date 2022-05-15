@@ -9,7 +9,8 @@ import '../../../../routes.dart';
 import '../../../../utils/tools.dart';
 import '../../../chat/view/chat_page.dart';
 import '../../../paginated_list/cubit/paginated_list_cubit.dart';
-import '../../cubits/post_viewing_cubit/post_cubit.dart';
+import '../../cubits/post_editor_cubit/post_editor_cubit.dart';
+import '../../cubits/post_viewer_cubit/post_cubit.dart';
 
 class PostActionButtons extends StatelessWidget {
   final bool editing;
@@ -47,12 +48,26 @@ class PostActionButtons extends StatelessWidget {
         onPressed: onTap);
   }
 
+  Widget _saveButton(BuildContext context, bool processing,
+      {bool valid = true}) {
+    return _mainFAB(
+      context,
+      title: "speichern",
+      icon: FeatherIcons.send,
+      isLoading: processing,
+      onTap: !processing && valid
+          ? () => context.read<PostEditorCubit>().submit()
+          : null,
+    );
+  }
+
   Widget _editContent(BuildContext context) {
-    return _mainFAB(context,
-        title: "speichern",
-        icon: FeatherIcons.send,
-        onTap: () => DevTools.showToDoSnackbar(context,
-            message: "Editor Cubit anbinden"));
+    return BlocBuilder<PostEditorCubit, PostEditorState>(
+        buildWhen: (prev, curr) => prev.runtimeType != curr.runtimeType,
+        builder: (context, state) => state.maybeWhen(
+            orElse: () => Container(),
+            editEvent: (_, valid) => _saveButton(context, false, valid: valid),
+            submitting: () => _saveButton(context, true)));
   }
 
   Widget _viewContent(BuildContext context) {
