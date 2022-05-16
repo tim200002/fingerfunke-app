@@ -87,10 +87,35 @@ class _Edit extends StatelessWidget {
                               }
                             },
                           )),
-                  const IconTextItem(
+                  IconTextItem(
                       icon: Icons.location_on_outlined,
                       label: "Location", //eventEditorFields.location,
-                      subLabel: "ToDo"),
+                      subLabel: "",
+                      onTap: () => showDialog(
+                          context: context,
+                          builder: (_) => AlertDialog(
+                                title: const Text('ToDo'),
+                                content: SingleChildScrollView(
+                                  child: ListBody(
+                                    children: const <Widget>[
+                                      Text(
+                                          'Bisher ist das Setzen einer Location nicht möglich'),
+                                    ],
+                                  ),
+                                ),
+                                /*actions: <Widget>[
+                              TextButton(
+                                child: const Text('Ulm wählen'),
+                                onPressed: () {
+                                  context
+                                        .read<PostEditorCubit>()
+                                        .updateInformation(
+                                            eventEditorFields.copyWith();
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],*/
+                              ))),
                 ],
               ),
           orElse: () => throw InvalidStateException()),

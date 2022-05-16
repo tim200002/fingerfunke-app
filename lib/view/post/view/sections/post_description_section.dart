@@ -6,6 +6,8 @@ import '../../cubits/post_editor_cubit/post_editor_cubit.dart';
 import '../../cubits/post_viewer_cubit/post_cubit.dart';
 import '../../editor_models/general_editor_fields.dart';
 
+/// This section is used to display the describtion text of the post.
+/// In [editing] mode, the text is editable
 class PostDescriptionSection extends StatelessWidget {
   final bool editing;
   const PostDescriptionSection(this.editing, {Key? key}) : super(key: key);
@@ -55,10 +57,12 @@ class _Edit extends StatelessWidget {
                     description: value)),
             decoration: const InputDecoration(
               border: InputBorder.none,
-              hintText: "Beschreibe deinen Post",
+              hintText: "Beschreibe Deinen Post",
               hintStyle: TextStyle(color: Colors.grey),
             ),
-          )
+          ),
+          const SizedBox(
+              height: 60) // so the field does not overlap with the FAB
         ],
       ),
     );

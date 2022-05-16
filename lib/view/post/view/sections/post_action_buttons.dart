@@ -11,6 +11,9 @@ import '../../../paginated_list/cubit/paginated_list_cubit.dart';
 import '../../cubits/post_editor_cubit/post_editor_cubit.dart';
 import '../../cubits/post_viewer_cubit/post_cubit.dart';
 
+/// Buttons on the post page. In viewing mode, these are used to allow the user
+/// to join posts and access the chat. In [editing] mode the button is used to
+/// submit the post
 class PostActionButtons extends StatelessWidget {
   final bool editing;
   const PostActionButtons(this.editing, {Key? key}) : super(key: key);
@@ -118,24 +121,27 @@ class _Edit extends StatelessWidget {
 
   Widget _sendButton(BuildContext context, bool processing,
       {bool valid = true}) {
-    return PostActionButtons._mainFAB(
-      context,
-      title: "senden",
-      icon: FeatherIcons.send,
-      isLoading: processing,
-      color: valid
-          ? Theme.of(context).colorScheme.primary
-          : _lightenColor(Theme.of(context).colorScheme.primary, 0.16),
-      onTap: valid
-          ? () => context.read<PostEditorCubit>().submit()
-          : () => Tools.showSnackbar(context, "Bitte alles ausfüllen"),
-    );
+    return Stack(children: <Widget>[
+      Align(
+          alignment: Alignment.bottomRight,
+          child: PostActionButtons._mainFAB(
+            context,
+            title: "senden",
+            icon: FeatherIcons.send,
+            isLoading: processing,
+            color: valid
+                ? Theme.of(context).colorScheme.primary
+                : _lightenColor(Theme.of(context).colorScheme.primary, 0.16),
+            onTap: valid
+                ? () => context.read<PostEditorCubit>().submit()
+                : () => Tools.showSnackbar(context, "Bitte alles ausfüllen"),
+          ))
+    ]);
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<PostEditorCubit, PostEditorState>(
-        buildWhen: (prev, curr) => prev.runtimeType != curr.runtimeType,
         builder: (context, state) => state.maybeWhen(
             orElse: () => Container(),
             editEvent: (_, valid) => _sendButton(context, false, valid: valid),

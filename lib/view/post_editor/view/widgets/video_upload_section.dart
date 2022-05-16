@@ -29,7 +29,7 @@ class VideoUploadSection extends StatelessWidget {
                 cubit: uploadCubits[0],
                 onDelete: (cubitId) =>
                     context.read<PostEditorCubit>().removeVideo(cubitId),
-                width: 125,
+                //width: 125,
                 height: 210,
               )
             : Container(

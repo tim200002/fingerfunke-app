@@ -5,13 +5,13 @@ import 'package:fingerfunke_app/models/asset/asset.dart';
 import 'package:fingerfunke_app/models/post/post.dart';
 import 'package:fingerfunke_app/repositories/video_repository/video_repository.impl.dart';
 import 'package:fingerfunke_app/utils/app_theme.dart';
-import 'package:fingerfunke_app/utils/dev_tools.dart';
 import 'package:fingerfunke_app/utils/util_widgets/floating_modal.dart';
 import 'package:fingerfunke_app/view/fullscreen_video/view/fullscreen_video_page.dart';
 import 'package:fingerfunke_app/view/post/view/widgets/post_settings_modal_content.dart';
 import 'package:fingerfunke_app/view/post_feed/view/post_feed_item_blur_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import '../../../../common_widgets/helper_widgets.dart';
 import '../../../../common_widgets/upload/video_upload_tile.dart';
@@ -22,6 +22,8 @@ import '../../cubits/post_editor_cubit/post_editor_cubit.dart';
 import '../../cubits/post_viewer_cubit/post_cubit.dart';
 import '../../editor_models/general_editor_fields.dart';
 
+/// Widget to display a button with additional [widget] on the left. This widget
+/// can for example be used to display an Icon or loading indicator
 class ElevatedButtonWithWidgetLeft extends StatelessWidget {
   final String text;
   final Widget widget;
@@ -64,6 +66,8 @@ class ElevatedButtonWithWidgetLeft extends StatelessWidget {
   }
 }
 
+/// Button that has a solid background to make it easier to see when overlaid
+/// over video content
 class PostAppBarButton extends StatelessWidget {
   final IconData icon;
   final Function() onPressed;
@@ -95,6 +99,8 @@ class PostAppBarButton extends StatelessWidget {
   }
 }
 
+/// Section that displays the video and title of the given post
+/// In [editing] mode, the video and title are editable
 class HeaderSection extends StatelessWidget {
   static const double titleHeight = 80 + 20;
   static const titleMaxCharacters = 160;
@@ -111,6 +117,10 @@ class HeaderSection extends StatelessWidget {
   static Widget _titleCardHeader(
       BuildContext context, double thumbnailHeight, double titleOverlap,
       {required String title, void Function(String)? onChanged}) {
+    final TextStyle titleStyle = Theme.of(context)
+        .textTheme
+        .headline5!
+        .copyWith(fontWeight: FontWeight.w600, height: 1.3);
     return Container(
       margin: EdgeInsets.only(
           left: 15, right: 15, bottom: 20, top: thumbnailHeight - titleOverlap),
@@ -137,27 +147,22 @@ class HeaderSection extends StatelessWidget {
                     title,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline5!
-                        .copyWith(fontWeight: FontWeight.w600, height: 1.3),
+                    style: titleStyle,
                     maxLines: 2,
                   )
                 : TextFormField(
                     initialValue: title,
-                    style: Theme.of(context).textTheme.headline5,
+                    style: titleStyle,
                     minLines: 1,
-                    maxLines: 3,
+                    maxLines: 2,
                     maxLength: titleMaxCharacters,
                     onChanged: onChanged,
                     decoration: InputDecoration(
+                        isCollapsed: true,
                         counterText: "",
                         border: InputBorder.none,
                         hintText: "Titel des Posts",
-                        hintStyle: Theme.of(context)
-                            .textTheme
-                            .headline5
-                            ?.copyWith(color: Colors.grey)),
+                        hintStyle: titleStyle.copyWith(color: Colors.grey)),
                   ),
           ],
         ),
@@ -226,10 +231,12 @@ class HeaderSection extends StatelessWidget {
                   bottom: 12,
                 ),
                 child: PostAppBarButton(
-                  icon: Icons.settings,
+                  icon: FeatherIcons.settings,
                   onPressed: () => showFloatingModalBottomSheet(
                     context: context,
-                    builder: (_) => const PostSettingsModalContent(),
+                    builder: (_) => BlocProvider<PostCubit>.value(
+                        value: context.read<PostCubit>(), //
+                        child: const PostSettingsModalContent()),
                   ),
                 ),
               )
