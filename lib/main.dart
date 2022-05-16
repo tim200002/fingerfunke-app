@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:fingerfunke_app/app.dart';
 import 'package:fingerfunke_app/cubits/authentication_cubit/authentication_cubit.dart';
+import 'package:fingerfunke_app/cubits/live_config_cubit/live_config_cubit.dart';
 import 'package:fingerfunke_app/cubits/settings_cubit/settings_cubit.dart';
 import 'package:fingerfunke_app/repositories/settings_repository/settings_repository.dart';
 import 'package:fingerfunke_app/routes.dart';
@@ -95,6 +96,9 @@ class AppInflater extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => SettingsCubit(SettingsRepositoryImpl()),
+        ),
+        BlocProvider(
+          create: (context) => LiveConfigCubit(),
         ),
       ],
       child:

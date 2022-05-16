@@ -1,7 +1,9 @@
+import 'package:fingerfunke_app/cubits/live_config_cubit/live_config_cubit.dart';
 import 'package:fingerfunke_app/routes.dart';
 import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:fingerfunke_app/utils/dev_tools.dart';
 import 'package:fingerfunke_app/view/home/widgets/home_drawer/home_drawer_view.dart';
+import 'package:fingerfunke_app/view/paged_post_feed/view/paged_post_feed_view.dart';
 import 'package:fingerfunke_app/view/post_feed/view/post_feed_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -90,10 +92,13 @@ class _HomeViewState extends State<HomeView> {
       ),
       drawer: const HomeDrawer(),
       body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: AppTheme.PADDING_SIDE),
+        padding: const EdgeInsets.only(
+            left: AppTheme.PADDING_SIDE, right: AppTheme.PADDING_SIDE, top: 15),
         clipBehavior: Clip.none,
         child: _activePage == _HomePages.feedPage
-            ? const PostFeedView()
+            ? LiveConfig.builder((config) => config.pagedFeed
+                ? const PagedPostFeedView()
+                : const PostFeedView()) //const PostFeedView()
             : DevTools.placeholder("saved posts"),
       ),
       bottomNavigationBar: BottomAppBar(

@@ -9,12 +9,16 @@ import 'package:flutter/material.dart';
 import 'package:fingerfunke_app/utils/extensions/date_time.dart';
 
 class PostFeedImageItem extends StatelessWidget {
+  static const heroTag = "postcard_img";
+
   final Post _post;
-  const PostFeedImageItem(this._post, {Key? key}) : super(key: key);
+  final int? height;
+  const PostFeedImageItem(this._post, {Key? key, this.height})
+      : super(key: key);
 
   Widget _imageSection(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
-    const double aspectRatio = 2.5 / 2;
+    //const double aspectRatio = 2.5 / 2;
     return _post.media.isEmpty
         ? const Center(
             child: Icon(
@@ -30,7 +34,8 @@ class PostFeedImageItem extends StatelessWidget {
             ),
             fit: BoxFit.cover,
             width: width.toInt(),
-            height: (width ~/ aspectRatio),
+            height: height,
+            //height: (width ~/ aspectRatio),
           );
   }
 
@@ -63,38 +68,42 @@ class PostFeedImageItem extends StatelessWidget {
 
   Widget _contentSection(BuildContext context) {
     const double padding = 12;
-    return Container(
-      padding: const EdgeInsets.fromLTRB(padding, 100, padding, padding),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Colors.transparent,
-            Colors.black.withOpacity(0.7),
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Container(
+        padding: const EdgeInsets.fromLTRB(padding, 100, padding, padding),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.transparent,
+              Colors.black.withOpacity(0.7),
+            ],
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              _post.title,
+              style: AppTheme.textStyleCondensed(
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 23,
+                      color: Colors.white)),
+            ),
+            const SizedBox(
+              height: 9,
+            ),
+            AuthorInfo(
+              _post.author,
+              color: Colors.white,
+            ),
           ],
         ),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            _post.title,
-            style: AppTheme.textStyleCondensed(
-                style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 23,
-                    color: Colors.white)),
-          ),
-          const SizedBox(
-            height: 9,
-          ),
-          AuthorInfo(
-            _post.author,
-            color: Colors.white,
-          ),
-        ],
       ),
     );
   }

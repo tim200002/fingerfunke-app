@@ -28,6 +28,7 @@ class PostFeedView extends StatelessWidget {
                   // ToDo ich habe das gemacht, weil sonst die Liste nicht immer richtig neu gebaut wurde
                   // ich verstehe aber eigentlich zu wenig von keys vielleicht gibt es auch bessere Lösungen
                   key: ValueKey(post.id),
+                  height: 350,
                 ),
                 reverse: false,
                 endMessage: "there are no more events",

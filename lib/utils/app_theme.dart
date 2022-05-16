@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+// color used for illustrations: #9BDDDA
+
 /// Contains customized Theme
 class AppTheme {
   static const Color _light_primary = Color(0xffFF6060);

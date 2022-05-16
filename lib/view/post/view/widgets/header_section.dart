@@ -13,7 +13,7 @@ import 'package:fingerfunke_app/view/post/cubit/post_cubit.dart';
 import 'package:fingerfunke_app/view/post/view/widgets/post_app_bar_button.dart';
 import 'package:fingerfunke_app/view/post/view/widgets/post_settings_modal_content.dart';
 import 'package:fingerfunke_app/view/post/view/widgets/visibility_controller.dart';
-import 'package:fingerfunke_app/view/post_feed/view/post_feed_item_blur_view.dart';
+import 'package:fingerfunke_app/view/post_feed/view/post_feed_item_image_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -125,14 +125,14 @@ class HeaderSection extends StatelessWidget {
                     as VideoAsset)))),
         child: Stack(children: [
           Hero(
-            tag: PostFeedItemBlur.heroTag,
+            tag: PostFeedImageItem.heroTag,
             child: NetworkPlaceholderImage(
               VideoRepositoryImpl()
                   .createThumbnailUrl(post.media[0] as VideoAsset),
               Container(
                 color: Colors.grey,
               ),
-              width: MediaQuery.of(context).size.width.toInt(),
+              //width: MediaQuery.of(context).size.width.toInt(),
               fit: BoxFit.cover,
             ),
           ),

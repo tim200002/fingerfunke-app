@@ -9,9 +9,10 @@ class NetworkPlaceholderImage extends StatelessWidget {
   final Widget placeholder;
   final int? height;
   final int? width;
+  final int transitionMs;
   final BoxFit? fit;
   const NetworkPlaceholderImage(this.imageUrl, this.placeholder,
-      {Key? key, this.height, this.width, this.fit})
+      {Key? key, this.height, this.width, this.fit, this.transitionMs = 200})
       : super(key: key);
 
   @override
@@ -24,14 +25,14 @@ class NetworkPlaceholderImage extends StatelessWidget {
           height: height?.toDouble(),
           child: BlocBuilder<NetworkImageCubit, NetworkImageState>(
             builder: (context, state) => AnimatedSwitcher(
-              duration: const Duration(milliseconds: 100),
+              duration: Duration(milliseconds: transitionMs),
               child: state.when(
                 loading: () => placeholder,
                 imageLoaded: (file) => Image(
                   image: file,
                   fit: fit,
-                  width: width?.toDouble(),
-                  height: height?.toDouble(),
+                  width: width?.toDouble() ?? 1000,
+                  height: height?.toDouble() ?? 1000, //TODO fix sizing issue
                 ),
                 error: (error) => ErrorWidget(error),
               ),
