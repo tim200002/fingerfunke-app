@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter/material.dart';
 import 'package:fingerfunke_app/utils/type_aliases.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 class NetworkPlaceholderImage extends StatelessWidget {
   final Link imageUrl;
@@ -20,7 +21,8 @@ class NetworkPlaceholderImage extends StatelessWidget {
     return BlocProvider(
       create: (context) => NetworkImageCubit(imageUrl),
       child: Builder(
-        builder: (context) => SizedBox(
+        builder: (context) => Container(
+          color: Theme.of(context).colorScheme.primary,
           width: width?.toDouble(),
           height: height?.toDouble(),
           child: BlocBuilder<NetworkImageCubit, NetworkImageState>(
@@ -34,7 +36,26 @@ class NetworkPlaceholderImage extends StatelessWidget {
                   width: width?.toDouble() ?? 1000,
                   height: height?.toDouble() ?? 1000, //TODO fix sizing issue
                 ),
-                error: (error) => ErrorWidget(error),
+                error: (error) => Center(
+                    child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Icon(
+                      FeatherIcons.alertCircle,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Text(
+                      "Bild konnte nicht\ngeladen werden",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.onPrimary),
+                    )
+                  ],
+                )),
               ),
             ),
           ),

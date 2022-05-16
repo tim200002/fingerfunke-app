@@ -21,7 +21,8 @@ class NetworkImageCubit extends Cubit<NetworkImageState> {
         .getSingleImageFile(
           url,
         ) // maxHeight: height, maxWidth: width)
-        .then((image) => emit(NetworkImageState.imageLoaded(image)))
+        .then((image) => emit(NetworkImageState.imageLoaded(image)),
+            onError: (e) => emit(NetworkImageState.error(e)))
         .catchError((error, stacktrace) {
       emit(NetworkImageState.error(error));
     });
