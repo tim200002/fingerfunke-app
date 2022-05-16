@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class VideoUploadTile extends StatelessWidget {
   final double height;
-  final double width;
+  final double? width;
 
   final VideoUploadCubit cubit;
 
@@ -15,7 +15,7 @@ class VideoUploadTile extends StatelessWidget {
 
   const VideoUploadTile(
       {required this.cubit,
-      required this.width,
+      this.width,
       required this.height,
       required this.onDelete,
       Key? key})
@@ -84,7 +84,7 @@ class VideoUploadTile extends StatelessWidget {
         children: [
           getImage(thumbnail),
           IconButton(
-            iconSize: min(height, width) / 2,
+            iconSize: min(height, width ?? height) / 2,
             icon: const Icon(
               Icons.restart_alt,
             ),

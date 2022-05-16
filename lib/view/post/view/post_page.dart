@@ -2,6 +2,7 @@ import 'package:fingerfunke_app/models/message/message.dart';
 import 'package:fingerfunke_app/services/pagination/message_pagination_service.dart';
 import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:fingerfunke_app/utils/dev_tools.dart';
+import 'package:fingerfunke_app/utils/tools.dart';
 import 'package:fingerfunke_app/view/error/exception_view.dart';
 import 'package:fingerfunke_app/view/paginated_list/cubit/paginated_list_cubit.dart';
 import 'package:fingerfunke_app/view/post/view/sections/author_section.dart';
@@ -89,8 +90,10 @@ class PostPage extends StatelessWidget {
         signedIn: (user) => BlocProvider<PostEditorCubit>(
           create: (context) => PostEditorCubit(
               currentUser: user, postToBeEdited: arguments?.post),
-          child: BlocBuilder<PostEditorCubit, PostEditorState>(
+          child: BlocConsumer<PostEditorCubit, PostEditorState>(
             buildWhen: (prev, curr) => prev.runtimeType != curr.runtimeType,
+            listener: (context, state) =>
+                state.whenOrNull(error: (e) => Tools.showSnackbar(context, e)),
             builder: (context, state) => state.when(
               loading: () => const EditLoadingView(message: "loading"),
               editEvent: (_, __) => builder(context),

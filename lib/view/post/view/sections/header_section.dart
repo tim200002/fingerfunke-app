@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:fingerfunke_app/common_widgets/image/network_placeholder_image.dart/network_placeholder_image.dart';
 import 'package:fingerfunke_app/models/asset/asset.dart';
 import 'package:fingerfunke_app/models/post/post.dart';
@@ -11,7 +13,14 @@ import 'package:fingerfunke_app/view/post_feed/view/post_feed_item_blur_view.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../common_widgets/helper_widgets.dart';
+import '../../../../common_widgets/upload/video_upload_tile.dart';
+import '../../../../cubits/video_upload_cubit/video_upload_cubit.dart';
+import '../../../../utils/exceptions.dart';
+import '../../../video_recorder/view/video_recorder_page.dart';
+import '../../cubits/post_editor_cubit/post_editor_cubit.dart';
 import '../../cubits/post_viewer_cubit/post_cubit.dart';
+import '../../editor_models/general_editor_fields.dart';
 
 class ElevatedButtonWithWidgetLeft extends StatelessWidget {
   final String text;
@@ -88,6 +97,8 @@ class PostAppBarButton extends StatelessWidget {
 
 class HeaderSection extends StatelessWidget {
   static const double titleHeight = 80 + 20;
+  static const titleMaxCharacters = 160;
+  static const imgBorderRadius = Radius.circular(20);
 
   final bool editing;
   final double thumbnailHeight;
@@ -97,10 +108,9 @@ class HeaderSection extends StatelessWidget {
       {Key? key, this.thumbnailHeight = 350, this.titleOverlap = 30})
       : super(key: key);
 
-  Widget _contentCardHeader(
-    BuildContext context,
-    Post post,
-  ) {
+  static Widget _titleCardHeader(
+      BuildContext context, double thumbnailHeight, double titleOverlap,
+      {required String title, void Function(String)? onChanged}) {
     return Container(
       margin: EdgeInsets.only(
           left: 15, right: 15, bottom: 20, top: thumbnailHeight - titleOverlap),
@@ -122,16 +132,33 @@ class HeaderSection extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              post.title,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.center,
-              style: Theme.of(context)
-                  .textTheme
-                  .headline5!
-                  .copyWith(fontWeight: FontWeight.w600, height: 1.3),
-              maxLines: 2,
-            ),
+            onChanged == null
+                ? Text(
+                    title,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline5!
+                        .copyWith(fontWeight: FontWeight.w600, height: 1.3),
+                    maxLines: 2,
+                  )
+                : TextFormField(
+                    initialValue: title,
+                    style: Theme.of(context).textTheme.headline5,
+                    minLines: 1,
+                    maxLines: 3,
+                    maxLength: titleMaxCharacters,
+                    onChanged: onChanged,
+                    decoration: InputDecoration(
+                        counterText: "",
+                        border: InputBorder.none,
+                        hintText: "Titel des Posts",
+                        hintStyle: Theme.of(context)
+                            .textTheme
+                            .headline5
+                            ?.copyWith(color: Colors.grey)),
+                  ),
           ],
         ),
       ),
@@ -139,7 +166,6 @@ class HeaderSection extends StatelessWidget {
   }
 
   Widget _postThumbnail(BuildContext context, Post post) {
-    const imgBorderRadius = Radius.circular(20);
     return ClipRRect(
       borderRadius: const BorderRadius.only(
         bottomLeft: imgBorderRadius,
@@ -175,10 +201,6 @@ class HeaderSection extends StatelessWidget {
     );
   }
 
-  Widget _editContent(BuildContext context) {
-    return DevTools.placeholder("header");
-  }
-
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
@@ -191,7 +213,7 @@ class HeaderSection extends StatelessWidget {
             top: 12.0 + AppTheme.PADDING_SIDE,
             bottom: 12),
         child: PostAppBarButton(
-            icon: Icons.arrow_back_ios_rounded,
+            icon: editing ? Icons.close_rounded : Icons.arrow_back_ios_rounded,
             onPressed: () => Navigator.of(context).pop()),
       ),
       actions: editing
@@ -227,9 +249,9 @@ class HeaderSection extends StatelessWidget {
         stretchModes: const [
           StretchMode.zoomBackground,
         ],
-        collapseMode: CollapseMode.parallax,
+        collapseMode: editing ? CollapseMode.pin : CollapseMode.parallax,
         background: editing
-            ? _editContent(context)
+            ? _Edit(thumbnailHeight, titleOverlap)
             : BlocBuilder<PostCubit, PostState>(
                 builder: (context, state) => state.when(
                   loading: (_) => const CircularProgressIndicator.adaptive(),
@@ -238,12 +260,84 @@ class HeaderSection extends StatelessWidget {
                       SizedBox(
                           height: thumbnailHeight,
                           child: _postThumbnail(context, post)),
-                      _contentCardHeader(context, post),
+                      _titleCardHeader(context, thumbnailHeight, titleOverlap,
+                          title: post.title),
                     ],
                   ),
                 ),
               ),
       ),
+    );
+  }
+}
+
+class _Edit extends StatelessWidget {
+  final double thumbnailHeight;
+  final double titleOverlap;
+  const _Edit(this.thumbnailHeight, this.titleOverlap, {Key? key})
+      : super(key: key);
+
+  Widget _thumbnail(
+    BuildContext context,
+    List<VideoUploadCubit> uploadCubits,
+  ) {
+    return ClipRRect(
+        borderRadius: const BorderRadius.only(
+          bottomLeft: HeaderSection.imgBorderRadius,
+          bottomRight: HeaderSection.imgBorderRadius,
+        ),
+        child: InkWell(
+          onTap: () async {
+            File? video =
+                await Navigator.push<File?>(context, VideoRecorderPage.route());
+            if (video != null) {
+              context.read<PostEditorCubit>().addVideo(video);
+            }
+          },
+          child: HelperWidgets.materialHero(
+            tag: VideoRecorderPage.videoHeroTag,
+            child: (uploadCubits.isNotEmpty)
+                ? VideoUploadTile(
+                    cubit: uploadCubits[0],
+                    onDelete: (cubitId) =>
+                        context.read<PostEditorCubit>().removeVideo(cubitId),
+                    height: 210,
+                  )
+                : Container(
+                    height: 210,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primaryVariant,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child:
+                        const Center(child: Icon(Icons.add_a_photo_outlined)),
+                  ),
+          ),
+        ));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<PostEditorCubit, PostEditorState>(
+      builder: (context, state) => state.maybeWhen(
+          editEvent: (fields, _) => Stack(
+                children: [
+                  SizedBox(
+                      height: thumbnailHeight,
+                      child: _thumbnail(context, fields.videoUploadCubits)),
+                  HeaderSection._titleCardHeader(
+                    context,
+                    thumbnailHeight,
+                    titleOverlap,
+                    title: fields.title,
+                    onChanged: (t) => BlocProvider.of<PostEditorCubit>(context)
+                        .updateInformation(GeneralEditorFields.copyWithHelper(
+                            fields,
+                            title: t)),
+                  ),
+                ],
+              ),
+          orElse: () => throw InvalidStateException()),
     );
   }
 }

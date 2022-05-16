@@ -1,9 +1,10 @@
-import 'package:fingerfunke_app/models/post/post.dart';
-import 'package:fingerfunke_app/utils/dev_tools.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../utils/exceptions.dart';
+import '../../cubits/post_editor_cubit/post_editor_cubit.dart';
 import '../../cubits/post_viewer_cubit/post_cubit.dart';
+import '../../editor_models/general_editor_fields.dart';
 
 class PostDescriptionSection extends StatelessWidget {
   final bool editing;
@@ -12,7 +13,7 @@ class PostDescriptionSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return editing
-        ? DevTools.placeholder("description")
+        ? const _Edit()
         : BlocBuilder<PostCubit, PostState>(
             builder: (context, state) => state.when(
                 loading: (_) => const CircularProgressIndicator.adaptive(),
@@ -23,5 +24,43 @@ class PostDescriptionSection extends StatelessWidget {
                         style: Theme.of(context).textTheme.subtitle2,
                       ),
                     )));
+  }
+}
+
+class _Edit extends StatelessWidget {
+  const _Edit({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    GeneralEditorFields fields = BlocProvider.of<PostEditorCubit>(context)
+        .state
+        .maybeWhen(
+            editEvent: (fields, _) => fields,
+            editGroup: (fields, _) => fields,
+            orElse: () => throw InvalidStateException());
+    return BlocListener<PostEditorCubit, PostEditorState>(
+      listener: (context, state) => state.maybeWhen(
+          editEvent: (updatedFields, _) => fields = updatedFields,
+          editGroup: (updatedFields, _) => fields = updatedFields,
+          orElse: () => throw InvalidStateException()),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // title field
+          TextFormField(
+            initialValue: fields.description,
+            maxLines: null,
+            onChanged: (value) => BlocProvider.of<PostEditorCubit>(context)
+                .updateInformation(GeneralEditorFields.copyWithHelper(fields,
+                    description: value)),
+            decoration: const InputDecoration(
+              border: InputBorder.none,
+              hintText: "Beschreibe deinen Post",
+              hintStyle: TextStyle(color: Colors.grey),
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
