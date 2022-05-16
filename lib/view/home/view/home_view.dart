@@ -6,8 +6,17 @@ import 'package:fingerfunke_app/view/post_feed/view/post_feed_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+enum _HomePages { feedPage, savedPage }
+
+class _HomeViewState extends State<HomeView> {
+  _HomePages _activePage = _HomePages.feedPage;
 
   // ignore: non_constant_identifier_names
   Widget _DEMOPlaceIndicator(BuildContext context) {
@@ -83,7 +92,9 @@ class HomeView extends StatelessWidget {
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: AppTheme.PADDING_SIDE),
         clipBehavior: Clip.none,
-        child: const PostFeedView(),
+        child: _activePage == _HomePages.feedPage
+            ? const PostFeedView()
+            : DevTools.placeholder("saved posts"),
       ),
       bottomNavigationBar: BottomAppBar(
         child: Row(
@@ -92,8 +103,9 @@ class HomeView extends StatelessWidget {
             _bottomNavItem(context,
                 title: "Entdecken",
                 icon: FeatherIcons.compass,
-                selected: true,
-                onPressed: () => DevTools.showToDoSnackbar(context)),
+                selected: _activePage == _HomePages.feedPage,
+                onPressed: () =>
+                    setState(() => _activePage = _HomePages.feedPage)),
             _bottomNavItem(context,
                 title: "Erstellen",
                 icon: FeatherIcons.plus,
@@ -102,8 +114,10 @@ class HomeView extends StatelessWidget {
                     Navigator.of(context).pushNamed(Routes.postEditor)),
             _bottomNavItem(context,
                 title: "Merkliste",
+                selected: _activePage == _HomePages.savedPage,
                 icon: FeatherIcons.heart,
-                onPressed: () => DevTools.showToDoSnackbar(context)),
+                onPressed: () =>
+                    setState(() => _activePage = _HomePages.savedPage)),
           ],
         ),
       ),
