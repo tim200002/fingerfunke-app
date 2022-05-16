@@ -53,7 +53,8 @@ class PostActionButtons extends StatelessWidget {
   Widget _viewContent(BuildContext context) {
     return BlocBuilder<PostCubit, PostState>(
         builder: (context, state) => state.when(
-            loading: (_) => const CircularProgressIndicator.adaptive(),
+            loading: (_) =>
+                const Center(child: CircularProgressIndicator.adaptive()),
             normal: (post, isJoining) {
               bool isParticipant = BlocProvider.of<AuthenticationCubit>(context)
                   .state

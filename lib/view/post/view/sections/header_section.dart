@@ -261,7 +261,8 @@ class HeaderSection extends StatelessWidget {
             ? _Edit(thumbnailHeight, titleOverlap)
             : BlocBuilder<PostCubit, PostState>(
                 builder: (context, state) => state.when(
-                  loading: (_) => const CircularProgressIndicator.adaptive(),
+                  loading: (_) =>
+                      const Center(child: CircularProgressIndicator.adaptive()),
                   normal: (post, isJoining) => Stack(
                     children: [
                       SizedBox(

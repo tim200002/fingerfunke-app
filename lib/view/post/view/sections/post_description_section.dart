@@ -18,7 +18,8 @@ class PostDescriptionSection extends StatelessWidget {
         ? const _Edit()
         : BlocBuilder<PostCubit, PostState>(
             builder: (context, state) => state.when(
-                loading: (_) => const CircularProgressIndicator.adaptive(),
+                loading: (_) =>
+                    const Center(child: CircularProgressIndicator.adaptive()),
                 normal: (post, isJoining) => Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12.0),
                       child: Text(

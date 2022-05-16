@@ -20,7 +20,8 @@ class EventDetailSection extends StatelessWidget {
         ? const _Edit()
         : BlocBuilder<PostCubit, PostState>(
             builder: (context, state) => state.when(
-                loading: (_) => const CircularProgressIndicator.adaptive(),
+                loading: (_) =>
+                    const Center(child: CircularProgressIndicator.adaptive()),
                 normal: (post, isJoining) => post is! Event
                     ? const Text("Die App unterstützt zur Zeit nur Events!")
                     : Column(
