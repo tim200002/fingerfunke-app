@@ -8,7 +8,7 @@ import 'package:fingerfunke_app/view/saved/view/saved_page.dart';
 import 'view/app_info/subpages/licenses/view/oss_licenses_page.dart';
 import 'view/app_info/subpages/manage_account/view/manage_account_page.dart';
 import 'view/app_info/subpages/settings/view/settings_page.dart';
-import 'view/app_info/subpages/view/developement_util_functions_page.dart';
+import 'view/app_info/subpages/view/settings_dev_tools_page.dart';
 
 /// this variable holds the global routes that can be used within the app
 /// the widgets used with this routing should end with the suffix 'Page' to
@@ -19,7 +19,7 @@ class Routes {
   static const post = "/post";
   static const manageAccount = "/manageAccount";
   static const postEditor = "/create";
-  static const developementUtils = "/developementUtils";
+  static const devtools = "/devtools";
   static const settings = "/settings";
 
   static const about = "/about";
@@ -34,7 +34,7 @@ final routes = {
   Routes.manageAccount: (context) => const ManageAccountPage(),
   Routes.postEditor: (context) => const PostPage(editing: true),
   Routes.post: (context) => const PostPage(),
-  Routes.developementUtils: (context) => const DevelopementUtilFunctionsPage(),
+  Routes.devtools: (context) => const DevToolsPage(),
   Routes.licenses: (context) => const OssLicensesPage(),
   Routes.settings: (context) => const SettingsPage(),
   Routes.about: (context) => const AppInfoPage(),

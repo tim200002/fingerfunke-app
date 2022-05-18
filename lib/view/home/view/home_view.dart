@@ -1,13 +1,24 @@
+import 'package:fingerfunke_app/cubits/live_config_cubit/live_config_cubit.dart';
 import 'package:fingerfunke_app/routes.dart';
 import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:fingerfunke_app/utils/dev_tools.dart';
 import 'package:fingerfunke_app/view/home/widgets/home_drawer/home_drawer_view.dart';
+import 'package:fingerfunke_app/view/paged_post_feed/view/paged_post_feed_view.dart';
 import 'package:fingerfunke_app/view/post_feed/view/post_feed_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+enum _HomePages { feedPage, savedPage }
+
+class _HomeViewState extends State<HomeView> {
+  _HomePages _activePage = _HomePages.feedPage;
 
   // ignore: non_constant_identifier_names
   Widget _DEMOPlaceIndicator(BuildContext context) {
@@ -81,9 +92,14 @@ class HomeView extends StatelessWidget {
       ),
       drawer: const HomeDrawer(),
       body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: AppTheme.PADDING_SIDE),
+        padding: const EdgeInsets.only(
+            left: AppTheme.PADDING_SIDE, right: AppTheme.PADDING_SIDE, top: 15),
         clipBehavior: Clip.none,
-        child: const PostFeedView(),
+        child: _activePage == _HomePages.feedPage
+            ? LiveConfig.builder((config) => config.pagedFeed
+                ? const PagedPostFeedView()
+                : const PostFeedView()) //const PostFeedView()
+            : DevTools.placeholder("saved posts"),
       ),
       bottomNavigationBar: BottomAppBar(
         child: Row(
@@ -92,8 +108,9 @@ class HomeView extends StatelessWidget {
             _bottomNavItem(context,
                 title: "Entdecken",
                 icon: FeatherIcons.compass,
-                selected: true,
-                onPressed: () => DevTools.showToDoSnackbar(context)),
+                selected: _activePage == _HomePages.feedPage,
+                onPressed: () =>
+                    setState(() => _activePage = _HomePages.feedPage)),
             _bottomNavItem(context,
                 title: "Erstellen",
                 icon: FeatherIcons.plus,
@@ -102,8 +119,10 @@ class HomeView extends StatelessWidget {
                     Navigator.of(context).pushNamed(Routes.postEditor)),
             _bottomNavItem(context,
                 title: "Merkliste",
+                selected: _activePage == _HomePages.savedPage,
                 icon: FeatherIcons.heart,
-                onPressed: () => DevTools.showToDoSnackbar(context)),
+                onPressed: () =>
+                    setState(() => _activePage = _HomePages.savedPage)),
           ],
         ),
       ),

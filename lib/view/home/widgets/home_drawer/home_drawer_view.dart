@@ -57,8 +57,7 @@ class HomeDrawer extends StatelessWidget {
               ListTile(
                 leading: const Icon(FeatherIcons.penTool),
                 title: const Text('DevTools'),
-                onTap: () =>
-                    Navigator.of(context).pushNamed(Routes.developementUtils),
+                onTap: () => Navigator.of(context).pushNamed(Routes.devtools),
               ),
             ],
           ),
