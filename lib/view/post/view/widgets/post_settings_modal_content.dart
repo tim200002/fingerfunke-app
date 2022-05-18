@@ -1,5 +1,6 @@
 import 'package:fingerfunke_app/cubits/authentication_cubit/authentication_cubit.dart';
 import 'package:fingerfunke_app/routes.dart';
+import 'package:fingerfunke_app/utils/dev_tools.dart';
 import 'package:fingerfunke_app/view/post_editor/view/post_editor_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,7 +36,7 @@ class PostSettingsModalContent extends StatelessWidget {
                   ListTile(
                     leading: const Icon(Icons.people_rounded),
                     title: const Text('Teilnehmer'),
-                    onTap: () => Navigator.of(context).pop(),
+                    onTap: () => DevTools.showToDoSnackbar(context),
                   ),
                   if (isAuthor)
                     ListTile(
@@ -51,7 +52,7 @@ class PostSettingsModalContent extends StatelessWidget {
                     ListTile(
                       leading: const Icon(Icons.edit),
                       title: const Text('Verlassen'),
-                      onTap: () {},
+                      onTap: () => DevTools.showToDoSnackbar(context),
                     ),
                   if (isAuthor)
                     ListTile(
@@ -64,7 +65,7 @@ class PostSettingsModalContent extends StatelessWidget {
                         style: TextStyle(
                             color: Theme.of(context).colorScheme.error),
                       ),
-                      onTap: () {},
+                      onTap: () => DevTools.showToDoSnackbar(context),
                     ),
                   if (!isAuthor)
                     ListTile(
