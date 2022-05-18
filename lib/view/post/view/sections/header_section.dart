@@ -8,7 +8,6 @@ import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:fingerfunke_app/utils/util_widgets/floating_modal.dart';
 import 'package:fingerfunke_app/view/fullscreen_video/view/fullscreen_video_page.dart';
 import 'package:fingerfunke_app/view/post/view/widgets/post_settings_modal_content.dart';
-import 'package:fingerfunke_app/view/post_feed/view/post_feed_item_blur_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -183,7 +182,7 @@ class HeaderSection extends StatelessWidget {
                     as VideoAsset)))),
         child: Stack(children: [
           Hero(
-            tag: PostFeedItemBlur.heroTag,
+            tag: "", //TODO: reenable hero tag  PostFeedItem.heroTag,
             child: NetworkPlaceholderImage(
               VideoRepositoryImpl()
                   .createThumbnailUrl(post.media[0] as VideoAsset),
