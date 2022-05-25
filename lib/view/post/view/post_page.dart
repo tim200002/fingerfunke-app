@@ -2,6 +2,7 @@ import 'package:fingerfunke_app/models/message/message.dart';
 import 'package:fingerfunke_app/services/pagination/message_pagination_service.dart';
 import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:fingerfunke_app/utils/util_widgets/loading_page.dart';
+import 'package:fingerfunke_app/view/maps/view/maps_location_widget.dart';
 import 'package:fingerfunke_app/view/paginated_list/cubit/paginated_list_cubit.dart';
 import 'package:fingerfunke_app/view/post/cubit/post_cubit.dart';
 import 'package:fingerfunke_app/view/post/view/widgets/author_section.dart';
@@ -37,6 +38,8 @@ class PostPage extends StatelessWidget {
                         EventDetailSection(editing),
                         const SizedBox(height: 15),
                         PostDescriptionSection(editing),
+                        const SizedBox(height: 24),
+                        const MapsLocationWidget(),
                         const SizedBox(height: 24),
                         AuthorSection(editing)
                       ],
