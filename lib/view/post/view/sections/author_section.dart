@@ -1,11 +1,10 @@
-import 'package:fingerfunke_app/models/user/user.dart';
-import 'package:fingerfunke_app/utils/dev_tools.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../utils/util_widgets/loading_page.dart';
-import '../../cubit/post_cubit.dart';
+import '../../cubits/post_viewer_cubit/post_cubit.dart';
 
+/// shows information about the author of the post.
+/// In [editing] mode, nothing is shown
 class AuthorSection extends StatelessWidget {
   final bool editing;
   const AuthorSection(this.editing, {Key? key}) : super(key: key);
@@ -13,10 +12,11 @@ class AuthorSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return editing
-        ? DevTools.placeholder("authorSection")
+        ? Container() // show nothing on editing
         : BlocBuilder<PostCubit, PostState>(
             builder: (context, state) => state.when(
-                loading: (_) => const CircularProgressIndicator.adaptive(),
+                loading: (_) =>
+                    const Center(child: CircularProgressIndicator.adaptive()),
                 normal: (post, isJoining) => Center(
                       child: Padding(
                         padding: const EdgeInsets.all(12),

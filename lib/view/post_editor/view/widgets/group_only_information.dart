@@ -1,6 +1,6 @@
 import 'package:fingerfunke_app/utils/exceptions.dart';
 import 'package:fingerfunke_app/utils/tools.dart';
-import 'package:fingerfunke_app/view/post_editor/cubit/post_editor_cubit.dart';
+import 'package:fingerfunke_app/view/post/cubits/post_editor_cubit/post_editor_cubit.dart';
 import 'package:fingerfunke_app/view/post_editor/view/widgets/meta_info_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

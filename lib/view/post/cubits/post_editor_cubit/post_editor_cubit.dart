@@ -7,7 +7,7 @@ import 'package:fingerfunke_app/models/user/user.dart';
 import 'package:fingerfunke_app/repositories/post_repository/post_repository.dart';
 import 'package:fingerfunke_app/repositories/post_repository/post_repository.impl.dart';
 import 'package:fingerfunke_app/utils/exceptions.dart';
-import 'package:fingerfunke_app/view/post_editor/models/general_editor_fields.dart';
+import 'package:fingerfunke_app/view/post/editor_models/general_editor_fields.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:fingerfunke_app/cubits/video_upload_cubit/video_upload_cubit.dart';
 

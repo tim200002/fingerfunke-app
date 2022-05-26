@@ -1,7 +1,7 @@
 import 'package:fingerfunke_app/models/post/post.dart';
 import 'package:fingerfunke_app/utils/exceptions.dart';
-import 'package:fingerfunke_app/view/post_editor/cubit/post_editor_cubit.dart';
-import 'package:fingerfunke_app/view/post_editor/models/general_editor_fields.dart';
+import 'package:fingerfunke_app/view/post/cubits/post_editor_cubit/post_editor_cubit.dart';
+import 'package:fingerfunke_app/view/post/editor_models/general_editor_fields.dart';
 import 'package:fingerfunke_app/view/post_editor/view/widgets/event_only_information.dart';
 import 'package:fingerfunke_app/view/post_editor/view/widgets/event_or_group_selection_button.dart';
 import 'package:fingerfunke_app/view/post_editor/view/widgets/group_only_information.dart';

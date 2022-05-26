@@ -1,17 +1,24 @@
 import 'package:fingerfunke_app/models/message/message.dart';
 import 'package:fingerfunke_app/services/pagination/message_pagination_service.dart';
 import 'package:fingerfunke_app/utils/app_theme.dart';
-import 'package:fingerfunke_app/utils/util_widgets/loading_page.dart';
+import 'package:fingerfunke_app/utils/dev_tools.dart';
+import 'package:fingerfunke_app/utils/tools.dart';
+import 'package:fingerfunke_app/view/error/exception_view.dart';
 import 'package:fingerfunke_app/view/paginated_list/cubit/paginated_list_cubit.dart';
-import 'package:fingerfunke_app/view/post/cubit/post_cubit.dart';
-import 'package:fingerfunke_app/view/post/view/widgets/author_section.dart';
-import 'package:fingerfunke_app/view/post/view/widgets/header_section.dart';
-import 'package:fingerfunke_app/view/post/view/widgets/post_action_buttons.dart';
-import 'package:fingerfunke_app/view/post/view/widgets/post_description_section.dart';
+import 'package:fingerfunke_app/view/post/view/sections/author_section.dart';
+import 'package:fingerfunke_app/view/post/view/sections/header_section.dart';
+import 'package:fingerfunke_app/view/post/view/sections/post_action_buttons.dart';
+import 'package:fingerfunke_app/view/post/view/sections/post_description_section.dart';
+import 'package:fingerfunke_app/view/post_editor/view/widgets/edit_loading_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'widgets/event_detail_section.dart';
+import '../../../cubits/authentication_cubit/authentication_cubit.dart';
+import '../../post_editor/view/page_views/post_posted_success_view.dart';
+import '../../post_editor/view/post_editor_page.dart';
+import '../cubits/post_editor_cubit/post_editor_cubit.dart';
+import '../cubits/post_viewer_cubit/post_cubit.dart';
+import 'sections/event_detail_section.dart';
 
 class PostPage extends StatelessWidget {
   final bool editing;
@@ -72,8 +79,33 @@ class PostPage extends StatelessWidget {
   }
 
   Widget _editProviders(BuildContext context, Function(BuildContext) builder) {
-    return Container(
-      child: builder(context),
+    final PostEditorArguments? arguments =
+        ModalRoute.of(context)!.settings.arguments != null
+            ? ModalRoute.of(context)!.settings.arguments as PostEditorArguments
+            : null;
+    return BlocBuilder<AuthenticationCubit, AuthenticationState>(
+      builder: (context, state) => state.maybeWhen(
+        orElse: () =>
+            DevTools.placeholder("user is not signed in. push to login"),
+        signedIn: (user) => BlocProvider<PostEditorCubit>(
+          create: (context) => PostEditorCubit(
+              currentUser: user, postToBeEdited: arguments?.post),
+          child: BlocConsumer<PostEditorCubit, PostEditorState>(
+            buildWhen: (prev, curr) => prev.runtimeType != curr.runtimeType,
+            listener: (context, state) =>
+                state.whenOrNull(error: (e) => Tools.showSnackbar(context, e)),
+            builder: (context, state) => state.when(
+              loading: () => const EditLoadingView(message: "loading"),
+              editEvent: (_, __) => builder(context),
+              editGroup: (fields, inputValid) => ExceptionView(
+                  exception: Exception("editing groups is not yet possible")),
+              error: (message) => const EditErrorView(),
+              submitted: () => const PostPostedSuccessView(),
+              submitting: () => const EditLoadingView(message: "submitting"),
+            ),
+          ),
+        ),
+      ),
     );
   }
 
