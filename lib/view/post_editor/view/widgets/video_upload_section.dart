@@ -4,7 +4,7 @@ import 'package:fingerfunke_app/common_widgets/helper_widgets.dart';
 import 'package:fingerfunke_app/common_widgets/upload/video_upload_tile.dart';
 import 'package:fingerfunke_app/cubits/video_upload_cubit/video_upload_cubit.dart';
 import 'package:fingerfunke_app/utils/exceptions.dart';
-import 'package:fingerfunke_app/view/post_editor/cubit/post_editor_cubit.dart';
+import 'package:fingerfunke_app/view/post/cubits/post_editor_cubit/post_editor_cubit.dart';
 import 'package:fingerfunke_app/view/video_recorder/view/video_recorder_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,7 +29,7 @@ class VideoUploadSection extends StatelessWidget {
                 cubit: uploadCubits[0],
                 onDelete: (cubitId) =>
                     context.read<PostEditorCubit>().removeVideo(cubitId),
-                width: 125,
+                //width: 125,
                 height: 210,
               )
             : Container(
