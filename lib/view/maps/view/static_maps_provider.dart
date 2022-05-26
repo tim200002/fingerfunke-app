@@ -67,14 +67,14 @@ class _StaticMapsProviderState extends State<StaticMapsProvider> {
           margin: const EdgeInsets.symmetric(horizontal: 5.0),
           child: Stack(
             children: [
-              Center(
-                child: CustomPaint(
-                  painter: DrawCircle(),
-                ),
-              ),
               ClipRRect(
                 borderRadius: BorderRadius.circular(15),
                 child: Image.network(renderURL.toString()),
+              ),
+              Center(
+                child: CustomPaint(
+                  painter: DrawCircle(context),
+                ),
               ),
             ],
           ),
@@ -85,11 +85,14 @@ class _StaticMapsProviderState extends State<StaticMapsProvider> {
 }
 
 class DrawCircle extends CustomPainter {
+  final BuildContext context;
+  const DrawCircle(this.context);
+
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint();
-    paint.color = Colors.red;
-    canvas.drawCircle(Offset(0.0, 0.0), 50, paint);
+    paint.color = Theme.of(context).colorScheme.primary;
+    canvas.drawCircle(Offset(0.0, -20.0), 7, paint);
   }
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate)

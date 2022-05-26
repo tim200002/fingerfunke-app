@@ -51,7 +51,7 @@ class PostPage extends StatelessWidget {
                         const StaticMapsProvider(),
                         const SizedBox(height: 24),
                         AuthorSection(editing),
-                        const SizedBox(height: 200),
+                        const SizedBox(height: 96),
                       ],
                     ),
                   ),
