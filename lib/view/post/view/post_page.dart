@@ -4,6 +4,8 @@ import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:fingerfunke_app/utils/dev_tools.dart';
 import 'package:fingerfunke_app/utils/tools.dart';
 import 'package:fingerfunke_app/view/error/exception_view.dart';
+import 'package:fingerfunke_app/view/maps/view/maps_location_widget.dart';
+import 'package:fingerfunke_app/view/maps/view/static_maps_provider.dart';
 import 'package:fingerfunke_app/view/paginated_list/cubit/paginated_list_cubit.dart';
 import 'package:fingerfunke_app/view/post/view/sections/author_section.dart';
 import 'package:fingerfunke_app/view/post/view/sections/header_section.dart';
@@ -46,9 +48,10 @@ class PostPage extends StatelessWidget {
                         const SizedBox(height: 15),
                         PostDescriptionSection(editing),
                         const SizedBox(height: 24),
-                        const MapsLocationWidget(),
+                        const StaticMapsProvider(),
                         const SizedBox(height: 24),
-                        AuthorSection(editing)
+                        AuthorSection(editing),
+                        const SizedBox(height: 96),
                       ],
                     ),
                   ),
