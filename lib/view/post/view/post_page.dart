@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../cubits/authentication_cubit/authentication_cubit.dart';
+import '../../maps/view/maps_location_widget.dart';
 import '../../post_editor/view/page_views/post_posted_success_view.dart';
 import '../../post_editor/view/post_editor_page.dart';
 import '../cubits/post_editor_cubit/post_editor_cubit.dart';
