@@ -6,9 +6,11 @@ import 'package:video_player/video_player.dart';
 class VideoPlaybackView extends StatelessWidget {
   final BoxFit fit;
   final BorderRadius borderRadius;
+  final Widget? thumbnail;
   const VideoPlaybackView(
       {Key? key,
       this.fit = BoxFit.contain,
+      this.thumbnail,
       this.borderRadius = BorderRadius.zero})
       : super(key: key);
 
@@ -34,7 +36,9 @@ class VideoPlaybackView extends StatelessWidget {
       builder: (context, state) => AnimatedSwitcher(
         duration: const Duration(milliseconds: 100),
         child: state.when(
-            initializing: () => const Center(
+            initializing: () =>
+                thumbnail ??
+                const Center(
                   child: CircularProgressIndicator(),
                 ),
             playing: (controller, _) => _videoPlayer(context, controller),

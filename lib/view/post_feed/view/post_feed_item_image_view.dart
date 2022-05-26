@@ -7,6 +7,11 @@ import 'package:fingerfunke_app/routes.dart';
 import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:fingerfunke_app/utils/extensions/date_time.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../common_widgets/video/video_playback_cubit/video_playback_cubit.dart';
+import '../../../common_widgets/video/view/video_playback_view.dart';
+import '../../../cubits/live_config_cubit/live_config_cubit.dart';
 
 class PostFeedImageItem extends StatelessWidget {
   static const heroTag = "postcard_img";
@@ -16,9 +21,40 @@ class PostFeedImageItem extends StatelessWidget {
   const PostFeedImageItem(this._post, {Key? key, this.height})
       : super(key: key);
 
-  Widget _imageSection(BuildContext context) {
+  Widget _videoBackgroundView(BuildContext context) {
+    return BlocProvider(
+      create: (context) => VideoPlaybackCubit(
+          url: VideoRepositoryImpl().createPlaybackUrl((_post.media
+              .firstWhere((e) => e.type == asset_type.video) as VideoAsset)),
+          autoplay: true,
+          loop: true),
+      child: /*Builder(builder: (context) {
+        return GestureDetector(
+            onTap: () =>
+                BlocProvider.of<VideoPlaybackCubit>(context).togglePlay(),
+            child: */
+          VideoPlaybackView(
+        fit: BoxFit.cover,
+        thumbnail: _imageBackgroundView(context),
+      ),
+    );
+  }
+
+  Widget _imageBackgroundView(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
-    //const double aspectRatio = 2.5 / 2;
+    return NetworkPlaceholderImage(
+      VideoRepositoryImpl().createThumbnailUrl(_post.media[0] as VideoAsset),
+      Container(
+        color: Colors.grey,
+      ),
+      fit: BoxFit.cover,
+      width: width.toInt(),
+      height: height,
+      //height: (width ~/ aspectRatio),
+    );
+  }
+
+  Widget _backgroundView(BuildContext context) {
     return _post.media.isEmpty
         ? const Center(
             child: Icon(
@@ -26,17 +62,9 @@ class PostFeedImageItem extends StatelessWidget {
               color: Colors.white,
             ),
           )
-        : NetworkPlaceholderImage(
-            VideoRepositoryImpl()
-                .createThumbnailUrl(_post.media[0] as VideoAsset),
-            Container(
-              color: Colors.grey,
-            ),
-            fit: BoxFit.cover,
-            width: width.toInt(),
-            height: height,
-            //height: (width ~/ aspectRatio),
-          );
+        : LiveConfig.builder((config) => config.pagedFeed
+            ? _videoBackgroundView(context)
+            : _imageBackgroundView(context));
   }
 
   Widget _eventDateWidget(BuildContext context) {
@@ -118,7 +146,7 @@ class PostFeedImageItem extends StatelessWidget {
           child: ClipRRect(
               borderRadius: BorderRadius.circular(14),
               child: Stack(alignment: Alignment.bottomCenter, children: [
-                _imageSection(context),
+                _backgroundView(context),
                 if (_post is Event)
                   Positioned(
                     top: 10,
