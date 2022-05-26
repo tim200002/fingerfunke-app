@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_config/flutter_config.dart';
 
 class MapsLocationWidget extends StatefulWidget {
   final LatLng location;
@@ -46,20 +47,16 @@ class _MapsLocationWidgetState extends State<MapsLocationWidget> {
         margin: const EdgeInsets.symmetric(horizontal: 5.0),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(15),
-          child: GoogleMap(
-            onTap: (latLang) async {
+          child: GestureDetector(
+            onTap: () async {
               if (await canLaunch(googleUrl)) {
                 await launch(googleUrl);
               } else {
                 throw 'Could not open the map.';
               }
             },
-            mapType: MapType.normal,
-            initialCameraPosition: camPos,
-            myLocationEnabled: true,
-            myLocationButtonEnabled: false,
-            zoomControlsEnabled: false,
-            markers: Set<Marker>.of(markers.values),
+            child: Image.network('https://maps.googleapis.com/maps/api/staticmap?center=37.0902%2C-95.7192&zoom=14&size=600x600&${
+                FlutterConfig.get('GOOGLE_MAPS_API_KEY_ANDROID')}'),
           ),
         ),
       ),
