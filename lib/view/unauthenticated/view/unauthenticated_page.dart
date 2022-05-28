@@ -19,13 +19,14 @@ class UnauthenticatedPage extends StatelessWidget {
           children: [
             Illustration(Illustrations.party),
             const Text(
-              "Hi!",
+              "Heyy!",
               style: TextStyle(
                 fontSize: 50,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w900,
               ),
             ),
-            const Text("welcome to fingerfunke",
+            const SizedBox(height: 20),
+            const Text("Willkommen bei fingerfunke!",
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
@@ -40,16 +41,8 @@ class UnauthenticatedPage extends StatelessWidget {
         children: [
           ElevatedButton(
             onPressed: () => Navigator.of(context).push(PhoneLoginPage.route()),
-            child: const Text("Login or create new Account"),
+            child: const Text("Anmelden"),
           ),
-          TextButton(
-            onPressed: () {
-              AuthenticaionRepositoryImpl().signInAnonymously().onError(
-                  (_, __) =>
-                      Tools.showSnackbar(context, "Oops something went wrong"));
-            },
-            child: const Text("skip"),
-          )
         ],
       ));
 

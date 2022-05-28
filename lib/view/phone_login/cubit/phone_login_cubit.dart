@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:fingerfunke_app/repositories/authentication_repository/authetication_repository.dart';
 import 'package:fingerfunke_app/utils/loading_overlay.dart';
+import 'package:fingerfunke_app/utils/logger.dart';
 import 'package:fingerfunke_app/utils/tools.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class PhoneLoginCubit extends Cubit<PhoneLoginState> {
 
   Future<void> sendSMSCode({required String phoneNumber}) async {
     emit(const PhoneLoginState.enterPhoneNumber(isLoading: true));
+    _logger.v("sending SMS to: $phoneNumber");
     await _authenticationRepository.sendSMSCode(
         phoneNumber: phoneNumber,
         verificationCompleted: (phoneAuthCredentials) {

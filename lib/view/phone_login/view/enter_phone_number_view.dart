@@ -3,6 +3,7 @@ import 'package:fingerfunke_app/utils/form_validator.dart';
 import 'package:fingerfunke_app/view/phone_login/cubit/phone_login_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 
 class EnterPhoneNumberView extends StatefulWidget {
   const EnterPhoneNumberView({Key? key}) : super(key: key);
@@ -32,16 +33,22 @@ class _EnterPhoneNumberViewState extends State<EnterPhoneNumberView> {
                 "We will send you a verification code once you entered your phone nnumber"),
           ),
           Padding(
-            padding: const EdgeInsets.only(bottom: 40),
-            child: TextFormField(
-              decoration: const InputDecoration(
-                  labelText:
-                      "mobile number (z.B. +49 160...)"), // prefixText: "+49"),
-              keyboardType: TextInputType.phone,
-              validator: (number) => FormValidator.validatePhoneNumber(number),
-              controller: _phoneInputController,
-            ),
-          ),
+              padding: const EdgeInsets.only(bottom: 40),
+              child: IntlPhoneField(
+                showDropdownIcon: false,
+                disableLengthCheck: true,
+                decoration: const InputDecoration(
+                  labelText: 'Phone Number',
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+                initialCountryCode: 'DE',
+                onChanged: (nr) =>
+                    _phoneInputController.text = nr.countryCode + nr.number,
+                //validator:  (number) => FormValidator.validatePhoneNumber(number.toString()),
+                //controller: _phoneInputController.,
+              )),
           BlocBuilder<PhoneLoginCubit, PhoneLoginState>(
               builder: (context, state) {
             return state.maybeWhen(

@@ -22,7 +22,7 @@ class NetworkPlaceholderImage extends StatelessWidget {
       create: (context) => NetworkImageCubit(imageUrl),
       child: Builder(
         builder: (context) => Container(
-          color: Theme.of(context).colorScheme.primary,
+          color: Theme.of(context).colorScheme.background,
           width: width?.toDouble(),
           height: height?.toDouble(),
           child: BlocBuilder<NetworkImageCubit, NetworkImageState>(
