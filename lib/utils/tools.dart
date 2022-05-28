@@ -82,4 +82,37 @@ class Tools {
 
     return file;
   }
+
+  static void navigate(BuildContext context,
+      {required Widget Function(bool isDialog) builder, String? routeName}) {
+    MediaQuery.of(context).size.width > 700
+        ? showDialog<void>(
+            context: context,
+            //useSafeArea: false,
+            barrierDismissible: true, // user must tap button!
+            builder: (BuildContext context) {
+              var mediaQuery = MediaQuery.of(context);
+              return Material(
+                  type: MaterialType.transparency,
+                  child: AnimatedContainer(
+                      padding: mediaQuery.viewInsets,
+                      duration: const Duration(milliseconds: 300),
+                      child: Center(
+                          child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Container(
+                          color: Theme.of(context).colorScheme.background,
+                          constraints:
+                              BoxConstraints(maxWidth: 500, maxHeight: 600),
+                          child: builder(true),
+                        ),
+                      ))));
+            })
+        : Navigator.push(
+            context,
+            MaterialPageRoute<void>(
+                builder: (_) =>
+                    Container(color: Colors.black, child: builder(false)),
+                settings: RouteSettings(name: routeName)));
+  }
 }

@@ -8,6 +8,8 @@ class ExceptionView extends StatelessWidget {
   final StackTrace? trace;
   final bool closable;
 
+  static ExceptionView fromError(dynamic e) => ExceptionView(exception: e);
+
   /// This is a widget for displaying a general error to the user
   ///
   /// A custom error object [exception] needs to be supplied. Additionally,

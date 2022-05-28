@@ -2,6 +2,7 @@ import 'package:fingerfunke_app/cubits/authentication_cubit/authentication_cubit
 import 'package:fingerfunke_app/routes.dart';
 import 'package:fingerfunke_app/utils/dev_tools.dart';
 import 'package:fingerfunke_app/view/post_editor/view/post_editor_page.dart';
+import 'package:fingerfunke_app/view/report/report_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -76,7 +77,10 @@ class PostSettingsModalContent extends StatelessWidget {
                       title: Text('Melden',
                           style: TextStyle(
                               color: Theme.of(context).colorScheme.error)),
-                      onTap: () => Navigator.of(context).pop(),
+                      onTap: () {
+                        Navigator.pop(context);
+                        ReportPage.navigate(context, post);
+                      },
                     )
                 ],
               );

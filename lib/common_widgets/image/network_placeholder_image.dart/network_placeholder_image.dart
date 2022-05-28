@@ -12,8 +12,14 @@ class NetworkPlaceholderImage extends StatelessWidget {
   final int? width;
   final int transitionMs;
   final BoxFit? fit;
+  final BorderRadius? borderRadius;
   const NetworkPlaceholderImage(this.imageUrl, this.placeholder,
-      {Key? key, this.height, this.width, this.fit, this.transitionMs = 200})
+      {Key? key,
+      this.height,
+      this.width,
+      this.fit,
+      this.transitionMs = 200,
+      this.borderRadius})
       : super(key: key);
 
   @override
@@ -22,7 +28,10 @@ class NetworkPlaceholderImage extends StatelessWidget {
       create: (context) => NetworkImageCubit(imageUrl),
       child: Builder(
         builder: (context) => Container(
-          color: Theme.of(context).colorScheme.background,
+          clipBehavior: Clip.hardEdge,
+          decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.background,
+              borderRadius: borderRadius),
           width: width?.toDouble(),
           height: height?.toDouble(),
           child: BlocBuilder<NetworkImageCubit, NetworkImageState>(

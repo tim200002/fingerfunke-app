@@ -36,7 +36,7 @@ class LiveConfig {
 }
 
 class LiveConfigCubit extends Cubit<LiveConfigState> {
-  LiveConfigCubit() : super(const LiveConfigState.neutral(false, false));
+  LiveConfigCubit() : super(const LiveConfigState.neutral(false, true));
 
   void set(LiveConfigState state) => emit(state);
 }
