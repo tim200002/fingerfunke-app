@@ -1,15 +1,14 @@
 import 'package:bloc/bloc.dart';
 import 'package:fingerfunke_app/repositories/authentication_repository/authetication_repository.dart';
 import 'package:fingerfunke_app/utils/loading_overlay.dart';
-import 'package:fingerfunke_app/utils/logger.dart';
 import 'package:fingerfunke_app/utils/tools.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:logger/logger.dart';
 
-part 'phone_login_state.dart';
 part 'phone_login_cubit.freezed.dart';
+part 'phone_login_state.dart';
 
 class PhoneLoginCubit extends Cubit<PhoneLoginState> {
   final AutheticationRepository _authenticationRepository;

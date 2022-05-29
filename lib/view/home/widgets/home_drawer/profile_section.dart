@@ -17,14 +17,14 @@ class _ProfileSection extends StatelessWidget {
           user?.name ?? "anmelden",
           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 21),
         ),
-        if (user != null)
-          const Padding(
-            padding: EdgeInsets.only(top: 8),
-            child: Text(
-              "Telefonnummer",
-              style: TextStyle(),
-            ),
-          )
+        if (user?.hasClearance(User.clearanceAdmin))
+          Padding(
+              padding: EdgeInsets.only(top: 8),
+              child: Chip(
+                visualDensity: VisualDensity.compact,
+                label: Text("admin"),
+                backgroundColor: Colors.orange.shade300,
+              ))
       ],
     );
   }

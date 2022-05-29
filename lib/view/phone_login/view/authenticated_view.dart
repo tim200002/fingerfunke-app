@@ -6,7 +6,7 @@ class AuthenticatedView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Text("Your are sucessfull authenticated"),
+      child: Text("Du bist angemeldet!"),
     );
   }
 }
