@@ -13,6 +13,7 @@ class VideoPlaybackCubit extends Cubit<VideoPlaybackState> {
       : super(const VideoPlaybackState.initializing()) {
     final VideoPlayerController controller = VideoPlayerController.network(url);
     controller.initialize().then((_) {
+      if (isClosed) return;
       emit(
         VideoPlaybackState.playing(controller, autoplay),
       );
@@ -24,7 +25,7 @@ class VideoPlaybackCubit extends Cubit<VideoPlaybackState> {
       }
     }).catchError((error, stackTrace) {
       getLogger().e("error", error, stackTrace);
-      emit(VideoPlaybackState.error(error));
+      if (!isClosed) emit(VideoPlaybackState.error(error));
     });
   }
 
