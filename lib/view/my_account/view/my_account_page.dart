@@ -126,7 +126,8 @@ class _AccountSection extends StatelessWidget {
         SettingsTile(
             title: "SocialMedia",
             leading: const Icon(Icons.link_rounded),
-            onPressed: (context) {}),
+            enabled: false,
+            onPressed: null),
         SettingsTile(
           title: "Account verwalten",
           leading: const Icon(Icons.account_circle_outlined),

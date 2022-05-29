@@ -4,6 +4,7 @@ import 'package:fingerfunke_app/utils/util_widgets/clearance_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../cubits/authentication_cubit/authentication_cubit.dart';
 import '../../../../models/user/user.dart';
@@ -50,19 +51,21 @@ class HomeDrawer extends StatelessWidget {
               ListTile(
                 leading: const Icon(FeatherIcons.users),
                 title: const Text('Gruppen'),
+                enabled: false,
                 onTap: () => DevTools.showToDoSnackbar(context),
               ),
               const SizedBox(height: 25),
               ListTile(
                 leading: const Icon(FeatherIcons.settings),
                 title: const Text('Einstellungen'),
+                enabled: false,
                 onTap: () =>
                     Navigator.of(context).popAndPushNamed(Routes.settings),
               ),
               ListTile(
                 leading: const Icon(FeatherIcons.share2),
                 title: const Text('Social Media'),
-                onTap: () => DevTools.showToDoSnackbar(context),
+                onTap: () => launch("https://instagram.com/fingerfunke"),
               ),
               ListTile(
                 leading: const Icon(FeatherIcons.info),
