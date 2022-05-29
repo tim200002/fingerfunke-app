@@ -27,6 +27,10 @@ class _$ModPostStateTearOff {
     );
   }
 
+  _Empty empty() {
+    return const _Empty();
+  }
+
   _Neutral neutral(Report report, int count) {
     return _Neutral(
       report,
@@ -44,6 +48,7 @@ mixin _$ModPostState {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(dynamic e) error,
+    required TResult Function() empty,
     required TResult Function(Report report, int count) neutral,
   }) =>
       throw _privateConstructorUsedError;
@@ -51,6 +56,7 @@ mixin _$ModPostState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(dynamic e)? error,
+    TResult Function()? empty,
     TResult Function(Report report, int count)? neutral,
   }) =>
       throw _privateConstructorUsedError;
@@ -58,6 +64,7 @@ mixin _$ModPostState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(dynamic e)? error,
+    TResult Function()? empty,
     TResult Function(Report report, int count)? neutral,
     required TResult orElse(),
   }) =>
@@ -66,6 +73,7 @@ mixin _$ModPostState {
   TResult map<TResult extends Object?>({
     required TResult Function(_Loading value) loading,
     required TResult Function(_Error value) error,
+    required TResult Function(_Empty value) empty,
     required TResult Function(_Neutral value) neutral,
   }) =>
       throw _privateConstructorUsedError;
@@ -73,6 +81,7 @@ mixin _$ModPostState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
+    TResult Function(_Empty value)? empty,
     TResult Function(_Neutral value)? neutral,
   }) =>
       throw _privateConstructorUsedError;
@@ -80,6 +89,7 @@ mixin _$ModPostState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
+    TResult Function(_Empty value)? empty,
     TResult Function(_Neutral value)? neutral,
     required TResult orElse(),
   }) =>
@@ -142,6 +152,7 @@ class _$_Loading implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(dynamic e) error,
+    required TResult Function() empty,
     required TResult Function(Report report, int count) neutral,
   }) {
     return loading();
@@ -152,6 +163,7 @@ class _$_Loading implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(dynamic e)? error,
+    TResult Function()? empty,
     TResult Function(Report report, int count)? neutral,
   }) {
     return loading?.call();
@@ -162,6 +174,7 @@ class _$_Loading implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(dynamic e)? error,
+    TResult Function()? empty,
     TResult Function(Report report, int count)? neutral,
     required TResult orElse(),
   }) {
@@ -176,6 +189,7 @@ class _$_Loading implements _Loading {
   TResult map<TResult extends Object?>({
     required TResult Function(_Loading value) loading,
     required TResult Function(_Error value) error,
+    required TResult Function(_Empty value) empty,
     required TResult Function(_Neutral value) neutral,
   }) {
     return loading(this);
@@ -186,6 +200,7 @@ class _$_Loading implements _Loading {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
+    TResult Function(_Empty value)? empty,
     TResult Function(_Neutral value)? neutral,
   }) {
     return loading?.call(this);
@@ -196,6 +211,7 @@ class _$_Loading implements _Loading {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
+    TResult Function(_Empty value)? empty,
     TResult Function(_Neutral value)? neutral,
     required TResult orElse(),
   }) {
@@ -274,6 +290,7 @@ class _$_Error implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(dynamic e) error,
+    required TResult Function() empty,
     required TResult Function(Report report, int count) neutral,
   }) {
     return error(e);
@@ -284,6 +301,7 @@ class _$_Error implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(dynamic e)? error,
+    TResult Function()? empty,
     TResult Function(Report report, int count)? neutral,
   }) {
     return error?.call(e);
@@ -294,6 +312,7 @@ class _$_Error implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(dynamic e)? error,
+    TResult Function()? empty,
     TResult Function(Report report, int count)? neutral,
     required TResult orElse(),
   }) {
@@ -308,6 +327,7 @@ class _$_Error implements _Error {
   TResult map<TResult extends Object?>({
     required TResult Function(_Loading value) loading,
     required TResult Function(_Error value) error,
+    required TResult Function(_Empty value) empty,
     required TResult Function(_Neutral value) neutral,
   }) {
     return error(this);
@@ -318,6 +338,7 @@ class _$_Error implements _Error {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
+    TResult Function(_Empty value)? empty,
     TResult Function(_Neutral value)? neutral,
   }) {
     return error?.call(this);
@@ -328,6 +349,7 @@ class _$_Error implements _Error {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
+    TResult Function(_Empty value)? empty,
     TResult Function(_Neutral value)? neutral,
     required TResult orElse(),
   }) {
@@ -344,6 +366,120 @@ abstract class _Error implements ModPostState {
   dynamic get e;
   @JsonKey(ignore: true)
   _$ErrorCopyWith<_Error> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$EmptyCopyWith<$Res> {
+  factory _$EmptyCopyWith(_Empty value, $Res Function(_Empty) then) =
+      __$EmptyCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$EmptyCopyWithImpl<$Res> extends _$ModPostStateCopyWithImpl<$Res>
+    implements _$EmptyCopyWith<$Res> {
+  __$EmptyCopyWithImpl(_Empty _value, $Res Function(_Empty) _then)
+      : super(_value, (v) => _then(v as _Empty));
+
+  @override
+  _Empty get _value => super._value as _Empty;
+}
+
+/// @nodoc
+
+class _$_Empty implements _Empty {
+  const _$_Empty();
+
+  @override
+  String toString() {
+    return 'ModPostState.empty()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _Empty);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loading,
+    required TResult Function(dynamic e) error,
+    required TResult Function() empty,
+    required TResult Function(Report report, int count) neutral,
+  }) {
+    return empty();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? loading,
+    TResult Function(dynamic e)? error,
+    TResult Function()? empty,
+    TResult Function(Report report, int count)? neutral,
+  }) {
+    return empty?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loading,
+    TResult Function(dynamic e)? error,
+    TResult Function()? empty,
+    TResult Function(Report report, int count)? neutral,
+    required TResult orElse(),
+  }) {
+    if (empty != null) {
+      return empty();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Error value) error,
+    required TResult Function(_Empty value) empty,
+    required TResult Function(_Neutral value) neutral,
+  }) {
+    return empty(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Error value)? error,
+    TResult Function(_Empty value)? empty,
+    TResult Function(_Neutral value)? neutral,
+  }) {
+    return empty?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Error value)? error,
+    TResult Function(_Empty value)? empty,
+    TResult Function(_Neutral value)? neutral,
+    required TResult orElse(),
+  }) {
+    if (empty != null) {
+      return empty(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Empty implements ModPostState {
+  const factory _Empty() = _$_Empty;
 }
 
 /// @nodoc
@@ -417,6 +553,7 @@ class _$_Neutral implements _Neutral {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(dynamic e) error,
+    required TResult Function() empty,
     required TResult Function(Report report, int count) neutral,
   }) {
     return neutral(report, count);
@@ -427,6 +564,7 @@ class _$_Neutral implements _Neutral {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(dynamic e)? error,
+    TResult Function()? empty,
     TResult Function(Report report, int count)? neutral,
   }) {
     return neutral?.call(report, count);
@@ -437,6 +575,7 @@ class _$_Neutral implements _Neutral {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(dynamic e)? error,
+    TResult Function()? empty,
     TResult Function(Report report, int count)? neutral,
     required TResult orElse(),
   }) {
@@ -451,6 +590,7 @@ class _$_Neutral implements _Neutral {
   TResult map<TResult extends Object?>({
     required TResult Function(_Loading value) loading,
     required TResult Function(_Error value) error,
+    required TResult Function(_Empty value) empty,
     required TResult Function(_Neutral value) neutral,
   }) {
     return neutral(this);
@@ -461,6 +601,7 @@ class _$_Neutral implements _Neutral {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
+    TResult Function(_Empty value)? empty,
     TResult Function(_Neutral value)? neutral,
   }) {
     return neutral?.call(this);
@@ -471,6 +612,7 @@ class _$_Neutral implements _Neutral {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
+    TResult Function(_Empty value)? empty,
     TResult Function(_Neutral value)? neutral,
     required TResult orElse(),
   }) {

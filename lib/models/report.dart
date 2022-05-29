@@ -64,4 +64,22 @@ class Report extends UserGeneratedDocument {
         state: ReportState.values.firstWhere((r) => r.name == map["state"]),
         objectReference: map["objectReference"]);
   }
+
+  Report copyWith(
+      {String? id,
+      UserInfo? author,
+      List<ReportReason>? reasons,
+      ReportType? type,
+      ReportState? state,
+      String? objectReference,
+      DateTime? creationTime}) {
+    return Report(
+        id: id ?? this.id,
+        author: author ?? this.author,
+        reasons: reasons ?? this.reasons,
+        type: type ?? this.type,
+        state: state ?? this.state,
+        objectReference: objectReference ?? this.objectReference,
+        creationTime: creationTime ?? this.creationTime);
+  }
 }

@@ -6,10 +6,61 @@ import 'package:fingerfunke_app/view/moderation/mod_post_report/widgets/mod_repo
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../utils/illustration.dart';
 import '../../../utils/util_widgets/admin_appbar.dart';
 
 class ModPostReportPage extends StatelessWidget {
   const ModPostReportPage({Key? key}) : super(key: key);
+
+  Widget _emptyIndicator() {
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 300),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Illustration(
+              Illustrations.empty,
+              height: null,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            const Text(
+              "keine offenen Meldungen",
+              textAlign: TextAlign.center,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _performAction(BuildContext context, bool accept) {
+    showDialog(
+        context: context,
+        builder: (BuildContext ctx) {
+          return AlertDialog(
+            actionsPadding: EdgeInsets.symmetric(horizontal: 7),
+            title: Text('Bestätigen:  ' + (accept ? "❌" : "✅")),
+            content: Text(accept
+                ? "Der Beitrag verstößt gegen unsere Richtlinen. \nDen Beitrag unwiderruflich löschen."
+                : 'Den Beitrag als "in Ordnung" markieren'),
+            actions: [
+              TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text('abbrechen')),
+              ElevatedButton(
+                  onPressed: () {
+                    context.read<ModPostCubit>().closeReport(accept);
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Ja'))
+            ],
+          );
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +76,7 @@ class ModPostReportPage extends StatelessWidget {
                     loading: () => const Center(
                         child: CircularProgressIndicator.adaptive()),
                     error: ExceptionView.builder,
+                    empty: () => _emptyIndicator(),
                     neutral: (report, count) => Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
@@ -69,7 +121,8 @@ class ModPostReportPage extends StatelessWidget {
                                                         .resolveWith((states) =>
                                                             Colors.teal
                                                                 .shade300)),
-                                            onPressed: () {},
+                                            onPressed: () =>
+                                                _performAction(context, false),
                                             child: const Text(
                                               "Beitrag\nist okay",
                                               textAlign: TextAlign.center,
@@ -86,7 +139,8 @@ class ModPostReportPage extends StatelessWidget {
                                                         .resolveWith((states) =>
                                                             Colors
                                                                 .red.shade300)),
-                                            onPressed: () {},
+                                            onPressed: () =>
+                                                _performAction(context, true),
                                             child: const Text(
                                               "Beitrag\nlöschen",
                                               textAlign: TextAlign.center,
