@@ -1,5 +1,6 @@
 import 'package:fingerfunke_app/utils/exceptions.dart';
 import 'package:fingerfunke_app/utils/form_validator.dart';
+import 'package:fingerfunke_app/view/error/exception_view.dart';
 import 'package:fingerfunke_app/view/phone_login/cubit/phone_login_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,61 +20,62 @@ class _EnterPhoneNumberViewState extends State<EnterPhoneNumberView> {
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            "Enter your phone number",
-            style: Theme.of(context).textTheme.headline4,
+        key: _formKey,
+        child: BlocBuilder<PhoneLoginCubit, PhoneLoginState>(
+          builder: (context, state) => Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const Text(
+                "Telefonnummer",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+              ),
+              const Padding(
+                padding: EdgeInsets.only(bottom: 20, top: 15),
+                child: Text(
+                    "Wir senden dir einen Code an Deine Nummer um diese zu verifizieren. Auf diese Weise musst Du Dir kein Passwort merken."),
+              ),
+              Padding(
+                  padding: const EdgeInsets.only(bottom: 40),
+                  child: IntlPhoneField(
+                    showDropdownIcon: false,
+                    disableLengthCheck: true,
+                    enabled: state.maybeWhen(
+                        enterPhoneNumber: (isLoading) => !isLoading,
+                        orElse: () => false),
+                    decoration: const InputDecoration(
+                      labelText: 'Phone Number',
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                    initialCountryCode: 'DE',
+                    onChanged: (nr) =>
+                        _phoneInputController.text = nr.countryCode + nr.number,
+                    //validator:  (number) => FormValidator.validatePhoneNumber(number.toString()),
+                    //controller: _phoneInputController.,
+                  )),
+              state.maybeWhen(
+                enterPhoneNumber: (isLoading) {
+                  if (isLoading) {
+                    return const Center(
+                        child: CircularProgressIndicator.adaptive());
+                  } else {
+                    return ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          BlocProvider.of<PhoneLoginCubit>(context).sendSMSCode(
+                              phoneNumber: _phoneInputController.text);
+                        }
+                      },
+                      child: const Text("Code senden"),
+                    );
+                  }
+                },
+                orElse: () => ExceptionView(exception: InvalidStateException()),
+              )
+            ],
           ),
-          const Padding(
-            padding: EdgeInsets.only(bottom: 20, top: 15),
-            child: Text(
-                "We will send you a verification code once you entered your phone nnumber"),
-          ),
-          Padding(
-              padding: const EdgeInsets.only(bottom: 40),
-              child: IntlPhoneField(
-                showDropdownIcon: false,
-                disableLengthCheck: true,
-                decoration: const InputDecoration(
-                  labelText: 'Phone Number',
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                  ),
-                ),
-                initialCountryCode: 'DE',
-                onChanged: (nr) =>
-                    _phoneInputController.text = nr.countryCode + nr.number,
-                //validator:  (number) => FormValidator.validatePhoneNumber(number.toString()),
-                //controller: _phoneInputController.,
-              )),
-          BlocBuilder<PhoneLoginCubit, PhoneLoginState>(
-              builder: (context, state) {
-            return state.maybeWhen(
-              enterPhoneNumber: (isLoading) {
-                if (isLoading) {
-                  return const Center(
-                      child: CircularProgressIndicator.adaptive());
-                } else {
-                  return ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        BlocProvider.of<PhoneLoginCubit>(context).sendSMSCode(
-                            phoneNumber: _phoneInputController.text);
-                      }
-                    },
-                    child: const Text("send code"),
-                  );
-                }
-              },
-              orElse: () => ErrorWidget(InvalidStateException()),
-            );
-          })
-        ],
-      ),
-    );
+        ));
   }
 
   @override

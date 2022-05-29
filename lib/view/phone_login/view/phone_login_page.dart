@@ -16,42 +16,53 @@ class PhoneLoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("login"),
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(
-              left: AppTheme.PADDING_SIDE,
-              right: AppTheme.PADDING_SIDE,
-              bottom: 50),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              //if (MediaQuery.of(context).size.height > 100)
-              /*Expanded(
-                child: Center(
-                  child: Illustration(Illustrations.login),
-                ),
-              ),*/
-              BlocProvider<PhoneLoginCubit>(
-                create: (BuildContext context) => PhoneLoginCubit(),
-                child: BlocBuilder<PhoneLoginCubit, PhoneLoginState>(
-                  // only for rebuild between different screens therefore only when real class changes
-                  buildWhen: (previousState, state) =>
-                      previousState.runtimeType != state.runtimeType,
-                  builder: (context, state) {
-                    return state.map(
-                        enterPhoneNumber: (_) => const EnterPhoneNumberView(),
-                        enterCode: (_) => EnterCodeView(),
-                        authenticated: (_) => const AuthenticatedView());
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(),
+        body: Stack(
+          //mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Image.asset(
+              "assets/img/images/connected_hands.png",
+              fit: BoxFit.cover,
+              height: 1000,
+              width: 1000,
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                AnimatedSize(
+                    alignment: Alignment.bottomCenter,
+                    curve: Curves.easeIn,
+                    duration: const Duration(seconds: 1),
+                    child: Container(
+                      constraints: BoxConstraints(minHeight: 220),
+                      padding: const EdgeInsets.all(30),
+                      decoration: const BoxDecoration(
+                        borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(20)),
+                        color: Colors.white,
+                      ),
+                      child: BlocProvider<PhoneLoginCubit>(
+                        create: (BuildContext context) => PhoneLoginCubit(),
+                        child: BlocBuilder<PhoneLoginCubit, PhoneLoginState>(
+                          // only for rebuild between different screens therefore only when real class changes
+                          buildWhen: (previousState, state) =>
+                              previousState.runtimeType != state.runtimeType,
+                          builder: (context, state) {
+                            return state.map(
+                                enterPhoneNumber: (_) =>
+                                    const EnterPhoneNumberView(),
+                                enterCode: (_) => EnterCodeView(),
+                                authenticated: (_) =>
+                                    const AuthenticatedView());
+                          },
+                        ),
+                      ),
+                    )),
+              ],
+            ),
+          ],
+        ));
   }
 }

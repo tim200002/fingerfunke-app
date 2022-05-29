@@ -12,44 +12,64 @@ class EnterCodeView extends StatelessWidget {
   final StreamController<ErrorAnimationType> errorController =
       StreamController<ErrorAnimationType>();
 
+  Widget _automaticRecog() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Container(
+          margin: EdgeInsets.only(right: 20),
+          height: 30,
+          width: 30,
+          child: CircularProgressIndicator.adaptive(),
+        ),
+        const Text("Verifizierung")
+      ]),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     PhoneLoginCubit _phoneLoginCubit =
         BlocProvider.of<PhoneLoginCubit>(context);
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Text("Enter pin"),
-        PinCodeTextField(
-          appContext: context,
-          keyboardType: TextInputType.number,
-          errorAnimationController: errorController,
-          length: 6,
-          onChanged: (pin) {},
-          onCompleted: (pin) {
-            _phoneLoginCubit.state.whenOrNull(
-              enterCode: (String verificationId, int? resendToken) =>
-                  _phoneLoginCubit.signInWithCode(
-                verificationId: verificationId,
-                smsCode: pin,
-                context: context,
-                onError: () => errorController.add(ErrorAnimationType.shake),
-              ),
-            );
-          },
-        ),
-        RichText(
-          text: TextSpan(
-            text: 'resend token',
-            style: const TextStyle(color: Colors.blue, fontSize: 15),
-            recognizer: TapGestureRecognizer()
-              ..onTap = () => _phoneLoginCubit.emit(
-                    const PhoneLoginState.enterPhoneNumber(isLoading: false),
+    return FutureBuilder(
+        //initialData: false,
+        future: Future.delayed(Duration(seconds: 20), () => true),
+        builder: (context, value) => value.hasData
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const Text(
+                    "SMS Code eingeben",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
                   ),
-          ),
-        )
-      ],
-    );
+                  PinCodeTextField(
+                    appContext: context,
+                    keyboardType: TextInputType.number,
+                    errorAnimationController: errorController,
+                    length: 6,
+                    onChanged: (pin) {},
+                    onCompleted: (pin) {
+                      _phoneLoginCubit.state.whenOrNull(
+                        enterCode: (String verificationId, int? resendToken) =>
+                            _phoneLoginCubit.signInWithCode(
+                          verificationId: verificationId,
+                          smsCode: pin,
+                          context: context,
+                          onError: () =>
+                              errorController.add(ErrorAnimationType.shake),
+                        ),
+                      );
+                    },
+                  ),
+                  TextButton(
+                      onPressed: () => _phoneLoginCubit.emit(
+                          const PhoneLoginState.enterPhoneNumber(
+                              isLoading: false)),
+                      child: const Text("Code erneut senden"))
+                ],
+              )
+            : _automaticRecog());
   }
 }

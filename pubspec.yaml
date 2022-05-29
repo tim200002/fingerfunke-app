@@ -78,6 +78,7 @@ flutter:
   assets:
     - .env
     - assets/img/
+    - assets/img/images/
     - assets/img/placeholder/
     - assets/img/illustrations/undraw/
     - assets/img/brand/
