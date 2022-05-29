@@ -1,5 +1,6 @@
 import 'package:fingerfunke_app/common_widgets/image/user_image/user_image.dart';
 import 'package:fingerfunke_app/utils/dev_tools.dart';
+import 'package:fingerfunke_app/utils/util_widgets/clearance_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -14,6 +15,21 @@ part './profile_section.dart';
 class HomeDrawer extends StatelessWidget {
   static const _borderRadius = Radius.circular(40);
   const HomeDrawer({Key? key}) : super(key: key);
+
+  Widget _moderationItem(BuildContext context) {
+    return BlocBuilder<AuthenticationCubit, AuthenticationState>(
+        builder: (context, state) => state.maybeWhen(
+              orElse: () => Container(),
+              signedIn: (user) => user.hasClearance(User.clearanceAdmin)
+                  ? ListTile(
+                      leading: const Icon(FeatherIcons.monitor),
+                      title: const Text('Moderation'),
+                      onTap: () =>
+                          Navigator.of(context).pushNamed(Routes.devtools),
+                    )
+                  : Container(),
+            ));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,10 +70,26 @@ class HomeDrawer extends StatelessWidget {
                 onTap: () => Navigator.of(context).pushNamed(Routes.about),
               ),
               const SizedBox(height: 25),
-              ListTile(
-                leading: const Icon(FeatherIcons.penTool),
-                title: const Text('DevTools'),
-                onTap: () => Navigator.of(context).pushNamed(Routes.devtools),
+              ClearanceBuilder(
+                level: User.clearanceAdmin,
+                builder: (_) => ListTile(
+                  leading: const Icon(FeatherIcons.penTool),
+                  title: const Text('DevTools'),
+                  onTap: () => Navigator.of(context).pushNamed(Routes.devtools),
+                ),
+              ),
+              ClearanceBuilder(
+                level: User.clearanceAdmin,
+                builder: (_) => ListTile(
+                  shape: const RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.horizontal(right: Radius.circular(15))),
+                  tileColor: Colors.orange.shade100,
+                  leading: const Icon(FeatherIcons.shield),
+                  title: const Text('Moderation'),
+                  onTap: () =>
+                      Navigator.of(context).pushNamed(Routes.moderation),
+                ),
               ),
             ],
           ),

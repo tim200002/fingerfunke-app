@@ -9,6 +9,10 @@ class ExceptionView extends StatelessWidget {
   final bool closable;
 
   static ExceptionView fromError(dynamic e) => ExceptionView(exception: e);
+  static ExceptionView fromErrorClosable(dynamic e) => ExceptionView(
+        exception: e,
+        closable: true,
+      );
 
   /// This is a widget for displaying a general error to the user
   ///
@@ -44,6 +48,7 @@ class ExceptionView extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           //title: Text("😳"),
+          automaticallyImplyLeading: false,
           leading: showClose
               ? IconButton(
                   onPressed: () => Navigator.of(context).pop(),

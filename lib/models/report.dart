@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fingerfunke_app/models/user/user.dart';
 import 'package:fingerfunke_app/models/utils.dart';
 import 'package:uuid/uuid.dart';
@@ -39,12 +40,28 @@ class Report extends UserGeneratedDocument {
   Map<String, dynamic> toJson() {
     return {
       "id": id,
+      "objectReference": objectReference,
       "author": author.toJson(),
       "reasons": reasons.map((e) => e.name).toList(),
       "type": type.name,
       "state": state.name,
-      "objectReference": objectReference,
       "creationTime": dateToJson(creationTime),
     };
+  }
+
+  factory Report.fromDoc(DocumentSnapshot document) =>
+      Report.fromJson(documentSnaphsotToJson(document));
+
+  factory Report.fromJson(Map<String, dynamic> map) {
+    return Report(
+        id: map["id"] as String,
+        creationTime: dateFromJson(map['creationTime'] as int),
+        author: UserInfo.fromJson(map["author"]),
+        reasons: (map["reasons"] as List<dynamic>)
+            .map((e) => ReportReason.values.firstWhere((r) => r.name == e))
+            .toList(),
+        type: ReportType.values.firstWhere((r) => r.name == map["type"]),
+        state: ReportState.values.firstWhere((r) => r.name == map["state"]),
+        objectReference: map["objectReference"]);
   }
 }

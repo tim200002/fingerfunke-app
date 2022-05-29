@@ -18,7 +18,23 @@ class ReportRepositoryImpl implements ReportRepository {
 
   @override
   Future<void> createReport(Report report) async {
-    print(_reportCollection.path);
     await _reportCollection.doc(report.id).set(report.toJson());
+  }
+
+  @override
+  Future<List<Report>> getReports({bool onlyOpen = false}) async {
+    var docs = await (onlyOpen
+            ? _reportCollection.where("state", isEqualTo: "open")
+            : _reportCollection)
+        .get();
+    // sorting on client side to not require setting an index in firebase
+    return docs.docs.map((m) => Report.fromDoc(m)).toList()
+      ..sort((a, b) => a.creationTime.compareTo(b.creationTime))
+      ..toList();
+  }
+
+  @override
+  Future<void> updateReport(Report report) async {
+    await _reportCollection.doc(report.id).update(report.toJson());
   }
 }

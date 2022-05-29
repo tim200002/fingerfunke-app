@@ -38,8 +38,13 @@ class UserInfo extends DatabaseDocument {
   List<Object?> get props => [id, name, picture];
 }
 
+typedef ClearanceLevel = int;
+
 @JsonSerializable(explicitToJson: true)
 class User extends UserInfo {
+  static const ClearanceLevel clearanceUser = 1;
+  static const ClearanceLevel clearanceAdmin = 7;
+
   final int? age;
   final int? clearance;
 
@@ -50,6 +55,10 @@ class User extends UserInfo {
     this.age,
     this.clearance = 0,
   }) : super(id: id, name: name, picture: picture);
+
+  hasClearance(ClearanceLevel level) {
+    return clearance != null ? clearance! >= level : false;
+  }
 
   @override
   Map<String, dynamic> toJson() => <String, dynamic>{

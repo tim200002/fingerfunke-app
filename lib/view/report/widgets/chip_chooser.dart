@@ -12,12 +12,9 @@ class ChipData<T> {
 class ChipChooser<T> extends StatelessWidget {
   final List<ChipData<T>> chips;
   final List<T> selected;
-  final Function(List<T> selected) onChanged;
+  final Function(List<T> selected)? onChanged;
   const ChipChooser(
-      {Key? key,
-      required this.chips,
-      required this.onChanged,
-      this.selected = const []})
+      {Key? key, required this.chips, this.onChanged, this.selected = const []})
       : super(key: key);
 
   @override
@@ -39,11 +36,13 @@ class ChipChooser<T> extends StatelessWidget {
             selectedColor: Theme.of(context).colorScheme.primary.withAlpha(150),
             label: Text(c.label),
             selected: selected.contains(c.value),
-            onSelected: (b) {
-              List<T> list = List.from(selected);
-              b ? list.add(c.value) : list.remove(c.value);
-              onChanged(list);
-            },
+            onSelected: onChanged == null
+                ? (_) {}
+                : (b) {
+                    List<T> list = List.from(selected);
+                    b ? list.add(c.value) : list.remove(c.value);
+                    onChanged!(list);
+                  },
           )
       ],
     );

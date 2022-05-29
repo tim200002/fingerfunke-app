@@ -1,5 +1,7 @@
 import 'package:fingerfunke_app/view/app_info/app_info_page.dart';
 import 'package:fingerfunke_app/view/chat/view/chat_page.dart';
+import 'package:fingerfunke_app/view/moderation/mod_post_report/mod_post_report_page.dart';
+import 'package:fingerfunke_app/view/moderation/moderation_page/moderation_page.dart';
 import 'package:fingerfunke_app/view/my_account/view/my_account_page.dart';
 import 'package:fingerfunke_app/view/post/view/post_page.dart';
 import 'package:fingerfunke_app/view/post_editor/view/post_editor_page.dart';
@@ -20,6 +22,8 @@ class Routes {
   static const manageAccount = "/manageAccount";
   static const postEditor = "/create";
   static const devtools = "/devtools";
+  static const moderation = "/moderation";
+  static const moderationPosts = "/moderation/posts";
   static const settings = "/settings";
 
   static const about = "/about";
@@ -35,6 +39,8 @@ final routes = {
   Routes.postEditor: (context) => const PostPage(editing: true),
   Routes.post: (context) => const PostPage(),
   Routes.devtools: (context) => const DevToolsPage(),
+  Routes.moderation: (context) => const ModerationPage(),
+  Routes.moderationPosts: (context) => const ModPostReportPage(),
   Routes.licenses: (context) => const OssLicensesPage(),
   Routes.settings: (context) => const SettingsPage(),
   Routes.about: (context) => const AppInfoPage(),
