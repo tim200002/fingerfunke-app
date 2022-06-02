@@ -3,6 +3,7 @@ import 'package:fingerfunke_app/utils/illustration.dart';
 import 'package:fingerfunke_app/utils/tools.dart';
 import 'package:fingerfunke_app/view/phone_login/view/phone_login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class UnauthenticatedPage extends StatelessWidget {
   const UnauthenticatedPage({Key? key}) : super(key: key);
@@ -15,21 +16,21 @@ class UnauthenticatedPage extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       child: Column(
           mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Illustration(Illustrations.party),
-            const Text(
-              "Heyy!",
-              style: TextStyle(
-                fontSize: 50,
-                fontWeight: FontWeight.w900,
-              ),
-            ),
-            const SizedBox(height: 20),
-            const Text("Willkommen bei fingerfunke!",
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
+            Text("Heyy",
+                textAlign: TextAlign.center,
+                style: GoogleFonts.playfairDisplay(
+                  fontSize: 50,
+                  fontWeight: FontWeight.w900,
+                )),
+            const SizedBox(height: 22),
+            Text("Willkommen bei\nfingerfunke",
+                textAlign: TextAlign.center,
+                style: GoogleFonts.signika(
+                  fontSize: 19,
+                  fontWeight: FontWeight.w700,
                 ))
           ]));
 
@@ -40,6 +41,8 @@ class UnauthenticatedPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           ElevatedButton(
+            style: ButtonStyle(
+                minimumSize: MaterialStateProperty.all(const Size(0, 60))),
             onPressed: () => Navigator.of(context).push(PhoneLoginPage.route()),
             child: const Text("Anmelden"),
           ),

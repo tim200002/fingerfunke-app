@@ -86,7 +86,7 @@ class _HomeViewState extends State<HomeView> {
         title: _DEMOPlaceIndicator(context),
         actions: [
           IconButton(
-              onPressed: () => DevTools.showToDoSnackbar(context),
+              onPressed: null, //() => DevTools.showToDoSnackbar(context),
               icon: const Icon(FeatherIcons.calendar))
         ],
       ),
