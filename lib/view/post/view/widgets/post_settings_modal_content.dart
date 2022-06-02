@@ -1,10 +1,10 @@
 import 'package:fingerfunke_app/cubits/authentication_cubit/authentication_cubit.dart';
 import 'package:fingerfunke_app/routes.dart';
 import 'package:fingerfunke_app/utils/dev_tools.dart';
-import 'package:fingerfunke_app/view/report/report_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../report_send/report_send_page.dart';
 import '../../cubits/post_viewer_cubit/post_cubit.dart';
 
 class PostSettingsModalContent extends StatelessWidget {
@@ -78,7 +78,7 @@ class PostSettingsModalContent extends StatelessWidget {
                               color: Theme.of(context).colorScheme.error)),
                       onTap: () {
                         Navigator.pop(context);
-                        ReportPage.navigate(context, post);
+                        ReportSendPage.navigate(context, post);
                       },
                     )
                 ],

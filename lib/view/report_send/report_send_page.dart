@@ -1,7 +1,6 @@
 import 'package:fingerfunke_app/models/report.dart';
 import 'package:fingerfunke_app/view/error/exception_view.dart';
-import 'package:fingerfunke_app/view/report/cubit/report_send_cubit.dart';
-import 'package:fingerfunke_app/view/report/widgets/chip_chooser.dart';
+import 'package:fingerfunke_app/view/insufficient_clearance/insufficient_clearance_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -12,14 +11,16 @@ import '../../models/asset/asset.dart';
 import '../../models/post/post.dart';
 import '../../repositories/video_repository/video_repository.impl.dart';
 import '../../utils/tools.dart';
+import 'cubit/report_send_cubit.dart';
+import 'widgets/chip_chooser.dart';
 
-class ReportPage extends StatelessWidget {
+class ReportSendPage extends StatelessWidget {
   final Post post;
-  const ReportPage({Key? key, required this.post}) : super(key: key);
+  const ReportSendPage({Key? key, required this.post}) : super(key: key);
 
   static void navigate(BuildContext context, Post post) {
     Tools.navigate(context,
-        builder: (isDialog) => ReportPage(
+        builder: (isDialog) => ReportSendPage(
               post: post,
             ));
   }
@@ -113,9 +114,7 @@ class ReportPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AuthenticationCubit, AuthenticationState>(
         builder: (context, state) => state.maybeWhen(
-            orElse: () => const Center(
-                  child: Icon(Icons.supervised_user_circle_outlined),
-                ),
+            orElse: () => const InsufficientClearanceView(),
             signedIn: (user) => BlocProvider<ReportSendCubit>(
                   create: (context) => ReportSendCubit(
                       doc: post, type: ReportType.post, author: user),
