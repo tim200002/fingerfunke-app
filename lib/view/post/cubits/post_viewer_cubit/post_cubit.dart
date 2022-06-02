@@ -28,6 +28,10 @@ class PostCubit extends Cubit<PostState> {
     });
   }
 
+  Future<void> deletePost() async {
+    state.whenOrNull(normal: (post, _) => _postRepository.deletePost(post.id));
+  }
+
   Future<void> joinPost() async {
     final currentState = state.maybeMap(
         normal: (state) => state,

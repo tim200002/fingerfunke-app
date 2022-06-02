@@ -84,10 +84,10 @@ class _HomeViewState extends State<HomeView> {
     return Scaffold(
       appBar: AppBar(
         title: _DEMOPlaceIndicator(context),
-        actions: [
+        actions: const [
           IconButton(
               onPressed: null, //() => DevTools.showToDoSnackbar(context),
-              icon: const Icon(FeatherIcons.calendar))
+              icon: Icon(FeatherIcons.calendar))
         ],
       ),
       drawer: const HomeDrawer(),

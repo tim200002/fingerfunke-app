@@ -30,6 +30,7 @@ class VideoUploadTile extends StatelessWidget {
             onPressed: () => onDelete(cubit.id),
             icon: const Icon(
               FeatherIcons.trash2,
+              color: Colors.white,
             ),
           ),
         ),
@@ -68,12 +69,11 @@ class VideoUploadTile extends StatelessWidget {
         ),
       ),
       Center(
-          child: Text(
-        "$progress %",
-        style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Theme.of(context).colorScheme.primary),
-      )),
+          child: Text("$progress %",
+              style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white) //Theme.of(context).colorScheme.primary),
+              )),
       const Center(
           child: SizedBox.square(
               dimension: 50, child: CircularProgressIndicator())),

@@ -12,7 +12,6 @@ import '../../models/asset/asset.dart';
 import '../../models/post/post.dart';
 import '../../repositories/video_repository/video_repository.impl.dart';
 import '../../utils/tools.dart';
-import '../post_editor/view/page_views/not_signed_in_view.dart';
 
 class ReportPage extends StatelessWidget {
   final Post post;
@@ -114,7 +113,9 @@ class ReportPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AuthenticationCubit, AuthenticationState>(
         builder: (context, state) => state.maybeWhen(
-            orElse: () => const NotSignedInView(),
+            orElse: () => const Center(
+                  child: Icon(Icons.supervised_user_circle_outlined),
+                ),
             signedIn: (user) => BlocProvider<ReportSendCubit>(
                   create: (context) => ReportSendCubit(
                       doc: post, type: ReportType.post, author: user),

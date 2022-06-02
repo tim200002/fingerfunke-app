@@ -7,12 +7,23 @@ class VideoPlaybackView extends StatelessWidget {
   final BoxFit fit;
   final BorderRadius borderRadius;
   final Widget? thumbnail;
+  final VideoPlayerController? _controller;
   const VideoPlaybackView(
       {Key? key,
       this.fit = BoxFit.contain,
       this.thumbnail,
       this.borderRadius = BorderRadius.zero})
-      : super(key: key);
+      : _controller = null,
+        super(key: key);
+
+  const VideoPlaybackView.controller(
+      {Key? key,
+      this.fit = BoxFit.contain,
+      this.thumbnail,
+      required VideoPlayerController controller,
+      this.borderRadius = BorderRadius.zero})
+      : _controller = controller,
+        super(key: key);
 
   Widget _videoPlayer(
     BuildContext context,
@@ -32,18 +43,20 @@ class VideoPlaybackView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<VideoPlaybackCubit, VideoPlaybackState>(
-      builder: (context, state) => AnimatedSwitcher(
-        duration: const Duration(milliseconds: 100),
-        child: state.when(
-            initializing: () =>
-                thumbnail ??
-                const Center(
-                  child: CircularProgressIndicator(),
-                ),
-            playing: (controller, _) => _videoPlayer(context, controller),
-            error: (error) => ErrorWidget(error)),
-      ),
-    );
+    return _controller != null
+        ? _videoPlayer(context, _controller!)
+        : BlocBuilder<VideoPlaybackCubit, VideoPlaybackState>(
+            builder: (context, state) => AnimatedSwitcher(
+              duration: const Duration(milliseconds: 100),
+              child: state.when(
+                  initializing: () =>
+                      thumbnail ??
+                      const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                  playing: (controller, _) => _videoPlayer(context, controller),
+                  error: (error) => ErrorWidget(error)),
+            ),
+          );
   }
 }

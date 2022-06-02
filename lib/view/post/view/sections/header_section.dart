@@ -294,13 +294,15 @@ class _Edit extends StatelessWidget {
           bottomRight: HeaderSection.imgBorderRadius,
         ),
         child: InkWell(
-          onTap: () async {
-            File? video =
-                await Navigator.push<File?>(context, VideoRecorderPage.route());
-            if (video != null) {
-              context.read<PostEditorCubit>().addVideo(video);
-            }
-          },
+          onTap: uploadCubits.isNotEmpty
+              ? null
+              : () async {
+                  File? video = await Navigator.push<File?>(
+                      context, VideoRecorderPage.route());
+                  if (video != null) {
+                    context.read<PostEditorCubit>().addVideo(video);
+                  }
+                },
           child: HelperWidgets.materialHero(
             tag: VideoRecorderPage.videoHeroTag,
             child: (uploadCubits.isNotEmpty)
