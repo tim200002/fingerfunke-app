@@ -52,11 +52,12 @@ dependencies:
   modal_bottom_sheet: ^2.0.0
   image_cropper: ^1.4.1
   image_picker: ^0.8.4+4
-  share_plus: ^3.0.4
+  share_plus: ^4.0.7
   auto_size_text: ^3.0.0
   flutter_settings_ui: ^2.0.1
   flutter_feather_icons: ^2.0.0+1
   google_maps_flutter: ^2.1.5
+  google_maps_place_picker_mb: ^2.0.0-mb.20
   flutter_config: ^2.0.0
 
 dev_dependencies:

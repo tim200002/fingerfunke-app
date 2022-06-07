@@ -1,5 +1,6 @@
 import 'package:fingerfunke_app/view/app_info/app_info_page.dart';
 import 'package:fingerfunke_app/view/chat/view/chat_page.dart';
+import 'package:fingerfunke_app/view/maps/view/maps_place_picker_page.dart';
 import 'package:fingerfunke_app/view/maps/view/maps_page.dart';
 import 'package:fingerfunke_app/view/my_account/view/my_account_page.dart';
 import 'package:fingerfunke_app/view/post/view/post_page.dart';

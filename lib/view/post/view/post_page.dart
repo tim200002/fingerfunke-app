@@ -4,7 +4,7 @@ import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:fingerfunke_app/utils/dev_tools.dart';
 import 'package:fingerfunke_app/utils/tools.dart';
 import 'package:fingerfunke_app/view/error/exception_view.dart';
-import 'package:fingerfunke_app/view/maps/view/maps_location_widget.dart';
+import 'package:fingerfunke_app/view/maps/view/maps_place_picker_page.dart';
 import 'package:fingerfunke_app/view/maps/view/static_maps_provider.dart';
 import 'package:fingerfunke_app/view/paginated_list/cubit/paginated_list_cubit.dart';
 import 'package:fingerfunke_app/view/post/view/sections/author_section.dart';
@@ -16,7 +16,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../cubits/authentication_cubit/authentication_cubit.dart';
-import '../../maps/view/maps_location_widget.dart';
+import '../../../models/post/post.dart';
+import '../../maps/view/maps_place_picker_page.dart';
 import '../../post_editor/view/page_views/post_posted_success_view.dart';
 import '../../post_editor/view/post_editor_page.dart';
 import '../cubits/post_editor_cubit/post_editor_cubit.dart';
@@ -48,7 +49,13 @@ class PostPage extends StatelessWidget {
                         const SizedBox(height: 15),
                         PostDescriptionSection(editing),
                         const SizedBox(height: 24),
-                        const StaticMapsProvider(),
+                        BlocBuilder<PostCubit, PostState>(
+                          builder: (context, state) => state.when(
+                              loading: (_) => Container(),
+                              normal: (post, isJoining) => post is! Event
+                                  ? const Text("Die App unterstützt zur Zeit nur Events!")
+                                  : StaticMapsProvider(address: post.location),
+                          )),
                         const SizedBox(height: 24),
                         AuthorSection(editing),
                         const SizedBox(height: 96),
