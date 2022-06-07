@@ -1,5 +1,6 @@
 import 'package:fingerfunke_app/models/post/post.dart';
 import 'package:fingerfunke_app/utils/extensions/date_time.dart';
+import 'package:fingerfunke_app/view/maps/view/maps_place_picker_page.dart';
 import 'package:fingerfunke_app/view/post/view/widgets/icon_text_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +13,7 @@ import '../../cubits/post_viewer_cubit/post_cubit.dart';
 /// In [editing] mode, the values of these fields can be changed
 class EventDetailSection extends StatelessWidget {
   final bool editing;
+
   const EventDetailSection(this.editing, {Key? key}) : super(key: key);
 
   @override
@@ -89,12 +91,31 @@ class _Edit extends StatelessWidget {
                             },
                           )),
                   IconTextItem(
-                      icon: Icons.location_on_outlined,
-                      label: "Location", //eventEditorFields.location,
-                      subLabel: "",
-                      onTap: () => showDialog(
+                    icon: Icons.location_on_outlined,
+                    label: eventEditorFields.location == ""
+                        ? "Location"
+                        : eventEditorFields.location,
+                    //eventEditorFields.location,
+                    subLabel: "",
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context2) =>
+                              BlocProvider<PostEditorCubit>.value(
+                            value: BlocProvider.of<PostEditorCubit>(context),
+                            child: MapsPlacePickerPage(
+                              onPlacePicked: (pickResult) => context
+                                  .read<PostEditorCubit>()
+                                  .updateInformation(eventEditorFields.copyWith(
+                                      location: pickResult.formattedAddress)),
+                            ),
+                          ),
+                        )
+                        /*
+                      showDialog(
                           context: context,
-                          builder: (_) => AlertDialog(
+                          builder: (_) =>
+                              AlertDialog(
                                 title: const Text('ToDo'),
                                 content: SingleChildScrollView(
                                   child: ListBody(
@@ -104,7 +125,7 @@ class _Edit extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                                /*actions: <Widget>[
+                                actions: <Widget>[
                               TextButton(
                                 child: const Text('Ulm wählen'),
                                 onPressed: () {
@@ -115,8 +136,10 @@ class _Edit extends StatelessWidget {
                                   Navigator.of(context).pop();
                                 },
                               ),
-                            ],*/
-                              ))),
+                            ],
+                              ))),*/
+                        ),
+                  )
                 ],
               ),
           orElse: () => throw InvalidStateException()),
