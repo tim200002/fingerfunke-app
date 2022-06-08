@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import '../../../../routes.dart';
-import '../../../report/widgets/chip_chooser.dart';
+import '../../../report_send/widgets/chip_chooser.dart';
 
 class ModReportView extends StatelessWidget {
   final Report report;

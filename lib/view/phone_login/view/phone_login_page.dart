@@ -6,6 +6,8 @@ import 'package:fingerfunke_app/view/phone_login/view/enter_phone_number_view.da
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../utils/illustration.dart';
+
 class PhoneLoginPage extends StatelessWidget {
   const PhoneLoginPage({Key? key}) : super(key: key);
 
@@ -21,12 +23,23 @@ class PhoneLoginPage extends StatelessWidget {
         body: Stack(
           //mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Image.asset(
+            ClipRect(
+              child: Container(
+                  padding: const EdgeInsets.only(bottom: 240),
+                  color: Colors.grey.shade50,
+                  child: Center(
+                    child: Illustration(
+                      Illustrations.dreamer,
+                      width: 260,
+                    ),
+                  )),
+            ),
+            /*Image.asset(
               "assets/img/images/connected_hands.png",
               fit: BoxFit.cover,
               height: 1000,
               width: 1000,
-            ),
+            ),*/
             Column(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.stretch,

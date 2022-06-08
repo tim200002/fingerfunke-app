@@ -8,6 +8,7 @@ class Illustrations {
   static const IllustrationKey fixingBugs = "fixing_bugs";
   static const IllustrationKey empty = "empty";
   static const IllustrationKey door = "door";
+  static const IllustrationKey dreamer = "dreamer";
 }
 
 class Illustration extends Image {
