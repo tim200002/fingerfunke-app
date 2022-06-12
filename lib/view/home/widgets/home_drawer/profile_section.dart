@@ -32,24 +32,21 @@ class _ProfileSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-        borderRadius:
-            const BorderRadius.only(topRight: HomeDrawer._borderRadius),
-        onTap: () => Navigator.popAndPushNamed(context, Routes.account),
-        child: Container(
-          padding: const EdgeInsets.all(18),
-          decoration: BoxDecoration(
-              border: Border(
-                  bottom: BorderSide(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .onBackground
-                          .withOpacity(0.1)))),
-          child: BlocBuilder<AuthenticationCubit, AuthenticationState>(
-            builder: (context, state) => state.maybeWhen(
-                signedIn: (user) => _profile(context, user: user),
-                signedInAnonymously: () => _profile(context),
-                orElse: () => ErrorWidget(InvalidStateException())),
-          ),
-        ));
+      borderRadius: const BorderRadius.only(topRight: HomeDrawer._borderRadius),
+      onTap: () => Navigator.popAndPushNamed(context, Routes.account),
+      child: Container(
+        padding: const EdgeInsets.all(18),
+        decoration: BoxDecoration(
+            border: Border(
+                bottom: BorderSide(
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onBackground
+                        .withOpacity(0.1)))),
+        child: BlocBuilder<AppCubit, AppState>(
+          builder: (context, state) => _profile(context, user: state.user),
+        ),
+      ),
+    );
   }
 }

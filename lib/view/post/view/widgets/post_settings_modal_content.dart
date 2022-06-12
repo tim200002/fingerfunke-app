@@ -1,3 +1,4 @@
+import 'package:fingerfunke_app/cubits/app_cubit/app_cubit.dart';
 import 'package:fingerfunke_app/cubits/authentication_cubit/authentication_cubit.dart';
 import 'package:fingerfunke_app/routes.dart';
 import 'package:fingerfunke_app/utils/dev_tools.dart';
@@ -16,19 +17,11 @@ class PostSettingsModalContent extends StatelessWidget {
         builder: (context, state) => state.when(
             loading: (_) => const CircularProgressIndicator.adaptive(),
             normal: (post, isJoining) {
-              bool isAuthor = BlocProvider.of<AuthenticationCubit>(context)
-                  .state
-                  .maybeWhen(
-                      signedIn: (currentUser) =>
-                          currentUser.id == post.author.id,
-                      orElse: () => false);
+              bool isAuthor = post
+                  .isUserAuthor(BlocProvider.of<AppCubit>(context).state.user);
 
-              bool isParticipant = BlocProvider.of<AuthenticationCubit>(context)
-                  .state
-                  .maybeWhen(
-                      signedIn: (currentUser) =>
-                          post.isUserParticipant(currentUser),
-                      orElse: () => false);
+              bool isParticipant = post.isUserParticipant(
+                  BlocProvider.of<AppCubit>(context).state.user);
 
               return Column(
                 mainAxisSize: MainAxisSize.min,

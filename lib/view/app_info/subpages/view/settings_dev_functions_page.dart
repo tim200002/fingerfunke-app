@@ -1,4 +1,4 @@
-import 'package:fingerfunke_app/cubits/authentication_cubit/authentication_cubit.dart';
+import 'package:fingerfunke_app/cubits/app_cubit/app_cubit.dart';
 import 'package:fingerfunke_app/cubits/live_config_cubit/live_config_cubit.dart';
 import 'package:fingerfunke_app/models/asset/asset.dart';
 import 'package:fingerfunke_app/models/post/post.dart';
@@ -26,9 +26,7 @@ class DevFunctionsPage extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {
                         final User? currentUser =
-                            BlocProvider.of<AuthenticationCubit>(context)
-                                .state
-                                .whenOrNull(signedIn: (user) => user);
+                            BlocProvider.of<AppCubit>(context).state.user;
                         PostRepositoryImpl().createPost(Event.createWithId(
                             author: currentUser!,
                             title: "Test post ${DateTime.now().second}",

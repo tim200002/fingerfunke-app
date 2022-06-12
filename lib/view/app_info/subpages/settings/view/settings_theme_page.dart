@@ -25,11 +25,11 @@ class _SettingsThemePageState extends State<SettingsThemePage> {
               const SampleTextWidget(),
               ListTile(
                 title: const Text('System Theme'),
-                trailing: BlocProvider.of<SettingsCubit>(context).state.when(
-                    initial: () => null,
-                    loaded: (settings) => settings.themeMode == ThemeMode.system
+                trailing:
+                    BlocProvider.of<SettingsCubit>(context).state.themeMode ==
+                            ThemeMode.system
                         ? const Icon(Icons.check)
-                        : null),
+                        : null,
                 onTap: () {
                   BlocProvider.of<SettingsCubit>(context)
                       .updateSettings(newThemeMode: ThemeMode.system);
@@ -38,11 +38,11 @@ class _SettingsThemePageState extends State<SettingsThemePage> {
               ),
               ListTile(
                 title: const Text('Light Theme'),
-                trailing: BlocProvider.of<SettingsCubit>(context).state.when(
-                    initial: () => null,
-                    loaded: (settings) => settings.themeMode == ThemeMode.light
+                trailing:
+                    BlocProvider.of<SettingsCubit>(context).state.themeMode ==
+                            ThemeMode.light
                         ? const Icon(Icons.check)
-                        : null),
+                        : null,
                 onTap: () {
                   BlocProvider.of<SettingsCubit>(context)
                       .updateSettings(newThemeMode: ThemeMode.light);
@@ -51,11 +51,11 @@ class _SettingsThemePageState extends State<SettingsThemePage> {
               ),
               ListTile(
                 title: const Text('Dark Theme'),
-                trailing: BlocProvider.of<SettingsCubit>(context).state.when(
-                    initial: () => null,
-                    loaded: (settings) => settings.themeMode == ThemeMode.dark
+                trailing:
+                    BlocProvider.of<SettingsCubit>(context).state.themeMode ==
+                            ThemeMode.dark
                         ? const Icon(Icons.check)
-                        : null),
+                        : null,
                 onTap: () {
                   BlocProvider.of<SettingsCubit>(context)
                       .updateSettings(newThemeMode: ThemeMode.dark);

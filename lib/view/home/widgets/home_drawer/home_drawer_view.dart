@@ -1,4 +1,5 @@
 import 'package:fingerfunke_app/common_widgets/image/user_image/user_image.dart';
+import 'package:fingerfunke_app/cubits/app_cubit/app_cubit.dart';
 import 'package:fingerfunke_app/utils/dev_tools.dart';
 import 'package:fingerfunke_app/utils/util_widgets/clearance_builder.dart';
 import 'package:flutter/material.dart';
@@ -18,18 +19,15 @@ class HomeDrawer extends StatelessWidget {
   const HomeDrawer({Key? key}) : super(key: key);
 
   Widget _moderationItem(BuildContext context) {
-    return BlocBuilder<AuthenticationCubit, AuthenticationState>(
-        builder: (context, state) => state.maybeWhen(
-              orElse: () => Container(),
-              signedIn: (user) => user.hasClearance(User.clearanceAdmin)
-                  ? ListTile(
-                      leading: const Icon(FeatherIcons.monitor),
-                      title: const Text('Moderation'),
-                      onTap: () =>
-                          Navigator.of(context).pushNamed(Routes.devtools),
-                    )
-                  : Container(),
-            ));
+    return BlocBuilder<AppCubit, AppState>(
+      builder: (context, state) => state.user.hasClearance(User.clearanceAdmin)
+          ? ListTile(
+              leading: const Icon(FeatherIcons.monitor),
+              title: const Text('Moderation'),
+              onTap: () => Navigator.of(context).pushNamed(Routes.devtools),
+            )
+          : Container(),
+    );
   }
 
   @override

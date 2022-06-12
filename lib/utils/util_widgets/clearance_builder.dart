@@ -1,8 +1,7 @@
+import 'package:fingerfunke_app/cubits/app_cubit/app_cubit.dart';
 import 'package:fingerfunke_app/models/user/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../cubits/authentication_cubit/authentication_cubit.dart';
 
 class ClearanceBuilder extends StatelessWidget {
   final ClearanceLevel level;
@@ -12,12 +11,10 @@ class ClearanceBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthenticationCubit, AuthenticationState>(
-        builder: (context, state) => state.maybeWhen(
-              orElse: () => Container(),
-              signedIn: (user) => user.hasClearance(User.clearanceAdmin)
-                  ? builder.call(user)
-                  : Container(),
-            ));
+    return BlocBuilder<AppCubit, AppState>(
+      builder: (context, state) => state.user.hasClearance(User.clearanceAdmin)
+          ? builder.call(state.user)
+          : Container(),
+    );
   }
 }

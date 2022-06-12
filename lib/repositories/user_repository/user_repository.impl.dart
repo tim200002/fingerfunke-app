@@ -29,4 +29,14 @@ class UserRepositoryImpl implements UserRepository {
         .doc(updatedUser.id)
         .update(updatedUser.toJson()..remove("clearance"));
   }
+
+  @override
+  Stream<User> getUserSubscription(String userId) {
+    return _userCollection.doc(userId).snapshots().map((documentSnapshot) {
+      if (documentSnapshot.data() == null) {
+        throw UserNotFoundException();
+      }
+      return User.fromDoc(documentSnapshot);
+    });
+  }
 }

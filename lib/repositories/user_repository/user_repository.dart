@@ -8,4 +8,6 @@ abstract class UserRepository {
   Future<User> getUser(String userId);
   Future<void> createUser(User user);
   Future<void> updateUser(User updatedUser);
+
+  Stream<User> getUserSubscription(String userId);
 }

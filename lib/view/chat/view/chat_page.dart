@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fingerfunke_app/cubits/app_cubit/app_cubit.dart';
 import 'package:fingerfunke_app/cubits/authentication_cubit/authentication_cubit.dart';
 import 'package:fingerfunke_app/models/message/message.dart';
 import 'package:fingerfunke_app/view/chat/widgets/chat_message.dart';
@@ -17,7 +18,8 @@ class ChatArguments {
   final PaginatedListCubit<Message> paginatedListCubit;
   final String? chatName;
 
-  ChatArguments({required this.postId, required this.paginatedListCubit, this.chatName});
+  ChatArguments(
+      {required this.postId, required this.paginatedListCubit, this.chatName});
 }
 
 class ChatPage extends StatelessWidget {
@@ -29,7 +31,11 @@ class ChatPage extends StatelessWidget {
         ModalRoute.of(context)!.settings.arguments as ChatArguments;
     return Scaffold(
       appBar: AppBar(
-        title: AutoSizeText(arguments.chatName ?? "", maxLines: 1, minFontSize: 12,),
+        title: AutoSizeText(
+          arguments.chatName ?? "",
+          maxLines: 1,
+          minFontSize: 12,
+        ),
       ),
       body: Column(
         children: [
@@ -52,11 +58,9 @@ class ChatPage extends StatelessWidget {
               ),
             ),
           ),
-          BlocProvider.of<AuthenticationCubit>(context).state.maybeWhen(
-              signedIn: (user) =>
-                  ChatEditor(postId: arguments.postId, author: user),
-              orElse: () =>
-                  const Text("You must have an account ro participate in this chat"))
+          ChatEditor(
+              postId: arguments.postId,
+              author: BlocProvider.of<AppCubit>(context).state.user),
         ],
       ),
     );

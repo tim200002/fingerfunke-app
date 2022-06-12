@@ -1,10 +1,10 @@
 import 'package:fingerfunke_app/models/settings/settings_model.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:get_storage/get_storage.dart';
 
 part 'settings_repository.impl.dart';
 
-abstract class SettingsRepository{
-  Future<Settings> getSettings();
-  Future<void> updateSettings(Settings settings);
+abstract class SettingsRepository {
+  Settings getSettings();
+  void updateSettings(Settings settings);
 }
