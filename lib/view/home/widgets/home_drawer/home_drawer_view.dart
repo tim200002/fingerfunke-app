@@ -1,16 +1,13 @@
 import 'package:fingerfunke_app/common_widgets/image/user_image/user_image.dart';
 import 'package:fingerfunke_app/cubits/app_cubit/app_cubit.dart';
+import 'package:fingerfunke_app/models/user/user.dart';
+import 'package:fingerfunke_app/routes.dart';
 import 'package:fingerfunke_app/utils/dev_tools.dart';
 import 'package:fingerfunke_app/utils/util_widgets/clearance_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import '../../../../cubits/authentication_cubit/authentication_cubit.dart';
-import '../../../../models/user/user.dart';
-import '../../../../routes.dart';
-import '../../../../utils/exceptions.dart';
 
 part './profile_section.dart';
 

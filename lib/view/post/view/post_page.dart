@@ -2,7 +2,6 @@ import 'package:fingerfunke_app/cubits/app_cubit/app_cubit.dart';
 import 'package:fingerfunke_app/models/message/message.dart';
 import 'package:fingerfunke_app/services/pagination/message_pagination_service.dart';
 import 'package:fingerfunke_app/utils/app_theme.dart';
-import 'package:fingerfunke_app/utils/dev_tools.dart';
 import 'package:fingerfunke_app/utils/tools.dart';
 import 'package:fingerfunke_app/view/error/exception_view.dart';
 import 'package:fingerfunke_app/view/paginated_list/cubit/paginated_list_cubit.dart';
@@ -14,7 +13,6 @@ import 'package:fingerfunke_app/view/post/view/widgets/edit_loading_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../cubits/authentication_cubit/authentication_cubit.dart';
 import '../../../models/post/post.dart';
 import 'sections/post_posted_success_view.dart';
 import '../cubits/post_editor_cubit/post_editor_cubit.dart';

@@ -1,4 +1,3 @@
-import 'package:fingerfunke_app/cubits/authentication_cubit/authentication_cubit.dart';
 import 'package:fingerfunke_app/cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
 import 'package:fingerfunke_app/utils/tools.dart';
 import 'package:flutter/material.dart';
