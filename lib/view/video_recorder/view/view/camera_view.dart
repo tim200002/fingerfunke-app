@@ -24,7 +24,7 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     // check if null check is valid, I think yes because ensure intitialized in main
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
     _initCamera();
   }
 
@@ -187,7 +187,7 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
 
   @override
   void dispose() {
-    WidgetsBinding.instance!.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     _controller?.dispose().then((value) => widget._logger.i("Camera Disposed"));
 
     super.dispose();

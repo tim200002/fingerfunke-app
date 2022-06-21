@@ -1,9 +1,12 @@
 import 'package:fingerfunke_app/models/post/post.dart';
 import 'package:fingerfunke_app/utils/extensions/date_time.dart';
+import 'package:fingerfunke_app/view/maps/view/maps_place_picker_page.dart';
 import 'package:fingerfunke_app/view/post/view/widgets/icon_text_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../services/google_maps_service.dart';
 import '../../../../utils/exceptions.dart';
 import '../../cubits/post_editor_cubit/post_editor_cubit.dart';
 import '../../cubits/post_viewer_cubit/post_cubit.dart';
@@ -12,6 +15,7 @@ import '../../cubits/post_viewer_cubit/post_cubit.dart';
 /// In [editing] mode, the values of these fields can be changed
 class EventDetailSection extends StatelessWidget {
   final bool editing;
+
   const EventDetailSection(this.editing, {Key? key}) : super(key: key);
 
   @override
@@ -34,9 +38,21 @@ class EventDetailSection extends StatelessWidget {
                               label: post.startTime.dateString,
                               subLabel: "ab ${post.startTime.timeString} Uhr"),
                           IconTextItem(
-                              icon: Icons.location_on_outlined,
-                              label: post.location,
-                              subLabel: "ToDo"),
+                            icon: Icons.location_on_outlined,
+                            label: post.location.split(',')[0],
+                            subLabel:  post.location.split(',').length < 2 ? null : post.location.split(',')[1],
+                            onTap: () async {
+                              if (await canLaunchUrl(
+                                  GoogleMapsService.getGoogleUri(
+                                      post.location))) {
+                                await launchUrl(
+                                    GoogleMapsService.getGoogleUri(
+                                        post.location));
+                              } else {
+                                throw 'Could not open the map.';
+                              }
+                            },
+                          ),
                         ],
                       )));
   }
@@ -89,34 +105,28 @@ class _Edit extends StatelessWidget {
                             },
                           )),
                   IconTextItem(
-                      icon: Icons.location_on_outlined,
-                      label: "Location", //eventEditorFields.location,
-                      subLabel: "",
-                      onTap: () => showDialog(
-                          context: context,
-                          builder: (_) => AlertDialog(
-                                title: const Text('ToDo'),
-                                content: SingleChildScrollView(
-                                  child: ListBody(
-                                    children: const <Widget>[
-                                      Text(
-                                          'Bisher ist das Setzen einer Location nicht möglich'),
-                                    ],
-                                  ),
-                                ),
-                                /*actions: <Widget>[
-                              TextButton(
-                                child: const Text('Ulm wählen'),
-                                onPressed: () {
-                                  context
-                                        .read<PostEditorCubit>()
-                                        .updateInformation(
-                                            eventEditorFields.copyWith();
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                            ],*/
-                              ))),
+                    icon: Icons.location_on_outlined,
+                    label: eventEditorFields.location == ""
+                        ? "Location"
+                        : eventEditorFields.location.split(',')[0],
+                    subLabel: eventEditorFields.location == ""
+                        ? null
+                        : eventEditorFields.location.split(',').length < 2 ? null : eventEditorFields.location.split(',')[1],
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context2) =>
+                              BlocProvider<PostEditorCubit>.value(
+                            value: BlocProvider.of<PostEditorCubit>(context),
+                            child: MapsPlacePickerPage(
+                              onPlacePicked: (pickResult) => context
+                                  .read<PostEditorCubit>()
+                                  .updateInformation(eventEditorFields.copyWith(
+                                      location: pickResult.formattedAddress)),
+                            ),
+                          ),
+                        )),
+                  )
                 ],
               ),
           orElse: () => throw InvalidStateException()),

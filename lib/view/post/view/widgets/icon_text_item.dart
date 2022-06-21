@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class IconTextItem extends StatelessWidget {
@@ -37,27 +38,33 @@ class IconTextItem extends StatelessWidget {
                 ),
               ),
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  label,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w900,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  AutoSizeText(
+                    label,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w900,
+                    ),
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: true,
                   ),
-                ),
-                if (subLabel != null)
-                  Text(
-                    subLabel!,
-                    style: TextStyle(
-                        fontWeight: FontWeight.normal,
-                        color: Theme.of(context)
-                            .colorScheme
-                            .onSurface
-                            .withOpacity(0.5)),
-                  )
-              ],
+                  if (subLabel != null)
+                    Text(
+                      subLabel!,
+                      style: TextStyle(
+                          fontWeight: FontWeight.normal,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSurface
+                              .withOpacity(0.5)),
+                    )
+                ],
+              ),
             )
           ],
         ),
