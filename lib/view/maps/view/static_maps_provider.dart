@@ -3,6 +3,8 @@ import 'package:flutter_config/flutter_config.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../services/google_maps_service.dart';
+
 class StaticMapsProvider extends StatelessWidget {
   final LatLng latLong;
   final String address;
@@ -13,35 +15,13 @@ class StaticMapsProvider extends StatelessWidget {
     this.address = "",
   }) : super(key: key);
 
-  Uri getGoogleUri() {
-    String searchQuery;
-    if (address == "") {
-      searchQuery = '${latLong.latitude},${latLong.longitude}';
-    } else {
-      searchQuery = address;
-    }
-    return Uri(
-        scheme: 'https',
-        host: 'maps.googleapis.com',
-        port: 443,
-        path: '/maps/api/staticmap',
-        queryParameters: {
-          'size': '${600}x${600}',
-          'center': '',
-          'markers': searchQuery,
-          'zoom': '15',
-          'maptype': 'roadmap',
-          'key': '${FlutterConfig.get('GOOGLE_MAPS_API_KEY')}'
-        });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Center(
       child: GestureDetector(
         onTap: () async {
-          if (await canLaunchUrl(getGoogleUri())) {
-            await launchUrl(getGoogleUri());
+          if (await canLaunchUrl(GoogleMapsService.getGoogleUri(address))) {
+            await launchUrl(GoogleMapsService.getGoogleUri(address));
           } else {
             throw 'Could not open the map.';
           }
@@ -53,7 +33,7 @@ class StaticMapsProvider extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 5.0),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(15),
-            child: Image.network(getGoogleUri().toString()),
+            child: Image.network(GoogleMapsService.getGoogleStaticApiUri(address).toString()),
           ),
         ),
       ),

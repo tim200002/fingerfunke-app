@@ -59,11 +59,6 @@ class HomeDrawer extends StatelessWidget {
                 title: const Text('DevTools'),
                 onTap: () => Navigator.of(context).pushNamed(Routes.devtools),
               ),
-              ListTile(
-                leading: const Icon(FeatherIcons.map),
-                title: const Text('Maps'),
-                onTap: () => Navigator.of(context).pushNamed(Routes.maps),
-              ),
             ],
           ),
         ),
