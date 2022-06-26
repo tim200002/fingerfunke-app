@@ -244,6 +244,9 @@ class HeaderSection extends StatelessWidget {
       floating: false,
       stretch: true,
       centerTitle: true,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30), topLeft: Radius.circular(30))),
       /*title: VisibilityController(
                   child: AutoSizeText(
                     post.title,
@@ -315,11 +318,11 @@ class _Edit extends StatelessWidget {
                 : Container(
                     height: 210,
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primaryVariant,
+                      color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.6),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child:
-                        const Center(child: Icon(Icons.add_a_photo_outlined)),
+                        Center(child: Icon(FeatherIcons.video, color: Theme.of(context).colorScheme.onPrimaryContainer, size: 40,)),
                   ),
           ),
         ));

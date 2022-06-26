@@ -54,7 +54,7 @@ class IconTextItem extends StatelessWidget {
                     softWrap: true,
                   ),
                   if (subLabel != null)
-                    Text(
+                    AutoSizeText(
                       subLabel!,
                       style: TextStyle(
                           fontWeight: FontWeight.normal,
@@ -62,6 +62,9 @@ class IconTextItem extends StatelessWidget {
                               .colorScheme
                               .onSurface
                               .withOpacity(0.5)),
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: true,
                     )
                 ],
               ),

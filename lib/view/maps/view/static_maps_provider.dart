@@ -20,7 +20,7 @@ class StaticMapsProvider extends StatelessWidget {
     return Center(
       child: GestureDetector(
         onTap: () async {
-          if (await canLaunchUrl(GoogleMapsService.getGoogleUri(address))) {
+          if (await canLaunchUrl(GoogleMapsService.getGoogleUri(address)) && address != "") {
             await launchUrl(GoogleMapsService.getGoogleUri(address));
           } else {
             throw 'Could not open the map.';
@@ -33,7 +33,7 @@ class StaticMapsProvider extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 5.0),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(15),
-            child: Image.network(GoogleMapsService.getGoogleStaticApiUri(address).toString()),
+            child: address != "" ? Image.network(GoogleMapsService.getGoogleStaticApiUri(address).toString()) : Container(color: Colors.black12),
           ),
         ),
       ),

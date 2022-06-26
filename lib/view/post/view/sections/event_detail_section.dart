@@ -107,7 +107,7 @@ class _Edit extends StatelessWidget {
                   IconTextItem(
                     icon: Icons.location_on_outlined,
                     label: eventEditorFields.location == ""
-                        ? "Location"
+                        ? "Ort wählen"
                         : eventEditorFields.location.split(',')[0],
                     subLabel: eventEditorFields.location == ""
                         ? null
