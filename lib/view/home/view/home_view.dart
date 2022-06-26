@@ -8,6 +8,8 @@ import 'package:fingerfunke_app/view/post_feed/view/post_feed_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
+import '../../maps/view/maps_place_picker_page.dart';
+
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
 
@@ -23,12 +25,13 @@ class _HomeViewState extends State<HomeView> {
   // ignore: non_constant_identifier_names
   Widget _DEMOPlaceIndicator(BuildContext context) {
     return InkWell(
-      onTap: () => showDialog(
-          context: context,
-          builder: (BuildContext context) => const AlertDialog(
-                title: Text('TODO'),
-                content: Text('LocationDialog'),
-              )),
+      onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context2) => MapsPlacePickerPage(
+              onPlacePicked: (pickResult) => null //TODO STORE LOCATION,
+            ),
+          )),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: const [
