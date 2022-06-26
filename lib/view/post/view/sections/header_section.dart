@@ -110,7 +110,7 @@ class HeaderSection extends StatelessWidget {
   final double titleOverlap;
 
   const HeaderSection(this.editing,
-      {Key? key, this.thumbnailHeight = 350, this.titleOverlap = 30})
+      {Key? key, this.thumbnailHeight = 350, this.titleOverlap = 40})
       : super(key: key);
 
   static Widget _titleCardHeader(
@@ -122,10 +122,10 @@ class HeaderSection extends StatelessWidget {
         .copyWith(fontWeight: FontWeight.w600, height: 1.3);
     return Container(
       margin: EdgeInsets.only(
-          left: 15, right: 15, bottom: 20, top: thumbnailHeight - titleOverlap),
+          left: 15, right: 15, top: thumbnailHeight - titleOverlap),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
-        borderRadius: BorderRadius.circular(25.0),
+        borderRadius: BorderRadius.circular(20.0),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.15),
@@ -136,7 +136,7 @@ class HeaderSection extends StatelessWidget {
         ],
       ),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        padding: const EdgeInsets.symmetric( vertical: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
@@ -247,35 +247,32 @@ class HeaderSection extends StatelessWidget {
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30), topLeft: Radius.circular(30))),
-      /*title: VisibilityController(
-                  child: AutoSizeText(
-                    post.title,
-                    maxLines: 2,
-                  ),
-                ),*/
-      expandedHeight: thumbnailHeight + titleHeight - titleOverlap,
-      flexibleSpace: FlexibleSpaceBar(
-        stretchModes: const [
-          StretchMode.zoomBackground,
-        ],
-        collapseMode: editing ? CollapseMode.pin : CollapseMode.parallax,
-        background: editing
-            ? _Edit(thumbnailHeight, titleOverlap)
-            : BlocBuilder<PostCubit, PostState>(
-                builder: (context, state) => state.when(
-                  loading: (_) =>
-                      const Center(child: CircularProgressIndicator.adaptive()),
-                  normal: (post, isJoining) => Stack(
-                    children: [
-                      SizedBox(
-                          height: thumbnailHeight,
-                          child: _postThumbnail(context, post)),
-                      _titleCardHeader(context, thumbnailHeight, titleOverlap,
-                          title: post.title),
-                    ],
+      expandedHeight: thumbnailHeight + titleHeight - titleOverlap - 40,
+      flexibleSpace: ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: FlexibleSpaceBar(
+          stretchModes: const [
+            StretchMode.zoomBackground,
+          ],
+          collapseMode: editing ? CollapseMode.pin : CollapseMode.parallax,
+          background: editing
+              ? _Edit(thumbnailHeight, titleOverlap)
+              : BlocBuilder<PostCubit, PostState>(
+                  builder: (context, state) => state.when(
+                    loading: (_) =>
+                        const Center(child: CircularProgressIndicator.adaptive()),
+                    normal: (post, isJoining) => Stack(
+                      children: [
+                        SizedBox(
+                            height: thumbnailHeight,
+                            child: _postThumbnail(context, post)),
+                        _titleCardHeader(context, thumbnailHeight, titleOverlap,
+                            title: post.title),
+                      ],
+                    ),
                   ),
                 ),
-              ),
+        ),
       ),
     );
   }

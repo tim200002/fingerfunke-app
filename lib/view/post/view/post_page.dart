@@ -40,6 +40,7 @@ class PostPage extends StatelessWidget {
                     padding: const EdgeInsets.only(
                       left: AppTheme.PADDING_SIDE + 8,
                       right: AppTheme.PADDING_SIDE + 8,
+                      top: AppTheme.PADDING_SIDE,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
