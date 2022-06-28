@@ -1,8 +1,8 @@
-import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:fingerfunke_app/view/phone_login/cubit/phone_login_cubit.dart';
 import 'package:fingerfunke_app/view/phone_login/view/authenticated_view.dart';
 import 'package:fingerfunke_app/view/phone_login/view/enter_code_view.dart';
 import 'package:fingerfunke_app/view/phone_login/view/enter_phone_number_view.dart';
+import 'package:fingerfunke_app/view/phone_login/view/loading_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -34,12 +34,6 @@ class PhoneLoginPage extends StatelessWidget {
                     ),
                   )),
             ),
-            /*Image.asset(
-              "assets/img/images/connected_hands.png",
-              fit: BoxFit.cover,
-              height: 1000,
-              width: 1000,
-            ),*/
             Column(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -49,7 +43,7 @@ class PhoneLoginPage extends StatelessWidget {
                     curve: Curves.easeIn,
                     duration: const Duration(seconds: 1),
                     child: Container(
-                      constraints: BoxConstraints(minHeight: 220),
+                      constraints: const BoxConstraints(minHeight: 220),
                       padding: const EdgeInsets.all(30),
                       decoration: const BoxDecoration(
                         borderRadius:
@@ -63,12 +57,16 @@ class PhoneLoginPage extends StatelessWidget {
                           buildWhen: (previousState, state) =>
                               previousState.runtimeType != state.runtimeType,
                           builder: (context, state) {
-                            return state.map(
-                                enterPhoneNumber: (_) =>
-                                    const EnterPhoneNumberView(),
-                                enterCode: (_) => EnterCodeView(),
-                                authenticated: (_) =>
-                                    const AuthenticatedView());
+                            return state.when(
+                              enterPhoneNumber: (_) =>
+                                  const EnterPhoneNumberView(),
+                              waitForCodeSent: () =>
+                                  const LoadingView("Wait for Code"),
+                              enterCode: (verificationId, __) =>
+                                  EnterCodeView(verificationId),
+                              waitForLogIn: () =>
+                                  const LoadingView("Wait for Login"),
+                            );
                           },
                         ),
                       ),

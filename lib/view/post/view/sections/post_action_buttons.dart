@@ -1,8 +1,8 @@
+import 'package:fingerfunke_app/cubits/app_cubit/app_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
-import '../../../../cubits/authentication_cubit/authentication_cubit.dart';
 import '../../../../models/message/message.dart';
 import '../../../../routes.dart';
 import '../../../../utils/tools.dart';
@@ -56,15 +56,10 @@ class PostActionButtons extends StatelessWidget {
             loading: (_) =>
                 const Center(child: CircularProgressIndicator.adaptive()),
             normal: (post, isJoining) {
-              bool isParticipant = BlocProvider.of<AuthenticationCubit>(context)
-                  .state
-                  .maybeWhen(
-                      signedIn: (currentUser) =>
-                          post.isUserParticipant(currentUser),
-                      orElse: () => false);
-              bool isLoggedIn = BlocProvider.of<AuthenticationCubit>(context)
-                  .state
-                  .maybeWhen(signedIn: (_) => true, orElse: () => false);
+              bool isParticipant = post.isUserParticipant(
+                  BlocProvider.of<AppCubit>(context).state.user);
+              // ToDo remove
+              bool isLoggedIn = true;
               return Stack(
                 children: <Widget>[
                   Align(

@@ -3,6 +3,7 @@ import 'package:fingerfunke_app/models/abstract_models/abstract_models.dart';
 import 'package:fingerfunke_app/models/utils.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:fingerfunke_app/utils/type_aliases.dart';
+import 'package:uuid/uuid.dart';
 
 part 'image_asset.dart';
 part 'video_asset.dart';

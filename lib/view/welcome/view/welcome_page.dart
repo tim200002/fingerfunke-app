@@ -11,8 +11,8 @@ class WelcomePage extends StatelessWidget {
   }
 
   Widget _heroSection(BuildContext context) => Padding(
-      padding: const EdgeInsets.all(20),
-      child: Column(
+        padding: const EdgeInsets.all(20),
+        child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -30,7 +30,9 @@ class WelcomePage extends StatelessWidget {
                   fontSize: 19,
                   fontWeight: FontWeight.w700,
                 ))
-          ]));
+          ],
+        ),
+      );
 
   Widget _loginSection(BuildContext context) => Padding(
       padding: const EdgeInsets.all(20),
@@ -52,12 +54,13 @@ class WelcomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       body: SafeArea(
-          child: Column(
-        children: [
-          Expanded(child: Center(child: _heroSection(context))),
-          _loginSection(context)
-        ],
-      )),
+        child: Column(
+          children: [
+            Expanded(child: Center(child: _heroSection(context))),
+            _loginSection(context)
+          ],
+        ),
+      ),
     );
   }
 }

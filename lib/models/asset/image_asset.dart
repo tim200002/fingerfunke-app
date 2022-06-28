@@ -1,6 +1,5 @@
 part of 'asset.dart';
 
-
 class ImageAsset extends Asset {
   final Link downloadUrl;
 
@@ -37,4 +36,12 @@ class ImageAsset extends Asset {
 
   factory ImageAsset.fromDoc(DocumentSnapshot document) =>
       ImageAsset.fromJson(documentSnaphsotToJson(document));
+
+  factory ImageAsset.createWithId(
+          {required String downloadUrl, required asset_state state}) =>
+      ImageAsset(
+          id: const Uuid().v4(),
+          creationTime: DateTime.now(),
+          downloadUrl: downloadUrl,
+          state: state);
 }
