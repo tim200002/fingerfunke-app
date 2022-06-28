@@ -15,24 +15,23 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_config/flutter_config.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: ".env");
+  await FlutterConfig.loadEnvVariables();
   await GetStorage.init();
   await Firebase.initializeApp();
   final Logger _logger = Logger();
 
   // choose envrionment
-  switch (dotenv.env['FIREBASE_ENVIRONMENT']) {
+  switch (FlutterConfig.get('FIREBASE_ENVIRONMENT')) {
     case 'local':
       {
         _logger.i("Using local environment");
         Logger.level = Level.debug;
-        String? emulatorIp = dotenv.env['EMULATOR_IP'];
+        String? emulatorIp = FlutterConfig.get('EMULATOR_IP');
         if (emulatorIp == null) {
           _logger.e("No IP for Emulator provided, falling back to localhost ");
           emulatorIp = "localhost";

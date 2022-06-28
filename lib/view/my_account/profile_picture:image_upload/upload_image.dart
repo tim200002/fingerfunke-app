@@ -18,7 +18,7 @@ Future<void> uploadProfilePictureBase64Encoded(
     return;
   }
   // crop File to right aspect ration
-  File? cropped = await ImageCropper.cropImage(
+  File? cropped = await ImageCropper().cropImage(
       sourcePath: file.path,
       cropStyle: CropStyle.circle,
       aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
