@@ -65,7 +65,7 @@ class PostActionButtons extends StatelessWidget {
                   Align(
                       alignment: Alignment.bottomCenter,
                       child: _mainFAB(context,
-                          title: isParticipant ? "Ich bin dabei" : "Ich komme",
+                          title: isParticipant ? "Ich bin dabei" : "Mach mit",
                           icon: isParticipant ? Icons.check : Icons.add,
                           color: isParticipant
                               ? Theme.of(context).colorScheme.secondary
@@ -119,15 +119,15 @@ class _Edit extends StatelessWidget {
       {bool valid = true}) {
     return Stack(children: <Widget>[
       Align(
-          alignment: Alignment.bottomRight,
+          alignment: Alignment.bottomCenter,
           child: PostActionButtons._mainFAB(
             context,
-            title: "senden",
+            title: "Posten",
             icon: FeatherIcons.send,
             isLoading: processing,
             color: valid
                 ? Theme.of(context).colorScheme.primary
-                : _lightenColor(Theme.of(context).colorScheme.primary, 0.16),
+                : _lightenColor(Theme.of(context).colorScheme.onBackground, 0.4),
             onTap: valid
                 ? () => context.read<PostEditorCubit>().submit()
                 : () => Tools.showSnackbar(context, "Bitte alles ausfüllen"),

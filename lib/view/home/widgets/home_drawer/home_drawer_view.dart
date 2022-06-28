@@ -8,11 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 part './profile_section.dart';
 
 class HomeDrawer extends StatelessWidget {
-  static const _borderRadius = Radius.circular(40);
+  static const _borderRadius = Radius.circular(20);
   const HomeDrawer({Key? key}) : super(key: key);
 
   Widget _moderationItem(BuildContext context) {
@@ -36,59 +37,87 @@ class HomeDrawer extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: borderShape),
         child: ClipRRect(
           borderRadius: borderShape,
-          child: ListView(
-            padding: EdgeInsets.zero,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const _ProfileSection(),
-              const SizedBox(
-                height: 6,
-              ),
-              ListTile(
-                leading: const Icon(FeatherIcons.users),
-                title: const Text('Gruppen'),
-                enabled: false,
-                onTap: () => DevTools.showToDoSnackbar(context),
-              ),
-              const SizedBox(height: 25),
-              ListTile(
-                leading: const Icon(FeatherIcons.settings),
-                title: const Text('Einstellungen'),
-                enabled: false,
-                onTap: () =>
-                    Navigator.of(context).popAndPushNamed(Routes.settings),
-              ),
-              ListTile(
-                leading: const Icon(FeatherIcons.share2),
-                title: const Text('Social Media'),
-                onTap: () => launch("https://instagram.com/fingerfunke"),
-              ),
-              ListTile(
-                leading: const Icon(FeatherIcons.info),
-                title: const Text('Informationen'),
-                onTap: () => Navigator.of(context).pushNamed(Routes.about),
-              ),
-              const SizedBox(height: 25),
-              ClearanceBuilder(
-                level: User.clearanceAdmin,
-                builder: (_) => ListTile(
-                  leading: const Icon(FeatherIcons.penTool),
-                  title: const Text('DevTools'),
-                  onTap: () => Navigator.of(context).pushNamed(Routes.devtools),
+              Expanded(
+                child: ListView(
+                  shrinkWrap: true,
+                  padding: EdgeInsets.zero,
+                  children: [
+                    const _ProfileSection(),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    ListTile(
+                      leading: const Icon(FeatherIcons.users),
+                      title: const Text('Gruppen'),
+                      enabled: false,
+                      onTap: () => DevTools.showToDoSnackbar(context),
+                    ),
+                    const SizedBox(height: 25),
+                    ListTile(
+                      leading: const Icon(FeatherIcons.share2),
+                      title: const Text('Social Media'),
+                      onTap: () => launchUrlString("https://instagram.com/fingerfunke"),
+                    ),
+                    ListTile(
+                      leading: const Icon(FeatherIcons.info),
+                      title: const Text('Informationen'),
+                      onTap: () => Navigator.of(context).pushNamed(Routes.about),
+                    ),
+                    const SizedBox(height: 25),
+                    ClearanceBuilder(
+                      level: User.clearanceAdmin,
+                      builder: (_) => ListTile(
+                        leading: const Icon(FeatherIcons.penTool),
+                        title: const Text('DevTools'),
+                        onTap: () => Navigator.of(context).pushNamed(Routes.devtools),
+                      ),
+                    ),
+                    ClearanceBuilder(
+                      level: User.clearanceAdmin,
+                      builder: (_) => ListTile(
+                        shape: const RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.horizontal(right: Radius.circular(15))),
+                        tileColor: Colors.orange.shade100,
+                        leading: const Icon(FeatherIcons.shield),
+                        title: const Text('Moderation'),
+                        onTap: () =>
+                            Navigator.of(context).pushNamed(Routes.moderation),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              ClearanceBuilder(
-                level: User.clearanceAdmin,
-                builder: (_) => ListTile(
-                  shape: const RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.horizontal(right: Radius.circular(15))),
-                  tileColor: Colors.orange.shade100,
-                  leading: const Icon(FeatherIcons.shield),
-                  title: const Text('Moderation'),
-                  onTap: () =>
-                      Navigator.of(context).pushNamed(Routes.moderation),
+              Flexible(
+                child: ListView(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    padding: EdgeInsets.zero,
+                    children: [
+                      ListTile(
+                        leading: const Icon(FeatherIcons.settings),
+                        title: const Text('Einstellungen'),
+                        enabled: false,
+                        onTap: () =>
+                            Navigator.of(context).popAndPushNamed(Routes.settings),
+                      ),
+                      ListTile(
+                        leading: const Icon(FeatherIcons.logOut),
+                        title: const Text('Ausloggen'),
+                        enabled: true,
+                        onTap: () =>
+                            BlocProvider.of<AuthenticationCubit>(context)
+                                .signOut()
+                                .catchError(
+                                  (_) => Tools.showSnackbar(context, "Logout failed?"),
+                            ),
+                      ),
+                    ]
                 ),
-              ),
+              )
             ],
           ),
         ),

@@ -43,5 +43,5 @@ final routes = {
   Routes.licenses: (context) => const OssLicensesPage(),
   Routes.settings: (context) => const SettingsPage(),
   Routes.about: (context) => const AppInfoPage(),
-  Routes.chat: (context) => const ChatPage()
+  Routes.chat: (context) => const ChatPage(),
 };

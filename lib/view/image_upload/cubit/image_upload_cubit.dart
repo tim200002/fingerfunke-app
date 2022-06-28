@@ -17,7 +17,7 @@ class ImageUploadCubit extends Cubit<ImageUploadState> {
     state.when(
         initial: () {},
         loaded: (File file) async {
-          File? cropped = await ImageCropper.cropImage(
+          File? cropped = await ImageCropper().cropImage(
             sourcePath: file.path,
             cropStyle: CropStyle.circle,
             aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),

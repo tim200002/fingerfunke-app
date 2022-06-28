@@ -4,6 +4,7 @@ import 'package:fingerfunke_app/services/pagination/message_pagination_service.d
 import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:fingerfunke_app/utils/tools.dart';
 import 'package:fingerfunke_app/view/error/exception_view.dart';
+import 'package:fingerfunke_app/view/maps/view/static_maps_provider.dart';
 import 'package:fingerfunke_app/view/paginated_list/cubit/paginated_list_cubit.dart';
 import 'package:fingerfunke_app/view/post/view/sections/author_section.dart';
 import 'package:fingerfunke_app/view/post/view/sections/header_section.dart';
@@ -18,9 +19,11 @@ import 'sections/post_posted_success_view.dart';
 import '../cubits/post_editor_cubit/post_editor_cubit.dart';
 import '../cubits/post_viewer_cubit/post_cubit.dart';
 import 'sections/event_detail_section.dart';
+import 'sections/location_section.dart';
 
 class PostPage extends StatelessWidget {
   final bool editing;
+
   const PostPage({Key? key, this.editing = false}) : super(key: key);
 
   Widget _content(BuildContext context) {
@@ -36,6 +39,7 @@ class PostPage extends StatelessWidget {
                     padding: const EdgeInsets.only(
                       left: AppTheme.PADDING_SIDE + 8,
                       right: AppTheme.PADDING_SIDE + 8,
+                      top: AppTheme.PADDING_SIDE,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,7 +48,10 @@ class PostPage extends StatelessWidget {
                         const SizedBox(height: 15),
                         PostDescriptionSection(editing),
                         const SizedBox(height: 24),
-                        AuthorSection(editing)
+                        LocationSection(editing),
+                        const SizedBox(height: 24),
+                        AuthorSection(editing),
+                        const SizedBox(height: 96),
                       ],
                     ),
                   ),

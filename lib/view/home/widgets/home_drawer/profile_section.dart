@@ -19,10 +19,10 @@ class _ProfileSection extends StatelessWidget {
         ),
         if (user?.hasClearance(User.clearanceAdmin))
           Padding(
-              padding: EdgeInsets.only(top: 8),
+              padding: const EdgeInsets.only(top: 8),
               child: Chip(
                 visualDensity: VisualDensity.compact,
-                label: Text("admin"),
+                label: const Text("admin"),
                 backgroundColor: Colors.orange.shade300,
               ))
       ],
