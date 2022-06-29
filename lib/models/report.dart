@@ -16,6 +16,7 @@ enum ReportReason {
 }
 
 enum ReportState { open, accepted, rejected }
+
 enum ReportType { post, message, user }
 
 class Report extends UserGeneratedDocument {
@@ -37,6 +38,7 @@ class Report extends UserGeneratedDocument {
             author: author,
             creationTime: creationTime);
 
+  @override
   Map<String, dynamic> toJson() {
     return {
       "id": id,

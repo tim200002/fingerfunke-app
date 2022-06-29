@@ -14,7 +14,7 @@ class ModPostCubit extends Cubit<ModPostState> {
   final ReportRepository _reportRepository = ReportRepositoryImpl();
   final PostRepository _postRepository = PostRepositoryImpl();
 
-  ModPostCubit() : super(ModPostState.loading()) {
+  ModPostCubit() : super(const ModPostState.loading()) {
     loadReports();
   }
 

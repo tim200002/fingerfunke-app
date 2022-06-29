@@ -4,7 +4,7 @@ class EventEditorFields extends GeneralEditorFields {
   final DateTime startTime;
   final String location;
 
-  EventEditorFields._(
+  const EventEditorFields._(
       {required String description,
       required String title,
       required List<VideoUploadCubit> videoUploadCubits,

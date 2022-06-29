@@ -17,6 +17,7 @@ class HomeDrawer extends StatelessWidget {
   static const _borderRadius = Radius.circular(20);
   const HomeDrawer({Key? key}) : super(key: key);
 
+  // ignore: unused_element
   Widget _moderationItem(BuildContext context) {
     return BlocBuilder<AppCubit, AppState>(
       builder: (context, state) => state.user.hasClearance(User.clearanceAdmin)
@@ -60,12 +61,14 @@ class HomeDrawer extends StatelessWidget {
                     ListTile(
                       leading: const Icon(FeatherIcons.share2),
                       title: const Text('Social Media'),
-                      onTap: () => launchUrlString("https://instagram.com/fingerfunke"),
+                      onTap: () =>
+                          launchUrlString("https://instagram.com/fingerfunke"),
                     ),
                     ListTile(
                       leading: const Icon(FeatherIcons.info),
                       title: const Text('Informationen'),
-                      onTap: () => Navigator.of(context).pushNamed(Routes.about),
+                      onTap: () =>
+                          Navigator.of(context).pushNamed(Routes.about),
                     ),
                     const SizedBox(height: 25),
                     ClearanceBuilder(
@@ -73,15 +76,16 @@ class HomeDrawer extends StatelessWidget {
                       builder: (_) => ListTile(
                         leading: const Icon(FeatherIcons.penTool),
                         title: const Text('DevTools'),
-                        onTap: () => Navigator.of(context).pushNamed(Routes.devtools),
+                        onTap: () =>
+                            Navigator.of(context).pushNamed(Routes.devtools),
                       ),
                     ),
                     ClearanceBuilder(
                       level: User.clearanceAdmin,
                       builder: (_) => ListTile(
                         shape: const RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.horizontal(right: Radius.circular(15))),
+                            borderRadius: BorderRadius.horizontal(
+                                right: Radius.circular(15))),
                         tileColor: Colors.orange.shade100,
                         leading: const Icon(FeatherIcons.shield),
                         title: const Text('Moderation'),
@@ -102,22 +106,22 @@ class HomeDrawer extends StatelessWidget {
                         leading: const Icon(FeatherIcons.settings),
                         title: const Text('Einstellungen'),
                         enabled: false,
-                        onTap: () =>
-                            Navigator.of(context).popAndPushNamed(Routes.settings),
+                        onTap: () => Navigator.of(context)
+                            .popAndPushNamed(Routes.settings),
                       ),
                       ListTile(
                         leading: const Icon(FeatherIcons.logOut),
                         title: const Text('Ausloggen'),
                         enabled: true,
-                        onTap: () =>
-                            BlocProvider.of<FirebaseAuthenticationCubitCubit>(context)
-                                .logoutRequested()
-                                .catchError(
-                                  (_) => Tools.showSnackbar(context, "Logout failed?"),
+                        onTap: () => BlocProvider.of<
+                                FirebaseAuthenticationCubitCubit>(context)
+                            .logoutRequested()
+                            .catchError(
+                              (_) =>
+                                  Tools.showSnackbar(context, "Logout failed?"),
                             ),
                       ),
-                    ]
-                ),
+                    ]),
               )
             ],
           ),

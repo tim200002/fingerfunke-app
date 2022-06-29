@@ -77,7 +77,7 @@ class _NewRecordButtonState extends State<NewRecordButton>
                       height: widget._size,
                       child: CircularProgressIndicator(
                         strokeWidth: 8,
-                        color: Theme.of(context).colorScheme.primaryVariant,
+                        color: Theme.of(context).colorScheme.primary,
                         value: _animationController.value,
                       ),
                     ),

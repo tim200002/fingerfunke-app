@@ -19,7 +19,7 @@ class ModerationPage extends StatelessWidget {
             SettingsTile(
               title: "User Reports",
               subtitle: "Von Nutzern gemeldete Inhalte verwalten",
-              trailing: Icon(Icons.arrow_forward_ios),
+              trailing: const Icon(Icons.arrow_forward_ios),
               onPressed: (_) =>
                   Navigator.of(context).pushNamed(Routes.moderationPosts),
             )

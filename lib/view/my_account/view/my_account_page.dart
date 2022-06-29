@@ -1,8 +1,5 @@
-import 'package:fingerfunke_app/common_widgets/image/user_image/user_image.dart';
 import 'package:fingerfunke_app/cubits/app_cubit/app_cubit.dart';
-import 'package:fingerfunke_app/utils/util_widgets/floating_modal.dart';
 import 'package:fingerfunke_app/utils/util_widgets/page_screen.dart';
-import 'package:fingerfunke_app/view/image_upload/view/image_upload_modal_content.dart';
 import 'package:fingerfunke_app/view/my_account/profile_picture:image_upload/profile_picture_image_upload_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

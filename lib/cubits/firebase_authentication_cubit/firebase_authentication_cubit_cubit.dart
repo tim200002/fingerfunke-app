@@ -45,7 +45,6 @@ class FirebaseAuthenticationCubitCubit
   }
 
   void _userChanged(User? currentUser) {
-    print("on user changed");
     if (currentUser == null) {
       return emit(const FirebaseAuthenticationCubitState.unauthenticated());
     } else {

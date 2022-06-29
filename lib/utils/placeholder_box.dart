@@ -7,7 +7,7 @@ class PlaceholderBox extends StatelessWidget {
 
   static Widget shimmer(Widget child) {
     return Shimmer.fromColors(
-        baseColor: Color(0xFFEFEFEF),
+        baseColor: const Color(0xFFEFEFEF),
         highlightColor: Colors.white,
         child: child);
   }

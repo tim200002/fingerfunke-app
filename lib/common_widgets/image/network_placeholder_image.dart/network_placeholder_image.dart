@@ -54,9 +54,7 @@ class NetworkPlaceholderImage extends StatelessWidget {
                       FeatherIcons.alertCircle,
                       color: Theme.of(context).colorScheme.onPrimary,
                     ),
-                    SizedBox(
-                      height: 15,
-                    ),
+                    const SizedBox(height: 15),
                     Text(
                       "Bild konnte nicht\ngeladen werden",
                       textAlign: TextAlign.center,

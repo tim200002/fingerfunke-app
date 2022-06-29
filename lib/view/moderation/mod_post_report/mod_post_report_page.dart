@@ -40,7 +40,7 @@ class ModPostReportPage extends StatelessWidget {
         context: context,
         builder: (BuildContext ctx) {
           return AlertDialog(
-            actionsPadding: EdgeInsets.symmetric(horizontal: 7),
+            actionsPadding: const EdgeInsets.symmetric(horizontal: 7),
             title: Text('Bestätigen:  ' + (accept ? "❌" : "✅")),
             content: Text(accept
                 ? "Der Beitrag verstößt gegen unsere Richtlinen. \nDen Beitrag unwiderruflich löschen."

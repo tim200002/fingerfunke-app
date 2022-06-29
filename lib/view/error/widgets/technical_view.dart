@@ -17,7 +17,7 @@ class _TechnicalExceptionView extends StatelessWidget {
       ListTile(
         title: Text(
           exception.toString(),
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
         ),
         subtitle: trace == null ? null : Text(trace.toString()),
       ),

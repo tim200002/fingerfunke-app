@@ -26,7 +26,7 @@ class EditLoadingView extends StatelessWidget {
   }
 }
 
-//TODO: Comnine with loading view
+//TODO: Combine with loading view
 class EditErrorView extends StatelessWidget {
   const EditErrorView({Key? key}) : super(key: key);
 

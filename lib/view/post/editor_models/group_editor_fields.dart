@@ -1,7 +1,7 @@
 part of 'general_editor_fields.dart';
 
 class GroupEditorFields extends GeneralEditorFields {
-  GroupEditorFields._({
+  const GroupEditorFields._({
     required String description,
     required String title,
     required List<VideoUploadCubit> videoUploadCubits,

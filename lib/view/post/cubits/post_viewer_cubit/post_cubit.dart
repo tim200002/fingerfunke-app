@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:fingerfunke_app/models/post/post.dart';
-import 'package:fingerfunke_app/models/user/user.dart';
 import 'package:fingerfunke_app/repositories/post_repository/post_repository.dart';
 import 'package:fingerfunke_app/repositories/post_repository/post_repository.impl.dart';
 import 'package:fingerfunke_app/utils/exceptions.dart';

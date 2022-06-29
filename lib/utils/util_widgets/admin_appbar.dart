@@ -10,7 +10,7 @@ class AdminAppBar {
       title: Row(
         children: [
           Container(
-              margin: EdgeInsets.only(right: 10),
+              margin: const EdgeInsets.only(right: 10),
               padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 9),
               decoration: BoxDecoration(
                   color: func == AdminFunction.moderation

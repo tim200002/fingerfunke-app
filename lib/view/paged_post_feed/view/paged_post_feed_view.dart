@@ -30,7 +30,7 @@ class PagedPostFeedView extends StatelessWidget {
                 ),
                 reverse: false,
                 endIndicator: ConstrainedBox(
-                  constraints: BoxConstraints(maxWidth: 300),
+                  constraints: const BoxConstraints(maxWidth: 300),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.stretch,

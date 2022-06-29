@@ -16,7 +16,7 @@ class PageAppBar extends AppBar {
 }
 
 class PageScreen extends StatelessWidget {
-  static const double TOP_PADDING = 23;
+  static const double topPadding = 23;
 
   final Function? onRefresh;
   final Widget? header;

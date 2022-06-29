@@ -108,7 +108,7 @@ class MiscOssLicenseSingle extends StatelessWidget {
                         style: const TextStyle(
                             color: Colors.blue,
                             decoration: TextDecoration.underline)),
-                    onTap: () => launch(homepage!),
+                    onTap: () => launchUrl(Uri.parse(homepage!)),
                   )),
             if (description != null || homepage != null) const Divider(),
             Padding(

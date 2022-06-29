@@ -15,7 +15,7 @@ class ManageAccountPage extends StatelessWidget {
         padding: const EdgeInsets.all(10.0),
         child: ListView(children: [
           ElevatedButton.icon(
-            icon: Icon(FeatherIcons.logOut),
+            icon: const Icon(FeatherIcons.logOut),
             label: const Text("abmelden"),
             onPressed: () {
               BlocProvider.of<FirebaseAuthenticationCubitCubit>(context)

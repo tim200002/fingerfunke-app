@@ -102,8 +102,8 @@ class Tools {
                         borderRadius: BorderRadius.circular(10),
                         child: Container(
                           color: Theme.of(context).colorScheme.background,
-                          constraints:
-                              BoxConstraints(maxWidth: 500, maxHeight: 600),
+                          constraints: const BoxConstraints(
+                              maxWidth: 500, maxHeight: 600),
                           child: builder(true),
                         ),
                       ))));
