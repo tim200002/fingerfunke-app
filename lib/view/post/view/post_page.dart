@@ -1,9 +1,10 @@
+import 'package:fingerfunke_app/cubits/app_cubit/app_cubit.dart';
 import 'package:fingerfunke_app/models/message/message.dart';
 import 'package:fingerfunke_app/services/pagination/message_pagination_service.dart';
 import 'package:fingerfunke_app/utils/app_theme.dart';
-import 'package:fingerfunke_app/utils/dev_tools.dart';
 import 'package:fingerfunke_app/utils/tools.dart';
 import 'package:fingerfunke_app/view/error/exception_view.dart';
+import 'package:fingerfunke_app/view/maps/view/static_maps_provider.dart';
 import 'package:fingerfunke_app/view/paginated_list/cubit/paginated_list_cubit.dart';
 import 'package:fingerfunke_app/view/post/view/sections/author_section.dart';
 import 'package:fingerfunke_app/view/post/view/sections/header_section.dart';
@@ -13,15 +14,16 @@ import 'package:fingerfunke_app/view/post/view/widgets/edit_loading_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../cubits/authentication_cubit/authentication_cubit.dart';
 import '../../../models/post/post.dart';
 import 'sections/post_posted_success_view.dart';
 import '../cubits/post_editor_cubit/post_editor_cubit.dart';
 import '../cubits/post_viewer_cubit/post_cubit.dart';
 import 'sections/event_detail_section.dart';
+import 'sections/location_section.dart';
 
 class PostPage extends StatelessWidget {
   final bool editing;
+
   const PostPage({Key? key, this.editing = false}) : super(key: key);
 
   Widget _content(BuildContext context) {
@@ -37,6 +39,7 @@ class PostPage extends StatelessWidget {
                     padding: const EdgeInsets.only(
                       left: AppTheme.PADDING_SIDE + 8,
                       right: AppTheme.PADDING_SIDE + 8,
+                      top: AppTheme.PADDING_SIDE,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,7 +48,10 @@ class PostPage extends StatelessWidget {
                         const SizedBox(height: 15),
                         PostDescriptionSection(editing),
                         const SizedBox(height: 24),
-                        AuthorSection(editing)
+                        LocationSection(editing),
+                        const SizedBox(height: 24),
+                        AuthorSection(editing),
+                        const SizedBox(height: 96),
                       ],
                     ),
                   ),
@@ -82,30 +88,27 @@ class PostPage extends StatelessWidget {
     final Post? post = ModalRoute.of(context)!.settings.arguments != null
         ? ModalRoute.of(context)!.settings.arguments as Post
         : null;
-    return BlocBuilder<AuthenticationCubit, AuthenticationState>(
-      builder: (context, state) => state.maybeWhen(
-        orElse: () =>
-            DevTools.placeholder("user is not signed in. push to login"),
-        signedIn: (user) => BlocProvider<PostEditorCubit>(
-          create: (context) =>
-              PostEditorCubit(currentUser: user, postToBeEdited: post),
-          child: BlocConsumer<PostEditorCubit, PostEditorState>(
-            buildWhen: (prev, curr) => prev.runtimeType != curr.runtimeType,
-            listener: (context, state) =>
-                state.whenOrNull(error: (e) => Tools.showSnackbar(context, e)),
-            builder: (context, state) => state.when(
-              loading: () => const EditLoadingView(message: "loading"),
-              editEvent: (_, __) => builder(context),
-              editGroup: (fields, inputValid) => ExceptionView(
-                  exception: Exception("editing groups is not yet possible")),
-              error: (message) => const EditErrorView(),
-              submitted: () => const PostPostedSuccessView(),
-              submitting: () => const EditLoadingView(message: "submitting"),
-            ),
+    return BlocBuilder<AppCubit, AppState>(builder: (context, state) {
+      final user = state.user;
+      return BlocProvider<PostEditorCubit>(
+        create: (context) =>
+            PostEditorCubit(currentUser: user, postToBeEdited: post),
+        child: BlocConsumer<PostEditorCubit, PostEditorState>(
+          buildWhen: (prev, curr) => prev.runtimeType != curr.runtimeType,
+          listener: (context, state) =>
+              state.whenOrNull(error: (e) => Tools.showSnackbar(context, e)),
+          builder: (context, state) => state.when(
+            loading: () => const EditLoadingView(message: "loading"),
+            editEvent: (_, __) => builder(context),
+            editGroup: (fields, inputValid) => ExceptionView(
+                exception: Exception("editing groups is not yet possible")),
+            error: (message) => const EditErrorView(),
+            submitted: () => const PostPostedSuccessView(),
+            submitting: () => const EditLoadingView(message: "submitting"),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 
   @override

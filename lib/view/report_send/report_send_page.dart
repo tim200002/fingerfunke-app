@@ -1,12 +1,11 @@
+import 'package:fingerfunke_app/cubits/app_cubit/app_cubit.dart';
 import 'package:fingerfunke_app/models/report.dart';
 import 'package:fingerfunke_app/view/error/exception_view.dart';
-import 'package:fingerfunke_app/view/insufficient_clearance/insufficient_clearance_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import '../../common_widgets/image/network_placeholder_image.dart/network_placeholder_image.dart';
-import '../../cubits/authentication_cubit/authentication_cubit.dart';
 import '../../models/asset/asset.dart';
 import '../../models/post/post.dart';
 import '../../repositories/video_repository/video_repository.impl.dart';
@@ -112,54 +111,53 @@ class ReportSendPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthenticationCubit, AuthenticationState>(
-        builder: (context, state) => state.maybeWhen(
-            orElse: () => const InsufficientClearanceView(),
-            signedIn: (user) => BlocProvider<ReportSendCubit>(
-                  create: (context) => ReportSendCubit(
-                      doc: post, type: ReportType.post, author: user),
-                  child: BlocBuilder<ReportSendCubit, ReportSendState>(
-                      builder: (context, state) => state.when(
-                          sending: () => const Center(
-                                child: CircularProgressIndicator.adaptive(),
-                              ),
-                          sent: () => _successView(context),
-                          error: ExceptionView.fromError,
-                          editing: (doc, type, reasons) => Scaffold(
-                                appBar: AppBar(
-                                  title: const Text("Post melden"),
-                                ),
-                                body: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10),
-                                  child: SingleChildScrollView(
-                                      child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    children: [
-                                      _postCard(context),
-                                      const Text("Dieser Post enthält:"),
-                                      ChipChooser<ReportReason>(
-                                          selected: reasons,
-                                          onChanged: (r) => context
-                                              .read<ReportSendCubit>()
-                                              .setReasons(r),
-                                          chips: ReportReason.values
-                                              .map((e) => ChipData(
-                                                  e.name.toString(), e))
-                                              .toList())
-                                    ],
-                                  )),
-                                ),
-                                floatingActionButton: ElevatedButton.icon(
-                                    onPressed: reasons.isEmpty
-                                        ? null
-                                        : () => context
-                                            .read<ReportSendCubit>()
-                                            .send(),
-                                    icon: const Icon(FeatherIcons.send),
-                                    label: const Text("melden")),
-                              ))),
-                )));
+    return BlocBuilder<AppCubit, AppState>(
+      builder: (context, state) {
+        final user = state.user;
+        return BlocProvider<ReportSendCubit>(
+          create: (context) =>
+              ReportSendCubit(doc: post, type: ReportType.post, author: user),
+          child: BlocBuilder<ReportSendCubit, ReportSendState>(
+            builder: (context, state) => state.when(
+              sending: () => const Center(
+                child: CircularProgressIndicator.adaptive(),
+              ),
+              sent: () => _successView(context),
+              error: ExceptionView.fromError,
+              editing: (doc, type, reasons) => Scaffold(
+                appBar: AppBar(
+                  title: const Text("Post melden"),
+                ),
+                body: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _postCard(context),
+                        const Text("Dieser Post enthält:"),
+                        ChipChooser<ReportReason>(
+                            selected: reasons,
+                            onChanged: (r) =>
+                                context.read<ReportSendCubit>().setReasons(r),
+                            chips: ReportReason.values
+                                .map((e) => ChipData(e.name.toString(), e))
+                                .toList())
+                      ],
+                    ),
+                  ),
+                ),
+                floatingActionButton: ElevatedButton.icon(
+                    onPressed: reasons.isEmpty
+                        ? null
+                        : () => context.read<ReportSendCubit>().send(),
+                    icon: const Icon(FeatherIcons.send),
+                    label: const Text("melden")),
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 }

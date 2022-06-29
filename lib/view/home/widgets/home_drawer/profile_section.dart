@@ -19,10 +19,10 @@ class _ProfileSection extends StatelessWidget {
         ),
         if (user?.hasClearance(User.clearanceAdmin))
           Padding(
-              padding: EdgeInsets.only(top: 8),
+              padding: const EdgeInsets.only(top: 8),
               child: Chip(
                 visualDensity: VisualDensity.compact,
-                label: Text("admin"),
+                label: const Text("admin"),
                 backgroundColor: Colors.orange.shade300,
               ))
       ],
@@ -32,24 +32,21 @@ class _ProfileSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-        borderRadius:
-            const BorderRadius.only(topRight: HomeDrawer._borderRadius),
-        onTap: () => Navigator.popAndPushNamed(context, Routes.account),
-        child: Container(
-          padding: const EdgeInsets.all(18),
-          decoration: BoxDecoration(
-              border: Border(
-                  bottom: BorderSide(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .onBackground
-                          .withOpacity(0.1)))),
-          child: BlocBuilder<AuthenticationCubit, AuthenticationState>(
-            builder: (context, state) => state.maybeWhen(
-                signedIn: (user) => _profile(context, user: user),
-                signedInAnonymously: () => _profile(context),
-                orElse: () => ErrorWidget(InvalidStateException())),
-          ),
-        ));
+      borderRadius: const BorderRadius.only(topRight: HomeDrawer._borderRadius),
+      onTap: () => Navigator.popAndPushNamed(context, Routes.account),
+      child: Container(
+        padding: const EdgeInsets.all(18),
+        decoration: BoxDecoration(
+            border: Border(
+                bottom: BorderSide(
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onBackground
+                        .withOpacity(0.1)))),
+        child: BlocBuilder<AppCubit, AppState>(
+          builder: (context, state) => _profile(context, user: state.user),
+        ),
+      ),
+    );
   }
 }

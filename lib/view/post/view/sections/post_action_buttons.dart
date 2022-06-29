@@ -1,8 +1,8 @@
+import 'package:fingerfunke_app/cubits/app_cubit/app_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
-import '../../../../cubits/authentication_cubit/authentication_cubit.dart';
 import '../../../../models/message/message.dart';
 import '../../../../routes.dart';
 import '../../../../utils/tools.dart';
@@ -56,21 +56,16 @@ class PostActionButtons extends StatelessWidget {
             loading: (_) =>
                 const Center(child: CircularProgressIndicator.adaptive()),
             normal: (post, isJoining) {
-              bool isParticipant = BlocProvider.of<AuthenticationCubit>(context)
-                  .state
-                  .maybeWhen(
-                      signedIn: (currentUser) =>
-                          post.isUserParticipant(currentUser),
-                      orElse: () => false);
-              bool isLoggedIn = BlocProvider.of<AuthenticationCubit>(context)
-                  .state
-                  .maybeWhen(signedIn: (_) => true, orElse: () => false);
+              bool isParticipant = post.isUserParticipant(
+                  BlocProvider.of<AppCubit>(context).state.user);
+              // ToDo remove
+              bool isLoggedIn = true;
               return Stack(
                 children: <Widget>[
                   Align(
                       alignment: Alignment.bottomCenter,
                       child: _mainFAB(context,
-                          title: isParticipant ? "Ich bin dabei" : "Ich komme",
+                          title: isParticipant ? "Ich bin dabei" : "Mach mit",
                           icon: isParticipant ? Icons.check : Icons.add,
                           isLoading: isJoining,
                           color: isParticipant
@@ -125,15 +120,15 @@ class _Edit extends StatelessWidget {
       {bool valid = true}) {
     return Stack(children: <Widget>[
       Align(
-          alignment: Alignment.bottomRight,
+          alignment: Alignment.bottomCenter,
           child: PostActionButtons._mainFAB(
             context,
-            title: "senden",
+            title: "Posten",
             icon: FeatherIcons.send,
             isLoading: processing,
             color: valid
                 ? Theme.of(context).colorScheme.primary
-                : _lightenColor(Theme.of(context).colorScheme.primary, 0.16),
+                : _lightenColor(Theme.of(context).colorScheme.onBackground, 0.4),
             onTap: valid
                 ? () => context.read<PostEditorCubit>().submit()
                 : () => Tools.showSnackbar(context, "Bitte alles ausfüllen"),

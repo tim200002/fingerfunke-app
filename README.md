@@ -4,6 +4,13 @@
 
 ## Getting started
 
+### Developement setup
+```
+flutter-version: 3.0.3
+dart-version: 2.17.5
+dev-tools-version: 2.12.2
+```
+
 ### Firebase Config files
 
 Before installing the flutter app one must add the (secret) `firebase config files` to ones own developement environment. These files are kept in a private fingerfunke gitlab-repo [here](https://gitlab.com/fingerfunke/config-files). If you are part of the team you should be able to just access them. If you are new and want to contribute to this project [please contact the team](mailto:info@fingerfunke.app) and we will give you access.
@@ -28,6 +35,7 @@ You must also provide a valid `.env` file. The `.env.example` file is a blueprin
 |FIREBASE_ENVIRONMENT|Whether to use production backend or local emulator suite|local; production
 
 Now you are ready to start developing. Have fun and thanks for contributing :)
+
 
 # Releases
 

@@ -1,4 +1,4 @@
-import 'package:fingerfunke_app/cubits/authentication_cubit/authentication_cubit.dart';
+import 'package:fingerfunke_app/cubits/app_cubit/app_cubit.dart';
 import 'package:fingerfunke_app/models/message/message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,11 +14,8 @@ class ChatMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    final bool amIAuthor = BlocProvider.of<AuthenticationCubit>(context)
-        .state
-        .maybeWhen(
-            signedIn: (user) => user.id == message.author.id,
-            orElse: () => false);
+    final bool amIAuthor =
+        BlocProvider.of<AppCubit>(context).state.user.id == message.author.id;
     return Padding(
       padding: const EdgeInsets.all(_messagePadding),
       child: Row(

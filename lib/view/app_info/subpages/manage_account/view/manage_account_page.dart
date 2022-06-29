@@ -1,4 +1,4 @@
-import 'package:fingerfunke_app/cubits/authentication_cubit/authentication_cubit.dart';
+import 'package:fingerfunke_app/cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
 import 'package:fingerfunke_app/utils/tools.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,8 +18,8 @@ class ManageAccountPage extends StatelessWidget {
             icon: Icon(FeatherIcons.logOut),
             label: const Text("abmelden"),
             onPressed: () {
-              BlocProvider.of<AuthenticationCubit>(context)
-                  .signOut()
+              BlocProvider.of<FirebaseAuthenticationCubitCubit>(context)
+                  .logoutRequested()
                   .catchError(
                     (_) => Tools.showSnackbar(context, "Logout failed?"),
                   );

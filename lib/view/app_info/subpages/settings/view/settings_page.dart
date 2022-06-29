@@ -1,4 +1,5 @@
 import 'package:fingerfunke_app/cubits/settings_cubit/settings_cubit.dart';
+import 'package:fingerfunke_app/models/settings/settings_model.dart';
 import 'package:fingerfunke_app/utils/util_widgets/floating_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,7 +19,6 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   @override
   void initState() {
-    BlocProvider.of<SettingsCubit>(context).loadSettings();
     super.initState();
   }
 
@@ -36,11 +36,8 @@ class _SettingsPageState extends State<SettingsPage> {
             onPressed: () => Navigator.of(context).pop()),
         title: const Text("Einstellungen"),
       ),
-      body:
-          BlocBuilder<SettingsCubit, SettingsState>(builder: (context, state) {
-        return state.when(initial: () {
-          return const Text('Einstellungen konnten nicht geladen werden!');
-        }, loaded: (settings) {
+      body: BlocBuilder<SettingsCubit, Settings>(
+        builder: (context, settings) {
           return ListView(
             children: [
               SettingsSection(
@@ -52,7 +49,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       onPressed: (BuildContext context) =>
                           showFloatingModalBottomSheet(
                             context: context,
-                            builder: (context) => SettingsLanguage(),
+                            builder: (context) => const SettingsLanguage(),
                           )),
                   SettingsTile(
                       title: 'Theme',
@@ -68,8 +65,8 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
             ],
           );
-        });
-      }),
+        },
+      ),
     );
   }
 }
