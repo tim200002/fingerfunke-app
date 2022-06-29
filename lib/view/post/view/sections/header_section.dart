@@ -143,28 +143,31 @@ class HeaderSection extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
           children: [
-            onChanged == null
-                ? Text(
-                    title,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.center,
-                    style: titleStyle,
-                    maxLines: 2,
-                  )
-                : TextFormField(
-                    initialValue: title,
-                    style: titleStyle,
-                    minLines: 1,
-                    maxLines: 2,
-                    maxLength: titleMaxCharacters,
-                    onChanged: onChanged,
-                    decoration: InputDecoration(
-                        isCollapsed: true,
-                        counterText: "",
-                        border: InputBorder.none,
-                        hintText: "Titel des Posts",
-                        hintStyle: titleStyle.copyWith(color: Colors.grey)),
-                  ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: onChanged == null
+                  ? Text(
+                      title,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                      style: titleStyle,
+                      maxLines: 2,
+                    )
+                  : TextFormField(
+                      initialValue: title,
+                      style: titleStyle,
+                      minLines: 1,
+                      maxLines: 2,
+                      maxLength: titleMaxCharacters,
+                      onChanged: onChanged,
+                      decoration: InputDecoration(
+                          isCollapsed: true,
+                          counterText: "",
+                          border: InputBorder.none,
+                          hintText: "Titel des Posts",
+                          hintStyle: titleStyle.copyWith(color: Colors.grey)),
+                    ),
+            ),
           ],
         ),
       ),

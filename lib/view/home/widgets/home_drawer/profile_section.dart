@@ -10,7 +10,7 @@ class _ProfileSection extends StatelessWidget {
       children: [
         UserImage(
           user?.picture?.downloadUrl,
-          diameter: 70,
+          diameter: 55,
         ),
         const SizedBox(height: 18),
         Text(
@@ -35,7 +35,7 @@ class _ProfileSection extends StatelessWidget {
       borderRadius: const BorderRadius.only(topRight: HomeDrawer._borderRadius),
       onTap: () => Navigator.popAndPushNamed(context, Routes.account),
       child: Container(
-        padding: const EdgeInsets.all(18),
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 25),
         decoration: BoxDecoration(
             border: Border(
                 bottom: BorderSide(

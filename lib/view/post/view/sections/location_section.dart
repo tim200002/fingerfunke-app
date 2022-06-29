@@ -1,6 +1,5 @@
 import 'package:fingerfunke_app/models/post/post.dart';
 import 'package:fingerfunke_app/utils/placeholder_box.dart';
-import 'package:fingerfunke_app/utils/tools.dart';
 import 'package:fingerfunke_app/view/maps/view/static_maps_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

@@ -1,11 +1,13 @@
+import 'package:fingerfunke_app/utils/placeholder_box.dart';
+import 'package:fingerfunke_app/utils/tools.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_config/flutter_config.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../services/google_maps_service.dart';
 
 class StaticMapsProvider extends StatelessWidget {
+  static const double height = 200;
   final LatLng latLong;
   final String address;
 
@@ -20,21 +22,37 @@ class StaticMapsProvider extends StatelessWidget {
     return Center(
       child: GestureDetector(
         onTap: () async {
-          if (await canLaunchUrl(GoogleMapsService.getGoogleUri(address)) && address != "") {
+          if (await canLaunchUrl(GoogleMapsService.getGoogleUri(address)) &&
+              address != "") {
             await launchUrl(GoogleMapsService.getGoogleUri(address));
           } else {
-            throw 'Could not open the map.';
+            Tools.showSnackbar(context, 'Could not open the map.');
           }
         },
-        child: Container(
-          alignment: Alignment.center,
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.width,
-          margin: const EdgeInsets.symmetric(horizontal: 5.0),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(15),
-            child: address != "" ? Image.network(GoogleMapsService.getGoogleStaticApiUri(address).toString()) : Container(color: Colors.black12),
-          ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(15),
+          child: address != ""
+              ? Image.network(
+                  GoogleMapsService.getGoogleStaticApiUri(address).toString(),
+                  height: height,
+                  fit: BoxFit.cover,
+                  loadingBuilder: (_, __, ___) =>
+                      PlaceholderBox.shimmer(const PlaceholderBox(
+                    height: height,
+                  )),
+                  errorBuilder: ((_, __, ___) => Container(
+                        height: height,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.grey.shade200),
+                        child: const Center(
+                            child: Icon(
+                          Icons.location_off,
+                          color: Colors.grey,
+                        )),
+                      )),
+                )
+              : Container(color: Colors.black12),
         ),
       ),
     );
