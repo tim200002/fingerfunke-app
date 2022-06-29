@@ -4,6 +4,7 @@ import 'package:fingerfunke_app/routes.dart';
 import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:fingerfunke_app/view/create_account/view/create_account_view.dart';
 import 'package:fingerfunke_app/view/home/view/home_view.dart';
+import 'package:fingerfunke_app/view/splash/view/splash_page.dart';
 import 'package:fingerfunke_app/view/welcome/view/welcome_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,7 +23,7 @@ class App extends StatelessWidget {
           unauthenticated: () =>
               buildApp(const WelcomePage(), themeMode: themeMode),
           authenticatedWaitingForUserToBeFetched: (_) =>
-              buildApp(const PeparingAppPage(), themeMode: themeMode),
+              buildApp(const SplashPage(), themeMode: themeMode),
           autehnticationNoUserCreated: (uid) =>
               buildApp(const CreateAccountView(), themeMode: themeMode),
           authenticated: (user) => BlocProvider(
@@ -46,20 +47,6 @@ class App extends StatelessWidget {
       themeMode: themeMode, //TODO change back to themeMode
       debugShowCheckedModeBanner: false,
       home: home,
-    );
-  }
-}
-
-class PeparingAppPage extends StatelessWidget {
-  const PeparingAppPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text(
-            "We are preparing the App for you. This might just take a few seconds"),
-      ),
     );
   }
 }
