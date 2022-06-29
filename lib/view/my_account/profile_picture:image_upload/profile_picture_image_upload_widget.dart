@@ -53,7 +53,7 @@ class ProfilePictureImageUploadWidget extends StatelessWidget {
             //fit: StackFit.passthrough,
             children: [
               UserImage(
-                state.user.picture?.downloadUrl,
+                state.user.picture,
                 diameter: userImageSize.round(),
               ),
               Align(

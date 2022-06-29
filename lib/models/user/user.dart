@@ -8,7 +8,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 @JsonSerializable(explicitToJson: true)
 class UserInfo extends DatabaseDocument {
   final String name;
-  final ImageAsset? picture;
+  final String? picture;
 
   const UserInfo({
     required FirestoreId id,
@@ -20,16 +20,13 @@ class UserInfo extends DatabaseDocument {
   Map<String, dynamic> toJson() => <String, dynamic>{
         'id': id,
         'name': name,
-        'picture': picture?.toJson(),
+        'picture': picture,
       };
 
   factory UserInfo.fromJson(Map<String, dynamic> map) => UserInfo(
-        id: map['id'] as String,
-        name: map['name'] as String,
-        picture: map['picture'] == null
-            ? null
-            : ImageAsset.fromJson(map['picture'] as Map<String, dynamic>),
-      );
+      id: map['id'] as String,
+      name: map['name'] as String,
+      picture: map['picture'] as String?);
 
   factory UserInfo.fromDoc(DocumentSnapshot document) =>
       UserInfo.fromJson(documentSnaphsotToJson(document));
@@ -51,7 +48,7 @@ class User extends UserInfo {
   const User({
     required FirestoreId id,
     required String name,
-    ImageAsset? picture,
+    String? picture,
     this.age,
     this.clearance = 0,
   }) : super(id: id, name: name, picture: picture);
@@ -64,7 +61,7 @@ class User extends UserInfo {
   Map<String, dynamic> toJson() => <String, dynamic>{
         'id': id,
         'name': name,
-        'picture': picture?.toJson(),
+        'picture': picture,
         'age': age,
         'clearance': clearance
       };
@@ -72,9 +69,7 @@ class User extends UserInfo {
   factory User.fromJson(Map<String, dynamic> map) => User(
       id: map['id'] as String,
       name: map['name'] as String,
-      picture: map['picture'] == null
-          ? null
-          : ImageAsset.fromJson(map['picture'] as Map<String, dynamic>),
+      picture: map['picture'] as String?,
       age: map['age'] as int?,
       clearance: map['clearance'] as int?);
 

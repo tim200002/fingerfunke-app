@@ -9,7 +9,7 @@ class _ProfileSection extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         UserImage(
-          user?.picture?.downloadUrl,
+          user?.picture,
           diameter: 55,
         ),
         const SizedBox(height: 18),

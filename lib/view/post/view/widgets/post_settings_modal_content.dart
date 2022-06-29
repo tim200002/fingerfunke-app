@@ -1,9 +1,12 @@
 import 'package:fingerfunke_app/cubits/app_cubit/app_cubit.dart';
 import 'package:fingerfunke_app/routes.dart';
 import 'package:fingerfunke_app/utils/dev_tools.dart';
+import 'package:fingerfunke_app/view/post/view/widgets/post_participants_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
+import '../../../../utils/util_widgets/floating_modal.dart';
 import '../../../report_send/report_send_page.dart';
 import '../../cubits/post_viewer_cubit/post_cubit.dart';
 
@@ -28,13 +31,19 @@ class PostSettingsModalContent extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   ListTile(
-                    leading: const Icon(Icons.people_rounded),
-                    title: const Text('Teilnehmer'),
-                    onTap: () => DevTools.showToDoSnackbar(context),
-                  ),
+                      leading: const Icon(FeatherIcons.users),
+                      title: const Text('Teilnehmer'),
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        showFloatingModalBottomSheet(
+                            context: context,
+                            builder: (_) => BlocProvider<PostCubit>.value(
+                                value: context.read<PostCubit>(), //
+                                child: const PostParticipantsView()));
+                      }),
                   if (isAuthor)
                     ListTile(
-                      leading: const Icon(Icons.edit),
+                      leading: const Icon(FeatherIcons.edit),
                       title: const Text('Bearbeiten'),
                       onTap: () {
                         Navigator.pushNamed(context, Routes.postEditor,
@@ -44,7 +53,7 @@ class PostSettingsModalContent extends StatelessWidget {
                     ),
                   if (isParticipant && !isAuthor)
                     ListTile(
-                      leading: const Icon(Icons.edit),
+                      leading: const Icon(FeatherIcons.logOut),
                       title: const Text('Verlassen'),
                       onTap: () => DevTools.showToDoSnackbar(context),
                     ),
