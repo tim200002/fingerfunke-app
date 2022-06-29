@@ -22,7 +22,10 @@ class _ProfileSection extends StatelessWidget {
               padding: const EdgeInsets.only(top: 8),
               child: Chip(
                 visualDensity: VisualDensity.compact,
-                label: const Text("admin"),
+                label: const Text(
+                  "admin",
+                  style: TextStyle(fontSize: 13),
+                ),
                 backgroundColor: Colors.orange.shade300,
               ))
       ],

@@ -44,7 +44,6 @@ class HomeDrawer extends StatelessWidget {
             children: [
               Expanded(
                 child: ListView(
-                  shrinkWrap: true,
                   padding: EdgeInsets.zero,
                   children: [
                     const _ProfileSection(),
@@ -61,8 +60,9 @@ class HomeDrawer extends StatelessWidget {
                     ListTile(
                       leading: const Icon(FeatherIcons.share2),
                       title: const Text('Social Media'),
-                      onTap: () =>
-                          launchUrlString("https://instagram.com/fingerfunke"),
+                      onTap: () => launchUrlString(
+                          "https://instagram.com/fingerfunke",
+                          mode: LaunchMode.externalApplication),
                     ),
                     ListTile(
                       leading: const Icon(FeatherIcons.info),
@@ -96,33 +96,31 @@ class HomeDrawer extends StatelessWidget {
                   ],
                 ),
               ),
-              Flexible(
-                child: ListView(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    padding: EdgeInsets.zero,
-                    children: [
-                      ListTile(
-                        leading: const Icon(FeatherIcons.settings),
-                        title: const Text('Einstellungen'),
-                        enabled: false,
-                        onTap: () => Navigator.of(context)
-                            .popAndPushNamed(Routes.settings),
-                      ),
-                      ListTile(
-                        leading: const Icon(FeatherIcons.logOut),
-                        title: const Text('Ausloggen'),
-                        enabled: true,
-                        onTap: () => BlocProvider.of<
-                                FirebaseAuthenticationCubitCubit>(context)
-                            .logoutRequested()
-                            .catchError(
-                              (_) =>
-                                  Tools.showSnackbar(context, "Logout failed?"),
-                            ),
-                      ),
-                    ]),
-              )
+              ListView(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  padding: EdgeInsets.zero,
+                  children: [
+                    ListTile(
+                      leading: const Icon(FeatherIcons.settings),
+                      title: const Text('Einstellungen'),
+                      enabled: false,
+                      onTap: () => Navigator.of(context)
+                          .popAndPushNamed(Routes.settings),
+                    ),
+                    ListTile(
+                      leading: const Icon(FeatherIcons.logOut),
+                      title: const Text('Abmelden'),
+                      enabled: true,
+                      onTap: () => BlocProvider.of<
+                              FirebaseAuthenticationCubitCubit>(context)
+                          .logoutRequested()
+                          .catchError(
+                            (_) =>
+                                Tools.showSnackbar(context, "Logout failed?"),
+                          ),
+                    ),
+                  ]),
             ],
           ),
         ),
