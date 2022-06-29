@@ -72,13 +72,14 @@ class PostActionButtons extends StatelessWidget {
                       child: _mainFAB(context,
                           title: isParticipant ? "Ich bin dabei" : "Ich komme",
                           icon: isParticipant ? Icons.check : Icons.add,
+                          isLoading: isJoining,
                           color: isParticipant
                               ? Theme.of(context).colorScheme.secondary
                               : Theme.of(context).colorScheme.primary,
-                          onTap: !isLoggedIn || isParticipant
+                          onTap: !isLoggedIn
                               ? null
                               : () => BlocProvider.of<PostCubit>(context)
-                                  .joinPost()
+                                  .toggleIsParticipant(isParticipant)
                                   .catchError(
                                     (_) => Tools.showSnackbar(
                                         context, "Oops something went wrong"),

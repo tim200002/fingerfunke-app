@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:fingerfunke_app/models/post/post.dart';
+import 'package:fingerfunke_app/models/user/user.dart';
 import 'package:fingerfunke_app/repositories/post_repository/post_repository.dart';
 import 'package:fingerfunke_app/repositories/post_repository/post_repository.impl.dart';
 import 'package:fingerfunke_app/utils/exceptions.dart';
@@ -32,21 +33,22 @@ class PostCubit extends Cubit<PostState> {
     state.whenOrNull(normal: (post, _) => _postRepository.deletePost(post.id));
   }
 
-  Future<void> joinPost() async {
-    final currentState = state.maybeMap(
-        normal: (state) => state,
+  Future<void> toggleIsParticipant(bool isParticipant) async {
+    state.maybeMap(
+        normal: (state) async {
+          emit(state.copyWith(isJoining: true));
+          try {
+            final updatedPost = isParticipant
+                ? await _postRepository.leavePost(postId: state.post.id)
+                : await _postRepository.joinPost(postId: state.post.id);
+
+            emit(PostState.normal(post: updatedPost, isJoining: false));
+          } catch (_) {
+            emit(state.copyWith(isJoining: false));
+            rethrow;
+          }
+        },
         orElse: () => throw (InvalidStateException()));
-    emit(currentState.copyWith(isJoining: true));
-
-    try {
-      final updatedPost =
-          await _postRepository.joinPost(postId: currentState.post.id);
-
-      emit(PostState.normal(post: updatedPost, isJoining: false));
-    } catch (_) {
-      emit(currentState.copyWith(isJoining: false));
-      rethrow;
-    }
   }
 
   @override

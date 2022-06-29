@@ -65,9 +65,9 @@ class PostRepositoryImpl implements PostRepository {
     _postCollection.doc(postId).update(updateMap);
   }
 
-  @override
-  Future<Post> joinPost({required FirestoreId postId}) async {
-    HttpsCallable callable = _functions.httpsCallable('post-joinPost');
+  Future<Post> _changeMemberOnPost(FirestoreId postId, bool join) async {
+    HttpsCallable callable =
+        _functions.httpsCallable(join ? 'post-joinPost' : 'post-leavePost');
     final resp = await callable.call(postId);
 
     final updatedPostResult = Post.fromJson(json.decode(resp.data));
@@ -75,11 +75,10 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Future<Post> leavePost({required FirestoreId postId}) async {
-    HttpsCallable callable = _functions.httpsCallable('post-leavePost');
-    final resp = await callable.call(postId);
+  Future<Post> joinPost({required FirestoreId postId}) =>
+      _changeMemberOnPost(postId, true);
 
-    final updatedPostResult = Post.fromJson(resp.data());
-    return updatedPostResult;
-  }
+  @override
+  Future<Post> leavePost({required FirestoreId postId}) =>
+      _changeMemberOnPost(postId, false);
 }
