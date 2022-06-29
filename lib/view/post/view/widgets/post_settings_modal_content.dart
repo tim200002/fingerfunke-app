@@ -14,7 +14,9 @@ class PostSettingsModalContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<PostCubit, PostState>(
         builder: (context, state) => state.when(
-            loading: (_) => const CircularProgressIndicator.adaptive(),
+            loading: (_) => const SizedBox(
+                height: 200,
+                child: Center(child: CircularProgressIndicator.adaptive())),
             normal: (post, isJoining) {
               bool isAuthor = post
                   .isUserAuthor(BlocProvider.of<AppCubit>(context).state.user);
