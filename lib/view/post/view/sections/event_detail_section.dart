@@ -4,6 +4,7 @@ import 'package:fingerfunke_app/view/maps/view/maps_place_picker_page.dart';
 import 'package:fingerfunke_app/view/post/view/widgets/icon_text_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../services/google_maps_service.dart';
@@ -39,11 +40,11 @@ class EventDetailSection extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           IconTextItem(
-                              icon: Icons.calendar_today_rounded,
+                              icon: FeatherIcons.calendar,
                               label: post.startTime.dateString,
                               subLabel: "ab ${post.startTime.timeString} Uhr"),
                           IconTextItem(
-                            icon: Icons.location_on_outlined,
+                            icon: FeatherIcons.mapPin,
                             label: post.location.split(',')[0],
                             subLabel: post.location.split(',').length < 2
                                 ? null

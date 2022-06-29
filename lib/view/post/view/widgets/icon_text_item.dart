@@ -25,17 +25,16 @@ class IconTextItem extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
-              padding: const EdgeInsets.only(right: 20.0),
+              padding: const EdgeInsets.only(right: 14.0),
               child: Container(
                 padding: const EdgeInsets.all(15),
                 decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.03),
+                    color: Colors.black.withOpacity(0.0),
                     borderRadius: BorderRadius.circular(20)),
-                child: Icon(
-                  icon,
-                  size: 28,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
+                child: Icon(icon,
+                    size: 23,
+                    color: Colors.grey //Theme.of(context).colorScheme.primary,
+                    ),
               ),
             ),
             Expanded(

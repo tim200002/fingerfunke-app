@@ -21,11 +21,11 @@ class PostCubit extends Cubit<PostState> {
         super(PostState.loading(postId)) {
     _postSubscription =
         _postRepository.subscribeToPost(postId).listen((Post post) {
-      /*emit(
+      emit(
         PostState.normal(
           post: post,
         ),
-      );*/
+      );
     });
   }
 

@@ -133,7 +133,7 @@ class HeaderSection extends StatelessWidget {
             color: Colors.black.withOpacity(0.15),
             spreadRadius: 0,
             blurRadius: 15,
-            offset: const Offset(0, 4), // changes position of shadow
+            offset: const Offset(0, 0), // changes position of shadow
           ),
         ],
       ),
