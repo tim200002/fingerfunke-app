@@ -1,3 +1,5 @@
+import 'package:fingerfunke_app/utils/placeholder_box.dart';
+import 'package:fingerfunke_app/utils/tools.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,14 +14,20 @@ class PostDescriptionSection extends StatelessWidget {
   final bool editing;
   const PostDescriptionSection(this.editing, {Key? key}) : super(key: key);
 
+  Widget _loading() {
+    return Column(children: [
+      for (int i = 2; i >= 0; i--)
+        PlaceholderBox.text(width: i == 0 ? 100 : null)
+    ]);
+  }
+
   @override
   Widget build(BuildContext context) {
     return editing
         ? const _Edit()
         : BlocBuilder<PostCubit, PostState>(
             builder: (context, state) => state.when(
-                loading: (_) =>
-                    const Center(child: CircularProgressIndicator.adaptive()),
+                loading: (_) => _loading(),
                 normal: (post, isJoining) => Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12.0),
                       child: Text(

@@ -42,7 +42,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       routes: routes,
       theme: AppTheme.mainTheme,
-      darkTheme: AppTheme.darkTheme,
+      //darkTheme: AppTheme.darkTheme,
       themeMode: themeMode, //TODO change back to themeMode
       debugShowCheckedModeBanner: false,
       home: home,

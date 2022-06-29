@@ -18,14 +18,18 @@ class EventDetailSection extends StatelessWidget {
 
   const EventDetailSection(this.editing, {Key? key}) : super(key: key);
 
+  Widget _loading() {
+    // including this would clutter the loading UI. Therefore i left it out
+    return Container();
+  }
+
   @override
   Widget build(BuildContext context) {
     return editing
         ? const _Edit()
         : BlocBuilder<PostCubit, PostState>(
             builder: (context, state) => state.when(
-                loading: (_) =>
-                    const Center(child: CircularProgressIndicator.adaptive()),
+                loading: (_) => _loading(),
                 normal: (post, isJoining) => post is! Event
                     ? const Text("Die App unterstützt zur Zeit nur Events!")
                     : Column(
@@ -40,14 +44,15 @@ class EventDetailSection extends StatelessWidget {
                           IconTextItem(
                             icon: Icons.location_on_outlined,
                             label: post.location.split(',')[0],
-                            subLabel:  post.location.split(',').length < 2 ? null : post.location.split(',')[1],
+                            subLabel: post.location.split(',').length < 2
+                                ? null
+                                : post.location.split(',')[1],
                             onTap: () async {
                               if (await canLaunchUrl(
                                   GoogleMapsService.getGoogleUri(
                                       post.location))) {
-                                await launchUrl(
-                                    GoogleMapsService.getGoogleUri(
-                                        post.location));
+                                await launchUrl(GoogleMapsService.getGoogleUri(
+                                    post.location));
                               } else {
                                 throw 'Could not open the map.';
                               }
@@ -111,7 +116,9 @@ class _Edit extends StatelessWidget {
                         : eventEditorFields.location.split(',')[0],
                     subLabel: eventEditorFields.location == ""
                         ? null
-                        : eventEditorFields.location.split(',').length < 2 ? null : eventEditorFields.location.split(',')[1],
+                        : eventEditorFields.location.split(',').length < 2
+                            ? null
+                            : eventEditorFields.location.split(',')[1],
                     onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(

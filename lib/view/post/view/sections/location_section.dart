@@ -1,8 +1,7 @@
 import 'package:fingerfunke_app/models/post/post.dart';
-import 'package:fingerfunke_app/utils/extensions/date_time.dart';
-import 'package:fingerfunke_app/view/maps/view/maps_place_picker_page.dart';
+import 'package:fingerfunke_app/utils/placeholder_box.dart';
+import 'package:fingerfunke_app/utils/tools.dart';
 import 'package:fingerfunke_app/view/maps/view/static_maps_provider.dart';
-import 'package:fingerfunke_app/view/post/view/widgets/icon_text_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,16 +16,20 @@ class LocationSection extends StatelessWidget {
 
   const LocationSection(this.editing, {Key? key}) : super(key: key);
 
+  Widget _loading() {
+    return const PlaceholderBox(height: 140);
+  }
+
   @override
   Widget build(BuildContext context) {
     return editing
         ? const _Edit()
         : BlocBuilder<PostCubit, PostState>(
-        builder: (context, state) => state.when(
-            loading: (_) => Container(),
-            normal: (post, isJoining) => post is! Event
-                ? const Text("Die App unterstützt zur Zeit nur Events!")
-                : StaticMapsProvider(address: post.location)));
+            builder: (context, state) => state.when(
+                loading: (_) => _loading(),
+                normal: (post, isJoining) => post is! Event
+                    ? const Text("Die App unterstützt zur Zeit nur Events!")
+                    : StaticMapsProvider(address: post.location)));
   }
 }
 
@@ -37,7 +40,8 @@ class _Edit extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<PostEditorCubit, PostEditorState>(
       builder: (context, state) => state.maybeWhen(
-          editEvent: (eventEditorFields, _) => StaticMapsProvider(address: eventEditorFields.location),
+          editEvent: (eventEditorFields, _) =>
+              StaticMapsProvider(address: eventEditorFields.location),
           orElse: () => throw InvalidStateException()),
     );
   }

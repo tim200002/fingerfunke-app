@@ -53,8 +53,7 @@ class PostActionButtons extends StatelessWidget {
   Widget _viewContent(BuildContext context) {
     return BlocBuilder<PostCubit, PostState>(
         builder: (context, state) => state.when(
-            loading: (_) =>
-                const Center(child: CircularProgressIndicator.adaptive()),
+            loading: (_) => Container(),
             normal: (post, isJoining) {
               bool isParticipant = post.isUserParticipant(
                   BlocProvider.of<AppCubit>(context).state.user);
@@ -128,7 +127,8 @@ class _Edit extends StatelessWidget {
             isLoading: processing,
             color: valid
                 ? Theme.of(context).colorScheme.primary
-                : _lightenColor(Theme.of(context).colorScheme.onBackground, 0.4),
+                : _lightenColor(
+                    Theme.of(context).colorScheme.onBackground, 0.4),
             onTap: valid
                 ? () => context.read<PostEditorCubit>().submit()
                 : () => Tools.showSnackbar(context, "Bitte alles ausfüllen"),

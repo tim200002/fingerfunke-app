@@ -5,6 +5,8 @@ import 'package:fingerfunke_app/models/asset/asset.dart';
 import 'package:fingerfunke_app/models/post/post.dart';
 import 'package:fingerfunke_app/repositories/video_repository/video_repository.impl.dart';
 import 'package:fingerfunke_app/utils/app_theme.dart';
+import 'package:fingerfunke_app/utils/placeholder_box.dart';
+import 'package:fingerfunke_app/utils/tools.dart';
 import 'package:fingerfunke_app/utils/util_widgets/floating_modal.dart';
 import 'package:fingerfunke_app/view/fullscreen_video/view/fullscreen_video_page.dart';
 import 'package:fingerfunke_app/view/post/view/widgets/post_settings_modal_content.dart';
@@ -136,7 +138,7 @@ class HeaderSection extends StatelessWidget {
         ],
       ),
       child: Container(
-        padding: const EdgeInsets.symmetric( vertical: 20),
+        padding: const EdgeInsets.symmetric(vertical: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
@@ -205,6 +207,22 @@ class HeaderSection extends StatelessWidget {
     );
   }
 
+  Widget _loading() {
+    return Stack(children: [
+      PlaceholderBox(height: thumbnailHeight),
+      PlaceholderBox.background(
+        height: 80,
+        borderRadius: 20,
+        margin: EdgeInsets.only(
+            left: 15, right: 15, top: thumbnailHeight - titleOverlap),
+        child: const PlaceholderBox.headline(
+          width: 100,
+          alignment: Alignment.center,
+        ),
+      )
+    ]);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
@@ -246,7 +264,9 @@ class HeaderSection extends StatelessWidget {
       centerTitle: true,
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30), topLeft: Radius.circular(30))),
+              bottomLeft: Radius.circular(30),
+              bottomRight: Radius.circular(30),
+              topLeft: Radius.circular(30))),
       expandedHeight: thumbnailHeight + titleHeight - titleOverlap - 40,
       flexibleSpace: ClipRRect(
         borderRadius: BorderRadius.circular(20),
@@ -259,8 +279,7 @@ class HeaderSection extends StatelessWidget {
               ? _Edit(thumbnailHeight, titleOverlap)
               : BlocBuilder<PostCubit, PostState>(
                   builder: (context, state) => state.when(
-                    loading: (_) =>
-                        const Center(child: CircularProgressIndicator.adaptive()),
+                    loading: (_) => _loading(),
                     normal: (post, isJoining) => Stack(
                       children: [
                         SizedBox(
@@ -315,11 +334,18 @@ class _Edit extends StatelessWidget {
                 : Container(
                     height: 210,
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.6),
+                      color: Theme.of(context)
+                          .colorScheme
+                          .primaryContainer
+                          .withOpacity(0.6),
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child:
-                        Center(child: Icon(FeatherIcons.video, color: Theme.of(context).colorScheme.onPrimaryContainer, size: 40,)),
+                    child: Center(
+                        child: Icon(
+                      FeatherIcons.video,
+                      color: Theme.of(context).colorScheme.onPrimaryContainer,
+                      size: 40,
+                    )),
                   ),
           ),
         ));
