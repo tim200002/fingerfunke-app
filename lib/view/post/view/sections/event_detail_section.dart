@@ -8,6 +8,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../services/google_maps_service.dart';
 import '../../../../utils/exceptions.dart';
+import '../../../../utils/placeholder_box.dart';
 import '../../cubits/post_editor_cubit/post_editor_cubit.dart';
 import '../../cubits/post_viewer_cubit/post_cubit.dart';
 
@@ -29,7 +30,7 @@ class EventDetailSection extends StatelessWidget {
         ? const _Edit()
         : BlocBuilder<PostCubit, PostState>(
             builder: (context, state) => state.when(
-                loading: (_) => _loading(),
+                loading: (_) => PlaceholderBox.shimmer(_loading()),
                 normal: (post, isJoining) => post is! Event
                     ? const Text("Die App unterstützt zur Zeit nur Events!")
                     : Column(

@@ -27,7 +27,7 @@ class PostDescriptionSection extends StatelessWidget {
         ? const _Edit()
         : BlocBuilder<PostCubit, PostState>(
             builder: (context, state) => state.when(
-                loading: (_) => _loading(),
+                loading: (_) => PlaceholderBox.shimmer(_loading()),
                 normal: (post, isJoining) => Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12.0),
                       child: Text(

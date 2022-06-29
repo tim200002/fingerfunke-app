@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 class PlaceholderBox extends StatelessWidget {
   static const Alignment topLeft = Alignment.topLeft;
   static const Color baseColor = Color(0xFFF5F5F5);
+
+  static Widget shimmer(Widget child) {
+    return Shimmer.fromColors(
+        baseColor: Color(0xFFEFEFEF),
+        highlightColor: Colors.white,
+        child: child);
+  }
 
   final double? width;
   final double? height;

@@ -60,6 +60,7 @@ dependencies:
   google_maps_flutter: ^2.1.5
   google_maps_place_picker_mb: ^2.0.0-mb.20
   flutter_config: ^2.0.0
+  shimmer: ^2.0.0
 
 dev_dependencies:
   flutter_test:
