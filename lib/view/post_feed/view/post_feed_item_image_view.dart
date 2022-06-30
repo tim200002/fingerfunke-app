@@ -95,7 +95,7 @@ class PostFeedImageItem extends StatelessWidget {
   }
 
   Widget _contentSection(BuildContext context) {
-    const double padding = 12;
+    const double padding = 18;
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
@@ -146,13 +146,13 @@ class PostFeedImageItem extends StatelessWidget {
           child: Hero(
             tag: heroTag,
             child: ClipRRect(
-                borderRadius: BorderRadius.circular(14),
+                borderRadius: BorderRadius.circular(21),
                 child: Stack(alignment: Alignment.bottomCenter, children: [
                   _backgroundView(context),
                   if (_post is Event)
                     Positioned(
-                      top: 10,
-                      right: 10,
+                      top: 18,
+                      right: 18,
                       child: _eventDateWidget(context),
                     ),
                   _contentSection(context),

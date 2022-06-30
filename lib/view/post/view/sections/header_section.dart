@@ -9,12 +9,10 @@ import 'package:fingerfunke_app/utils/placeholder_box.dart';
 import 'package:fingerfunke_app/utils/util_widgets/floating_modal.dart';
 import 'package:fingerfunke_app/view/fullscreen_video/view/fullscreen_video_page.dart';
 import 'package:fingerfunke_app/view/post/view/widgets/post_settings_modal_content.dart';
-import 'package:fingerfunke_app/view/post_feed/view/post_feed_item_image_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
-import '../../../../common_widgets/helper_widgets.dart';
 import '../../../../common_widgets/upload/video_upload_tile.dart';
 import '../../../../cubits/video_upload_cubit/video_upload_cubit.dart';
 import '../../../../utils/exceptions.dart';
@@ -103,7 +101,7 @@ class PostAppBarButton extends StatelessWidget {
 /// Section that displays the video and title of the given post
 /// In [editing] mode, the video and title are editable
 class HeaderSection extends StatelessWidget {
-  static const double titleHeight = 80 + 20;
+  static const double titleHeight = 120 + 20;
   static const titleMaxCharacters = 160;
   static const imgBorderRadius = Radius.circular(20);
 

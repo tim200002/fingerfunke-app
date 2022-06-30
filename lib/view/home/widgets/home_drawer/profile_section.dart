@@ -14,7 +14,10 @@ class _ProfileSection extends StatelessWidget {
         ),
         const SizedBox(height: 18),
         Text(user?.name ?? "anmelden",
-            style: Theme.of(context).textTheme.titleMedium),
+            style: Theme.of(context)
+                .textTheme
+                .titleLarge
+                ?.copyWith(fontWeight: FontWeight.bold)),
         if (user?.hasClearance(User.clearanceAdmin))
           Padding(
               padding: const EdgeInsets.only(top: 8),
