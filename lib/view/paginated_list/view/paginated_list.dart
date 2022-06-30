@@ -55,22 +55,20 @@ class PaginatedList<T> extends StatelessWidget {
       return endMessage != null
           ? Center(
               child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Container(
-                  padding: const EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25),
-                    color: Theme.of(context)
-                        .colorScheme
-                        .onSurface
-                        .withOpacity(0.08),
-                  ),
-                  child: Text(
-                    endMessage!,
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.onBackground),
+                  padding: const EdgeInsets.all(12.0),
+                  child: Container(
+                    padding: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withOpacity(0.08),
+                    ),
+                    child: Text(endMessage!,
+                        style: Theme.of(context).textTheme.labelMedium),
                   )),
-            ))
+            )
           : null;
     }
   }

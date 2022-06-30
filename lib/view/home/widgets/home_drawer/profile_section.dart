@@ -13,18 +13,16 @@ class _ProfileSection extends StatelessWidget {
           diameter: 55,
         ),
         const SizedBox(height: 18),
-        Text(
-          user?.name ?? "anmelden",
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 21),
-        ),
+        Text(user?.name ?? "anmelden",
+            style: Theme.of(context).textTheme.titleMedium),
         if (user?.hasClearance(User.clearanceAdmin))
           Padding(
               padding: const EdgeInsets.only(top: 8),
               child: Chip(
                 visualDensity: VisualDensity.compact,
-                label: const Text(
+                label: Text(
                   "admin",
-                  style: TextStyle(fontSize: 13),
+                  style: Theme.of(context).textTheme.labelSmall,
                 ),
                 backgroundColor: Colors.orange.shade300,
               ))

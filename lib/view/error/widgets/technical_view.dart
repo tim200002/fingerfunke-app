@@ -15,10 +15,8 @@ class _TechnicalExceptionView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ExpansionTile(title: const Text("technische Details"), children: [
       ListTile(
-        title: Text(
-          exception.toString(),
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
-        ),
+        title: Text(exception.toString(),
+            style: Theme.of(context).textTheme.labelMedium),
         subtitle: trace == null ? null : Text(trace.toString()),
       ),
     ]);

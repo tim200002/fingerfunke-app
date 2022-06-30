@@ -15,10 +15,8 @@ class EnterCodeView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Text(
-            "SMS Code eingeben",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-          ),
+          Text("SMS Code eingeben",
+              style: Theme.of(context).textTheme.labelLarge),
           PinCodeTextField(
               appContext: context,
               keyboardType: TextInputType.number,

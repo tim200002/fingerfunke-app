@@ -22,16 +22,15 @@ class PostParticipantsView extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 5),
                       child: Text(
                         "Teilnehmer",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 18),
+                        style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ),
-                    SizedBox(height: 13),
+                    const SizedBox(height: 13),
                     for (UserInfo info in post.participants)
                       Container(
                         margin: const EdgeInsets.symmetric(vertical: 10),

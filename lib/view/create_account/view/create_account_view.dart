@@ -36,16 +36,16 @@ class _CreateAccountViewState extends State<CreateAccountView> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Padding(
-                  padding: EdgeInsets.only(bottom: 8.0),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
                   child: Text(
                     "Willkommen!",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
-                const Text(
+                Text(
                   "Wie sollen Dich andere Nutzer nennen?",
-                  style: TextStyle(fontSize: 16),
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 const SizedBox(height: 10),
                 TextField(

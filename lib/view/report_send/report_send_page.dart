@@ -63,15 +63,14 @@ class ReportSendPage extends StatelessWidget {
               children: [
                 Text(
                   post.title,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 20),
+                  style: Theme.of(context).textTheme.labelMedium,
                 ),
                 const SizedBox(
                   height: 30,
                 ),
                 Text(
                   "erstellt von: ${post.author.name}",
-                  style: const TextStyle(fontWeight: FontWeight.normal),
+                  style: Theme.of(context).textTheme.bodyMedium,
                 )
               ],
             ),

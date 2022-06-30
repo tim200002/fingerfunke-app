@@ -44,10 +44,7 @@ class IconTextItem extends StatelessWidget {
                 children: [
                   AutoSizeText(
                     label,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w900,
-                    ),
+                    style: Theme.of(context).textTheme.labelMedium,
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                     softWrap: true,

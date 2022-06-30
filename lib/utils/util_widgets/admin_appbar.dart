@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 enum AdminFunction { moderation, development }
 
 class AdminAppBar {
-  static AppBar widget(AdminFunction func,
+  static AppBar widget(BuildContext context, AdminFunction func,
       {required String title, List<Widget>? actions}) {
     return AppBar(
       centerTitle: false,
@@ -19,10 +19,7 @@ class AdminAppBar {
                   borderRadius: BorderRadius.circular(30)),
               child: Text(
                 func == AdminFunction.moderation ? "mod" : "dev",
-                style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 13,
-                    fontWeight: FontWeight.bold),
+                style: Theme.of(context).primaryTextTheme.labelSmall,
               )),
           Expanded(
               child: Text(

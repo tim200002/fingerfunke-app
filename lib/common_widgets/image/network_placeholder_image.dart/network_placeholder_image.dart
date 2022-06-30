@@ -58,8 +58,7 @@ class NetworkPlaceholderImage extends StatelessWidget {
                     Text(
                       "Bild konnte nicht\ngeladen werden",
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Theme.of(context).colorScheme.onPrimary),
+                      style: Theme.of(context).textTheme.bodyMedium,
                     )
                   ],
                 )),

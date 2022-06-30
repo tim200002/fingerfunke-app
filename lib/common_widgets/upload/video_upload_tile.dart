@@ -70,10 +70,7 @@ class VideoUploadTile extends StatelessWidget {
       ),
       Center(
           child: Text("$progress %",
-              style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white) //Theme.of(context).colorScheme.primary),
-              )),
+              style: Theme.of(context).textTheme.labelMedium)),
       const Center(
           child: SizedBox.square(
               dimension: 50, child: CircularProgressIndicator())),

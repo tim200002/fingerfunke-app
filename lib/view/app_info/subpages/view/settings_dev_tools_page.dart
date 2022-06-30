@@ -12,7 +12,8 @@ class DevToolsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AdminAppBar.widget(AdminFunction.development, title: "DevTools"),
+      appBar: AdminAppBar.widget(context, AdminFunction.development,
+          title: "DevTools"),
       body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: LiveConfig.builder(

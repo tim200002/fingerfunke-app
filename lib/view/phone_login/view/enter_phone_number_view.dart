@@ -22,10 +22,8 @@ class _EnterPhoneNumberViewState extends State<EnterPhoneNumberView> {
         builder: (context, state) => Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Text(
-              "Telefonnummer",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-            ),
+            Text("Telefonnummer",
+                style: Theme.of(context).textTheme.labelLarge),
             const Padding(
               padding: EdgeInsets.only(bottom: 20, top: 15),
               child: Text(

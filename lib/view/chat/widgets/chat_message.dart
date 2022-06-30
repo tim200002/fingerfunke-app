@@ -41,10 +41,8 @@ class ChatMessage extends StatelessWidget {
                   if (!amIAuthor) ...[
                     Row(
                       children: [
-                        Text(
-                          message.author.name,
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        )
+                        Text(message.author.name,
+                            style: Theme.of(context).textTheme.labelMedium)
                       ],
                     ),
                     const SizedBox(

@@ -10,7 +10,8 @@ class ModerationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AdminAppBar.widget(AdminFunction.moderation, title: "Übersicht"),
+      appBar: AdminAppBar.widget(context, AdminFunction.moderation,
+          title: "Übersicht"),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: ListView(

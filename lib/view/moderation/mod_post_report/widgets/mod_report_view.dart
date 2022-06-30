@@ -14,10 +14,7 @@ class ModReportView extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(
-          report.type.name,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-        ),
+        Text(report.type.name, style: Theme.of(context).textTheme.labelLarge),
         Padding(
             padding: const EdgeInsets.symmetric(vertical: 20),
             child: ElevatedButton.icon(

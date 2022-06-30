@@ -29,8 +29,8 @@ class _HomeViewState extends State<HomeView> {
           context,
           MaterialPageRoute(
             builder: (context2) => MapsPlacePickerPage(
-              onPlacePicked: (pickResult) => null //TODO STORE LOCATION,
-            ),
+                onPlacePicked: (pickResult) => null //TODO STORE LOCATION,
+                ),
           )),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -72,10 +72,10 @@ class _HomeViewState extends State<HomeView> {
               ),
               Text(
                 title,
-                style: TextStyle(
-                    color: color,
-                    fontWeight: selected ? FontWeight.bold : null,
-                    fontSize: 12),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodySmall
+                    ?.copyWith(fontWeight: selected ? FontWeight.bold : null),
               )
             ],
           ),

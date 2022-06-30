@@ -21,8 +21,7 @@ class AuthorInfo extends StatelessWidget {
         ),
         Text(
           _userInfo.name,
-          style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14)
-              .copyWith(color: color),
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: color),
         )
       ],
     );

@@ -65,7 +65,7 @@ class ModPostReportPage extends StatelessWidget {
     return BlocProvider<ModPostCubit>(
       create: (context) => ModPostCubit(),
       child: Scaffold(
-          appBar: AdminAppBar.widget(AdminFunction.moderation,
+          appBar: AdminAppBar.widget(context, AdminFunction.moderation,
               title: "gemeldete Posts"),
           body: Padding(
             padding: const EdgeInsets.all(20),
