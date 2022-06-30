@@ -10,6 +10,8 @@ class PaginatedList<T> extends StatelessWidget {
   /// message displayed when list reached last element
   final String? endMessage;
 
+  final Widget? endWidget;
+
   /// optional function to turn on and off shrinkWrap depending on the number of items in the list
   /// this is currently needed to shrink the list down in the comment section
   final bool Function(int)? shouldShrinkWrap;
@@ -23,6 +25,7 @@ class PaginatedList<T> extends StatelessWidget {
       {required Widget Function(T) itemBuilder,
       this.reverse = false,
       this.endMessage,
+      this.endWidget,
       this.shouldShrinkWrap,
       this.loadingIndicator,
       Key? key})
@@ -52,24 +55,25 @@ class PaginatedList<T> extends StatelessWidget {
     if (state.isLoading) {
       return loadingIndicator;
     } else {
-      return endMessage != null
-          ? Center(
-              child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Container(
-                    padding: const EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25),
-                      color: Theme.of(context)
-                          .colorScheme
-                          .onSurface
-                          .withOpacity(0.08),
-                    ),
-                    child: Text(endMessage!,
-                        style: Theme.of(context).textTheme.labelMedium),
-                  )),
-            )
-          : null;
+      return endWidget ??
+          (endMessage != null
+              ? Center(
+                  child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Container(
+                        padding: const EdgeInsets.all(8.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSurface
+                              .withOpacity(0.08),
+                        ),
+                        child: Text(endMessage!,
+                            style: Theme.of(context).textTheme.labelMedium),
+                      )),
+                )
+              : null);
     }
   }
 

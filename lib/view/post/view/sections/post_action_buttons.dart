@@ -81,6 +81,7 @@ class PostActionButtons extends StatelessWidget {
                   Align(
                     alignment: Alignment.bottomRight,
                     child: FloatingActionButton(
+                        heroTag: "post_chat",
                         backgroundColor:
                             Theme.of(context).colorScheme.onBackground,
                         child: const Icon(Icons.chat_bubble_outline_rounded),

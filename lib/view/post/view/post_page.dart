@@ -10,6 +10,7 @@ import 'package:fingerfunke_app/view/post/view/sections/header_section.dart';
 import 'package:fingerfunke_app/view/post/view/sections/post_action_buttons.dart';
 import 'package:fingerfunke_app/view/post/view/sections/post_description_section.dart';
 import 'package:fingerfunke_app/view/post/view/widgets/edit_loading_view.dart';
+import 'package:fingerfunke_app/view/post_feed/view/post_feed_item_image_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

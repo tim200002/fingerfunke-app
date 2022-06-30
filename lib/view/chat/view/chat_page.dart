@@ -28,39 +28,59 @@ class ChatPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final ChatArguments arguments =
         ModalRoute.of(context)!.settings.arguments as ChatArguments;
-    return Scaffold(
-      appBar: AppBar(
-        title: AutoSizeText(
-          arguments.chatName ?? "",
-          maxLines: 1,
-          minFontSize: 12,
+    return Hero(
+      tag: "post_chat",
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        appBar: AppBar(
+          foregroundColor: Colors.white,
+          backgroundColor: Colors.black,
+          leading: IconButton(
+              onPressed: () => Navigator.of(context).pop(),
+              icon: Icon(Icons.close)),
+          title: const AutoSizeText(
+            "Chat",
+            maxLines: 1,
+            minFontSize: 12,
+          ),
         ),
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: BlocProvider.value(
-              value: arguments.paginatedListCubit,
-              child: PaginatedList<Message>(
-                reverse: true,
-                endMessage: "Keine weitere Nachrichten",
-                itemBuilder: (message) {
-                  switch (message.type) {
-                    case message_type.text:
-                      return ChatMessage(message as TextMessage);
-                    default:
-                      return ExceptionView(
-                        exception: InvalidMessageTypeException(),
-                      );
-                  }
-                },
-              ),
+        body: ClipRRect(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+          child: Container(
+            color: Colors.white,
+            child: Column(
+              children: [
+                Expanded(
+                  child: BlocProvider.value(
+                    value: arguments.paginatedListCubit,
+                    child: PaginatedList<Message>(
+                      reverse: true,
+                      /*endWidget: const Center(
+                        child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 30),
+                            child: Text("Beginn der Unterhaltung")),
+                      ),*/
+                      itemBuilder: (message) {
+                        switch (message.type) {
+                          case message_type.text:
+                            return ChatMessage(message as TextMessage);
+                          default:
+                            return ExceptionView(
+                              exception: InvalidMessageTypeException(),
+                            );
+                        }
+                      },
+                    ),
+                  ),
+                ),
+                ChatEditor(
+                    postId: arguments.postId,
+                    author: BlocProvider.of<AppCubit>(context).state.user),
+              ],
             ),
           ),
-          ChatEditor(
-              postId: arguments.postId,
-              author: BlocProvider.of<AppCubit>(context).state.user),
-        ],
+        ),
       ),
     );
   }

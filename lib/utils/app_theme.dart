@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 /// Contains customized Theme
 class AppTheme {
+  static const List<double> _textBodySizes = [13, 15, 17];
   static final TextStyle _font_primary = GoogleFonts.signika();
 
   static const Color _light_primary = Color(0xffFF6060);
@@ -103,7 +104,19 @@ class AppTheme {
 
   static const double PADDING_SIDE = 12;
 
-  static final TextTheme _textTheme = GoogleFonts.signikaTextTheme();
+  static final TextTheme _baseTheme = GoogleFonts.signikaTextTheme();
+  static final TextTheme _textTheme = _baseTheme.copyWith(
+    bodySmall: _baseTheme.bodySmall
+        ?.copyWith(fontSize: _textBodySizes[0], color: Colors.black),
+    bodyMedium: _baseTheme.bodyMedium?.copyWith(fontSize: _textBodySizes[1]),
+    bodyLarge: _baseTheme.bodyLarge?.copyWith(fontSize: _textBodySizes[2]),
+    labelSmall: _baseTheme.labelSmall
+        ?.copyWith(fontSize: _textBodySizes[0], fontWeight: FontWeight.bold),
+    labelMedium: _baseTheme.labelMedium
+        ?.copyWith(fontSize: _textBodySizes[1], fontWeight: FontWeight.bold),
+    labelLarge: _baseTheme.labelLarge
+        ?.copyWith(fontSize: _textBodySizes[2], fontWeight: FontWeight.bold),
+  );
 
   /*static final TextTheme _textTheme = TextTheme(
     headline1: _font_primary.copyWith(

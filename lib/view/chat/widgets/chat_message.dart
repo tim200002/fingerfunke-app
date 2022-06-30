@@ -1,5 +1,6 @@
 import 'package:fingerfunke_app/cubits/app_cubit/app_cubit.dart';
 import 'package:fingerfunke_app/models/message/message.dart';
+import 'package:fingerfunke_app/utils/extensions/lightness_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -7,17 +8,17 @@ class ChatMessage extends StatelessWidget {
   final TextMessage message;
   ChatMessage(this.message, {Key? key}) : super(key: key);
 
-  static const double _messagePadding = 8;
-  static const _bubbleBorderRadius = Radius.circular(12);
-  final _myMessageColor = Colors.green[300];
-  final _othersMessageColor = Colors.grey[200];
+  static const double _messageMargin = 7;
+  static const double _messagePadding = 15;
+  static const _bubbleBorderRadius = Radius.circular(17);
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     final bool amIAuthor =
         BlocProvider.of<AppCubit>(context).state.user.id == message.author.id;
     return Padding(
-      padding: const EdgeInsets.all(_messagePadding),
+      padding: const EdgeInsets.all(_messageMargin),
       child: Row(
         mainAxisAlignment:
             amIAuthor ? MainAxisAlignment.end : MainAxisAlignment.start,
@@ -32,9 +33,15 @@ class ChatMessage extends StatelessWidget {
                     bottomLeft: amIAuthor ? _bubbleBorderRadius : Radius.zero,
                     bottomRight:
                         !amIAuthor ? _bubbleBorderRadius : Radius.zero),
-                color: amIAuthor ? _myMessageColor : _othersMessageColor),
+                border: amIAuthor
+                    ? null
+                    : Border.all(
+                        color: Theme.of(context).colorScheme.primary, width: 3),
+                color: amIAuthor
+                    ? Theme.of(context).colorScheme.primary
+                    : Colors.transparent),
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(_messagePadding),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -42,14 +49,17 @@ class ChatMessage extends StatelessWidget {
                     Row(
                       children: [
                         Text(message.author.name,
-                            style: Theme.of(context).textTheme.labelMedium)
+                            style: amIAuthor
+                                ? Theme.of(context).primaryTextTheme.labelMedium
+                                : Theme.of(context).textTheme.labelMedium)
                       ],
                     ),
-                    const SizedBox(
-                      height: _messagePadding,
-                    )
+                    const SizedBox(height: 10)
                   ],
-                  Text(message.text)
+                  Text(message.text,
+                      style: amIAuthor
+                          ? Theme.of(context).primaryTextTheme.bodyMedium
+                          : Theme.of(context).textTheme.bodyMedium)
                 ],
               ),
             ),

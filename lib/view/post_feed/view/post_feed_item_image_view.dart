@@ -143,18 +143,21 @@ class PostFeedImageItem extends StatelessWidget {
       child: InkWell(
           onTap: () =>
               Navigator.pushNamed(context, Routes.post, arguments: _post.id),
-          child: ClipRRect(
-              borderRadius: BorderRadius.circular(14),
-              child: Stack(alignment: Alignment.bottomCenter, children: [
-                _backgroundView(context),
-                if (_post is Event)
-                  Positioned(
-                    top: 10,
-                    right: 10,
-                    child: _eventDateWidget(context),
-                  ),
-                _contentSection(context),
-              ]))),
+          child: Hero(
+            tag: heroTag,
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(14),
+                child: Stack(alignment: Alignment.bottomCenter, children: [
+                  _backgroundView(context),
+                  if (_post is Event)
+                    Positioned(
+                      top: 10,
+                      right: 10,
+                      child: _eventDateWidget(context),
+                    ),
+                  _contentSection(context),
+                ])),
+          )),
     );
   }
 }

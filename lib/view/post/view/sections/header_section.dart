@@ -9,6 +9,7 @@ import 'package:fingerfunke_app/utils/placeholder_box.dart';
 import 'package:fingerfunke_app/utils/util_widgets/floating_modal.dart';
 import 'package:fingerfunke_app/view/fullscreen_video/view/fullscreen_video_page.dart';
 import 'package:fingerfunke_app/view/post/view/widgets/post_settings_modal_content.dart';
+import 'package:fingerfunke_app/view/post_feed/view/post_feed_item_image_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -185,17 +186,14 @@ class HeaderSection extends StatelessWidget {
                 (post.media.firstWhere((e) => e.type == asset_type.video)
                     as VideoAsset)))),
         child: Stack(children: [
-          Hero(
-            tag: "", //TODO: reenable hero tag  PostFeedItem.heroTag,
-            child: NetworkPlaceholderImage(
-              VideoRepositoryImpl()
-                  .createThumbnailUrl(post.media[0] as VideoAsset),
-              Container(
-                color: Colors.grey,
-              ),
-              width: MediaQuery.of(context).size.width.toInt(),
-              fit: BoxFit.cover,
+          NetworkPlaceholderImage(
+            VideoRepositoryImpl()
+                .createThumbnailUrl(post.media[0] as VideoAsset),
+            Container(
+              color: Colors.grey,
             ),
+            width: MediaQuery.of(context).size.width.toInt(),
+            fit: BoxFit.cover,
           ),
           const Center(
             child: Icon(
@@ -324,32 +322,29 @@ class _Edit extends StatelessWidget {
                     context.read<PostEditorCubit>().addVideo(video);
                   }
                 },
-          child: HelperWidgets.materialHero(
-            tag: VideoRecorderPage.videoHeroTag,
-            child: (uploadCubits.isNotEmpty)
-                ? VideoUploadTile(
-                    cubit: uploadCubits[0],
-                    onDelete: (cubitId) =>
-                        context.read<PostEditorCubit>().removeVideo(cubitId),
-                    height: 210,
-                  )
-                : Container(
-                    height: 210,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .primaryContainer
-                          .withOpacity(0.6),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Center(
-                        child: Icon(
-                      FeatherIcons.video,
-                      color: Theme.of(context).colorScheme.onPrimaryContainer,
-                      size: 40,
-                    )),
+          child: (uploadCubits.isNotEmpty)
+              ? VideoUploadTile(
+                  cubit: uploadCubits[0],
+                  onDelete: (cubitId) =>
+                      context.read<PostEditorCubit>().removeVideo(cubitId),
+                  height: 210,
+                )
+              : Container(
+                  height: 210,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context)
+                        .colorScheme
+                        .primaryContainer
+                        .withOpacity(0.6),
+                    borderRadius: BorderRadius.circular(10),
                   ),
-          ),
+                  child: Center(
+                      child: Icon(
+                    FeatherIcons.video,
+                    color: Theme.of(context).colorScheme.onPrimaryContainer,
+                    size: 40,
+                  )),
+                ),
         ));
   }
 

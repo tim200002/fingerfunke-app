@@ -72,10 +72,9 @@ class _HomeViewState extends State<HomeView> {
               ),
               Text(
                 title,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodySmall
-                    ?.copyWith(fontWeight: selected ? FontWeight.bold : null),
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    fontWeight: selected ? FontWeight.bold : null,
+                    color: color),
               )
             ],
           ),
