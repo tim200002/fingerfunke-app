@@ -192,7 +192,7 @@ class PostEditorCubit extends Cubit<PostEditorState> {
           title: fields.title,
           description: fields.description,
           visibility: fields.visibility,
-          location: "Darmstadt(null)",
+          location: fields.location,
           media: _videoUploadCubitsToAssetsHelper(fields.videoUploadCubits),
           startTime: fields.startTime);
       await _postRepository.createPost(event);
