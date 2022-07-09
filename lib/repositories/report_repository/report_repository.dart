@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:fingerfunke_app/models/report.dart';
+import '../../models/report.dart';
 
 abstract class ReportRepository {
   Future<void> createReport(Report report);

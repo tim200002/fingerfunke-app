@@ -1,26 +1,26 @@
 import 'dart:io';
 
-import 'package:fingerfunke_app/common_widgets/image/network_placeholder_image.dart/network_placeholder_image.dart';
-import 'package:fingerfunke_app/cubits/app_cubit/app_cubit.dart';
-import 'package:fingerfunke_app/models/asset/asset.dart';
-import 'package:fingerfunke_app/models/post/post.dart';
-import 'package:fingerfunke_app/repositories/video_repository/video_repository.impl.dart';
-import 'package:fingerfunke_app/utils/app_theme.dart';
-import 'package:fingerfunke_app/utils/placeholder_box.dart';
-import 'package:fingerfunke_app/utils/util_widgets/floating_modal.dart';
-import 'package:fingerfunke_app/view/fullscreen_video/view/fullscreen_video_page.dart';
-import 'package:fingerfunke_app/view/post/view/widgets/post_settings_modal_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
+import '../../../../common_widgets/image/network_placeholder_image.dart/network_placeholder_image.dart';
 import '../../../../common_widgets/upload/video_upload_tile.dart';
+import '../../../../cubits/app_cubit/app_cubit.dart';
 import '../../../../cubits/video_upload_cubit/video_upload_cubit.dart';
+import '../../../../models/asset/asset.dart';
+import '../../../../models/post/post.dart';
+import '../../../../repositories/video_repository/video_repository.impl.dart';
+import '../../../../utils/app_theme.dart';
 import '../../../../utils/exceptions.dart';
+import '../../../../utils/placeholder_box.dart';
+import '../../../../utils/util_widgets/floating_modal.dart';
+import '../../../fullscreen_video/view/fullscreen_video_page.dart';
 import '../../../video_recorder/view/video_recorder_page.dart';
 import '../../cubits/post_editor_cubit/post_editor_cubit.dart';
 import '../../cubits/post_viewer_cubit/post_cubit.dart';
 import '../../editor_models/general_editor_fields.dart';
+import '../widgets/post_settings_modal_content.dart';
 
 /// Widget to display a button with additional [widget] on the left. This widget
 /// can for example be used to display an Icon or loading indicator

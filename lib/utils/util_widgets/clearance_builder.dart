@@ -1,7 +1,8 @@
-import 'package:fingerfunke_app/cubits/app_cubit/app_cubit.dart';
-import 'package:fingerfunke_app/models/user/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../cubits/app_cubit/app_cubit.dart';
+import '../../models/user/user.dart';
 
 class ClearanceBuilder extends StatelessWidget {
   final ClearanceLevel level;

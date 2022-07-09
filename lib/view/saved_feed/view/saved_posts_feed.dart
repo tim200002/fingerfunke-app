@@ -1,8 +1,9 @@
-import 'package:fingerfunke_app/cubits/app_cubit/app_cubit.dart';
-import 'package:fingerfunke_app/view/saved_feed/cubit/saved_posts_cubit.dart';
-import 'package:fingerfunke_app/view/saved_feed/widgets/non_paginated_post_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../cubits/app_cubit/app_cubit.dart';
+import '../cubit/saved_posts_cubit.dart';
+import '../widgets/non_paginated_post_list.dart';
 
 class SavedPostsFeed extends StatelessWidget {
   const SavedPostsFeed({Key? key}) : super(key: key);

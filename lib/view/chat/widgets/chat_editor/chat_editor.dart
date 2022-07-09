@@ -1,8 +1,8 @@
-import 'package:fingerfunke_app/models/user/user.dart';
-import 'package:fingerfunke_app/utils/tools.dart';
-import 'package:fingerfunke_app/view/chat/widgets/chat_editor/cubit/chat_editor_cubit.dart';
+import '../../../../models/user/user.dart';
+import '../../../../utils/tools.dart';
+import 'cubit/chat_editor_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:fingerfunke_app/utils/type_aliases.dart';
+import '../../../../utils/type_aliases.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ChatEditor extends StatefulWidget {

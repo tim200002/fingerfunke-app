@@ -1,15 +1,16 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:fingerfunke_app/models/user/user.dart' as user_models;
-import 'package:fingerfunke_app/repositories/firebase_authentication_repository/firebase_authentication_repository.dart';
-import 'package:fingerfunke_app/repositories/user_repository/user_repository.dart';
-import 'package:fingerfunke_app/utils/exceptions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'firebase_authentication_cubit_state.dart';
+import '../../models/user/user.dart' as user_models;
+import '../../repositories/firebase_authentication_repository/firebase_authentication_repository.dart';
+import '../../repositories/user_repository/user_repository.dart';
+import '../../utils/exceptions.dart';
+
 part 'firebase_authentication_cubit_cubit.freezed.dart';
+part 'firebase_authentication_cubit_state.dart';
 
 class FirebaseAuthenticationCubitCubit
     extends Cubit<FirebaseAuthenticationCubitState> {

@@ -1,11 +1,11 @@
-import 'package:fingerfunke_app/cubits/app_cubit/app_cubit.dart';
-import 'package:fingerfunke_app/cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
-import 'package:fingerfunke_app/routes.dart';
-import 'package:fingerfunke_app/utils/app_theme.dart';
-import 'package:fingerfunke_app/view/create_account/view/create_account_view.dart';
-import 'package:fingerfunke_app/view/home/view/home_view.dart';
-import 'package:fingerfunke_app/view/splash/view/splash_page.dart';
-import 'package:fingerfunke_app/view/welcome/view/welcome_page.dart';
+import 'cubits/app_cubit/app_cubit.dart';
+import 'cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
+import 'routes.dart';
+import 'utils/app_theme.dart';
+import 'view/create_account/view/create_account_view.dart';
+import 'view/home/view/home_view.dart';
+import 'view/splash/view/splash_page.dart';
+import 'view/welcome/view/welcome_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

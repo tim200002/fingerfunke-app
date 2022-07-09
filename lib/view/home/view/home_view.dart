@@ -1,14 +1,14 @@
-import 'package:fingerfunke_app/cubits/live_config_cubit/live_config_cubit.dart';
-import 'package:fingerfunke_app/routes.dart';
-import 'package:fingerfunke_app/utils/app_theme.dart';
-import 'package:fingerfunke_app/view/home/widgets/home_drawer/home_drawer_view.dart';
-import 'package:fingerfunke_app/view/post_discovery_feed/view/paged_post_discovery_feed.dart';
-import 'package:fingerfunke_app/view/post_discovery_feed/view/post_discovery_feed.dart';
-import 'package:fingerfunke_app/view/saved_feed/view/saved_posts_feed.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
+import '../../../cubits/live_config_cubit/live_config_cubit.dart';
+import '../../../routes.dart';
+import '../../../utils/app_theme.dart';
 import '../../maps/view/maps_place_picker_page.dart';
+import '../../post_discovery_feed/view/paged_post_discovery_feed.dart';
+import '../../post_discovery_feed/view/post_discovery_feed.dart';
+import '../../saved_feed/view/saved_posts_feed.dart';
+import '../widgets/home_drawer/home_drawer_view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);

@@ -1,10 +1,10 @@
 import 'package:bloc/bloc.dart';
-import 'package:fingerfunke_app/models/message/message.dart';
-import 'package:fingerfunke_app/models/user/user.dart';
-import 'package:fingerfunke_app/repositories/message_repository.dart/message_repository.dart';
-import 'package:fingerfunke_app/repositories/message_repository.dart/message_repository.impl.dart';
+import '../../../../../models/message/message.dart';
+import '../../../../../models/user/user.dart';
+import '../../../../../repositories/message_repository.dart/message_repository.dart';
+import '../../../../../repositories/message_repository.dart/message_repository.impl.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:fingerfunke_app/utils/type_aliases.dart';
+import '../../../../../utils/type_aliases.dart';
 
 part 'chat_editor_state.dart';
 part 'chat_editor_cubit.freezed.dart';

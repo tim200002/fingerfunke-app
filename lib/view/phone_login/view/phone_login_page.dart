@@ -1,7 +1,7 @@
-import 'package:fingerfunke_app/view/phone_login/cubit/phone_login_cubit.dart';
-import 'package:fingerfunke_app/view/phone_login/view/enter_code_view.dart';
-import 'package:fingerfunke_app/view/phone_login/view/enter_phone_number_view.dart';
-import 'package:fingerfunke_app/view/phone_login/view/loading_view.dart';
+import '../cubit/phone_login_cubit.dart';
+import 'enter_code_view.dart';
+import 'enter_phone_number_view.dart';
+import 'loading_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

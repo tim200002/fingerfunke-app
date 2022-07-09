@@ -1,4 +1,4 @@
-import 'package:fingerfunke_app/cubits/settings_cubit/settings_cubit.dart';
+import '../../../../../cubits/settings_cubit/settings_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

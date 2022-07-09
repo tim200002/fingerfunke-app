@@ -1,11 +1,11 @@
-import 'package:fingerfunke_app/view/error/exception_view.dart';
-import 'package:fingerfunke_app/view/moderation/mod_post_report/cubit/mod_post_cubit.dart';
-import 'package:fingerfunke_app/view/moderation/mod_post_report/widgets/mod_report_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../utils/illustration.dart';
 import '../../../utils/util_widgets/admin_appbar.dart';
+import '../../error/exception_view.dart';
+import 'cubit/mod_post_cubit.dart';
+import 'widgets/mod_report_view.dart';
 
 class ModPostReportPage extends StatelessWidget {
   const ModPostReportPage({Key? key}) : super(key: key);

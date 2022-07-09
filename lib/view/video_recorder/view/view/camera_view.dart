@@ -1,10 +1,11 @@
 import 'package:camera/camera.dart';
-import 'package:fingerfunke_app/utils/tools.dart';
-import 'package:fingerfunke_app/view/video_recorder/view/cubit/video_recorder_cubit.dart';
-import 'package:fingerfunke_app/view/video_recorder/view/widgets/new_record_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
+
+import '../../../../utils/tools.dart';
+import '../cubit/video_recorder_cubit.dart';
+import '../widgets/new_record_button.dart';
 
 class CameraView extends StatefulWidget {
   CameraView({Key? key}) : super(key: key);

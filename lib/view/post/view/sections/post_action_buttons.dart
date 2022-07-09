@@ -1,9 +1,9 @@
-import 'package:fingerfunke_app/common_widgets/list_view/pagination/cubit/paginated_list_cubit.dart';
-import 'package:fingerfunke_app/cubits/app_cubit/app_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
+import '../../../../common_widgets/list_view/pagination/cubit/paginated_list_cubit.dart';
+import '../../../../cubits/app_cubit/app_cubit.dart';
 import '../../../../models/message/message.dart';
 import '../../../../routes.dart';
 import '../../../../utils/tools.dart';

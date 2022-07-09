@@ -1,5 +1,5 @@
-import 'package:fingerfunke_app/cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
-import 'package:fingerfunke_app/utils/tools.dart';
+import '../../../../../cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
+import '../../../../../utils/tools.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';

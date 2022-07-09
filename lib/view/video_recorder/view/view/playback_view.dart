@@ -1,12 +1,13 @@
 import 'dart:io';
 
-import 'package:fingerfunke_app/common_widgets/video/view/video_playback_view.dart';
-import 'package:fingerfunke_app/utils/tools.dart';
-import 'package:fingerfunke_app/view/video_recorder/view/cubit/video_recorder_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:video_player/video_player.dart';
+
+import '../../../../common_widgets/video/view/video_playback_view.dart';
+import '../../../../utils/tools.dart';
+import '../cubit/video_recorder_cubit.dart';
 
 class PlaybackView extends StatefulWidget {
   final File file;

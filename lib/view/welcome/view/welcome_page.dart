@@ -1,7 +1,8 @@
-import 'package:fingerfunke_app/utils/illustration.dart';
-import 'package:fingerfunke_app/view/phone_login/view/phone_login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../../../utils/illustration.dart';
+import '../../phone_login/view/phone_login_page.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({Key? key}) : super(key: key);

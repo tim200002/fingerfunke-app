@@ -1,9 +1,10 @@
 import 'dart:async';
 
-import 'package:fingerfunke_app/cache/media_cache/media_cache.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/file.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+
+import 'media_cache.dart';
 
 class MediaCacheImpl implements MediaCache {
   final DefaultCacheManager _cacheManager;

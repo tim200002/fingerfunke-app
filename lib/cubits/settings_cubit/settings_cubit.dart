@@ -1,7 +1,8 @@
 import 'package:bloc/bloc.dart';
-import 'package:fingerfunke_app/models/settings/settings_model.dart';
-import 'package:fingerfunke_app/repositories/settings_repository/settings_repository.dart';
 import 'package:flutter/material.dart';
+
+import '../../models/settings/settings_model.dart';
+import '../../repositories/settings_repository/settings_repository.dart';
 
 /// Holds and reads user settings, updates user settings, or listens to user settings changes.
 class SettingsCubit extends Cubit<Settings> {

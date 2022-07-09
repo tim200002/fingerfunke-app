@@ -1,6 +1,6 @@
-import 'package:fingerfunke_app/common_widgets/list_view/list_items/post_feed_image_item.dart';
-import 'package:fingerfunke_app/models/post/post.dart';
-import 'package:fingerfunke_app/view/saved_feed/cubit/saved_posts_cubit.dart';
+import '../../../common_widgets/list_view/list_items/post_feed_image_item.dart';
+import '../../../models/post/post.dart';
+import '../cubit/saved_posts_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -1,7 +1,7 @@
-import 'package:fingerfunke_app/common_widgets/list_view/pagination/cubit/paginated_list_cubit.dart';
-import 'package:fingerfunke_app/models/post/post.dart';
-import 'package:fingerfunke_app/services/pagination/post_pagination_service.dart';
-import 'package:fingerfunke_app/utils/illustration.dart';
+import '../../../common_widgets/list_view/pagination/cubit/paginated_list_cubit.dart';
+import '../../../models/post/post.dart';
+import '../../../services/pagination/post_pagination_service.dart';
+import '../../../utils/illustration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

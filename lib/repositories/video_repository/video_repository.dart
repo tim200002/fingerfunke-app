@@ -1,7 +1,8 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:fingerfunke_app/models/asset/asset.dart';
+
+import '../../models/asset/asset.dart';
 
 abstract class VideoRepository {
   Future<Map<String, dynamic>> createVideoAsset();

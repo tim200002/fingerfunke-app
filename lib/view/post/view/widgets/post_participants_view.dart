@@ -1,8 +1,8 @@
-import 'package:fingerfunke_app/models/user/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../common_widgets/image/user_image/user_image.dart';
+import '../../../../models/user/user.dart';
 import '../../cubits/post_viewer_cubit/post_cubit.dart';
 
 class PostParticipantsView extends StatelessWidget {

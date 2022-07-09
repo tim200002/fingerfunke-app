@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fingerfunke_app/models/abstract_models/abstract_models.dart';
-import 'package:fingerfunke_app/models/utils.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:fingerfunke_app/utils/type_aliases.dart';
 import 'package:uuid/uuid.dart';
+
+import '../../utils/type_aliases.dart';
+import '../abstract_models/abstract_models.dart';
+import '../utils.dart';
 
 part 'image_asset.dart';
 part 'video_asset.dart';

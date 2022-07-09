@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
-import 'package:fingerfunke_app/repositories/firebase_authentication_repository/errors_and_exceptions.dart';
-import 'package:fingerfunke_app/repositories/firebase_authentication_repository/firebase_authentication_repository.dart';
-import 'package:fingerfunke_app/utils/loading_overlay.dart';
+import '../../../repositories/firebase_authentication_repository/errors_and_exceptions.dart';
+import '../../../repositories/firebase_authentication_repository/firebase_authentication_repository.dart';
+import '../../../utils/loading_overlay.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

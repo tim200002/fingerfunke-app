@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:fingerfunke_app/cubits/video_upload_cubit/video_upload_cubit.dart';
-import 'package:fingerfunke_app/models/asset/asset.dart';
-import 'package:fingerfunke_app/models/post/post.dart';
+import '../../../cubits/video_upload_cubit/video_upload_cubit.dart';
+import '../../../models/asset/asset.dart';
+import '../../../models/post/post.dart';
 
 part 'group_editor_fields.dart';
 part 'post_editor_fields.dart';

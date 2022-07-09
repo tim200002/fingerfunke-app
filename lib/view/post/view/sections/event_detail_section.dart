@@ -1,17 +1,17 @@
-import 'package:fingerfunke_app/models/post/post.dart';
-import 'package:fingerfunke_app/utils/extensions/date_time.dart';
-import 'package:fingerfunke_app/view/maps/view/maps_place_picker_page.dart';
-import 'package:fingerfunke_app/view/post/view/widgets/icon_text_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../models/post/post.dart';
 import '../../../../services/google_maps_service.dart';
 import '../../../../utils/exceptions.dart';
+import '../../../../utils/extensions/date_time.dart';
 import '../../../../utils/placeholder_box.dart';
+import '../../../maps/view/maps_place_picker_page.dart';
 import '../../cubits/post_editor_cubit/post_editor_cubit.dart';
 import '../../cubits/post_viewer_cubit/post_cubit.dart';
+import '../widgets/icon_text_item.dart';
 
 /// Shows structured information about the event
 /// In [editing] mode, the values of these fields can be changed

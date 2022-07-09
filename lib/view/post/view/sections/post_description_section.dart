@@ -1,4 +1,4 @@
-import 'package:fingerfunke_app/utils/placeholder_box.dart';
+import '../../../../utils/placeholder_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

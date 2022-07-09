@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fingerfunke_app/models/user/user.dart';
-import 'package:fingerfunke_app/utils/type_aliases.dart';
 
-part 'user_repository.impl.dart';
+import '../../models/user/user.dart';
+import '../../utils/type_aliases.dart';
+
 part 'errors_and_exceptions.dart';
+part 'user_repository.impl.dart';
 
 abstract class UserRepository {
   Future<User> getUser(String userId);

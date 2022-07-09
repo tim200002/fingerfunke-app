@@ -1,4 +1,4 @@
-import 'package:fingerfunke_app/utils/illustration.dart';
+import '../../utils/illustration.dart';
 import 'package:flutter/material.dart';
 
 part 'widgets/technical_view.dart';

@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fingerfunke_app/utils/type_aliases.dart';
+import '../../utils/type_aliases.dart';
 
 part 'authentication_repository.impl.dart';
 

@@ -1,12 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fingerfunke_app/common_widgets/list_view/pagination/cubit/paginated_list_cubit.dart';
-import 'package:fingerfunke_app/common_widgets/list_view/pagination/view/paginated_list.dart';
-import 'package:fingerfunke_app/cubits/app_cubit/app_cubit.dart';
-import 'package:fingerfunke_app/models/message/message.dart';
-import 'package:fingerfunke_app/view/chat/widgets/chat_message.dart';
-import 'package:fingerfunke_app/view/chat/widgets/chat_editor/chat_editor.dart';
-import 'package:fingerfunke_app/view/error/exception_view.dart';
-import 'package:fingerfunke_app/utils/type_aliases.dart';
+import '../../../common_widgets/list_view/pagination/cubit/paginated_list_cubit.dart';
+import '../../../common_widgets/list_view/pagination/view/paginated_list.dart';
+import '../../../cubits/app_cubit/app_cubit.dart';
+import '../../../models/message/message.dart';
+import '../widgets/chat_message.dart';
+import '../widgets/chat_editor/chat_editor.dart';
+import '../../error/exception_view.dart';
+import '../../../utils/type_aliases.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

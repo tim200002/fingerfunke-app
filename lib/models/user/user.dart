@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fingerfunke_app/models/abstract_models/abstract_models.dart';
-import 'package:fingerfunke_app/models/utils.dart';
-import 'package:fingerfunke_app/utils/type_aliases.dart';
+
+import '../../utils/type_aliases.dart';
+import '../abstract_models/abstract_models.dart';
+import '../utils.dart';
 
 class UserInfo extends DatabaseDocument {
   final String name;

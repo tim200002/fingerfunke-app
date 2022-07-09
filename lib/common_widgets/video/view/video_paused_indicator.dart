@@ -1,4 +1,4 @@
-import 'package:fingerfunke_app/common_widgets/video/video_playback_cubit/video_playback_cubit.dart';
+import '../video_playback_cubit/video_playback_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

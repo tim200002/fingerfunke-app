@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fingerfunke_app/models/user/user.dart';
-import 'package:fingerfunke_app/models/utils.dart';
 import 'package:uuid/uuid.dart';
 
 import 'abstract_models/abstract_models.dart';
+import 'user/user.dart';
+import 'utils.dart';
 
 enum ReportReason {
   harassment,

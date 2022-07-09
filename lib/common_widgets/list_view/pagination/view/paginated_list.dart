@@ -1,5 +1,5 @@
-import 'package:fingerfunke_app/common_widgets/creation_aware_widget/creation_aware_widget.dart';
-import 'package:fingerfunke_app/common_widgets/list_view/pagination/cubit/paginated_list_cubit.dart';
+import '../../../creation_aware_widget/creation_aware_widget.dart';
+import '../cubit/paginated_list_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

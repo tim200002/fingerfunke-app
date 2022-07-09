@@ -1,6 +1,7 @@
-import 'package:fingerfunke_app/common_widgets/image/user_image/user_image.dart';
-import 'package:fingerfunke_app/models/user/user.dart';
 import 'package:flutter/material.dart';
+
+import '../../models/user/user.dart';
+import '../image/user_image/user_image.dart';
 
 class AuthorInfo extends StatelessWidget {
   final UserInfo _userInfo;

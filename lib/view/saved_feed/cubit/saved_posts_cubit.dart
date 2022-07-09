@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
-import 'package:fingerfunke_app/models/post/post.dart';
-import 'package:fingerfunke_app/repositories/post_repository/post_repository.dart';
-import 'package:fingerfunke_app/repositories/post_repository/post_repository.impl.dart';
-import 'package:fingerfunke_app/utils/type_aliases.dart';
+import '../../../models/post/post.dart';
+import '../../../repositories/post_repository/post_repository.dart';
+import '../../../repositories/post_repository/post_repository.impl.dart';
+import '../../../utils/type_aliases.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'saved_posts_state.dart';

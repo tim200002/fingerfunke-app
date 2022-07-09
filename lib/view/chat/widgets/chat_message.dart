@@ -1,12 +1,11 @@
-import 'package:fingerfunke_app/cubits/app_cubit/app_cubit.dart';
-import 'package:fingerfunke_app/models/message/message.dart';
-import 'package:fingerfunke_app/utils/extensions/lightness_color.dart';
+import '../../../cubits/app_cubit/app_cubit.dart';
+import '../../../models/message/message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ChatMessage extends StatelessWidget {
   final TextMessage message;
-  ChatMessage(this.message, {Key? key}) : super(key: key);
+  const ChatMessage(this.message, {Key? key}) : super(key: key);
 
   static const double _messageMargin = 7;
   static const double _messagePadding = 15;
