@@ -1,11 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:fingerfunke_app/models/abstract_models/abstract_models.dart';
+import 'package:fingerfunke_app/models/report.dart';
 import 'package:fingerfunke_app/models/user/user.dart';
 import 'package:fingerfunke_app/repositories/report_repository/report_repository.dart';
 import 'package:fingerfunke_app/repositories/report_repository/report_repository.impl.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-
-import '../../../models/report.dart';
 
 part 'report_send_state.dart';
 part 'report_send_cubit.freezed.dart';

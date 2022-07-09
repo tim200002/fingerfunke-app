@@ -1,15 +1,15 @@
+import 'package:fingerfunke_app/common_widgets/image/network_placeholder_image.dart/network_placeholder_image.dart';
 import 'package:fingerfunke_app/cubits/app_cubit/app_cubit.dart';
+import 'package:fingerfunke_app/models/asset/asset.dart';
+import 'package:fingerfunke_app/models/post/post.dart';
 import 'package:fingerfunke_app/models/report.dart';
+import 'package:fingerfunke_app/repositories/video_repository/video_repository.impl.dart';
+import 'package:fingerfunke_app/utils/tools.dart';
 import 'package:fingerfunke_app/view/error/exception_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
-import '../../common_widgets/image/network_placeholder_image.dart/network_placeholder_image.dart';
-import '../../models/asset/asset.dart';
-import '../../models/post/post.dart';
-import '../../repositories/video_repository/video_repository.impl.dart';
-import '../../utils/tools.dart';
 import 'cubit/report_send_cubit.dart';
 import 'widgets/chip_chooser.dart';
 

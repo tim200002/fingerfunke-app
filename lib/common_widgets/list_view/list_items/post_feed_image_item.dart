@@ -5,6 +5,7 @@ import 'package:fingerfunke_app/models/post/post.dart';
 import 'package:fingerfunke_app/repositories/video_repository/video_repository.impl.dart';
 import 'package:fingerfunke_app/routes.dart';
 import 'package:fingerfunke_app/utils/app_theme.dart';
+import 'package:fingerfunke_app/utils/type_aliases.dart';
 import 'package:flutter/material.dart';
 import 'package:fingerfunke_app/utils/extensions/date_time.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,7 +19,14 @@ class PostFeedImageItem extends StatelessWidget {
 
   final Post _post;
   final int? height;
-  const PostFeedImageItem(this._post, {Key? key, this.height})
+
+  /// From here one can navigate to a detailed post view, this function is called when
+  /// returning back from this detail view to then do any necessary actions
+  /// (e.g. reload current post in case changes have been done on the detail page)
+  final void Function(FirestoreId postId)? onNavigatedBackToThisItem;
+
+  const PostFeedImageItem(this._post,
+      {Key? key, this.height, this.onNavigatedBackToThisItem})
       : super(key: key);
 
   Widget _videoBackgroundView(BuildContext context) {
@@ -141,23 +149,29 @@ class PostFeedImageItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 15),
       child: InkWell(
-          onTap: () =>
-              Navigator.pushNamed(context, Routes.post, arguments: _post.id),
-          child: Hero(
-            tag: heroTag,
-            child: ClipRRect(
-                borderRadius: BorderRadius.circular(21),
-                child: Stack(alignment: Alignment.bottomCenter, children: [
-                  _backgroundView(context),
-                  if (_post is Event)
-                    Positioned(
-                      top: 18,
-                      right: 18,
-                      child: _eventDateWidget(context),
-                    ),
-                  _contentSection(context),
-                ])),
-          )),
+        onTap: () =>
+            Navigator.pushNamed(context, Routes.post, arguments: _post.id)
+                .then((_) => onNavigatedBackToThisItem?.call(_post.id)),
+        child: Hero(
+          tag: heroTag,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(21),
+            child: Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                _backgroundView(context),
+                if (_post is Event)
+                  Positioned(
+                    top: 18,
+                    right: 18,
+                    child: _eventDateWidget(context),
+                  ),
+                _contentSection(context),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

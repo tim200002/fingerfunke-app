@@ -5,11 +5,11 @@ import 'package:fingerfunke_app/utils/illustration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../common_widgets/list_view/list_item/post_feed_image_item.dart';
+import '../../../common_widgets/list_view/list_items/post_feed_image_item.dart';
 import '../../../common_widgets/list_view/pagination/view/paged_paginated_list.dart';
 
-class PagedDiscoveryFeed extends StatelessWidget {
-  const PagedDiscoveryFeed({Key? key}) : super(key: key);
+class PagedPostDiscoveryFeed extends StatelessWidget {
+  const PagedPostDiscoveryFeed({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -16,9 +16,9 @@ class SavedPostsCubit extends Cubit<SavedPostsState> {
   SavedPostsCubit() : super(const SavedPostsState.loading());
 
   Future<void> updatePosts(List<FirestoreId> updatedPostIds) async {
-    print("update Posts");
     // Step 1 delete all posts which are no longer in list
-    final filteredPosts = posts.where((post) => updatedPostIds.contains(post.id));
+    final filteredPosts =
+        posts.where((post) => updatedPostIds.contains(post.id));
 
     // Step 2 find all posts which must be loaded from sever
     final notYetAddedPosts = [];
@@ -42,9 +42,26 @@ class SavedPostsCubit extends Cubit<SavedPostsState> {
         (a, b) => (a as Event).startTime.compareTo((b as Event).startTime));
     posts = mergedPosts;
 
-    if(posts.isEmpty){
+    if (posts.isEmpty) {
       return emit(const SavedPostsState.loadedButNothingSaved());
     }
     return emit(SavedPostsState.loaded(posts));
+  }
+
+  Future<void> refetchPost(FirestoreId postId) async {
+    // fetch post with updated information
+    final Post refetchedPost = await _postRepository.getPost(postId);
+
+    // Exchange post in post list
+    final List<Post> updatedPosts = posts.map((post) {
+      if (post.id == postId) {
+        return refetchedPost;
+      } else {
+        return post;
+      }
+    }).toList();
+
+    posts = updatedPosts;
+    emit(SavedPostsState.loaded(posts));
   }
 }

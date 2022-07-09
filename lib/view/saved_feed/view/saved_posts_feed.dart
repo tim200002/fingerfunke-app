@@ -18,17 +18,8 @@ class SavedPostsFeed extends StatelessWidget {
             child: BlocProvider<SavedPostsCubit>(
               create: (_) => SavedPostsCubit(),
               child: Builder(builder: (context) {
-                // on initial load get first list of saved post from user
-                final savedPosts =
-                    BlocProvider.of<AppCubit>(context).state.user.savedPosts;
-                BlocProvider.of<SavedPostsCubit>(context)
-                    .updatePosts(savedPosts);
-
-                // Also create a listener for changes to the savedPosts list
+                //  Create a listener for changes to the savedPosts list
                 return BlocListener<AppCubit, AppState>(
-                  // listenWhen: (previous, current) => const ListEquality()
-                  //     .equals(
-                  //         previous.user.savedPosts, current.user.savedPosts),
                   listener: ((context, state) =>
                       BlocProvider.of<SavedPostsCubit>(context)
                           .updatePosts(state.user.savedPosts)),
