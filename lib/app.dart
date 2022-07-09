@@ -9,6 +9,14 @@ import 'package:fingerfunke_app/view/welcome/view/welcome_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+class SimpleBlocObserver extends BlocObserver {
+  @override
+  void onChange(BlocBase bloc, Change change) {
+    super.onChange(bloc, change);
+    print('${bloc.runtimeType} $change');
+  }
+}
+
 class App extends StatelessWidget {
   final ThemeMode themeMode;
   const App(this.themeMode, {Key? key}) : super(key: key);
@@ -20,18 +28,19 @@ class App extends StatelessWidget {
       child: BlocBuilder<FirebaseAuthenticationCubitCubit,
           FirebaseAuthenticationCubitState>(
         builder: (context, state) => state.when(
-          unauthenticated: () =>
-              buildApp(const WelcomePage(), themeMode: themeMode),
-          authenticatedWaitingForUserToBeFetched: (_) =>
-              buildApp(const SplashPage(), themeMode: themeMode),
-          autehnticationNoUserCreated: (uid) =>
-              buildApp(const CreateAccountView(), themeMode: themeMode),
-          authenticated: (user) => BlocProvider(
-            create: (context) => AppCubit(user),
-            child: buildApp(const HomeView(),
-                themeMode: themeMode, routes: routes),
-          ),
-        ),
+            unauthenticated: () =>
+                buildApp(const WelcomePage(), themeMode: themeMode),
+            authenticatedWaitingForUserToBeFetched: (_) =>
+                buildApp(const SplashPage(), themeMode: themeMode),
+            autehnticationNoUserCreated: (uid) =>
+                buildApp(const CreateAccountView(), themeMode: themeMode),
+            authenticated: (user) => BlocOverrides.runZoned(
+                () => BlocProvider(
+                      create: (context) => AppCubit(user),
+                      child: buildApp(const HomeView(),
+                          themeMode: themeMode, routes: routes),
+                    ),
+                blocObserver: SimpleBlocObserver())),
       ),
     );
   }

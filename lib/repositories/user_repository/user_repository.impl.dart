@@ -25,13 +25,28 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<void> updateUser(FirestoreId userId,
-      {String? name, ImageAsset? picture, int? age}) async {
+      {String? name, String? picture, int? age, List<FirestoreId>? savedPosts}) async {
     final Map<String, dynamic> updateMap = {
       'name': name,
-      'picture': picture?.toJson(),
-      'age': age
+      'picture': picture,
+      'age': age,
+      'savedPosts': savedPosts
     }..removeWhere((key, value) => value == null);
     await _userCollection.doc(userId).update(updateMap);
+  }
+
+  @override
+  Future<void> savePost(FirestoreId userId, FirestoreId postId) {
+    return _userCollection.doc(userId).update(
+      {"savedPosts": FieldValue.arrayUnion([postId])}
+    );
+  }
+
+  @override
+  Future<void> unsavePost(FirestoreId userId, FirestoreId postId) {
+    return _userCollection.doc(userId).update(
+      {"savedPosts": FieldValue.arrayRemove([postId])}
+    );
   }
 
   @override

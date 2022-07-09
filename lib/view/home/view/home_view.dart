@@ -5,6 +5,7 @@ import 'package:fingerfunke_app/utils/dev_tools.dart';
 import 'package:fingerfunke_app/view/home/widgets/home_drawer/home_drawer_view.dart';
 import 'package:fingerfunke_app/view/paged_post_feed/view/paged_post_feed_view.dart';
 import 'package:fingerfunke_app/view/post_feed/view/post_feed_view.dart';
+import 'package:fingerfunke_app/view/saved/view/saved_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
@@ -101,7 +102,7 @@ class _HomeViewState extends State<HomeView> {
             ? LiveConfig.builder((config) => config.pagedFeed
                 ? const PagedPostFeedView()
                 : const PostFeedView()) //const PostFeedView()
-            : DevTools.placeholder("saved posts"),
+            : const SavedPage(),
       ),
       bottomNavigationBar: BottomAppBar(
         child: Row(

@@ -1,11 +1,13 @@
 import 'dart:io';
 
 import 'package:fingerfunke_app/common_widgets/image/network_placeholder_image.dart/network_placeholder_image.dart';
+import 'package:fingerfunke_app/cubits/app_cubit/app_cubit.dart';
 import 'package:fingerfunke_app/models/asset/asset.dart';
 import 'package:fingerfunke_app/models/post/post.dart';
 import 'package:fingerfunke_app/repositories/video_repository/video_repository.impl.dart';
 import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:fingerfunke_app/utils/placeholder_box.dart';
+import 'package:fingerfunke_app/utils/type_aliases.dart';
 import 'package:fingerfunke_app/utils/util_widgets/floating_modal.dart';
 import 'package:fingerfunke_app/view/fullscreen_video/view/fullscreen_video_page.dart';
 import 'package:fingerfunke_app/view/post/view/widgets/post_settings_modal_content.dart';
@@ -93,7 +95,7 @@ class PostAppBarButton extends StatelessWidget {
           child: IconButton(
               color: Theme.of(context).colorScheme.onSurface.withOpacity(0.8),
               onPressed: onPressed,
-              icon: Icon(icon))),
+              icon: Icon(icon, size: 30,))),
     );
   }
 }
@@ -254,7 +256,28 @@ class HeaderSection extends StatelessWidget {
                         child: const PostSettingsModalContent()),
                   ),
                 ),
-              )
+              ),
+              Padding(
+                  padding: const EdgeInsets.only(
+                    right: AppTheme.PADDING_SIDE,
+                    top: 12.0 + AppTheme.PADDING_SIDE,
+                    bottom: 12,
+                  ),
+                  child: BlocBuilder<AppCubit, AppState>(
+                    builder: (context, state) {
+                      final currentPostId = context.read<PostCubit>().state.when(
+                        normal: (post, _) => post.id,
+                        loading: (postId) => postId,
+                      );
+                      final hasPostSaved = state.user.savedPosts.contains(currentPostId);
+                      return PostAppBarButton(
+                        icon: hasPostSaved
+                            ? Icons.favorite
+                            : Icons.favorite_border_outlined,
+                        onPressed: () => context.read<PostCubit>().toggleSaved(state.user.id, hasPostSaved)
+                      );
+                    },
+                  ))
             ],
       pinned: true,
       floating: false,

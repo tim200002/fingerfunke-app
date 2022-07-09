@@ -10,7 +10,10 @@ abstract class UserRepository {
   Future<User> getUser(String userId);
   Future<void> createUser(User user);
   Future<void> updateUser(FirestoreId userId,
-      {String? name, ImageAsset? picture, int? age});
+      {String? name, String? picture, int? age, List<FirestoreId>? savedPosts});
+
+  Future<void> savePost(FirestoreId userId, FirestoreId postId);
+  Future<void> unsavePost(FirestoreId userId, FirestoreId postId);
 
   Stream<User> getUserSubscription(String userId);
 }

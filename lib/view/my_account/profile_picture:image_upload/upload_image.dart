@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:convert';
 
-import 'package:fingerfunke_app/models/asset/asset.dart';
 import 'package:fingerfunke_app/repositories/user_repository/user_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -32,14 +31,13 @@ Future<void> uploadProfilePictureBase64Encoded(
   Uint8List imagebytes = await cropped.readAsBytes();
   String base64String = base64Encode(imagebytes);
   String dataUrl = "data:image/jpeg;base64,$base64String";
-  ImageAsset image =
-      ImageAsset.createWithId(downloadUrl: dataUrl, state: asset_state.ready);
+
 
   await showDialog(
       context: context,
       builder: (context) {
         userRepository
-            .updateUser(userId, picture: image)
+            .updateUser(userId, picture: dataUrl)
             .then((_) => Navigator.of(context).pop());
         return const Center(
           child: CircularProgressIndicator.adaptive(),
