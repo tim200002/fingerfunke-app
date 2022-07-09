@@ -1,15 +1,13 @@
-import 'package:fingerfunke_app/view/app_info/app_info_page.dart';
-import 'package:fingerfunke_app/view/chat/view/chat_page.dart';
-import 'package:fingerfunke_app/view/moderation/mod_post_report/mod_post_report_page.dart';
-import 'package:fingerfunke_app/view/moderation/moderation_page/moderation_page.dart';
-import 'package:fingerfunke_app/view/my_account/view/my_account_page.dart';
-import 'package:fingerfunke_app/view/post/view/post_page.dart';
-import 'package:fingerfunke_app/view/saved/view/saved_page.dart';
-
+import 'view/app_info/app_info_page.dart';
 import 'view/app_info/subpages/licenses/view/oss_licenses_page.dart';
 import 'view/app_info/subpages/manage_account/view/manage_account_page.dart';
 import 'view/app_info/subpages/settings/view/settings_page.dart';
 import 'view/app_info/subpages/view/settings_dev_tools_page.dart';
+import 'view/chat/view/chat_page.dart';
+import 'view/moderation/mod_post_report/mod_post_report_page.dart';
+import 'view/moderation/moderation_page/moderation_page.dart';
+import 'view/my_account/view/my_account_page.dart';
+import 'view/post/view/post_page.dart';
 
 /// this variable holds the global routes that can be used within the app
 /// the widgets used with this routing should end with the suffix 'Page' to
@@ -32,7 +30,6 @@ class Routes {
 }
 
 final routes = {
-  Routes.saved: (context) => const SavedPage(),
   Routes.account: (context) => const MyAccountPage(),
   Routes.manageAccount: (context) => const ManageAccountPage(),
   Routes.postEditor: (context) => const PostPage(editing: true),

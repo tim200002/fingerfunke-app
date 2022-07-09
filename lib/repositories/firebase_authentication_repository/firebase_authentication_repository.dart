@@ -1,5 +1,6 @@
-import 'package:fingerfunke_app/repositories/firebase_authentication_repository/errors_and_exceptions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import 'errors_and_exceptions.dart';
 
 class FirebaseAuthenticationRepository {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;

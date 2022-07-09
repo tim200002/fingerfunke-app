@@ -1,10 +1,10 @@
-import 'package:fingerfunke_app/cubits/live_config_cubit/live_config_cubit.dart';
-import 'package:fingerfunke_app/view/app_info/subpages/view/settings_dev_functions_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 
+import '../../../../cubits/live_config_cubit/live_config_cubit.dart';
 import '../../../../utils/util_widgets/admin_appbar.dart';
+import 'settings_dev_functions_page.dart';
 
 class DevToolsPage extends StatelessWidget {
   const DevToolsPage({Key? key}) : super(key: key);

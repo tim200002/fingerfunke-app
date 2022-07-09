@@ -1,7 +1,7 @@
-import 'package:fingerfunke_app/utils/placeholder_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../utils/placeholder_box.dart';
 import '../../cubits/post_viewer_cubit/post_cubit.dart';
 
 /// shows information about the author of the post.

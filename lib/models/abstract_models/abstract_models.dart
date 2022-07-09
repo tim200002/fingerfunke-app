@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
-import 'package:fingerfunke_app/models/user/user.dart';
-import 'package:fingerfunke_app/models/utils.dart';
-import 'package:fingerfunke_app/utils/type_aliases.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../../utils/type_aliases.dart';
+import '../user/user.dart';
+import '../utils.dart';
 
 part 'abstract_models.g.dart';
 

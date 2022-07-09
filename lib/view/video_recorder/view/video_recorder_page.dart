@@ -1,13 +1,13 @@
 import 'dart:io';
 
-import 'package:fingerfunke_app/view/error/exception_view.dart';
-import 'package:fingerfunke_app/view/video_recorder/view/cubit/video_recorder_cubit.dart';
-import 'package:fingerfunke_app/view/video_recorder/view/view/camera_view.dart';
-import 'package:fingerfunke_app/view/video_recorder/view/view/missing_camera_permission_view.dart';
-import 'package:fingerfunke_app/view/video_recorder/view/view/playback_view.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../error/exception_view.dart';
+import 'cubit/video_recorder_cubit.dart';
+import 'view/camera_view.dart';
+import 'view/missing_camera_permission_view.dart';
+import 'view/playback_view.dart';
 
 /// This is the UI for recording video content within the App. The result will
 /// be passed back through the Navigator as a `File` object.

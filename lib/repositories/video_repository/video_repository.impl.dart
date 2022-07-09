@@ -3,10 +3,11 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:fingerfunke_app/models/asset/asset.dart';
-import 'package:fingerfunke_app/repositories/video_repository/video_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:mime/mime.dart';
+
+import '../../models/asset/asset.dart';
+import 'video_repository.dart';
 
 class VideoRepositoryImpl implements VideoRepository {
   final FirebaseFunctions _functions;

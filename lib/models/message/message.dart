@@ -1,11 +1,12 @@
 //! Please do not use JSON Annotator for these classes, since deserialization is to complex for it
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fingerfunke_app/models/abstract_models/abstract_models.dart';
-import 'package:fingerfunke_app/models/user/user.dart';
-import 'package:fingerfunke_app/models/utils.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:fingerfunke_app/utils/type_aliases.dart';
 import 'package:uuid/uuid.dart';
+
+import '../../utils/type_aliases.dart';
+import '../abstract_models/abstract_models.dart';
+import '../user/user.dart';
+import '../utils.dart';
 
 enum message_type { video, text }
 const _messageTypeEnumMap = {

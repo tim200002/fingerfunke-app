@@ -1,13 +1,14 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:fingerfunke_app/models/asset/asset.dart';
-import 'package:fingerfunke_app/models/post/post.dart';
-import 'package:fingerfunke_app/models/utils.dart';
-import 'package:fingerfunke_app/repositories/post_repository/post_repository.dart';
-import 'package:fingerfunke_app/utils/type_aliases.dart';
-import 'dart:convert';
+
+import '../../models/asset/asset.dart';
+import '../../models/post/post.dart';
+import '../../models/utils.dart';
+import '../../utils/type_aliases.dart';
+import 'post_repository.dart';
 
 class PostRepositoryImpl implements PostRepository {
   final FirebaseFirestore _firestore;

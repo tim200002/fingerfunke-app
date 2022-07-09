@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fingerfunke_app/models/abstract_models/abstract_models.dart';
-import 'package:fingerfunke_app/models/asset/asset.dart';
-import 'package:fingerfunke_app/models/utils.dart';
-import 'package:fingerfunke_app/utils/type_aliases.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 
-@JsonSerializable(explicitToJson: true)
+import '../../utils/type_aliases.dart';
+import '../abstract_models/abstract_models.dart';
+import '../utils.dart';
+
 class UserInfo extends DatabaseDocument {
   final String name;
   final String? picture;
@@ -24,9 +22,10 @@ class UserInfo extends DatabaseDocument {
       };
 
   factory UserInfo.fromJson(Map<String, dynamic> map) => UserInfo(
-      id: map['id'] as String,
-      name: map['name'] as String,
-      picture: map['picture'] as String?);
+        id: map['id'] as String,
+        name: map['name'] as String,
+        picture: map['picture'] as String?,
+      );
 
   factory UserInfo.fromDoc(DocumentSnapshot document) =>
       UserInfo.fromJson(documentSnaphsotToJson(document));
@@ -37,18 +36,20 @@ class UserInfo extends DatabaseDocument {
 
 typedef ClearanceLevel = int;
 
-@JsonSerializable(explicitToJson: true)
+
 class User extends UserInfo {
   static const ClearanceLevel clearanceUser = 1;
   static const ClearanceLevel clearanceAdmin = 7;
 
   final int? age;
   final int? clearance;
+  final List<FirestoreId> savedPosts;
 
   const User({
     required FirestoreId id,
     required String name,
     String? picture,
+    this.savedPosts = const [],
     this.age,
     this.clearance = 0,
   }) : super(id: id, name: name, picture: picture);
@@ -62,6 +63,7 @@ class User extends UserInfo {
         'id': id,
         'name': name,
         'picture': picture,
+        'savedPosts': savedPosts,
         'age': age,
         'clearance': clearance
       };
@@ -70,6 +72,9 @@ class User extends UserInfo {
       id: map['id'] as String,
       name: map['name'] as String,
       picture: map['picture'] as String?,
+      savedPosts: map['savedPosts'] != null
+          ? (map['savedPosts'] as List<dynamic>).map((e) => e as String).toList()
+          : [],
       age: map['age'] as int?,
       clearance: map['clearance'] as int?);
 
@@ -77,5 +82,5 @@ class User extends UserInfo {
       User.fromJson(documentSnaphsotToJson(document));
 
   @override
-  List<Object?> get props => [id, name, picture, age];
+  List<Object?> get props => [id, name, picture, age, savedPosts, clearance];
 }

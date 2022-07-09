@@ -1,9 +1,10 @@
-import 'package:fingerfunke_app/common_widgets/video/video_playback_cubit/video_playback_cubit.dart';
-import 'package:fingerfunke_app/common_widgets/video/view/video_paused_indicator.dart';
-import 'package:fingerfunke_app/common_widgets/video/view/video_playback_view.dart';
-import 'package:fingerfunke_app/common_widgets/video/view/video_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../common_widgets/video/video_playback_cubit/video_playback_cubit.dart';
+import '../../../common_widgets/video/view/video_paused_indicator.dart';
+import '../../../common_widgets/video/view/video_playback_view.dart';
+import '../../../common_widgets/video/view/video_progress_bar.dart';
 
 class FullscreenVideoPage extends StatelessWidget {
   final BoxFit fit;

@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
-import 'package:fingerfunke_app/repositories/post_repository/post_repository.dart';
-import 'package:fingerfunke_app/repositories/post_repository/post_repository.impl.dart';
-import 'package:fingerfunke_app/repositories/report_repository/report_repository.dart';
-import 'package:fingerfunke_app/repositories/report_repository/report_repository.impl.dart';
+import '../../../../repositories/post_repository/post_repository.dart';
+import '../../../../repositories/post_repository/post_repository.impl.dart';
+import '../../../../repositories/report_repository/report_repository.dart';
+import '../../../../repositories/report_repository/report_repository.impl.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../models/report.dart';

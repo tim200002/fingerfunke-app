@@ -1,6 +1,6 @@
-import 'package:fingerfunke_app/common_widgets/image/network_placeholder_asset_image/network_placeholder_asset_image.dart';
+import '../network_placeholder_asset_image/network_placeholder_asset_image.dart';
 import 'package:flutter/material.dart';
-import 'package:fingerfunke_app/utils/type_aliases.dart';
+import '../../../utils/type_aliases.dart';
 
 class CircularNetworkImage extends StatelessWidget {
   final Link imageUrl;

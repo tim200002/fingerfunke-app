@@ -1,5 +1,6 @@
-import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:flutter/material.dart';
+
+import '../app_theme.dart';
 
 class PageAppBar extends AppBar {
   PageAppBar(BuildContext context,

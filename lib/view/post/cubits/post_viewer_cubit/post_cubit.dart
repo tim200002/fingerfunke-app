@@ -1,18 +1,21 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:fingerfunke_app/models/post/post.dart';
-import 'package:fingerfunke_app/repositories/post_repository/post_repository.dart';
-import 'package:fingerfunke_app/repositories/post_repository/post_repository.impl.dart';
-import 'package:fingerfunke_app/utils/exceptions.dart';
-import 'package:fingerfunke_app/utils/type_aliases.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../../../../models/post/post.dart';
+import '../../../../repositories/post_repository/post_repository.dart';
+import '../../../../repositories/post_repository/post_repository.impl.dart';
+import '../../../../repositories/user_repository/user_repository.dart';
+import '../../../../utils/exceptions.dart';
+import '../../../../utils/type_aliases.dart';
 
 part 'post_cubit.freezed.dart';
 part 'post_state.dart';
 
 class PostCubit extends Cubit<PostState> {
   final PostRepository _postRepository;
+  final UserRepository _userRepository = UserRepositoryImpl();
 
   late final StreamSubscription _postSubscription;
   PostCubit(FirestoreId postId, {PostRepository? postRepository})
@@ -48,6 +51,16 @@ class PostCubit extends Cubit<PostState> {
           }
         },
         orElse: () => throw (InvalidStateException()));
+  }
+
+  Future<void> toggleSaved(FirestoreId userId, bool hasSaved) async {
+    final postId =
+        state.when(loading: (postId) => postId, normal: (post, _) => post.id);
+    if (!hasSaved) {
+      _userRepository.savePost(userId, postId);
+    } else {
+      _userRepository.unsavePost(userId, postId);
+    }
   }
 
   @override

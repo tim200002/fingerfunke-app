@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fingerfunke_app/models/abstract_models/abstract_models.dart';
-import 'package:fingerfunke_app/models/asset/asset.dart';
-import 'package:fingerfunke_app/models/user/user.dart';
-import 'package:fingerfunke_app/models/utils.dart';
-import 'package:fingerfunke_app/utils/type_aliases.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:uuid/uuid.dart';
+
+import '../../utils/type_aliases.dart';
+import '../abstract_models/abstract_models.dart';
+import '../asset/asset.dart';
+import '../user/user.dart';
+import '../utils.dart';
 
 part 'event.dart';
 part 'group.dart';

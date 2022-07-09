@@ -1,15 +1,15 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
-import 'package:fingerfunke_app/models/asset/asset.dart';
-import 'package:fingerfunke_app/models/post/post.dart';
-import 'package:fingerfunke_app/models/user/user.dart';
-import 'package:fingerfunke_app/repositories/post_repository/post_repository.dart';
-import 'package:fingerfunke_app/repositories/post_repository/post_repository.impl.dart';
-import 'package:fingerfunke_app/utils/exceptions.dart';
-import 'package:fingerfunke_app/view/post/editor_models/general_editor_fields.dart';
+import '../../../../models/asset/asset.dart';
+import '../../../../models/post/post.dart';
+import '../../../../models/user/user.dart';
+import '../../../../repositories/post_repository/post_repository.dart';
+import '../../../../repositories/post_repository/post_repository.impl.dart';
+import '../../../../utils/exceptions.dart';
+import '../../editor_models/general_editor_fields.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:fingerfunke_app/cubits/video_upload_cubit/video_upload_cubit.dart';
+import '../../../../cubits/video_upload_cubit/video_upload_cubit.dart';
 
 part 'post_editor_cubit.freezed.dart';
 part 'post_editor_state.dart';

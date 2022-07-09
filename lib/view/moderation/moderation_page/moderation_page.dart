@@ -1,4 +1,4 @@
-import 'package:fingerfunke_app/utils/util_widgets/admin_appbar.dart';
+import '../../../utils/util_widgets/admin_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 

@@ -1,11 +1,12 @@
 import 'package:bloc/bloc.dart';
-import 'package:fingerfunke_app/models/user/user.dart';
-import 'package:fingerfunke_app/repositories/user_repository/user_repository.dart';
-import 'package:fingerfunke_app/utils/type_aliases.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'create_account_state.dart';
+import '../../../../models/user/user.dart';
+import '../../../../repositories/user_repository/user_repository.dart';
+import '../../../../utils/type_aliases.dart';
+
 part 'create_account_cubit.freezed.dart';
+part 'create_account_state.dart';
 
 class CreateAccountCubit extends Cubit<CreateAccountState> {
   final FirestoreId userId;

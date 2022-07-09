@@ -1,10 +1,10 @@
-import 'package:fingerfunke_app/models/post/post.dart';
-import 'package:fingerfunke_app/utils/placeholder_box.dart';
-import 'package:fingerfunke_app/view/maps/view/static_maps_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../models/post/post.dart';
 import '../../../../utils/exceptions.dart';
+import '../../../../utils/placeholder_box.dart';
+import '../../../maps/view/static_maps_provider.dart';
 import '../../cubits/post_editor_cubit/post_editor_cubit.dart';
 import '../../cubits/post_viewer_cubit/post_cubit.dart';
 

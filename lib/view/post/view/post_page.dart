@@ -1,25 +1,24 @@
-import 'package:fingerfunke_app/cubits/app_cubit/app_cubit.dart';
-import 'package:fingerfunke_app/models/message/message.dart';
-import 'package:fingerfunke_app/services/pagination/message_pagination_service.dart';
-import 'package:fingerfunke_app/utils/app_theme.dart';
-import 'package:fingerfunke_app/utils/tools.dart';
-import 'package:fingerfunke_app/view/error/exception_view.dart';
-import 'package:fingerfunke_app/view/paginated_list/cubit/paginated_list_cubit.dart';
-import 'package:fingerfunke_app/view/post/view/sections/author_section.dart';
-import 'package:fingerfunke_app/view/post/view/sections/header_section.dart';
-import 'package:fingerfunke_app/view/post/view/sections/post_action_buttons.dart';
-import 'package:fingerfunke_app/view/post/view/sections/post_description_section.dart';
-import 'package:fingerfunke_app/view/post/view/widgets/edit_loading_view.dart';
-import 'package:fingerfunke_app/view/post_feed/view/post_feed_item_image_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../common_widgets/list_view/pagination/cubit/paginated_list_cubit.dart';
+import '../../../cubits/app_cubit/app_cubit.dart';
+import '../../../models/message/message.dart';
 import '../../../models/post/post.dart';
+import '../../../services/pagination/message_pagination_service.dart';
+import '../../../utils/app_theme.dart';
+import '../../../utils/tools.dart';
+import '../../error/exception_view.dart';
 import '../cubits/post_editor_cubit/post_editor_cubit.dart';
 import '../cubits/post_viewer_cubit/post_cubit.dart';
+import 'sections/author_section.dart';
 import 'sections/event_detail_section.dart';
+import 'sections/header_section.dart';
 import 'sections/location_section.dart';
+import 'sections/post_action_buttons.dart';
+import 'sections/post_description_section.dart';
 import 'sections/post_posted_success_view.dart';
+import 'widgets/edit_loading_view.dart';
 
 class PostPage extends StatelessWidget {
   final bool editing;

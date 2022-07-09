@@ -4,21 +4,21 @@ import 'dart:typed_data';
 
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
-import 'package:fingerfunke_app/cache/media_cache/media_cache.dart';
-import 'package:fingerfunke_app/cache/media_cache/media_cache.impl.dart';
-import 'package:fingerfunke_app/models/asset/asset.dart';
-import 'package:fingerfunke_app/repositories/video_repository/video_repository.dart';
-import 'package:fingerfunke_app/repositories/video_repository/video_repository.impl.dart';
-import 'package:fingerfunke_app/utils/exceptions.dart';
 import 'package:flutter/material.dart';
-
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:logger/logger.dart';
 import 'package:uuid/uuid.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
-part 'video_upload_state.dart';
+import '../../cache/media_cache/media_cache.dart';
+import '../../cache/media_cache/media_cache.impl.dart';
+import '../../models/asset/asset.dart';
+import '../../repositories/video_repository/video_repository.dart';
+import '../../repositories/video_repository/video_repository.impl.dart';
+import '../../utils/exceptions.dart';
+
 part 'video_upload_cubit.freezed.dart';
+part 'video_upload_state.dart';
 
 class AssetNotAvailableException implements Exception {}
 

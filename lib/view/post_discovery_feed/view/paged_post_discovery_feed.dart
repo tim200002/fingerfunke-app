@@ -1,15 +1,15 @@
-import 'package:fingerfunke_app/models/post/post.dart';
-import 'package:fingerfunke_app/services/pagination/post_pagination_service.dart';
-import 'package:fingerfunke_app/utils/illustration.dart';
-import 'package:fingerfunke_app/view/paginated_list/cubit/paginated_list_cubit.dart';
+import '../../../common_widgets/list_view/pagination/cubit/paginated_list_cubit.dart';
+import '../../../models/post/post.dart';
+import '../../../services/pagination/post_pagination_service.dart';
+import '../../../utils/illustration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../post_feed/view/post_feed_item_image_view.dart';
-import 'paged_paginated_list.dart';
+import '../../../common_widgets/list_view/list_items/post_feed_image_item.dart';
+import '../../../common_widgets/list_view/pagination/view/paged_paginated_list.dart';
 
-class PagedPostFeedView extends StatelessWidget {
-  const PagedPostFeedView({Key? key}) : super(key: key);
+class PagedPostDiscoveryFeed extends StatelessWidget {
+  const PagedPostDiscoveryFeed({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

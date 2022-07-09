@@ -1,6 +1,6 @@
-import 'package:fingerfunke_app/cubits/settings_cubit/settings_cubit.dart';
-import 'package:fingerfunke_app/models/settings/settings_model.dart';
-import 'package:fingerfunke_app/utils/util_widgets/floating_modal.dart';
+import '../../../../../cubits/settings_cubit/settings_cubit.dart';
+import '../../../../../models/settings/settings_model.dart';
+import '../../../../../utils/util_widgets/floating_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';

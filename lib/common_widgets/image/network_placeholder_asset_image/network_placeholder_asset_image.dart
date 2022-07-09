@@ -1,5 +1,5 @@
-import 'package:fingerfunke_app/common_widgets/image/network_placeholder_image.dart/network_placeholder_image.dart';
-import 'package:fingerfunke_app/utils/type_aliases.dart';
+import '../network_placeholder_image.dart/network_placeholder_image.dart';
+import '../../../utils/type_aliases.dart';
 import 'package:flutter/material.dart';
 
 class NetworkPlaceholderAssetImage extends StatelessWidget {

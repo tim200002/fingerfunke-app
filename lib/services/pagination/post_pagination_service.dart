@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fingerfunke_app/models/post/post.dart';
-import 'package:fingerfunke_app/services/pagination/firestore_pagination_service.dart';
+import '../../models/post/post.dart';
+import 'firestore_pagination_service.dart';
 
 class PostPaginationService extends FirestorePaginationService<Post> {
   PostPaginationService(

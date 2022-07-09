@@ -1,14 +1,14 @@
-import 'package:fingerfunke_app/cubits/app_cubit/app_cubit.dart';
-import 'package:fingerfunke_app/routes.dart';
-import 'package:fingerfunke_app/utils/dev_tools.dart';
-import 'package:fingerfunke_app/view/post/view/widgets/post_participants_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
+import '../../../../cubits/app_cubit/app_cubit.dart';
+import '../../../../routes.dart';
+import '../../../../utils/dev_tools.dart';
 import '../../../../utils/util_widgets/floating_modal.dart';
 import '../../../report_send/report_send_page.dart';
 import '../../cubits/post_viewer_cubit/post_cubit.dart';
+import 'post_participants_view.dart';
 
 class PostSettingsModalContent extends StatelessWidget {
   const PostSettingsModalContent({Key? key}) : super(key: key);

@@ -1,7 +1,8 @@
-import 'package:fingerfunke_app/view/image_upload/cubit/image_upload_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../cubit/image_upload_cubit.dart';
 
 class ImageUploadModalContent extends StatelessWidget {
   const ImageUploadModalContent({Key? key}) : super(key: key);

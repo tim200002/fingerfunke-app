@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fingerfunke_app/models/message/message.dart';
-import 'package:fingerfunke_app/services/pagination/firestore_pagination_service.dart';
-import 'package:fingerfunke_app/utils/type_aliases.dart';
+
+import '../../models/message/message.dart';
+import '../../utils/type_aliases.dart';
+import 'firestore_pagination_service.dart';
 
 class MessagePaginationService extends FirestorePaginationService<Message> {
   MessagePaginationService(FirestoreId postId,

@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:fingerfunke_app/services/pagination/firestore_pagination_service.dart';
+import '../../../../services/pagination/firestore_pagination_service.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:logger/logger.dart';
 

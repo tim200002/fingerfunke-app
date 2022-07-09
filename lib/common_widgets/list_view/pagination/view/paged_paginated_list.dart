@@ -1,16 +1,14 @@
-import 'package:fingerfunke_app/common_widgets/creation_aware_widget/creation_aware_widget.dart';
-import 'package:fingerfunke_app/view/paginated_list/cubit/paginated_list_cubit.dart';
+import '../../../creation_aware_widget/creation_aware_widget.dart';
+import '../cubit/paginated_list_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class PaginatedList<T> extends StatelessWidget {
+class PagedPaginatedList<T> extends StatelessWidget {
   /// function envoked on each list item to create widget given the data
   final Widget Function(T) _itemBuilder;
 
   /// message displayed when list reached last element
-  final String? endMessage;
-
-  final Widget? endWidget;
+  final Widget? endIndicator;
 
   /// optional function to turn on and off shrinkWrap depending on the number of items in the list
   /// this is currently needed to shrink the list down in the comment section
@@ -21,11 +19,10 @@ class PaginatedList<T> extends StatelessWidget {
   /// what to show when list is loading new elements
   final Widget? loadingIndicator;
 
-  const PaginatedList(
+  PagedPaginatedList(
       {required Widget Function(T) itemBuilder,
       this.reverse = false,
-      this.endMessage,
-      this.endWidget,
+      this.endIndicator,
       this.shouldShrinkWrap,
       this.loadingIndicator,
       Key? key})
@@ -55,38 +52,20 @@ class PaginatedList<T> extends StatelessWidget {
     if (state.isLoading) {
       return loadingIndicator;
     } else {
-      return endWidget ??
-          (endMessage != null
-              ? Center(
-                  child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Container(
-                        padding: const EdgeInsets.all(8.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          color: Theme.of(context)
-                              .colorScheme
-                              .onSurface
-                              .withOpacity(0.08),
-                        ),
-                        child: Text(endMessage!,
-                            style: Theme.of(context).textTheme.labelMedium),
-                      )),
-                )
-              : null);
+      return endIndicator != null ? Center(child: endIndicator) : null;
     }
   }
+
+  final PageController _controller = PageController(initialPage: 0);
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<PaginatedListCubit<T>, PaginatedListState<T>>(
       builder: (context, state) {
-        return ListView.builder(
+        return PageView.builder(
+          scrollDirection: Axis.vertical,
+          controller: _controller,
           itemCount: state.itemCount,
-          shrinkWrap: shouldShrinkWrap != null
-              ? shouldShrinkWrap!(state.itemCount)
-              : false,
-          reverse: reverse,
           itemBuilder: (context, index) {
             //Check if we reached bottom of list
             // if yes shown indicator

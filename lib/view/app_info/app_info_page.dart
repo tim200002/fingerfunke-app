@@ -1,6 +1,6 @@
-import 'package:fingerfunke_app/routes.dart';
-import 'package:fingerfunke_app/utils/dev_tools.dart';
-import 'package:fingerfunke_app/utils/util_widgets/page_screen.dart';
+import '../../routes.dart';
+import '../../utils/dev_tools.dart';
+import '../../utils/util_widgets/page_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 

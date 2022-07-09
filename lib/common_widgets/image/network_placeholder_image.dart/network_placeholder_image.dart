@@ -1,8 +1,8 @@
-import 'package:fingerfunke_app/common_widgets/image/cubit/network_image_cubit.dart';
+import '../cubit/network_image_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter/material.dart';
-import 'package:fingerfunke_app/utils/type_aliases.dart';
+import '../../../utils/type_aliases.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 class NetworkPlaceholderImage extends StatelessWidget {

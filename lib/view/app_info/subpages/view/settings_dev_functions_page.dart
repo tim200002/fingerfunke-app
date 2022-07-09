@@ -1,9 +1,9 @@
-import 'package:fingerfunke_app/cubits/app_cubit/app_cubit.dart';
-import 'package:fingerfunke_app/cubits/live_config_cubit/live_config_cubit.dart';
-import 'package:fingerfunke_app/models/asset/asset.dart';
-import 'package:fingerfunke_app/models/post/post.dart';
-import 'package:fingerfunke_app/models/user/user.dart';
-import 'package:fingerfunke_app/repositories/post_repository/post_repository.impl.dart';
+import '../../../../cubits/app_cubit/app_cubit.dart';
+import '../../../../cubits/live_config_cubit/live_config_cubit.dart';
+import '../../../../models/asset/asset.dart';
+import '../../../../models/post/post.dart';
+import '../../../../models/user/user.dart';
+import '../../../../repositories/post_repository/post_repository.impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -1,17 +1,17 @@
-import 'package:fingerfunke_app/common_widgets/image/network_placeholder_image.dart/network_placeholder_image.dart';
-import 'package:fingerfunke_app/common_widgets/user/author_info.dart';
-import 'package:fingerfunke_app/models/asset/asset.dart';
-import 'package:fingerfunke_app/models/post/post.dart';
-import 'package:fingerfunke_app/repositories/video_repository/video_repository.impl.dart';
-import 'package:fingerfunke_app/routes.dart';
-import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:fingerfunke_app/utils/extensions/date_time.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../common_widgets/video/video_playback_cubit/video_playback_cubit.dart';
-import '../../../common_widgets/video/view/video_playback_view.dart';
 import '../../../cubits/live_config_cubit/live_config_cubit.dart';
+import '../../../models/asset/asset.dart';
+import '../../../models/post/post.dart';
+import '../../../repositories/video_repository/video_repository.impl.dart';
+import '../../../routes.dart';
+import '../../../utils/app_theme.dart';
+import '../../../utils/extensions/date_time.dart';
+import '../../image/network_placeholder_image.dart/network_placeholder_image.dart';
+import '../../user/author_info.dart';
+import '../../video/video_playback_cubit/video_playback_cubit.dart';
+import '../../video/view/video_playback_view.dart';
 
 class PostFeedImageItem extends StatelessWidget {
   static const heroTag = "postcard_img";

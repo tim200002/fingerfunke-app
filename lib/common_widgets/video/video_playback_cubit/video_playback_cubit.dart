@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:fingerfunke_app/utils/logger.dart';
-import 'package:fingerfunke_app/utils/type_aliases.dart';
+import '../../../utils/logger.dart';
+import '../../../utils/type_aliases.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:video_player/video_player.dart';
 
