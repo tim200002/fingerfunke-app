@@ -4,7 +4,6 @@ import 'package:fingerfunke_app/view/moderation/mod_post_report/mod_post_report_
 import 'package:fingerfunke_app/view/moderation/moderation_page/moderation_page.dart';
 import 'package:fingerfunke_app/view/my_account/view/my_account_page.dart';
 import 'package:fingerfunke_app/view/post/view/post_page.dart';
-import 'package:fingerfunke_app/view/saved/view/saved_page.dart';
 
 import 'view/app_info/subpages/licenses/view/oss_licenses_page.dart';
 import 'view/app_info/subpages/manage_account/view/manage_account_page.dart';
@@ -32,7 +31,6 @@ class Routes {
 }
 
 final routes = {
-  Routes.saved: (context) => const SavedPage(),
   Routes.account: (context) => const MyAccountPage(),
   Routes.manageAccount: (context) => const ManageAccountPage(),
   Routes.postEditor: (context) => const PostPage(editing: true),

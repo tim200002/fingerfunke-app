@@ -9,8 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:fingerfunke_app/utils/extensions/date_time.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../common_widgets/video/video_playback_cubit/video_playback_cubit.dart';
-import '../../../common_widgets/video/view/video_playback_view.dart';
+import '../../video/video_playback_cubit/video_playback_cubit.dart';
+import '../../video/view/video_playback_view.dart';
 import '../../../cubits/live_config_cubit/live_config_cubit.dart';
 
 class PostFeedImageItem extends StatelessWidget {

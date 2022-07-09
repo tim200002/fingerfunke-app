@@ -1,11 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fingerfunke_app/common_widgets/list_view/pagination/cubit/paginated_list_cubit.dart';
+import 'package:fingerfunke_app/common_widgets/list_view/pagination/view/paginated_list.dart';
 import 'package:fingerfunke_app/cubits/app_cubit/app_cubit.dart';
 import 'package:fingerfunke_app/models/message/message.dart';
 import 'package:fingerfunke_app/view/chat/widgets/chat_message.dart';
 import 'package:fingerfunke_app/view/chat/widgets/chat_editor/chat_editor.dart';
 import 'package:fingerfunke_app/view/error/exception_view.dart';
-import 'package:fingerfunke_app/view/paginated_list/cubit/paginated_list_cubit.dart';
-import 'package:fingerfunke_app/view/paginated_list/view/paginated_list.dart';
 import 'package:fingerfunke_app/utils/type_aliases.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,7 +37,7 @@ class ChatPage extends StatelessWidget {
           backgroundColor: Colors.black,
           leading: IconButton(
               onPressed: () => Navigator.of(context).pop(),
-              icon: Icon(Icons.close)),
+              icon: const Icon(Icons.close)),
           title: const AutoSizeText(
             "Chat",
             maxLines: 1,
@@ -45,7 +45,7 @@ class ChatPage extends StatelessWidget {
           ),
         ),
         body: ClipRRect(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
           child: Container(
             color: Colors.white,
             child: Column(

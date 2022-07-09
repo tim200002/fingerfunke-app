@@ -1,11 +1,10 @@
 import 'package:fingerfunke_app/cubits/live_config_cubit/live_config_cubit.dart';
 import 'package:fingerfunke_app/routes.dart';
 import 'package:fingerfunke_app/utils/app_theme.dart';
-import 'package:fingerfunke_app/utils/dev_tools.dart';
+import 'package:fingerfunke_app/view/discovery_feed/view/paged_discovery_feed.dart';
+import 'package:fingerfunke_app/view/discovery_feed/view/discovery_feed.dart';
 import 'package:fingerfunke_app/view/home/widgets/home_drawer/home_drawer_view.dart';
-import 'package:fingerfunke_app/view/paged_post_feed/view/paged_post_feed_view.dart';
-import 'package:fingerfunke_app/view/post_feed/view/post_feed_view.dart';
-import 'package:fingerfunke_app/view/saved/view/saved_page.dart';
+import 'package:fingerfunke_app/view/saved_feed/view/saved_posts_feed.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
@@ -100,9 +99,9 @@ class _HomeViewState extends State<HomeView> {
         clipBehavior: Clip.none,
         child: _activePage == _HomePages.feedPage
             ? LiveConfig.builder((config) => config.pagedFeed
-                ? const PagedPostFeedView()
-                : const PostFeedView()) //const PostFeedView()
-            : const SavedPage(),
+                ? const PagedDiscoveryFeed()
+                : const DiscoveryFeed()) //const PostFeedView()
+            : const SavedPostsFeed(),
       ),
       bottomNavigationBar: BottomAppBar(
         child: Row(

@@ -1,14 +1,14 @@
+import 'package:fingerfunke_app/common_widgets/list_view/pagination/cubit/paginated_list_cubit.dart';
+import 'package:fingerfunke_app/common_widgets/list_view/pagination/view/paginated_list.dart';
 import 'package:fingerfunke_app/models/post/post.dart';
 import 'package:fingerfunke_app/services/pagination/post_pagination_service.dart';
-import 'package:fingerfunke_app/view/paginated_list/cubit/paginated_list_cubit.dart';
-import 'package:fingerfunke_app/view/paginated_list/view/paginated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'post_feed_item_image_view.dart';
+import '../../../common_widgets/list_view/list_item/post_feed_image_item.dart';
 
-class PostFeedView extends StatelessWidget {
-  const PostFeedView({Key? key}) : super(key: key);
+class DiscoveryFeed extends StatelessWidget {
+  const DiscoveryFeed({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

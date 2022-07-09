@@ -1,12 +1,11 @@
 import 'package:fingerfunke_app/cubits/app_cubit/app_cubit.dart';
-import 'package:fingerfunke_app/view/saved/cubit/saved_posts_cubit.dart';
-import 'package:fingerfunke_app/view/saved/widgets/non_paginated_post_list.dart';
+import 'package:fingerfunke_app/view/saved_feed/cubit/saved_posts_cubit.dart';
+import 'package:fingerfunke_app/view/saved_feed/widgets/non_paginated_post_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 
-class SavedPage extends StatelessWidget {
-  const SavedPage({Key? key}) : super(key: key);
+class SavedPostsFeed extends StatelessWidget {
+  const SavedPostsFeed({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
