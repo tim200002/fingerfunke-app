@@ -1,13 +1,14 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
 import '../../../../models/post/post.dart';
 import '../../../../repositories/post_repository/post_repository.dart';
 import '../../../../repositories/post_repository/post_repository.impl.dart';
 import '../../../../repositories/user_repository/user_repository.dart';
 import '../../../../utils/exceptions.dart';
 import '../../../../utils/type_aliases.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'post_cubit.freezed.dart';
 part 'post_state.dart';
@@ -56,15 +57,9 @@ class PostCubit extends Cubit<PostState> {
     final postId =
         state.when(loading: (postId) => postId, normal: (post, _) => post.id);
     if (!hasSaved) {
-      _userRepository.savePost(
-        postId,
-        userId,
-      );
+      _userRepository.savePost(userId, postId);
     } else {
-      _userRepository.unsavePost(
-        postId,
-        userId,
-      );
+      _userRepository.unsavePost(userId, postId);
     }
   }
 

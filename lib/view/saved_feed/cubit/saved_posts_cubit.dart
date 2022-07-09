@@ -16,6 +16,7 @@ class SavedPostsCubit extends Cubit<SavedPostsState> {
   SavedPostsCubit() : super(const SavedPostsState.loading());
 
   Future<void> updatePosts(List<FirestoreId> updatedPostIds) async {
+    print("update");
     // Step 1 delete all posts which are no longer in list
     final filteredPosts =
         posts.where((post) => updatedPostIds.contains(post.id));
@@ -30,6 +31,8 @@ class SavedPostsCubit extends Cubit<SavedPostsState> {
         notYetAddedPosts.add(postId);
       }
     }
+
+    print(notYetAddedPosts);
 
     List<Future<Post>> newlyFetchedPostsFutures = notYetAddedPosts
         .map((postId) async => await _postRepository.getPost(postId))
