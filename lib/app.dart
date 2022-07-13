@@ -9,6 +9,8 @@ import 'view/welcome/view/welcome_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class SimpleBlocObserver extends BlocObserver {
   @override
   void onChange(BlocBase bloc, Change change) {
@@ -52,6 +54,8 @@ class App extends StatelessWidget {
     return MaterialApp(
       routes: routes,
       theme: AppTheme.mainTheme,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       //darkTheme: AppTheme.darkTheme,
       themeMode: themeMode, //TODO change back to themeMode
       debugShowCheckedModeBanner: false,

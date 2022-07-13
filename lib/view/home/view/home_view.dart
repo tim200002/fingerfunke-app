@@ -4,6 +4,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import '../../../cubits/live_config_cubit/live_config_cubit.dart';
 import '../../../routes.dart';
 import '../../../utils/app_theme.dart';
+import '../../../utils/tools.dart';
 import '../../maps/view/maps_place_picker_page.dart';
 import '../../post_discovery_feed/view/paged_post_discovery_feed.dart';
 import '../../post_discovery_feed/view/post_discovery_feed.dart';
@@ -108,19 +109,19 @@ class _HomeViewState extends State<HomeView> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             _bottomNavItem(context,
-                title: "Entdecken",
+                title: l10n(context).home_nav_explore,
                 icon: FeatherIcons.compass,
                 selected: _activePage == _HomePages.feedPage,
                 onPressed: () =>
                     setState(() => _activePage = _HomePages.feedPage)),
             _bottomNavItem(context,
-                title: "Erstellen",
+                title: l10n(context).home_nav_create,
                 icon: FeatherIcons.plus,
                 color: Theme.of(context).colorScheme.secondary,
                 onPressed: () =>
                     Navigator.of(context).pushNamed(Routes.postEditor)),
             _bottomNavItem(context,
-                title: "Merkliste",
+                title: l10n(context).home_nav_saved,
                 selected: _activePage == _HomePages.savedPage,
                 icon: FeatherIcons.heart,
                 onPressed: () =>

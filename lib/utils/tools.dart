@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+AppLocalizations l10n(BuildContext context) => AppLocalizations.of(context)!;
 
 class Tools {
   static showSnackbar(BuildContext context, String message) {

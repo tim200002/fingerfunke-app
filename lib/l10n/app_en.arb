@@ -1,0 +1,8 @@
+{
+    "home_nav_create": "create",
+    "@home_nav_create": {
+      "description": "This button allows a user to create a new post"
+    },
+    "home_nav_explore": "explore",
+    "home_nav_saved": "saved"
+}
