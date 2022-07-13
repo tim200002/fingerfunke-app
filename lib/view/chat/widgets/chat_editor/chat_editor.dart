@@ -43,11 +43,11 @@ class _ChatEditorState extends State<ChatEditor> {
                       maxLines: 6,
                       textCapitalization: TextCapitalization.sentences,
                       controller: _controller,
-                      decoration: const InputDecoration(
-                        contentPadding:
-                            EdgeInsets.symmetric(vertical: 9, horizontal: 25),
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 9, horizontal: 25),
                         border: InputBorder.none,
-                        hintText: "neue Nachricht",
+                        hintText: l10n(context).lbl_chatNewMessage,
                       ),
                       onChanged: (value) =>
                           chatEditorCubit.validateMessage(value),
@@ -60,8 +60,8 @@ class _ChatEditorState extends State<ChatEditor> {
                         ? () => chatEditorCubit
                             .postMessage(_controller.text)
                             .then((_) => _controller.clear())
-                            .onError((_, __) => Tools.showSnackbar(context,
-                                "Sorry wir konnten deine Nachricht leider nicht absenden"))
+                            .onError((_, __) => Tools.showSnackbar(
+                                context, l10n(context).msg_chatSendingFailed))
                         : null,
                     icon: Icon(
                       Icons.send_rounded,

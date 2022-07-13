@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../utils/illustration.dart';
+import '../../../utils/tools.dart';
 import '../../phone_login/view/phone_login_page.dart';
 
 class WelcomePage extends StatelessWidget {
@@ -18,14 +19,14 @@ class WelcomePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Illustration(Illustrations.party),
-            Text("Heyy",
+            Text(l10n(context).lbl_welcomeHello,
                 textAlign: TextAlign.center,
                 style: GoogleFonts.playfairDisplay(
                   fontSize: 50,
                   fontWeight: FontWeight.w900,
                 )),
             const SizedBox(height: 22),
-            Text("Willkommen bei\nfingerfunke",
+            Text(l10n(context).lbl_welcomeToApp,
                 textAlign: TextAlign.center,
                 style: GoogleFonts.signika(
                   fontSize: 19,
@@ -45,7 +46,7 @@ class WelcomePage extends StatelessWidget {
             style: ButtonStyle(
                 minimumSize: MaterialStateProperty.all(const Size(0, 60))),
             onPressed: () => Navigator.of(context).push(PhoneLoginPage.route()),
-            child: const Text("Anmelden"),
+            child: Text(l10n(context).lbl_login),
           ),
         ],
       ));

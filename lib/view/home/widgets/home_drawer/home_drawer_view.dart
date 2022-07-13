@@ -18,7 +18,7 @@ class HomeDrawer extends StatelessWidget {
   const HomeDrawer({Key? key}) : super(key: key);
 
   // ignore: unused_element
-  Widget _moderationItem(BuildContext context) {
+  /*Widget _moderationItem(BuildContext context) {
     return BlocBuilder<AppCubit, AppState>(
       builder: (context, state) => state.user.hasClearance(User.clearanceAdmin)
           ? ListTile(
@@ -28,7 +28,7 @@ class HomeDrawer extends StatelessWidget {
             )
           : Container(),
     );
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -52,21 +52,21 @@ class HomeDrawer extends StatelessWidget {
                     ),
                     ListTile(
                       leading: const Icon(FeatherIcons.users),
-                      title: const Text('Gruppen'),
+                      title: Text(l10n(context).lbl_groups),
                       enabled: false,
                       onTap: () => DevTools.showToDoSnackbar(context),
                     ),
                     const SizedBox(height: 25),
                     ListTile(
                       leading: const Icon(FeatherIcons.share2),
-                      title: const Text('Social Media'),
+                      title: Text(l10n(context).lbl_socialMedia),
                       onTap: () => launchUrlString(
                           "https://instagram.com/fingerfunke",
                           mode: LaunchMode.externalApplication),
                     ),
                     ListTile(
                       leading: const Icon(FeatherIcons.info),
-                      title: const Text('Informationen'),
+                      title: Text(l10n(context).lbl_information),
                       onTap: () =>
                           Navigator.of(context).pushNamed(Routes.about),
                     ),
@@ -75,7 +75,7 @@ class HomeDrawer extends StatelessWidget {
                       level: User.clearanceAdmin,
                       builder: (_) => ListTile(
                         leading: const Icon(FeatherIcons.penTool),
-                        title: const Text('DevTools'),
+                        title: Text(l10n(context).lbl_devTools),
                         onTap: () =>
                             Navigator.of(context).pushNamed(Routes.devtools),
                       ),
@@ -88,7 +88,7 @@ class HomeDrawer extends StatelessWidget {
                                 right: Radius.circular(15))),
                         tileColor: Colors.orange.shade100,
                         leading: const Icon(FeatherIcons.shield),
-                        title: const Text('Moderation'),
+                        title: Text(l10n(context).lbl_moderation),
                         onTap: () =>
                             Navigator.of(context).pushNamed(Routes.moderation),
                       ),
@@ -103,22 +103,23 @@ class HomeDrawer extends StatelessWidget {
                   children: [
                     ListTile(
                       leading: const Icon(FeatherIcons.settings),
-                      title: const Text('Einstellungen'),
+                      title: Text(l10n(context).lbl_settings),
                       enabled: false,
                       onTap: () => Navigator.of(context)
                           .popAndPushNamed(Routes.settings),
                     ),
                     ListTile(
                       leading: const Icon(FeatherIcons.logOut),
-                      title: const Text('Abmelden'),
+                      title: Text(l10n(context).lbl_signOut),
                       enabled: true,
-                      onTap: () => BlocProvider.of<
-                              FirebaseAuthenticationCubitCubit>(context)
-                          .logoutRequested()
-                          .catchError(
-                            (_) =>
-                                Tools.showSnackbar(context, "Logout failed?"),
-                          ),
+                      onTap: () =>
+                          BlocProvider.of<FirebaseAuthenticationCubitCubit>(
+                                  context)
+                              .logoutRequested()
+                              .catchError(
+                                (_) => Tools.showSnackbar(
+                                    context, l10n(context).msg_signOutFailed),
+                              ),
                     ),
                   ]),
             ],

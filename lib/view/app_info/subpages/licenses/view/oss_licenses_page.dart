@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../../utils/tools.dart';
 import '/oss_licenses.dart';
 
 class OssLicensesPage extends StatelessWidget {
@@ -35,7 +36,7 @@ class OssLicensesPage extends StatelessWidget {
         leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () => Navigator.of(context).pop()),
-        title: const Text("Lizenzen"),
+        title: Text(l10n(context).lbl_licenses),
       ),
       body: FutureBuilder<List<String>>(
           future: _licenses,

@@ -3,6 +3,7 @@ import '../../../common_widgets/list_view/pagination/cubit/paginated_list_cubit.
 import '../../../common_widgets/list_view/pagination/view/paginated_list.dart';
 import '../../../cubits/app_cubit/app_cubit.dart';
 import '../../../models/message/message.dart';
+import '../../../utils/tools.dart';
 import '../widgets/chat_message.dart';
 import '../widgets/chat_editor/chat_editor.dart';
 import '../../error/exception_view.dart';
@@ -38,8 +39,8 @@ class ChatPage extends StatelessWidget {
           leading: IconButton(
               onPressed: () => Navigator.of(context).pop(),
               icon: const Icon(Icons.close)),
-          title: const AutoSizeText(
-            "Chat",
+          title: AutoSizeText(
+            l10n(context).lbl_chat,
             maxLines: 1,
             minFontSize: 12,
           ),

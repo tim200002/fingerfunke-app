@@ -1,3 +1,4 @@
+import '../../../utils/tools.dart';
 import '../cubit/phone_login_cubit.dart';
 import 'enter_code_view.dart';
 import 'enter_phone_number_view.dart';
@@ -60,11 +61,11 @@ class PhoneLoginPage extends StatelessWidget {
                               enterPhoneNumber: (_) =>
                                   const EnterPhoneNumberView(),
                               waitForCodeSent: () =>
-                                  const LoadingView("Wait for Code"),
+                                  LoadingView(l10n(context).msg_loginWaitCode),
                               enterCode: (verificationId, __) =>
                                   EnterCodeView(verificationId),
                               waitForLogIn: () =>
-                                  const LoadingView("Wait for Login"),
+                                  LoadingView(l10n(context).msg_loginWait),
                             );
                           },
                         ),

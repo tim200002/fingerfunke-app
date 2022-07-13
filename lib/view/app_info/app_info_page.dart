@@ -1,5 +1,6 @@
 import '../../routes.dart';
 import '../../utils/dev_tools.dart';
+import '../../utils/tools.dart';
 import '../../utils/util_widgets/page_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
@@ -12,22 +13,22 @@ class AppInfoPage extends StatelessWidget {
     return PageScreen(
         appBar: PageAppBar(
           context,
-          title: "Informationen",
+          title: l10n(context).lbl_information,
           closable: true,
         ),
         body: FFSettingsSection(
-          title: "Informationen",
+          title: l10n(context).lbl_information,
           tiles: [
             SettingsTile(
-                title: "Datenschutz",
+                title: l10n(context).lbl_privacy,
                 leading: const Icon(Icons.privacy_tip_outlined),
                 onPressed: (context) => DevTools.showToDoSnackbar(context)),
             SettingsTile(
-                title: "Impressum",
+                title: l10n(context).lbl_imprint,
                 leading: const Icon(Icons.notes_rounded),
                 onPressed: (context) => DevTools.showToDoSnackbar(context)),
             SettingsTile(
-                title: "Lizenzen",
+                title: l10n(context).lbl_licenses,
                 leading: const Icon(Icons.gavel_outlined),
                 onPressed: (context) {
                   Navigator.of(context).pushNamed(Routes.licenses);

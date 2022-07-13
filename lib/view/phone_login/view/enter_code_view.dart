@@ -1,3 +1,4 @@
+import '../../../utils/tools.dart';
 import '../cubit/phone_login_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,7 +16,7 @@ class EnterCodeView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text("SMS Code eingeben",
+          Text(l10n(context).msg_loginEnterCode,
               style: Theme.of(context).textTheme.labelLarge),
           PinCodeTextField(
               appContext: context,

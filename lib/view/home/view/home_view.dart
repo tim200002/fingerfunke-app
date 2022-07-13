@@ -109,19 +109,19 @@ class _HomeViewState extends State<HomeView> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             _bottomNavItem(context,
-                title: l10n(context).home_nav_explore,
+                title: l10n(context).lbl_explore,
                 icon: FeatherIcons.compass,
                 selected: _activePage == _HomePages.feedPage,
                 onPressed: () =>
                     setState(() => _activePage = _HomePages.feedPage)),
             _bottomNavItem(context,
-                title: l10n(context).home_nav_create,
+                title: l10n(context).lbl_create,
                 icon: FeatherIcons.plus,
                 color: Theme.of(context).colorScheme.secondary,
                 onPressed: () =>
                     Navigator.of(context).pushNamed(Routes.postEditor)),
             _bottomNavItem(context,
-                title: l10n(context).home_nav_saved,
+                title: l10n(context).lbl_saved,
                 selected: _activePage == _HomePages.savedPage,
                 icon: FeatherIcons.heart,
                 onPressed: () =>

@@ -1,4 +1,5 @@
 import '../../../cubits/app_cubit/app_cubit.dart';
+import '../../../utils/tools.dart';
 import '../../../utils/util_widgets/page_screen.dart';
 import '../profile_picture_image_upload/profile_picture_image_upload_widget.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ class MyAccountPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return PageScreen(
       appBar: AppBar(
-          title: const Text("Mein Account"),
+          title: Text(l10n(context).lbl_myAccount),
           leading: IconButton(
               onPressed: () => Navigator.of(context).pop(),
               icon: const Icon(Icons.close))),
@@ -80,15 +81,15 @@ class _AccountSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FFSettingsSection(
-      title: "Account",
+      title: l10n(context).lbl_account,
       tiles: [
         SettingsTile(
-            title: "SocialMedia",
+            title: l10n(context).lbl_socialMedia,
             leading: const Icon(Icons.link_rounded),
             enabled: false,
             onPressed: null),
         SettingsTile(
-          title: "Account verwalten",
+          title: l10n(context).lbl_accountManage,
           leading: const Icon(Icons.account_circle_outlined),
           onPressed: (context) {
             Navigator.of(context).pushNamed("/manageAccount");

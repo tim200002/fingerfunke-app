@@ -1,8 +1,56 @@
 {
-    "home_nav_create": "create",
-    "@home_nav_create": {
-      "description": "This button allows a user to create a new post"
-    },
-    "home_nav_explore": "explore",
-    "home_nav_saved": "saved"
+    "lbl_login": "login",
+    "lbl_signOut": "sign out",
+    "lbl_account": "account",
+    "lbl_myAccount": "my account",
+    "msg_signedIn": "you are signed in",
+    "msg_loginEnterCode": "enter SMS code",
+
+    "lbl_loginSendCode": "send code",
+    "msg_loginWait": "wait for login",
+    "msg_loginWaitCode": "wait for code",
+
+    "lbl_phoneNumber": "phone number",
+    "msg_loginCodeAbout": "We will send a code to your number to verify it. This way you don't have to remember a password",
+
+    "lbl_groups": "groups",
+    "lbl_socialMedia": "socialMedia",
+    "lbl_information": "information",
+    "lbl_devTools": "DevTools",
+    "lbl_moderation": "moderation",
+    "lbl_settings": "settings",
+    "msg_signOutFailed": "sign out failed",
+
+    "lbl_accountManage": "manage account",
+
+    "lbl_errorTitle": "Oh no :/",
+    "lbl_errorAbout": "An unexpected error has occurred.\n We saved the error and started working on it",
+    "lbl_errorCantView": "This content could not be shown",
+
+    "lbl_privacy": "privacy",
+    "lbl_imprint": "imprint",
+    "lbl_licenses": "licenses",
+
+    "lbl_welcome": "welcome",
+    "lbl_newUserName": "what should other people call you?",
+    "lbl_welcomeHello": "Heyy!",
+    "lbl_welcomeToApp": "welcome to\nfingerfunke",
+
+    "lbl_chat": "chat",
+    "lbl_chatNewMessage": "new message",
+    "msg_chatSendingFailed": "Sorry, your message could not be sent",
+
+    "lbl_camera": "camera",
+    "lbl_imageGallery": "gallery",
+    "lbl_imageUpload": "upload image",
+
+    "lbl_mapPlaceFind": "find a place",
+    "lbl_mapPlaceSelect": "select place",
+    "lbl_mapPlaceNotInArea": "select place",
+    "msg_mapCouldNotOpen": "map could not be opened",
+    "lbl_wait": "please wait",
+
+    "lbl_create": "create",
+    "lbl_explore": "explore",
+    "lbl_saved": "saved"
 }
