@@ -1,4 +1,3 @@
-
 import 'package:flutter_config/flutter_config.dart';
 
 /// This service provides functions to generate Google Maps Queries
@@ -12,7 +11,7 @@ class GoogleMapsService {
         port: 443,
         path: '/maps/api/staticmap',
         queryParameters: {
-          'size': '${600}x${600}',
+          'size': '${600}x${300}',
           'center': '',
           'markers': searchQuery,
           'zoom': '15',

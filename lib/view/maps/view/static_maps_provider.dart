@@ -22,13 +22,15 @@ class StaticMapsProvider extends StatelessWidget {
     return Center(
       child: GestureDetector(
         onTap: () async {
-          if (await canLaunchUrl(GoogleMapsService.getGoogleUri(address)) &&
-              address != "") {
-            await launchUrl(GoogleMapsService.getGoogleUri(address));
-          } else {
+          var uri = GoogleMapsService.getGoogleUri(address);
+
+          if (!(await canLaunchUrl(uri)) && address == "") {
             Tools.showSnackbar(context, 'Could not open the map.');
+            return;
           }
+          await launchUrl(uri, mode: LaunchMode.externalApplication);
         },
+        //TODO: change to cached network image
         child: ClipRRect(
           borderRadius: BorderRadius.circular(15),
           child: address != ""
@@ -36,10 +38,11 @@ class StaticMapsProvider extends StatelessWidget {
                   GoogleMapsService.getGoogleStaticApiUri(address).toString(),
                   height: height,
                   fit: BoxFit.cover,
-                  loadingBuilder: (_, __, ___) =>
-                      PlaceholderBox.shimmer(const PlaceholderBox(
-                    height: height,
-                  )),
+                  loadingBuilder: (_, child, process) => process == null
+                      ? child
+                      : PlaceholderBox.shimmer(const PlaceholderBox(
+                          height: height,
+                        )),
                   errorBuilder: ((_, __, ___) => Container(
                         height: height,
                         decoration: BoxDecoration(
