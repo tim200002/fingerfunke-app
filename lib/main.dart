@@ -5,6 +5,7 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:get_storage/get_storage.dart';
@@ -25,6 +26,8 @@ void main() async {
   await GetStorage.init();
   await Firebase.initializeApp();
   final Logger _logger = Logger();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
   // choose envrionment
   switch (FlutterConfig.get('FIREBASE_ENVIRONMENT')) {
