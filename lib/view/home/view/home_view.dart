@@ -11,6 +11,17 @@ import '../../post_discovery_feed/view/post_discovery_feed.dart';
 import '../../saved_feed/view/saved_posts_feed.dart';
 import '../widgets/home_drawer/home_drawer_view.dart';
 
+class _menuButton extends StatelessWidget {
+  final IconData icon;
+  const _menuButton({Key? key, required this.icon}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+        onPressed: () => Scaffold.of(context).openDrawer(), icon: Icon(icon));
+  }
+}
+
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
 
@@ -40,7 +51,10 @@ class _HomeViewState extends State<HomeView> {
             padding: EdgeInsets.only(right: 5),
             child: Icon(Icons.place_rounded),
           ),
-          Text("Ulm")
+          Text(
+            "Ulm",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          )
         ],
       ),
     );
@@ -51,10 +65,13 @@ class _HomeViewState extends State<HomeView> {
       required IconData icon,
       Color? color,
       bool selected = false,
+      double minWidth = 75.0,
       required Function() onPressed}) {
     return InkWell(
-        onTap: onPressed,
-        child: Container(
+      borderRadius: BorderRadius.circular(17),
+      onTap: onPressed,
+      child: Container(
+          constraints: BoxConstraints(minWidth: minWidth),
           margin: const EdgeInsets.all(10),
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
@@ -74,23 +91,27 @@ class _HomeViewState extends State<HomeView> {
               Text(
                 title,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    fontWeight: selected ? FontWeight.bold : null,
+                    fontWeight: selected ? FontWeight.w900 : null,
                     color: color),
               )
             ],
-          ),
-        ));
+          )),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: const _menuButton(icon: FeatherIcons.menu),
         title: _DEMOPlaceIndicator(context),
         actions: const [
-          IconButton(
+          SizedBox(
+            width: 62,
+          )
+          /*IconButton(
               onPressed: null, //() => DevTools.showToDoSnackbar(context),
-              icon: Icon(FeatherIcons.calendar))
+              icon: Icon(FeatherIcons.calendar))*/
         ],
       ),
       drawer: const HomeDrawer(),
@@ -105,6 +126,7 @@ class _HomeViewState extends State<HomeView> {
             : const SavedPostsFeed(),
       ),
       bottomNavigationBar: BottomAppBar(
+        elevation: 0,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [

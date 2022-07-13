@@ -14,7 +14,7 @@ import 'package:url_launcher/url_launcher_string.dart';
 part './profile_section.dart';
 
 class HomeDrawer extends StatelessWidget {
-  static const _borderRadius = Radius.circular(20);
+  static const _borderRadius = Radius.circular(27);
   const HomeDrawer({Key? key}) : super(key: key);
 
   // ignore: unused_element

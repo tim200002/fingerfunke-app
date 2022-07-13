@@ -1,104 +1,74 @@
 {
-    "lbl_login": "login",
-    "lbl_signOut": "sign out",
-    "lbl_account": "account",
-    "lbl_myAccount": "my account",
-    "msg_signedIn": "you are signed in",
-    "msg_loginEnterCode": "enter SMS code",
-    "msg_errorUndefined": "something went wrong",
-    "msg_editFieldsMissing": "please fill in all fields",
+"@lbl_postCreatedBy" : {"placeholders": {"authorName": {}}},
+"@lbl_postTime" : {"placeholders": {"time": {}}},
 
-    "lbl_loading": "loading",
-    "lbl_submitting": "loading",
-
-    "lbl_submitPost": "post",
-    "lbl_postDescription": "describe your post",
-
-    "lbl_postMembers": "participants",
-    "lbl_edit": "edit",
-    "lbl_leavePost": "leave",
-    "lbl_delete": "delete",
-
-    "msg_postErrorSaving" : "error saving post",
-
-    "msg_postOnlyEventsSupported": "for now the app only supports events",
-    "lbl_postTime": "from {time}",
-    "@lbl_postTime" : {
-      "placeholders": {
-          "time": {}
-      }
-    },
-
-    "lbl_joinPost": "join",
-    "lbl_joinedPost": "joined",
-
-    "lbl_postEditTitle" : "title of the post",
-
-    "lbl_locationChoose": "choose location",
-
-    "lbl_loginSendCode": "send code",
-    "msg_loginWait": "wait for login",
-    "msg_loginWaitCode": "wait for code",
-
-    "lbl_phoneNumber": "phone number",
-    "msg_loginCodeAbout": "We will send a code to your number to verify it. This way you don't have to remember a password",
-
-    "lbl_groups": "groups",
-    "lbl_socialMedia": "socialMedia",
-    "lbl_information": "information",
-    "lbl_devTools": "DevTools",
-    "lbl_moderation": "moderation",
-    "lbl_settings": "settings",
-    "msg_signOutFailed": "sign out failed",
-
-    "lbl_accountManage": "manage account",
-
-    "lbl_errorTitle": "Oh no :/",
-    "lbl_errorAbout": "An unexpected error has occurred.\n We saved the error and started working on it",
-    "lbl_errorCantView": "This content could not be shown",
-
-    "lbl_privacy": "privacy",
-    "lbl_imprint": "imprint",
-    "lbl_licenses": "licenses",
-
-    "lbl_welcome": "welcome",
-    "lbl_newUserName": "what should other people call you?",
-    "lbl_welcomeHello": "Heyy!",
-    "lbl_welcomeToApp": "welcome to\nfingerfunke",
-
-    "lbl_chat": "chat",
-    "lbl_chatNewMessage": "new message",
-    "msg_chatSendingFailed": "Sorry, your message could not be sent",
-
-    "lbl_camera": "camera",
-    "lbl_imageGallery": "gallery",
-    "lbl_imageUpload": "upload image",
-
-    "lbl_mapPlaceFind": "find a place",
-    "lbl_mapPlaceSelect": "select place",
-    "lbl_mapPlaceNotInArea": "select place",
-    "msg_mapCouldNotOpen": "map could not be opened",
-    "lbl_wait": "please wait",
-
-    "lbl_create": "create",
-    "lbl_explore": "explore",
-    "lbl_saved": "saved",
-    
-    "lbl_report": "report",
-    "lbl_reportPost": "report post",
-    "lbl_reportReasons": "this post contains:",
-    "msg_reportSuccess": "content was reported.\nThank you!",
-    "lbl_postCreatedBy": "posted by {authorName}",
-    "@lbl_postCreatedBy" : {
-      "placeholders": {
-          "authorName": {}
-      }
-  },
-
-
-    "lbl_cameraPreview": "preview",
-    "msg_savedFeedEmpty" : "If you saved posts they will appear here",
-    "msg_feedEmpty" : "no more posts",
-
-    "lbl_cameraPermissionError": "Sorry, it looks like you've not given us permission to use your camera. To use the editor you have to change this in the settings"
+"lbl_account": "account",
+"lbl_accountManage": "manage account",
+"lbl_camera": "camera",
+"lbl_cameraPermissionError": "Sorry, it looks like you've not given us permission to use your camera. To use the editor you have to change this in the settings",
+"lbl_cameraPreview": "preview",
+"lbl_chat": "chat",
+"lbl_chatNewMessage": "new message",
+"lbl_create": "create",
+"lbl_delete": "delete",
+"lbl_devTools": "DevTools",
+"lbl_edit": "edit",
+"lbl_errorAbout": "An unexpected error has occurred.\n We saved the error and started working on it",
+"lbl_errorCantView": "This content could not be shown",
+"lbl_errorTitle": "Oh no :/",
+"lbl_explore": "explore",
+"lbl_groups": "groups",
+"lbl_imageGallery": "gallery",
+"lbl_imageUpload": "upload image",
+"lbl_imprint": "imprint",
+"lbl_information": "information",
+"lbl_joinPost": "join",
+"lbl_joinedPost": "joined",
+"lbl_leavePost": "leave",
+"lbl_licenses": "licenses",
+"lbl_loading": "loading",
+"lbl_locationChoose": "choose location",
+"lbl_login": "login",
+"lbl_loginSendCode": "send code",
+"lbl_mapPlaceFind": "find a place",
+"lbl_mapPlaceNotInArea": "select place",
+"lbl_mapPlaceSelect": "select place",
+"lbl_moderation": "moderation",
+"lbl_myAccount": "my account",
+"lbl_newUserName": "what should other people call you?",
+"lbl_phoneNumber": "phone number",
+"lbl_postCreatedBy": "posted by {authorName}",
+"lbl_postDescription": "describe your post",
+"lbl_postEditTitle" : "title of the post",
+"lbl_postMembers": "participants",
+"lbl_postTime": "from {time}",
+"lbl_privacy": "privacy",
+"lbl_report": "report",
+"lbl_reportPost": "report post",
+"lbl_reportReasons": "this post contains:",
+"lbl_saved": "saved",
+"lbl_settings": "settings",
+"lbl_signOut": "sign out",
+"lbl_socialMedia": "social media",
+"lbl_submitPost": "post",
+"lbl_submitting": "loading",
+"lbl_wait": "please wait",
+"lbl_welcome": "welcome",
+"lbl_welcomeHello": "Heyy!",
+"lbl_welcomeToApp": "welcome to\nfingerfunke",
+"msg_chatSendingFailed": "Sorry, your message could not be sent",
+"msg_editFieldsMissing": "please fill in all fields",
+"msg_errorUndefined": "something went wrong",
+"msg_feedEmpty" : "no more posts",
+"msg_loginCodeAbout": "We will send a code to your number to verify it. This way you don't have to remember a password",
+"msg_loginEnterCode": "enter SMS code",
+"msg_loginWait": "wait for login",
+"msg_loginWaitCode": "wait for code",
+"msg_mapCouldNotOpen": "map could not be opened",
+"msg_postErrorSaving" : "error saving post",
+"msg_postOnlyEventsSupported": "for now the app only supports events",
+"msg_reportSuccess": "content was reported.\nThank you!",
+"msg_savedFeedEmpty" : "If you saved posts they will appear here",
+"msg_signOutFailed": "sign out failed",
+"msg_signedIn": "you are signed in"
 }
