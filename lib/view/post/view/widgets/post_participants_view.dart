@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../common_widgets/image/user_image/user_image.dart';
 import '../../../../models/user/user.dart';
+import '../../../../utils/tools.dart';
 import '../../cubits/post_viewer_cubit/post_cubit.dart';
 
 class PostParticipantsView extends StatelessWidget {
@@ -26,7 +27,7 @@ class PostParticipantsView extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 5),
                       child: Text(
-                        "Teilnehmer",
+                        l10n(context).lbl_postMembers,
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ),

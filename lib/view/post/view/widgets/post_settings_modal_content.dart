@@ -5,6 +5,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import '../../../../cubits/app_cubit/app_cubit.dart';
 import '../../../../routes.dart';
 import '../../../../utils/dev_tools.dart';
+import '../../../../utils/tools.dart';
 import '../../../../utils/util_widgets/floating_modal.dart';
 import '../../../report_send/report_send_page.dart';
 import '../../cubits/post_viewer_cubit/post_cubit.dart';
@@ -32,7 +33,7 @@ class PostSettingsModalContent extends StatelessWidget {
                 children: [
                   ListTile(
                       leading: const Icon(FeatherIcons.users),
-                      title: const Text('Teilnehmer'),
+                      title: Text(l10n(context).lbl_postMembers),
                       onTap: () {
                         Navigator.of(context).pop();
                         showFloatingModalBottomSheet(
@@ -44,7 +45,7 @@ class PostSettingsModalContent extends StatelessWidget {
                   if (isAuthor)
                     ListTile(
                       leading: const Icon(FeatherIcons.edit),
-                      title: const Text('Bearbeiten'),
+                      title: Text(l10n(context).lbl_edit),
                       onTap: () {
                         Navigator.pushNamed(context, Routes.postEditor,
                                 arguments: post)
@@ -54,7 +55,7 @@ class PostSettingsModalContent extends StatelessWidget {
                   if (isParticipant && !isAuthor)
                     ListTile(
                       leading: const Icon(FeatherIcons.logOut),
-                      title: const Text('Verlassen'),
+                      title: Text(l10n(context).lbl_leavePost),
                       onTap: () => DevTools.showToDoSnackbar(context),
                     ),
                   if (isAuthor)
@@ -64,7 +65,7 @@ class PostSettingsModalContent extends StatelessWidget {
                         color: Theme.of(context).colorScheme.error,
                       ),
                       title: Text(
-                        'Löschen',
+                        l10n(context).lbl_delete,
                         style: TextStyle(
                             color: Theme.of(context).colorScheme.error),
                       ),
@@ -76,7 +77,7 @@ class PostSettingsModalContent extends StatelessWidget {
                         Icons.report_gmailerrorred_rounded,
                         color: Theme.of(context).colorScheme.error,
                       ),
-                      title: Text('Melden',
+                      title: Text(l10n(context).lbl_report,
                           style: TextStyle(
                               color: Theme.of(context).colorScheme.error)),
                       onTap: () {

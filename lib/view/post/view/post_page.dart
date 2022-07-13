@@ -97,13 +97,14 @@ class PostPage extends StatelessWidget {
           listener: (context, state) =>
               state.whenOrNull(error: (e) => Tools.showSnackbar(context, e)),
           builder: (context, state) => state.when(
-            loading: () => const EditLoadingView(message: "loading"),
+            loading: () => EditLoadingView(message: l10n(context).lbl_loading),
             editEvent: (_, __) => builder(context),
             editGroup: (fields, inputValid) => ExceptionView(
                 exception: Exception("editing groups is not yet possible")),
             error: (message) => const EditErrorView(),
             submitted: () => const PostPostedSuccessView(),
-            submitting: () => const EditLoadingView(message: "submitting"),
+            submitting: () =>
+                EditLoadingView(message: l10n(context).lbl_submitting),
           ),
         ),
       );

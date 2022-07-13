@@ -5,6 +5,36 @@
     "lbl_myAccount": "my account",
     "msg_signedIn": "you are signed in",
     "msg_loginEnterCode": "enter SMS code",
+    "msg_errorUndefined": "something went wrong",
+    "msg_editFieldsMissing": "please fill in all fields",
+
+    "lbl_loading": "loading",
+    "lbl_submitting": "loading",
+
+    "lbl_submitPost": "post",
+    "lbl_postDescription": "describe your post",
+
+    "lbl_postMembers": "participants",
+    "lbl_edit": "edit",
+    "lbl_leavePost": "leave",
+    "lbl_delete": "delete",
+
+    "msg_postErrorSaving" : "error saving post",
+
+    "msg_postOnlyEventsSupported": "for now the app only supports events",
+    "lbl_postTime": "from {time}",
+    "@lbl_postTime" : {
+      "placeholders": {
+          "time": {}
+      }
+    },
+
+    "lbl_joinPost": "join",
+    "lbl_joinedPost": "joined",
+
+    "lbl_postEditTitle" : "title of the post",
+
+    "lbl_locationChoose": "choose location",
 
     "lbl_loginSendCode": "send code",
     "msg_loginWait": "wait for login",
@@ -52,5 +82,23 @@
 
     "lbl_create": "create",
     "lbl_explore": "explore",
-    "lbl_saved": "saved"
+    "lbl_saved": "saved",
+    
+    "lbl_report": "report",
+    "lbl_reportPost": "report post",
+    "lbl_reportReasons": "this post contains:",
+    "msg_reportSuccess": "content was reported.\nThank you!",
+    "lbl_postCreatedBy": "posted by {authorName}",
+    "@lbl_postCreatedBy" : {
+      "placeholders": {
+          "authorName": {}
+      }
+  },
+
+
+    "lbl_cameraPreview": "preview",
+    "msg_savedFeedEmpty" : "If you saved posts they will appear here",
+    "msg_feedEmpty" : "no more posts",
+
+    "lbl_cameraPermissionError": "Sorry, it looks like you've not given us permission to use your camera. To use the editor you have to change this in the settings"
 }
