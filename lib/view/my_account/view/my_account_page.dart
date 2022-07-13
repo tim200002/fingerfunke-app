@@ -1,6 +1,6 @@
 import '../../../cubits/app_cubit/app_cubit.dart';
 import '../../../utils/util_widgets/page_screen.dart';
-import '../profile_picture:image_upload/profile_picture_image_upload_widget.dart';
+import '../profile_picture_image_upload/profile_picture_image_upload_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
