@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../utils/tools.dart';
+
 class EditLoadingView extends StatelessWidget {
   final String message;
   const EditLoadingView({Key? key, required this.message}) : super(key: key);
@@ -37,12 +39,12 @@ class EditErrorView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
-        children: const [
-          Icon(Icons.warning_rounded, color: Colors.red),
+        children: [
+          const Icon(Icons.warning_rounded, color: Colors.red),
           Padding(
-            padding: EdgeInsets.only(top: 30),
+            padding: const EdgeInsets.only(top: 30),
             child: Text(
-              "Error saving post",
+              l10n(context).msg_postErrorSaving,
               textAlign: TextAlign.center,
             ),
           )

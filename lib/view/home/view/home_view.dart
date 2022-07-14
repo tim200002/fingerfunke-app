@@ -16,6 +16,17 @@ import '../../post_discovery_feed/view/post_discovery_feed.dart';
 import '../../saved_feed/view/saved_posts_feed.dart';
 import '../widgets/home_drawer/home_drawer_view.dart';
 
+class _menuButton extends StatelessWidget {
+  final IconData icon;
+  const _menuButton({Key? key, required this.icon}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+        onPressed: () => Scaffold.of(context).openDrawer(), icon: Icon(icon));
+  }
+}
+
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
 
@@ -33,29 +44,30 @@ class _HomeViewState extends State<HomeView> {
     return BlocProvider(
       create: (_) => LocationCubit(LocationRepositoryImpl()),
       child: BlocBuilder<LocationCubit, LocationState>(
-          builder: (context, state) {
-            if (state is Initial) context.read<LocationCubit>().loadLocation();
-        return InkWell(
-          onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context2) => MapsPlacePickerPage(
-                  onPlacePicked: (PickResult pickResult) => context
-                      .read<LocationCubit>()
-                      .updateLocation(location: pickResult.formattedAddress),
+        builder: (context, state) {
+          if (state is Initial) context.read<LocationCubit>().loadLocation();
+          return InkWell(
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context2) => MapsPlacePickerPage(
+                    onPlacePicked: (PickResult pickResult) => context
+                        .read<LocationCubit>()
+                        .updateLocation(location: pickResult.formattedAddress),
+                  ),
+                )),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(right: 5),
+                  child: Icon(Icons.place_rounded),
                 ),
-              )),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(right: 5),
-                child: Icon(Icons.place_rounded),
-              ),
-              AutoSizeText(context.read<LocationCubit>().getCity())
-            ],
-          ),
-        );},
+                AutoSizeText(context.read<LocationCubit>().getCity())
+              ],
+            ),
+          );
+        },
       ),
     );
   }
@@ -65,10 +77,13 @@ class _HomeViewState extends State<HomeView> {
       required IconData icon,
       Color? color,
       bool selected = false,
+      double minWidth = 75.0,
       required Function() onPressed}) {
     return InkWell(
-        onTap: onPressed,
-        child: Container(
+      borderRadius: BorderRadius.circular(17),
+      onTap: onPressed,
+      child: Container(
+          constraints: BoxConstraints(minWidth: minWidth),
           margin: const EdgeInsets.all(10),
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
@@ -88,23 +103,27 @@ class _HomeViewState extends State<HomeView> {
               Text(
                 title,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    fontWeight: selected ? FontWeight.bold : null,
+                    fontWeight: selected ? FontWeight.w900 : null,
                     color: color),
               )
             ],
-          ),
-        ));
+          )),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: const _menuButton(icon: FeatherIcons.menu),
         title: _DEMOPlaceIndicator(context),
         actions: const [
-          IconButton(
+          SizedBox(
+            width: 62,
+          )
+          /*IconButton(
               onPressed: null, //() => DevTools.showToDoSnackbar(context),
-              icon: Icon(FeatherIcons.calendar))
+              icon: Icon(FeatherIcons.calendar))*/
         ],
       ),
       drawer: const HomeDrawer(),
@@ -119,23 +138,24 @@ class _HomeViewState extends State<HomeView> {
             : const SavedPostsFeed(),
       ),
       bottomNavigationBar: BottomAppBar(
+        elevation: 0,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             _bottomNavItem(context,
-                title: l10n(context).home_nav_explore,
+                title: l10n(context).lbl_explore,
                 icon: FeatherIcons.compass,
                 selected: _activePage == _HomePages.feedPage,
                 onPressed: () =>
                     setState(() => _activePage = _HomePages.feedPage)),
             _bottomNavItem(context,
-                title: l10n(context).home_nav_create,
+                title: l10n(context).lbl_create,
                 icon: FeatherIcons.plus,
                 color: Theme.of(context).colorScheme.secondary,
                 onPressed: () =>
                     Navigator.of(context).pushNamed(Routes.postEditor)),
             _bottomNavItem(context,
-                title: l10n(context).home_nav_saved,
+                title: l10n(context).lbl_saved,
                 selected: _activePage == _HomePages.savedPage,
                 icon: FeatherIcons.heart,
                 onPressed: () =>

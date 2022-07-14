@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../utils/placeholder_box.dart';
+import '../../../../utils/tools.dart';
 import '../../cubits/post_viewer_cubit/post_cubit.dart';
 
 /// shows information about the author of the post.
@@ -29,7 +30,7 @@ class AuthorSection extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(12),
                         child: Text(
-                          "Erstellt von ${post.author.name}",
+                          l10n(context).lbl_postCreatedBy(post.author.name),
                           style: Theme.of(context).textTheme.caption,
                         ),
                       ),

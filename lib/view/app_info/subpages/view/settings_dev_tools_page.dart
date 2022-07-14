@@ -3,6 +3,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 
 import '../../../../cubits/live_config_cubit/live_config_cubit.dart';
+import '../../../../utils/tools.dart';
 import '../../../../utils/util_widgets/admin_appbar.dart';
 import 'settings_dev_functions_page.dart';
 
@@ -13,7 +14,7 @@ class DevToolsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AdminAppBar.widget(context, AdminFunction.development,
-          title: "DevTools"),
+          title: l10n(context).lbl_devTools),
       body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: LiveConfig.builder(

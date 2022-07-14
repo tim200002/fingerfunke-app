@@ -10,18 +10,19 @@ class ManageAccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Account verwalten")),
+      appBar: AppBar(title: Text(l10n(context).lbl_accountManage)),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: ListView(children: [
           ElevatedButton.icon(
             icon: const Icon(FeatherIcons.logOut),
-            label: const Text("abmelden"),
+            label: Text(l10n(context).lbl_signOut),
             onPressed: () {
               BlocProvider.of<FirebaseAuthenticationCubitCubit>(context)
                   .logoutRequested()
                   .catchError(
-                    (_) => Tools.showSnackbar(context, "Logout failed?"),
+                    (_) => Tools.showSnackbar(
+                        context, l10n(context).msg_signOutFailed),
                   );
             },
           ),

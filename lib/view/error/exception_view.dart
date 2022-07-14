@@ -1,6 +1,8 @@
 import '../../utils/illustration.dart';
 import 'package:flutter/material.dart';
 
+import '../../utils/tools.dart';
+
 part 'widgets/technical_view.dart';
 
 class ExceptionView extends StatelessWidget {
@@ -70,14 +72,14 @@ class ExceptionView extends StatelessWidget {
                         Illustrations.fixingBugs,
                         height: 150,
                       ))),
-                  Text("Oh no :/",
+                  Text(l10n(context).lbl_errorTitle,
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.headline4),
                   const SizedBox(
                     height: 10,
                   ),
-                  const Text(
-                    "Ein unerwarteter Fehler ist aufgetreten.\n Wir haben den Fehler erfasst und machen uns gleich an die Arbeit",
+                  Text(
+                    l10n(context).lbl_errorAbout,
                     textAlign: TextAlign.center,
                     //style: Theme.of(context).textTheme.headline3
                   ),

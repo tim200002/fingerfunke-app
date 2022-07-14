@@ -13,7 +13,7 @@ class _ProfileSection extends StatelessWidget {
           diameter: 55,
         ),
         const SizedBox(height: 18),
-        Text(user?.name ?? "anmelden",
+        Text(user?.name ?? l10n(context).lbl_login,
             style: Theme.of(context)
                 .textTheme
                 .titleLarge

@@ -8,6 +8,7 @@ import '../../../../services/google_maps_service.dart';
 import '../../../../utils/exceptions.dart';
 import '../../../../utils/extensions/date_time.dart';
 import '../../../../utils/placeholder_box.dart';
+import '../../../../utils/tools.dart';
 import '../../../maps/view/maps_place_picker_page.dart';
 import '../../cubits/post_editor_cubit/post_editor_cubit.dart';
 import '../../cubits/post_viewer_cubit/post_cubit.dart';
@@ -33,7 +34,7 @@ class EventDetailSection extends StatelessWidget {
             builder: (context, state) => state.when(
                 loading: (_) => PlaceholderBox.shimmer(_loading()),
                 normal: (post, isJoining) => post is! Event
-                    ? const Text("Die App unterstützt zur Zeit nur Events!")
+                    ? Text(l10n(context).msg_postOnlyEventsSupported)
                     : Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -42,7 +43,8 @@ class EventDetailSection extends StatelessWidget {
                           IconTextItem(
                               icon: FeatherIcons.calendar,
                               label: post.startTime.dateString,
-                              subLabel: "ab ${post.startTime.timeString} Uhr"),
+                              subLabel: l10n(context)
+                                  .lbl_postTime(post.startTime.timeString)),
                           IconTextItem(
                             icon: FeatherIcons.mapPin,
                             label: post.location.split(',')[0],
@@ -80,8 +82,8 @@ class _Edit extends StatelessWidget {
                   IconTextItem(
                       icon: Icons.calendar_today_rounded,
                       label: eventEditorFields.startTime.dateString,
-                      subLabel:
-                          "ab ${eventEditorFields.startTime.timeString} Uhr",
+                      subLabel: l10n(context)
+                          .lbl_postTime(eventEditorFields.startTime.timeString),
                       onTap: () => showDatePicker(
                             context: context,
                             initialDate: eventEditorFields.startTime,
@@ -114,7 +116,7 @@ class _Edit extends StatelessWidget {
                   IconTextItem(
                     icon: Icons.location_on_outlined,
                     label: eventEditorFields.location == ""
-                        ? "Ort wählen"
+                        ? l10n(context).lbl_locationChoose
                         : eventEditorFields.location.split(',')[0],
                     subLabel: eventEditorFields.location == ""
                         ? null

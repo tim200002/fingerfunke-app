@@ -1,5 +1,6 @@
 import '../../../common_widgets/image/user_image/user_image.dart';
 import '../../../cubits/app_cubit/app_cubit.dart';
+import '../../../utils/tools.dart';
 import '../../../utils/util_widgets/floating_modal.dart';
 import 'upload_image.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class ProfilePictureImageUploadWidget extends StatelessWidget {
         children: [
           ListTile(
             leading: const Icon(Icons.photo_camera),
-            title: const Text('Camera'),
+            title: Text(l10n(context).lbl_camera),
             onTap: () async {
               await uploadProfilePictureBase64Encoded(
                   userId, ImageSource.camera, context);
@@ -28,7 +29,7 @@ class ProfilePictureImageUploadWidget extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.photo_library),
-            title: const Text('Gallery'),
+            title: Text(l10n(context).lbl_imageGallery),
             onTap: () async {
               await uploadProfilePictureBase64Encoded(
                   userId, ImageSource.gallery, context);

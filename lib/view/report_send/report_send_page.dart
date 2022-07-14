@@ -69,7 +69,7 @@ class ReportSendPage extends StatelessWidget {
                   height: 30,
                 ),
                 Text(
-                  "erstellt von: ${post.author.name}",
+                  l10n(context).lbl_postCreatedBy(post.author.name),
                   style: Theme.of(context).textTheme.bodyMedium,
                 )
               ],
@@ -90,17 +90,17 @@ class ReportSendPage extends StatelessWidget {
       body: Center(
           child: Column(
         mainAxisSize: MainAxisSize.min,
-        children: const [
-          Icon(
+        children: [
+          const Icon(
             FeatherIcons.check,
             color: Colors.green,
             size: 35,
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Text(
-            "Beitrag wurde gemeldet.\nDanke",
+            l10n(context).msg_reportSuccess,
             textAlign: TextAlign.center,
           )
         ],
@@ -125,7 +125,7 @@ class ReportSendPage extends StatelessWidget {
               error: ExceptionView.fromError,
               editing: (doc, type, reasons) => Scaffold(
                 appBar: AppBar(
-                  title: const Text("Post melden"),
+                  title: Text(l10n(context).lbl_reportPost),
                 ),
                 body: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -134,7 +134,7 @@ class ReportSendPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         _postCard(context),
-                        const Text("Dieser Post enthält:"),
+                        Text(l10n(context).lbl_reportReasons),
                         ChipChooser<ReportReason>(
                             selected: reasons,
                             onChanged: (r) =>
@@ -151,7 +151,7 @@ class ReportSendPage extends StatelessWidget {
                         ? null
                         : () => context.read<ReportSendCubit>().send(),
                     icon: const Icon(FeatherIcons.send),
-                    label: const Text("melden")),
+                    label: Text(l10n(context).lbl_report)),
               ),
             ),
           ),

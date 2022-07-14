@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import '../../../cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
+import '../../../utils/tools.dart';
 
 class CreateAccountView extends StatefulWidget {
   const CreateAccountView({Key? key}) : super(key: key);
@@ -40,12 +41,12 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 8.0),
                   child: Text(
-                    "Willkommen!",
+                    l10n(context).lbl_welcome,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
                 Text(
-                  "Wie sollen Dich andere Nutzer nennen?",
+                  l10n(context).lbl_newUserName,
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 const SizedBox(height: 10),

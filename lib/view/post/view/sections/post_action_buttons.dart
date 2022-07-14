@@ -64,7 +64,9 @@ class PostActionButtons extends StatelessWidget {
                   Align(
                       alignment: Alignment.bottomCenter,
                       child: _mainFAB(context,
-                          title: isParticipant ? "Ich bin dabei" : "Mach mit",
+                          title: isParticipant
+                              ? l10n(context).lbl_joinedPost
+                              : l10n(context).lbl_joinPost,
                           icon: isParticipant ? Icons.check : Icons.add,
                           isLoading: isJoining,
                           color: isParticipant
@@ -75,8 +77,8 @@ class PostActionButtons extends StatelessWidget {
                               : () => BlocProvider.of<PostCubit>(context)
                                   .toggleIsParticipant(isParticipant)
                                   .catchError(
-                                    (_) => Tools.showSnackbar(
-                                        context, "Oops something went wrong"),
+                                    (_) => Tools.showSnackbar(context,
+                                        l10n(context).msg_errorUndefined),
                                   ))),
                   Align(
                     alignment: Alignment.bottomRight,
@@ -123,7 +125,7 @@ class _Edit extends StatelessWidget {
           alignment: Alignment.bottomCenter,
           child: PostActionButtons._mainFAB(
             context,
-            title: "Posten",
+            title: l10n(context).lbl_submitPost,
             icon: FeatherIcons.send,
             isLoading: processing,
             color: valid
@@ -132,7 +134,8 @@ class _Edit extends StatelessWidget {
                     Theme.of(context).colorScheme.onBackground, 0.4),
             onTap: valid
                 ? () => context.read<PostEditorCubit>().submit()
-                : () => Tools.showSnackbar(context, "Bitte alles ausfüllen"),
+                : () => Tools.showSnackbar(
+                    context, l10n(context).msg_editFieldsMissing),
           ))
     ]);
   }

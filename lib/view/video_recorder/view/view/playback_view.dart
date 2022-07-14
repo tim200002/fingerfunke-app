@@ -43,7 +43,7 @@ class _PlaybackViewState extends State<PlaybackView> {
                 onPressed: () => BlocProvider.of<VideoRecorderCubit>(context)
                     .recordNewVideoClip(),
               ),
-              title: const Text('Preview'),
+              title: Text(l10n(context).lbl_cameraPreview),
             ),
             floatingActionButton: FloatingActionButton(
               child: const Icon(FeatherIcons.save),

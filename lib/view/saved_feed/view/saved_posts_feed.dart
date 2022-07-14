@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../cubits/app_cubit/app_cubit.dart';
+import '../../../utils/tools.dart';
 import '../cubit/saved_posts_cubit.dart';
 import '../widgets/non_paginated_post_list.dart';
 
@@ -34,9 +35,8 @@ class SavedPostsFeed extends StatelessWidget {
                     builder: (context, state) => state.when(
                       loading: () =>
                           const Center(child: CircularProgressIndicator()),
-                      loadedButNothingSaved: () => const Center(
-                          child:
-                              Text("If you saved posts they will appear here")),
+                      loadedButNothingSaved: () =>
+                          Center(child: Text(l10n(context).msg_savedFeedEmpty)),
                       loaded: (posts) => NonPaginatedPostList(posts),
                     ),
                   ),

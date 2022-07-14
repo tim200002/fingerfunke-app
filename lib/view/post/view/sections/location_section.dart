@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../models/post/post.dart';
 import '../../../../utils/exceptions.dart';
 import '../../../../utils/placeholder_box.dart';
+import '../../../../utils/tools.dart';
 import '../../../maps/view/static_maps_provider.dart';
 import '../../cubits/post_editor_cubit/post_editor_cubit.dart';
 import '../../cubits/post_viewer_cubit/post_cubit.dart';
@@ -27,7 +28,7 @@ class LocationSection extends StatelessWidget {
             builder: (context, state) => state.when(
                 loading: (_) => PlaceholderBox.shimmer(_loading()),
                 normal: (post, isJoining) => post is! Event
-                    ? const Text("Die App unterstützt zur Zeit nur Events!")
+                    ? Text(l10n(context).msg_postOnlyEventsSupported)
                     : StaticMapsProvider(address: post.location)));
   }
 }

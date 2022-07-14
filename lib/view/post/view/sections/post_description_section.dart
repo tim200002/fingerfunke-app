@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../utils/exceptions.dart';
+import '../../../../utils/tools.dart';
 import '../../cubits/post_editor_cubit/post_editor_cubit.dart';
 import '../../cubits/post_viewer_cubit/post_cubit.dart';
 import '../../editor_models/general_editor_fields.dart';
@@ -61,10 +62,10 @@ class _Edit extends StatelessWidget {
             onChanged: (value) => BlocProvider.of<PostEditorCubit>(context)
                 .updateInformation(GeneralEditorFields.copyWithHelper(fields,
                     description: value)),
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               border: InputBorder.none,
-              hintText: "Beschreibe Deinen Post",
-              hintStyle: TextStyle(color: Colors.grey),
+              hintText: l10n(context).lbl_postDescription,
+              hintStyle: const TextStyle(color: Colors.grey),
             ),
           ),
           const SizedBox(

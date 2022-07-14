@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 
+import '../../../utils/tools.dart';
 import '../cubit/phone_login_cubit.dart';
 
 class EnterPhoneNumberView extends StatefulWidget {
@@ -23,21 +24,19 @@ class _EnterPhoneNumberViewState extends State<EnterPhoneNumberView> {
         builder: (context, state) => Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text("Telefonnummer",
+            Text(l10n(context).lbl_phoneNumber,
                 style: Theme.of(context).textTheme.labelLarge),
-            const Padding(
-              padding: EdgeInsets.only(bottom: 20, top: 15),
-              child: Text(
-                  "Wir senden dir einen Code an Deine Nummer um diese zu verifizieren. Auf diese Weise musst Du Dir kein Passwort merken."),
-            ),
+            Padding(
+                padding: const EdgeInsets.only(bottom: 20, top: 15),
+                child: Text(l10n(context).msg_loginCodeAbout)),
             Padding(
                 padding: const EdgeInsets.only(bottom: 40),
                 child: IntlPhoneField(
                   showDropdownIcon: false,
                   disableLengthCheck: true,
-                  decoration: const InputDecoration(
-                    labelText: 'Phone Number',
-                    border: OutlineInputBorder(
+                  decoration: InputDecoration(
+                    labelText: l10n(context).lbl_phoneNumber,
+                    border: const OutlineInputBorder(
                       borderSide: BorderSide.none,
                     ),
                   ),
@@ -52,7 +51,7 @@ class _EnterPhoneNumberViewState extends State<EnterPhoneNumberView> {
                       .sendSMSCode(phoneNumber: _phoneInputController.text);
                 }
               },
-              child: const Text("Code senden"),
+              child: Text(l10n(context).lbl_loginSendCode),
             )
           ],
         ),

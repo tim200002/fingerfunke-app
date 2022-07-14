@@ -6,6 +6,7 @@ import '../../../common_widgets/list_view/pagination/cubit/paginated_list_cubit.
 import '../../../common_widgets/list_view/pagination/view/paginated_list.dart';
 import '../../../models/post/post.dart';
 import '../../../services/pagination/post_pagination_service.dart';
+import '../../../utils/tools.dart';
 
 class PostDiscoveryFeed extends StatelessWidget {
   const PostDiscoveryFeed({Key? key}) : super(key: key);
@@ -31,7 +32,7 @@ class PostDiscoveryFeed extends StatelessWidget {
                   height: 350,
                 ),
                 reverse: false,
-                endMessage: "there are no more events",
+                endMessage: l10n(context).msg_feedEmpty,
               ),
             ),
           ),

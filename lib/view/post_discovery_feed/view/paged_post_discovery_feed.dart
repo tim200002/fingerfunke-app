@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../common_widgets/list_view/list_items/post_feed_image_item.dart';
 import '../../../common_widgets/list_view/pagination/view/paged_paginated_list.dart';
+import '../../../utils/tools.dart';
 
 class PagedPostDiscoveryFeed extends StatelessWidget {
   const PagedPostDiscoveryFeed({Key? key}) : super(key: key);
@@ -42,8 +43,8 @@ class PagedPostDiscoveryFeed extends StatelessWidget {
                       const SizedBox(
                         height: 20,
                       ),
-                      const Text(
-                        "keine weiteren Events",
+                      Text(
+                        l10n(context).msg_feedEmpty,
                         textAlign: TextAlign.center,
                       )
                     ],
