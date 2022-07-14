@@ -25,6 +25,14 @@ android/app/google-services.json
 ios/GoogleService-Info.plist
 ```
 
+### Localization Files
+to enable l10n a code generator must be executed. 
+It can be started in one of two ways:
+- starting the app (while ignoring build errors) starts the generator automatically
+- running the generator manually:
+  1. navigate to the `/lib/l10n/` directory
+  2. in VS-Code right click on `app_en.arb` and select `Generate Localizations`
+
 ### Environment Variables
 
 You must also provide a valid `.env` file. The `.env.example` file is a blueprint how this file should look like. Prebuilt configuration for local use as well as production can be found in [the private fingerfunke gitlab repo](https://gitlab.com/fingerfunke/config-files).
