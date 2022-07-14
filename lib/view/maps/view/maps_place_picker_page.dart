@@ -11,9 +11,9 @@ class MapsPlacePickerPage extends StatelessWidget  {
   Widget build(BuildContext context) {
     return PlacePicker(
         apiKey: FlutterConfig.get('GOOGLE_MAPS_API_KEY'),
-        hintText: "Find a place ...",
-        searchingText: "Please wait ...",
-        selectText: "Select place",
+        hintText: "Suche eine Adresse ...",
+        searchingText: "Bitte warte ...",
+        selectText: "Wähle diese Adresse",
         outsideOfPickAreaText: "Place not in area",
         initialPosition: const LatLng(37.42796133580664, -122.085749655962),
         useCurrentLocation: true,
@@ -21,7 +21,7 @@ class MapsPlacePickerPage extends StatelessWidget  {
         usePinPointingSearch: true,
         usePlaceDetailSearch: true,
         zoomGesturesEnabled: true,
-        zoomControlsEnabled: true,
+        zoomControlsEnabled: false,
         onPlacePicked: (PickResult result) {
           onPlacePicked(result);
           Navigator.of(context).pop();

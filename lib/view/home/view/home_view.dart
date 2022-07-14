@@ -1,7 +1,12 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
 
 import '../../../cubits/live_config_cubit/live_config_cubit.dart';
+import '../../../cubits/location_cubit/location_cubit.dart';
+import '../../../repositories/location_repository/location_repository.dart';
 import '../../../routes.dart';
 import '../../../utils/app_theme.dart';
 import '../../../utils/tools.dart';
@@ -25,23 +30,32 @@ class _HomeViewState extends State<HomeView> {
 
   // ignore: non_constant_identifier_names
   Widget _DEMOPlaceIndicator(BuildContext context) {
-    return InkWell(
-      onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context2) => MapsPlacePickerPage(
-                onPlacePicked: (pickResult) => null //TODO STORE LOCATION,
+    return BlocProvider(
+      create: (_) => LocationCubit(LocationRepositoryImpl()),
+      child: BlocBuilder<LocationCubit, LocationState>(
+          builder: (context, state) {
+            if (state is Initial) context.read<LocationCubit>().loadLocation();
+        return InkWell(
+          onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context2) => MapsPlacePickerPage(
+                  onPlacePicked: (PickResult pickResult) => context
+                      .read<LocationCubit>()
+                      .updateLocation(location: pickResult.formattedAddress),
                 ),
-          )),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          Padding(
-            padding: EdgeInsets.only(right: 5),
-            child: Icon(Icons.place_rounded),
+              )),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(right: 5),
+                child: Icon(Icons.place_rounded),
+              ),
+              AutoSizeText(context.read<LocationCubit>().getCity())
+            ],
           ),
-          Text("Ulm")
-        ],
+        );},
       ),
     );
   }
