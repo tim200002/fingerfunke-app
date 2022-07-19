@@ -11,6 +11,7 @@ import '../../../routes.dart';
 import '../../../utils/app_theme.dart';
 import '../../../utils/tools.dart';
 import '../../maps/view/maps_place_picker_page.dart';
+import '../../post/view/post_page.dart';
 import '../../post_discovery_feed/view/paged_post_discovery_feed.dart';
 import '../../post_discovery_feed/view/post_discovery_feed.dart';
 import '../../saved_feed/view/saved_posts_feed.dart';
@@ -75,9 +76,9 @@ class _HomeViewState extends State<HomeView> {
   Widget _bottomNavItem(BuildContext context,
       {required String title,
       required IconData icon,
-      Color? color,
+      final Color? color,
       bool selected = false,
-      double minWidth = 75.0,
+      double minWidth = 80.0,
       required Function() onPressed}) {
     return InkWell(
       borderRadius: BorderRadius.circular(17),
@@ -88,7 +89,10 @@ class _HomeViewState extends State<HomeView> {
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              color: color?.withOpacity(0.1)),
+              color: color != null
+                  ? Color.alphaBlend(
+                      color.withOpacity(0.1), Theme.of(context).canvasColor)
+                  : null),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             // Replace with a Row for horizontal icon + text
@@ -116,7 +120,7 @@ class _HomeViewState extends State<HomeView> {
     return Scaffold(
       appBar: AppBar(
         leading: const _menuButton(icon: FeatherIcons.menu),
-        title: _DEMOPlaceIndicator(context),
+        title: Text("TODO: Location Error"), //_DEMOPlaceIndicator(context),
         actions: const [
           SizedBox(
             width: 62,
@@ -148,12 +152,17 @@ class _HomeViewState extends State<HomeView> {
                 selected: _activePage == _HomePages.feedPage,
                 onPressed: () =>
                     setState(() => _activePage = _HomePages.feedPage)),
-            _bottomNavItem(context,
-                title: l10n(context).lbl_create,
-                icon: FeatherIcons.plus,
-                color: Theme.of(context).colorScheme.secondary,
-                onPressed: () =>
-                    Navigator.of(context).pushNamed(Routes.postEditor)),
+            Hero(
+                tag: PostPage.editingHeroTag,
+                child: Material(
+                  type: MaterialType.transparency,
+                  child: _bottomNavItem(context,
+                      title: l10n(context).lbl_create,
+                      icon: FeatherIcons.plus,
+                      color: Theme.of(context).colorScheme.primary,
+                      onPressed: () =>
+                          Navigator.of(context).pushNamed(Routes.postEditor)),
+                )),
             _bottomNavItem(context,
                 title: l10n(context).lbl_saved,
                 selected: _activePage == _HomePages.savedPage,

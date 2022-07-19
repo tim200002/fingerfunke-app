@@ -21,6 +21,7 @@ import 'sections/post_posted_success_view.dart';
 import 'widgets/edit_loading_view.dart';
 
 class PostPage extends StatelessWidget {
+  static const String editingHeroTag = "postEditor";
   final bool editing;
 
   const PostPage({Key? key, this.editing = false}) : super(key: key);
@@ -114,7 +115,9 @@ class PostPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return editing
-        ? _editProviders(context, (c) => _content(c))
+        ? Hero(
+            tag: editingHeroTag,
+            child: _editProviders(context, (c) => _content(c)))
         : _viewProviders(context, (c) => _content(c));
   }
 }

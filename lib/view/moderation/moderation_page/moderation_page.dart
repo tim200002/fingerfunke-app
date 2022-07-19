@@ -18,7 +18,7 @@ class ModerationPage extends StatelessWidget {
           shrinkWrap: true,
           children: [
             SettingsTile(
-              title: "User Reports",
+              title: "gemeldete Posts",
               subtitle: "Von Nutzern gemeldete Inhalte verwalten",
               trailing: const Icon(Icons.arrow_forward_ios),
               onPressed: (_) =>
