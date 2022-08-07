@@ -50,6 +50,7 @@ class FeedbackSendPage extends StatelessWidget {
                         body: const Center(
                             child: Text(
                           "Danke!\n😊",
+                          textAlign: TextAlign.center,
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 20),
                         )),
