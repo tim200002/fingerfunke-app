@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 
-import '../../models/report.dart';
 import '../../models/user_feedback.dart';
 import 'user_feedback_repository.dart';
 

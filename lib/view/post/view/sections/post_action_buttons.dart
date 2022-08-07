@@ -57,8 +57,6 @@ class PostActionButtons extends StatelessWidget {
             normal: (post, isJoining) {
               bool isParticipant = post.isUserParticipant(
                   BlocProvider.of<AppCubit>(context).state.user);
-              // ToDo remove
-              bool isLoggedIn = true;
               return Stack(
                 children: <Widget>[
                   Align(
@@ -72,14 +70,12 @@ class PostActionButtons extends StatelessWidget {
                           color: isParticipant
                               ? Theme.of(context).colorScheme.secondary
                               : Theme.of(context).colorScheme.primary,
-                          onTap: !isLoggedIn
-                              ? null
-                              : () => BlocProvider.of<PostCubit>(context)
-                                  .toggleIsParticipant(isParticipant)
-                                  .catchError(
-                                    (_) => Tools.showSnackbar(context,
-                                        l10n(context).msg_errorUndefined),
-                                  ))),
+                          onTap: () => BlocProvider.of<PostCubit>(context)
+                              .toggleIsParticipant(isParticipant)
+                              .catchError(
+                                (_) => Tools.showSnackbar(
+                                    context, l10n(context).msg_errorUndefined),
+                              ))),
                   Align(
                     alignment: Alignment.bottomRight,
                     child: FloatingActionButton(

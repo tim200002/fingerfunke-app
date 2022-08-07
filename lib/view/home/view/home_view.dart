@@ -1,25 +1,18 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
 
 import '../../../cubits/live_config_cubit/live_config_cubit.dart';
-import '../../../cubits/location_cubit/location_cubit.dart';
-import '../../../repositories/location_repository/location_repository.dart';
 import '../../../routes.dart';
 import '../../../utils/app_theme.dart';
 import '../../../utils/tools.dart';
-import '../../maps/view/maps_place_picker_page.dart';
-import '../../post/view/post_page.dart';
 import '../../post_discovery_feed/view/paged_post_discovery_feed.dart';
 import '../../post_discovery_feed/view/post_discovery_feed.dart';
 import '../../saved_feed/view/saved_posts_feed.dart';
 import '../widgets/home_drawer/home_drawer_view.dart';
 
-class _menuButton extends StatelessWidget {
+class _MenuButton extends StatelessWidget {
   final IconData icon;
-  const _menuButton({Key? key, required this.icon}) : super(key: key);
+  const _MenuButton({Key? key, required this.icon}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,39 +32,6 @@ enum _HomePages { feedPage, savedPage }
 
 class _HomeViewState extends State<HomeView> {
   _HomePages _activePage = _HomePages.feedPage;
-
-  // ignore: non_constant_identifier_names
-  Widget _DEMOPlaceIndicator(BuildContext context) {
-    return BlocProvider(
-      create: (_) => LocationCubit(LocationRepositoryImpl()),
-      child: BlocBuilder<LocationCubit, LocationState>(
-        builder: (context, state) {
-          if (state is Initial) context.read<LocationCubit>().loadLocation();
-          return InkWell(
-            onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context2) => MapsPlacePickerPage(
-                    onPlacePicked: (PickResult pickResult) => context
-                        .read<LocationCubit>()
-                        .updateLocation(location: pickResult.formattedAddress),
-                  ),
-                )),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.only(right: 5),
-                  child: Icon(Icons.place_rounded),
-                ),
-                AutoSizeText(context.read<LocationCubit>().getCity())
-              ],
-            ),
-          );
-        },
-      ),
-    );
-  }
 
   Widget _bottomNavItem(BuildContext context,
       {required String title,
@@ -119,8 +79,8 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const _menuButton(icon: FeatherIcons.menu),
-        title: Text("TODO: Location"), //_DEMOPlaceIndicator(context),
+        leading: const _MenuButton(icon: FeatherIcons.menu),
+        title: const Text("TODO: Location"), //_DEMOPlaceIndicator(context),
         actions: [
           const SizedBox(
             width: 62,

@@ -12,7 +12,7 @@ import 'cubit/feedback_send_cubit.dart';
 class FeedbackSendPage extends StatelessWidget {
   const FeedbackSendPage({Key? key}) : super(key: key);
 
-  Widget _feedbackType() {
+  /*Widget _feedbackType() {
     double borderwidth = 1.5;
     return LayoutBuilder(
       builder: (context, constraints) => ToggleButtons(
@@ -31,7 +31,7 @@ class FeedbackSendPage extends StatelessWidget {
         isSelected: const [false, true],
       ),
     );
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {

@@ -9,7 +9,6 @@ import 'package:google_fonts/google_fonts.dart';
 /// Contains customized Theme
 class AppTheme {
   static const List<double> _textBodySizes = [13, 15, 17];
-  static final TextStyle _font_primary = GoogleFonts.signika();
 
   static const Color _light_primary = Color(0xffFF6060);
   static const Color _light_primaryVariant = Color(0xffF0ACB0);

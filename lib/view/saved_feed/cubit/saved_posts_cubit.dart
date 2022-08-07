@@ -1,13 +1,15 @@
 import 'package:bloc/bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
 import '../../../models/post/post.dart';
 import '../../../repositories/post_repository/post_repository.dart';
 import '../../../repositories/post_repository/post_repository.impl.dart';
 import '../../../utils/extensions/first_where_or_null.dart';
+import '../../../utils/logger.dart';
 import '../../../utils/type_aliases.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'saved_posts_state.dart';
 part 'saved_posts_cubit.freezed.dart';
+part 'saved_posts_state.dart';
 
 class SavedPostsCubit extends Cubit<SavedPostsState> {
   final PostRepository _postRepository = PostRepositoryImpl();
@@ -17,7 +19,7 @@ class SavedPostsCubit extends Cubit<SavedPostsState> {
   SavedPostsCubit() : super(const SavedPostsState.loading());
 
   Future<void> updatePosts(List<FirestoreId> updatedPostIds) async {
-    print("update");
+    getLogger().d("update");
     // Step 1 delete all posts which are no longer in list
     final filteredPosts =
         posts.where((post) => updatedPostIds.contains(post.id));
@@ -33,7 +35,7 @@ class SavedPostsCubit extends Cubit<SavedPostsState> {
       }
     }
 
-    print(notYetAddedPosts);
+    getLogger().d(notYetAddedPosts);
 
     List<Future<Post>> newlyFetchedPostsFutures = notYetAddedPosts
         .map((postId) async => await _postRepository.getPost(postId))
