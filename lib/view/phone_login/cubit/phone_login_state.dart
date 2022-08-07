@@ -6,6 +6,8 @@ class PhoneLoginState with _$PhoneLoginState {
       _EnterPhoneNumber;
   const factory PhoneLoginState.waitForCodeSent() = _WaitForCodeSent;
   const factory PhoneLoginState.enterCode(
-      {required String verificationId, String? withErrorMessage}) = _EnterCode;
+      {required String verificationId,
+      required bool autoDetecting,
+      String? withErrorMessage}) = _EnterCode;
   const factory PhoneLoginState.waitForLogIn() = _WaitForLogin;
 }

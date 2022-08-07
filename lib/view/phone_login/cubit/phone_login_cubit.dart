@@ -41,10 +41,13 @@ class PhoneLoginCubit extends Cubit<PhoneLoginState> {
               withErrorMessage: reasonForFailure.message));
         },
         codeSent: (verificationId, _) {
-          emit(PhoneLoginState.enterCode(verificationId: verificationId));
+          emit(PhoneLoginState.enterCode(
+              verificationId: verificationId, autoDetecting: true));
         },
         // We could maybe use this timeout as the earlist time for which it is allowed to ask for new SMS
         codeAutoRetrievalTimeout: (verificationId) {
+          state.mapOrNull(
+              enterCode: (state) => emit(state.copyWith(autoDetecting: false)));
           _logger
               .i('CodeAutoRetrieval timeout called. This is irrelevant for us');
         });
@@ -66,6 +69,7 @@ class PhoneLoginCubit extends Cubit<PhoneLoginState> {
           SignInWithCredentialFailure.fromCode(exception.code);
       emit(PhoneLoginState.enterCode(
           verificationId: verificationId,
+          autoDetecting: true,
           withErrorMessage: reasonForFailure.message));
     }
   }

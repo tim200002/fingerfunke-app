@@ -30,7 +30,7 @@ class WelcomePage extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: GoogleFonts.signika(
                   fontSize: 19,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.w500,
                 ))
           ],
         ),

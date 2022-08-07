@@ -37,6 +37,8 @@
 "lbl_myAccount": "my account",
 "lbl_newUserName": "what should other people call you?",
 "lbl_phoneNumber": "phone number",
+"lbl_autoDetectingLoginCode": "auto-detecting code",
+"lbl_loginCodeNotAutoDetectable": "enter code manually",
 "lbl_postCreatedBy": "posted by {authorName}",
 "lbl_postDescription": "describe your post",
 "lbl_postEditTitle" : "title of the post",

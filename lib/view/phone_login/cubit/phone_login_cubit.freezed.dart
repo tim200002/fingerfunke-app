@@ -28,9 +28,12 @@ class _$PhoneLoginStateTearOff {
   }
 
   _EnterCode enterCode(
-      {required String verificationId, String? withErrorMessage}) {
+      {required String verificationId,
+      required bool autoDetecting,
+      String? withErrorMessage}) {
     return _EnterCode(
       verificationId: verificationId,
+      autoDetecting: autoDetecting,
       withErrorMessage: withErrorMessage,
     );
   }
@@ -49,7 +52,8 @@ mixin _$PhoneLoginState {
   TResult when<TResult extends Object?>({
     required TResult Function(String? withErrorMessage) enterPhoneNumber,
     required TResult Function() waitForCodeSent,
-    required TResult Function(String verificationId, String? withErrorMessage)
+    required TResult Function(
+            String verificationId, bool autoDetecting, String? withErrorMessage)
         enterCode,
     required TResult Function() waitForLogIn,
   }) =>
@@ -58,7 +62,8 @@ mixin _$PhoneLoginState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String? withErrorMessage)? enterPhoneNumber,
     TResult Function()? waitForCodeSent,
-    TResult Function(String verificationId, String? withErrorMessage)?
+    TResult Function(String verificationId, bool autoDetecting,
+            String? withErrorMessage)?
         enterCode,
     TResult Function()? waitForLogIn,
   }) =>
@@ -67,7 +72,8 @@ mixin _$PhoneLoginState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String? withErrorMessage)? enterPhoneNumber,
     TResult Function()? waitForCodeSent,
-    TResult Function(String verificationId, String? withErrorMessage)?
+    TResult Function(String verificationId, bool autoDetecting,
+            String? withErrorMessage)?
         enterCode,
     TResult Function()? waitForLogIn,
     required TResult orElse(),
@@ -184,7 +190,8 @@ class _$_EnterPhoneNumber implements _EnterPhoneNumber {
   TResult when<TResult extends Object?>({
     required TResult Function(String? withErrorMessage) enterPhoneNumber,
     required TResult Function() waitForCodeSent,
-    required TResult Function(String verificationId, String? withErrorMessage)
+    required TResult Function(
+            String verificationId, bool autoDetecting, String? withErrorMessage)
         enterCode,
     required TResult Function() waitForLogIn,
   }) {
@@ -196,7 +203,8 @@ class _$_EnterPhoneNumber implements _EnterPhoneNumber {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String? withErrorMessage)? enterPhoneNumber,
     TResult Function()? waitForCodeSent,
-    TResult Function(String verificationId, String? withErrorMessage)?
+    TResult Function(String verificationId, bool autoDetecting,
+            String? withErrorMessage)?
         enterCode,
     TResult Function()? waitForLogIn,
   }) {
@@ -208,7 +216,8 @@ class _$_EnterPhoneNumber implements _EnterPhoneNumber {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String? withErrorMessage)? enterPhoneNumber,
     TResult Function()? waitForCodeSent,
-    TResult Function(String verificationId, String? withErrorMessage)?
+    TResult Function(String verificationId, bool autoDetecting,
+            String? withErrorMessage)?
         enterCode,
     TResult Function()? waitForLogIn,
     required TResult orElse(),
@@ -310,7 +319,8 @@ class _$_WaitForCodeSent implements _WaitForCodeSent {
   TResult when<TResult extends Object?>({
     required TResult Function(String? withErrorMessage) enterPhoneNumber,
     required TResult Function() waitForCodeSent,
-    required TResult Function(String verificationId, String? withErrorMessage)
+    required TResult Function(
+            String verificationId, bool autoDetecting, String? withErrorMessage)
         enterCode,
     required TResult Function() waitForLogIn,
   }) {
@@ -322,7 +332,8 @@ class _$_WaitForCodeSent implements _WaitForCodeSent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String? withErrorMessage)? enterPhoneNumber,
     TResult Function()? waitForCodeSent,
-    TResult Function(String verificationId, String? withErrorMessage)?
+    TResult Function(String verificationId, bool autoDetecting,
+            String? withErrorMessage)?
         enterCode,
     TResult Function()? waitForLogIn,
   }) {
@@ -334,7 +345,8 @@ class _$_WaitForCodeSent implements _WaitForCodeSent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String? withErrorMessage)? enterPhoneNumber,
     TResult Function()? waitForCodeSent,
-    TResult Function(String verificationId, String? withErrorMessage)?
+    TResult Function(String verificationId, bool autoDetecting,
+            String? withErrorMessage)?
         enterCode,
     TResult Function()? waitForLogIn,
     required TResult orElse(),
@@ -392,7 +404,8 @@ abstract class _$EnterCodeCopyWith<$Res> {
   factory _$EnterCodeCopyWith(
           _EnterCode value, $Res Function(_EnterCode) then) =
       __$EnterCodeCopyWithImpl<$Res>;
-  $Res call({String verificationId, String? withErrorMessage});
+  $Res call(
+      {String verificationId, bool autoDetecting, String? withErrorMessage});
 }
 
 /// @nodoc
@@ -407,6 +420,7 @@ class __$EnterCodeCopyWithImpl<$Res> extends _$PhoneLoginStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? verificationId = freezed,
+    Object? autoDetecting = freezed,
     Object? withErrorMessage = freezed,
   }) {
     return _then(_EnterCode(
@@ -414,6 +428,10 @@ class __$EnterCodeCopyWithImpl<$Res> extends _$PhoneLoginStateCopyWithImpl<$Res>
           ? _value.verificationId
           : verificationId // ignore: cast_nullable_to_non_nullable
               as String,
+      autoDetecting: autoDetecting == freezed
+          ? _value.autoDetecting
+          : autoDetecting // ignore: cast_nullable_to_non_nullable
+              as bool,
       withErrorMessage: withErrorMessage == freezed
           ? _value.withErrorMessage
           : withErrorMessage // ignore: cast_nullable_to_non_nullable
@@ -425,16 +443,21 @@ class __$EnterCodeCopyWithImpl<$Res> extends _$PhoneLoginStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_EnterCode implements _EnterCode {
-  const _$_EnterCode({required this.verificationId, this.withErrorMessage});
+  const _$_EnterCode(
+      {required this.verificationId,
+      required this.autoDetecting,
+      this.withErrorMessage});
 
   @override
   final String verificationId;
+  @override
+  final bool autoDetecting;
   @override
   final String? withErrorMessage;
 
   @override
   String toString() {
-    return 'PhoneLoginState.enterCode(verificationId: $verificationId, withErrorMessage: $withErrorMessage)';
+    return 'PhoneLoginState.enterCode(verificationId: $verificationId, autoDetecting: $autoDetecting, withErrorMessage: $withErrorMessage)';
   }
 
   @override
@@ -444,13 +467,15 @@ class _$_EnterCode implements _EnterCode {
             other is _EnterCode &&
             (identical(other.verificationId, verificationId) ||
                 other.verificationId == verificationId) &&
+            (identical(other.autoDetecting, autoDetecting) ||
+                other.autoDetecting == autoDetecting) &&
             (identical(other.withErrorMessage, withErrorMessage) ||
                 other.withErrorMessage == withErrorMessage));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, verificationId, withErrorMessage);
+      Object.hash(runtimeType, verificationId, autoDetecting, withErrorMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -462,11 +487,12 @@ class _$_EnterCode implements _EnterCode {
   TResult when<TResult extends Object?>({
     required TResult Function(String? withErrorMessage) enterPhoneNumber,
     required TResult Function() waitForCodeSent,
-    required TResult Function(String verificationId, String? withErrorMessage)
+    required TResult Function(
+            String verificationId, bool autoDetecting, String? withErrorMessage)
         enterCode,
     required TResult Function() waitForLogIn,
   }) {
-    return enterCode(verificationId, withErrorMessage);
+    return enterCode(verificationId, autoDetecting, withErrorMessage);
   }
 
   @override
@@ -474,11 +500,12 @@ class _$_EnterCode implements _EnterCode {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String? withErrorMessage)? enterPhoneNumber,
     TResult Function()? waitForCodeSent,
-    TResult Function(String verificationId, String? withErrorMessage)?
+    TResult Function(String verificationId, bool autoDetecting,
+            String? withErrorMessage)?
         enterCode,
     TResult Function()? waitForLogIn,
   }) {
-    return enterCode?.call(verificationId, withErrorMessage);
+    return enterCode?.call(verificationId, autoDetecting, withErrorMessage);
   }
 
   @override
@@ -486,13 +513,14 @@ class _$_EnterCode implements _EnterCode {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String? withErrorMessage)? enterPhoneNumber,
     TResult Function()? waitForCodeSent,
-    TResult Function(String verificationId, String? withErrorMessage)?
+    TResult Function(String verificationId, bool autoDetecting,
+            String? withErrorMessage)?
         enterCode,
     TResult Function()? waitForLogIn,
     required TResult orElse(),
   }) {
     if (enterCode != null) {
-      return enterCode(verificationId, withErrorMessage);
+      return enterCode(verificationId, autoDetecting, withErrorMessage);
     }
     return orElse();
   }
@@ -538,9 +566,11 @@ class _$_EnterCode implements _EnterCode {
 abstract class _EnterCode implements PhoneLoginState {
   const factory _EnterCode(
       {required String verificationId,
+      required bool autoDetecting,
       String? withErrorMessage}) = _$_EnterCode;
 
   String get verificationId;
+  bool get autoDetecting;
   String? get withErrorMessage;
   @JsonKey(ignore: true)
   _$EnterCodeCopyWith<_EnterCode> get copyWith =>
@@ -590,7 +620,8 @@ class _$_WaitForLogin implements _WaitForLogin {
   TResult when<TResult extends Object?>({
     required TResult Function(String? withErrorMessage) enterPhoneNumber,
     required TResult Function() waitForCodeSent,
-    required TResult Function(String verificationId, String? withErrorMessage)
+    required TResult Function(
+            String verificationId, bool autoDetecting, String? withErrorMessage)
         enterCode,
     required TResult Function() waitForLogIn,
   }) {
@@ -602,7 +633,8 @@ class _$_WaitForLogin implements _WaitForLogin {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String? withErrorMessage)? enterPhoneNumber,
     TResult Function()? waitForCodeSent,
-    TResult Function(String verificationId, String? withErrorMessage)?
+    TResult Function(String verificationId, bool autoDetecting,
+            String? withErrorMessage)?
         enterCode,
     TResult Function()? waitForLogIn,
   }) {
@@ -614,7 +646,8 @@ class _$_WaitForLogin implements _WaitForLogin {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String? withErrorMessage)? enterPhoneNumber,
     TResult Function()? waitForCodeSent,
-    TResult Function(String verificationId, String? withErrorMessage)?
+    TResult Function(String verificationId, bool autoDetecting,
+            String? withErrorMessage)?
         enterCode,
     TResult Function()? waitForLogIn,
     required TResult orElse(),

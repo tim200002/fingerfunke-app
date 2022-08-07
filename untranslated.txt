@@ -34,6 +34,8 @@
     "lbl_myAccount",
     "lbl_newUserName",
     "lbl_phoneNumber",
+    "lbl_autoDetectingLoginCode",
+    "lbl_loginCodeNotAutoDetectable",
     "lbl_postCreatedBy",
     "lbl_postDescription",
     "lbl_postEditTitle",

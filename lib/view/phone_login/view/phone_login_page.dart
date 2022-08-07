@@ -62,8 +62,8 @@ class PhoneLoginPage extends StatelessWidget {
                                   const EnterPhoneNumberView(),
                               waitForCodeSent: () =>
                                   LoadingView(l10n(context).msg_loginWaitCode),
-                              enterCode: (verificationId, __) =>
-                                  EnterCodeView(verificationId),
+                              enterCode: (verificationId, autoDet, __) =>
+                                  EnterCodeView(verificationId, autoDet),
                               waitForLogIn: () =>
                                   LoadingView(l10n(context).msg_loginWait),
                             );
