@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'live_config_cubit.dart';
@@ -11,28 +12,12 @@ part of 'live_config_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$LiveConfigStateTearOff {
-  const _$LiveConfigStateTearOff();
-
-  _Neutral neutral(bool newFeedItems, bool pagedFeed) {
-    return _Neutral(
-      newFeedItems,
-      pagedFeed,
-    );
-  }
-}
-
-/// @nodoc
-const $LiveConfigState = _$LiveConfigStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$LiveConfigState {
   bool get newFeedItems => throw _privateConstructorUsedError;
   bool get pagedFeed => throw _privateConstructorUsedError;
-
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(bool newFeedItems, bool pagedFeed) neutral,
@@ -107,29 +92,30 @@ class _$LiveConfigStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$NeutralCopyWith<$Res>
+abstract class _$$_NeutralCopyWith<$Res>
     implements $LiveConfigStateCopyWith<$Res> {
-  factory _$NeutralCopyWith(_Neutral value, $Res Function(_Neutral) then) =
-      __$NeutralCopyWithImpl<$Res>;
+  factory _$$_NeutralCopyWith(
+          _$_Neutral value, $Res Function(_$_Neutral) then) =
+      __$$_NeutralCopyWithImpl<$Res>;
   @override
   $Res call({bool newFeedItems, bool pagedFeed});
 }
 
 /// @nodoc
-class __$NeutralCopyWithImpl<$Res> extends _$LiveConfigStateCopyWithImpl<$Res>
-    implements _$NeutralCopyWith<$Res> {
-  __$NeutralCopyWithImpl(_Neutral _value, $Res Function(_Neutral) _then)
-      : super(_value, (v) => _then(v as _Neutral));
+class __$$_NeutralCopyWithImpl<$Res> extends _$LiveConfigStateCopyWithImpl<$Res>
+    implements _$$_NeutralCopyWith<$Res> {
+  __$$_NeutralCopyWithImpl(_$_Neutral _value, $Res Function(_$_Neutral) _then)
+      : super(_value, (v) => _then(v as _$_Neutral));
 
   @override
-  _Neutral get _value => super._value as _Neutral;
+  _$_Neutral get _value => super._value as _$_Neutral;
 
   @override
   $Res call({
     Object? newFeedItems = freezed,
     Object? pagedFeed = freezed,
   }) {
-    return _then(_Neutral(
+    return _then(_$_Neutral(
       newFeedItems == freezed
           ? _value.newFeedItems
           : newFeedItems // ignore: cast_nullable_to_non_nullable
@@ -161,20 +147,22 @@ class _$_Neutral implements _Neutral {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Neutral &&
-            (identical(other.newFeedItems, newFeedItems) ||
-                other.newFeedItems == newFeedItems) &&
-            (identical(other.pagedFeed, pagedFeed) ||
-                other.pagedFeed == pagedFeed));
+            other is _$_Neutral &&
+            const DeepCollectionEquality()
+                .equals(other.newFeedItems, newFeedItems) &&
+            const DeepCollectionEquality().equals(other.pagedFeed, pagedFeed));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, newFeedItems, pagedFeed);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(newFeedItems),
+      const DeepCollectionEquality().hash(pagedFeed));
 
   @JsonKey(ignore: true)
   @override
-  _$NeutralCopyWith<_Neutral> get copyWith =>
-      __$NeutralCopyWithImpl<_Neutral>(this, _$identity);
+  _$$_NeutralCopyWith<_$_Neutral> get copyWith =>
+      __$$_NeutralCopyWithImpl<_$_Neutral>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -234,7 +222,8 @@ class _$_Neutral implements _Neutral {
 }
 
 abstract class _Neutral implements LiveConfigState {
-  const factory _Neutral(bool newFeedItems, bool pagedFeed) = _$_Neutral;
+  const factory _Neutral(final bool newFeedItems, final bool pagedFeed) =
+      _$_Neutral;
 
   @override
   bool get newFeedItems;
@@ -242,6 +231,6 @@ abstract class _Neutral implements LiveConfigState {
   bool get pagedFeed;
   @override
   @JsonKey(ignore: true)
-  _$NeutralCopyWith<_Neutral> get copyWith =>
+  _$$_NeutralCopyWith<_$_Neutral> get copyWith =>
       throw _privateConstructorUsedError;
 }

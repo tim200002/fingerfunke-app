@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'saved_posts_cubit.dart';
@@ -11,29 +12,7 @@ part of 'saved_posts_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$SavedPostsStateTearOff {
-  const _$SavedPostsStateTearOff();
-
-  _Loading loading() {
-    return const _Loading();
-  }
-
-  _LoadedButNohthingSaved loadedButNothingSaved() {
-    return const _LoadedButNohthingSaved();
-  }
-
-  _Loaded loaded(List<Post> posts) {
-    return _Loaded(
-      posts,
-    );
-  }
-}
-
-/// @nodoc
-const $SavedPostsState = _$SavedPostsStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$SavedPostsState {
@@ -102,19 +81,20 @@ class _$SavedPostsStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$LoadingCopyWith<$Res> {
-  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) then) =
-      __$LoadingCopyWithImpl<$Res>;
+abstract class _$$_LoadingCopyWith<$Res> {
+  factory _$$_LoadingCopyWith(
+          _$_Loading value, $Res Function(_$_Loading) then) =
+      __$$_LoadingCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$LoadingCopyWithImpl<$Res> extends _$SavedPostsStateCopyWithImpl<$Res>
-    implements _$LoadingCopyWith<$Res> {
-  __$LoadingCopyWithImpl(_Loading _value, $Res Function(_Loading) _then)
-      : super(_value, (v) => _then(v as _Loading));
+class __$$_LoadingCopyWithImpl<$Res> extends _$SavedPostsStateCopyWithImpl<$Res>
+    implements _$$_LoadingCopyWith<$Res> {
+  __$$_LoadingCopyWithImpl(_$_Loading _value, $Res Function(_$_Loading) _then)
+      : super(_value, (v) => _then(v as _$_Loading));
 
   @override
-  _Loading get _value => super._value as _Loading;
+  _$_Loading get _value => super._value as _$_Loading;
 }
 
 /// @nodoc
@@ -130,7 +110,7 @@ class _$_Loading implements _Loading {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Loading);
+        (other.runtimeType == runtimeType && other is _$_Loading);
   }
 
   @override
@@ -211,22 +191,23 @@ abstract class _Loading implements SavedPostsState {
 }
 
 /// @nodoc
-abstract class _$LoadedButNohthingSavedCopyWith<$Res> {
-  factory _$LoadedButNohthingSavedCopyWith(_LoadedButNohthingSaved value,
-          $Res Function(_LoadedButNohthingSaved) then) =
-      __$LoadedButNohthingSavedCopyWithImpl<$Res>;
+abstract class _$$_LoadedButNohthingSavedCopyWith<$Res> {
+  factory _$$_LoadedButNohthingSavedCopyWith(_$_LoadedButNohthingSaved value,
+          $Res Function(_$_LoadedButNohthingSaved) then) =
+      __$$_LoadedButNohthingSavedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$LoadedButNohthingSavedCopyWithImpl<$Res>
+class __$$_LoadedButNohthingSavedCopyWithImpl<$Res>
     extends _$SavedPostsStateCopyWithImpl<$Res>
-    implements _$LoadedButNohthingSavedCopyWith<$Res> {
-  __$LoadedButNohthingSavedCopyWithImpl(_LoadedButNohthingSaved _value,
-      $Res Function(_LoadedButNohthingSaved) _then)
-      : super(_value, (v) => _then(v as _LoadedButNohthingSaved));
+    implements _$$_LoadedButNohthingSavedCopyWith<$Res> {
+  __$$_LoadedButNohthingSavedCopyWithImpl(_$_LoadedButNohthingSaved _value,
+      $Res Function(_$_LoadedButNohthingSaved) _then)
+      : super(_value, (v) => _then(v as _$_LoadedButNohthingSaved));
 
   @override
-  _LoadedButNohthingSaved get _value => super._value as _LoadedButNohthingSaved;
+  _$_LoadedButNohthingSaved get _value =>
+      super._value as _$_LoadedButNohthingSaved;
 }
 
 /// @nodoc
@@ -242,7 +223,8 @@ class _$_LoadedButNohthingSaved implements _LoadedButNohthingSaved {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _LoadedButNohthingSaved);
+        (other.runtimeType == runtimeType &&
+            other is _$_LoadedButNohthingSaved);
   }
 
   @override
@@ -323,28 +305,28 @@ abstract class _LoadedButNohthingSaved implements SavedPostsState {
 }
 
 /// @nodoc
-abstract class _$LoadedCopyWith<$Res> {
-  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) then) =
-      __$LoadedCopyWithImpl<$Res>;
+abstract class _$$_LoadedCopyWith<$Res> {
+  factory _$$_LoadedCopyWith(_$_Loaded value, $Res Function(_$_Loaded) then) =
+      __$$_LoadedCopyWithImpl<$Res>;
   $Res call({List<Post> posts});
 }
 
 /// @nodoc
-class __$LoadedCopyWithImpl<$Res> extends _$SavedPostsStateCopyWithImpl<$Res>
-    implements _$LoadedCopyWith<$Res> {
-  __$LoadedCopyWithImpl(_Loaded _value, $Res Function(_Loaded) _then)
-      : super(_value, (v) => _then(v as _Loaded));
+class __$$_LoadedCopyWithImpl<$Res> extends _$SavedPostsStateCopyWithImpl<$Res>
+    implements _$$_LoadedCopyWith<$Res> {
+  __$$_LoadedCopyWithImpl(_$_Loaded _value, $Res Function(_$_Loaded) _then)
+      : super(_value, (v) => _then(v as _$_Loaded));
 
   @override
-  _Loaded get _value => super._value as _Loaded;
+  _$_Loaded get _value => super._value as _$_Loaded;
 
   @override
   $Res call({
     Object? posts = freezed,
   }) {
-    return _then(_Loaded(
+    return _then(_$_Loaded(
       posts == freezed
-          ? _value.posts
+          ? _value._posts
           : posts // ignore: cast_nullable_to_non_nullable
               as List<Post>,
     ));
@@ -354,10 +336,14 @@ class __$LoadedCopyWithImpl<$Res> extends _$SavedPostsStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Loaded implements _Loaded {
-  const _$_Loaded(this.posts);
+  const _$_Loaded(final List<Post> posts) : _posts = posts;
 
+  final List<Post> _posts;
   @override
-  final List<Post> posts;
+  List<Post> get posts {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_posts);
+  }
 
   @override
   String toString() {
@@ -368,18 +354,18 @@ class _$_Loaded implements _Loaded {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Loaded &&
-            const DeepCollectionEquality().equals(other.posts, posts));
+            other is _$_Loaded &&
+            const DeepCollectionEquality().equals(other._posts, _posts));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(posts));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_posts));
 
   @JsonKey(ignore: true)
   @override
-  _$LoadedCopyWith<_Loaded> get copyWith =>
-      __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
+  _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
+      __$$_LoadedCopyWithImpl<_$_Loaded>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -452,9 +438,10 @@ class _$_Loaded implements _Loaded {
 }
 
 abstract class _Loaded implements SavedPostsState {
-  const factory _Loaded(List<Post> posts) = _$_Loaded;
+  const factory _Loaded(final List<Post> posts) = _$_Loaded;
 
   List<Post> get posts;
   @JsonKey(ignore: true)
-  _$LoadedCopyWith<_Loaded> get copyWith => throw _privateConstructorUsedError;
+  _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
+      throw _privateConstructorUsedError;
 }

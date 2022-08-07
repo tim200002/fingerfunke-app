@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'video_recorder_cubit.dart';
@@ -11,35 +12,7 @@ part of 'video_recorder_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$VideoRecorderStateTearOff {
-  const _$VideoRecorderStateTearOff();
-
-  _Error error(dynamic err) {
-    return _Error(
-      err,
-    );
-  }
-
-  _Camera camera() {
-    return const _Camera();
-  }
-
-  _Viewing viewing(File file) {
-    return _Viewing(
-      file,
-    );
-  }
-
-  _MissingPermission missingPermission() {
-    return const _MissingPermission();
-  }
-}
-
-/// @nodoc
-const $VideoRecorderState = _$VideoRecorderStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$VideoRecorderState {
@@ -113,26 +86,27 @@ class _$VideoRecorderStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$ErrorCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) then) =
-      __$ErrorCopyWithImpl<$Res>;
+abstract class _$$_ErrorCopyWith<$Res> {
+  factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
+      __$$_ErrorCopyWithImpl<$Res>;
   $Res call({dynamic err});
 }
 
 /// @nodoc
-class __$ErrorCopyWithImpl<$Res> extends _$VideoRecorderStateCopyWithImpl<$Res>
-    implements _$ErrorCopyWith<$Res> {
-  __$ErrorCopyWithImpl(_Error _value, $Res Function(_Error) _then)
-      : super(_value, (v) => _then(v as _Error));
+class __$$_ErrorCopyWithImpl<$Res>
+    extends _$VideoRecorderStateCopyWithImpl<$Res>
+    implements _$$_ErrorCopyWith<$Res> {
+  __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
+      : super(_value, (v) => _then(v as _$_Error));
 
   @override
-  _Error get _value => super._value as _Error;
+  _$_Error get _value => super._value as _$_Error;
 
   @override
   $Res call({
     Object? err = freezed,
   }) {
-    return _then(_Error(
+    return _then(_$_Error(
       err == freezed
           ? _value.err
           : err // ignore: cast_nullable_to_non_nullable
@@ -158,7 +132,7 @@ class _$_Error implements _Error {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Error &&
+            other is _$_Error &&
             const DeepCollectionEquality().equals(other.err, err));
   }
 
@@ -168,8 +142,8 @@ class _$_Error implements _Error {
 
   @JsonKey(ignore: true)
   @override
-  _$ErrorCopyWith<_Error> get copyWith =>
-      __$ErrorCopyWithImpl<_Error>(this, _$identity);
+  _$$_ErrorCopyWith<_$_Error> get copyWith =>
+      __$$_ErrorCopyWithImpl<_$_Error>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -247,27 +221,29 @@ class _$_Error implements _Error {
 }
 
 abstract class _Error implements VideoRecorderState {
-  const factory _Error(dynamic err) = _$_Error;
+  const factory _Error(final dynamic err) = _$_Error;
 
   dynamic get err;
   @JsonKey(ignore: true)
-  _$ErrorCopyWith<_Error> get copyWith => throw _privateConstructorUsedError;
+  _$$_ErrorCopyWith<_$_Error> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$CameraCopyWith<$Res> {
-  factory _$CameraCopyWith(_Camera value, $Res Function(_Camera) then) =
-      __$CameraCopyWithImpl<$Res>;
+abstract class _$$_CameraCopyWith<$Res> {
+  factory _$$_CameraCopyWith(_$_Camera value, $Res Function(_$_Camera) then) =
+      __$$_CameraCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$CameraCopyWithImpl<$Res> extends _$VideoRecorderStateCopyWithImpl<$Res>
-    implements _$CameraCopyWith<$Res> {
-  __$CameraCopyWithImpl(_Camera _value, $Res Function(_Camera) _then)
-      : super(_value, (v) => _then(v as _Camera));
+class __$$_CameraCopyWithImpl<$Res>
+    extends _$VideoRecorderStateCopyWithImpl<$Res>
+    implements _$$_CameraCopyWith<$Res> {
+  __$$_CameraCopyWithImpl(_$_Camera _value, $Res Function(_$_Camera) _then)
+      : super(_value, (v) => _then(v as _$_Camera));
 
   @override
-  _Camera get _value => super._value as _Camera;
+  _$_Camera get _value => super._value as _$_Camera;
 }
 
 /// @nodoc
@@ -283,7 +259,7 @@ class _$_Camera implements _Camera {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Camera);
+        (other.runtimeType == runtimeType && other is _$_Camera);
   }
 
   @override
@@ -369,27 +345,28 @@ abstract class _Camera implements VideoRecorderState {
 }
 
 /// @nodoc
-abstract class _$ViewingCopyWith<$Res> {
-  factory _$ViewingCopyWith(_Viewing value, $Res Function(_Viewing) then) =
-      __$ViewingCopyWithImpl<$Res>;
+abstract class _$$_ViewingCopyWith<$Res> {
+  factory _$$_ViewingCopyWith(
+          _$_Viewing value, $Res Function(_$_Viewing) then) =
+      __$$_ViewingCopyWithImpl<$Res>;
   $Res call({File file});
 }
 
 /// @nodoc
-class __$ViewingCopyWithImpl<$Res>
+class __$$_ViewingCopyWithImpl<$Res>
     extends _$VideoRecorderStateCopyWithImpl<$Res>
-    implements _$ViewingCopyWith<$Res> {
-  __$ViewingCopyWithImpl(_Viewing _value, $Res Function(_Viewing) _then)
-      : super(_value, (v) => _then(v as _Viewing));
+    implements _$$_ViewingCopyWith<$Res> {
+  __$$_ViewingCopyWithImpl(_$_Viewing _value, $Res Function(_$_Viewing) _then)
+      : super(_value, (v) => _then(v as _$_Viewing));
 
   @override
-  _Viewing get _value => super._value as _Viewing;
+  _$_Viewing get _value => super._value as _$_Viewing;
 
   @override
   $Res call({
     Object? file = freezed,
   }) {
-    return _then(_Viewing(
+    return _then(_$_Viewing(
       file == freezed
           ? _value.file
           : file // ignore: cast_nullable_to_non_nullable
@@ -415,17 +392,18 @@ class _$_Viewing implements _Viewing {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Viewing &&
-            (identical(other.file, file) || other.file == file));
+            other is _$_Viewing &&
+            const DeepCollectionEquality().equals(other.file, file));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, file);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(file));
 
   @JsonKey(ignore: true)
   @override
-  _$ViewingCopyWith<_Viewing> get copyWith =>
-      __$ViewingCopyWithImpl<_Viewing>(this, _$identity);
+  _$$_ViewingCopyWith<_$_Viewing> get copyWith =>
+      __$$_ViewingCopyWithImpl<_$_Viewing>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -503,31 +481,31 @@ class _$_Viewing implements _Viewing {
 }
 
 abstract class _Viewing implements VideoRecorderState {
-  const factory _Viewing(File file) = _$_Viewing;
+  const factory _Viewing(final File file) = _$_Viewing;
 
   File get file;
   @JsonKey(ignore: true)
-  _$ViewingCopyWith<_Viewing> get copyWith =>
+  _$$_ViewingCopyWith<_$_Viewing> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$MissingPermissionCopyWith<$Res> {
-  factory _$MissingPermissionCopyWith(
-          _MissingPermission value, $Res Function(_MissingPermission) then) =
-      __$MissingPermissionCopyWithImpl<$Res>;
+abstract class _$$_MissingPermissionCopyWith<$Res> {
+  factory _$$_MissingPermissionCopyWith(_$_MissingPermission value,
+          $Res Function(_$_MissingPermission) then) =
+      __$$_MissingPermissionCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$MissingPermissionCopyWithImpl<$Res>
+class __$$_MissingPermissionCopyWithImpl<$Res>
     extends _$VideoRecorderStateCopyWithImpl<$Res>
-    implements _$MissingPermissionCopyWith<$Res> {
-  __$MissingPermissionCopyWithImpl(
-      _MissingPermission _value, $Res Function(_MissingPermission) _then)
-      : super(_value, (v) => _then(v as _MissingPermission));
+    implements _$$_MissingPermissionCopyWith<$Res> {
+  __$$_MissingPermissionCopyWithImpl(
+      _$_MissingPermission _value, $Res Function(_$_MissingPermission) _then)
+      : super(_value, (v) => _then(v as _$_MissingPermission));
 
   @override
-  _MissingPermission get _value => super._value as _MissingPermission;
+  _$_MissingPermission get _value => super._value as _$_MissingPermission;
 }
 
 /// @nodoc
@@ -543,7 +521,7 @@ class _$_MissingPermission implements _MissingPermission {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _MissingPermission);
+        (other.runtimeType == runtimeType && other is _$_MissingPermission);
   }
 
   @override

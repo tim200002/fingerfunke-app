@@ -120,11 +120,14 @@ class _HomeViewState extends State<HomeView> {
     return Scaffold(
       appBar: AppBar(
         leading: const _menuButton(icon: FeatherIcons.menu),
-        title: Text("TODO: Location Error"), //_DEMOPlaceIndicator(context),
-        actions: const [
-          SizedBox(
+        title: Text("TODO: Location"), //_DEMOPlaceIndicator(context),
+        actions: [
+          const SizedBox(
             width: 62,
-          )
+          ),
+          IconButton(
+              onPressed: () => Navigator.of(context).pushNamed(Routes.feedback),
+              icon: const Icon(FeatherIcons.frown))
           /*IconButton(
               onPressed: null, //() => DevTools.showToDoSnackbar(context),
               icon: Icon(FeatherIcons.calendar))*/

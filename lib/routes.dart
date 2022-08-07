@@ -3,7 +3,7 @@ import 'view/app_info/subpages/licenses/view/oss_licenses_page.dart';
 import 'view/app_info/subpages/manage_account/view/manage_account_page.dart';
 import 'view/app_info/subpages/settings/view/settings_page.dart';
 import 'view/app_info/subpages/view/settings_dev_tools_page.dart';
-import 'view/chat/view/chat_page.dart';
+import 'view/feedback/send/feedback_send_page.dart';
 import 'view/moderation/mod_post_report/mod_post_report_page.dart';
 import 'view/moderation/moderation_page/moderation_page.dart';
 import 'view/my_account/view/my_account_page.dart';
@@ -22,6 +22,7 @@ class Routes {
   static const moderation = "/moderation";
   static const moderationPosts = "/moderation/posts";
   static const settings = "/settings";
+  static const feedback = "/feedback";
 
   static const about = "/about";
   static const licenses = "/about/licenses";
@@ -40,5 +41,5 @@ final routes = {
   Routes.licenses: (context) => const OssLicensesPage(),
   Routes.settings: (context) => const SettingsPage(),
   Routes.about: (context) => const AppInfoPage(),
-  Routes.chat: (context) => const ChatPage(),
+  Routes.feedback: (context) => const FeedbackSendPage(),
 };

@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'image_upload_cubit.dart';
@@ -11,25 +12,7 @@ part of 'image_upload_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$ImageUploadStateTearOff {
-  const _$ImageUploadStateTearOff();
-
-  Initial initial() {
-    return const Initial();
-  }
-
-  Loaded loaded(File file) {
-    return Loaded(
-      file,
-    );
-  }
-}
-
-/// @nodoc
-const $ImageUploadState = _$ImageUploadStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$ImageUploadState {
@@ -91,19 +74,19 @@ class _$ImageUploadStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class $InitialCopyWith<$Res> {
-  factory $InitialCopyWith(Initial value, $Res Function(Initial) then) =
-      _$InitialCopyWithImpl<$Res>;
+abstract class _$$InitialCopyWith<$Res> {
+  factory _$$InitialCopyWith(_$Initial value, $Res Function(_$Initial) then) =
+      __$$InitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$InitialCopyWithImpl<$Res> extends _$ImageUploadStateCopyWithImpl<$Res>
-    implements $InitialCopyWith<$Res> {
-  _$InitialCopyWithImpl(Initial _value, $Res Function(Initial) _then)
-      : super(_value, (v) => _then(v as Initial));
+class __$$InitialCopyWithImpl<$Res> extends _$ImageUploadStateCopyWithImpl<$Res>
+    implements _$$InitialCopyWith<$Res> {
+  __$$InitialCopyWithImpl(_$Initial _value, $Res Function(_$Initial) _then)
+      : super(_value, (v) => _then(v as _$Initial));
 
   @override
-  Initial get _value => super._value as Initial;
+  _$Initial get _value => super._value as _$Initial;
 }
 
 /// @nodoc
@@ -119,7 +102,7 @@ class _$Initial implements Initial {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is Initial);
+        (other.runtimeType == runtimeType && other is _$Initial);
   }
 
   @override
@@ -193,26 +176,26 @@ abstract class Initial implements ImageUploadState {
 }
 
 /// @nodoc
-abstract class $LoadedCopyWith<$Res> {
-  factory $LoadedCopyWith(Loaded value, $Res Function(Loaded) then) =
-      _$LoadedCopyWithImpl<$Res>;
+abstract class _$$LoadedCopyWith<$Res> {
+  factory _$$LoadedCopyWith(_$Loaded value, $Res Function(_$Loaded) then) =
+      __$$LoadedCopyWithImpl<$Res>;
   $Res call({File file});
 }
 
 /// @nodoc
-class _$LoadedCopyWithImpl<$Res> extends _$ImageUploadStateCopyWithImpl<$Res>
-    implements $LoadedCopyWith<$Res> {
-  _$LoadedCopyWithImpl(Loaded _value, $Res Function(Loaded) _then)
-      : super(_value, (v) => _then(v as Loaded));
+class __$$LoadedCopyWithImpl<$Res> extends _$ImageUploadStateCopyWithImpl<$Res>
+    implements _$$LoadedCopyWith<$Res> {
+  __$$LoadedCopyWithImpl(_$Loaded _value, $Res Function(_$Loaded) _then)
+      : super(_value, (v) => _then(v as _$Loaded));
 
   @override
-  Loaded get _value => super._value as Loaded;
+  _$Loaded get _value => super._value as _$Loaded;
 
   @override
   $Res call({
     Object? file = freezed,
   }) {
-    return _then(Loaded(
+    return _then(_$Loaded(
       file == freezed
           ? _value.file
           : file // ignore: cast_nullable_to_non_nullable
@@ -238,17 +221,18 @@ class _$Loaded implements Loaded {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is Loaded &&
-            (identical(other.file, file) || other.file == file));
+            other is _$Loaded &&
+            const DeepCollectionEquality().equals(other.file, file));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, file);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(file));
 
   @JsonKey(ignore: true)
   @override
-  $LoadedCopyWith<Loaded> get copyWith =>
-      _$LoadedCopyWithImpl<Loaded>(this, _$identity);
+  _$$LoadedCopyWith<_$Loaded> get copyWith =>
+      __$$LoadedCopyWithImpl<_$Loaded>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -314,9 +298,10 @@ class _$Loaded implements Loaded {
 }
 
 abstract class Loaded implements ImageUploadState {
-  const factory Loaded(File file) = _$Loaded;
+  const factory Loaded(final File file) = _$Loaded;
 
   File get file;
   @JsonKey(ignore: true)
-  $LoadedCopyWith<Loaded> get copyWith => throw _privateConstructorUsedError;
+  _$$LoadedCopyWith<_$Loaded> get copyWith =>
+      throw _privateConstructorUsedError;
 }

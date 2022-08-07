@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'create_account_cubit.dart';
@@ -11,22 +12,7 @@ part of 'create_account_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$CreateAccountStateTearOff {
-  const _$CreateAccountStateTearOff();
-
-  _CreateAccountState call({required String name, bool inputValid = false}) {
-    return _CreateAccountState(
-      name: name,
-      inputValid: inputValid,
-    );
-  }
-}
-
-/// @nodoc
-const $CreateAccountState = _$CreateAccountStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$CreateAccountState {
@@ -74,32 +60,32 @@ class _$CreateAccountStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$CreateAccountStateCopyWith<$Res>
+abstract class _$$_CreateAccountStateCopyWith<$Res>
     implements $CreateAccountStateCopyWith<$Res> {
-  factory _$CreateAccountStateCopyWith(
-          _CreateAccountState value, $Res Function(_CreateAccountState) then) =
-      __$CreateAccountStateCopyWithImpl<$Res>;
+  factory _$$_CreateAccountStateCopyWith(_$_CreateAccountState value,
+          $Res Function(_$_CreateAccountState) then) =
+      __$$_CreateAccountStateCopyWithImpl<$Res>;
   @override
   $Res call({String name, bool inputValid});
 }
 
 /// @nodoc
-class __$CreateAccountStateCopyWithImpl<$Res>
+class __$$_CreateAccountStateCopyWithImpl<$Res>
     extends _$CreateAccountStateCopyWithImpl<$Res>
-    implements _$CreateAccountStateCopyWith<$Res> {
-  __$CreateAccountStateCopyWithImpl(
-      _CreateAccountState _value, $Res Function(_CreateAccountState) _then)
-      : super(_value, (v) => _then(v as _CreateAccountState));
+    implements _$$_CreateAccountStateCopyWith<$Res> {
+  __$$_CreateAccountStateCopyWithImpl(
+      _$_CreateAccountState _value, $Res Function(_$_CreateAccountState) _then)
+      : super(_value, (v) => _then(v as _$_CreateAccountState));
 
   @override
-  _CreateAccountState get _value => super._value as _CreateAccountState;
+  _$_CreateAccountState get _value => super._value as _$_CreateAccountState;
 
   @override
   $Res call({
     Object? name = freezed,
     Object? inputValid = freezed,
   }) {
-    return _then(_CreateAccountState(
+    return _then(_$_CreateAccountState(
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -119,8 +105,8 @@ class _$_CreateAccountState implements _CreateAccountState {
 
   @override
   final String name;
-  @JsonKey(defaultValue: false)
   @override
+  @JsonKey()
   final bool inputValid;
 
   @override
@@ -132,24 +118,29 @@ class _$_CreateAccountState implements _CreateAccountState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _CreateAccountState &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.inputValid, inputValid) ||
-                other.inputValid == inputValid));
+            other is _$_CreateAccountState &&
+            const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality()
+                .equals(other.inputValid, inputValid));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, name, inputValid);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(name),
+      const DeepCollectionEquality().hash(inputValid));
 
   @JsonKey(ignore: true)
   @override
-  _$CreateAccountStateCopyWith<_CreateAccountState> get copyWith =>
-      __$CreateAccountStateCopyWithImpl<_CreateAccountState>(this, _$identity);
+  _$$_CreateAccountStateCopyWith<_$_CreateAccountState> get copyWith =>
+      __$$_CreateAccountStateCopyWithImpl<_$_CreateAccountState>(
+          this, _$identity);
 }
 
 abstract class _CreateAccountState implements CreateAccountState {
-  const factory _CreateAccountState({required String name, bool inputValid}) =
-      _$_CreateAccountState;
+  const factory _CreateAccountState(
+      {required final String name,
+      final bool inputValid}) = _$_CreateAccountState;
 
   @override
   String get name;
@@ -157,6 +148,6 @@ abstract class _CreateAccountState implements CreateAccountState {
   bool get inputValid;
   @override
   @JsonKey(ignore: true)
-  _$CreateAccountStateCopyWith<_CreateAccountState> get copyWith =>
+  _$$_CreateAccountStateCopyWith<_$_CreateAccountState> get copyWith =>
       throw _privateConstructorUsedError;
 }

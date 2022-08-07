@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'video_upload_cubit.dart';
@@ -11,51 +12,7 @@ part of 'video_upload_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$VideoUploadStateTearOff {
-  const _$VideoUploadStateTearOff();
-
-  _Initial initial() {
-    return const _Initial();
-  }
-
-  _Uploading uploading(
-      File video, ImageProvider<Object>? thumbnail, int progress) {
-    return _Uploading(
-      video,
-      thumbnail,
-      progress,
-    );
-  }
-
-  _Processing processing(File video, ImageProvider<Object>? thumbnail) {
-    return _Processing(
-      video,
-      thumbnail,
-    );
-  }
-
-  _Uploaded uploaded(ImageProvider<Object>? thumbnail, VideoAsset asset) {
-    return _Uploaded(
-      thumbnail,
-      asset,
-    );
-  }
-
-  _UploadError uploadError(Object error,
-      {required File video, ImageProvider<Object>? thumbnail}) {
-    return _UploadError(
-      error,
-      video: video,
-      thumbnail: thumbnail,
-    );
-  }
-}
-
-/// @nodoc
-const $VideoUploadState = _$VideoUploadStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$VideoUploadState {
@@ -152,19 +109,21 @@ class _$VideoUploadStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$InitialCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) then) =
-      __$InitialCopyWithImpl<$Res>;
+abstract class _$$_InitialCopyWith<$Res> {
+  factory _$$_InitialCopyWith(
+          _$_Initial value, $Res Function(_$_Initial) then) =
+      __$$_InitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$InitialCopyWithImpl<$Res> extends _$VideoUploadStateCopyWithImpl<$Res>
-    implements _$InitialCopyWith<$Res> {
-  __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
-      : super(_value, (v) => _then(v as _Initial));
+class __$$_InitialCopyWithImpl<$Res>
+    extends _$VideoUploadStateCopyWithImpl<$Res>
+    implements _$$_InitialCopyWith<$Res> {
+  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
+      : super(_value, (v) => _then(v as _$_Initial));
 
   @override
-  _Initial get _value => super._value as _Initial;
+  _$_Initial get _value => super._value as _$_Initial;
 }
 
 /// @nodoc
@@ -180,7 +139,7 @@ class _$_Initial implements _Initial {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Initial);
+        (other.runtimeType == runtimeType && other is _$_Initial);
   }
 
   @override
@@ -289,22 +248,23 @@ abstract class _Initial implements VideoUploadState {
 }
 
 /// @nodoc
-abstract class _$UploadingCopyWith<$Res> {
-  factory _$UploadingCopyWith(
-          _Uploading value, $Res Function(_Uploading) then) =
-      __$UploadingCopyWithImpl<$Res>;
+abstract class _$$_UploadingCopyWith<$Res> {
+  factory _$$_UploadingCopyWith(
+          _$_Uploading value, $Res Function(_$_Uploading) then) =
+      __$$_UploadingCopyWithImpl<$Res>;
   $Res call({File video, ImageProvider<Object>? thumbnail, int progress});
 }
 
 /// @nodoc
-class __$UploadingCopyWithImpl<$Res>
+class __$$_UploadingCopyWithImpl<$Res>
     extends _$VideoUploadStateCopyWithImpl<$Res>
-    implements _$UploadingCopyWith<$Res> {
-  __$UploadingCopyWithImpl(_Uploading _value, $Res Function(_Uploading) _then)
-      : super(_value, (v) => _then(v as _Uploading));
+    implements _$$_UploadingCopyWith<$Res> {
+  __$$_UploadingCopyWithImpl(
+      _$_Uploading _value, $Res Function(_$_Uploading) _then)
+      : super(_value, (v) => _then(v as _$_Uploading));
 
   @override
-  _Uploading get _value => super._value as _Uploading;
+  _$_Uploading get _value => super._value as _$_Uploading;
 
   @override
   $Res call({
@@ -312,7 +272,7 @@ class __$UploadingCopyWithImpl<$Res>
     Object? thumbnail = freezed,
     Object? progress = freezed,
   }) {
-    return _then(_Uploading(
+    return _then(_$_Uploading(
       video == freezed
           ? _value.video
           : video // ignore: cast_nullable_to_non_nullable
@@ -350,21 +310,23 @@ class _$_Uploading implements _Uploading {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Uploading &&
-            (identical(other.video, video) || other.video == video) &&
-            (identical(other.thumbnail, thumbnail) ||
-                other.thumbnail == thumbnail) &&
-            (identical(other.progress, progress) ||
-                other.progress == progress));
+            other is _$_Uploading &&
+            const DeepCollectionEquality().equals(other.video, video) &&
+            const DeepCollectionEquality().equals(other.thumbnail, thumbnail) &&
+            const DeepCollectionEquality().equals(other.progress, progress));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, video, thumbnail, progress);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(video),
+      const DeepCollectionEquality().hash(thumbnail),
+      const DeepCollectionEquality().hash(progress));
 
   @JsonKey(ignore: true)
   @override
-  _$UploadingCopyWith<_Uploading> get copyWith =>
-      __$UploadingCopyWithImpl<_Uploading>(this, _$identity);
+  _$$_UploadingCopyWith<_$_Uploading> get copyWith =>
+      __$$_UploadingCopyWithImpl<_$_Uploading>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -466,42 +428,43 @@ class _$_Uploading implements _Uploading {
 
 abstract class _Uploading implements VideoUploadState {
   const factory _Uploading(
-          File video, ImageProvider<Object>? thumbnail, int progress) =
-      _$_Uploading;
+      final File video,
+      final ImageProvider<Object>? thumbnail,
+      final int progress) = _$_Uploading;
 
   File get video;
   ImageProvider<Object>? get thumbnail;
   int get progress;
   @JsonKey(ignore: true)
-  _$UploadingCopyWith<_Uploading> get copyWith =>
+  _$$_UploadingCopyWith<_$_Uploading> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$ProcessingCopyWith<$Res> {
-  factory _$ProcessingCopyWith(
-          _Processing value, $Res Function(_Processing) then) =
-      __$ProcessingCopyWithImpl<$Res>;
+abstract class _$$_ProcessingCopyWith<$Res> {
+  factory _$$_ProcessingCopyWith(
+          _$_Processing value, $Res Function(_$_Processing) then) =
+      __$$_ProcessingCopyWithImpl<$Res>;
   $Res call({File video, ImageProvider<Object>? thumbnail});
 }
 
 /// @nodoc
-class __$ProcessingCopyWithImpl<$Res>
+class __$$_ProcessingCopyWithImpl<$Res>
     extends _$VideoUploadStateCopyWithImpl<$Res>
-    implements _$ProcessingCopyWith<$Res> {
-  __$ProcessingCopyWithImpl(
-      _Processing _value, $Res Function(_Processing) _then)
-      : super(_value, (v) => _then(v as _Processing));
+    implements _$$_ProcessingCopyWith<$Res> {
+  __$$_ProcessingCopyWithImpl(
+      _$_Processing _value, $Res Function(_$_Processing) _then)
+      : super(_value, (v) => _then(v as _$_Processing));
 
   @override
-  _Processing get _value => super._value as _Processing;
+  _$_Processing get _value => super._value as _$_Processing;
 
   @override
   $Res call({
     Object? video = freezed,
     Object? thumbnail = freezed,
   }) {
-    return _then(_Processing(
+    return _then(_$_Processing(
       video == freezed
           ? _value.video
           : video // ignore: cast_nullable_to_non_nullable
@@ -533,19 +496,21 @@ class _$_Processing implements _Processing {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Processing &&
-            (identical(other.video, video) || other.video == video) &&
-            (identical(other.thumbnail, thumbnail) ||
-                other.thumbnail == thumbnail));
+            other is _$_Processing &&
+            const DeepCollectionEquality().equals(other.video, video) &&
+            const DeepCollectionEquality().equals(other.thumbnail, thumbnail));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, video, thumbnail);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(video),
+      const DeepCollectionEquality().hash(thumbnail));
 
   @JsonKey(ignore: true)
   @override
-  _$ProcessingCopyWith<_Processing> get copyWith =>
-      __$ProcessingCopyWithImpl<_Processing>(this, _$identity);
+  _$$_ProcessingCopyWith<_$_Processing> get copyWith =>
+      __$$_ProcessingCopyWithImpl<_$_Processing>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -646,38 +611,41 @@ class _$_Processing implements _Processing {
 }
 
 abstract class _Processing implements VideoUploadState {
-  const factory _Processing(File video, ImageProvider<Object>? thumbnail) =
-      _$_Processing;
+  const factory _Processing(
+      final File video, final ImageProvider<Object>? thumbnail) = _$_Processing;
 
   File get video;
   ImageProvider<Object>? get thumbnail;
   @JsonKey(ignore: true)
-  _$ProcessingCopyWith<_Processing> get copyWith =>
+  _$$_ProcessingCopyWith<_$_Processing> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$UploadedCopyWith<$Res> {
-  factory _$UploadedCopyWith(_Uploaded value, $Res Function(_Uploaded) then) =
-      __$UploadedCopyWithImpl<$Res>;
+abstract class _$$_UploadedCopyWith<$Res> {
+  factory _$$_UploadedCopyWith(
+          _$_Uploaded value, $Res Function(_$_Uploaded) then) =
+      __$$_UploadedCopyWithImpl<$Res>;
   $Res call({ImageProvider<Object>? thumbnail, VideoAsset asset});
 }
 
 /// @nodoc
-class __$UploadedCopyWithImpl<$Res> extends _$VideoUploadStateCopyWithImpl<$Res>
-    implements _$UploadedCopyWith<$Res> {
-  __$UploadedCopyWithImpl(_Uploaded _value, $Res Function(_Uploaded) _then)
-      : super(_value, (v) => _then(v as _Uploaded));
+class __$$_UploadedCopyWithImpl<$Res>
+    extends _$VideoUploadStateCopyWithImpl<$Res>
+    implements _$$_UploadedCopyWith<$Res> {
+  __$$_UploadedCopyWithImpl(
+      _$_Uploaded _value, $Res Function(_$_Uploaded) _then)
+      : super(_value, (v) => _then(v as _$_Uploaded));
 
   @override
-  _Uploaded get _value => super._value as _Uploaded;
+  _$_Uploaded get _value => super._value as _$_Uploaded;
 
   @override
   $Res call({
     Object? thumbnail = freezed,
     Object? asset = freezed,
   }) {
-    return _then(_Uploaded(
+    return _then(_$_Uploaded(
       thumbnail == freezed
           ? _value.thumbnail
           : thumbnail // ignore: cast_nullable_to_non_nullable
@@ -709,19 +677,21 @@ class _$_Uploaded implements _Uploaded {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Uploaded &&
-            (identical(other.thumbnail, thumbnail) ||
-                other.thumbnail == thumbnail) &&
-            (identical(other.asset, asset) || other.asset == asset));
+            other is _$_Uploaded &&
+            const DeepCollectionEquality().equals(other.thumbnail, thumbnail) &&
+            const DeepCollectionEquality().equals(other.asset, asset));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, thumbnail, asset);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(thumbnail),
+      const DeepCollectionEquality().hash(asset));
 
   @JsonKey(ignore: true)
   @override
-  _$UploadedCopyWith<_Uploaded> get copyWith =>
-      __$UploadedCopyWithImpl<_Uploaded>(this, _$identity);
+  _$$_UploadedCopyWith<_$_Uploaded> get copyWith =>
+      __$$_UploadedCopyWithImpl<_$_Uploaded>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -822,34 +792,35 @@ class _$_Uploaded implements _Uploaded {
 }
 
 abstract class _Uploaded implements VideoUploadState {
-  const factory _Uploaded(ImageProvider<Object>? thumbnail, VideoAsset asset) =
+  const factory _Uploaded(
+          final ImageProvider<Object>? thumbnail, final VideoAsset asset) =
       _$_Uploaded;
 
   ImageProvider<Object>? get thumbnail;
   VideoAsset get asset;
   @JsonKey(ignore: true)
-  _$UploadedCopyWith<_Uploaded> get copyWith =>
+  _$$_UploadedCopyWith<_$_Uploaded> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$UploadErrorCopyWith<$Res> {
-  factory _$UploadErrorCopyWith(
-          _UploadError value, $Res Function(_UploadError) then) =
-      __$UploadErrorCopyWithImpl<$Res>;
+abstract class _$$_UploadErrorCopyWith<$Res> {
+  factory _$$_UploadErrorCopyWith(
+          _$_UploadError value, $Res Function(_$_UploadError) then) =
+      __$$_UploadErrorCopyWithImpl<$Res>;
   $Res call({Object error, File video, ImageProvider<Object>? thumbnail});
 }
 
 /// @nodoc
-class __$UploadErrorCopyWithImpl<$Res>
+class __$$_UploadErrorCopyWithImpl<$Res>
     extends _$VideoUploadStateCopyWithImpl<$Res>
-    implements _$UploadErrorCopyWith<$Res> {
-  __$UploadErrorCopyWithImpl(
-      _UploadError _value, $Res Function(_UploadError) _then)
-      : super(_value, (v) => _then(v as _UploadError));
+    implements _$$_UploadErrorCopyWith<$Res> {
+  __$$_UploadErrorCopyWithImpl(
+      _$_UploadError _value, $Res Function(_$_UploadError) _then)
+      : super(_value, (v) => _then(v as _$_UploadError));
 
   @override
-  _UploadError get _value => super._value as _UploadError;
+  _$_UploadError get _value => super._value as _$_UploadError;
 
   @override
   $Res call({
@@ -857,7 +828,7 @@ class __$UploadErrorCopyWithImpl<$Res>
     Object? video = freezed,
     Object? thumbnail = freezed,
   }) {
-    return _then(_UploadError(
+    return _then(_$_UploadError(
       error == freezed
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -895,21 +866,23 @@ class _$_UploadError implements _UploadError {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _UploadError &&
+            other is _$_UploadError &&
             const DeepCollectionEquality().equals(other.error, error) &&
-            (identical(other.video, video) || other.video == video) &&
-            (identical(other.thumbnail, thumbnail) ||
-                other.thumbnail == thumbnail));
+            const DeepCollectionEquality().equals(other.video, video) &&
+            const DeepCollectionEquality().equals(other.thumbnail, thumbnail));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(error), video, thumbnail);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(error),
+      const DeepCollectionEquality().hash(video),
+      const DeepCollectionEquality().hash(thumbnail));
 
   @JsonKey(ignore: true)
   @override
-  _$UploadErrorCopyWith<_UploadError> get copyWith =>
-      __$UploadErrorCopyWithImpl<_UploadError>(this, _$identity);
+  _$$_UploadErrorCopyWith<_$_UploadError> get copyWith =>
+      __$$_UploadErrorCopyWithImpl<_$_UploadError>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1010,13 +983,14 @@ class _$_UploadError implements _UploadError {
 }
 
 abstract class _UploadError implements VideoUploadState {
-  const factory _UploadError(Object error,
-      {required File video, ImageProvider<Object>? thumbnail}) = _$_UploadError;
+  const factory _UploadError(final Object error,
+      {required final File video,
+      final ImageProvider<Object>? thumbnail}) = _$_UploadError;
 
   Object get error;
   File get video;
   ImageProvider<Object>? get thumbnail;
   @JsonKey(ignore: true)
-  _$UploadErrorCopyWith<_UploadError> get copyWith =>
+  _$$_UploadErrorCopyWith<_$_UploadError> get copyWith =>
       throw _privateConstructorUsedError;
 }

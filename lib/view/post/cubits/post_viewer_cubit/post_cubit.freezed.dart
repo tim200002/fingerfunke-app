@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'post_cubit.dart';
@@ -11,28 +12,7 @@ part of 'post_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$PostStateTearOff {
-  const _$PostStateTearOff();
-
-  _Loading loading(String postId) {
-    return _Loading(
-      postId,
-    );
-  }
-
-  _Normal normal({required Post post, bool isJoining = false}) {
-    return _Normal(
-      post: post,
-      isJoining: isJoining,
-    );
-  }
-}
-
-/// @nodoc
-const $PostState = _$PostStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$PostState {
@@ -92,26 +72,27 @@ class _$PostStateCopyWithImpl<$Res> implements $PostStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$LoadingCopyWith<$Res> {
-  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) then) =
-      __$LoadingCopyWithImpl<$Res>;
+abstract class _$$_LoadingCopyWith<$Res> {
+  factory _$$_LoadingCopyWith(
+          _$_Loading value, $Res Function(_$_Loading) then) =
+      __$$_LoadingCopyWithImpl<$Res>;
   $Res call({String postId});
 }
 
 /// @nodoc
-class __$LoadingCopyWithImpl<$Res> extends _$PostStateCopyWithImpl<$Res>
-    implements _$LoadingCopyWith<$Res> {
-  __$LoadingCopyWithImpl(_Loading _value, $Res Function(_Loading) _then)
-      : super(_value, (v) => _then(v as _Loading));
+class __$$_LoadingCopyWithImpl<$Res> extends _$PostStateCopyWithImpl<$Res>
+    implements _$$_LoadingCopyWith<$Res> {
+  __$$_LoadingCopyWithImpl(_$_Loading _value, $Res Function(_$_Loading) _then)
+      : super(_value, (v) => _then(v as _$_Loading));
 
   @override
-  _Loading get _value => super._value as _Loading;
+  _$_Loading get _value => super._value as _$_Loading;
 
   @override
   $Res call({
     Object? postId = freezed,
   }) {
-    return _then(_Loading(
+    return _then(_$_Loading(
       postId == freezed
           ? _value.postId
           : postId // ignore: cast_nullable_to_non_nullable
@@ -137,17 +118,18 @@ class _$_Loading implements _Loading {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Loading &&
-            (identical(other.postId, postId) || other.postId == postId));
+            other is _$_Loading &&
+            const DeepCollectionEquality().equals(other.postId, postId));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, postId);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(postId));
 
   @JsonKey(ignore: true)
   @override
-  _$LoadingCopyWith<_Loading> get copyWith =>
-      __$LoadingCopyWithImpl<_Loading>(this, _$identity);
+  _$$_LoadingCopyWith<_$_Loading> get copyWith =>
+      __$$_LoadingCopyWithImpl<_$_Loading>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -213,36 +195,36 @@ class _$_Loading implements _Loading {
 }
 
 abstract class _Loading implements PostState {
-  const factory _Loading(String postId) = _$_Loading;
+  const factory _Loading(final String postId) = _$_Loading;
 
   String get postId;
   @JsonKey(ignore: true)
-  _$LoadingCopyWith<_Loading> get copyWith =>
+  _$$_LoadingCopyWith<_$_Loading> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$NormalCopyWith<$Res> {
-  factory _$NormalCopyWith(_Normal value, $Res Function(_Normal) then) =
-      __$NormalCopyWithImpl<$Res>;
+abstract class _$$_NormalCopyWith<$Res> {
+  factory _$$_NormalCopyWith(_$_Normal value, $Res Function(_$_Normal) then) =
+      __$$_NormalCopyWithImpl<$Res>;
   $Res call({Post post, bool isJoining});
 }
 
 /// @nodoc
-class __$NormalCopyWithImpl<$Res> extends _$PostStateCopyWithImpl<$Res>
-    implements _$NormalCopyWith<$Res> {
-  __$NormalCopyWithImpl(_Normal _value, $Res Function(_Normal) _then)
-      : super(_value, (v) => _then(v as _Normal));
+class __$$_NormalCopyWithImpl<$Res> extends _$PostStateCopyWithImpl<$Res>
+    implements _$$_NormalCopyWith<$Res> {
+  __$$_NormalCopyWithImpl(_$_Normal _value, $Res Function(_$_Normal) _then)
+      : super(_value, (v) => _then(v as _$_Normal));
 
   @override
-  _Normal get _value => super._value as _Normal;
+  _$_Normal get _value => super._value as _$_Normal;
 
   @override
   $Res call({
     Object? post = freezed,
     Object? isJoining = freezed,
   }) {
-    return _then(_Normal(
+    return _then(_$_Normal(
       post: post == freezed
           ? _value.post
           : post // ignore: cast_nullable_to_non_nullable
@@ -262,8 +244,8 @@ class _$_Normal implements _Normal {
 
   @override
   final Post post;
-  @JsonKey(defaultValue: false)
   @override
+  @JsonKey()
   final bool isJoining;
 
   @override
@@ -275,19 +257,21 @@ class _$_Normal implements _Normal {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Normal &&
-            (identical(other.post, post) || other.post == post) &&
-            (identical(other.isJoining, isJoining) ||
-                other.isJoining == isJoining));
+            other is _$_Normal &&
+            const DeepCollectionEquality().equals(other.post, post) &&
+            const DeepCollectionEquality().equals(other.isJoining, isJoining));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, post, isJoining);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(post),
+      const DeepCollectionEquality().hash(isJoining));
 
   @JsonKey(ignore: true)
   @override
-  _$NormalCopyWith<_Normal> get copyWith =>
-      __$NormalCopyWithImpl<_Normal>(this, _$identity);
+  _$$_NormalCopyWith<_$_Normal> get copyWith =>
+      __$$_NormalCopyWithImpl<_$_Normal>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -353,10 +337,12 @@ class _$_Normal implements _Normal {
 }
 
 abstract class _Normal implements PostState {
-  const factory _Normal({required Post post, bool isJoining}) = _$_Normal;
+  const factory _Normal({required final Post post, final bool isJoining}) =
+      _$_Normal;
 
   Post get post;
   bool get isJoining;
   @JsonKey(ignore: true)
-  _$NormalCopyWith<_Normal> get copyWith => throw _privateConstructorUsedError;
+  _$$_NormalCopyWith<_$_Normal> get copyWith =>
+      throw _privateConstructorUsedError;
 }

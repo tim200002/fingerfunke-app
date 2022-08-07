@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'mod_post_cubit.dart';
@@ -11,36 +12,7 @@ part of 'mod_post_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$ModPostStateTearOff {
-  const _$ModPostStateTearOff();
-
-  _Loading loading() {
-    return const _Loading();
-  }
-
-  _Error error(dynamic e) {
-    return _Error(
-      e,
-    );
-  }
-
-  _Empty empty() {
-    return const _Empty();
-  }
-
-  _Neutral neutral(Report report, int count) {
-    return _Neutral(
-      report,
-      count,
-    );
-  }
-}
-
-/// @nodoc
-const $ModPostState = _$ModPostStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$ModPostState {
@@ -113,19 +85,20 @@ class _$ModPostStateCopyWithImpl<$Res> implements $ModPostStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$LoadingCopyWith<$Res> {
-  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) then) =
-      __$LoadingCopyWithImpl<$Res>;
+abstract class _$$_LoadingCopyWith<$Res> {
+  factory _$$_LoadingCopyWith(
+          _$_Loading value, $Res Function(_$_Loading) then) =
+      __$$_LoadingCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$LoadingCopyWithImpl<$Res> extends _$ModPostStateCopyWithImpl<$Res>
-    implements _$LoadingCopyWith<$Res> {
-  __$LoadingCopyWithImpl(_Loading _value, $Res Function(_Loading) _then)
-      : super(_value, (v) => _then(v as _Loading));
+class __$$_LoadingCopyWithImpl<$Res> extends _$ModPostStateCopyWithImpl<$Res>
+    implements _$$_LoadingCopyWith<$Res> {
+  __$$_LoadingCopyWithImpl(_$_Loading _value, $Res Function(_$_Loading) _then)
+      : super(_value, (v) => _then(v as _$_Loading));
 
   @override
-  _Loading get _value => super._value as _Loading;
+  _$_Loading get _value => super._value as _$_Loading;
 }
 
 /// @nodoc
@@ -141,7 +114,7 @@ class _$_Loading implements _Loading {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Loading);
+        (other.runtimeType == runtimeType && other is _$_Loading);
   }
 
   @override
@@ -227,26 +200,26 @@ abstract class _Loading implements ModPostState {
 }
 
 /// @nodoc
-abstract class _$ErrorCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) then) =
-      __$ErrorCopyWithImpl<$Res>;
+abstract class _$$_ErrorCopyWith<$Res> {
+  factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
+      __$$_ErrorCopyWithImpl<$Res>;
   $Res call({dynamic e});
 }
 
 /// @nodoc
-class __$ErrorCopyWithImpl<$Res> extends _$ModPostStateCopyWithImpl<$Res>
-    implements _$ErrorCopyWith<$Res> {
-  __$ErrorCopyWithImpl(_Error _value, $Res Function(_Error) _then)
-      : super(_value, (v) => _then(v as _Error));
+class __$$_ErrorCopyWithImpl<$Res> extends _$ModPostStateCopyWithImpl<$Res>
+    implements _$$_ErrorCopyWith<$Res> {
+  __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
+      : super(_value, (v) => _then(v as _$_Error));
 
   @override
-  _Error get _value => super._value as _Error;
+  _$_Error get _value => super._value as _$_Error;
 
   @override
   $Res call({
     Object? e = freezed,
   }) {
-    return _then(_Error(
+    return _then(_$_Error(
       e == freezed
           ? _value.e
           : e // ignore: cast_nullable_to_non_nullable
@@ -272,7 +245,7 @@ class _$_Error implements _Error {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Error &&
+            other is _$_Error &&
             const DeepCollectionEquality().equals(other.e, e));
   }
 
@@ -282,8 +255,8 @@ class _$_Error implements _Error {
 
   @JsonKey(ignore: true)
   @override
-  _$ErrorCopyWith<_Error> get copyWith =>
-      __$ErrorCopyWithImpl<_Error>(this, _$identity);
+  _$$_ErrorCopyWith<_$_Error> get copyWith =>
+      __$$_ErrorCopyWithImpl<_$_Error>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -361,27 +334,28 @@ class _$_Error implements _Error {
 }
 
 abstract class _Error implements ModPostState {
-  const factory _Error(dynamic e) = _$_Error;
+  const factory _Error(final dynamic e) = _$_Error;
 
   dynamic get e;
   @JsonKey(ignore: true)
-  _$ErrorCopyWith<_Error> get copyWith => throw _privateConstructorUsedError;
+  _$$_ErrorCopyWith<_$_Error> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$EmptyCopyWith<$Res> {
-  factory _$EmptyCopyWith(_Empty value, $Res Function(_Empty) then) =
-      __$EmptyCopyWithImpl<$Res>;
+abstract class _$$_EmptyCopyWith<$Res> {
+  factory _$$_EmptyCopyWith(_$_Empty value, $Res Function(_$_Empty) then) =
+      __$$_EmptyCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$EmptyCopyWithImpl<$Res> extends _$ModPostStateCopyWithImpl<$Res>
-    implements _$EmptyCopyWith<$Res> {
-  __$EmptyCopyWithImpl(_Empty _value, $Res Function(_Empty) _then)
-      : super(_value, (v) => _then(v as _Empty));
+class __$$_EmptyCopyWithImpl<$Res> extends _$ModPostStateCopyWithImpl<$Res>
+    implements _$$_EmptyCopyWith<$Res> {
+  __$$_EmptyCopyWithImpl(_$_Empty _value, $Res Function(_$_Empty) _then)
+      : super(_value, (v) => _then(v as _$_Empty));
 
   @override
-  _Empty get _value => super._value as _Empty;
+  _$_Empty get _value => super._value as _$_Empty;
 }
 
 /// @nodoc
@@ -397,7 +371,7 @@ class _$_Empty implements _Empty {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Empty);
+        (other.runtimeType == runtimeType && other is _$_Empty);
   }
 
   @override
@@ -483,27 +457,28 @@ abstract class _Empty implements ModPostState {
 }
 
 /// @nodoc
-abstract class _$NeutralCopyWith<$Res> {
-  factory _$NeutralCopyWith(_Neutral value, $Res Function(_Neutral) then) =
-      __$NeutralCopyWithImpl<$Res>;
+abstract class _$$_NeutralCopyWith<$Res> {
+  factory _$$_NeutralCopyWith(
+          _$_Neutral value, $Res Function(_$_Neutral) then) =
+      __$$_NeutralCopyWithImpl<$Res>;
   $Res call({Report report, int count});
 }
 
 /// @nodoc
-class __$NeutralCopyWithImpl<$Res> extends _$ModPostStateCopyWithImpl<$Res>
-    implements _$NeutralCopyWith<$Res> {
-  __$NeutralCopyWithImpl(_Neutral _value, $Res Function(_Neutral) _then)
-      : super(_value, (v) => _then(v as _Neutral));
+class __$$_NeutralCopyWithImpl<$Res> extends _$ModPostStateCopyWithImpl<$Res>
+    implements _$$_NeutralCopyWith<$Res> {
+  __$$_NeutralCopyWithImpl(_$_Neutral _value, $Res Function(_$_Neutral) _then)
+      : super(_value, (v) => _then(v as _$_Neutral));
 
   @override
-  _Neutral get _value => super._value as _Neutral;
+  _$_Neutral get _value => super._value as _$_Neutral;
 
   @override
   $Res call({
     Object? report = freezed,
     Object? count = freezed,
   }) {
-    return _then(_Neutral(
+    return _then(_$_Neutral(
       report == freezed
           ? _value.report
           : report // ignore: cast_nullable_to_non_nullable
@@ -535,18 +510,21 @@ class _$_Neutral implements _Neutral {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Neutral &&
-            (identical(other.report, report) || other.report == report) &&
-            (identical(other.count, count) || other.count == count));
+            other is _$_Neutral &&
+            const DeepCollectionEquality().equals(other.report, report) &&
+            const DeepCollectionEquality().equals(other.count, count));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, report, count);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(report),
+      const DeepCollectionEquality().hash(count));
 
   @JsonKey(ignore: true)
   @override
-  _$NeutralCopyWith<_Neutral> get copyWith =>
-      __$NeutralCopyWithImpl<_Neutral>(this, _$identity);
+  _$$_NeutralCopyWith<_$_Neutral> get copyWith =>
+      __$$_NeutralCopyWithImpl<_$_Neutral>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -624,11 +602,11 @@ class _$_Neutral implements _Neutral {
 }
 
 abstract class _Neutral implements ModPostState {
-  const factory _Neutral(Report report, int count) = _$_Neutral;
+  const factory _Neutral(final Report report, final int count) = _$_Neutral;
 
   Report get report;
   int get count;
   @JsonKey(ignore: true)
-  _$NeutralCopyWith<_Neutral> get copyWith =>
+  _$$_NeutralCopyWith<_$_Neutral> get copyWith =>
       throw _privateConstructorUsedError;
 }

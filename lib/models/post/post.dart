@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../utils/extensions/first_where_or_null.dart';
 import '../../utils/type_aliases.dart';
 import '../abstract_models/abstract_models.dart';
 import '../asset/asset.dart';
@@ -12,12 +13,14 @@ part 'event.dart';
 part 'group.dart';
 
 enum post_type { event, recurrent }
+
 const _postTypeEnumMap = {
   post_type.event: 'event',
   post_type.recurrent: 'recurrent',
 };
 
 enum post_visibility { visible, hidden }
+
 const postVisibilityEnumMap = {
   post_visibility.visible: 'visible',
   post_visibility.hidden: 'hidden',

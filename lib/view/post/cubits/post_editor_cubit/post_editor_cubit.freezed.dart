@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'post_editor_cubit.dart';
@@ -11,49 +12,7 @@ part of 'post_editor_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$PostEditorStateTearOff {
-  const _$PostEditorStateTearOff();
-
-  _Loading loading() {
-    return const _Loading();
-  }
-
-  _EditEvent editEvent(
-      {required EventEditorFields eventEditorFields, bool inputValid = false}) {
-    return _EditEvent(
-      eventEditorFields: eventEditorFields,
-      inputValid: inputValid,
-    );
-  }
-
-  _EditGroup editGroup(
-      {required GroupEditorFields groupEditorFields, bool inputValid = false}) {
-    return _EditGroup(
-      groupEditorFields: groupEditorFields,
-      inputValid: inputValid,
-    );
-  }
-
-  _Submitting submitting() {
-    return const _Submitting();
-  }
-
-  _Submitted submitted() {
-    return const _Submitted();
-  }
-
-  _Error error(String message) {
-    return _Error(
-      message,
-    );
-  }
-}
-
-/// @nodoc
-const $PostEditorState = _$PostEditorStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$PostEditorState {
@@ -147,19 +106,20 @@ class _$PostEditorStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$LoadingCopyWith<$Res> {
-  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) then) =
-      __$LoadingCopyWithImpl<$Res>;
+abstract class _$$_LoadingCopyWith<$Res> {
+  factory _$$_LoadingCopyWith(
+          _$_Loading value, $Res Function(_$_Loading) then) =
+      __$$_LoadingCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$LoadingCopyWithImpl<$Res> extends _$PostEditorStateCopyWithImpl<$Res>
-    implements _$LoadingCopyWith<$Res> {
-  __$LoadingCopyWithImpl(_Loading _value, $Res Function(_Loading) _then)
-      : super(_value, (v) => _then(v as _Loading));
+class __$$_LoadingCopyWithImpl<$Res> extends _$PostEditorStateCopyWithImpl<$Res>
+    implements _$$_LoadingCopyWith<$Res> {
+  __$$_LoadingCopyWithImpl(_$_Loading _value, $Res Function(_$_Loading) _then)
+      : super(_value, (v) => _then(v as _$_Loading));
 
   @override
-  _Loading get _value => super._value as _Loading;
+  _$_Loading get _value => super._value as _$_Loading;
 }
 
 /// @nodoc
@@ -175,7 +135,7 @@ class _$_Loading implements _Loading {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Loading);
+        (other.runtimeType == runtimeType && other is _$_Loading);
   }
 
   @override
@@ -281,28 +241,30 @@ abstract class _Loading implements PostEditorState {
 }
 
 /// @nodoc
-abstract class _$EditEventCopyWith<$Res> {
-  factory _$EditEventCopyWith(
-          _EditEvent value, $Res Function(_EditEvent) then) =
-      __$EditEventCopyWithImpl<$Res>;
+abstract class _$$_EditEventCopyWith<$Res> {
+  factory _$$_EditEventCopyWith(
+          _$_EditEvent value, $Res Function(_$_EditEvent) then) =
+      __$$_EditEventCopyWithImpl<$Res>;
   $Res call({EventEditorFields eventEditorFields, bool inputValid});
 }
 
 /// @nodoc
-class __$EditEventCopyWithImpl<$Res> extends _$PostEditorStateCopyWithImpl<$Res>
-    implements _$EditEventCopyWith<$Res> {
-  __$EditEventCopyWithImpl(_EditEvent _value, $Res Function(_EditEvent) _then)
-      : super(_value, (v) => _then(v as _EditEvent));
+class __$$_EditEventCopyWithImpl<$Res>
+    extends _$PostEditorStateCopyWithImpl<$Res>
+    implements _$$_EditEventCopyWith<$Res> {
+  __$$_EditEventCopyWithImpl(
+      _$_EditEvent _value, $Res Function(_$_EditEvent) _then)
+      : super(_value, (v) => _then(v as _$_EditEvent));
 
   @override
-  _EditEvent get _value => super._value as _EditEvent;
+  _$_EditEvent get _value => super._value as _$_EditEvent;
 
   @override
   $Res call({
     Object? eventEditorFields = freezed,
     Object? inputValid = freezed,
   }) {
-    return _then(_EditEvent(
+    return _then(_$_EditEvent(
       eventEditorFields: eventEditorFields == freezed
           ? _value.eventEditorFields
           : eventEditorFields // ignore: cast_nullable_to_non_nullable
@@ -323,8 +285,8 @@ class _$_EditEvent implements _EditEvent {
 
   @override
   final EventEditorFields eventEditorFields;
-  @JsonKey(defaultValue: false)
   @override
+  @JsonKey()
   final bool inputValid;
 
   @override
@@ -336,20 +298,23 @@ class _$_EditEvent implements _EditEvent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _EditEvent &&
-            (identical(other.eventEditorFields, eventEditorFields) ||
-                other.eventEditorFields == eventEditorFields) &&
-            (identical(other.inputValid, inputValid) ||
-                other.inputValid == inputValid));
+            other is _$_EditEvent &&
+            const DeepCollectionEquality()
+                .equals(other.eventEditorFields, eventEditorFields) &&
+            const DeepCollectionEquality()
+                .equals(other.inputValid, inputValid));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, eventEditorFields, inputValid);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(eventEditorFields),
+      const DeepCollectionEquality().hash(inputValid));
 
   @JsonKey(ignore: true)
   @override
-  _$EditEventCopyWith<_EditEvent> get copyWith =>
-      __$EditEventCopyWithImpl<_EditEvent>(this, _$identity);
+  _$$_EditEventCopyWith<_$_EditEvent> get copyWith =>
+      __$$_EditEventCopyWithImpl<_$_EditEvent>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -448,39 +413,41 @@ class _$_EditEvent implements _EditEvent {
 
 abstract class _EditEvent implements PostEditorState {
   const factory _EditEvent(
-      {required EventEditorFields eventEditorFields,
-      bool inputValid}) = _$_EditEvent;
+      {required final EventEditorFields eventEditorFields,
+      final bool inputValid}) = _$_EditEvent;
 
   EventEditorFields get eventEditorFields;
   bool get inputValid;
   @JsonKey(ignore: true)
-  _$EditEventCopyWith<_EditEvent> get copyWith =>
+  _$$_EditEventCopyWith<_$_EditEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$EditGroupCopyWith<$Res> {
-  factory _$EditGroupCopyWith(
-          _EditGroup value, $Res Function(_EditGroup) then) =
-      __$EditGroupCopyWithImpl<$Res>;
+abstract class _$$_EditGroupCopyWith<$Res> {
+  factory _$$_EditGroupCopyWith(
+          _$_EditGroup value, $Res Function(_$_EditGroup) then) =
+      __$$_EditGroupCopyWithImpl<$Res>;
   $Res call({GroupEditorFields groupEditorFields, bool inputValid});
 }
 
 /// @nodoc
-class __$EditGroupCopyWithImpl<$Res> extends _$PostEditorStateCopyWithImpl<$Res>
-    implements _$EditGroupCopyWith<$Res> {
-  __$EditGroupCopyWithImpl(_EditGroup _value, $Res Function(_EditGroup) _then)
-      : super(_value, (v) => _then(v as _EditGroup));
+class __$$_EditGroupCopyWithImpl<$Res>
+    extends _$PostEditorStateCopyWithImpl<$Res>
+    implements _$$_EditGroupCopyWith<$Res> {
+  __$$_EditGroupCopyWithImpl(
+      _$_EditGroup _value, $Res Function(_$_EditGroup) _then)
+      : super(_value, (v) => _then(v as _$_EditGroup));
 
   @override
-  _EditGroup get _value => super._value as _EditGroup;
+  _$_EditGroup get _value => super._value as _$_EditGroup;
 
   @override
   $Res call({
     Object? groupEditorFields = freezed,
     Object? inputValid = freezed,
   }) {
-    return _then(_EditGroup(
+    return _then(_$_EditGroup(
       groupEditorFields: groupEditorFields == freezed
           ? _value.groupEditorFields
           : groupEditorFields // ignore: cast_nullable_to_non_nullable
@@ -501,8 +468,8 @@ class _$_EditGroup implements _EditGroup {
 
   @override
   final GroupEditorFields groupEditorFields;
-  @JsonKey(defaultValue: false)
   @override
+  @JsonKey()
   final bool inputValid;
 
   @override
@@ -514,20 +481,23 @@ class _$_EditGroup implements _EditGroup {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _EditGroup &&
-            (identical(other.groupEditorFields, groupEditorFields) ||
-                other.groupEditorFields == groupEditorFields) &&
-            (identical(other.inputValid, inputValid) ||
-                other.inputValid == inputValid));
+            other is _$_EditGroup &&
+            const DeepCollectionEquality()
+                .equals(other.groupEditorFields, groupEditorFields) &&
+            const DeepCollectionEquality()
+                .equals(other.inputValid, inputValid));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, groupEditorFields, inputValid);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(groupEditorFields),
+      const DeepCollectionEquality().hash(inputValid));
 
   @JsonKey(ignore: true)
   @override
-  _$EditGroupCopyWith<_EditGroup> get copyWith =>
-      __$EditGroupCopyWithImpl<_EditGroup>(this, _$identity);
+  _$$_EditGroupCopyWith<_$_EditGroup> get copyWith =>
+      __$$_EditGroupCopyWithImpl<_$_EditGroup>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -626,33 +596,33 @@ class _$_EditGroup implements _EditGroup {
 
 abstract class _EditGroup implements PostEditorState {
   const factory _EditGroup(
-      {required GroupEditorFields groupEditorFields,
-      bool inputValid}) = _$_EditGroup;
+      {required final GroupEditorFields groupEditorFields,
+      final bool inputValid}) = _$_EditGroup;
 
   GroupEditorFields get groupEditorFields;
   bool get inputValid;
   @JsonKey(ignore: true)
-  _$EditGroupCopyWith<_EditGroup> get copyWith =>
+  _$$_EditGroupCopyWith<_$_EditGroup> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$SubmittingCopyWith<$Res> {
-  factory _$SubmittingCopyWith(
-          _Submitting value, $Res Function(_Submitting) then) =
-      __$SubmittingCopyWithImpl<$Res>;
+abstract class _$$_SubmittingCopyWith<$Res> {
+  factory _$$_SubmittingCopyWith(
+          _$_Submitting value, $Res Function(_$_Submitting) then) =
+      __$$_SubmittingCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$SubmittingCopyWithImpl<$Res>
+class __$$_SubmittingCopyWithImpl<$Res>
     extends _$PostEditorStateCopyWithImpl<$Res>
-    implements _$SubmittingCopyWith<$Res> {
-  __$SubmittingCopyWithImpl(
-      _Submitting _value, $Res Function(_Submitting) _then)
-      : super(_value, (v) => _then(v as _Submitting));
+    implements _$$_SubmittingCopyWith<$Res> {
+  __$$_SubmittingCopyWithImpl(
+      _$_Submitting _value, $Res Function(_$_Submitting) _then)
+      : super(_value, (v) => _then(v as _$_Submitting));
 
   @override
-  _Submitting get _value => super._value as _Submitting;
+  _$_Submitting get _value => super._value as _$_Submitting;
 }
 
 /// @nodoc
@@ -668,7 +638,7 @@ class _$_Submitting implements _Submitting {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Submitting);
+        (other.runtimeType == runtimeType && other is _$_Submitting);
   }
 
   @override
@@ -774,20 +744,22 @@ abstract class _Submitting implements PostEditorState {
 }
 
 /// @nodoc
-abstract class _$SubmittedCopyWith<$Res> {
-  factory _$SubmittedCopyWith(
-          _Submitted value, $Res Function(_Submitted) then) =
-      __$SubmittedCopyWithImpl<$Res>;
+abstract class _$$_SubmittedCopyWith<$Res> {
+  factory _$$_SubmittedCopyWith(
+          _$_Submitted value, $Res Function(_$_Submitted) then) =
+      __$$_SubmittedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$SubmittedCopyWithImpl<$Res> extends _$PostEditorStateCopyWithImpl<$Res>
-    implements _$SubmittedCopyWith<$Res> {
-  __$SubmittedCopyWithImpl(_Submitted _value, $Res Function(_Submitted) _then)
-      : super(_value, (v) => _then(v as _Submitted));
+class __$$_SubmittedCopyWithImpl<$Res>
+    extends _$PostEditorStateCopyWithImpl<$Res>
+    implements _$$_SubmittedCopyWith<$Res> {
+  __$$_SubmittedCopyWithImpl(
+      _$_Submitted _value, $Res Function(_$_Submitted) _then)
+      : super(_value, (v) => _then(v as _$_Submitted));
 
   @override
-  _Submitted get _value => super._value as _Submitted;
+  _$_Submitted get _value => super._value as _$_Submitted;
 }
 
 /// @nodoc
@@ -803,7 +775,7 @@ class _$_Submitted implements _Submitted {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Submitted);
+        (other.runtimeType == runtimeType && other is _$_Submitted);
   }
 
   @override
@@ -909,26 +881,26 @@ abstract class _Submitted implements PostEditorState {
 }
 
 /// @nodoc
-abstract class _$ErrorCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) then) =
-      __$ErrorCopyWithImpl<$Res>;
+abstract class _$$_ErrorCopyWith<$Res> {
+  factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
+      __$$_ErrorCopyWithImpl<$Res>;
   $Res call({String message});
 }
 
 /// @nodoc
-class __$ErrorCopyWithImpl<$Res> extends _$PostEditorStateCopyWithImpl<$Res>
-    implements _$ErrorCopyWith<$Res> {
-  __$ErrorCopyWithImpl(_Error _value, $Res Function(_Error) _then)
-      : super(_value, (v) => _then(v as _Error));
+class __$$_ErrorCopyWithImpl<$Res> extends _$PostEditorStateCopyWithImpl<$Res>
+    implements _$$_ErrorCopyWith<$Res> {
+  __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
+      : super(_value, (v) => _then(v as _$_Error));
 
   @override
-  _Error get _value => super._value as _Error;
+  _$_Error get _value => super._value as _$_Error;
 
   @override
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(_Error(
+    return _then(_$_Error(
       message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -954,17 +926,18 @@ class _$_Error implements _Error {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Error &&
-            (identical(other.message, message) || other.message == message));
+            other is _$_Error &&
+            const DeepCollectionEquality().equals(other.message, message));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, message);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(message));
 
   @JsonKey(ignore: true)
   @override
-  _$ErrorCopyWith<_Error> get copyWith =>
-      __$ErrorCopyWithImpl<_Error>(this, _$identity);
+  _$$_ErrorCopyWith<_$_Error> get copyWith =>
+      __$$_ErrorCopyWithImpl<_$_Error>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1062,9 +1035,10 @@ class _$_Error implements _Error {
 }
 
 abstract class _Error implements PostEditorState {
-  const factory _Error(String message) = _$_Error;
+  const factory _Error(final String message) = _$_Error;
 
   String get message;
   @JsonKey(ignore: true)
-  _$ErrorCopyWith<_Error> get copyWith => throw _privateConstructorUsedError;
+  _$$_ErrorCopyWith<_$_Error> get copyWith =>
+      throw _privateConstructorUsedError;
 }

@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'firebase_authentication_cubit_cubit.dart';
@@ -11,39 +12,7 @@ part of 'firebase_authentication_cubit_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$FirebaseAuthenticationCubitStateTearOff {
-  const _$FirebaseAuthenticationCubitStateTearOff();
-
-  _AuthenticatedWaitingForUserToBeFetched
-      authenticatedWaitingForUserToBeFetched(String uid) {
-    return _AuthenticatedWaitingForUserToBeFetched(
-      uid,
-    );
-  }
-
-  _AuthenticatedNoUserCreated autehnticationNoUserCreated(String uid) {
-    return _AuthenticatedNoUserCreated(
-      uid,
-    );
-  }
-
-  _Authenticated authenticated(user_models.User user) {
-    return _Authenticated(
-      user,
-    );
-  }
-
-  _Unauthenticated unauthenticated() {
-    return const _Unauthenticated();
-  }
-}
-
-/// @nodoc
-const $FirebaseAuthenticationCubitState =
-    _$FirebaseAuthenticationCubitStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$FirebaseAuthenticationCubitState {
@@ -125,33 +94,33 @@ class _$FirebaseAuthenticationCubitStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$AuthenticatedWaitingForUserToBeFetchedCopyWith<$Res> {
-  factory _$AuthenticatedWaitingForUserToBeFetchedCopyWith(
-          _AuthenticatedWaitingForUserToBeFetched value,
-          $Res Function(_AuthenticatedWaitingForUserToBeFetched) then) =
-      __$AuthenticatedWaitingForUserToBeFetchedCopyWithImpl<$Res>;
+abstract class _$$_AuthenticatedWaitingForUserToBeFetchedCopyWith<$Res> {
+  factory _$$_AuthenticatedWaitingForUserToBeFetchedCopyWith(
+          _$_AuthenticatedWaitingForUserToBeFetched value,
+          $Res Function(_$_AuthenticatedWaitingForUserToBeFetched) then) =
+      __$$_AuthenticatedWaitingForUserToBeFetchedCopyWithImpl<$Res>;
   $Res call({String uid});
 }
 
 /// @nodoc
-class __$AuthenticatedWaitingForUserToBeFetchedCopyWithImpl<$Res>
+class __$$_AuthenticatedWaitingForUserToBeFetchedCopyWithImpl<$Res>
     extends _$FirebaseAuthenticationCubitStateCopyWithImpl<$Res>
-    implements _$AuthenticatedWaitingForUserToBeFetchedCopyWith<$Res> {
-  __$AuthenticatedWaitingForUserToBeFetchedCopyWithImpl(
-      _AuthenticatedWaitingForUserToBeFetched _value,
-      $Res Function(_AuthenticatedWaitingForUserToBeFetched) _then)
-      : super(
-            _value, (v) => _then(v as _AuthenticatedWaitingForUserToBeFetched));
+    implements _$$_AuthenticatedWaitingForUserToBeFetchedCopyWith<$Res> {
+  __$$_AuthenticatedWaitingForUserToBeFetchedCopyWithImpl(
+      _$_AuthenticatedWaitingForUserToBeFetched _value,
+      $Res Function(_$_AuthenticatedWaitingForUserToBeFetched) _then)
+      : super(_value,
+            (v) => _then(v as _$_AuthenticatedWaitingForUserToBeFetched));
 
   @override
-  _AuthenticatedWaitingForUserToBeFetched get _value =>
-      super._value as _AuthenticatedWaitingForUserToBeFetched;
+  _$_AuthenticatedWaitingForUserToBeFetched get _value =>
+      super._value as _$_AuthenticatedWaitingForUserToBeFetched;
 
   @override
   $Res call({
     Object? uid = freezed,
   }) {
-    return _then(_AuthenticatedWaitingForUserToBeFetched(
+    return _then(_$_AuthenticatedWaitingForUserToBeFetched(
       uid == freezed
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
@@ -178,19 +147,20 @@ class _$_AuthenticatedWaitingForUserToBeFetched
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _AuthenticatedWaitingForUserToBeFetched &&
-            (identical(other.uid, uid) || other.uid == uid));
+            other is _$_AuthenticatedWaitingForUserToBeFetched &&
+            const DeepCollectionEquality().equals(other.uid, uid));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, uid);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(uid));
 
   @JsonKey(ignore: true)
   @override
-  _$AuthenticatedWaitingForUserToBeFetchedCopyWith<
-          _AuthenticatedWaitingForUserToBeFetched>
-      get copyWith => __$AuthenticatedWaitingForUserToBeFetchedCopyWithImpl<
-          _AuthenticatedWaitingForUserToBeFetched>(this, _$identity);
+  _$$_AuthenticatedWaitingForUserToBeFetchedCopyWith<
+          _$_AuthenticatedWaitingForUserToBeFetched>
+      get copyWith => __$$_AuthenticatedWaitingForUserToBeFetchedCopyWithImpl<
+          _$_AuthenticatedWaitingForUserToBeFetched>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -276,42 +246,43 @@ class _$_AuthenticatedWaitingForUserToBeFetched
 
 abstract class _AuthenticatedWaitingForUserToBeFetched
     implements FirebaseAuthenticationCubitState {
-  const factory _AuthenticatedWaitingForUserToBeFetched(String uid) =
+  const factory _AuthenticatedWaitingForUserToBeFetched(final String uid) =
       _$_AuthenticatedWaitingForUserToBeFetched;
 
   String get uid;
   @JsonKey(ignore: true)
-  _$AuthenticatedWaitingForUserToBeFetchedCopyWith<
-          _AuthenticatedWaitingForUserToBeFetched>
+  _$$_AuthenticatedWaitingForUserToBeFetchedCopyWith<
+          _$_AuthenticatedWaitingForUserToBeFetched>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$AuthenticatedNoUserCreatedCopyWith<$Res> {
-  factory _$AuthenticatedNoUserCreatedCopyWith(
-          _AuthenticatedNoUserCreated value,
-          $Res Function(_AuthenticatedNoUserCreated) then) =
-      __$AuthenticatedNoUserCreatedCopyWithImpl<$Res>;
+abstract class _$$_AuthenticatedNoUserCreatedCopyWith<$Res> {
+  factory _$$_AuthenticatedNoUserCreatedCopyWith(
+          _$_AuthenticatedNoUserCreated value,
+          $Res Function(_$_AuthenticatedNoUserCreated) then) =
+      __$$_AuthenticatedNoUserCreatedCopyWithImpl<$Res>;
   $Res call({String uid});
 }
 
 /// @nodoc
-class __$AuthenticatedNoUserCreatedCopyWithImpl<$Res>
+class __$$_AuthenticatedNoUserCreatedCopyWithImpl<$Res>
     extends _$FirebaseAuthenticationCubitStateCopyWithImpl<$Res>
-    implements _$AuthenticatedNoUserCreatedCopyWith<$Res> {
-  __$AuthenticatedNoUserCreatedCopyWithImpl(_AuthenticatedNoUserCreated _value,
-      $Res Function(_AuthenticatedNoUserCreated) _then)
-      : super(_value, (v) => _then(v as _AuthenticatedNoUserCreated));
+    implements _$$_AuthenticatedNoUserCreatedCopyWith<$Res> {
+  __$$_AuthenticatedNoUserCreatedCopyWithImpl(
+      _$_AuthenticatedNoUserCreated _value,
+      $Res Function(_$_AuthenticatedNoUserCreated) _then)
+      : super(_value, (v) => _then(v as _$_AuthenticatedNoUserCreated));
 
   @override
-  _AuthenticatedNoUserCreated get _value =>
-      super._value as _AuthenticatedNoUserCreated;
+  _$_AuthenticatedNoUserCreated get _value =>
+      super._value as _$_AuthenticatedNoUserCreated;
 
   @override
   $Res call({
     Object? uid = freezed,
   }) {
-    return _then(_AuthenticatedNoUserCreated(
+    return _then(_$_AuthenticatedNoUserCreated(
       uid == freezed
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
@@ -337,18 +308,19 @@ class _$_AuthenticatedNoUserCreated implements _AuthenticatedNoUserCreated {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _AuthenticatedNoUserCreated &&
-            (identical(other.uid, uid) || other.uid == uid));
+            other is _$_AuthenticatedNoUserCreated &&
+            const DeepCollectionEquality().equals(other.uid, uid));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, uid);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(uid));
 
   @JsonKey(ignore: true)
   @override
-  _$AuthenticatedNoUserCreatedCopyWith<_AuthenticatedNoUserCreated>
-      get copyWith => __$AuthenticatedNoUserCreatedCopyWithImpl<
-          _AuthenticatedNoUserCreated>(this, _$identity);
+  _$$_AuthenticatedNoUserCreatedCopyWith<_$_AuthenticatedNoUserCreated>
+      get copyWith => __$$_AuthenticatedNoUserCreatedCopyWithImpl<
+          _$_AuthenticatedNoUserCreated>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -434,39 +406,39 @@ class _$_AuthenticatedNoUserCreated implements _AuthenticatedNoUserCreated {
 
 abstract class _AuthenticatedNoUserCreated
     implements FirebaseAuthenticationCubitState {
-  const factory _AuthenticatedNoUserCreated(String uid) =
+  const factory _AuthenticatedNoUserCreated(final String uid) =
       _$_AuthenticatedNoUserCreated;
 
   String get uid;
   @JsonKey(ignore: true)
-  _$AuthenticatedNoUserCreatedCopyWith<_AuthenticatedNoUserCreated>
+  _$$_AuthenticatedNoUserCreatedCopyWith<_$_AuthenticatedNoUserCreated>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$AuthenticatedCopyWith<$Res> {
-  factory _$AuthenticatedCopyWith(
-          _Authenticated value, $Res Function(_Authenticated) then) =
-      __$AuthenticatedCopyWithImpl<$Res>;
+abstract class _$$_AuthenticatedCopyWith<$Res> {
+  factory _$$_AuthenticatedCopyWith(
+          _$_Authenticated value, $Res Function(_$_Authenticated) then) =
+      __$$_AuthenticatedCopyWithImpl<$Res>;
   $Res call({user_models.User user});
 }
 
 /// @nodoc
-class __$AuthenticatedCopyWithImpl<$Res>
+class __$$_AuthenticatedCopyWithImpl<$Res>
     extends _$FirebaseAuthenticationCubitStateCopyWithImpl<$Res>
-    implements _$AuthenticatedCopyWith<$Res> {
-  __$AuthenticatedCopyWithImpl(
-      _Authenticated _value, $Res Function(_Authenticated) _then)
-      : super(_value, (v) => _then(v as _Authenticated));
+    implements _$$_AuthenticatedCopyWith<$Res> {
+  __$$_AuthenticatedCopyWithImpl(
+      _$_Authenticated _value, $Res Function(_$_Authenticated) _then)
+      : super(_value, (v) => _then(v as _$_Authenticated));
 
   @override
-  _Authenticated get _value => super._value as _Authenticated;
+  _$_Authenticated get _value => super._value as _$_Authenticated;
 
   @override
   $Res call({
     Object? user = freezed,
   }) {
-    return _then(_Authenticated(
+    return _then(_$_Authenticated(
       user == freezed
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
@@ -492,17 +464,18 @@ class _$_Authenticated implements _Authenticated {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Authenticated &&
-            (identical(other.user, user) || other.user == user));
+            other is _$_Authenticated &&
+            const DeepCollectionEquality().equals(other.user, user));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, user);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(user));
 
   @JsonKey(ignore: true)
   @override
-  _$AuthenticatedCopyWith<_Authenticated> get copyWith =>
-      __$AuthenticatedCopyWithImpl<_Authenticated>(this, _$identity);
+  _$$_AuthenticatedCopyWith<_$_Authenticated> get copyWith =>
+      __$$_AuthenticatedCopyWithImpl<_$_Authenticated>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -587,31 +560,31 @@ class _$_Authenticated implements _Authenticated {
 }
 
 abstract class _Authenticated implements FirebaseAuthenticationCubitState {
-  const factory _Authenticated(user_models.User user) = _$_Authenticated;
+  const factory _Authenticated(final user_models.User user) = _$_Authenticated;
 
   user_models.User get user;
   @JsonKey(ignore: true)
-  _$AuthenticatedCopyWith<_Authenticated> get copyWith =>
+  _$$_AuthenticatedCopyWith<_$_Authenticated> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$UnauthenticatedCopyWith<$Res> {
-  factory _$UnauthenticatedCopyWith(
-          _Unauthenticated value, $Res Function(_Unauthenticated) then) =
-      __$UnauthenticatedCopyWithImpl<$Res>;
+abstract class _$$_UnauthenticatedCopyWith<$Res> {
+  factory _$$_UnauthenticatedCopyWith(
+          _$_Unauthenticated value, $Res Function(_$_Unauthenticated) then) =
+      __$$_UnauthenticatedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$UnauthenticatedCopyWithImpl<$Res>
+class __$$_UnauthenticatedCopyWithImpl<$Res>
     extends _$FirebaseAuthenticationCubitStateCopyWithImpl<$Res>
-    implements _$UnauthenticatedCopyWith<$Res> {
-  __$UnauthenticatedCopyWithImpl(
-      _Unauthenticated _value, $Res Function(_Unauthenticated) _then)
-      : super(_value, (v) => _then(v as _Unauthenticated));
+    implements _$$_UnauthenticatedCopyWith<$Res> {
+  __$$_UnauthenticatedCopyWithImpl(
+      _$_Unauthenticated _value, $Res Function(_$_Unauthenticated) _then)
+      : super(_value, (v) => _then(v as _$_Unauthenticated));
 
   @override
-  _Unauthenticated get _value => super._value as _Unauthenticated;
+  _$_Unauthenticated get _value => super._value as _$_Unauthenticated;
 }
 
 /// @nodoc
@@ -627,7 +600,7 @@ class _$_Unauthenticated implements _Unauthenticated {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Unauthenticated);
+        (other.runtimeType == runtimeType && other is _$_Unauthenticated);
   }
 
   @override

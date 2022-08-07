@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'network_image_cubit.dart';
@@ -11,31 +12,7 @@ part of 'network_image_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$NetworkImageStateTearOff {
-  const _$NetworkImageStateTearOff();
-
-  _Loading loading() {
-    return const _Loading();
-  }
-
-  _ImageLoaded imageLoaded(ImageProvider<Object> image) {
-    return _ImageLoaded(
-      image,
-    );
-  }
-
-  _Error error(Object error) {
-    return _Error(
-      error,
-    );
-  }
-}
-
-/// @nodoc
-const $NetworkImageState = _$NetworkImageStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$NetworkImageState {
@@ -103,19 +80,21 @@ class _$NetworkImageStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$LoadingCopyWith<$Res> {
-  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) then) =
-      __$LoadingCopyWithImpl<$Res>;
+abstract class _$$_LoadingCopyWith<$Res> {
+  factory _$$_LoadingCopyWith(
+          _$_Loading value, $Res Function(_$_Loading) then) =
+      __$$_LoadingCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$LoadingCopyWithImpl<$Res> extends _$NetworkImageStateCopyWithImpl<$Res>
-    implements _$LoadingCopyWith<$Res> {
-  __$LoadingCopyWithImpl(_Loading _value, $Res Function(_Loading) _then)
-      : super(_value, (v) => _then(v as _Loading));
+class __$$_LoadingCopyWithImpl<$Res>
+    extends _$NetworkImageStateCopyWithImpl<$Res>
+    implements _$$_LoadingCopyWith<$Res> {
+  __$$_LoadingCopyWithImpl(_$_Loading _value, $Res Function(_$_Loading) _then)
+      : super(_value, (v) => _then(v as _$_Loading));
 
   @override
-  _Loading get _value => super._value as _Loading;
+  _$_Loading get _value => super._value as _$_Loading;
 }
 
 /// @nodoc
@@ -131,7 +110,7 @@ class _$_Loading implements _Loading {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Loading);
+        (other.runtimeType == runtimeType && other is _$_Loading);
   }
 
   @override
@@ -211,29 +190,29 @@ abstract class _Loading implements NetworkImageState {
 }
 
 /// @nodoc
-abstract class _$ImageLoadedCopyWith<$Res> {
-  factory _$ImageLoadedCopyWith(
-          _ImageLoaded value, $Res Function(_ImageLoaded) then) =
-      __$ImageLoadedCopyWithImpl<$Res>;
+abstract class _$$_ImageLoadedCopyWith<$Res> {
+  factory _$$_ImageLoadedCopyWith(
+          _$_ImageLoaded value, $Res Function(_$_ImageLoaded) then) =
+      __$$_ImageLoadedCopyWithImpl<$Res>;
   $Res call({ImageProvider<Object> image});
 }
 
 /// @nodoc
-class __$ImageLoadedCopyWithImpl<$Res>
+class __$$_ImageLoadedCopyWithImpl<$Res>
     extends _$NetworkImageStateCopyWithImpl<$Res>
-    implements _$ImageLoadedCopyWith<$Res> {
-  __$ImageLoadedCopyWithImpl(
-      _ImageLoaded _value, $Res Function(_ImageLoaded) _then)
-      : super(_value, (v) => _then(v as _ImageLoaded));
+    implements _$$_ImageLoadedCopyWith<$Res> {
+  __$$_ImageLoadedCopyWithImpl(
+      _$_ImageLoaded _value, $Res Function(_$_ImageLoaded) _then)
+      : super(_value, (v) => _then(v as _$_ImageLoaded));
 
   @override
-  _ImageLoaded get _value => super._value as _ImageLoaded;
+  _$_ImageLoaded get _value => super._value as _$_ImageLoaded;
 
   @override
   $Res call({
     Object? image = freezed,
   }) {
-    return _then(_ImageLoaded(
+    return _then(_$_ImageLoaded(
       image == freezed
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
@@ -259,17 +238,18 @@ class _$_ImageLoaded implements _ImageLoaded {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ImageLoaded &&
-            (identical(other.image, image) || other.image == image));
+            other is _$_ImageLoaded &&
+            const DeepCollectionEquality().equals(other.image, image));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, image);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(image));
 
   @JsonKey(ignore: true)
   @override
-  _$ImageLoadedCopyWith<_ImageLoaded> get copyWith =>
-      __$ImageLoadedCopyWithImpl<_ImageLoaded>(this, _$identity);
+  _$$_ImageLoadedCopyWith<_$_ImageLoaded> get copyWith =>
+      __$$_ImageLoadedCopyWithImpl<_$_ImageLoaded>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -341,35 +321,36 @@ class _$_ImageLoaded implements _ImageLoaded {
 }
 
 abstract class _ImageLoaded implements NetworkImageState {
-  const factory _ImageLoaded(ImageProvider<Object> image) = _$_ImageLoaded;
+  const factory _ImageLoaded(final ImageProvider<Object> image) =
+      _$_ImageLoaded;
 
   ImageProvider<Object> get image;
   @JsonKey(ignore: true)
-  _$ImageLoadedCopyWith<_ImageLoaded> get copyWith =>
+  _$$_ImageLoadedCopyWith<_$_ImageLoaded> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$ErrorCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) then) =
-      __$ErrorCopyWithImpl<$Res>;
+abstract class _$$_ErrorCopyWith<$Res> {
+  factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
+      __$$_ErrorCopyWithImpl<$Res>;
   $Res call({Object error});
 }
 
 /// @nodoc
-class __$ErrorCopyWithImpl<$Res> extends _$NetworkImageStateCopyWithImpl<$Res>
-    implements _$ErrorCopyWith<$Res> {
-  __$ErrorCopyWithImpl(_Error _value, $Res Function(_Error) _then)
-      : super(_value, (v) => _then(v as _Error));
+class __$$_ErrorCopyWithImpl<$Res> extends _$NetworkImageStateCopyWithImpl<$Res>
+    implements _$$_ErrorCopyWith<$Res> {
+  __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
+      : super(_value, (v) => _then(v as _$_Error));
 
   @override
-  _Error get _value => super._value as _Error;
+  _$_Error get _value => super._value as _$_Error;
 
   @override
   $Res call({
     Object? error = freezed,
   }) {
-    return _then(_Error(
+    return _then(_$_Error(
       error == freezed
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -395,7 +376,7 @@ class _$_Error implements _Error {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Error &&
+            other is _$_Error &&
             const DeepCollectionEquality().equals(other.error, error));
   }
 
@@ -405,8 +386,8 @@ class _$_Error implements _Error {
 
   @JsonKey(ignore: true)
   @override
-  _$ErrorCopyWith<_Error> get copyWith =>
-      __$ErrorCopyWithImpl<_Error>(this, _$identity);
+  _$$_ErrorCopyWith<_$_Error> get copyWith =>
+      __$$_ErrorCopyWithImpl<_$_Error>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -478,9 +459,10 @@ class _$_Error implements _Error {
 }
 
 abstract class _Error implements NetworkImageState {
-  const factory _Error(Object error) = _$_Error;
+  const factory _Error(final Object error) = _$_Error;
 
   Object get error;
   @JsonKey(ignore: true)
-  _$ErrorCopyWith<_Error> get copyWith => throw _privateConstructorUsedError;
+  _$$_ErrorCopyWith<_$_Error> get copyWith =>
+      throw _privateConstructorUsedError;
 }

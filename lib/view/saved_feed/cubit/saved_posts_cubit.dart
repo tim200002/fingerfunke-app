@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import '../../../models/post/post.dart';
 import '../../../repositories/post_repository/post_repository.dart';
 import '../../../repositories/post_repository/post_repository.impl.dart';
+import '../../../utils/extensions/first_where_or_null.dart';
 import '../../../utils/type_aliases.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 

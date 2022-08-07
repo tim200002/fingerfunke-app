@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'report_send_cubit.dart';
+part of 'feedback_send_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,11 +15,11 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$ReportSendState {
+mixin _$FeedbackSendState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(UserGeneratedDocument doc, ReportType type,
-            List<ReportReason> reasons)
+    required TResult Function(List<UserFeedbackCategories> categories,
+            TextEditingController title, TextEditingController description)
         editing,
     required TResult Function() sending,
     required TResult Function() sent,
@@ -28,8 +28,8 @@ mixin _$ReportSendState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(UserGeneratedDocument doc, ReportType type,
-            List<ReportReason> reasons)?
+    TResult Function(List<UserFeedbackCategories> categories,
+            TextEditingController title, TextEditingController description)?
         editing,
     TResult Function()? sending,
     TResult Function()? sent,
@@ -38,8 +38,8 @@ mixin _$ReportSendState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(UserGeneratedDocument doc, ReportType type,
-            List<ReportReason> reasons)?
+    TResult Function(List<UserFeedbackCategories> categories,
+            TextEditingController title, TextEditingController description)?
         editing,
     TResult Function()? sending,
     TResult Function()? sent,
@@ -75,20 +75,20 @@ mixin _$ReportSendState {
 }
 
 /// @nodoc
-abstract class $ReportSendStateCopyWith<$Res> {
-  factory $ReportSendStateCopyWith(
-          ReportSendState value, $Res Function(ReportSendState) then) =
-      _$ReportSendStateCopyWithImpl<$Res>;
+abstract class $FeedbackSendStateCopyWith<$Res> {
+  factory $FeedbackSendStateCopyWith(
+          FeedbackSendState value, $Res Function(FeedbackSendState) then) =
+      _$FeedbackSendStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$ReportSendStateCopyWithImpl<$Res>
-    implements $ReportSendStateCopyWith<$Res> {
-  _$ReportSendStateCopyWithImpl(this._value, this._then);
+class _$FeedbackSendStateCopyWithImpl<$Res>
+    implements $FeedbackSendStateCopyWith<$Res> {
+  _$FeedbackSendStateCopyWithImpl(this._value, this._then);
 
-  final ReportSendState _value;
+  final FeedbackSendState _value;
   // ignore: unused_field
-  final $Res Function(ReportSendState) _then;
+  final $Res Function(FeedbackSendState) _then;
 }
 
 /// @nodoc
@@ -97,11 +97,14 @@ abstract class _$$_EditingCopyWith<$Res> {
           _$_Editing value, $Res Function(_$_Editing) then) =
       __$$_EditingCopyWithImpl<$Res>;
   $Res call(
-      {UserGeneratedDocument doc, ReportType type, List<ReportReason> reasons});
+      {List<UserFeedbackCategories> categories,
+      TextEditingController title,
+      TextEditingController description});
 }
 
 /// @nodoc
-class __$$_EditingCopyWithImpl<$Res> extends _$ReportSendStateCopyWithImpl<$Res>
+class __$$_EditingCopyWithImpl<$Res>
+    extends _$FeedbackSendStateCopyWithImpl<$Res>
     implements _$$_EditingCopyWith<$Res> {
   __$$_EditingCopyWithImpl(_$_Editing _value, $Res Function(_$_Editing) _then)
       : super(_value, (v) => _then(v as _$_Editing));
@@ -111,23 +114,23 @@ class __$$_EditingCopyWithImpl<$Res> extends _$ReportSendStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? doc = freezed,
-    Object? type = freezed,
-    Object? reasons = freezed,
+    Object? categories = freezed,
+    Object? title = freezed,
+    Object? description = freezed,
   }) {
     return _then(_$_Editing(
-      doc == freezed
-          ? _value.doc
-          : doc // ignore: cast_nullable_to_non_nullable
-              as UserGeneratedDocument,
-      type == freezed
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as ReportType,
-      reasons == freezed
-          ? _value._reasons
-          : reasons // ignore: cast_nullable_to_non_nullable
-              as List<ReportReason>,
+      categories == freezed
+          ? _value._categories
+          : categories // ignore: cast_nullable_to_non_nullable
+              as List<UserFeedbackCategories>,
+      title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
+      description == freezed
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
     ));
   }
 }
@@ -135,23 +138,25 @@ class __$$_EditingCopyWithImpl<$Res> extends _$ReportSendStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Editing implements _Editing {
-  const _$_Editing(this.doc, this.type, final List<ReportReason> reasons)
-      : _reasons = reasons;
+  const _$_Editing(final List<UserFeedbackCategories> categories, this.title,
+      this.description)
+      : _categories = categories;
 
+  final List<UserFeedbackCategories> _categories;
   @override
-  final UserGeneratedDocument doc;
-  @override
-  final ReportType type;
-  final List<ReportReason> _reasons;
-  @override
-  List<ReportReason> get reasons {
+  List<UserFeedbackCategories> get categories {
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_reasons);
+    return EqualUnmodifiableListView(_categories);
   }
 
   @override
+  final TextEditingController title;
+  @override
+  final TextEditingController description;
+
+  @override
   String toString() {
-    return 'ReportSendState.editing(doc: $doc, type: $type, reasons: $reasons)';
+    return 'FeedbackSendState.editing(categories: $categories, title: $title, description: $description)';
   }
 
   @override
@@ -159,17 +164,19 @@ class _$_Editing implements _Editing {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Editing &&
-            const DeepCollectionEquality().equals(other.doc, doc) &&
-            const DeepCollectionEquality().equals(other.type, type) &&
-            const DeepCollectionEquality().equals(other._reasons, _reasons));
+            const DeepCollectionEquality()
+                .equals(other._categories, _categories) &&
+            const DeepCollectionEquality().equals(other.title, title) &&
+            const DeepCollectionEquality()
+                .equals(other.description, description));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(doc),
-      const DeepCollectionEquality().hash(type),
-      const DeepCollectionEquality().hash(_reasons));
+      const DeepCollectionEquality().hash(_categories),
+      const DeepCollectionEquality().hash(title),
+      const DeepCollectionEquality().hash(description));
 
   @JsonKey(ignore: true)
   @override
@@ -179,34 +186,34 @@ class _$_Editing implements _Editing {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(UserGeneratedDocument doc, ReportType type,
-            List<ReportReason> reasons)
+    required TResult Function(List<UserFeedbackCategories> categories,
+            TextEditingController title, TextEditingController description)
         editing,
     required TResult Function() sending,
     required TResult Function() sent,
     required TResult Function(dynamic e) error,
   }) {
-    return editing(doc, type, reasons);
+    return editing(categories, title, description);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(UserGeneratedDocument doc, ReportType type,
-            List<ReportReason> reasons)?
+    TResult Function(List<UserFeedbackCategories> categories,
+            TextEditingController title, TextEditingController description)?
         editing,
     TResult Function()? sending,
     TResult Function()? sent,
     TResult Function(dynamic e)? error,
   }) {
-    return editing?.call(doc, type, reasons);
+    return editing?.call(categories, title, description);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(UserGeneratedDocument doc, ReportType type,
-            List<ReportReason> reasons)?
+    TResult Function(List<UserFeedbackCategories> categories,
+            TextEditingController title, TextEditingController description)?
         editing,
     TResult Function()? sending,
     TResult Function()? sent,
@@ -214,7 +221,7 @@ class _$_Editing implements _Editing {
     required TResult orElse(),
   }) {
     if (editing != null) {
-      return editing(doc, type, reasons);
+      return editing(categories, title, description);
     }
     return orElse();
   }
@@ -257,13 +264,15 @@ class _$_Editing implements _Editing {
   }
 }
 
-abstract class _Editing implements ReportSendState {
-  const factory _Editing(final UserGeneratedDocument doc, final ReportType type,
-      final List<ReportReason> reasons) = _$_Editing;
+abstract class _Editing implements FeedbackSendState {
+  const factory _Editing(
+      final List<UserFeedbackCategories> categories,
+      final TextEditingController title,
+      final TextEditingController description) = _$_Editing;
 
-  UserGeneratedDocument get doc;
-  ReportType get type;
-  List<ReportReason> get reasons;
+  List<UserFeedbackCategories> get categories;
+  TextEditingController get title;
+  TextEditingController get description;
   @JsonKey(ignore: true)
   _$$_EditingCopyWith<_$_Editing> get copyWith =>
       throw _privateConstructorUsedError;
@@ -277,7 +286,8 @@ abstract class _$$_SendingCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_SendingCopyWithImpl<$Res> extends _$ReportSendStateCopyWithImpl<$Res>
+class __$$_SendingCopyWithImpl<$Res>
+    extends _$FeedbackSendStateCopyWithImpl<$Res>
     implements _$$_SendingCopyWith<$Res> {
   __$$_SendingCopyWithImpl(_$_Sending _value, $Res Function(_$_Sending) _then)
       : super(_value, (v) => _then(v as _$_Sending));
@@ -293,7 +303,7 @@ class _$_Sending implements _Sending {
 
   @override
   String toString() {
-    return 'ReportSendState.sending()';
+    return 'FeedbackSendState.sending()';
   }
 
   @override
@@ -308,8 +318,8 @@ class _$_Sending implements _Sending {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(UserGeneratedDocument doc, ReportType type,
-            List<ReportReason> reasons)
+    required TResult Function(List<UserFeedbackCategories> categories,
+            TextEditingController title, TextEditingController description)
         editing,
     required TResult Function() sending,
     required TResult Function() sent,
@@ -321,8 +331,8 @@ class _$_Sending implements _Sending {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(UserGeneratedDocument doc, ReportType type,
-            List<ReportReason> reasons)?
+    TResult Function(List<UserFeedbackCategories> categories,
+            TextEditingController title, TextEditingController description)?
         editing,
     TResult Function()? sending,
     TResult Function()? sent,
@@ -334,8 +344,8 @@ class _$_Sending implements _Sending {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(UserGeneratedDocument doc, ReportType type,
-            List<ReportReason> reasons)?
+    TResult Function(List<UserFeedbackCategories> categories,
+            TextEditingController title, TextEditingController description)?
         editing,
     TResult Function()? sending,
     TResult Function()? sent,
@@ -386,7 +396,7 @@ class _$_Sending implements _Sending {
   }
 }
 
-abstract class _Sending implements ReportSendState {
+abstract class _Sending implements FeedbackSendState {
   const factory _Sending() = _$_Sending;
 }
 
@@ -397,7 +407,7 @@ abstract class _$$_SentCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_SentCopyWithImpl<$Res> extends _$ReportSendStateCopyWithImpl<$Res>
+class __$$_SentCopyWithImpl<$Res> extends _$FeedbackSendStateCopyWithImpl<$Res>
     implements _$$_SentCopyWith<$Res> {
   __$$_SentCopyWithImpl(_$_Sent _value, $Res Function(_$_Sent) _then)
       : super(_value, (v) => _then(v as _$_Sent));
@@ -413,7 +423,7 @@ class _$_Sent implements _Sent {
 
   @override
   String toString() {
-    return 'ReportSendState.sent()';
+    return 'FeedbackSendState.sent()';
   }
 
   @override
@@ -428,8 +438,8 @@ class _$_Sent implements _Sent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(UserGeneratedDocument doc, ReportType type,
-            List<ReportReason> reasons)
+    required TResult Function(List<UserFeedbackCategories> categories,
+            TextEditingController title, TextEditingController description)
         editing,
     required TResult Function() sending,
     required TResult Function() sent,
@@ -441,8 +451,8 @@ class _$_Sent implements _Sent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(UserGeneratedDocument doc, ReportType type,
-            List<ReportReason> reasons)?
+    TResult Function(List<UserFeedbackCategories> categories,
+            TextEditingController title, TextEditingController description)?
         editing,
     TResult Function()? sending,
     TResult Function()? sent,
@@ -454,8 +464,8 @@ class _$_Sent implements _Sent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(UserGeneratedDocument doc, ReportType type,
-            List<ReportReason> reasons)?
+    TResult Function(List<UserFeedbackCategories> categories,
+            TextEditingController title, TextEditingController description)?
         editing,
     TResult Function()? sending,
     TResult Function()? sent,
@@ -506,7 +516,7 @@ class _$_Sent implements _Sent {
   }
 }
 
-abstract class _Sent implements ReportSendState {
+abstract class _Sent implements FeedbackSendState {
   const factory _Sent() = _$_Sent;
 }
 
@@ -518,7 +528,7 @@ abstract class _$$_ErrorCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_ErrorCopyWithImpl<$Res> extends _$ReportSendStateCopyWithImpl<$Res>
+class __$$_ErrorCopyWithImpl<$Res> extends _$FeedbackSendStateCopyWithImpl<$Res>
     implements _$$_ErrorCopyWith<$Res> {
   __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
       : super(_value, (v) => _then(v as _$_Error));
@@ -549,7 +559,7 @@ class _$_Error implements _Error {
 
   @override
   String toString() {
-    return 'ReportSendState.error(e: $e)';
+    return 'FeedbackSendState.error(e: $e)';
   }
 
   @override
@@ -572,8 +582,8 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(UserGeneratedDocument doc, ReportType type,
-            List<ReportReason> reasons)
+    required TResult Function(List<UserFeedbackCategories> categories,
+            TextEditingController title, TextEditingController description)
         editing,
     required TResult Function() sending,
     required TResult Function() sent,
@@ -585,8 +595,8 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(UserGeneratedDocument doc, ReportType type,
-            List<ReportReason> reasons)?
+    TResult Function(List<UserFeedbackCategories> categories,
+            TextEditingController title, TextEditingController description)?
         editing,
     TResult Function()? sending,
     TResult Function()? sent,
@@ -598,8 +608,8 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(UserGeneratedDocument doc, ReportType type,
-            List<ReportReason> reasons)?
+    TResult Function(List<UserFeedbackCategories> categories,
+            TextEditingController title, TextEditingController description)?
         editing,
     TResult Function()? sending,
     TResult Function()? sent,
@@ -650,7 +660,7 @@ class _$_Error implements _Error {
   }
 }
 
-abstract class _Error implements ReportSendState {
+abstract class _Error implements FeedbackSendState {
   const factory _Error(final dynamic e) = _$_Error;
 
   dynamic get e;

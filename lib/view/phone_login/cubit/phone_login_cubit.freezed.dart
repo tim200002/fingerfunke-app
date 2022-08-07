@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'phone_login_cubit.dart';
@@ -11,40 +12,7 @@ part of 'phone_login_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$PhoneLoginStateTearOff {
-  const _$PhoneLoginStateTearOff();
-
-  _EnterPhoneNumber enterPhoneNumber({String? withErrorMessage}) {
-    return _EnterPhoneNumber(
-      withErrorMessage: withErrorMessage,
-    );
-  }
-
-  _WaitForCodeSent waitForCodeSent() {
-    return const _WaitForCodeSent();
-  }
-
-  _EnterCode enterCode(
-      {required String verificationId,
-      required bool autoDetecting,
-      String? withErrorMessage}) {
-    return _EnterCode(
-      verificationId: verificationId,
-      autoDetecting: autoDetecting,
-      withErrorMessage: withErrorMessage,
-    );
-  }
-
-  _WaitForLogin waitForLogIn() {
-    return const _WaitForLogin();
-  }
-}
-
-/// @nodoc
-const $PhoneLoginState = _$PhoneLoginStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$PhoneLoginState {
@@ -124,29 +92,29 @@ class _$PhoneLoginStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$EnterPhoneNumberCopyWith<$Res> {
-  factory _$EnterPhoneNumberCopyWith(
-          _EnterPhoneNumber value, $Res Function(_EnterPhoneNumber) then) =
-      __$EnterPhoneNumberCopyWithImpl<$Res>;
+abstract class _$$_EnterPhoneNumberCopyWith<$Res> {
+  factory _$$_EnterPhoneNumberCopyWith(
+          _$_EnterPhoneNumber value, $Res Function(_$_EnterPhoneNumber) then) =
+      __$$_EnterPhoneNumberCopyWithImpl<$Res>;
   $Res call({String? withErrorMessage});
 }
 
 /// @nodoc
-class __$EnterPhoneNumberCopyWithImpl<$Res>
+class __$$_EnterPhoneNumberCopyWithImpl<$Res>
     extends _$PhoneLoginStateCopyWithImpl<$Res>
-    implements _$EnterPhoneNumberCopyWith<$Res> {
-  __$EnterPhoneNumberCopyWithImpl(
-      _EnterPhoneNumber _value, $Res Function(_EnterPhoneNumber) _then)
-      : super(_value, (v) => _then(v as _EnterPhoneNumber));
+    implements _$$_EnterPhoneNumberCopyWith<$Res> {
+  __$$_EnterPhoneNumberCopyWithImpl(
+      _$_EnterPhoneNumber _value, $Res Function(_$_EnterPhoneNumber) _then)
+      : super(_value, (v) => _then(v as _$_EnterPhoneNumber));
 
   @override
-  _EnterPhoneNumber get _value => super._value as _EnterPhoneNumber;
+  _$_EnterPhoneNumber get _value => super._value as _$_EnterPhoneNumber;
 
   @override
   $Res call({
     Object? withErrorMessage = freezed,
   }) {
-    return _then(_EnterPhoneNumber(
+    return _then(_$_EnterPhoneNumber(
       withErrorMessage: withErrorMessage == freezed
           ? _value.withErrorMessage
           : withErrorMessage // ignore: cast_nullable_to_non_nullable
@@ -172,18 +140,19 @@ class _$_EnterPhoneNumber implements _EnterPhoneNumber {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _EnterPhoneNumber &&
-            (identical(other.withErrorMessage, withErrorMessage) ||
-                other.withErrorMessage == withErrorMessage));
+            other is _$_EnterPhoneNumber &&
+            const DeepCollectionEquality()
+                .equals(other.withErrorMessage, withErrorMessage));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, withErrorMessage);
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(withErrorMessage));
 
   @JsonKey(ignore: true)
   @override
-  _$EnterPhoneNumberCopyWith<_EnterPhoneNumber> get copyWith =>
-      __$EnterPhoneNumberCopyWithImpl<_EnterPhoneNumber>(this, _$identity);
+  _$$_EnterPhoneNumberCopyWith<_$_EnterPhoneNumber> get copyWith =>
+      __$$_EnterPhoneNumberCopyWithImpl<_$_EnterPhoneNumber>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -267,32 +236,32 @@ class _$_EnterPhoneNumber implements _EnterPhoneNumber {
 }
 
 abstract class _EnterPhoneNumber implements PhoneLoginState {
-  const factory _EnterPhoneNumber({String? withErrorMessage}) =
+  const factory _EnterPhoneNumber({final String? withErrorMessage}) =
       _$_EnterPhoneNumber;
 
   String? get withErrorMessage;
   @JsonKey(ignore: true)
-  _$EnterPhoneNumberCopyWith<_EnterPhoneNumber> get copyWith =>
+  _$$_EnterPhoneNumberCopyWith<_$_EnterPhoneNumber> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$WaitForCodeSentCopyWith<$Res> {
-  factory _$WaitForCodeSentCopyWith(
-          _WaitForCodeSent value, $Res Function(_WaitForCodeSent) then) =
-      __$WaitForCodeSentCopyWithImpl<$Res>;
+abstract class _$$_WaitForCodeSentCopyWith<$Res> {
+  factory _$$_WaitForCodeSentCopyWith(
+          _$_WaitForCodeSent value, $Res Function(_$_WaitForCodeSent) then) =
+      __$$_WaitForCodeSentCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$WaitForCodeSentCopyWithImpl<$Res>
+class __$$_WaitForCodeSentCopyWithImpl<$Res>
     extends _$PhoneLoginStateCopyWithImpl<$Res>
-    implements _$WaitForCodeSentCopyWith<$Res> {
-  __$WaitForCodeSentCopyWithImpl(
-      _WaitForCodeSent _value, $Res Function(_WaitForCodeSent) _then)
-      : super(_value, (v) => _then(v as _WaitForCodeSent));
+    implements _$$_WaitForCodeSentCopyWith<$Res> {
+  __$$_WaitForCodeSentCopyWithImpl(
+      _$_WaitForCodeSent _value, $Res Function(_$_WaitForCodeSent) _then)
+      : super(_value, (v) => _then(v as _$_WaitForCodeSent));
 
   @override
-  _WaitForCodeSent get _value => super._value as _WaitForCodeSent;
+  _$_WaitForCodeSent get _value => super._value as _$_WaitForCodeSent;
 }
 
 /// @nodoc
@@ -308,7 +277,7 @@ class _$_WaitForCodeSent implements _WaitForCodeSent {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _WaitForCodeSent);
+        (other.runtimeType == runtimeType && other is _$_WaitForCodeSent);
   }
 
   @override
@@ -400,22 +369,24 @@ abstract class _WaitForCodeSent implements PhoneLoginState {
 }
 
 /// @nodoc
-abstract class _$EnterCodeCopyWith<$Res> {
-  factory _$EnterCodeCopyWith(
-          _EnterCode value, $Res Function(_EnterCode) then) =
-      __$EnterCodeCopyWithImpl<$Res>;
+abstract class _$$_EnterCodeCopyWith<$Res> {
+  factory _$$_EnterCodeCopyWith(
+          _$_EnterCode value, $Res Function(_$_EnterCode) then) =
+      __$$_EnterCodeCopyWithImpl<$Res>;
   $Res call(
       {String verificationId, bool autoDetecting, String? withErrorMessage});
 }
 
 /// @nodoc
-class __$EnterCodeCopyWithImpl<$Res> extends _$PhoneLoginStateCopyWithImpl<$Res>
-    implements _$EnterCodeCopyWith<$Res> {
-  __$EnterCodeCopyWithImpl(_EnterCode _value, $Res Function(_EnterCode) _then)
-      : super(_value, (v) => _then(v as _EnterCode));
+class __$$_EnterCodeCopyWithImpl<$Res>
+    extends _$PhoneLoginStateCopyWithImpl<$Res>
+    implements _$$_EnterCodeCopyWith<$Res> {
+  __$$_EnterCodeCopyWithImpl(
+      _$_EnterCode _value, $Res Function(_$_EnterCode) _then)
+      : super(_value, (v) => _then(v as _$_EnterCode));
 
   @override
-  _EnterCode get _value => super._value as _EnterCode;
+  _$_EnterCode get _value => super._value as _$_EnterCode;
 
   @override
   $Res call({
@@ -423,7 +394,7 @@ class __$EnterCodeCopyWithImpl<$Res> extends _$PhoneLoginStateCopyWithImpl<$Res>
     Object? autoDetecting = freezed,
     Object? withErrorMessage = freezed,
   }) {
-    return _then(_EnterCode(
+    return _then(_$_EnterCode(
       verificationId: verificationId == freezed
           ? _value.verificationId
           : verificationId // ignore: cast_nullable_to_non_nullable
@@ -464,23 +435,26 @@ class _$_EnterCode implements _EnterCode {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _EnterCode &&
-            (identical(other.verificationId, verificationId) ||
-                other.verificationId == verificationId) &&
-            (identical(other.autoDetecting, autoDetecting) ||
-                other.autoDetecting == autoDetecting) &&
-            (identical(other.withErrorMessage, withErrorMessage) ||
-                other.withErrorMessage == withErrorMessage));
+            other is _$_EnterCode &&
+            const DeepCollectionEquality()
+                .equals(other.verificationId, verificationId) &&
+            const DeepCollectionEquality()
+                .equals(other.autoDetecting, autoDetecting) &&
+            const DeepCollectionEquality()
+                .equals(other.withErrorMessage, withErrorMessage));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, verificationId, autoDetecting, withErrorMessage);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(verificationId),
+      const DeepCollectionEquality().hash(autoDetecting),
+      const DeepCollectionEquality().hash(withErrorMessage));
 
   @JsonKey(ignore: true)
   @override
-  _$EnterCodeCopyWith<_EnterCode> get copyWith =>
-      __$EnterCodeCopyWithImpl<_EnterCode>(this, _$identity);
+  _$$_EnterCodeCopyWith<_$_EnterCode> get copyWith =>
+      __$$_EnterCodeCopyWithImpl<_$_EnterCode>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -565,35 +539,35 @@ class _$_EnterCode implements _EnterCode {
 
 abstract class _EnterCode implements PhoneLoginState {
   const factory _EnterCode(
-      {required String verificationId,
-      required bool autoDetecting,
-      String? withErrorMessage}) = _$_EnterCode;
+      {required final String verificationId,
+      required final bool autoDetecting,
+      final String? withErrorMessage}) = _$_EnterCode;
 
   String get verificationId;
   bool get autoDetecting;
   String? get withErrorMessage;
   @JsonKey(ignore: true)
-  _$EnterCodeCopyWith<_EnterCode> get copyWith =>
+  _$$_EnterCodeCopyWith<_$_EnterCode> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$WaitForLoginCopyWith<$Res> {
-  factory _$WaitForLoginCopyWith(
-          _WaitForLogin value, $Res Function(_WaitForLogin) then) =
-      __$WaitForLoginCopyWithImpl<$Res>;
+abstract class _$$_WaitForLoginCopyWith<$Res> {
+  factory _$$_WaitForLoginCopyWith(
+          _$_WaitForLogin value, $Res Function(_$_WaitForLogin) then) =
+      __$$_WaitForLoginCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$WaitForLoginCopyWithImpl<$Res>
+class __$$_WaitForLoginCopyWithImpl<$Res>
     extends _$PhoneLoginStateCopyWithImpl<$Res>
-    implements _$WaitForLoginCopyWith<$Res> {
-  __$WaitForLoginCopyWithImpl(
-      _WaitForLogin _value, $Res Function(_WaitForLogin) _then)
-      : super(_value, (v) => _then(v as _WaitForLogin));
+    implements _$$_WaitForLoginCopyWith<$Res> {
+  __$$_WaitForLoginCopyWithImpl(
+      _$_WaitForLogin _value, $Res Function(_$_WaitForLogin) _then)
+      : super(_value, (v) => _then(v as _$_WaitForLogin));
 
   @override
-  _WaitForLogin get _value => super._value as _WaitForLogin;
+  _$_WaitForLogin get _value => super._value as _$_WaitForLogin;
 }
 
 /// @nodoc
@@ -609,7 +583,7 @@ class _$_WaitForLogin implements _WaitForLogin {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _WaitForLogin);
+        (other.runtimeType == runtimeType && other is _$_WaitForLogin);
   }
 
   @override
