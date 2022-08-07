@@ -30,7 +30,7 @@ class PostPage extends StatelessWidget {
     return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.surface,
         body: CustomScrollView(
-          slivers: <Widget>[
+          slivers: [
             HeaderSection(editing),
             SliverToBoxAdapter(
               child: Column(
@@ -115,9 +115,7 @@ class PostPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return editing
-        ? Hero(
-            tag: editingHeroTag,
-            child: _editProviders(context, (c) => _content(c)))
+        ? _editProviders(context, (c) => _content(c))
         : _viewProviders(context, (c) => _content(c));
   }
 }

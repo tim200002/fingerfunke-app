@@ -152,17 +152,12 @@ class _HomeViewState extends State<HomeView> {
                 selected: _activePage == _HomePages.feedPage,
                 onPressed: () =>
                     setState(() => _activePage = _HomePages.feedPage)),
-            Hero(
-                tag: PostPage.editingHeroTag,
-                child: Material(
-                  type: MaterialType.transparency,
-                  child: _bottomNavItem(context,
-                      title: l10n(context).lbl_create,
-                      icon: FeatherIcons.plus,
-                      color: Theme.of(context).colorScheme.primary,
-                      onPressed: () =>
-                          Navigator.of(context).pushNamed(Routes.postEditor)),
-                )),
+            _bottomNavItem(context,
+                title: l10n(context).lbl_create,
+                icon: FeatherIcons.plus,
+                color: Theme.of(context).colorScheme.primary,
+                onPressed: () =>
+                    Navigator.of(context).pushNamed(Routes.postEditor)),
             _bottomNavItem(context,
                 title: l10n(context).lbl_saved,
                 selected: _activePage == _HomePages.savedPage,

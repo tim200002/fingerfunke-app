@@ -296,7 +296,7 @@ class HeaderSection extends StatelessWidget {
               topLeft: Radius.circular(30))),
       expandedHeight: thumbnailHeight + titleHeight - titleOverlap - 40,
       flexibleSpace: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: const BorderRadius.vertical(bottom: Radius.circular(20)),
         child: FlexibleSpaceBar(
           stretchModes: const [
             StretchMode.zoomBackground,
@@ -335,9 +335,8 @@ class _Edit extends StatelessWidget {
     List<VideoUploadCubit> uploadCubits,
   ) {
     return ClipRRect(
-        borderRadius: const BorderRadius.only(
-          bottomLeft: HeaderSection.imgBorderRadius,
-          bottomRight: HeaderSection.imgBorderRadius,
+        borderRadius: const BorderRadius.vertical(
+          bottom: HeaderSection.imgBorderRadius,
         ),
         child: InkWell(
           onTap: uploadCubits.isNotEmpty
@@ -363,7 +362,8 @@ class _Edit extends StatelessWidget {
                         .colorScheme
                         .primaryContainer
                         .withOpacity(0.6),
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: const BorderRadius.vertical(
+                        bottom: Radius.circular(10)),
                   ),
                   child: Center(
                       child: Icon(
