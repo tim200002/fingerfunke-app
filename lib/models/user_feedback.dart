@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
 import 'abstract_models/abstract_models.dart';
@@ -16,7 +17,14 @@ enum UserFeedbackCategories {
   const UserFeedbackCategories(this.label);
 }
 
-enum UserFeedbackState { open, closed }
+enum UserFeedbackState {
+  open(Colors.red),
+  closed(Colors.teal);
+
+  final MaterialColor color;
+
+  const UserFeedbackState(this.color);
+}
 
 class UserFeedback extends UserGeneratedDocument {
   final String title;
@@ -65,7 +73,7 @@ class UserFeedback extends UserGeneratedDocument {
           .map((e) =>
               UserFeedbackCategories.values.firstWhere((r) => r.name == e))
           .toList(),
-      state: map["state"],
+      state: UserFeedbackState.values.firstWhere((e) => e.name == map["state"]),
       appVersion: map["appVersion"],
       title: map["title"],
       description: map["description"],

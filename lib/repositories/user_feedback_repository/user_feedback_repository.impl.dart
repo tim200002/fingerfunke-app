@@ -29,7 +29,7 @@ class UserFeedbackRepositoryImpl implements UserFeedbackRepository {
         .get();
     // sorting on client side to not require setting an index in firebase
     return docs.docs.map((m) => UserFeedback.fromDoc(m)).toList()
-      ..sort((a, b) => a.creationTime.compareTo(b.creationTime))
+      ..sort((a, b) => b.creationTime.compareTo(a.creationTime))
       ..toList();
   }
 
