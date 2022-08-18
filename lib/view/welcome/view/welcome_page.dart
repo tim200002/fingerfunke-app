@@ -31,7 +31,8 @@ class WelcomePage extends StatelessWidget {
                 style: GoogleFonts.signika(
                   fontSize: 19,
                   fontWeight: FontWeight.w500,
-                ))
+                )),
+            _betaIndicator()
           ],
         ),
       );
@@ -51,6 +52,28 @@ class WelcomePage extends StatelessWidget {
         ],
       ));
 
+  Widget _betaIndicator() {
+    const double indent = 10;
+    return Center(
+      child: Padding(
+          padding: const EdgeInsets.only(top: 20),
+          child: CustomPaint(
+              painter: const _Chevron(Colors.blue, indent),
+              child: Container(
+                margin: const EdgeInsets.only(right: indent),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
+                child: const Text(
+                  "beta@Erlangen", //"βeta",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 13),
+                ),
+              ))),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,4 +88,26 @@ class WelcomePage extends StatelessWidget {
       ),
     );
   }
+}
+
+class _Chevron extends CustomPainter {
+  final Color color;
+  final double indent;
+  const _Chevron(this.color, this.indent);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    Path path = Path()
+      ..moveTo(0, 0)
+      ..lineTo(0, size.height)
+      ..lineTo(size.width, size.height)
+      ..lineTo(size.width - indent, size.height / 2)
+      ..lineTo(size.width, 0)
+      ..close();
+
+    canvas.drawPath(path, Paint()..color = color);
+  }
+
+  @override
+  bool shouldRepaint(_) => false;
 }
