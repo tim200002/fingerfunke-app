@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/user/user.dart';
 
-class AdminAppBar {
+@immutable
+abstract class ClearanceAppBar extends StatelessWidget {
   static AppBar widget(BuildContext context, UserClearance clearance,
       {required String title, List<Widget>? actions}) {
     return AppBar(

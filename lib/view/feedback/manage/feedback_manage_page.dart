@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 import '../../../models/user/user.dart';
-import '../../../utils/util_widgets/admin_appbar.dart';
+import '../../../utils/util_widgets/clearance_appbar.dart';
 import '../../error/exception_view.dart';
 import 'cubit/feedback_manage_cubit.dart';
 
@@ -15,7 +15,7 @@ class FeedbackManagePage extends StatelessWidget {
     return BlocProvider<FeedbackManageCubit>(
         create: (context) => FeedbackManageCubit(),
         child: Scaffold(
-            appBar: AdminAppBar.widget(context, UserClearance.development,
+            appBar: ClearanceAppBar.widget(context, UserClearance.development,
                 title: "Feedback",
                 actions: [
                   BlocBuilder<FeedbackManageCubit, FeedbackManageState>(

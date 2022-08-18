@@ -1,9 +1,9 @@
 import '../../../models/user/user.dart';
-import '../../../utils/util_widgets/admin_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 
 import '../../../routes.dart';
+import '../../../utils/util_widgets/clearance_appbar.dart';
 
 class ModerationPage extends StatelessWidget {
   const ModerationPage({Key? key}) : super(key: key);
@@ -11,7 +11,7 @@ class ModerationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AdminAppBar.widget(context, UserClearance.moderation,
+      appBar: ClearanceAppBar.widget(context, UserClearance.moderation,
           title: "Übersicht"),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),

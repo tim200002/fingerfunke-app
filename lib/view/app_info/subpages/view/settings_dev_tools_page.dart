@@ -5,7 +5,7 @@ import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 import '../../../../cubits/live_config_cubit/live_config_cubit.dart';
 import '../../../../models/user/user.dart';
 import '../../../../utils/tools.dart';
-import '../../../../utils/util_widgets/admin_appbar.dart';
+import '../../../../utils/util_widgets/clearance_appbar.dart';
 import '../../../feedback/manage/feedback_manage_page.dart';
 import 'settings_dev_functions_page.dart';
 
@@ -15,7 +15,7 @@ class DevToolsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AdminAppBar.widget(context, UserClearance.development,
+      appBar: ClearanceAppBar.widget(context, UserClearance.development,
           title: l10n(context).lbl_devTools),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
