@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../models/user/user.dart';
 import '../../../utils/illustration.dart';
 import '../../../utils/util_widgets/admin_appbar.dart';
 import '../../error/exception_view.dart';
@@ -65,7 +66,7 @@ class ModPostReportPage extends StatelessWidget {
     return BlocProvider<ModPostCubit>(
       create: (context) => ModPostCubit(),
       child: Scaffold(
-          appBar: AdminAppBar.widget(context, AdminFunction.moderation,
+          appBar: AdminAppBar.widget(context, UserClearance.moderation,
               title: "gemeldete Posts"),
           body: Padding(
             padding: const EdgeInsets.all(20),

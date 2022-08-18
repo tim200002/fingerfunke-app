@@ -1,12 +1,12 @@
-import '../../../models/user/user.dart';
-import '../../../utils/util_widgets/admin_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 
+import '../../../models/user/user.dart';
 import '../../../routes.dart';
+import '../../../utils/util_widgets/admin_appbar.dart';
 
-class ModerationPage extends StatelessWidget {
-  const ModerationPage({Key? key}) : super(key: key);
+class MyWidget extends StatelessWidget {
+  const MyWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 import '../../utils/type_aliases.dart';
 import '../abstract_models/abstract_models.dart';
@@ -34,15 +35,23 @@ class UserInfo extends DatabaseDocument {
   List<Object?> get props => [id, name, picture];
 }
 
-typedef ClearanceLevel = int;
+enum UserClearance {
+  unauthenticated(0, "none", Colors.grey),
+  user(1, "user", Colors.blueGrey),
+  moderation(3, "mod", Colors.orange),
+  development(5, "dev", Colors.teal),
+  administrator(7, "admin", Colors.deepPurple);
 
+  final int level;
+  final String label;
+  final MaterialColor color;
+
+  const UserClearance(this.level, this.label, this.color);
+}
 
 class User extends UserInfo {
-  static const ClearanceLevel clearanceUser = 1;
-  static const ClearanceLevel clearanceAdmin = 7;
-
   final int? age;
-  final int? clearance;
+  final UserClearance? clearance;
   final List<FirestoreId> savedPosts;
 
   const User({
@@ -51,11 +60,11 @@ class User extends UserInfo {
     String? picture,
     this.savedPosts = const [],
     this.age,
-    this.clearance = 0,
+    this.clearance = UserClearance.user,
   }) : super(id: id, name: name, picture: picture);
 
-  hasClearance(ClearanceLevel level) {
-    return clearance != null ? clearance! >= level : false;
+  hasClearance(UserClearance c) {
+    return clearance != null ? clearance!.level >= c.level : false;
   }
 
   @override
@@ -65,7 +74,7 @@ class User extends UserInfo {
         'picture': picture,
         'savedPosts': savedPosts,
         'age': age,
-        'clearance': clearance
+        'clearance': clearance?.level
       };
 
   factory User.fromJson(Map<String, dynamic> map) => User(
@@ -73,10 +82,13 @@ class User extends UserInfo {
       name: map['name'] as String,
       picture: map['picture'] as String?,
       savedPosts: map['savedPosts'] != null
-          ? (map['savedPosts'] as List<dynamic>).map((e) => e as String).toList()
+          ? (map['savedPosts'] as List<dynamic>)
+              .map((e) => e as String)
+              .toList()
           : [],
       age: map['age'] as int?,
-      clearance: map['clearance'] as int?);
+      clearance: UserClearance.values
+          .firstWhere((e) => e.level >= (map['clearance'] as int? ?? 0)));
 
   factory User.fromDoc(DocumentSnapshot document) =>
       User.fromJson(documentSnaphsotToJson(document));

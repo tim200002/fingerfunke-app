@@ -5,6 +5,7 @@ import '../../../../models/user/user.dart';
 import '../../../../routes.dart';
 import '../../../../utils/dev_tools.dart';
 import '../../../../utils/tools.dart';
+import '../../../../utils/util_widgets/admin_appbar.dart';
 import '../../../../utils/util_widgets/clearance_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -72,21 +73,25 @@ class HomeDrawer extends StatelessWidget {
                     ),
                     const SizedBox(height: 25),
                     ClearanceBuilder(
-                      level: User.clearanceAdmin,
-                      builder: (_) => ListTile(
+                      clearance: UserClearance.development,
+                      builder: (_, c) => ListTile(
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.horizontal(
+                                right: Radius.circular(15))),
                         leading: const Icon(FeatherIcons.penTool),
                         title: Text(l10n(context).lbl_devTools),
+                        tileColor: c.color.shade100,
                         onTap: () =>
                             Navigator.of(context).pushNamed(Routes.devtools),
                       ),
                     ),
                     ClearanceBuilder(
-                      level: User.clearanceAdmin,
-                      builder: (_) => ListTile(
+                      clearance: UserClearance.moderation,
+                      builder: (_, c) => ListTile(
                         shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.horizontal(
                                 right: Radius.circular(15))),
-                        tileColor: Colors.orange.shade100,
+                        tileColor: c.color.shade100,
                         leading: const Icon(FeatherIcons.shield),
                         title: Text(l10n(context).lbl_moderation),
                         onTap: () =>

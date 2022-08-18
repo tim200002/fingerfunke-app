@@ -87,7 +87,7 @@ class _HomeViewState extends State<HomeView> {
           ),
           IconButton(
               onPressed: () => Navigator.of(context).pushNamed(Routes.feedback),
-              icon: const Icon(FeatherIcons.frown))
+              icon: const Icon(Icons.thumbs_up_down_rounded))
           /*IconButton(
               onPressed: null, //() => DevTools.showToDoSnackbar(context),
               icon: Icon(FeatherIcons.calendar))*/

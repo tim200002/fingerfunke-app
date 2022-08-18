@@ -3,7 +3,7 @@ part of 'home_drawer_view.dart';
 class _ProfileSection extends StatelessWidget {
   const _ProfileSection({Key? key}) : super(key: key);
 
-  Widget _profile(BuildContext context, {User? user}) {
+  Widget _profile(BuildContext context, {final User? user}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -18,16 +18,16 @@ class _ProfileSection extends StatelessWidget {
                 .textTheme
                 .titleLarge
                 ?.copyWith(fontWeight: FontWeight.bold)),
-        if (user?.hasClearance(User.clearanceAdmin))
+        if ((user?.clearance?.level ?? 0) > 1)
           Padding(
               padding: const EdgeInsets.only(top: 8),
               child: Chip(
                 visualDensity: VisualDensity.compact,
                 label: Text(
-                  "admin",
+                  user!.clearance!.label,
                   style: Theme.of(context).textTheme.labelSmall,
                 ),
-                backgroundColor: Colors.orange.shade300,
+                backgroundColor: user.clearance!.color.shade300,
               ))
       ],
     );
