@@ -9,7 +9,7 @@ import 'utils.dart';
 enum UserFeedbackCategories {
   bug("Technisches Problem"),
   content("Inhalte"),
-  organization("Unternehmen"),
+  organization("Entwicklungsteam"),
   compliment("Lob"),
   other("sonstiges");
 
