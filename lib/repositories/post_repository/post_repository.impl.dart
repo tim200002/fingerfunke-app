@@ -25,7 +25,8 @@ class PostRepositoryImpl implements PostRepository {
 
   @override
   Future<void> createPost(Post post) async {
-    await _postCollection.doc(post.id).set(post.toJson());
+    var postJson = post.toJson();
+    await _postCollection.doc(post.id).set(postJson);
   }
 
   @override

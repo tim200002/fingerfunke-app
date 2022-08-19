@@ -31,7 +31,7 @@ class DevFunctionsPage extends StatelessWidget {
                         final User? currentUser =
                             BlocProvider.of<AppCubit>(context).state.user;
                         PostRepositoryImpl().createPost(Event.createWithId(
-                            author: currentUser!,
+                            author: currentUser!.toInfo(),
                             title: "Test post ${DateTime.now().second}",
                             visibility: post_visibility.visible,
                             description:

@@ -114,8 +114,8 @@ class ReportSendPage extends StatelessWidget {
       builder: (context, state) {
         final user = state.user;
         return BlocProvider<ReportSendCubit>(
-          create: (context) =>
-              ReportSendCubit(doc: post, type: ReportType.post, author: user),
+          create: (context) => ReportSendCubit(
+              doc: post, type: ReportType.post, author: user.toInfo()),
           child: BlocBuilder<ReportSendCubit, ReportSendState>(
             builder: (context, state) => state.when(
               sending: () => const Center(

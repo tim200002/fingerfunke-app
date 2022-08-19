@@ -17,9 +17,9 @@ class UserInfo extends DatabaseDocument {
 
   @override
   Map<String, dynamic> toJson() => <String, dynamic>{
-        'id': id,
-        'name': name,
-        'picture': picture,
+        "id": id,
+        "name": name,
+        "picture": picture,
       };
 
   factory UserInfo.fromJson(Map<String, dynamic> map) => UserInfo(
@@ -49,19 +49,23 @@ enum UserClearance {
   const UserClearance(this.level, this.label, this.color);
 }
 
-class User extends UserInfo {
+class User extends DatabaseDocument {
+  final String name;
+  final String? picture;
   final int? age;
   final UserClearance? clearance;
   final List<FirestoreId> savedPosts;
 
   const User({
     required FirestoreId id,
-    required String name,
-    String? picture,
+    required this.name,
+    this.picture,
     this.savedPosts = const [],
     this.age,
     this.clearance = UserClearance.user,
-  }) : super(id: id, name: name, picture: picture);
+  }) : super(id: id);
+
+  UserInfo toInfo() => UserInfo(id: id, name: name, picture: picture);
 
   hasClearance(UserClearance c) {
     return clearance != null ? clearance!.level >= c.level : false;

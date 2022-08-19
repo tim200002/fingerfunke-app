@@ -33,13 +33,15 @@ class Event extends Post {
       "id": id,
       "creationTime": dateToJson(creationTime),
       "author": author.toJson(),
-      "type": _postTypeEnumMap[type],
+      "type": "event", //_postTypeEnumMap[type],
       "title": title,
       "description": description,
       "visibility": postVisibilityEnumMap[visibility],
       "location": location,
       "media": media.map((e) => e.toJson()).toList(),
-      "participants": participants.map((user) => user.toJson()).toList(),
+      "participants": participants
+          .map((user) => user.toJson()..["picture"] = null)
+          .toList(),
       "startTime": dateToJson(startTime)
     };
   }

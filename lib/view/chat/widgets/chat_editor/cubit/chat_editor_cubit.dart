@@ -29,7 +29,7 @@ class ChatEditorCubit extends Cubit<ChatEditorState> {
     if (state.isValid) {
       await _messageRepository.createMessage(
         postId,
-        TextMessage.createWithId(author: author, text: message),
+        TextMessage.createWithId(author: author.toInfo(), text: message),
       );
       emit(state.copyWith(isValid: false));
     }

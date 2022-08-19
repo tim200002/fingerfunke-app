@@ -92,7 +92,7 @@ class PostPage extends StatelessWidget {
       final user = state.user;
       return BlocProvider<PostEditorCubit>(
         create: (context) =>
-            PostEditorCubit(currentUser: user, postToBeEdited: post),
+            PostEditorCubit(currentUser: user.toInfo(), postToBeEdited: post),
         child: BlocConsumer<PostEditorCubit, PostEditorState>(
           buildWhen: (prev, curr) => prev.runtimeType != curr.runtimeType,
           listener: (context, state) =>

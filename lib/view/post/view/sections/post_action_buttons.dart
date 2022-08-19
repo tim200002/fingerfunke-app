@@ -56,7 +56,7 @@ class PostActionButtons extends StatelessWidget {
             loading: (_) => Container(),
             normal: (post, isJoining) {
               bool isParticipant = post.isUserParticipant(
-                  BlocProvider.of<AppCubit>(context).state.user);
+                  BlocProvider.of<AppCubit>(context).state.user.toInfo());
               return Stack(
                 children: <Widget>[
                   Align(

@@ -37,7 +37,7 @@ class FeedbackSendPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubit, AppState>(
         builder: (context, state) => BlocProvider(
-            create: (context) => FeedbackSendCubit(author: state.user),
+            create: (context) => FeedbackSendCubit(author: state.user.toInfo()),
             child: BlocBuilder<FeedbackSendCubit, FeedbackSendState>(
               builder: (context, state) => state.when(
                   error: (e) => ExceptionView.fromErrorClosable(e),

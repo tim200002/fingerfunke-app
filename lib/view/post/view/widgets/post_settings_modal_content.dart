@@ -22,11 +22,11 @@ class PostSettingsModalContent extends StatelessWidget {
                 height: 200,
                 child: Center(child: CircularProgressIndicator.adaptive())),
             normal: (post, isJoining) {
-              bool isAuthor = post
-                  .isUserAuthor(BlocProvider.of<AppCubit>(context).state.user);
+              bool isAuthor = post.isUserAuthor(
+                  BlocProvider.of<AppCubit>(context).state.user.toInfo());
 
               bool isParticipant = post.isUserParticipant(
-                  BlocProvider.of<AppCubit>(context).state.user);
+                  BlocProvider.of<AppCubit>(context).state.user.toInfo());
 
               return Column(
                 mainAxisSize: MainAxisSize.min,
