@@ -5,6 +5,7 @@ import '../../../common_widgets/list_view/pagination/cubit/paginated_list_cubit.
 import '../../../cubits/app_cubit/app_cubit.dart';
 import '../../../models/message/message.dart';
 import '../../../models/post/post.dart';
+import '../../../routes.dart';
 import '../../../services/pagination/message_pagination_service.dart';
 import '../../../utils/app_theme.dart';
 import '../../../utils/tools.dart';
@@ -103,7 +104,7 @@ class PostPage extends StatelessWidget {
             editGroup: (fields, inputValid) => ExceptionView(
                 exception: Exception("editing groups is not yet possible")),
             error: (message) => const EditErrorView(),
-            submitted: () => const PostPostedSuccessView(),
+            submitted: (id) => PostPostedSuccessView(postId: id),
             submitting: () =>
                 EditLoadingView(message: l10n(context).lbl_submitting),
           ),

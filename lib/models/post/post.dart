@@ -60,6 +60,8 @@ class Post extends UserGeneratedDocument {
       required this.participants})
       : super(id: id, author: author, creationTime: creationTime);
 
+  int get hashCode => toJson().hashCode;
+
   @override
   Map<String, dynamic> toJson() {
     if (this is Group) {

@@ -161,8 +161,8 @@ class PostEditorCubit extends Cubit<PostEditorState> {
         editEvent: (eventEditorFields, _) async {
           emit(const PostEditorState.submitting());
           try {
-            await _createEventFromFields(eventEditorFields);
-            emit(const PostEditorState.submitted());
+            var eventId = await _createEventFromFields(eventEditorFields);
+            emit(PostEditorState.submitted(eventId));
             disposeVideoUploadCubits(eventEditorFields.videoUploadCubits);
           } catch (err) {
             emit(PostEditorState.error(err.toString()));
@@ -171,8 +171,8 @@ class PostEditorCubit extends Cubit<PostEditorState> {
         editGroup: (groupEditorFields, _) async {
           emit(const PostEditorState.submitting());
           try {
-            await _createGroupFromFields(groupEditorFields);
-            emit(const PostEditorState.submitted());
+            var groupId = await _createGroupFromFields(groupEditorFields);
+            emit(PostEditorState.submitted(groupId));
             disposeVideoUploadCubits(groupEditorFields.videoUploadCubits);
           } catch (err) {
             emit(PostEditorState.error(err.toString()));
@@ -185,7 +185,7 @@ class PostEditorCubit extends Cubit<PostEditorState> {
   ///
   /// if the editor has been created from an event then only update fields
   /// Otherwise a new event is created
-  Future<void> _createEventFromFields(EventEditorFields fields) async {
+  Future<String?> _createEventFromFields(EventEditorFields fields) async {
     if (postToBeEdited == null) {
       final event = Event.createWithId(
           author: currentUser,
@@ -196,6 +196,7 @@ class PostEditorCubit extends Cubit<PostEditorState> {
           media: _videoUploadCubitsToAssetsHelper(fields.videoUploadCubits),
           startTime: fields.startTime);
       await _postRepository.createPost(event);
+      return event.id;
     } else {
       await _postRepository.updatePost(postToBeEdited!.id,
           visibility: fields.visibility,
@@ -210,7 +211,7 @@ class PostEditorCubit extends Cubit<PostEditorState> {
   ///
   /// if the editor has been created from an exisitng Group then only update fields
   /// Otherwise a new group is created
-  Future<void> _createGroupFromFields(GroupEditorFields fields) async {
+  Future<String?> _createGroupFromFields(GroupEditorFields fields) async {
     if (postToBeEdited == null) {
       final group = Group.createWithId(
         author: currentUser,
@@ -221,6 +222,7 @@ class PostEditorCubit extends Cubit<PostEditorState> {
         media: _videoUploadCubitsToAssetsHelper(fields.videoUploadCubits),
       );
       await _postRepository.createPost(group);
+      return group.id;
     } else {
       await _postRepository.updatePost(postToBeEdited!.id,
           visibility: fields.visibility,

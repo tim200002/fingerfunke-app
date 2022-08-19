@@ -23,6 +23,7 @@ class PostCubit extends Cubit<PostState> {
         super(PostState.loading(postId)) {
     _postSubscription =
         _postRepository.subscribeToPost(postId).listen((Post post) {
+      print("post update");
       emit(
         PostState.normal(
           post: post,
@@ -46,7 +47,7 @@ class PostCubit extends Cubit<PostState> {
 
             emit(PostState.normal(post: updatedPost, isJoining: false));
           } catch (_) {
-            emit(state.copyWith(isJoining: false));
+            //emit(state.copyWith(isJoining: false));
             rethrow;
           }
         },

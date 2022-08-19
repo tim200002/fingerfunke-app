@@ -16,6 +16,11 @@ class UserInfo extends DatabaseDocument {
   }) : super(id: id);
 
   @override
+  int get hashCode => toJson().hashCode;
+  @override
+  bool operator ==(Object other) => super.hashCode == hashCode;
+
+  @override
   Map<String, dynamic> toJson() => <String, dynamic>{
         "id": id,
         "name": name,

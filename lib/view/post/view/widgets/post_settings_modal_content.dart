@@ -47,6 +47,7 @@ class PostSettingsModalContent extends StatelessWidget {
                       leading: const Icon(FeatherIcons.edit),
                       title: Text(l10n(context).lbl_edit),
                       onTap: () {
+                        Navigator.of(context).pop();
                         Navigator.pushNamed(context, Routes.postEditor,
                                 arguments: post)
                             .then((_) => Navigator.of(context).pop());
@@ -69,7 +70,12 @@ class PostSettingsModalContent extends StatelessWidget {
                         style: TextStyle(
                             color: Theme.of(context).colorScheme.error),
                       ),
-                      onTap: () => context.read<PostCubit>().deletePost(),
+                      onTap: () async {
+                        Navigator.of(context).pop();
+                        await context.read<PostCubit>().deletePost();
+                        Tools.showSnackbar(context, "Post gelöscht");
+                        Navigator.of(context).pop();
+                      },
                     ),
                   if (!isAuthor)
                     ListTile(

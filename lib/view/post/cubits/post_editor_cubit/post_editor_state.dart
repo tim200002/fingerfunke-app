@@ -11,7 +11,7 @@ class PostEditorState with _$PostEditorState {
       {required GroupEditorFields groupEditorFields,
       @Default(false) bool inputValid}) = _EditGroup;
   const factory PostEditorState.submitting() = _Submitting;
-  const factory PostEditorState.submitted() = _Submitted;
+  const factory PostEditorState.submitted(String? postId) = _Success;
   const factory PostEditorState.error(String message) = _Error;
   //const factory PostEditorState.invalid() = _Invalid;
 }

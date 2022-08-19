@@ -26,7 +26,7 @@ mixin _$PostEditorState {
             GroupEditorFields groupEditorFields, bool inputValid)
         editGroup,
     required TResult Function() submitting,
-    required TResult Function() submitted,
+    required TResult Function(String? postId) submitted,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -38,7 +38,7 @@ mixin _$PostEditorState {
     TResult Function(GroupEditorFields groupEditorFields, bool inputValid)?
         editGroup,
     TResult Function()? submitting,
-    TResult Function()? submitted,
+    TResult Function(String? postId)? submitted,
     TResult Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -50,7 +50,7 @@ mixin _$PostEditorState {
     TResult Function(GroupEditorFields groupEditorFields, bool inputValid)?
         editGroup,
     TResult Function()? submitting,
-    TResult Function()? submitted,
+    TResult Function(String? postId)? submitted,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -61,7 +61,7 @@ mixin _$PostEditorState {
     required TResult Function(_EditEvent value) editEvent,
     required TResult Function(_EditGroup value) editGroup,
     required TResult Function(_Submitting value) submitting,
-    required TResult Function(_Submitted value) submitted,
+    required TResult Function(_Success value) submitted,
     required TResult Function(_Error value) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -71,7 +71,7 @@ mixin _$PostEditorState {
     TResult Function(_EditEvent value)? editEvent,
     TResult Function(_EditGroup value)? editGroup,
     TResult Function(_Submitting value)? submitting,
-    TResult Function(_Submitted value)? submitted,
+    TResult Function(_Success value)? submitted,
     TResult Function(_Error value)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -81,7 +81,7 @@ mixin _$PostEditorState {
     TResult Function(_EditEvent value)? editEvent,
     TResult Function(_EditGroup value)? editGroup,
     TResult Function(_Submitting value)? submitting,
-    TResult Function(_Submitted value)? submitted,
+    TResult Function(_Success value)? submitted,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) =>
@@ -152,7 +152,7 @@ class _$_Loading implements _Loading {
             GroupEditorFields groupEditorFields, bool inputValid)
         editGroup,
     required TResult Function() submitting,
-    required TResult Function() submitted,
+    required TResult Function(String? postId) submitted,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -167,7 +167,7 @@ class _$_Loading implements _Loading {
     TResult Function(GroupEditorFields groupEditorFields, bool inputValid)?
         editGroup,
     TResult Function()? submitting,
-    TResult Function()? submitted,
+    TResult Function(String? postId)? submitted,
     TResult Function(String message)? error,
   }) {
     return loading?.call();
@@ -182,7 +182,7 @@ class _$_Loading implements _Loading {
     TResult Function(GroupEditorFields groupEditorFields, bool inputValid)?
         editGroup,
     TResult Function()? submitting,
-    TResult Function()? submitted,
+    TResult Function(String? postId)? submitted,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -199,7 +199,7 @@ class _$_Loading implements _Loading {
     required TResult Function(_EditEvent value) editEvent,
     required TResult Function(_EditGroup value) editGroup,
     required TResult Function(_Submitting value) submitting,
-    required TResult Function(_Submitted value) submitted,
+    required TResult Function(_Success value) submitted,
     required TResult Function(_Error value) error,
   }) {
     return loading(this);
@@ -212,7 +212,7 @@ class _$_Loading implements _Loading {
     TResult Function(_EditEvent value)? editEvent,
     TResult Function(_EditGroup value)? editGroup,
     TResult Function(_Submitting value)? submitting,
-    TResult Function(_Submitted value)? submitted,
+    TResult Function(_Success value)? submitted,
     TResult Function(_Error value)? error,
   }) {
     return loading?.call(this);
@@ -225,7 +225,7 @@ class _$_Loading implements _Loading {
     TResult Function(_EditEvent value)? editEvent,
     TResult Function(_EditGroup value)? editGroup,
     TResult Function(_Submitting value)? submitting,
-    TResult Function(_Submitted value)? submitted,
+    TResult Function(_Success value)? submitted,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -327,7 +327,7 @@ class _$_EditEvent implements _EditEvent {
             GroupEditorFields groupEditorFields, bool inputValid)
         editGroup,
     required TResult Function() submitting,
-    required TResult Function() submitted,
+    required TResult Function(String? postId) submitted,
     required TResult Function(String message) error,
   }) {
     return editEvent(eventEditorFields, inputValid);
@@ -342,7 +342,7 @@ class _$_EditEvent implements _EditEvent {
     TResult Function(GroupEditorFields groupEditorFields, bool inputValid)?
         editGroup,
     TResult Function()? submitting,
-    TResult Function()? submitted,
+    TResult Function(String? postId)? submitted,
     TResult Function(String message)? error,
   }) {
     return editEvent?.call(eventEditorFields, inputValid);
@@ -357,7 +357,7 @@ class _$_EditEvent implements _EditEvent {
     TResult Function(GroupEditorFields groupEditorFields, bool inputValid)?
         editGroup,
     TResult Function()? submitting,
-    TResult Function()? submitted,
+    TResult Function(String? postId)? submitted,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -374,7 +374,7 @@ class _$_EditEvent implements _EditEvent {
     required TResult Function(_EditEvent value) editEvent,
     required TResult Function(_EditGroup value) editGroup,
     required TResult Function(_Submitting value) submitting,
-    required TResult Function(_Submitted value) submitted,
+    required TResult Function(_Success value) submitted,
     required TResult Function(_Error value) error,
   }) {
     return editEvent(this);
@@ -387,7 +387,7 @@ class _$_EditEvent implements _EditEvent {
     TResult Function(_EditEvent value)? editEvent,
     TResult Function(_EditGroup value)? editGroup,
     TResult Function(_Submitting value)? submitting,
-    TResult Function(_Submitted value)? submitted,
+    TResult Function(_Success value)? submitted,
     TResult Function(_Error value)? error,
   }) {
     return editEvent?.call(this);
@@ -400,7 +400,7 @@ class _$_EditEvent implements _EditEvent {
     TResult Function(_EditEvent value)? editEvent,
     TResult Function(_EditGroup value)? editGroup,
     TResult Function(_Submitting value)? submitting,
-    TResult Function(_Submitted value)? submitted,
+    TResult Function(_Success value)? submitted,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -510,7 +510,7 @@ class _$_EditGroup implements _EditGroup {
             GroupEditorFields groupEditorFields, bool inputValid)
         editGroup,
     required TResult Function() submitting,
-    required TResult Function() submitted,
+    required TResult Function(String? postId) submitted,
     required TResult Function(String message) error,
   }) {
     return editGroup(groupEditorFields, inputValid);
@@ -525,7 +525,7 @@ class _$_EditGroup implements _EditGroup {
     TResult Function(GroupEditorFields groupEditorFields, bool inputValid)?
         editGroup,
     TResult Function()? submitting,
-    TResult Function()? submitted,
+    TResult Function(String? postId)? submitted,
     TResult Function(String message)? error,
   }) {
     return editGroup?.call(groupEditorFields, inputValid);
@@ -540,7 +540,7 @@ class _$_EditGroup implements _EditGroup {
     TResult Function(GroupEditorFields groupEditorFields, bool inputValid)?
         editGroup,
     TResult Function()? submitting,
-    TResult Function()? submitted,
+    TResult Function(String? postId)? submitted,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -557,7 +557,7 @@ class _$_EditGroup implements _EditGroup {
     required TResult Function(_EditEvent value) editEvent,
     required TResult Function(_EditGroup value) editGroup,
     required TResult Function(_Submitting value) submitting,
-    required TResult Function(_Submitted value) submitted,
+    required TResult Function(_Success value) submitted,
     required TResult Function(_Error value) error,
   }) {
     return editGroup(this);
@@ -570,7 +570,7 @@ class _$_EditGroup implements _EditGroup {
     TResult Function(_EditEvent value)? editEvent,
     TResult Function(_EditGroup value)? editGroup,
     TResult Function(_Submitting value)? submitting,
-    TResult Function(_Submitted value)? submitted,
+    TResult Function(_Success value)? submitted,
     TResult Function(_Error value)? error,
   }) {
     return editGroup?.call(this);
@@ -583,7 +583,7 @@ class _$_EditGroup implements _EditGroup {
     TResult Function(_EditEvent value)? editEvent,
     TResult Function(_EditGroup value)? editGroup,
     TResult Function(_Submitting value)? submitting,
-    TResult Function(_Submitted value)? submitted,
+    TResult Function(_Success value)? submitted,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -655,7 +655,7 @@ class _$_Submitting implements _Submitting {
             GroupEditorFields groupEditorFields, bool inputValid)
         editGroup,
     required TResult Function() submitting,
-    required TResult Function() submitted,
+    required TResult Function(String? postId) submitted,
     required TResult Function(String message) error,
   }) {
     return submitting();
@@ -670,7 +670,7 @@ class _$_Submitting implements _Submitting {
     TResult Function(GroupEditorFields groupEditorFields, bool inputValid)?
         editGroup,
     TResult Function()? submitting,
-    TResult Function()? submitted,
+    TResult Function(String? postId)? submitted,
     TResult Function(String message)? error,
   }) {
     return submitting?.call();
@@ -685,7 +685,7 @@ class _$_Submitting implements _Submitting {
     TResult Function(GroupEditorFields groupEditorFields, bool inputValid)?
         editGroup,
     TResult Function()? submitting,
-    TResult Function()? submitted,
+    TResult Function(String? postId)? submitted,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -702,7 +702,7 @@ class _$_Submitting implements _Submitting {
     required TResult Function(_EditEvent value) editEvent,
     required TResult Function(_EditGroup value) editGroup,
     required TResult Function(_Submitting value) submitting,
-    required TResult Function(_Submitted value) submitted,
+    required TResult Function(_Success value) submitted,
     required TResult Function(_Error value) error,
   }) {
     return submitting(this);
@@ -715,7 +715,7 @@ class _$_Submitting implements _Submitting {
     TResult Function(_EditEvent value)? editEvent,
     TResult Function(_EditGroup value)? editGroup,
     TResult Function(_Submitting value)? submitting,
-    TResult Function(_Submitted value)? submitted,
+    TResult Function(_Success value)? submitted,
     TResult Function(_Error value)? error,
   }) {
     return submitting?.call(this);
@@ -728,7 +728,7 @@ class _$_Submitting implements _Submitting {
     TResult Function(_EditEvent value)? editEvent,
     TResult Function(_EditGroup value)? editGroup,
     TResult Function(_Submitting value)? submitting,
-    TResult Function(_Submitted value)? submitted,
+    TResult Function(_Success value)? submitted,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -744,42 +744,64 @@ abstract class _Submitting implements PostEditorState {
 }
 
 /// @nodoc
-abstract class _$$_SubmittedCopyWith<$Res> {
-  factory _$$_SubmittedCopyWith(
-          _$_Submitted value, $Res Function(_$_Submitted) then) =
-      __$$_SubmittedCopyWithImpl<$Res>;
+abstract class _$$_SuccessCopyWith<$Res> {
+  factory _$$_SuccessCopyWith(
+          _$_Success value, $Res Function(_$_Success) then) =
+      __$$_SuccessCopyWithImpl<$Res>;
+  $Res call({String? postId});
 }
 
 /// @nodoc
-class __$$_SubmittedCopyWithImpl<$Res>
-    extends _$PostEditorStateCopyWithImpl<$Res>
-    implements _$$_SubmittedCopyWith<$Res> {
-  __$$_SubmittedCopyWithImpl(
-      _$_Submitted _value, $Res Function(_$_Submitted) _then)
-      : super(_value, (v) => _then(v as _$_Submitted));
+class __$$_SuccessCopyWithImpl<$Res> extends _$PostEditorStateCopyWithImpl<$Res>
+    implements _$$_SuccessCopyWith<$Res> {
+  __$$_SuccessCopyWithImpl(_$_Success _value, $Res Function(_$_Success) _then)
+      : super(_value, (v) => _then(v as _$_Success));
 
   @override
-  _$_Submitted get _value => super._value as _$_Submitted;
+  _$_Success get _value => super._value as _$_Success;
+
+  @override
+  $Res call({
+    Object? postId = freezed,
+  }) {
+    return _then(_$_Success(
+      postId == freezed
+          ? _value.postId
+          : postId // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
 }
 
 /// @nodoc
 
-class _$_Submitted implements _Submitted {
-  const _$_Submitted();
+class _$_Success implements _Success {
+  const _$_Success(this.postId);
+
+  @override
+  final String? postId;
 
   @override
   String toString() {
-    return 'PostEditorState.submitted()';
+    return 'PostEditorState.submitted(postId: $postId)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Submitted);
+        (other.runtimeType == runtimeType &&
+            other is _$_Success &&
+            const DeepCollectionEquality().equals(other.postId, postId));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(postId));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_SuccessCopyWith<_$_Success> get copyWith =>
+      __$$_SuccessCopyWithImpl<_$_Success>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -792,10 +814,10 @@ class _$_Submitted implements _Submitted {
             GroupEditorFields groupEditorFields, bool inputValid)
         editGroup,
     required TResult Function() submitting,
-    required TResult Function() submitted,
+    required TResult Function(String? postId) submitted,
     required TResult Function(String message) error,
   }) {
-    return submitted();
+    return submitted(postId);
   }
 
   @override
@@ -807,10 +829,10 @@ class _$_Submitted implements _Submitted {
     TResult Function(GroupEditorFields groupEditorFields, bool inputValid)?
         editGroup,
     TResult Function()? submitting,
-    TResult Function()? submitted,
+    TResult Function(String? postId)? submitted,
     TResult Function(String message)? error,
   }) {
-    return submitted?.call();
+    return submitted?.call(postId);
   }
 
   @override
@@ -822,12 +844,12 @@ class _$_Submitted implements _Submitted {
     TResult Function(GroupEditorFields groupEditorFields, bool inputValid)?
         editGroup,
     TResult Function()? submitting,
-    TResult Function()? submitted,
+    TResult Function(String? postId)? submitted,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (submitted != null) {
-      return submitted();
+      return submitted(postId);
     }
     return orElse();
   }
@@ -839,7 +861,7 @@ class _$_Submitted implements _Submitted {
     required TResult Function(_EditEvent value) editEvent,
     required TResult Function(_EditGroup value) editGroup,
     required TResult Function(_Submitting value) submitting,
-    required TResult Function(_Submitted value) submitted,
+    required TResult Function(_Success value) submitted,
     required TResult Function(_Error value) error,
   }) {
     return submitted(this);
@@ -852,7 +874,7 @@ class _$_Submitted implements _Submitted {
     TResult Function(_EditEvent value)? editEvent,
     TResult Function(_EditGroup value)? editGroup,
     TResult Function(_Submitting value)? submitting,
-    TResult Function(_Submitted value)? submitted,
+    TResult Function(_Success value)? submitted,
     TResult Function(_Error value)? error,
   }) {
     return submitted?.call(this);
@@ -865,7 +887,7 @@ class _$_Submitted implements _Submitted {
     TResult Function(_EditEvent value)? editEvent,
     TResult Function(_EditGroup value)? editGroup,
     TResult Function(_Submitting value)? submitting,
-    TResult Function(_Submitted value)? submitted,
+    TResult Function(_Success value)? submitted,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -876,8 +898,13 @@ class _$_Submitted implements _Submitted {
   }
 }
 
-abstract class _Submitted implements PostEditorState {
-  const factory _Submitted() = _$_Submitted;
+abstract class _Success implements PostEditorState {
+  const factory _Success(final String? postId) = _$_Success;
+
+  String? get postId;
+  @JsonKey(ignore: true)
+  _$$_SuccessCopyWith<_$_Success> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -950,7 +977,7 @@ class _$_Error implements _Error {
             GroupEditorFields groupEditorFields, bool inputValid)
         editGroup,
     required TResult Function() submitting,
-    required TResult Function() submitted,
+    required TResult Function(String? postId) submitted,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -965,7 +992,7 @@ class _$_Error implements _Error {
     TResult Function(GroupEditorFields groupEditorFields, bool inputValid)?
         editGroup,
     TResult Function()? submitting,
-    TResult Function()? submitted,
+    TResult Function(String? postId)? submitted,
     TResult Function(String message)? error,
   }) {
     return error?.call(message);
@@ -980,7 +1007,7 @@ class _$_Error implements _Error {
     TResult Function(GroupEditorFields groupEditorFields, bool inputValid)?
         editGroup,
     TResult Function()? submitting,
-    TResult Function()? submitted,
+    TResult Function(String? postId)? submitted,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -997,7 +1024,7 @@ class _$_Error implements _Error {
     required TResult Function(_EditEvent value) editEvent,
     required TResult Function(_EditGroup value) editGroup,
     required TResult Function(_Submitting value) submitting,
-    required TResult Function(_Submitted value) submitted,
+    required TResult Function(_Success value) submitted,
     required TResult Function(_Error value) error,
   }) {
     return error(this);
@@ -1010,7 +1037,7 @@ class _$_Error implements _Error {
     TResult Function(_EditEvent value)? editEvent,
     TResult Function(_EditGroup value)? editGroup,
     TResult Function(_Submitting value)? submitting,
-    TResult Function(_Submitted value)? submitted,
+    TResult Function(_Success value)? submitted,
     TResult Function(_Error value)? error,
   }) {
     return error?.call(this);
@@ -1023,7 +1050,7 @@ class _$_Error implements _Error {
     TResult Function(_EditEvent value)? editEvent,
     TResult Function(_EditGroup value)? editGroup,
     TResult Function(_Submitting value)? submitting,
-    TResult Function(_Submitted value)? submitted,
+    TResult Function(_Success value)? submitted,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
