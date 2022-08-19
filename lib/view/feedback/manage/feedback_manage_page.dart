@@ -5,7 +5,9 @@ import 'package:intl/intl.dart';
 import '../../../models/user/user.dart';
 import '../../../utils/util_widgets/clearance_appbar.dart';
 import '../../error/exception_view.dart';
+import '../../moderation/mod_post_report/mod_post_report_page.dart';
 import 'cubit/feedback_manage_cubit.dart';
+import 'mamage_item/feedback_manage_item_page.dart';
 
 class FeedbackManagePage extends StatelessWidget {
   const FeedbackManagePage({Key? key}) : super(key: key);
@@ -36,52 +38,72 @@ class FeedbackManagePage extends StatelessWidget {
                         loading: () => const Center(
                             child: CircularProgressIndicator.adaptive()),
                         error: ExceptionView.builder,
-                        neutral: (items, showClosed) => ListView.builder(
-                            itemCount: items.length,
-                            itemBuilder: (context, i) => Container(
-                                  margin: const EdgeInsets.only(bottom: 10),
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.grey.shade200),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(DateFormat("dd.MM.yyyy")
-                                              .format(items[i].creationTime)),
-                                          Container(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 5, horizontal: 7),
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                                color: items[i].state.color),
-                                            child: Text(
-                                              items[i].state.name,
+                        neutral: (items, onlyOpen) => items.isEmpty
+                            ? ModPostReportPage.emptyIndicator(
+                                "kein ${onlyOpen ? "offenes " : ""}Feedback vorhanden")
+                            : ListView.builder(
+                                itemCount: items.length,
+                                itemBuilder: (context, i) => InkWell(
+                                      onTap: () => Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  FeedbackManageItemPage(
+                                                      feedbackId:
+                                                          items[i].id))),
+                                      child: Container(
+                                        margin:
+                                            const EdgeInsets.only(bottom: 10),
+                                        padding: const EdgeInsets.all(10),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            color: Colors.grey.shade200),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.stretch,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(DateFormat("dd.MM.yyyy")
+                                                    .format(
+                                                        items[i].creationTime)),
+                                                Container(
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      vertical: 5,
+                                                      horizontal: 7),
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5),
+                                                      color:
+                                                          items[i].state.color),
+                                                  child: Text(
+                                                    items[i].state.name,
+                                                    style: const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.white),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                            const SizedBox(height: 7),
+                                            Text(
+                                              items[i].title,
                                               style: const TextStyle(
                                                   fontWeight: FontWeight.bold,
-                                                  color: Colors.white),
-                                            ),
-                                          )
-                                        ],
+                                                  fontSize: 18),
+                                            )
+                                          ],
+                                        ),
                                       ),
-                                      const SizedBox(height: 7),
-                                      Text(
-                                        items[i].title,
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 18),
-                                      )
-                                    ],
-                                  ),
-                                )))))));
+                                    )))))));
   }
 }

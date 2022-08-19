@@ -22,19 +22,34 @@ class UserFeedbackRepositoryImpl implements UserFeedbackRepository {
   }
 
   @override
-  Future<List<UserFeedback>> getReports({bool onlyOpen = false}) async {
-    var docs = await (onlyOpen
+  Stream<List<UserFeedback>> observeReports({bool onlyOpen = false}) {
+    return (onlyOpen
             ? _reportCollection.where("state", isEqualTo: "open")
             : _reportCollection)
-        .get();
-    // sorting on client side to not require setting an index in firebase
-    return docs.docs.map((m) => UserFeedback.fromDoc(m)).toList()
-      ..sort((a, b) => b.creationTime.compareTo(a.creationTime))
-      ..toList();
+        .snapshots()
+        .map((event) {
+      return event.docs.map((m) => UserFeedback.fromDoc(m)).toList()
+        ..sort((a, b) => b.creationTime.compareTo(a.creationTime))
+        ..toList();
+    });
+  }
+
+  @override
+  Stream<UserFeedback> observeReport({required String id}) {
+    return _reportCollection
+        .doc(id)
+        .snapshots()
+        .map((doc) => UserFeedback.fromDoc(doc));
   }
 
   @override
   Future<void> updateReport(UserFeedback report) async {
-    await _reportCollection.doc(report.id).update(report.toJson());
+    await _reportCollection.doc(report.id).set(report.toJson());
+  }
+
+  @override
+  Future<void> updateReportState(
+      String reportId, UserFeedbackState state) async {
+    await _reportCollection.doc(reportId).update({"state": state.name});
   }
 }

@@ -61,6 +61,13 @@ class UserFeedback extends UserGeneratedDocument {
     };
   }
 
+  @override
+  String toString() => toJson().toString();
+
+  @override
+  int get hashCode => toString().hashCode;
+  bool operator ==(Object other) => hashCode == other.hashCode;
+
   factory UserFeedback.fromDoc(DocumentSnapshot document) =>
       UserFeedback.fromJson(documentSnaphsotToJson(document));
 

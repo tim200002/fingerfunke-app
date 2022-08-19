@@ -11,7 +11,7 @@ import 'widgets/mod_report_view.dart';
 class ModPostReportPage extends StatelessWidget {
   const ModPostReportPage({Key? key}) : super(key: key);
 
-  Widget _emptyIndicator() {
+  static Widget emptyIndicator(String text) {
     return Center(
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 300),
@@ -26,8 +26,8 @@ class ModPostReportPage extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            const Text(
-              "keine offenen Meldungen",
+            Text(
+              text,
               textAlign: TextAlign.center,
             )
           ],
@@ -75,7 +75,7 @@ class ModPostReportPage extends StatelessWidget {
                     loading: () => const Center(
                         child: CircularProgressIndicator.adaptive()),
                     error: ExceptionView.builder,
-                    empty: () => _emptyIndicator(),
+                    empty: () => emptyIndicator("keine offenen Meldungen"),
                     neutral: (report, count) => Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
