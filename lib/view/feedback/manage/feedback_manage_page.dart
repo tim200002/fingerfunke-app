@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
+import '../../../common_widgets/helper_widgets.dart';
 import '../../../models/user/user.dart';
 import '../../../utils/util_widgets/clearance_appbar.dart';
 import '../../error/exception_view.dart';
@@ -44,12 +45,13 @@ class FeedbackManagePage extends StatelessWidget {
                             : ListView.builder(
                                 itemCount: items.length,
                                 itemBuilder: (context, i) => InkWell(
-                                      onTap: () => Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  FeedbackManageItemPage(
-                                                      feedbackId:
-                                                          items[i].id))),
+                                    onTap: () => Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                FeedbackManageItemPage(
+                                                    feedbackId: items[i].id))),
+                                    child: HelperWidgets.materialHero(
+                                      tag: "fb_${items[i].id}",
                                       child: Container(
                                         margin:
                                             const EdgeInsets.only(bottom: 10),
@@ -104,6 +106,6 @@ class FeedbackManagePage extends StatelessWidget {
                                           ],
                                         ),
                                       ),
-                                    )))))));
+                                    ))))))));
   }
 }

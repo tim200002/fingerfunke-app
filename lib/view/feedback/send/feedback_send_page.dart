@@ -104,7 +104,7 @@ class FeedbackSendPage extends StatelessWidget {
                                   hintStyle: TextStyle(color: Colors.grey),
                                 ),
                               ),
-                              const SizedBox(height: 60)
+                              const SizedBox(height: 100)
                             ],
                           )),
                         ),

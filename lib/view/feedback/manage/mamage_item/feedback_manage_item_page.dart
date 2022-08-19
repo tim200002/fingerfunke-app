@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../common_widgets/helper_widgets.dart';
 import '../../../../common_widgets/user/author_info.dart';
 import '../../../../models/user/user.dart';
 import '../../../../models/user_feedback.dart';
@@ -18,7 +19,7 @@ class FeedbackManageItemPage extends StatelessWidget {
   Widget _metaInfoItem(final String name,
       {final String? text, final Widget? child}) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 5),
+      padding: const EdgeInsets.only(bottom: 10),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -86,44 +87,47 @@ class FeedbackManageItemPage extends StatelessWidget {
                 dataStream:
                     UserFeedbackRepositoryImpl().observeReport(id: feedbackId),
                 builder: (context, state) => state.when(
-                      loading: () => const Center(
-                          child: CircularProgressIndicator.adaptive()),
-                      error: ExceptionView.builder,
-                      neutral: (report) => ListView(
-                        children: [
-                          Text(
-                            report.title,
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 23),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.all(10),
-                            margin: const EdgeInsets.symmetric(vertical: 20),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(14),
-                                color: Colors.grey.shade100),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                _metaInfoItem("Datum",
-                                    text: DateFormat("dd.MM.yyyy")
-                                        .format(report.creationTime)),
-                                _metaInfoItem("App Version",
-                                    text: report.appVersion),
-                                _metaInfoItem("Kategorien",
-                                    text: report.categories
-                                        .fold("", (p, e) => "$p#${e.label} ")),
-                                _metaInfoItem("Autor",
-                                    child: AuthorInfo(report.author)),
-                                const SizedBox(height: 20),
-                                _stateButton(report)
-                              ],
+                    loading: () => const Center(
+                        child: CircularProgressIndicator.adaptive()),
+                    error: ExceptionView.builder,
+                    neutral: (report) => ListView(
+                          children: [
+                            Text(
+                              report.title,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 23),
                             ),
-                          ),
-                          const SizedBox(height: 10),
-                          Text(report.description)
-                        ],
-                      ),
-                    ))));
+                            HelperWidgets.materialHero(
+                                tag: "fb_$feedbackId",
+                                child: Container(
+                                  padding: const EdgeInsets.all(10),
+                                  margin:
+                                      const EdgeInsets.symmetric(vertical: 20),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(14),
+                                      color: Colors.grey.shade100),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: [
+                                      _metaInfoItem("Datum",
+                                          text: DateFormat("dd.MM.yyyy")
+                                              .format(report.creationTime)),
+                                      _metaInfoItem("App Version",
+                                          text: report.appVersion),
+                                      _metaInfoItem("Kategorien",
+                                          text: report.categories.fold(
+                                              "", (p, e) => "$p#${e.label} ")),
+                                      _metaInfoItem("Autor",
+                                          child: AuthorInfo(report.author)),
+                                      const SizedBox(height: 20),
+                                      _stateButton(report)
+                                    ],
+                                  ),
+                                )),
+                            const SizedBox(height: 10),
+                            Text(report.description)
+                          ],
+                        )))));
   }
 }
