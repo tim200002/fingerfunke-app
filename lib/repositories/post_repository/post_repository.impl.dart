@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:geoflutterfire/geoflutterfire.dart';
 
 import '../../models/asset/asset.dart';
 import '../../models/post/post.dart';
@@ -13,6 +14,7 @@ import 'post_repository.dart';
 class PostRepositoryImpl implements PostRepository {
   final FirebaseFirestore _firestore;
   final FirebaseFunctions _functions;
+  final Geoflutterfire _geo = Geoflutterfire();
   late final CollectionReference _postCollection;
 
   PostRepositoryImpl(
@@ -30,11 +32,18 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Stream<List<Post>> observePosts(
-      {Query Function(CollectionReference)? filter}) {
-    return (filter?.call(_postCollection) ?? _postCollection).snapshots().map(
-          (snap) => snap.docs.map((doc) => Post.fromDoc(doc)).toList(),
-        );
+  Stream<List<Post>> observeNearbyPosts(
+      {required GeoPoint point,
+      required double radius,
+      final List<Post> Function(List<Post> posts)? worker}) {
+    var stream = _geo
+        .collection(collectionRef: _postCollection)
+        .within(
+            center: GeoFirePoint(point.latitude, point.longitude),
+            radius: radius,
+            field: "place")
+        .map((doc) => doc.map((doc) => Post.fromDoc(doc)).toList());
+    return worker != null ? stream.map(worker) : stream;
   }
 
   @override
@@ -59,14 +68,15 @@ class PostRepositoryImpl implements PostRepository {
       {PostVisibility? visibility,
       String? title,
       String? description,
-      String? location,
+      PostPlace? place,
       List<Asset>? media,
       DateTime? startTime}) async {
+    //TODO: würde diese Methode nicht ungesetzte Felder mit null überschreiben?
     final Map<String, dynamic> updateMap = {
       'visibility': visibility?.name,
       'title': title,
       'description': description,
-      'location': location,
+      'place': place?.toJson(),
       'media': media?.map((asset) => asset.toJson()).toList(),
       'startTime': startTime != null ? dateToJson(startTime) : null
     }..removeWhere((key, value) => value == null);

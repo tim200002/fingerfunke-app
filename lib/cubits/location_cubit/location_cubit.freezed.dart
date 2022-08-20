@@ -18,39 +18,45 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$LocationState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(String location) loaded,
+    required TResult Function() loading,
+    required TResult Function(dynamic e) error,
+    required TResult Function(Position location) loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(String location)? loaded,
+    TResult Function()? loading,
+    TResult Function(dynamic e)? error,
+    TResult Function(Position location)? loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(String location)? loaded,
+    TResult Function()? loading,
+    TResult Function(dynamic e)? error,
+    TResult Function(Position location)? loaded,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Initial value) initial,
-    required TResult Function(Loaded value) loaded,
+    required TResult Function(_loading value) loading,
+    required TResult Function(_Error value) error,
+    required TResult Function(_Loaded value) loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
-    TResult Function(Loaded value)? loaded,
+    TResult Function(_loading value)? loading,
+    TResult Function(_Error value)? error,
+    TResult Function(_Loaded value)? loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
-    TResult Function(Loaded value)? loaded,
+    TResult Function(_loading value)? loading,
+    TResult Function(_Error value)? error,
+    TResult Function(_Loaded value)? loaded,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -74,35 +80,36 @@ class _$LocationStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$$InitialCopyWith<$Res> {
-  factory _$$InitialCopyWith(_$Initial value, $Res Function(_$Initial) then) =
-      __$$InitialCopyWithImpl<$Res>;
+abstract class _$$_loadingCopyWith<$Res> {
+  factory _$$_loadingCopyWith(
+          _$_loading value, $Res Function(_$_loading) then) =
+      __$$_loadingCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$InitialCopyWithImpl<$Res> extends _$LocationStateCopyWithImpl<$Res>
-    implements _$$InitialCopyWith<$Res> {
-  __$$InitialCopyWithImpl(_$Initial _value, $Res Function(_$Initial) _then)
-      : super(_value, (v) => _then(v as _$Initial));
+class __$$_loadingCopyWithImpl<$Res> extends _$LocationStateCopyWithImpl<$Res>
+    implements _$$_loadingCopyWith<$Res> {
+  __$$_loadingCopyWithImpl(_$_loading _value, $Res Function(_$_loading) _then)
+      : super(_value, (v) => _then(v as _$_loading));
 
   @override
-  _$Initial get _value => super._value as _$Initial;
+  _$_loading get _value => super._value as _$_loading;
 }
 
 /// @nodoc
 
-class _$Initial implements Initial {
-  const _$Initial();
+class _$_loading implements _loading {
+  const _$_loading();
 
   @override
   String toString() {
-    return 'LocationState.initial()';
+    return 'LocationState.loading()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$Initial);
+        (other.runtimeType == runtimeType && other is _$_loading);
   }
 
   @override
@@ -111,30 +118,33 @@ class _$Initial implements Initial {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(String location) loaded,
+    required TResult Function() loading,
+    required TResult Function(dynamic e) error,
+    required TResult Function(Position location) loaded,
   }) {
-    return initial();
+    return loading();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(String location)? loaded,
+    TResult Function()? loading,
+    TResult Function(dynamic e)? error,
+    TResult Function(Position location)? loaded,
   }) {
-    return initial?.call();
+    return loading?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(String location)? loaded,
+    TResult Function()? loading,
+    TResult Function(dynamic e)? error,
+    TResult Function(Position location)? loaded,
     required TResult orElse(),
   }) {
-    if (initial != null) {
-      return initial();
+    if (loading != null) {
+      return loading();
     }
     return orElse();
   }
@@ -142,75 +152,215 @@ class _$Initial implements Initial {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Initial value) initial,
-    required TResult Function(Loaded value) loaded,
+    required TResult Function(_loading value) loading,
+    required TResult Function(_Error value) error,
+    required TResult Function(_Loaded value) loaded,
   }) {
-    return initial(this);
+    return loading(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
-    TResult Function(Loaded value)? loaded,
+    TResult Function(_loading value)? loading,
+    TResult Function(_Error value)? error,
+    TResult Function(_Loaded value)? loaded,
   }) {
-    return initial?.call(this);
+    return loading?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
-    TResult Function(Loaded value)? loaded,
+    TResult Function(_loading value)? loading,
+    TResult Function(_Error value)? error,
+    TResult Function(_Loaded value)? loaded,
     required TResult orElse(),
   }) {
-    if (initial != null) {
-      return initial(this);
+    if (loading != null) {
+      return loading(this);
     }
     return orElse();
   }
 }
 
-abstract class Initial implements LocationState {
-  const factory Initial() = _$Initial;
+abstract class _loading implements LocationState {
+  const factory _loading() = _$_loading;
 }
 
 /// @nodoc
-abstract class _$$LoadedCopyWith<$Res> {
-  factory _$$LoadedCopyWith(_$Loaded value, $Res Function(_$Loaded) then) =
-      __$$LoadedCopyWithImpl<$Res>;
-  $Res call({String location});
+abstract class _$$_ErrorCopyWith<$Res> {
+  factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
+      __$$_ErrorCopyWithImpl<$Res>;
+  $Res call({dynamic e});
 }
 
 /// @nodoc
-class __$$LoadedCopyWithImpl<$Res> extends _$LocationStateCopyWithImpl<$Res>
-    implements _$$LoadedCopyWith<$Res> {
-  __$$LoadedCopyWithImpl(_$Loaded _value, $Res Function(_$Loaded) _then)
-      : super(_value, (v) => _then(v as _$Loaded));
+class __$$_ErrorCopyWithImpl<$Res> extends _$LocationStateCopyWithImpl<$Res>
+    implements _$$_ErrorCopyWith<$Res> {
+  __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
+      : super(_value, (v) => _then(v as _$_Error));
 
   @override
-  _$Loaded get _value => super._value as _$Loaded;
+  _$_Error get _value => super._value as _$_Error;
 
   @override
   $Res call({
-    Object? location = freezed,
+    Object? e = freezed,
   }) {
-    return _then(_$Loaded(
-      location == freezed
-          ? _value.location
-          : location // ignore: cast_nullable_to_non_nullable
-              as String,
+    return _then(_$_Error(
+      e == freezed
+          ? _value.e
+          : e // ignore: cast_nullable_to_non_nullable
+              as dynamic,
     ));
   }
 }
 
 /// @nodoc
 
-class _$Loaded implements Loaded {
-  const _$Loaded(this.location);
+class _$_Error implements _Error {
+  const _$_Error(this.e);
 
   @override
-  final String location;
+  final dynamic e;
+
+  @override
+  String toString() {
+    return 'LocationState.error(e: $e)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_Error &&
+            const DeepCollectionEquality().equals(other.e, e));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(e));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_ErrorCopyWith<_$_Error> get copyWith =>
+      __$$_ErrorCopyWithImpl<_$_Error>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loading,
+    required TResult Function(dynamic e) error,
+    required TResult Function(Position location) loaded,
+  }) {
+    return error(e);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? loading,
+    TResult Function(dynamic e)? error,
+    TResult Function(Position location)? loaded,
+  }) {
+    return error?.call(e);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loading,
+    TResult Function(dynamic e)? error,
+    TResult Function(Position location)? loaded,
+    required TResult orElse(),
+  }) {
+    if (error != null) {
+      return error(e);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_loading value) loading,
+    required TResult Function(_Error value) error,
+    required TResult Function(_Loaded value) loaded,
+  }) {
+    return error(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_loading value)? loading,
+    TResult Function(_Error value)? error,
+    TResult Function(_Loaded value)? loaded,
+  }) {
+    return error?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_loading value)? loading,
+    TResult Function(_Error value)? error,
+    TResult Function(_Loaded value)? loaded,
+    required TResult orElse(),
+  }) {
+    if (error != null) {
+      return error(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Error implements LocationState {
+  const factory _Error(final dynamic e) = _$_Error;
+
+  dynamic get e;
+  @JsonKey(ignore: true)
+  _$$_ErrorCopyWith<_$_Error> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_LoadedCopyWith<$Res> {
+  factory _$$_LoadedCopyWith(_$_Loaded value, $Res Function(_$_Loaded) then) =
+      __$$_LoadedCopyWithImpl<$Res>;
+  $Res call({Position location});
+}
+
+/// @nodoc
+class __$$_LoadedCopyWithImpl<$Res> extends _$LocationStateCopyWithImpl<$Res>
+    implements _$$_LoadedCopyWith<$Res> {
+  __$$_LoadedCopyWithImpl(_$_Loaded _value, $Res Function(_$_Loaded) _then)
+      : super(_value, (v) => _then(v as _$_Loaded));
+
+  @override
+  _$_Loaded get _value => super._value as _$_Loaded;
+
+  @override
+  $Res call({
+    Object? location = freezed,
+  }) {
+    return _then(_$_Loaded(
+      location == freezed
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as Position,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_Loaded implements _Loaded {
+  const _$_Loaded(this.location);
+
+  @override
+  final Position location;
 
   @override
   String toString() {
@@ -221,7 +371,7 @@ class _$Loaded implements Loaded {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$Loaded &&
+            other is _$_Loaded &&
             const DeepCollectionEquality().equals(other.location, location));
   }
 
@@ -231,14 +381,15 @@ class _$Loaded implements Loaded {
 
   @JsonKey(ignore: true)
   @override
-  _$$LoadedCopyWith<_$Loaded> get copyWith =>
-      __$$LoadedCopyWithImpl<_$Loaded>(this, _$identity);
+  _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
+      __$$_LoadedCopyWithImpl<_$_Loaded>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(String location) loaded,
+    required TResult Function() loading,
+    required TResult Function(dynamic e) error,
+    required TResult Function(Position location) loaded,
   }) {
     return loaded(location);
   }
@@ -246,8 +397,9 @@ class _$Loaded implements Loaded {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(String location)? loaded,
+    TResult Function()? loading,
+    TResult Function(dynamic e)? error,
+    TResult Function(Position location)? loaded,
   }) {
     return loaded?.call(location);
   }
@@ -255,8 +407,9 @@ class _$Loaded implements Loaded {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(String location)? loaded,
+    TResult Function()? loading,
+    TResult Function(dynamic e)? error,
+    TResult Function(Position location)? loaded,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -268,8 +421,9 @@ class _$Loaded implements Loaded {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Initial value) initial,
-    required TResult Function(Loaded value) loaded,
+    required TResult Function(_loading value) loading,
+    required TResult Function(_Error value) error,
+    required TResult Function(_Loaded value) loaded,
   }) {
     return loaded(this);
   }
@@ -277,8 +431,9 @@ class _$Loaded implements Loaded {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
-    TResult Function(Loaded value)? loaded,
+    TResult Function(_loading value)? loading,
+    TResult Function(_Error value)? error,
+    TResult Function(_Loaded value)? loaded,
   }) {
     return loaded?.call(this);
   }
@@ -286,8 +441,9 @@ class _$Loaded implements Loaded {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
-    TResult Function(Loaded value)? loaded,
+    TResult Function(_loading value)? loading,
+    TResult Function(_Error value)? error,
+    TResult Function(_Loaded value)? loaded,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -297,11 +453,11 @@ class _$Loaded implements Loaded {
   }
 }
 
-abstract class Loaded implements LocationState {
-  const factory Loaded(final String location) = _$Loaded;
+abstract class _Loaded implements LocationState {
+  const factory _Loaded(final Position location) = _$_Loaded;
 
-  String get location;
+  Position get location;
   @JsonKey(ignore: true)
-  _$$LoadedCopyWith<_$Loaded> get copyWith =>
+  _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
       throw _privateConstructorUsedError;
 }

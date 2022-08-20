@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../common_widgets/list_view/list_items/post_feed_image_item.dart';
+import '../../../cubits/location_cubit/location_cubit.dart';
 import '../../../models/post/post.dart';
 import '../../../repositories/post_repository/post_repository.impl.dart';
 import '../../../utils/tools.dart';
@@ -33,26 +34,44 @@ class PagedPostDiscoveryFeed extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Expanded(child: BlocBuilder<FeedFilterCubit, FeedFilterState>(
-              builder: (context, filter) {
-            return StreamSubscribeCubit.asWidget<List<Post>>(
-                dataStream: PostRepositoryImpl().observePosts(
-                    filter: context.read<FeedFilterCubit>().createFilter),
-                builder: (context, state) => state.when(
+          Expanded(
+              child: BlocBuilder<LocationCubit, LocationState>(
+                  builder: (context, state) => state.when(
+                      error: ExceptionView.builder,
                       loading: () => const Center(
                           child: CircularProgressIndicator.adaptive()),
-                      error: ExceptionView.builder,
-                      neutral: (posts) => demoFeedList(
-                        items: posts,
-                        itemBuilder: (post) => PostFeedImageItem(
-                          post,
-                          key: ValueKey(post.id),
-                        ),
-                        endIndicator: ModPostReportPage.emptyIndicator(
-                            l10n(context).msg_feedEmpty),
-                      ),
-                    ));
-          }))
+                      loaded: (location) =>
+                          BlocBuilder<FeedFilterCubit, FeedFilterState>(
+                              builder: (context, filter) {
+                            var stream = PostRepositoryImpl()
+                                .observeNearbyPosts(
+                                    point: GeoPoint(
+                                        location.latitude, location.longitude),
+                                    radius: filter.distance,
+                                    worker: (l) => context
+                                        .read<FeedFilterCubit>()
+                                        .filter(l));
+                            return StreamSubscribeCubit.asWidget<List<Post>>(
+                                key: Key(filter.hashCode.toString()),
+                                dataStream: stream,
+                                builder: (context, state) => state.when(
+                                      loading: () => const Center(
+                                          child: CircularProgressIndicator
+                                              .adaptive()),
+                                      error: ExceptionView.builder,
+                                      neutral: (posts) => demoFeedList(
+                                        items: posts,
+                                        itemBuilder: (post) =>
+                                            PostFeedImageItem(
+                                          post,
+                                          key: ValueKey(post.id),
+                                        ),
+                                        endIndicator:
+                                            ModPostReportPage.emptyIndicator(
+                                                l10n(context).msg_feedEmpty),
+                                      ),
+                                    ));
+                          }))))
         ],
       ),
     );

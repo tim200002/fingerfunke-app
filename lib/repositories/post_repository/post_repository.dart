@@ -7,8 +7,8 @@ import '../../models/post/post.dart';
 import '../../utils/type_aliases.dart';
 
 abstract class PostRepository {
-  Stream<List<Post>> observePosts(
-      {Query Function(CollectionReference)? filter});
+  Stream<List<Post>> observeNearbyPosts(
+      {required GeoPoint point, required double radius});
 
   Future<void> createPost(Post post);
 
@@ -22,7 +22,7 @@ abstract class PostRepository {
       {PostVisibility? visibility,
       String? title,
       String? description,
-      String? location,
+      PostPlace? place,
       List<Asset>? media,
       DateTime? startTime});
 

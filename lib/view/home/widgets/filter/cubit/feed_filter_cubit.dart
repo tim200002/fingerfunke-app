@@ -1,29 +1,24 @@
 import 'package:bloc/bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'feed_filter_state.dart';
+import '../../../../../models/post/post.dart';
+
 part 'feed_filter_cubit.freezed.dart';
+part 'feed_filter_state.dart';
 
 class FeedFilterCubit extends Cubit<FeedFilterState> {
-  FeedFilterCubit() : super(const FeedFilterState.neutral(10, true));
+  FeedFilterCubit() : super(const FeedFilterState.neutral(10, false));
 
   void change(FeedFilterState changed) {
     emit(changed);
   }
 
-  Query createFilter(CollectionReference collection) {
-    Query? query;
-    print("create query ${state.hideCompleted}");
-
+  List<Post> filter(List<Post> posts) {
     if (state.hideCompleted) {
-      query = collection.where("startTime",
-          isGreaterThanOrEqualTo: DateTime.now().microsecondsSinceEpoch);
+      posts = posts.where((p) => !(p.asEvent?.isCompleted ?? true)).toList();
     }
-    //TODO: das ist ein kleiner 'hack' mit der ID.
-    //Müssen wir uns nochmal anschauen
-    return query ?? collection.where("id", isNull: false);
+    return posts;
   }
 }

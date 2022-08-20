@@ -2,7 +2,7 @@ part of 'general_editor_fields.dart';
 
 class EventEditorFields extends GeneralEditorFields {
   final DateTime startTime;
-  final String location;
+  final PostPlace? place;
 
   const EventEditorFields._(
       {required String description,
@@ -10,7 +10,7 @@ class EventEditorFields extends GeneralEditorFields {
       required List<VideoUploadCubit> videoUploadCubits,
       required PostVisibility visibility,
       required this.startTime,
-      required this.location})
+      required this.place})
       : super._(
             description: description,
             title: title,
@@ -19,16 +19,16 @@ class EventEditorFields extends GeneralEditorFields {
 
   EventEditorFields.createEmpty()
       : startTime = DateTime.now(),
-        location = "",
+        place = null,
         super._createEmpty();
   EventEditorFields.fromEvent(Event event)
       : startTime = event.startTime,
-        location = "",
+        place = event.place,
         super._fromPost(event);
 
   EventEditorFields.fromGroupEditorFields(GroupEditorFields fields)
       : startTime = DateTime.now(),
-        location = "",
+        place = null,
         super._(
             description: fields.description,
             visibility: fields.visibility,
@@ -41,19 +41,19 @@ class EventEditorFields extends GeneralEditorFields {
           PostVisibility? visibility,
           List<VideoUploadCubit>? videoUploadCubits,
           DateTime? startTime,
-          String? location}) =>
+          PostPlace? place}) =>
       EventEditorFields._(
           description: description ?? this.description,
           title: title ?? this.title,
           videoUploadCubits: videoUploadCubits ?? this.videoUploadCubits,
           visibility: visibility ?? this.visibility,
           startTime: startTime ?? this.startTime,
-          location: location ?? this.location);
+          place: place ?? this.place);
 
   bool validate() {
-    return super._validate();
+    return super._validate() && place != null;
   }
 
   @override
-  List<Object?> get props => [...super.props, startTime, location];
+  List<Object?> get props => [...super.props, startTime, place];
 }

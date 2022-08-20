@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:geoflutterfire/geoflutterfire.dart';
+import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../utils/extensions/first_where_or_null.dart';
@@ -12,6 +14,43 @@ import '../utils.dart';
 part 'event.dart';
 part 'group.dart';
 
+class PostPlace {
+  final String address;
+  final String geohash;
+  final GeoPoint point;
+
+  const PostPlace({
+    required this.address,
+    required this.geohash,
+    required this.point,
+  });
+
+  const PostPlace.demo()
+      : this(address: "null", geohash: "abcd", point: const GeoPoint(0, 0));
+
+  PostPlace.fromPick(PickResult r)
+      : this(
+            address: r.formattedAddress!,
+            point: GeoPoint(r.geometry!.location.lat, r.geometry!.location.lat),
+            geohash: Geoflutterfire()
+                .point(
+                    latitude: r.geometry!.location.lat,
+                    longitude: r.geometry!.location.lng)
+                .hash);
+
+  factory PostPlace.fromJson(Map<String, dynamic> map) => PostPlace(
+        address: map["address"],
+        geohash: map["geohash"],
+        point: map["geopoint"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "address": address,
+        "geohash": geohash,
+        "geopoint": point,
+      };
+}
+
 enum PostType { event, recurrent }
 
 enum PostVisibility { visible, hidden }
@@ -20,14 +59,10 @@ class InvalidPostTypeException implements Exception {}
 
 class Post extends UserGeneratedDocument {
   final PostType type;
-
   final String title;
   final String description;
-
   final PostVisibility visibility;
-
-  final String location;
-  //final GeoHash postPlace;
+  final PostPlace place;
 
   //final List<FirestoreId> interstedUserIds;
   //final List<UserInfo> interstedUsers;
@@ -44,8 +79,7 @@ class Post extends UserGeneratedDocument {
       required this.description,
       required DateTime creationTime,
       required this.visibility,
-      required this.location,
-      //required this.postPlace,
+      required this.place,
       required this.media,
       required this.participants})
       : super(id: id, author: author, creationTime: creationTime);
@@ -104,8 +138,7 @@ class Post extends UserGeneratedDocument {
         description,
         creationTime,
         visibility,
-        location,
-        // postPlace,
+        place,
         media
       ];
 }

@@ -9,11 +9,13 @@ part 'stream_subscribe_cubit.freezed.dart';
 
 class StreamSubscribeCubit<T> extends Cubit<StreamSubscribeState<T>> {
   static Widget asWidget<T>(
-      {required Stream<T> dataStream,
+      {Key? key,
+      required Stream<T> dataStream,
       required Widget Function(BuildContext, StreamSubscribeState<T>)
           builder}) {
-    return BlocProvider<StreamSubscribeCubit<T>>.value(
-      value: StreamSubscribeCubit(dataStream: dataStream),
+    return BlocProvider<StreamSubscribeCubit<T>>(
+      key: key,
+      create: (c) => StreamSubscribeCubit(dataStream: dataStream),
       child: BlocBuilder<StreamSubscribeCubit<T>, StreamSubscribeState<T>>(
           builder: builder),
     );

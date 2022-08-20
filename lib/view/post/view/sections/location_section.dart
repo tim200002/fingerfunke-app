@@ -29,7 +29,7 @@ class LocationSection extends StatelessWidget {
                 loading: (_) => PlaceholderBox.shimmer(_loading()),
                 normal: (post, isJoining) => post is! Event
                     ? Text(l10n(context).msg_postOnlyEventsSupported)
-                    : StaticMapsProvider(address: post.location)));
+                    : StaticMapsProvider(address: post.place.address)));
   }
 }
 
@@ -40,8 +40,8 @@ class _Edit extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<PostEditorCubit, PostEditorState>(
       builder: (context, state) => state.maybeWhen(
-          editEvent: (eventEditorFields, _) =>
-              StaticMapsProvider(address: eventEditorFields.location),
+          editEvent: (eventEditorFields, _) => StaticMapsProvider(
+              address: eventEditorFields.place?.address ?? ""),
           orElse: () => throw InvalidStateException()),
     );
   }

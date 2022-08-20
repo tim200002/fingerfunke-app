@@ -8,8 +8,7 @@ class Group extends Post {
     required String description,
     required DateTime creationTime,
     required PostVisibility visibility,
-    required String location,
-    //required this.postPlace,
+    required PostPlace place,
     required List<Asset> media,
     required List<UserInfo> participants,
   }) : super._(
@@ -20,7 +19,7 @@ class Group extends Post {
             description: description,
             creationTime: creationTime,
             visibility: visibility,
-            location: location,
+            place: place,
             media: media,
             participants: participants);
 
@@ -34,7 +33,7 @@ class Group extends Post {
       "title": title,
       "description": description,
       "visibility": visibility.name,
-      "location": location,
+      "location": place.toJson(),
       "media": media.map((e) => e.toJson()).toList(),
       "participants": participants.map((user) => user.toJson()).toList(),
     };
@@ -49,7 +48,7 @@ class Group extends Post {
       description: map["description"] as String,
       visibility:
           PostVisibility.values.firstWhere((t) => t.name == map["visibility"]),
-      location: map["location"] as String,
+      place: PostPlace.fromJson(map["place"]),
       media: (map['media'] as List<dynamic>)
           .map((e) => Asset.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -68,8 +67,7 @@ class Group extends Post {
     required String title,
     required String description,
     required PostVisibility visibility,
-    required String location,
-    //required GeoHash postPlace,
+    required PostPlace place,
     required List<Asset> media,
   }) =>
       Group(
@@ -79,7 +77,7 @@ class Group extends Post {
         description: description,
         creationTime: DateTime.now(),
         visibility: visibility,
-        location: location,
+        place: place,
         media: media,
         participants: [author],
       );

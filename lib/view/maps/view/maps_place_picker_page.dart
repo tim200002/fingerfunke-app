@@ -6,7 +6,7 @@ import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
 import '../../../utils/tools.dart';
 
 class MapsPlacePickerPage extends StatelessWidget {
-  final Function onPlacePicked;
+  final Function(PickResult) onPlacePicked;
   const MapsPlacePickerPage({required this.onPlacePicked, Key? key})
       : super(key: key);
 

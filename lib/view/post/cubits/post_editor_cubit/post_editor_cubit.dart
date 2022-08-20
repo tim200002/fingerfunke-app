@@ -171,9 +171,10 @@ class PostEditorCubit extends Cubit<PostEditorState> {
         editGroup: (groupEditorFields, _) async {
           emit(const PostEditorState.submitting());
           try {
-            var groupId = await _createGroupFromFields(groupEditorFields);
-            emit(PostEditorState.submitted(groupId));
-            disposeVideoUploadCubits(groupEditorFields.videoUploadCubits);
+            throw Exception("can't create posts so far");
+            //var groupId = await _createGroupFromFields(groupEditorFields);
+            //emit(PostEditorState.submitted(groupId));
+            //disposeVideoUploadCubits(groupEditorFields.videoUploadCubits);
           } catch (err) {
             emit(PostEditorState.error(err.toString()));
           }
@@ -186,13 +187,14 @@ class PostEditorCubit extends Cubit<PostEditorState> {
   /// if the editor has been created from an event then only update fields
   /// Otherwise a new event is created
   Future<String?> _createEventFromFields(EventEditorFields fields) async {
+    if (fields.place == null) throw Exception("location is null");
     if (postToBeEdited == null) {
       final event = Event.createWithId(
           author: currentUser,
           title: fields.title,
           description: fields.description,
           visibility: fields.visibility,
-          location: fields.location,
+          place: fields.place!,
           media: _videoUploadCubitsToAssetsHelper(fields.videoUploadCubits),
           startTime: fields.startTime);
       await _postRepository.createPost(event);
@@ -201,9 +203,10 @@ class PostEditorCubit extends Cubit<PostEditorState> {
       await _postRepository.updatePost(postToBeEdited!.id,
           visibility: fields.visibility,
           title: fields.title,
-          description: fields.title,
+          description: fields.description,
           media: _videoUploadCubitsToAssetsHelper(fields.videoUploadCubits),
-          startTime: fields.startTime);
+          startTime: fields.startTime,
+          place: fields.place);
     }
   }
 
@@ -211,14 +214,15 @@ class PostEditorCubit extends Cubit<PostEditorState> {
   ///
   /// if the editor has been created from an exisitng Group then only update fields
   /// Otherwise a new group is created
-  Future<String?> _createGroupFromFields(GroupEditorFields fields) async {
+  /*Future<String?> _createGroupFromFields(GroupEditorFields fields) async {
+    if (fields. == null) throw Exception("location is null");
     if (postToBeEdited == null) {
       final group = Group.createWithId(
         author: currentUser,
         title: fields.title,
         description: fields.description,
         visibility: fields.visibility,
-        location: "Darmstadt(null)",
+        place: fields.place,
         media: _videoUploadCubitsToAssetsHelper(fields.videoUploadCubits),
       );
       await _postRepository.createPost(group);
@@ -230,7 +234,7 @@ class PostEditorCubit extends Cubit<PostEditorState> {
           description: fields.title,
           media: _videoUploadCubitsToAssetsHelper(fields.videoUploadCubits));
     }
-  }
+  }*/
 
   /// helper to map the List of uploadCubits to a list of assets
   ///

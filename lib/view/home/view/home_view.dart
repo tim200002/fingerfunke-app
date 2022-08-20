@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import '../../../cubits/live_config_cubit/live_config_cubit.dart';
+import '../../../cubits/location_cubit/location_cubit.dart';
 import '../../../routes.dart';
 import '../../../utils/app_theme.dart';
 import '../../../utils/tools.dart';
@@ -91,8 +92,15 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<FeedFilterCubit>(
-      create: (context) => FeedFilterCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<FeedFilterCubit>(
+          create: (context) => FeedFilterCubit(),
+        ),
+        BlocProvider<LocationCubit>(
+          create: (context) => LocationCubit(),
+        ),
+      ],
       child: Scaffold(
         appBar: AppBar(
           leading: const _MenuButton(icon: FeatherIcons.menu),
@@ -106,8 +114,8 @@ class _HomeViewState extends State<HomeView> {
                     Navigator.of(context).pushNamed(Routes.feedback),
                 icon: const Icon(Icons.thumbs_up_down_rounded))
             /*IconButton(
-                    onPressed: null, //() => DevTools.showToDoSnackbar(context),
-                    icon: Icon(FeatherIcons.calendar))*/
+                        onPressed: null, //() => DevTools.showToDoSnackbar(context),
+                        icon: Icon(FeatherIcons.calendar))*/
           ],
         ),
         drawer: const HomeDrawer(),

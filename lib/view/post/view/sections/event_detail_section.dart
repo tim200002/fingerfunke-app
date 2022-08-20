@@ -67,16 +67,16 @@ class EventDetailSection extends StatelessWidget {
                                   .lbl_postTime(post.startTime.timeString)),
                           IconTextItem(
                             icon: FeatherIcons.mapPin,
-                            label: post.location.split(',')[0],
-                            subLabel: post.location.split(',').length < 2
+                            label: post.place.address.split(',')[0],
+                            subLabel: post.place.address.split(',').length < 2
                                 ? null
-                                : post.location.split(',')[1],
+                                : post.place.address.split(',')[1],
                             onTap: () async {
                               if (await canLaunchUrl(
                                   GoogleMapsService.getGoogleUri(
-                                      post.location))) {
+                                      post.place.address))) {
                                 await launchUrl(GoogleMapsService.getGoogleUri(
-                                    post.location));
+                                    post.place.address));
                               } else {
                                 throw 'Could not open the map.';
                               }
@@ -135,14 +135,14 @@ class _Edit extends StatelessWidget {
                           )),
                   IconTextItem(
                     icon: Icons.location_on_outlined,
-                    label: eventEditorFields.location == ""
-                        ? l10n(context).lbl_locationChoose
-                        : eventEditorFields.location.split(',')[0],
-                    subLabel: eventEditorFields.location == ""
+                    label: eventEditorFields.place != null
+                        ? eventEditorFields.place!.address.split(',')[0]
+                        : l10n(context).lbl_locationChoose,
+                    subLabel: eventEditorFields.place == null
                         ? null
-                        : eventEditorFields.location.split(',').length < 2
+                        : eventEditorFields.place!.address.split(',').length < 2
                             ? null
-                            : eventEditorFields.location.split(',')[1],
+                            : eventEditorFields.place!.address.split(',')[1],
                     onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -153,7 +153,7 @@ class _Edit extends StatelessWidget {
                               onPlacePicked: (pickResult) => context
                                   .read<PostEditorCubit>()
                                   .updateInformation(eventEditorFields.copyWith(
-                                      location: pickResult.formattedAddress)),
+                                      place: PostPlace.fromPick(pickResult))),
                             ),
                           ),
                         )),

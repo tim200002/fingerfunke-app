@@ -63,7 +63,7 @@ class GeneralEditorFields extends Equatable {
   }
 
   bool _validate() {
-    return _validateUploadCubits();
+    return _validateUploadCubits() && title != "";
   }
 
   bool _validateUploadCubits() {
