@@ -39,7 +39,7 @@ class PostFeedImageItem extends StatelessWidget {
             url: VideoRepositoryImpl().createPlaybackUrl((_post.media
                 .firstWhere((e) => e.type == asset_type.video) as VideoAsset)),
             autoplay: true,
-            loop: true),
+            loop: false),
         child: !greyscale
             ? videoPlayback
             : ColorFiltered(
