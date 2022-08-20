@@ -1,10 +1,9 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
-import '../../../../utils/dev_tools.dart';
 import 'cubit/feed_filter_cubit.dart';
 
 class HomeFilterView extends StatelessWidget {
@@ -35,7 +34,7 @@ class HomeFilterView extends StatelessWidget {
   }
 
   Widget _locationSlider(double value,
-      {double max = 30, required Function(double) onChanged}) {
+      {double max = 35, required Function(double) onChanged}) {
     return Padding(
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: Column(
@@ -50,12 +49,12 @@ class HomeFilterView extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Slider(
-              value: value,
+              value: math.max(5, math.min(max, value)),
               max: max,
               divisions: 6,
-              min: 1,
-              label: "+ ${value.floor()} km",
-              onChanged: onChanged,
+              min: 5,
+              label: value < max ? "+ ${value.floor()} km" : "alle",
+              onChanged: (v) => onChanged(v < max ? v : 1000),
             ),
           ],
         ));

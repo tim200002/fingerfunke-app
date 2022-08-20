@@ -43,7 +43,7 @@ class PagedPostDiscoveryFeed extends StatelessWidget {
             ),
             const SizedBox(height: 30),
             const Text(
-              "Die App benötigt Deinen Standort für das Anzeigen von Posts in Deiner Nähe. Bitte gibt diesen frei.",
+              "Die App benötigt Deinen Standort für das Anzeigen von Posts in Deiner Nähe. Bitte gebe diesen frei.",
               textAlign: TextAlign.center,
             )
           ],

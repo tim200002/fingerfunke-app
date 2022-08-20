@@ -84,7 +84,7 @@ class _HomeViewState extends State<HomeView> {
                 builder: (context) => BlocProvider.value(
                     value: BlocProvider.of<FeedFilterCubit>(c),
                     child: const HomeFilterView()))),
-            icon: const Icon(FeatherIcons.filter),
+            icon: const Icon(FeatherIcons.mapPin),
             label: const Text("Filter")));
   }
 
