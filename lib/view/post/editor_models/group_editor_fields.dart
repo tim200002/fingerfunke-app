@@ -5,7 +5,7 @@ class GroupEditorFields extends GeneralEditorFields {
     required String description,
     required String title,
     required List<VideoUploadCubit> videoUploadCubits,
-    required post_visibility visibility,
+    required PostVisibility visibility,
   }) : super._(
             description: description,
             title: title,
@@ -24,7 +24,7 @@ class GroupEditorFields extends GeneralEditorFields {
   GroupEditorFields copyWith({
     String? title,
     String? description,
-    post_visibility? visibility,
+    PostVisibility? visibility,
     List<VideoUploadCubit>? videoUploadCubits,
   }) =>
       GroupEditorFields._(

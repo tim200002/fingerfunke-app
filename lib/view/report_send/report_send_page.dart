@@ -108,6 +108,7 @@ class ReportSendPage extends StatelessWidget {
     );
   }
 
+  //TODO: add scaffold
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubit, AppState>(

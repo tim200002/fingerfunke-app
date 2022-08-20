@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import '../../../../cubits/app_cubit/app_cubit.dart';
+import '../../../../models/post/post.dart';
 import '../../../../routes.dart';
 import '../../../../utils/dev_tools.dart';
 import '../../../../utils/tools.dart';
@@ -42,7 +43,8 @@ class PostSettingsModalContent extends StatelessWidget {
                                 value: context.read<PostCubit>(), //
                                 child: const PostParticipantsView()));
                       }),
-                  if (isAuthor)
+                  if (isAuthor &&
+                      (!post.isEvent || !(post as Event).isCompleted))
                     ListTile(
                       leading: const Icon(FeatherIcons.edit),
                       title: Text(l10n(context).lbl_edit),

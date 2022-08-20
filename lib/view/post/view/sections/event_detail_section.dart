@@ -40,6 +40,26 @@ class EventDetailSection extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         mainAxisSize: MainAxisSize.min,
                         children: [
+                          if (post.isCompleted)
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 20),
+                              child: Container(
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    color: Colors.teal.shade50,
+                                    borderRadius: BorderRadius.circular(6)),
+                                child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: const [
+                                      Icon(FeatherIcons.check),
+                                      SizedBox(width: 15),
+                                      Expanded(
+                                          child: Text(
+                                              "Das Event ist abgeschlossen.\nEs kann nicht mehr bearbeitet werden"))
+                                    ]),
+                              ),
+                            ),
                           IconTextItem(
                               icon: FeatherIcons.calendar,
                               label: post.startTime.dateString,

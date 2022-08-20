@@ -8,7 +8,7 @@ class EventEditorFields extends GeneralEditorFields {
       {required String description,
       required String title,
       required List<VideoUploadCubit> videoUploadCubits,
-      required post_visibility visibility,
+      required PostVisibility visibility,
       required this.startTime,
       required this.location})
       : super._(
@@ -38,7 +38,7 @@ class EventEditorFields extends GeneralEditorFields {
   EventEditorFields copyWith(
           {String? title,
           String? description,
-          post_visibility? visibility,
+          PostVisibility? visibility,
           List<VideoUploadCubit>? videoUploadCubits,
           DateTime? startTime,
           String? location}) =>

@@ -11,7 +11,7 @@ class InvalidEditorFieldTypeException implements Exception {}
 class GeneralEditorFields extends Equatable {
   final String title;
   final String description;
-  final post_visibility visibility;
+  final PostVisibility visibility;
   final List<VideoUploadCubit> videoUploadCubits;
 
   const GeneralEditorFields._(
@@ -23,7 +23,7 @@ class GeneralEditorFields extends Equatable {
   GeneralEditorFields._createEmpty()
       : title = "",
         description = "",
-        visibility = post_visibility.visible,
+        visibility = PostVisibility.visible,
         videoUploadCubits = [];
 
   GeneralEditorFields._fromPost(Post post)
@@ -43,7 +43,7 @@ class GeneralEditorFields extends Equatable {
   static GeneralEditorFields copyWithHelper(GeneralEditorFields fields,
       {String? title,
       String? description,
-      post_visibility? visibility,
+      PostVisibility? visibility,
       List<VideoUploadCubit>? videoUploadCubits}) {
     if (fields is GroupEditorFields) {
       return fields.copyWith(

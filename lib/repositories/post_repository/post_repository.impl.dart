@@ -48,15 +48,14 @@ class PostRepositoryImpl implements PostRepository {
 
   @override
   Future<void> updatePost(FirestoreId postId,
-      {post_visibility? visibility,
+      {PostVisibility? visibility,
       String? title,
       String? description,
       String? location,
       List<Asset>? media,
       DateTime? startTime}) async {
     final Map<String, dynamic> updateMap = {
-      'visibility':
-          visibility != null ? postVisibilityEnumMap[visibility] : null,
+      'visibility': visibility?.name,
       'title': title,
       'description': description,
       'location': location,

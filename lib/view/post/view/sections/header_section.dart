@@ -120,7 +120,9 @@ class HeaderSection extends StatelessWidget {
 
   static Widget _titleCardHeader(
       BuildContext context, double thumbnailHeight, double titleOverlap,
-      {required String title, void Function(String)? onChanged}) {
+      {required String title,
+      void Function(String)? onChanged,
+      final bool disabled = false}) {
     final TextStyle titleStyle = Theme.of(context)
         .textTheme
         .headline5!
@@ -153,7 +155,9 @@ class HeaderSection extends StatelessWidget {
                       title,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.center,
-                      style: titleStyle,
+                      style: disabled
+                          ? titleStyle.copyWith(color: Colors.grey.shade600)
+                          : titleStyle,
                       maxLines: 2,
                     )
                   : TextFormField(
@@ -313,7 +317,8 @@ class HeaderSection extends StatelessWidget {
                             height: thumbnailHeight,
                             child: _postThumbnail(context, post)),
                         _titleCardHeader(context, thumbnailHeight, titleOverlap,
-                            title: post.title),
+                            title: post.title,
+                            disabled: post.asEvent?.isCompleted ?? false),
                       ],
                     ),
                   ),

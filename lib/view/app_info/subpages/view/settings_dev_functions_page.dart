@@ -33,7 +33,7 @@ class DevFunctionsPage extends StatelessWidget {
                         PostRepositoryImpl().createPost(Event.createWithId(
                             author: currentUser!.toInfo(),
                             title: "Test post ${DateTime.now().second}",
-                            visibility: post_visibility.visible,
+                            visibility: PostVisibility.visible,
                             description:
                                 "Dieser post ist ein post der nur zu testzwecken um ${DateTime.now().toString()} erstellt wurde",
                             location: "ToDO Location",

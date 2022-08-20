@@ -14,7 +14,7 @@ abstract class PostRepository {
   Future<void> deletePost(FirestoreId postId);
 
   Future<void> updatePost(FirestoreId postId,
-      {post_visibility? visibility,
+      {PostVisibility? visibility,
       String? title,
       String? description,
       String? location,

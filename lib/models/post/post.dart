@@ -12,29 +12,19 @@ import '../utils.dart';
 part 'event.dart';
 part 'group.dart';
 
-enum post_type { event, recurrent }
+enum PostType { event, recurrent }
 
-const _postTypeEnumMap = {
-  post_type.event: 'event',
-  post_type.recurrent: 'recurrent',
-};
-
-enum post_visibility { visible, hidden }
-
-const postVisibilityEnumMap = {
-  post_visibility.visible: 'visible',
-  post_visibility.hidden: 'hidden',
-};
+enum PostVisibility { visible, hidden }
 
 class InvalidPostTypeException implements Exception {}
 
 class Post extends UserGeneratedDocument {
-  final post_type type;
+  final PostType type;
 
   final String title;
   final String description;
 
-  final post_visibility visibility;
+  final PostVisibility visibility;
 
   final String location;
   //final GeoHash postPlace;
@@ -62,6 +52,12 @@ class Post extends UserGeneratedDocument {
 
   int get hashCode => toJson().hashCode;
 
+  bool get isEvent => type == PostType.event;
+  bool get isGroup => type == PostType.recurrent;
+
+  Event? get asEvent => isEvent ? (this as Event) : null;
+  Group? get asGroup => isGroup ? (this as Group) : null;
+
   @override
   Map<String, dynamic> toJson() {
     if (this is Group) {
@@ -74,19 +70,13 @@ class Post extends UserGeneratedDocument {
   }
 
   factory Post.fromJson(Map<String, dynamic> map) {
-    switch ($enumDecode(_postTypeEnumMap, map["type"])) {
-      case post_type.event:
-        {
-          return Event.fromJson(map);
-        }
-      case post_type.recurrent:
-        {
-          return Group.fromJson(map);
-        }
+    switch (PostType.values.firstWhere((t) => t.name == map["type"])) {
+      case PostType.event:
+        return Event.fromJson(map);
+      case PostType.recurrent:
+        return Group.fromJson(map);
       default:
-        {
-          throw InvalidPostTypeException();
-        }
+        throw InvalidPostTypeException();
     }
   }
 
