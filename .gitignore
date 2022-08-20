@@ -47,3 +47,4 @@ app.*.map.json
 
 # environment_variables
 *.env
+lib/env.dart

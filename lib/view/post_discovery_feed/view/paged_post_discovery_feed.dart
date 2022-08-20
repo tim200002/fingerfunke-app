@@ -45,7 +45,13 @@ class PagedPostDiscoveryFeed extends StatelessWidget {
             const Text(
               "Die App benötigt Deinen Standort für das Anzeigen von Posts in Deiner Nähe. Bitte gebe diesen frei.",
               textAlign: TextAlign.center,
-            )
+            ),
+            const SizedBox(height: 20),
+            TextButton(
+                onPressed: () {
+                  context.read<LocationCubit>().reload();
+                },
+                child: Text("erneut versuchen"))
           ],
         ),
       ),

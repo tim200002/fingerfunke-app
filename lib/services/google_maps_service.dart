@@ -1,4 +1,4 @@
-import 'package:flutter_config/flutter_config.dart';
+import '../env.dart' as env;
 
 /// This service provides functions to generate Google Maps Queries
 class GoogleMapsService {
@@ -16,7 +16,7 @@ class GoogleMapsService {
           'markers': searchQuery,
           'zoom': '15',
           'maptype': 'roadmap',
-          'key': '${FlutterConfig.get('GOOGLE_MAPS_API_KEY')}'
+          'key': env.GOOGLE_MAPS_API_KEY
         });
   }
 
