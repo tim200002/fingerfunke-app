@@ -44,7 +44,7 @@ class HomeFilterView extends StatelessWidget {
               children: const [
                 Icon(FeatherIcons.mapPin, size: 17),
                 SizedBox(width: 5),
-                Text("dein Standort")
+                Text("Dein Standort")
               ],
             ),
             const SizedBox(height: 10),
@@ -92,13 +92,20 @@ class HomeFilterView extends StatelessWidget {
                         .change(filter.copyWith(distance: v))),
                 _sectionHeader(context, "Posts"),
                 _filterItem(
-                    "alle anzeigen",
-                    "alte verstecken",
+                    "alle",
+                    "vergangene\nausblenden",
                     filter.hideCompleted,
                     (v) => context
                         .read<FeedFilterCubit>()
                         .change(filter.copyWith(hideCompleted: v))),
                 const SizedBox(height: 12),
+                _filterItem(
+                    "alle",
+                    "nur demnächst stattindende",
+                    filter.hideFarFuture,
+                    (v) => context
+                        .read<FeedFilterCubit>()
+                        .change(filter.copyWith(hideFarFuture: v))),
                 //_filterItem("alle anzeigen", "alte verstecken")
               ],
             );

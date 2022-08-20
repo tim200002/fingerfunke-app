@@ -18,19 +18,24 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$FeedFilterState {
   double get distance => throw _privateConstructorUsedError;
   bool get hideCompleted => throw _privateConstructorUsedError;
+  bool get hideFarFuture => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(double distance, bool hideCompleted) neutral,
+    required TResult Function(
+            double distance, bool hideCompleted, bool hideFarFuture)
+        neutral,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(double distance, bool hideCompleted)? neutral,
+    TResult Function(double distance, bool hideCompleted, bool hideFarFuture)?
+        neutral,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(double distance, bool hideCompleted)? neutral,
+    TResult Function(double distance, bool hideCompleted, bool hideFarFuture)?
+        neutral,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -61,7 +66,7 @@ abstract class $FeedFilterStateCopyWith<$Res> {
   factory $FeedFilterStateCopyWith(
           FeedFilterState value, $Res Function(FeedFilterState) then) =
       _$FeedFilterStateCopyWithImpl<$Res>;
-  $Res call({double distance, bool hideCompleted});
+  $Res call({double distance, bool hideCompleted, bool hideFarFuture});
 }
 
 /// @nodoc
@@ -77,6 +82,7 @@ class _$FeedFilterStateCopyWithImpl<$Res>
   $Res call({
     Object? distance = freezed,
     Object? hideCompleted = freezed,
+    Object? hideFarFuture = freezed,
   }) {
     return _then(_value.copyWith(
       distance: distance == freezed
@@ -86,6 +92,10 @@ class _$FeedFilterStateCopyWithImpl<$Res>
       hideCompleted: hideCompleted == freezed
           ? _value.hideCompleted
           : hideCompleted // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hideFarFuture: hideFarFuture == freezed
+          ? _value.hideFarFuture
+          : hideFarFuture // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -98,7 +108,7 @@ abstract class _$$_InitialCopyWith<$Res>
           _$_Initial value, $Res Function(_$_Initial) then) =
       __$$_InitialCopyWithImpl<$Res>;
   @override
-  $Res call({double distance, bool hideCompleted});
+  $Res call({double distance, bool hideCompleted, bool hideFarFuture});
 }
 
 /// @nodoc
@@ -114,6 +124,7 @@ class __$$_InitialCopyWithImpl<$Res> extends _$FeedFilterStateCopyWithImpl<$Res>
   $Res call({
     Object? distance = freezed,
     Object? hideCompleted = freezed,
+    Object? hideFarFuture = freezed,
   }) {
     return _then(_$_Initial(
       distance == freezed
@@ -124,6 +135,10 @@ class __$$_InitialCopyWithImpl<$Res> extends _$FeedFilterStateCopyWithImpl<$Res>
           ? _value.hideCompleted
           : hideCompleted // ignore: cast_nullable_to_non_nullable
               as bool,
+      hideFarFuture == freezed
+          ? _value.hideFarFuture
+          : hideFarFuture // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -131,16 +146,18 @@ class __$$_InitialCopyWithImpl<$Res> extends _$FeedFilterStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Initial implements _Initial {
-  const _$_Initial(this.distance, this.hideCompleted);
+  const _$_Initial(this.distance, this.hideCompleted, this.hideFarFuture);
 
   @override
   final double distance;
   @override
   final bool hideCompleted;
+  @override
+  final bool hideFarFuture;
 
   @override
   String toString() {
-    return 'FeedFilterState.neutral(distance: $distance, hideCompleted: $hideCompleted)';
+    return 'FeedFilterState.neutral(distance: $distance, hideCompleted: $hideCompleted, hideFarFuture: $hideFarFuture)';
   }
 
   @override
@@ -150,14 +167,17 @@ class _$_Initial implements _Initial {
             other is _$_Initial &&
             const DeepCollectionEquality().equals(other.distance, distance) &&
             const DeepCollectionEquality()
-                .equals(other.hideCompleted, hideCompleted));
+                .equals(other.hideCompleted, hideCompleted) &&
+            const DeepCollectionEquality()
+                .equals(other.hideFarFuture, hideFarFuture));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(distance),
-      const DeepCollectionEquality().hash(hideCompleted));
+      const DeepCollectionEquality().hash(hideCompleted),
+      const DeepCollectionEquality().hash(hideFarFuture));
 
   @JsonKey(ignore: true)
   @override
@@ -167,27 +187,31 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(double distance, bool hideCompleted) neutral,
+    required TResult Function(
+            double distance, bool hideCompleted, bool hideFarFuture)
+        neutral,
   }) {
-    return neutral(distance, hideCompleted);
+    return neutral(distance, hideCompleted, hideFarFuture);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(double distance, bool hideCompleted)? neutral,
+    TResult Function(double distance, bool hideCompleted, bool hideFarFuture)?
+        neutral,
   }) {
-    return neutral?.call(distance, hideCompleted);
+    return neutral?.call(distance, hideCompleted, hideFarFuture);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(double distance, bool hideCompleted)? neutral,
+    TResult Function(double distance, bool hideCompleted, bool hideFarFuture)?
+        neutral,
     required TResult orElse(),
   }) {
     if (neutral != null) {
-      return neutral(distance, hideCompleted);
+      return neutral(distance, hideCompleted, hideFarFuture);
     }
     return orElse();
   }
@@ -222,13 +246,15 @@ class _$_Initial implements _Initial {
 }
 
 abstract class _Initial implements FeedFilterState {
-  const factory _Initial(final double distance, final bool hideCompleted) =
-      _$_Initial;
+  const factory _Initial(final double distance, final bool hideCompleted,
+      final bool hideFarFuture) = _$_Initial;
 
   @override
   double get distance;
   @override
   bool get hideCompleted;
+  @override
+  bool get hideFarFuture;
   @override
   @JsonKey(ignore: true)
   _$$_InitialCopyWith<_$_Initial> get copyWith =>

@@ -9,7 +9,7 @@ part 'feed_filter_cubit.freezed.dart';
 part 'feed_filter_state.dart';
 
 class FeedFilterCubit extends Cubit<FeedFilterState> {
-  FeedFilterCubit() : super(const FeedFilterState.neutral(10, false));
+  FeedFilterCubit() : super(const FeedFilterState.neutral(10, true, false));
 
   void change(FeedFilterState changed) {
     emit(changed);
@@ -18,6 +18,13 @@ class FeedFilterCubit extends Cubit<FeedFilterState> {
   List<Post> filter(List<Post> posts) {
     if (state.hideCompleted) {
       posts = posts.where((p) => !(p.asEvent?.isCompleted ?? true)).toList();
+    }
+    if (state.hideFarFuture) {
+      posts = posts
+          .where((p) => !(p.asEvent?.startTime
+                  .isBefore(DateTime.now()..add(const Duration(days: 30))) ??
+              false))
+          .toList();
     }
     return posts;
   }
