@@ -171,7 +171,7 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerFloat,
             floatingActionButton: NewRecordButton(
-              maxRecodingLength: 10,
+              maxRecodingLength: 60,
               onRecordingStarted: () => _startRecording(),
               onRecordingFinished: () async {
                 final file = await _stopRecording();

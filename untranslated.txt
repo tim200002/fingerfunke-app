@@ -58,7 +58,6 @@
     "msg_chatSendingFailed",
     "msg_editFieldsMissing",
     "msg_errorUndefined",
-    "msg_feedEmpty",
     "msg_loginCodeAbout",
     "msg_loginEnterCode",
     "msg_loginWait",

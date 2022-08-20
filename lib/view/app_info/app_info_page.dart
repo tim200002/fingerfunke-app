@@ -1,3 +1,5 @@
+import 'package:url_launcher/url_launcher.dart';
+
 import '../../routes.dart';
 import '../../utils/dev_tools.dart';
 import '../../utils/tools.dart';
@@ -16,23 +18,37 @@ class AppInfoPage extends StatelessWidget {
           title: l10n(context).lbl_information,
           closable: true,
         ),
-        body: FFSettingsSection(
-          title: l10n(context).lbl_information,
-          tiles: [
-            SettingsTile(
-                title: l10n(context).lbl_privacy,
-                leading: const Icon(Icons.privacy_tip_outlined),
-                onPressed: (context) => DevTools.showToDoSnackbar(context)),
-            SettingsTile(
-                title: l10n(context).lbl_imprint,
-                leading: const Icon(Icons.notes_rounded),
-                onPressed: (context) => DevTools.showToDoSnackbar(context)),
-            SettingsTile(
-                title: l10n(context).lbl_licenses,
-                leading: const Icon(Icons.gavel_outlined),
-                onPressed: (context) {
-                  Navigator.of(context).pushNamed(Routes.licenses);
-                }),
+        body: Column(
+          children: [
+            Expanded(
+              child: FFSettingsSection(
+                  title: l10n(context).lbl_information,
+                  tiles: [
+                    SettingsTile(
+                        title: l10n(context).lbl_privacy,
+                        leading: const Icon(Icons.privacy_tip_outlined),
+                        onPressed: (context) =>
+                            launch("https://fingerfunke.app/privacy.html")),
+                    SettingsTile(
+                        title: l10n(context).lbl_imprint,
+                        leading: const Icon(Icons.notes_rounded),
+                        onPressed: (context) =>
+                            launch("https://fingerfunke.app/impressum.html")),
+                    SettingsTile(
+                        title: l10n(context).lbl_licenses,
+                        leading: const Icon(Icons.gavel_outlined),
+                        onPressed: (context) {
+                          Navigator.of(context).pushNamed(Routes.licenses);
+                        }),
+                  ]),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 20),
+              child: Image.asset(
+                "assets/img/partners/bmbf_logo.jpg",
+                height: 150,
+              ),
+            )
           ],
         ));
   }

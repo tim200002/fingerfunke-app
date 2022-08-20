@@ -112,7 +112,7 @@ class HomeDrawer extends StatelessWidget {
                       onTap: () => Navigator.of(context)
                           .popAndPushNamed(Routes.settings),
                     ),
-                    ListTile(
+                    /*ListTile(
                       leading: const Icon(FeatherIcons.logOut),
                       title: Text(l10n(context).lbl_signOut),
                       enabled: true,
@@ -124,7 +124,7 @@ class HomeDrawer extends StatelessWidget {
                                 (_) => Tools.showSnackbar(
                                     context, l10n(context).msg_signOutFailed),
                               ),
-                    ),
+                    ),*/
                   ]),
             ],
           ),
