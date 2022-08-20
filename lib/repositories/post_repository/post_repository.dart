@@ -1,11 +1,14 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '../../models/asset/asset.dart';
 import '../../models/post/post.dart';
 import '../../utils/type_aliases.dart';
 
 abstract class PostRepository {
-  Stream<List<Post>> observePosts();
+  Stream<List<Post>> observePosts(
+      {Query Function(CollectionReference)? filter});
 
   Future<void> createPost(Post post);
 

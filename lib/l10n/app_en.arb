@@ -70,7 +70,7 @@
 "msg_postErrorSaving" : "error saving post",
 "msg_postOnlyEventsSupported": "for now the app only supports events",
 "msg_reportSuccess": "content was reported.\nThank you!",
-"msg_savedFeedEmpty" : "If you saved posts they will appear here",
+"msg_savedFeedEmpty" : "If you save posts they will appear here",
 "msg_signOutFailed": "sign out failed",
 "msg_signedIn": "you are signed in"
 }

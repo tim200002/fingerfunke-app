@@ -30,8 +30,9 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Stream<List<Post>> observePosts() {
-    return _postCollection.snapshots().map(
+  Stream<List<Post>> observePosts(
+      {Query Function(CollectionReference)? filter}) {
+    return (filter?.call(_postCollection) ?? _postCollection).snapshots().map(
           (snap) => snap.docs.map((doc) => Post.fromDoc(doc)).toList(),
         );
   }

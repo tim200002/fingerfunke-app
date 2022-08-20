@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../common_widgets/list_view/list_items/post_feed_image_item.dart';
 import '../../../models/post/post.dart';
@@ -6,6 +8,7 @@ import '../../../repositories/post_repository/post_repository.impl.dart';
 import '../../../utils/tools.dart';
 import '../../../utils/util_cubits/stream/stream_subscribe_cubit.dart';
 import '../../error/exception_view.dart';
+import '../../home/widgets/filter/cubit/feed_filter_cubit.dart';
 import '../../moderation/mod_post_report/mod_post_report_page.dart';
 
 class PagedPostDiscoveryFeed extends StatelessWidget {
@@ -30,24 +33,26 @@ class PagedPostDiscoveryFeed extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Expanded(
-              child: StreamSubscribeCubit.asWidget<List<Post>>(
-                  dataStream: PostRepositoryImpl().observePosts(),
-                  builder: (context, state) => state.when(
-                        loading: () => const Center(
-                            child: CircularProgressIndicator.adaptive()),
-                        error: ExceptionView.builder,
-                        neutral: (posts) => demoFeedList(
-                          items: posts,
-                          itemBuilder: (post) => PostFeedImageItem(
-                            post,
-                            key: ValueKey(post.id),
-                          ),
-                          endIndicator: ModPostReportPage.emptyIndicator(
-                            l10n(context).msg_feedEmpty,
-                          ),
+          Expanded(child: BlocBuilder<FeedFilterCubit, FeedFilterState>(
+              builder: (context, filter) {
+            return StreamSubscribeCubit.asWidget<List<Post>>(
+                dataStream: PostRepositoryImpl().observePosts(
+                    filter: context.read<FeedFilterCubit>().createFilter),
+                builder: (context, state) => state.when(
+                      loading: () => const Center(
+                          child: CircularProgressIndicator.adaptive()),
+                      error: ExceptionView.builder,
+                      neutral: (posts) => demoFeedList(
+                        items: posts,
+                        itemBuilder: (post) => PostFeedImageItem(
+                          post,
+                          key: ValueKey(post.id),
                         ),
-                      )))
+                        endIndicator: ModPostReportPage.emptyIndicator(
+                            l10n(context).msg_feedEmpty),
+                      ),
+                    ));
+          }))
         ],
       ),
     );

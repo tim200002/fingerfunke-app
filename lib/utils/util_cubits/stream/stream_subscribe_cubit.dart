@@ -12,8 +12,8 @@ class StreamSubscribeCubit<T> extends Cubit<StreamSubscribeState<T>> {
       {required Stream<T> dataStream,
       required Widget Function(BuildContext, StreamSubscribeState<T>)
           builder}) {
-    return BlocProvider<StreamSubscribeCubit<T>>(
-      create: (c) => StreamSubscribeCubit(dataStream: dataStream),
+    return BlocProvider<StreamSubscribeCubit<T>>.value(
+      value: StreamSubscribeCubit(dataStream: dataStream),
       child: BlocBuilder<StreamSubscribeCubit<T>, StreamSubscribeState<T>>(
           builder: builder),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import '../../../cubits/live_config_cubit/live_config_cubit.dart';
@@ -8,6 +9,8 @@ import '../../../utils/tools.dart';
 import '../../post_discovery_feed/view/paged_post_discovery_feed.dart';
 import '../../post_discovery_feed/view/post_discovery_feed.dart';
 import '../../saved_feed/view/saved_posts_feed.dart';
+import '../widgets/filter/cubit/feed_filter_cubit.dart';
+import '../widgets/filter/home_filter_view.dart';
 import '../widgets/home_drawer/home_drawer_view.dart';
 
 class _MenuButton extends StatelessWidget {
@@ -75,59 +78,76 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
+  Widget _filterButton() {
+    return Builder(
+        builder: (c) => TextButton.icon(
+            onPressed: () => Navigator.of(c).push(MaterialPageRoute(
+                builder: (context) => BlocProvider.value(
+                    value: BlocProvider.of<FeedFilterCubit>(c),
+                    child: const HomeFilterView()))),
+            icon: const Icon(FeatherIcons.filter),
+            label: const Text("Filter")));
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: const _MenuButton(icon: FeatherIcons.menu),
-        title: const Text("TODO: Location"), //_DEMOPlaceIndicator(context),
-        actions: [
-          const SizedBox(
-            width: 62,
-          ),
-          IconButton(
-              onPressed: () => Navigator.of(context).pushNamed(Routes.feedback),
-              icon: const Icon(Icons.thumbs_up_down_rounded))
-          /*IconButton(
-              onPressed: null, //() => DevTools.showToDoSnackbar(context),
-              icon: Icon(FeatherIcons.calendar))*/
-        ],
-      ),
-      drawer: const HomeDrawer(),
-      body: Container(
-        padding: const EdgeInsets.only(
-            left: AppTheme.PADDING_SIDE, right: AppTheme.PADDING_SIDE, top: 15),
-        clipBehavior: Clip.none,
-        child: _activePage == _HomePages.feedPage
-            ? LiveConfig.builder((config) => config.pagedFeed
-                ? const PagedPostDiscoveryFeed()
-                : const PostDiscoveryFeed()) //const PostFeedView()
-            : const SavedPostsFeed(),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        elevation: 0,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _bottomNavItem(context,
-                title: l10n(context).lbl_explore,
-                icon: FeatherIcons.compass,
-                selected: _activePage == _HomePages.feedPage,
+    return BlocProvider<FeedFilterCubit>(
+      create: (context) => FeedFilterCubit(),
+      child: Scaffold(
+        appBar: AppBar(
+          leading: const _MenuButton(icon: FeatherIcons.menu),
+          title: _filterButton(),
+          actions: [
+            const SizedBox(
+              width: 62,
+            ),
+            IconButton(
                 onPressed: () =>
-                    setState(() => _activePage = _HomePages.feedPage)),
-            _bottomNavItem(context,
-                title: l10n(context).lbl_create,
-                icon: FeatherIcons.plus,
-                color: Theme.of(context).colorScheme.primary,
-                onPressed: () =>
-                    Navigator.of(context).pushNamed(Routes.postEditor)),
-            _bottomNavItem(context,
-                title: l10n(context).lbl_saved,
-                selected: _activePage == _HomePages.savedPage,
-                icon: FeatherIcons.heart,
-                onPressed: () =>
-                    setState(() => _activePage = _HomePages.savedPage)),
+                    Navigator.of(context).pushNamed(Routes.feedback),
+                icon: const Icon(Icons.thumbs_up_down_rounded))
+            /*IconButton(
+                    onPressed: null, //() => DevTools.showToDoSnackbar(context),
+                    icon: Icon(FeatherIcons.calendar))*/
           ],
+        ),
+        drawer: const HomeDrawer(),
+        body: Container(
+          padding: const EdgeInsets.only(
+              left: AppTheme.PADDING_SIDE,
+              right: AppTheme.PADDING_SIDE,
+              top: 15),
+          clipBehavior: Clip.none,
+          child: _activePage == _HomePages.feedPage
+              ? LiveConfig.builder((config) => config.pagedFeed
+                  ? const PagedPostDiscoveryFeed()
+                  : const PostDiscoveryFeed()) //const PostFeedView()
+              : const SavedPostsFeed(),
+        ),
+        bottomNavigationBar: BottomAppBar(
+          elevation: 0,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              _bottomNavItem(context,
+                  title: l10n(context).lbl_explore,
+                  icon: FeatherIcons.compass,
+                  selected: _activePage == _HomePages.feedPage,
+                  onPressed: () =>
+                      setState(() => _activePage = _HomePages.feedPage)),
+              _bottomNavItem(context,
+                  title: l10n(context).lbl_create,
+                  icon: FeatherIcons.plus,
+                  color: Theme.of(context).colorScheme.primary,
+                  onPressed: () =>
+                      Navigator.of(context).pushNamed(Routes.postEditor)),
+              _bottomNavItem(context,
+                  title: l10n(context).lbl_saved,
+                  selected: _activePage == _HomePages.savedPage,
+                  icon: FeatherIcons.heart,
+                  onPressed: () =>
+                      setState(() => _activePage = _HomePages.savedPage)),
+            ],
+          ),
         ),
       ),
     );
