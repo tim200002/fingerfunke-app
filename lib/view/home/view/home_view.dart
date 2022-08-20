@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
-import '../../../cubits/live_config_cubit/live_config_cubit.dart';
 import '../../../cubits/location_cubit/location_cubit.dart';
 import '../../../routes.dart';
 import '../../../utils/app_theme.dart';
 import '../../../utils/tools.dart';
 import '../../post_discovery_feed/view/paged_post_discovery_feed.dart';
-import '../../post_discovery_feed/view/post_discovery_feed.dart';
 import '../../saved_feed/view/saved_posts_feed.dart';
 import '../widgets/filter/cubit/feed_filter_cubit.dart';
 import '../widgets/filter/home_filter_view.dart';
@@ -126,9 +124,7 @@ class _HomeViewState extends State<HomeView> {
               top: 15),
           clipBehavior: Clip.none,
           child: _activePage == _HomePages.feedPage
-              ? LiveConfig.builder((config) => config.pagedFeed
-                  ? const PagedPostDiscoveryFeed()
-                  : const PostDiscoveryFeed()) //const PostFeedView()
+              ? const PagedPostDiscoveryFeed()
               : const SavedPostsFeed(),
         ),
         bottomNavigationBar: BottomAppBar(
