@@ -1,16 +1,27 @@
-import '../../../common_widgets/list_view/pagination/cubit/paginated_list_cubit.dart';
-import '../../../models/post/post.dart';
-import '../../../services/pagination/post_pagination_service.dart';
-import '../../../utils/illustration.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../common_widgets/list_view/list_items/post_feed_image_item.dart';
-import '../../../common_widgets/list_view/pagination/view/paged_paginated_list.dart';
+import '../../../models/post/post.dart';
+import '../../../repositories/post_repository/post_repository.impl.dart';
 import '../../../utils/tools.dart';
+import '../../../utils/util_cubits/stream/stream_subscribe_cubit.dart';
+import '../../error/exception_view.dart';
+import '../../moderation/mod_post_report/mod_post_report_page.dart';
 
 class PagedPostDiscoveryFeed extends StatelessWidget {
   const PagedPostDiscoveryFeed({Key? key}) : super(key: key);
+
+  Widget demoFeedList(
+      {required List<Post> items,
+      required Widget Function(Post) itemBuilder,
+      required Widget endIndicator}) {
+    return PageView.builder(
+        scrollDirection: Axis.vertical,
+        itemCount: items.length + 1,
+        itemBuilder: (context, i) {
+          return i >= items.length ? endIndicator : itemBuilder(items[i]);
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,39 +31,23 @@ class PagedPostDiscoveryFeed extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
-            child: BlocProvider(
-              create: (context) => PaginatedListCubit<Post>(
-                paginationService: PostPaginationService(),
-              ),
-              child: PagedPaginatedList<Post>(
-                itemBuilder: (post) => PostFeedImageItem(
-                  post,
-                  key: ValueKey(post.id),
-                ),
-                reverse: false,
-                endIndicator: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 300),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Illustration(
-                        Illustrations.empty,
-                        height: null,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        l10n(context).msg_feedEmpty,
-                        textAlign: TextAlign.center,
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
+              child: StreamSubscribeCubit.asWidget<List<Post>>(
+                  dataStream: PostRepositoryImpl().observePosts(),
+                  builder: (context, state) => state.when(
+                        loading: () => const Center(
+                            child: CircularProgressIndicator.adaptive()),
+                        error: ExceptionView.builder,
+                        neutral: (posts) => demoFeedList(
+                          items: posts,
+                          itemBuilder: (post) => PostFeedImageItem(
+                            post,
+                            key: ValueKey(post.id),
+                          ),
+                          endIndicator: ModPostReportPage.emptyIndicator(
+                            l10n(context).msg_feedEmpty,
+                          ),
+                        ),
+                      )))
         ],
       ),
     );

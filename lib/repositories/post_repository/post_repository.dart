@@ -5,6 +5,8 @@ import '../../models/post/post.dart';
 import '../../utils/type_aliases.dart';
 
 abstract class PostRepository {
+  Stream<List<Post>> observePosts();
+
   Future<void> createPost(Post post);
 
   Stream<Post> subscribeToPost(FirestoreId postId);

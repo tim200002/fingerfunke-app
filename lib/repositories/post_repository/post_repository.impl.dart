@@ -30,6 +30,13 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
+  Stream<List<Post>> observePosts() {
+    return _postCollection.snapshots().map(
+          (snap) => snap.docs.map((doc) => Post.fromDoc(doc)).toList(),
+        );
+  }
+
+  @override
   Stream<Post> subscribeToPost(FirestoreId postId) {
     return _postCollection.doc(postId).snapshots().map(
           (DocumentSnapshot doc) => Post.fromDoc(doc),

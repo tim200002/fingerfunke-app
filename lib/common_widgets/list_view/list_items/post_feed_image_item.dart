@@ -29,23 +29,25 @@ class PostFeedImageItem extends StatelessWidget {
       {Key? key, this.height, this.onNavigatedBackToThisItem})
       : super(key: key);
 
-  Widget _videoBackgroundView(BuildContext context) {
-    return BlocProvider(
-      create: (context) => VideoPlaybackCubit(
-          url: VideoRepositoryImpl().createPlaybackUrl((_post.media
-              .firstWhere((e) => e.type == asset_type.video) as VideoAsset)),
-          autoplay: true,
-          loop: true),
-      child: /*Builder(builder: (context) {
-        return GestureDetector(
-            onTap: () =>
-                BlocProvider.of<VideoPlaybackCubit>(context).togglePlay(),
-            child: */
-          VideoPlaybackView(
-        fit: BoxFit.cover,
-        thumbnail: _imageBackgroundView(context),
-      ),
+  Widget _videoBackgroundView(BuildContext context, {bool greyscale = false}) {
+    Widget videoPlayback = VideoPlaybackView(
+      fit: BoxFit.cover,
+      thumbnail: _imageBackgroundView(context),
     );
+    return BlocProvider(
+        create: (context) => VideoPlaybackCubit(
+            url: VideoRepositoryImpl().createPlaybackUrl((_post.media
+                .firstWhere((e) => e.type == asset_type.video) as VideoAsset)),
+            autoplay: true,
+            loop: true),
+        child: !greyscale
+            ? videoPlayback
+            : ColorFiltered(
+                colorFilter: const ColorFilter.mode(
+                  Colors.grey,
+                  BlendMode.saturation,
+                ),
+                child: videoPlayback));
   }
 
   Widget _imageBackgroundView(BuildContext context) {
@@ -71,7 +73,8 @@ class PostFeedImageItem extends StatelessWidget {
             ),
           )
         : LiveConfig.builder((config) => config.pagedFeed
-            ? _videoBackgroundView(context)
+            ? _videoBackgroundView(context,
+                greyscale: _post.asEvent?.isCompleted ?? false)
             : _imageBackgroundView(context));
   }
 
