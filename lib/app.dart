@@ -36,13 +36,16 @@ class App extends StatelessWidget {
                 buildApp(const SplashPage(), themeMode: themeMode),
             autehnticationNoUserCreated: (uid) =>
                 buildApp(const CreateAccountView(), themeMode: themeMode),
-            authenticated: (user) => BlocOverrides.runZoned(
-                () => BlocProvider(
-                      create: (context) => AppCubit(user),
-                      child: buildApp(const HomeView(),
-                          themeMode: themeMode, routes: routes),
-                    ),
-                blocObserver: SimpleBlocObserver())),
+            authenticated: (user) {
+              AppCubit.setUserVars(user.id);
+              return BlocOverrides.runZoned(
+                  () => BlocProvider(
+                        create: (context) => AppCubit(user),
+                        child: buildApp(const HomeView(),
+                            themeMode: themeMode, routes: routes),
+                      ),
+                  blocObserver: SimpleBlocObserver());
+            }),
       ),
     );
   }

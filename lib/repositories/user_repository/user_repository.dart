@@ -9,6 +9,7 @@ part 'user_repository.impl.dart';
 abstract class UserRepository {
   Future<User> getUser(String userId);
   Future<void> createUser(User user);
+  Future<void> setToken(String userId, String key, Map<String, dynamic> value);
   Future<void> updateUser(FirestoreId userId,
       {String? name, String? picture, int? age, List<FirestoreId>? savedPosts});
 

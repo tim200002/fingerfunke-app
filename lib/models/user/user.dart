@@ -60,15 +60,17 @@ class User extends DatabaseDocument {
   final int? age;
   final UserClearance? clearance;
   final List<FirestoreId> savedPosts;
+  final String? fcmToken;
 
-  const User({
-    required FirestoreId id,
-    required this.name,
-    this.picture,
-    this.savedPosts = const [],
-    this.age,
-    this.clearance = UserClearance.user,
-  }) : super(id: id);
+  const User(
+      {required FirestoreId id,
+      required this.name,
+      this.picture,
+      this.savedPosts = const [],
+      this.age,
+      this.clearance = UserClearance.user,
+      this.fcmToken})
+      : super(id: id);
 
   UserInfo toInfo() => UserInfo(id: id, name: name, picture: picture);
 
@@ -83,7 +85,8 @@ class User extends DatabaseDocument {
         'picture': picture,
         'savedPosts': savedPosts,
         'age': age,
-        'clearance': clearance?.level
+        'clearance': clearance?.level,
+        'fcmToken': fcmToken
       };
 
   factory User.fromJson(Map<String, dynamic> map) => User(
@@ -97,7 +100,8 @@ class User extends DatabaseDocument {
           : [],
       age: map['age'] as int?,
       clearance: UserClearance.values
-          .firstWhere((e) => e.level >= (map['clearance'] as int? ?? 0)));
+          .firstWhere((e) => e.level >= (map['clearance'] as int? ?? 0)),
+      fcmToken: map['fcmToken']);
 
   factory User.fromDoc(DocumentSnapshot document) =>
       User.fromJson(documentSnaphsotToJson(document));
