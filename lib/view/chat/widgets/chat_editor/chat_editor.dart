@@ -63,9 +63,9 @@ class _ChatEditorState extends State<ChatEditor> {
                             .onError((_, __) => Tools.showSnackbar(
                                 context, l10n(context).msg_chatSendingFailed))
                         : null,
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.send_rounded,
-                      color: Theme.of(context).colorScheme.primary,
+                      color: Colors.black,
                     ),
                   ),
                 )

@@ -29,7 +29,7 @@ class PhoneLoginCubit extends Cubit<PhoneLoginState> {
             await _authenticationRepository.signIn(phoneAuthCredentials);
           } on FirebaseAuthException catch (exception) {
             final SignInWithCredentialFailure reasonForFailure =
-                SignInWithCredentialFailure.fromCode(exception.code);
+                SignInWithCredentialFailure.fromCode(exception);
             emit(PhoneLoginState.enterPhoneNumber(
                 withErrorMessage: reasonForFailure.message));
           }
@@ -66,7 +66,7 @@ class PhoneLoginCubit extends Cubit<PhoneLoginState> {
       await _authenticationRepository.signIn(authCredential);
     } on FirebaseAuthException catch (exception) {
       final SignInWithCredentialFailure reasonForFailure =
-          SignInWithCredentialFailure.fromCode(exception.code);
+          SignInWithCredentialFailure.fromCode(exception);
       emit(PhoneLoginState.enterCode(
           verificationId: verificationId,
           autoDetecting: true,
