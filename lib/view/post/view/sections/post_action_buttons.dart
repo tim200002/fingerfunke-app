@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import '../../../../common_widgets/list_view/pagination/cubit/paginated_list_cubit.dart';
+import '../../../../cubits/app_cubit/app_cubit.dart';
 import '../../../../models/message/message.dart';
 import '../../../../routes.dart';
 import '../../../../utils/tools.dart';
@@ -58,40 +59,49 @@ class PostActionButtons extends StatelessWidget {
             normal: (post, isJoining) {
               return Stack(
                 children: <Widget>[
-                  Align(
-                      alignment: Alignment.bottomCenter,
-                      child: BlocBuilder<PostMemberCubit, StreamSubscribeState>(
-                          builder: (context, state) => state.when(
-                              error: (_) => Container(),
-                              loading: () => Container(),
-                              neutral: (members) {
-                                final isMember = context
-                                    .read<PostMemberCubit>()
-                                    .userIsMember();
-                                return _mainFAB(context,
-                                    title: isMember
-                                        ? l10n(context).lbl_joinedPost
-                                        : l10n(context).lbl_joinPost,
-                                    icon: isMember ? Icons.check : Icons.add,
-                                    isLoading: isJoining,
-                                    color: isMember
-                                        ? Theme.of(context)
-                                            .colorScheme
-                                            .secondary
-                                        : Theme.of(context).colorScheme.primary,
-                                    onTap: () => (isMember
-                                            ? context
-                                                .read<PostMemberCubit>()
-                                                .leavePost
-                                            : context
-                                                .read<PostMemberCubit>()
-                                                .joinPost)
-                                        .call()
-                                        .catchError(
-                                          (_) => Tools.showSnackbar(context,
-                                              l10n(context).msg_errorUndefined),
-                                        ));
-                              }))),
+                  if (!post.isUserAuthor(
+                      context.read<AppCubit>().state.user.toInfo()))
+                    Align(
+                        alignment: Alignment.bottomCenter,
+                        child:
+                            BlocBuilder<PostMemberCubit, StreamSubscribeState>(
+                                builder: (context, state) => state.when(
+                                    error: (_) => Container(),
+                                    loading: () => Container(),
+                                    neutral: (members) {
+                                      final isMember = context
+                                          .read<PostMemberCubit>()
+                                          .userIsMember();
+                                      return _mainFAB(context,
+                                          title: isMember
+                                              ? l10n(context).lbl_joinedPost
+                                              : l10n(context).lbl_joinPost,
+                                          icon: isMember
+                                              ? Icons.check
+                                              : Icons.add,
+                                          isLoading: isJoining,
+                                          color: isMember
+                                              ? Theme.of(context)
+                                                  .colorScheme
+                                                  .secondary
+                                              : Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
+                                          onTap: () => (isMember
+                                                  ? context
+                                                      .read<PostMemberCubit>()
+                                                      .leavePost
+                                                  : context
+                                                      .read<PostMemberCubit>()
+                                                      .joinPost)
+                                              .call()
+                                              .catchError(
+                                                (_) => Tools.showSnackbar(
+                                                    context,
+                                                    l10n(context)
+                                                        .msg_errorUndefined),
+                                              ));
+                                    }))),
                   Align(
                     alignment: Alignment.bottomRight,
                     child: FloatingActionButton(
