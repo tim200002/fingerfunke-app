@@ -1,10 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../utils/extensions/first_where_or_null.dart';
 import '../../utils/type_aliases.dart';
 import '../abstract_models/abstract_models.dart';
 import '../asset/asset.dart';
@@ -69,7 +67,7 @@ class Post extends UserGeneratedDocument {
 
   final List<Asset> media;
 
-  final List<UserInfo> participants;
+  //final List<UserInfo> participants;
 
   const Post._(
       {required FirestoreId id,
@@ -80,8 +78,7 @@ class Post extends UserGeneratedDocument {
       required DateTime creationTime,
       required this.visibility,
       required this.place,
-      required this.media,
-      required this.participants})
+      required this.media})
       : super(id: id, author: author, creationTime: creationTime);
 
   int get hashCode => toJson().hashCode;
@@ -112,14 +109,6 @@ class Post extends UserGeneratedDocument {
       default:
         throw InvalidPostTypeException();
     }
-  }
-
-  bool isUserParticipant(UserInfo? participant) {
-    if (participant == null) return false;
-    return participants.firstWhereOrNull((user) => user.id == participant.id) !=
-            null
-        ? true
-        : false;
   }
 
   bool isUserAuthor(UserInfo? user) {

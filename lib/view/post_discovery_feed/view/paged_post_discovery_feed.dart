@@ -51,7 +51,7 @@ class PagedPostDiscoveryFeed extends StatelessWidget {
                 onPressed: () {
                   context.read<LocationCubit>().reload();
                 },
-                child: Text("erneut versuchen"))
+                child: const Text("erneut versuchen"))
           ],
         ),
       ),

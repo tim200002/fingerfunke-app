@@ -1,11 +1,10 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../routes.dart';
-import '../../utils/dev_tools.dart';
 import '../../utils/tools.dart';
 import '../../utils/util_widgets/page_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 
 class AppInfoPage extends StatelessWidget {
   const AppInfoPage({Key? key}) : super(key: key);
@@ -43,7 +42,7 @@ class AppInfoPage extends StatelessWidget {
                   ]),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 20),
+              padding: const EdgeInsets.symmetric(vertical: 20),
               child: Image.asset(
                 "assets/img/partners/bmbf_logo.jpg",
                 height: 150,

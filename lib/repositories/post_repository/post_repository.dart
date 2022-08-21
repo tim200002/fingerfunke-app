@@ -4,11 +4,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../models/asset/asset.dart';
 import '../../models/post/post.dart';
+import '../../models/user/user.dart';
 import '../../utils/type_aliases.dart';
 
 abstract class PostRepository {
   Stream<List<Post>> observeNearbyPosts(
       {required GeoPoint point, required double radius});
+
+  Stream<List<UserInfo>> observePostMembers(String postId);
 
   Future<void> createPost(Post post);
 
@@ -26,8 +29,9 @@ abstract class PostRepository {
       List<Asset>? media,
       DateTime? startTime});
 
-  /// make current user member of post
-  Future<Post> joinPost({required FirestoreId postId});
+  Future<void> addPostMember(
+      {required FirestoreId postId, required UserInfo user});
 
-  Future<Post> leavePost({required FirestoreId postId});
+  Future<void> removePostMember(
+      {required FirestoreId postId, required String userId});
 }

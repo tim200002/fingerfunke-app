@@ -198,6 +198,7 @@ class PostEditorCubit extends Cubit<PostEditorState> {
           media: _videoUploadCubitsToAssetsHelper(fields.videoUploadCubits),
           startTime: fields.startTime);
       await _postRepository.createPost(event);
+      await _postRepository.addPostMember(postId: event.id, user: currentUser);
       return event.id;
     } else {
       await _postRepository.updatePost(postToBeEdited!.id,
@@ -226,6 +227,7 @@ class PostEditorCubit extends Cubit<PostEditorState> {
         media: _videoUploadCubitsToAssetsHelper(fields.videoUploadCubits),
       );
       await _postRepository.createPost(group);
+      await _postRepository.addPostMember(postId: group.id, user: currentUser);
       return group.id;
     } else {
       await _postRepository.updatePost(postToBeEdited!.id,

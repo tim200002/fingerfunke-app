@@ -10,18 +10,17 @@ class Group extends Post {
     required PostVisibility visibility,
     required PostPlace place,
     required List<Asset> media,
-    required List<UserInfo> participants,
   }) : super._(
-            id: id,
-            type: PostType.recurrent,
-            author: author,
-            title: title,
-            description: description,
-            creationTime: creationTime,
-            visibility: visibility,
-            place: place,
-            media: media,
-            participants: participants);
+          id: id,
+          type: PostType.recurrent,
+          author: author,
+          title: title,
+          description: description,
+          creationTime: creationTime,
+          visibility: visibility,
+          place: place,
+          media: media,
+        );
 
   @override
   Map<String, dynamic> toJson() {
@@ -35,7 +34,6 @@ class Group extends Post {
       "visibility": visibility.name,
       "location": place.toJson(),
       "media": media.map((e) => e.toJson()).toList(),
-      "participants": participants.map((user) => user.toJson()).toList(),
     };
   }
 
@@ -51,10 +49,6 @@ class Group extends Post {
       place: PostPlace.fromJson(map["place"]),
       media: (map['media'] as List<dynamic>)
           .map((e) => Asset.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      participants: (map["participants"] as List<dynamic>)
-          .map((participant) =>
-              UserInfo.fromJson(participant as Map<String, dynamic>))
           .toList(),
     );
   }
@@ -79,7 +73,6 @@ class Group extends Post {
         visibility: visibility,
         place: place,
         media: media,
-        participants: [author],
       );
 
   @override

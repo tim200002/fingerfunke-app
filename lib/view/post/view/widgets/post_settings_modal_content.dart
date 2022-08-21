@@ -9,11 +9,24 @@ import '../../../../utils/dev_tools.dart';
 import '../../../../utils/tools.dart';
 import '../../../../utils/util_widgets/floating_modal.dart';
 import '../../../report_send/report_send_page.dart';
+import '../../cubits/post_member_cubit/post_member_cubit.dart';
 import '../../cubits/post_viewer_cubit/post_cubit.dart';
 import 'post_participants_view.dart';
 
 class PostSettingsModalContent extends StatelessWidget {
-  const PostSettingsModalContent({Key? key}) : super(key: key);
+  const PostSettingsModalContent._({Key? key}) : super(key: key);
+
+  static Future<void> openAsModalBottomSheet(BuildContext context) {
+    return showFloatingModalBottomSheet<void>(
+        context: context,
+        builder: (_) => MultiBlocProvider(providers: [
+              BlocProvider<PostMemberCubit>.value(
+                  value: context.read<PostMemberCubit>()),
+              BlocProvider<PostCubit>.value(
+                value: context.read<PostCubit>(),
+              )
+            ], child: const PostSettingsModalContent._()));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +39,8 @@ class PostSettingsModalContent extends StatelessWidget {
               bool isAuthor = post.isUserAuthor(
                   BlocProvider.of<AppCubit>(context).state.user.toInfo());
 
-              bool isParticipant = post.isUserParticipant(
-                  BlocProvider.of<AppCubit>(context).state.user.toInfo());
+              bool isParticipant =
+                  context.read<PostMemberCubit>().userIsMember();
 
               return Column(
                 mainAxisSize: MainAxisSize.min,
@@ -37,11 +50,7 @@ class PostSettingsModalContent extends StatelessWidget {
                       title: Text(l10n(context).lbl_postMembers),
                       onTap: () {
                         Navigator.of(context).pop();
-                        showFloatingModalBottomSheet(
-                            context: context,
-                            builder: (_) => BlocProvider<PostCubit>.value(
-                                value: context.read<PostCubit>(), //
-                                child: const PostParticipantsView()));
+                        PostParticipantsView.openAsModalBottomSheet(context);
                       }),
                   if (isAuthor &&
                       (!post.isEvent || !(post as Event).isCompleted))

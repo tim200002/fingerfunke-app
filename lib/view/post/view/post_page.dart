@@ -5,12 +5,14 @@ import '../../../common_widgets/list_view/pagination/cubit/paginated_list_cubit.
 import '../../../cubits/app_cubit/app_cubit.dart';
 import '../../../models/message/message.dart';
 import '../../../models/post/post.dart';
-import '../../../routes.dart';
+import '../../../repositories/post_repository/post_repository.impl.dart';
 import '../../../services/pagination/message_pagination_service.dart';
 import '../../../utils/app_theme.dart';
 import '../../../utils/tools.dart';
+import '../../../utils/util_cubits/stream/stream_subscribe_cubit.dart';
 import '../../error/exception_view.dart';
 import '../cubits/post_editor_cubit/post_editor_cubit.dart';
+import '../cubits/post_member_cubit/post_member_cubit.dart';
 import '../cubits/post_viewer_cubit/post_cubit.dart';
 import 'sections/author_section.dart';
 import 'sections/event_detail_section.dart';
@@ -74,6 +76,10 @@ class PostPage extends StatelessWidget {
       BlocProvider<PostCubit>(
         create: (_) => PostCubit(postId),
       ),
+      BlocProvider<PostMemberCubit>(
+          create: (_) => PostMemberCubit(
+              postId: postId,
+              user: context.read<AppCubit>().state.user.toInfo())),
       // it makes sense to already provide the chat message cubit here
       // so that when opening the chat initial messages are typically already loaded
       // therefore we require the cubit to be instantly built -> lazy is set to false

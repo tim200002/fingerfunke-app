@@ -36,7 +36,7 @@ class DevFunctionsPage extends StatelessWidget {
                             visibility: PostVisibility.visible,
                             description:
                                 "Dieser post ist ein post der nur zu testzwecken um ${DateTime.now().toString()} erstellt wurde",
-                            place: PostPlace.demo(),
+                            place: const PostPlace.demo(),
                             media: [
                               VideoAsset(
                                   id: "test",

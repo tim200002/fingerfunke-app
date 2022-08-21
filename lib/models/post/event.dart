@@ -12,7 +12,6 @@ class Event extends Post {
       required PostVisibility visibility,
       required PostPlace place,
       required List<Asset> media,
-      required List<UserInfo> participants,
       required this.startTime})
       : super._(
             id: id,
@@ -23,8 +22,7 @@ class Event extends Post {
             creationTime: creationTime,
             visibility: visibility,
             place: place,
-            media: media,
-            participants: participants);
+            media: media);
 
   bool get isCompleted => DateTime.now().isAfter(startTime);
 
@@ -40,9 +38,6 @@ class Event extends Post {
       "visibility": visibility.name,
       "place": place.toJson(),
       "media": media.map((e) => e.toJson()).toList(),
-      "participants": participants
-          .map((user) => user.toJson()..["picture"] = null)
-          .toList(),
       "startTime": dateToJson(startTime)
     };
   }
@@ -59,10 +54,6 @@ class Event extends Post {
       place: PostPlace.fromJson(map["place"]),
       media: (map['media'] as List<dynamic>)
           .map((e) => Asset.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      participants: (map["participants"] as List<dynamic>)
-          .map((participant) =>
-              UserInfo.fromJson(participant as Map<String, dynamic>))
           .toList(),
       startTime: dateFromJson(map['startTime'] as int),
     );
@@ -88,7 +79,6 @@ class Event extends Post {
           visibility: visibility,
           place: place,
           media: media,
-          participants: [author],
           startTime: startTime);
 
   @override

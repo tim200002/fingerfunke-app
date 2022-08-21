@@ -4,10 +4,25 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../common_widgets/image/user_image/user_image.dart';
 import '../../../../models/user/user.dart';
 import '../../../../utils/tools.dart';
+import '../../../../utils/util_cubits/stream/stream_subscribe_cubit.dart';
+import '../../../../utils/util_widgets/floating_modal.dart';
+import '../../cubits/post_member_cubit/post_member_cubit.dart';
 import '../../cubits/post_viewer_cubit/post_cubit.dart';
 
 class PostParticipantsView extends StatelessWidget {
-  const PostParticipantsView({Key? key}) : super(key: key);
+  const PostParticipantsView._({Key? key}) : super(key: key);
+
+  static Future<void> openAsModalBottomSheet(BuildContext context) {
+    return showFloatingModalBottomSheet<void>(
+        context: context,
+        builder: (_) => MultiBlocProvider(providers: [
+              BlocProvider<PostMemberCubit>.value(
+                  value: context.read<PostMemberCubit>()),
+              BlocProvider<PostCubit>.value(
+                value: context.read<PostCubit>(),
+              )
+            ], child: const PostParticipantsView._()));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,24 +47,47 @@ class PostParticipantsView extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 13),
-                    for (UserInfo info in post.participants)
-                      Container(
-                        margin: const EdgeInsets.symmetric(vertical: 10),
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 3, horizontal: 20),
-                        child: Row(
-                          children: [
-                            UserImage(
-                              info.picture,
-                              diameter: 34,
-                            ),
-                            const SizedBox(
-                              width: 15,
-                            ),
-                            Text(info.name)
-                          ],
-                        ),
-                      )
+                    BlocBuilder<PostMemberCubit,
+                            StreamSubscribeState<List<UserInfo>>>(
+                        builder: (context, state) => state.when(
+                            loading: () => const Center(
+                                child: CircularProgressIndicator.adaptive()),
+                            error: (e) =>
+                                const Center(child: Text("Fehler beim Laden")),
+                            neutral: (members) => members.isEmpty
+                                ? const Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 20),
+                                    child: Text(
+                                      "keine Teilnehmer",
+                                      textAlign: TextAlign.center,
+                                    ))
+                                : Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: members
+                                        .map((user) => Container(
+                                              margin:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 10),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 3,
+                                                      horizontal: 20),
+                                              child: Row(
+                                                children: [
+                                                  UserImage(
+                                                    user.picture,
+                                                    diameter: 34,
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 15,
+                                                  ),
+                                                  Text(user.name)
+                                                ],
+                                              ),
+                                            ))
+                                        .toList())))
                   ],
                 ),
               );

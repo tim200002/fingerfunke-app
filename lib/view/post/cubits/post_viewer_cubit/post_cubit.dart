@@ -7,7 +7,6 @@ import '../../../../models/post/post.dart';
 import '../../../../repositories/post_repository/post_repository.dart';
 import '../../../../repositories/post_repository/post_repository.impl.dart';
 import '../../../../repositories/user_repository/user_repository.dart';
-import '../../../../utils/exceptions.dart';
 import '../../../../utils/type_aliases.dart';
 
 part 'post_cubit.freezed.dart';
@@ -23,7 +22,6 @@ class PostCubit extends Cubit<PostState> {
         super(PostState.loading(postId)) {
     _postSubscription =
         _postRepository.subscribeToPost(postId).listen((Post post) {
-      print("post update");
       emit(
         PostState.normal(
           post: post,
@@ -34,24 +32,6 @@ class PostCubit extends Cubit<PostState> {
 
   Future<void> deletePost() async {
     state.whenOrNull(normal: (post, _) => _postRepository.deletePost(post.id));
-  }
-
-  Future<void> toggleIsParticipant(bool isParticipant) async {
-    state.maybeMap(
-        normal: (state) async {
-          emit(state.copyWith(isJoining: true));
-          try {
-            final updatedPost = isParticipant
-                ? await _postRepository.leavePost(postId: state.post.id)
-                : await _postRepository.joinPost(postId: state.post.id);
-
-            emit(PostState.normal(post: updatedPost, isJoining: false));
-          } catch (_) {
-            //emit(state.copyWith(isJoining: false));
-            rethrow;
-          }
-        },
-        orElse: () => throw (InvalidStateException()));
   }
 
   Future<void> toggleSaved(FirestoreId userId, bool hasSaved) async {

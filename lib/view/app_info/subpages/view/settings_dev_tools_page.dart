@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 
 import '../../../../cubits/live_config_cubit/live_config_cubit.dart';
@@ -36,7 +35,7 @@ class DevToolsPage extends StatelessWidget {
               onPressed: (_) => Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => const DevFunctionsPage())),
             ),
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
             LiveConfig.builder(
               (config) => SettingsSection(
                   title: "Feature-Flags",

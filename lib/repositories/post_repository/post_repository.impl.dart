@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
@@ -7,6 +6,7 @@ import 'package:geoflutterfire/geoflutterfire.dart';
 
 import '../../models/asset/asset.dart';
 import '../../models/post/post.dart';
+import '../../models/user/user.dart';
 import '../../models/utils.dart';
 import '../../utils/type_aliases.dart';
 import 'post_repository.dart';
@@ -16,6 +16,7 @@ class PostRepositoryImpl implements PostRepository {
   final FirebaseFunctions _functions;
   final Geoflutterfire _geo = Geoflutterfire();
   late final CollectionReference _postCollection;
+  static const FirestoreId postMemberCollection = "members";
 
   PostRepositoryImpl(
       {FirebaseFirestore? firestore, FirebaseFunctions? functions})
@@ -84,20 +85,30 @@ class PostRepositoryImpl implements PostRepository {
     _postCollection.doc(postId).update(updateMap);
   }
 
-  Future<Post> _changeMemberOnPost(FirestoreId postId, bool join) async {
-    HttpsCallable callable =
-        _functions.httpsCallable(join ? 'post-joinPost' : 'post-leavePost');
-    final resp = await callable.call(postId);
+  @override
+  Future<void> addPostMember(
+          {required FirestoreId postId, required UserInfo user}) =>
+      _postCollection
+          .doc(postId)
+          .collection(postMemberCollection)
+          .doc(user.id)
+          .set(user.toJson());
 
-    final updatedPostResult = Post.fromJson(json.decode(resp.data));
-    return updatedPostResult;
+  @override
+  Future<void> removePostMember(
+          {required FirestoreId postId, required String userId}) =>
+      _postCollection
+          .doc(postId)
+          .collection(postMemberCollection)
+          .doc(userId)
+          .delete();
+
+  @override
+  Stream<List<UserInfo>> observePostMembers(FirestoreId postId) {
+    return _postCollection
+        .doc(postId)
+        .collection(postMemberCollection)
+        .snapshots()
+        .map((event) => event.docs.map((u) => UserInfo.fromDoc(u)).toList());
   }
-
-  @override
-  Future<Post> joinPost({required FirestoreId postId}) =>
-      _changeMemberOnPost(postId, true);
-
-  @override
-  Future<Post> leavePost({required FirestoreId postId}) =>
-      _changeMemberOnPost(postId, false);
 }

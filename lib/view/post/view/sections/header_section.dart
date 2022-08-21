@@ -255,14 +255,10 @@ class HeaderSection extends StatelessWidget {
                   bottom: 12,
                 ),
                 child: PostAppBarButton(
-                  icon: FeatherIcons.settings,
-                  onPressed: () => showFloatingModalBottomSheet(
-                    context: context,
-                    builder: (_) => BlocProvider<PostCubit>.value(
-                        value: context.read<PostCubit>(), //
-                        child: const PostSettingsModalContent()),
-                  ),
-                ),
+                    icon: FeatherIcons.settings,
+                    onPressed: () =>
+                        PostSettingsModalContent.openAsModalBottomSheet(
+                            context)),
               ),
               Padding(
                   padding: const EdgeInsets.only(
