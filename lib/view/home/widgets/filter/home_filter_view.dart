@@ -43,8 +43,8 @@ class HomeFilterView extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: Column(
           children: [
-            InkWell(
-              onTap: () => Navigator.of(context).push(MaterialPageRoute(
+            ElevatedButton(
+              onPressed: () => Navigator.of(context).push(MaterialPageRoute(
                     builder: (context2) => BlocProvider.value(
                       value: BlocProvider.of<LocationCubit>(context),
                     child: MapsPlacePickerPage(
@@ -55,10 +55,17 @@ class HomeFilterView extends StatelessWidget {
                   ))),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   const Icon(FeatherIcons.mapPin, size: 17),
                   const SizedBox(width: 5),
-                  AutoSizeText(context.read<LocationCubit>().getAddress())
+                  BlocBuilder<LocationCubit, LocationState>(
+                      builder: (context, state) => AutoSizeText(state.map(
+                        loading: (_) => "Lade Standort",
+                        error: (_) => "Fehler",
+                        loaded: (loaded) => context.read<LocationCubit>().generateAddress(loaded.address)
+                      ))
+                  )
                 ],
               ),
             ),
