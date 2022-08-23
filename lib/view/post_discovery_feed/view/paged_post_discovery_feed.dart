@@ -71,7 +71,7 @@ class PagedPostDiscoveryFeed extends StatelessWidget {
                       error: (_) => _locationError(context),
                       loading: () => const Center(
                           child: CircularProgressIndicator.adaptive()),
-                      loaded: (location) =>
+                      loaded: (location, address) =>
                           BlocBuilder<FeedFilterCubit, FeedFilterState>(
                               builder: (context, filter) {
                             var stream = PostRepositoryImpl()

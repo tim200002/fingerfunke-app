@@ -81,8 +81,15 @@ class _HomeViewState extends State<HomeView> {
     return Builder(
         builder: (c) => TextButton.icon(
             onPressed: () => Navigator.of(c).push(MaterialPageRoute(
-                builder: (context) => BlocProvider.value(
-                    value: BlocProvider.of<FeedFilterCubit>(c),
+                builder: (context) => MultiBlocProvider(
+                    providers: [
+                      BlocProvider.value(
+                        value: BlocProvider.of<FeedFilterCubit>(c),
+                      ),
+                      BlocProvider.value(
+                        value: BlocProvider.of<LocationCubit>(c),
+                      ),
+                    ],
                     child: const HomeFilterView()))),
             icon: const Icon(FeatherIcons.mapPin),
             label: const Text("Filter")));

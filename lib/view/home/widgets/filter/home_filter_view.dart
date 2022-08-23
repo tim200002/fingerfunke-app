@@ -1,9 +1,11 @@
 import 'dart:math' as math;
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
+import '../../../../cubits/location_cubit/location_cubit.dart';
 import 'cubit/feed_filter_cubit.dart';
 
 class HomeFilterView extends StatelessWidget {
@@ -33,7 +35,7 @@ class HomeFilterView extends StatelessWidget {
     );
   }
 
-  Widget _locationSlider(double value,
+  Widget _locationSlider(BuildContext context, double value,
       {double max = 35, required Function(double) onChanged}) {
     return Padding(
         padding: const EdgeInsets.symmetric(vertical: 10),
@@ -41,10 +43,10 @@ class HomeFilterView extends StatelessWidget {
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Icon(FeatherIcons.mapPin, size: 17),
-                SizedBox(width: 5),
-                Text("Dein Standort")
+              children: [
+                const Icon(FeatherIcons.mapPin, size: 17),
+                const SizedBox(width: 5),
+                AutoSizeText(context.read<LocationCubit>().getAddress())
               ],
             ),
             const SizedBox(height: 10),
@@ -86,7 +88,7 @@ class HomeFilterView extends StatelessWidget {
             return ListView(
               children: [
                 _sectionHeader(context, "Umkreis"),
-                _locationSlider(filter.distance,
+                _locationSlider(context, filter.distance,
                     onChanged: (v) => context
                         .read<FeedFilterCubit>()
                         .change(filter.copyWith(distance: v))),

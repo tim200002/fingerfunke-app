@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart' as geocoding;
 
 import '../../repositories/location_repository/location_repository.dart';
 
@@ -18,20 +19,30 @@ class LocationCubit extends Cubit<LocationState> {
   void reload() {
     emit(const LocationState.loading());
     _locationRepositoryImpl.getLocation().then(
-        (value) => emit(LocationState.loaded(value)),
+        (value) async => emit(LocationState.loaded(value, await generateAddress(value.longitude, value.latitude))),
         onError: (e) => emit(LocationState.error(e)));
   }
 
-  /*
-  /// Returns city of the adress
-  String getCity() {
+  /// Returns address of location
+  String getAddress() {
     return state.map(
-        initial: (_) => "Lade Standort",
+        loading: (_) => "Lade Standort",
+        error: (_) => "Fehler",
         loaded: (loaded) {
-          if (loaded.location.contains('+')) {
-            return loaded.location.split(",")[0].trim().split(" ").last;
+          if (loaded.address.contains('+')) {
+            return loaded.address.split(",")[0].trim().split(" ").last;
           }
-          return loaded.location.split(",")[1].trim().split(" ").last;
-        });
-  }*/
+          return loaded.address.split(",")[1].trim().split(" ").last;
+        },
+    );
+  }
+
+  /// Returns address of location
+  Future<String> generateAddress(double longitude, double latitude) async {
+    List<geocoding.Placemark> placeMarks = await geocoding.placemarkFromCoordinates(
+      latitude,
+      longitude,
+    );
+    return """${placeMarks[0].street}, ${placeMarks[0].postalCode} ${placeMarks[0].locality}, ${placeMarks[0].country}""";
+  }
 }
