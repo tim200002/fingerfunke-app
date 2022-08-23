@@ -4,8 +4,10 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
 
 import '../../../../cubits/location_cubit/location_cubit.dart';
+import '../../../maps/view/maps_place_picker_page.dart';
 import 'cubit/feed_filter_cubit.dart';
 
 class HomeFilterView extends StatelessWidget {
@@ -41,13 +43,24 @@ class HomeFilterView extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(FeatherIcons.mapPin, size: 17),
-                const SizedBox(width: 5),
-                AutoSizeText(context.read<LocationCubit>().getAddress())
-              ],
+            InkWell(
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context2) => BlocProvider.value(
+                      value: BlocProvider.of<LocationCubit>(context),
+                    child: MapsPlacePickerPage(
+                        onPlacePicked: (PickResult pickResult) => context
+                            .read<LocationCubit>()
+                            .updateLocation( lat: pickResult.geometry!.location.lat, lng: pickResult.geometry!.location.lng, address: pickResult.formattedAddress)
+                    ),
+                  ))),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(FeatherIcons.mapPin, size: 17),
+                  const SizedBox(width: 5),
+                  AutoSizeText(context.read<LocationCubit>().getAddress())
+                ],
+              ),
             ),
             const SizedBox(height: 10),
             Slider(

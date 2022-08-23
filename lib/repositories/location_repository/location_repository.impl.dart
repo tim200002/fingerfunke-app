@@ -1,20 +1,22 @@
 part of './location_repository.dart';
 
+
 /// A service that stores and retrieves the location of the user
 class LocationRepositoryImpl implements LocationRepository {
 
   /// Load location in local storage.
   @override
-  Future<Position> getLocation() async {
+  Future<Map> getLocation() async {
     final prefs = await SharedPreferences.getInstance();
-    final storedLocation = prefs.getString('position');
+    final storedPosition = prefs.getString('position');
+    final storedAddress = prefs.getString('address');
 
-    if (storedLocation == null) {
+    if (storedPosition == null) {
       final currentLocation = await getDeviceLocation();
-      updateLocation(currentLocation);
-      return currentLocation;
+      await updateLocation(currentLocation);
+      return {"position": currentLocation, "address": prefs.getString('address')};
     }
-    return Position.fromMap(jsonDecode(storedLocation));
+    return {"position": Position.fromMap(jsonDecode(storedPosition)), "address": storedAddress};
   }
 
   /// Persists location in local storage.
@@ -22,6 +24,7 @@ class LocationRepositoryImpl implements LocationRepository {
   Future<void> updateLocation(Position position) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString('position', json.encode(position.toJson()));
+    prefs.setString('address', json.encode(await generateAddress(position.longitude, position.latitude)));
   }
 
   /// Generates current location
@@ -37,5 +40,14 @@ class LocationRepositoryImpl implements LocationRepository {
     return Geolocator.getCurrentPosition(
             desiredAccuracy: LocationAccuracy.medium)
         .timeout(const Duration(seconds: 5));
+  }
+
+  /// Returns address of location
+  Future<String> generateAddress(double longitude, double latitude) async {
+    List<geocoding.Placemark> placeMarks = await geocoding.placemarkFromCoordinates(
+      latitude,
+      longitude,
+    );
+    return """${placeMarks[0].street}, ${placeMarks[0].postalCode} ${placeMarks[0].locality}, ${placeMarks[0].country}""";
   }
 }
