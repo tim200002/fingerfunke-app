@@ -17,7 +17,7 @@ class LocationCubit extends Cubit<LocationState> {
 
   void reload() {
     emit(const LocationState.loading());
-    _locationRepositoryImpl.getDeviceLocation().then(
+    _locationRepositoryImpl.getLocation().then(
         (value) => emit(LocationState.loaded(value)),
         onError: (e) => emit(LocationState.error(e)));
   }
