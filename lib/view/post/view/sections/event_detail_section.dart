@@ -76,7 +76,7 @@ class EventDetailSection extends StatelessWidget {
                                   GoogleMapsService.getGoogleUri(
                                       post.place.address))) {
                                 await launchUrl(GoogleMapsService.getGoogleUri(
-                                    post.place.address));
+                                    post.place.address), mode: LaunchMode.externalApplication);
                               } else {
                                 throw 'Could not open the map.';
                               }
