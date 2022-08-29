@@ -28,3 +28,4 @@ build:
             - build/app/outputs/apk/bundle/release/app-release.aab
         expire_in: 1 day
     when: manual
+    allow_failure: false
