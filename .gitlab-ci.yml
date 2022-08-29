@@ -8,7 +8,9 @@ variables:
 
 
 build:
-    image: flutter_android_image
+    image: 
+        name: flutter_android_image
+        pull_policy: if-not-present
     stage: build
 
     script:
