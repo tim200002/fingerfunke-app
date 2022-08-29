@@ -1,0 +1,30 @@
+stages:
+    - build
+    - test_deployement
+
+variables:
+  LC_ALL: "en_US.UTF-8"
+  LANG: "en_US.UTF-8"
+
+
+build:
+    image: flutter_android_image
+    stage: build
+
+    script:
+        - flutter pub get
+
+        - cd android
+
+        #  decode key.properties file
+        - echo $KEY_PROPERTIES_FILE | base64 -d > key.properties
+
+        # decode upload keystore and move
+        - echo $UPLOAD_KEYSTORE_FILE | base64 -d > ~/upload-keystore.jks
+
+        - flutter build appbundle
+    artifacts:
+        paths:
+            - build/app/outputs/apk/bundle/release/app-release.aab
+        expire_in: 1 day
+    when: manual
