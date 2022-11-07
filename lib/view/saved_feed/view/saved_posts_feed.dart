@@ -37,7 +37,10 @@ class SavedPostsFeed extends StatelessWidget {
                           const Center(child: CircularProgressIndicator()),
                       loadedButNothingSaved: () =>
                           Center(child: Text(l10n(context).msg_savedFeedEmpty)),
-                      loaded: (posts) => NonPaginatedPostList(posts),
+                      loaded: (posts) => NonPaginatedPostList(
+                        posts,
+                        paged: false,
+                      ),
                     ),
                   ),
                 );

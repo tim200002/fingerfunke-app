@@ -19,6 +19,7 @@ class PostFeedImageItem extends StatelessWidget {
 
   final Post _post;
   final int? height;
+  final bool video;
 
   /// From here one can navigate to a detailed post view, this function is called when
   /// returning back from this detail view to then do any necessary actions
@@ -26,7 +27,10 @@ class PostFeedImageItem extends StatelessWidget {
   final void Function(FirestoreId postId)? onNavigatedBackToThisItem;
 
   const PostFeedImageItem(this._post,
-      {Key? key, this.height, this.onNavigatedBackToThisItem})
+      {Key? key,
+      this.height,
+      this.onNavigatedBackToThisItem,
+      this.video = false})
       : super(key: key);
 
   Widget _videoBackgroundView(BuildContext context, {bool greyscale = false}) {
@@ -72,10 +76,10 @@ class PostFeedImageItem extends StatelessWidget {
               color: Colors.white,
             ),
           )
-        : LiveConfig.builder((config) => config.pagedFeed
+        : video
             ? _videoBackgroundView(context,
                 greyscale: _post.asEvent?.isCompleted ?? false)
-            : _imageBackgroundView(context));
+            : _imageBackgroundView(context);
   }
 
   Widget _eventDateWidget(BuildContext context) {
@@ -163,13 +167,13 @@ class PostFeedImageItem extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               children: [
                 _backgroundView(context),
+                _contentSection(context),
                 if (_post is Event)
                   Positioned(
                     top: 18,
                     right: 18,
                     child: _eventDateWidget(context),
                   ),
-                _contentSection(context),
               ],
             ),
           ),

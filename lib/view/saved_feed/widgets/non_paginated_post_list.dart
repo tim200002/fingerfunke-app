@@ -6,16 +6,37 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class NonPaginatedPostList extends StatelessWidget {
   final List<Post> posts;
-  const NonPaginatedPostList(this.posts, {Key? key}) : super(key: key);
+  final bool paged;
+  final double itemMinHeight;
+  const NonPaginatedPostList(
+    this.posts, {
+    Key? key,
+    this.paged = true,
+    this.itemMinHeight = 250,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return PageView.builder(
-        scrollDirection: Axis.vertical,
-        itemCount: posts.length,
-        itemBuilder: (context, index) => PostFeedImageItem(posts[index],
-            onNavigatedBackToThisItem: (postId) =>
-                BlocProvider.of<SavedPostsCubit>(context).refetchPost(postId),
-            key: ValueKey(posts[index].id)));
+    return paged
+        ? PageView.builder(
+            scrollDirection: Axis.vertical,
+            itemCount: posts.length,
+            itemBuilder: (context, index) => PostFeedImageItem(posts[index],
+                onNavigatedBackToThisItem: (postId) =>
+                    BlocProvider.of<SavedPostsCubit>(context)
+                        .refetchPost(postId),
+                key: ValueKey(posts[index].id)))
+        : ListView.builder(
+            scrollDirection: Axis.vertical,
+            itemCount: posts.length,
+            itemBuilder: (context, index) => Container(
+                  height: 200,
+                  //constraints: BoxConstraints(minHeight: itemMinHeight),
+                  child: PostFeedImageItem(posts[index],
+                      onNavigatedBackToThisItem: (postId) =>
+                          BlocProvider.of<SavedPostsCubit>(context)
+                              .refetchPost(postId),
+                      key: ValueKey(posts[index].id)),
+                ));
   }
 }
