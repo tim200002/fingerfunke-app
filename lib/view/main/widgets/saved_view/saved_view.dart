@@ -20,7 +20,10 @@ class __PersTabItemState extends State<_PersTabItem>
     with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
-    return widget.child;
+    return Padding(
+        padding: const EdgeInsets.only(
+            left: AppTheme.PADDING_SIDE, right: AppTheme.PADDING_SIDE, top: 15),
+        child: widget.child);
   }
 
   @override
@@ -48,27 +51,21 @@ class SavedView extends StatelessWidget {
           ),
           //title: const Text('Tabs Demo'),
         ),
-        body: Padding(
-          padding: const EdgeInsets.only(
-              left: AppTheme.PADDING_SIDE,
-              right: AppTheme.PADDING_SIDE,
-              top: 15),
-          child: BlocBuilder<AppCubit, AppState>(
-              builder: (context, state) => TabBarView(
-                    children: [
-                      _PersTabItem(CompactPostsFeed(
-                          postIds: state.user.savedPosts,
-                          filter: (posts) => posts
-                              .where((p) => !p.isAuthor(state.user.id))
-                              .toList())),
-                      _PersTabItem(CompactPostsFeed(
-                          postIds: state.user.savedPosts,
-                          filter: (posts) => posts
-                              .where((p) => p.isAuthor(state.user.id))
-                              .toList())),
-                    ],
-                  )),
-        ),
+        body: BlocBuilder<AppCubit, AppState>(
+            builder: (context, state) => TabBarView(
+                  children: [
+                    _PersTabItem(CompactPostsFeed(
+                        postIds: state.user.savedPosts,
+                        filter: (posts) => posts
+                            .where((p) => !p.isAuthor(state.user.id))
+                            .toList())),
+                    _PersTabItem(CompactPostsFeed(
+                        postIds: state.user.savedPosts,
+                        filter: (posts) => posts
+                            .where((p) => p.isAuthor(state.user.id))
+                            .toList())),
+                  ],
+                )),
       ),
     );
   }
