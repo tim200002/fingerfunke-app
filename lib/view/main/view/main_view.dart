@@ -4,6 +4,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import '../../../routes.dart';
 import '../../../utils/tools.dart';
 import '../widgets/explore_view/explore_view.dart';
+import '../widgets/explore_view/widgets/home_drawer/home_drawer_view.dart';
 import '../widgets/saved_view/saved_view.dart';
 
 class MainView extends StatefulWidget {
@@ -90,6 +91,7 @@ class _MainViewState extends State<MainView> {
       body: _activePage == _MainViewPages.explore
           ? const ExploreView()
           : const SavedView(),
+      drawer: const HomeDrawer(),
       bottomNavigationBar: BottomAppBar(
         elevation: 0,
         child: Row(

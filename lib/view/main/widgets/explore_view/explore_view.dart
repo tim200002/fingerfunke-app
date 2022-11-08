@@ -10,19 +10,14 @@ import 'widgets/filter/cubit/feed_filter_cubit.dart';
 import 'widgets/filter/explore_filter_view.dart';
 import 'widgets/home_drawer/home_drawer_view.dart';
 
-class _MenuButton extends StatelessWidget {
-  final IconData icon;
-  const _MenuButton({Key? key, required this.icon}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-        onPressed: () => Scaffold.of(context).openDrawer(), icon: Icon(icon));
-  }
-}
-
 class ExploreView extends StatelessWidget {
   const ExploreView({super.key});
+
+  Widget _drawerButton(BuildContext outerContext) {
+    return IconButton(
+        onPressed: () => Scaffold.of(outerContext).openDrawer(),
+        icon: const Icon(FeatherIcons.menu));
+  }
 
   Widget _filterButton() {
     return Builder(
@@ -53,7 +48,7 @@ class ExploreView extends StatelessWidget {
         ],
         child: Scaffold(
           appBar: AppBar(
-            leading: const _MenuButton(icon: FeatherIcons.menu),
+            leading: _drawerButton(context),
             title: _filterButton(),
             actions: [
               const SizedBox(
@@ -68,14 +63,13 @@ class ExploreView extends StatelessWidget {
                         icon: Icon(FeatherIcons.calendar))*/
             ],
           ),
-          drawer: const HomeDrawer(),
           body: Container(
               padding: const EdgeInsets.only(
                   left: AppTheme.PADDING_SIDE,
                   right: AppTheme.PADDING_SIDE,
                   top: 15),
               clipBehavior: Clip.none,
-              child: PagedPostDiscoveryFeed()),
+              child: const PagedPostDiscoveryFeed()),
         ));
   }
 }
