@@ -15,7 +15,6 @@ import '../../../../utils/app_theme.dart';
 import '../../../../utils/exceptions.dart';
 import '../../../../utils/placeholder_box.dart';
 import '../../../../utils/tools.dart';
-import '../../../../utils/util_widgets/floating_modal.dart';
 import '../../../fullscreen_video/view/fullscreen_video_page.dart';
 import '../../../video_recorder/view/video_recorder_page.dart';
 import '../../cubits/post_editor_cubit/post_editor_cubit.dart';

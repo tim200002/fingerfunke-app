@@ -15,8 +15,6 @@ import '../../video/view/video_playback_view.dart';
 import '../../../cubits/live_config_cubit/live_config_cubit.dart';
 
 class PostFeedImageItem extends StatelessWidget {
-  static const heroTag = "postcard_img";
-
   final Post _post;
   final int? height;
   final bool video;
@@ -159,23 +157,20 @@ class PostFeedImageItem extends StatelessWidget {
         onTap: () =>
             Navigator.pushNamed(context, Routes.post, arguments: _post.id)
                 .then((_) => onNavigatedBackToThisItem?.call(_post.id)),
-        child: Hero(
-          tag: heroTag,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(21),
-            child: Stack(
-              alignment: Alignment.bottomCenter,
-              children: [
-                _backgroundView(context),
-                _contentSection(context),
-                if (_post is Event)
-                  Positioned(
-                    top: 18,
-                    right: 18,
-                    child: _eventDateWidget(context),
-                  ),
-              ],
-            ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(21),
+          child: Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              _backgroundView(context),
+              _contentSection(context),
+              if (_post is Event)
+                Positioned(
+                  top: 18,
+                  right: 18,
+                  child: _eventDateWidget(context),
+                ),
+            ],
           ),
         ),
       ),
