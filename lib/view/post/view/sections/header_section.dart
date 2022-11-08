@@ -70,34 +70,41 @@ class ElevatedButtonWithWidgetLeft extends StatelessWidget {
 /// over video content
 class PostAppBarButton extends StatelessWidget {
   final IconData icon;
+  final bool enabled;
   final Function() onPressed;
   const PostAppBarButton(
-      {Key? key, required this.icon, required this.onPressed})
+      {Key? key,
+      required this.icon,
+      this.enabled = true,
+      required this.onPressed})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1,
-      child: Container(
-          decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.10),
-                  spreadRadius: 0,
-                  blurRadius: 10,
-                  offset: const Offset(0, 6), // changes position of shadow
-                ),
-              ],
-              color: Theme.of(context).colorScheme.surface,
-              borderRadius: BorderRadius.circular(100)),
-          child: IconButton(
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.8),
-              onPressed: onPressed,
-              icon: Icon(
-                icon,
-                size: 30,
-              ))),
+    return Opacity(
+      opacity: enabled ? 1 : 0.5,
+      child: AspectRatio(
+        aspectRatio: 1,
+        child: Container(
+            decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.10),
+                    spreadRadius: 0,
+                    blurRadius: 10,
+                    offset: const Offset(0, 6), // changes position of shadow
+                  ),
+                ],
+                color: Theme.of(context).colorScheme.surface,
+                borderRadius: BorderRadius.circular(100)),
+            child: IconButton(
+                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.8),
+                onPressed: enabled ? onPressed : null,
+                icon: Icon(
+                  icon,
+                  size: 30,
+                ))),
+      ),
     );
   }
 }
@@ -266,23 +273,32 @@ class HeaderSection extends StatelessWidget {
                     bottom: 12,
                   ),
                   child: BlocBuilder<AppCubit, AppState>(
-                    builder: (context, state) {
-                      final currentPostId =
-                          context.read<PostCubit>().state.when(
-                                normal: (post, _) => post.id,
-                                loading: (postId) => postId,
-                              );
-                      final hasPostSaved =
-                          state.user.savedPosts.contains(currentPostId);
-                      return PostAppBarButton(
-                          icon: hasPostSaved
-                              ? Icons.favorite
-                              : Icons.favorite_border_outlined,
-                          onPressed: () => context
-                              .read<PostCubit>()
-                              .toggleSaved(state.user.id, hasPostSaved));
-                    },
-                  ))
+                      builder: (context, appState) =>
+                          BlocBuilder<PostCubit, PostState>(
+                            builder: (context, postState) {
+                              Post? post;
+                              final postId =
+                                  context.read<PostCubit>().state.when(
+                                        normal: (p, _) {
+                                          post = p;
+                                          return p.id;
+                                        },
+                                        loading: (postId) => postId,
+                                      );
+                              final hasPostSaved =
+                                  appState.user.savedPosts.contains(postId);
+                              return PostAppBarButton(
+                                  enabled: (post?.author.id ?? "") !=
+                                      appState.user.id,
+                                  icon: hasPostSaved
+                                      ? Icons.favorite
+                                      : Icons.favorite_border_outlined,
+                                  onPressed: () => context
+                                      .read<PostCubit>()
+                                      .toggleSaved(
+                                          appState.user.id, hasPostSaved));
+                            },
+                          )))
             ],
       pinned: true,
       floating: false,

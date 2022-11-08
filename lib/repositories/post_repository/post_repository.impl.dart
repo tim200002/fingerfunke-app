@@ -55,6 +55,13 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
+  Stream<List<Post>> subscribeToPosts(List<FirestoreId> postIds) {
+    return _postCollection.where('id', whereIn: postIds).snapshots().map(
+          (r) => r.docs.map((d) => Post.fromDoc(d)).toList(),
+        );
+  }
+
+  @override
   Future<Post> getPost(FirestoreId postId) {
     return _postCollection.doc(postId).get().then((doc) => Post.fromDoc(doc));
   }

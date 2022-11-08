@@ -1,40 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../../models/user/user.dart';
 import '../../../utils/illustration.dart';
 import '../../../utils/util_widgets/clearance_appbar.dart';
 import '../../error/exception_view.dart';
+import '../../illustration_view/illustration_view.dart';
 import 'cubit/mod_post_cubit.dart';
 import 'widgets/mod_report_view.dart';
 
 class ModPostReportPage extends StatelessWidget {
   const ModPostReportPage({Key? key}) : super(key: key);
-
-  static Widget emptyIndicator(String text) {
-    return Center(
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 300),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Illustration(
-              Illustrations.empty,
-              height: null,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Text(
-              text,
-              textAlign: TextAlign.center,
-            )
-          ],
-        ),
-      ),
-    );
-  }
 
   void _performAction(BuildContext context, bool accept) {
     showDialog(
@@ -75,7 +52,8 @@ class ModPostReportPage extends StatelessWidget {
                     loading: () => const Center(
                         child: CircularProgressIndicator.adaptive()),
                     error: ExceptionView.builder,
-                    empty: () => emptyIndicator("keine offenen Meldungen"),
+                    empty: () => const IllustrationView.empty(
+                        text: "keine offenen Meldungen"),
                     neutral: (report, count) => Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [

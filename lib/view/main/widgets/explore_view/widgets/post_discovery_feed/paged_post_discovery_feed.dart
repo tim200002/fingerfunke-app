@@ -10,6 +10,7 @@ import '../../../../../../utils/illustration.dart';
 import '../../../../../../utils/tools.dart';
 import '../../../../../../utils/util_cubits/stream/stream_subscribe_cubit.dart';
 import '../../../../../error/exception_view.dart';
+import '../../../../../illustration_view/illustration_view.dart';
 import '../../../../../moderation/mod_post_report/mod_post_report_page.dart';
 import '../filter/cubit/feed_filter_cubit.dart';
 
@@ -97,9 +98,8 @@ class PagedPostDiscoveryFeed extends StatelessWidget {
                                           post,
                                           key: ValueKey(post.id),
                                         ),
-                                        endIndicator:
-                                            ModPostReportPage.emptyIndicator(
-                                                l10n(context).msg_feedEmpty),
+                                        endIndicator: IllustrationView.empty(
+                                            text: l10n(context).msg_feedEmpty),
                                       ),
                                     ));
                           }))))

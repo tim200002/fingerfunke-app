@@ -3,7 +3,6 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import '../../../routes.dart';
 import '../../../utils/tools.dart';
-import '../../saved_feed/view/saved_posts_feed.dart';
 import '../widgets/explore_view/explore_view.dart';
 import '../widgets/saved_view/saved_view.dart';
 

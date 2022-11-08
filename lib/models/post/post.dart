@@ -116,6 +116,10 @@ class Post extends UserGeneratedDocument {
     return author.id == user.id;
   }
 
+  bool isAuthor(FirestoreId? userId) {
+    return author.id == userId;
+  }
+
   factory Post.fromDoc(DocumentSnapshot document) =>
       Post.fromJson(documentSnaphsotToJson(document));
   @override
