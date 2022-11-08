@@ -37,8 +37,8 @@ class ExploreFilterView extends StatelessWidget {
     );
   }
 
-  Widget _locationSlider(BuildContext context, double value,
-      {double max = 35, required Function(double) onChanged}) {
+  Widget _locationSlider(BuildContext context, double? value,
+      {double max = 35, required Function(double?) onChanged}) {
     return Padding(
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: Column(
@@ -73,12 +73,12 @@ class ExploreFilterView extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Slider(
-              value: math.max(5, math.min(max, value)),
+              value: math.max(5, math.min(max, value ?? max)),
               max: max,
               divisions: 6,
               min: 5,
-              label: value < max ? "+ ${value.floor()} km" : "alle",
-              onChanged: (v) => onChanged(v < max ? v : 1000),
+              label: value != null ? "+ ${value.floor()} km" : "alle",
+              onChanged: (v) => onChanged(v < max ? v : null),
             ),
           ],
         ));
@@ -110,10 +110,12 @@ class ExploreFilterView extends StatelessWidget {
             return ListView(
               children: [
                 _sectionHeader(context, "Umkreis"),
-                _locationSlider(context, filter.distance,
-                    onChanged: (v) => context
-                        .read<FeedFilterCubit>()
-                        .change(filter.copyWith(distance: v))),
+                _locationSlider(context, filter.distance, onChanged: (v) {
+                  print(v);
+                  context
+                      .read<FeedFilterCubit>()
+                      .change(filter.copyWith(distance: v));
+                }),
                 _sectionHeader(context, "Posts"),
                 _filterItem(
                     "alle",

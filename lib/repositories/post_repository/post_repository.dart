@@ -17,7 +17,7 @@ abstract class PostRepository {
 
   Stream<Post> subscribeToPost(FirestoreId postId);
 
-  Stream<List<Post>> subscribeToPosts(List<FirestoreId> postIds);
+  Stream<List<Post>> subscribeToPosts(List<FirestoreId>? postIds);
 
   Future<Post> getPost(FirestoreId postId);
 

@@ -35,8 +35,12 @@ class PostRepositoryImpl implements PostRepository {
   @override
   Stream<List<Post>> observeNearbyPosts(
       {required GeoPoint point,
-      required double radius,
+      required double? radius,
       final List<Post> Function(List<Post> posts)? worker}) {
+    //! fetching all posts is more for debug purposes.
+    // When moving to production, this should be disabled
+    print("fetch: $radius");
+    if (radius == null) return subscribeToPosts(null);
     var stream = _geo
         .collection(collectionRef: _postCollection)
         .within(
@@ -55,8 +59,12 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Stream<List<Post>> subscribeToPosts(List<FirestoreId> postIds) {
-    return _postCollection.where('id', whereIn: postIds).snapshots().map(
+  Stream<List<Post>> subscribeToPosts(List<FirestoreId>? postIds) {
+    return (postIds != null
+            ? _postCollection.where('id', whereIn: postIds)
+            : _postCollection)
+        .snapshots()
+        .map(
           (r) => r.docs.map((d) => Post.fromDoc(d)).toList(),
         );
   }

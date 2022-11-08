@@ -8,7 +8,7 @@ part 'feed_filter_cubit.freezed.dart';
 part 'feed_filter_state.dart';
 
 class FeedFilterCubit extends Cubit<FeedFilterState> {
-  FeedFilterCubit() : super(const FeedFilterState.neutral(35, true, false));
+  FeedFilterCubit() : super(const FeedFilterState.neutral(null, true, false));
 
   void change(FeedFilterState changed) {
     emit(changed);
