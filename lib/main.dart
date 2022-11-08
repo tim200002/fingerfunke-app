@@ -13,11 +13,10 @@ import 'package:logger/logger.dart';
 import 'app.dart';
 import 'cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
 import 'cubits/live_config_cubit/live_config_cubit.dart';
-import 'cubits/settings_cubit/settings_cubit.dart';
+import 'cubits/settings_cubit/app_settings_cubit.dart';
 import 'env.dart' as env;
-import 'models/settings/settings_model.dart' as settings;
+import 'models/settings/app_settings.dart';
 import 'repositories/firebase_authentication_repository/firebase_authentication_repository.dart';
-import 'repositories/settings_repository/settings_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -75,20 +74,13 @@ class AppInflater extends StatelessWidget {
               firebaseAuthenticationRepository),
         ),
         BlocProvider(
-          create: (context) => SettingsCubit(SettingsRepositoryImpl()),
+          create: (context) => AppSettingsCubit(),
         ),
         BlocProvider(
           create: (context) => LiveConfigCubit(),
         ),
       ],
-      child: BlocBuilder<SettingsCubit, settings.Settings>(
-        builder: (context, state) {
-          return AnimatedSwitcher(
-            duration: const Duration(milliseconds: 250),
-            child: App(state.themeMode),
-          );
-        },
-      ),
+      child: App(),
     );
   }
 }

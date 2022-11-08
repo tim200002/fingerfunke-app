@@ -4,20 +4,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../../common_widgets/list_view/list_items/post_feed_image_item.dart';
 import '../../../../../../cubits/location_cubit/location_cubit.dart';
+import '../../../../../../cubits/settings_cubit/app_settings_cubit.dart';
 import '../../../../../../models/post/post.dart';
+import '../../../../../../models/settings/app_settings.dart';
 import '../../../../../../repositories/post_repository/post_repository.impl.dart';
 import '../../../../../../utils/illustration.dart';
 import '../../../../../../utils/tools.dart';
 import '../../../../../../utils/util_cubits/stream/stream_subscribe_cubit.dart';
 import '../../../../../error/exception_view.dart';
 import '../../../../../illustration_view/illustration_view.dart';
-import '../../../../../moderation/mod_post_report/mod_post_report_page.dart';
 import '../filter/cubit/feed_filter_cubit.dart';
 
 class PagedPostDiscoveryFeed extends StatelessWidget {
   const PagedPostDiscoveryFeed({Key? key}) : super(key: key);
 
-  Widget demoFeedList(
+  Widget feedList(
       {required List<Post> items,
       required Widget Function(Post) itemBuilder,
       required Widget endIndicator}) {
@@ -91,17 +92,22 @@ class PagedPostDiscoveryFeed extends StatelessWidget {
                                           child: CircularProgressIndicator
                                               .adaptive()),
                                       error: ExceptionView.builder,
-                                      neutral: (posts) => demoFeedList(
-                                        items: posts,
-                                        itemBuilder: (post) =>
-                                            PostFeedImageItem(
-                                          post,
-                                          video: true,
-                                          key: ValueKey(post.id),
-                                        ),
-                                        endIndicator: IllustrationView.empty(
-                                            text: l10n(context).msg_feedEmpty),
-                                      ),
+                                      neutral: (posts) => BlocBuilder<
+                                              AppSettingsCubit, AppSettings>(
+                                          builder: (_, settings) => feedList(
+                                                items: posts,
+                                                itemBuilder: (post) =>
+                                                    PostFeedImageItem(
+                                                  post,
+                                                  video:
+                                                      settings.dsFeedAutoplay,
+                                                  key: ValueKey(post.id),
+                                                ),
+                                                endIndicator:
+                                                    IllustrationView.empty(
+                                                        text: l10n(context)
+                                                            .msg_feedEmpty),
+                                              )),
                                     ));
                           }))))
         ],

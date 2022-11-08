@@ -13,7 +13,7 @@ class AppTheme {
   static const Color _light_primary = Color(0xffFF6060);
   static const Color _light_primaryVariant = Color(0xffF0ACB0);
   static const Color _light_onPrimary = Color(0xffFFFFFF);
-  static const Color _light_secondary = Color(0xff048D86);
+  static const Color _light_secondary = Color(0xffFF6060);
   static const Color _light_secondaryVariant = Color(0xff95CCC9);
   static const Color _light_onSecondary = Color(0xffFFFFFF);
   static const Color _light_background = Color(0xffF1F1F1);

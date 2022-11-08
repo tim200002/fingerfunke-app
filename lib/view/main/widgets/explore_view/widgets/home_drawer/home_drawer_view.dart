@@ -108,7 +108,6 @@ class HomeDrawer extends StatelessWidget {
                     ListTile(
                       leading: const Icon(FeatherIcons.settings),
                       title: Text(l10n(context).lbl_settings),
-                      enabled: false,
                       onTap: () => Navigator.of(context)
                           .popAndPushNamed(Routes.settings),
                     ),

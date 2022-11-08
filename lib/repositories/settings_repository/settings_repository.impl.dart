@@ -1,5 +1,7 @@
 part of './settings_repository.dart';
 
+//TODO: implement dsAutoplay persistment
+
 /// A service that stores and retrieves user settings.
 class SettingsRepositoryImpl implements SettingsRepository {
   final themeKey = 'themeMode';
@@ -8,14 +10,14 @@ class SettingsRepositoryImpl implements SettingsRepository {
 
   /// Persists the user's preferred settings to local storage.
   @override
-  void updateSettings(Settings settings) {
+  void updateSettings(AppSettings settings) {
     box.write(themeKey, settings.themeMode.toString());
     box.write(localeKey, settings.locale);
   }
 
   /// Loads User settings from local storage.
   @override
-  Settings getSettings() {
+  AppSettings getSettings() {
     final ThemeMode storedTheme;
     switch (box.read(themeKey)) {
       case 'ThemeMode.light':
@@ -33,6 +35,6 @@ class SettingsRepositoryImpl implements SettingsRepository {
     }
     final storedLocale = box.read(localeKey);
 
-    return Settings(themeMode: storedTheme, locale: storedLocale ?? 'en_EN');
+    return AppSettings(themeMode: storedTheme, locale: storedLocale ?? 'en_EN');
   }
 }

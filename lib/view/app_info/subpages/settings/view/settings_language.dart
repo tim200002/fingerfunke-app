@@ -1,4 +1,4 @@
-import '../../../../../cubits/settings_cubit/settings_cubit.dart';
+import '../../../../../cubits/settings_cubit/app_settings_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -11,6 +11,7 @@ class SettingsLanguage extends StatefulWidget {
 
 class _SettingsLanguageState extends State<SettingsLanguage> {
   final languages = [
+    {"system": "System"},
     {"en_EN": "English"},
     {"de_DE": "Deutsch"}
   ];
@@ -26,15 +27,14 @@ class _SettingsLanguageState extends State<SettingsLanguage> {
             itemBuilder: (context, index) {
               return ListTile(
                 title: Text(languages[index].values.first),
-                trailing:
-                    BlocProvider.of<SettingsCubit>(context).state.locale ==
-                            languages[index].keys.first
-                        ? const Icon(Icons.check)
-                        : null,
+                trailing: AppSettingsCubit.of(context).state.locale ==
+                        languages[index].keys.first
+                    ? const Icon(Icons.check)
+                    : null,
                 onTap: () => {
                   setState(() {
-                    BlocProvider.of<SettingsCubit>(context)
-                        .updateSettings(locale: languages[index].keys.first);
+                    AppSettingsCubit.of(context)
+                        .set(locale: languages[index].keys.first);
                   })
                 },
               );
