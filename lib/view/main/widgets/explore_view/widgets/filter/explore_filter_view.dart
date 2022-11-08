@@ -6,12 +6,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
 
-import '../../../../cubits/location_cubit/location_cubit.dart';
-import '../../../maps/view/maps_place_picker_page.dart';
+import '../../../../../../cubits/location_cubit/location_cubit.dart';
+import '../../../../../maps/view/maps_place_picker_page.dart';
 import 'cubit/feed_filter_cubit.dart';
 
-class HomeFilterView extends StatelessWidget {
-  const HomeFilterView({Key? key}) : super(key: key);
+class ExploreFilterView extends StatelessWidget {
+  const ExploreFilterView({Key? key}) : super(key: key);
 
   Widget _filterItem(
       String off, String on, bool value, Function(bool) onChanged) {
@@ -45,14 +45,16 @@ class HomeFilterView extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context2) => BlocProvider.value(
-                      value: BlocProvider.of<LocationCubit>(context),
-                    child: MapsPlacePickerPage(
-                        onPlacePicked: (PickResult pickResult) => context
-                            .read<LocationCubit>()
-                            .updateLocation( lat: pickResult.geometry!.location.lat, lng: pickResult.geometry!.location.lng, address: pickResult.formattedAddress)
-                    ),
-                  ))),
+                  builder: (context2) => BlocProvider.value(
+                        value: BlocProvider.of<LocationCubit>(context),
+                        child: MapsPlacePickerPage(
+                            onPlacePicked: (PickResult pickResult) => context
+                                .read<LocationCubit>()
+                                .updateLocation(
+                                    lat: pickResult.geometry!.location.lat,
+                                    lng: pickResult.geometry!.location.lng,
+                                    address: pickResult.formattedAddress)),
+                      ))),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
@@ -61,11 +63,11 @@ class HomeFilterView extends StatelessWidget {
                   const SizedBox(width: 5),
                   BlocBuilder<LocationCubit, LocationState>(
                       builder: (context, state) => AutoSizeText(state.map(
-                        loading: (_) => "Lade Standort",
-                        error: (_) => "Fehler",
-                        loaded: (loaded) => context.read<LocationCubit>().generateAddress(loaded.address)
-                      ))
-                  )
+                          loading: (_) => "Lade Standort",
+                          error: (_) => "Fehler",
+                          loaded: (loaded) => context
+                              .read<LocationCubit>()
+                              .generateAddress(loaded.address))))
                 ],
               ),
             ),

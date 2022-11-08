@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../../../models/post/post.dart';
+import '../../../../../../../models/post/post.dart';
 
 part 'feed_filter_cubit.freezed.dart';
 part 'feed_filter_state.dart';

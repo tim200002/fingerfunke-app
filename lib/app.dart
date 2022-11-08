@@ -3,7 +3,7 @@ import 'cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit
 import 'routes.dart';
 import 'utils/app_theme.dart';
 import 'view/create_account/view/create_account_view.dart';
-import 'view/home/view/home_view.dart';
+import 'view/main/view/main_view.dart';
 import 'view/splash/view/splash_page.dart';
 import 'view/welcome/view/welcome_page.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +41,7 @@ class App extends StatelessWidget {
               return BlocOverrides.runZoned(
                   () => BlocProvider(
                         create: (context) => AppCubit(user),
-                        child: buildApp(const HomeView(),
+                        child: buildApp(const MainView(),
                             themeMode: themeMode, routes: routes),
                       ),
                   blocObserver: SimpleBlocObserver());
