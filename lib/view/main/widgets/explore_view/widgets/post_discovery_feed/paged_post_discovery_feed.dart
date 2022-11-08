@@ -96,6 +96,7 @@ class PagedPostDiscoveryFeed extends StatelessWidget {
                                         itemBuilder: (post) =>
                                             PostFeedImageItem(
                                           post,
+                                          video: true,
                                           key: ValueKey(post.id),
                                         ),
                                         endIndicator: IllustrationView.empty(

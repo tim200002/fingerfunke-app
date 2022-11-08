@@ -12,7 +12,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../video/video_playback_cubit/video_playback_cubit.dart';
 import '../../video/view/video_playback_view.dart';
-import '../../../cubits/live_config_cubit/live_config_cubit.dart';
 
 class PostFeedImageItem extends StatelessWidget {
   final Post _post;
