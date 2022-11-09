@@ -4,22 +4,14 @@ part of 'live_config_cubit.dart';
 // Leider sind trotz Hilfsfunktionen einige Schritte nötig um ein neues
 // item hinzuzufügen:
 //
-// 1. Im `live_cubit_state` ein neues Feld hinzufügen
-// 2. Constructor im Cubit ein 'false' hinzufügen (also den Fehler beheben)
-// 3. In dieser Datei einen neuen Eintrag hinzufügen
+// 1. Im `live_config_cubit` ein neues Feld im State hinzufügen
+//    - Constructor im Cubit ein 'false' hinzufügen (also den Fehler beheben)
+// 2. In dieser Datei einen neuen Eintrag hinzufügen
 
-final _liveConfigs = [
+final List<LiveConfig> _liveConfigs = [
   LiveConfig(
-      name: "Paged Post Feed",
-      description:
-          "Ob ein Fullscreen Post Feed (ähnlich der TikTok UI) verwentet werden soll",
-      isSelected: (c) => _getState(c).map(neutral: (s) => s.pagedFeed),
-      onToggle: (c, v) => _set(c, _getState(c).copyWith(pagedFeed: v))),
-  LiveConfig(
-      unused: true,
-      name: "new Feed Items",
-      description:
-          "Ob die neuen FeedItems innerhalb der App verwendet werden sollen",
-      isSelected: (c) => _getState(c).map(neutral: (s) => s.newFeedItems),
-      onToggle: (c, v) => _set(c, _getState(c).copyWith(newFeedItems: v)))
+      name: "Feedback Button",
+      description: "Einen Button für Feedback auf dem Home-Bildschirm zeigen",
+      isSelected: (c) => _getState(c).hideFeedbackBtn,
+      onToggle: (c, v) => _set(c, _getState(c).copyWith(hideFeedbackBtn: v))),
 ];

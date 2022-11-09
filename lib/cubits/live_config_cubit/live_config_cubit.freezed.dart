@@ -16,40 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$LiveConfigState {
-  bool get newFeedItems => throw _privateConstructorUsedError;
-  bool get pagedFeed => throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(bool newFeedItems, bool pagedFeed) neutral,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(bool newFeedItems, bool pagedFeed)? neutral,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(bool newFeedItems, bool pagedFeed)? neutral,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Neutral value) neutral,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Neutral value)? neutral,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Neutral value)? neutral,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+  bool get hideFeedbackBtn => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $LiveConfigStateCopyWith<LiveConfigState> get copyWith =>
@@ -61,7 +28,7 @@ abstract class $LiveConfigStateCopyWith<$Res> {
   factory $LiveConfigStateCopyWith(
           LiveConfigState value, $Res Function(LiveConfigState) then) =
       _$LiveConfigStateCopyWithImpl<$Res>;
-  $Res call({bool newFeedItems, bool pagedFeed});
+  $Res call({bool hideFeedbackBtn});
 }
 
 /// @nodoc
@@ -75,54 +42,42 @@ class _$LiveConfigStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? newFeedItems = freezed,
-    Object? pagedFeed = freezed,
+    Object? hideFeedbackBtn = freezed,
   }) {
     return _then(_value.copyWith(
-      newFeedItems: newFeedItems == freezed
-          ? _value.newFeedItems
-          : newFeedItems // ignore: cast_nullable_to_non_nullable
-              as bool,
-      pagedFeed: pagedFeed == freezed
-          ? _value.pagedFeed
-          : pagedFeed // ignore: cast_nullable_to_non_nullable
+      hideFeedbackBtn: hideFeedbackBtn == freezed
+          ? _value.hideFeedbackBtn
+          : hideFeedbackBtn // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
 }
 
 /// @nodoc
-abstract class _$$_NeutralCopyWith<$Res>
-    implements $LiveConfigStateCopyWith<$Res> {
-  factory _$$_NeutralCopyWith(
-          _$_Neutral value, $Res Function(_$_Neutral) then) =
-      __$$_NeutralCopyWithImpl<$Res>;
+abstract class _$$_SCopyWith<$Res> implements $LiveConfigStateCopyWith<$Res> {
+  factory _$$_SCopyWith(_$_S value, $Res Function(_$_S) then) =
+      __$$_SCopyWithImpl<$Res>;
   @override
-  $Res call({bool newFeedItems, bool pagedFeed});
+  $Res call({bool hideFeedbackBtn});
 }
 
 /// @nodoc
-class __$$_NeutralCopyWithImpl<$Res> extends _$LiveConfigStateCopyWithImpl<$Res>
-    implements _$$_NeutralCopyWith<$Res> {
-  __$$_NeutralCopyWithImpl(_$_Neutral _value, $Res Function(_$_Neutral) _then)
-      : super(_value, (v) => _then(v as _$_Neutral));
+class __$$_SCopyWithImpl<$Res> extends _$LiveConfigStateCopyWithImpl<$Res>
+    implements _$$_SCopyWith<$Res> {
+  __$$_SCopyWithImpl(_$_S _value, $Res Function(_$_S) _then)
+      : super(_value, (v) => _then(v as _$_S));
 
   @override
-  _$_Neutral get _value => super._value as _$_Neutral;
+  _$_S get _value => super._value as _$_S;
 
   @override
   $Res call({
-    Object? newFeedItems = freezed,
-    Object? pagedFeed = freezed,
+    Object? hideFeedbackBtn = freezed,
   }) {
-    return _then(_$_Neutral(
-      newFeedItems == freezed
-          ? _value.newFeedItems
-          : newFeedItems // ignore: cast_nullable_to_non_nullable
-              as bool,
-      pagedFeed == freezed
-          ? _value.pagedFeed
-          : pagedFeed // ignore: cast_nullable_to_non_nullable
+    return _then(_$_S(
+      hideFeedbackBtn == freezed
+          ? _value.hideFeedbackBtn
+          : hideFeedbackBtn // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -130,107 +85,42 @@ class __$$_NeutralCopyWithImpl<$Res> extends _$LiveConfigStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Neutral implements _Neutral {
-  const _$_Neutral(this.newFeedItems, this.pagedFeed);
+class _$_S implements _S {
+  const _$_S(this.hideFeedbackBtn);
 
   @override
-  final bool newFeedItems;
-  @override
-  final bool pagedFeed;
+  final bool hideFeedbackBtn;
 
   @override
   String toString() {
-    return 'LiveConfigState.neutral(newFeedItems: $newFeedItems, pagedFeed: $pagedFeed)';
+    return 'LiveConfigState(hideFeedbackBtn: $hideFeedbackBtn)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Neutral &&
+            other is _$_S &&
             const DeepCollectionEquality()
-                .equals(other.newFeedItems, newFeedItems) &&
-            const DeepCollectionEquality().equals(other.pagedFeed, pagedFeed));
+                .equals(other.hideFeedbackBtn, hideFeedbackBtn));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(newFeedItems),
-      const DeepCollectionEquality().hash(pagedFeed));
+      runtimeType, const DeepCollectionEquality().hash(hideFeedbackBtn));
 
   @JsonKey(ignore: true)
   @override
-  _$$_NeutralCopyWith<_$_Neutral> get copyWith =>
-      __$$_NeutralCopyWithImpl<_$_Neutral>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(bool newFeedItems, bool pagedFeed) neutral,
-  }) {
-    return neutral(newFeedItems, pagedFeed);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(bool newFeedItems, bool pagedFeed)? neutral,
-  }) {
-    return neutral?.call(newFeedItems, pagedFeed);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(bool newFeedItems, bool pagedFeed)? neutral,
-    required TResult orElse(),
-  }) {
-    if (neutral != null) {
-      return neutral(newFeedItems, pagedFeed);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Neutral value) neutral,
-  }) {
-    return neutral(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Neutral value)? neutral,
-  }) {
-    return neutral?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Neutral value)? neutral,
-    required TResult orElse(),
-  }) {
-    if (neutral != null) {
-      return neutral(this);
-    }
-    return orElse();
-  }
+  _$$_SCopyWith<_$_S> get copyWith =>
+      __$$_SCopyWithImpl<_$_S>(this, _$identity);
 }
 
-abstract class _Neutral implements LiveConfigState {
-  const factory _Neutral(final bool newFeedItems, final bool pagedFeed) =
-      _$_Neutral;
+abstract class _S implements LiveConfigState {
+  const factory _S(final bool hideFeedbackBtn) = _$_S;
 
   @override
-  bool get newFeedItems;
-  @override
-  bool get pagedFeed;
+  bool get hideFeedbackBtn;
   @override
   @JsonKey(ignore: true)
-  _$$_NeutralCopyWith<_$_Neutral> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$_SCopyWith<_$_S> get copyWith => throw _privateConstructorUsedError;
 }
