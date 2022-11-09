@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../models/user/user.dart';
+import '../../utils/app_tools.dart';
+import '../../view/user_profile/profile_view.dart';
 import '../image/user_image/user_image.dart';
 
 class AuthorInfo extends StatelessWidget {
@@ -10,21 +12,26 @@ class AuthorInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(right: 6),
-          child: UserImage(
-            _userInfo.picture,
-            diameter: 24,
+    return InkWell(
+      onTap: () =>
+          UserProfileView.showAsBottomSheet(context, userId: _userInfo.id),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 6),
+            child: UserImage(
+              _userInfo.picture,
+              diameter: 24,
+            ),
           ),
-        ),
-        Text(
-          _userInfo.name,
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: color),
-        )
-      ],
+          Text(
+            _userInfo.name,
+            style:
+                Theme.of(context).textTheme.bodyMedium?.copyWith(color: color),
+          )
+        ],
+      ),
     );
   }
 }

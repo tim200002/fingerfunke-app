@@ -3,6 +3,7 @@
 "@lbl_postTime" : {"placeholders": {"time": {}}},
 
 "lbl_account": "account",
+"lbl_post_inPast": "in the past",
 "lbl_accountManage": "manage account",
 "lbl_camera": "camera",
 "lbl_cameraPermissionError": "Sorry, it looks like you've not given us permission to use your camera. To use the editor you have to change this in the settings",

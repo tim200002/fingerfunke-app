@@ -1,3 +1,4 @@
+import '../../../utils/tools.dart';
 import '../../image/network_placeholder_image.dart/network_placeholder_image.dart';
 import '../../user/author_info.dart';
 import '../../../models/asset/asset.dart';
@@ -15,7 +16,7 @@ import '../../video/view/video_playback_view.dart';
 
 class PostFeedImageItem extends StatelessWidget {
   final Post _post;
-  final int? height;
+  final double? height;
   final bool video;
 
   /// From here one can navigate to a detailed post view, this function is called when
@@ -60,7 +61,7 @@ class PostFeedImageItem extends StatelessWidget {
       ),
       fit: BoxFit.cover,
       width: width.toInt(),
-      height: height,
+      height: height?.toInt(),
       //height: (width ~/ aspectRatio),
     );
   }
@@ -86,23 +87,29 @@ class PostFeedImageItem extends StatelessWidget {
       constraints: const BoxConstraints(minWidth: 60),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10), color: Colors.white),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-              event.startTime.day
-                  .toString(), //ToDo: Datamodel does not contain date
+      child: event.startTime.isBefore(DateTime.now())
+          ? Text(l10n(context).lbl_post_inPast,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 21,
-              )),
-          Text(event.startTime.monthAsAbbreviatedString,
-              style: const TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 14,
-                  color: Colors.grey))
-        ],
-      ),
+                fontSize: 18,
+              ))
+          : Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                    event.startTime.day
+                        .toString(), //ToDo: Datamodel does not contain date
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 21,
+                    )),
+                Text(event.startTime.monthAsAbbreviatedString,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                        color: Colors.grey))
+              ],
+            ),
     );
   }
 

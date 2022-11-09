@@ -1,6 +1,7 @@
 {
   "de": [
     "lbl_account",
+    "lbl_post_inPast",
     "lbl_camera",
     "lbl_cameraPermissionError",
     "lbl_cameraPreview",

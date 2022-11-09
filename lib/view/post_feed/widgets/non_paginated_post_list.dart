@@ -14,13 +14,10 @@ class NonPaginatedPostList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        scrollDirection: Axis.vertical,
-        itemCount: posts.length,
-        itemBuilder: (context, index) => Container(
-              height: itemMinHeight,
-              //constraints: BoxConstraints(minHeight: itemMinHeight),
-              child: PostFeedImageItem(posts[index],
-                  key: ValueKey(posts[index].id)),
-            ));
+      scrollDirection: Axis.vertical,
+      itemCount: posts.length,
+      itemBuilder: (context, index) => PostFeedImageItem(posts[index],
+          height: itemMinHeight, key: ValueKey(posts[index].id)),
+    );
   }
 }
