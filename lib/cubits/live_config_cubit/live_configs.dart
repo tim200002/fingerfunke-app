@@ -10,7 +10,7 @@ part of 'live_config_cubit.dart';
 
 final List<LiveConfig> _liveConfigs = [
   LiveConfig(
-      name: "Feedback Button",
+      name: "Feedback Button verstecken",
       description: "Einen Button für Feedback auf dem Home-Bildschirm zeigen",
       isSelected: (c) => _getState(c).hideFeedbackBtn,
       onToggle: (c, v) => _set(c, _getState(c).copyWith(hideFeedbackBtn: v))),

@@ -53,6 +53,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         )),
               ]),
               SettingsTile(
+                  enabled: false,
                   title: 'Theme',
                   subtitle: toBeginningOfSentenceCase(
                       settings.themeMode.toString().substring(10)),
