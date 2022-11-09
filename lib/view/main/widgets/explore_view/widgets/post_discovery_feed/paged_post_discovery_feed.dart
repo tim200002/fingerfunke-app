@@ -99,8 +99,7 @@ class PagedPostDiscoveryFeed extends StatelessWidget {
                                                 itemBuilder: (post) =>
                                                     PostFeedImageItem(
                                                   post,
-                                                  video:
-                                                      settings.dsFeedAutoplay,
+                                                  video: settings.dsAutoplay,
                                                   key: ValueKey(post.id),
                                                 ),
                                                 endIndicator:

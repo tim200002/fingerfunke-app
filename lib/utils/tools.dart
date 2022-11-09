@@ -8,6 +8,14 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 AppLocalizations l10n(BuildContext context) => AppLocalizations.of(context)!;
 
+attempt(Function f, {required Function(dynamic e) onError}) {
+  try {
+    return f.call();
+  } catch (e) {
+    onError.call(e);
+  }
+}
+
 class Tools {
   static showSnackbar(BuildContext context, String message) {
     ScaffoldMessenger.of(context)

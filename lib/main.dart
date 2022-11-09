@@ -21,7 +21,7 @@ import 'repositories/firebase_authentication_repository/firebase_authentication_
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   //await FlutterConfig.loadEnvVariables();
-  await GetStorage.init();
+  await GetStorage.init("settings");
   await Firebase.initializeApp();
   final Logger _logger = Logger();
   SystemChrome.setPreferredOrientations(

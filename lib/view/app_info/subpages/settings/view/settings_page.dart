@@ -69,9 +69,9 @@ class _SettingsPageState extends State<SettingsPage> {
                     title: "Video-Autoplay",
                     subtitle: 'Videos im Feed abspielen',
                     leading: const Icon(Icons.dark_mode),
-                    switchValue: settings.dsFeedAutoplay,
+                    switchValue: settings.dsAutoplay,
                     onToggle: (bool v) {
-                      AppSettingsCubit.of(context).set(dsFeedAutoplay: v);
+                      AppSettingsCubit.of(context).set(dsAutoplay: v);
                     },
                   )
                 ],

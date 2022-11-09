@@ -21,13 +21,13 @@ class AppSettingsCubit extends Cubit<AppSettings> {
   void set({
     String? locale,
     ThemeMode? themeMode,
-    bool? dsFeedAutoplay,
-  }) {
+    bool? dsAutoplay,
+  }) async {
     var settings = AppSettings(
         locale: locale ?? state.locale,
         themeMode: themeMode ?? state.themeMode,
-        dsFeedAutoplay: dsFeedAutoplay ?? state.dsFeedAutoplay);
-    _settingsRepository.updateSettings(settings);
+        dsAutoplay: dsAutoplay ?? state.dsAutoplay);
+    await _settingsRepository.setSettings(settings);
     emit(settings);
   }
 }

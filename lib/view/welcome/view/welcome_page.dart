@@ -78,6 +78,7 @@ class WelcomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
           children: [

@@ -20,21 +20,21 @@ mixin _$LocationState {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(dynamic e) error,
-    required TResult Function(Position location, String address) loaded,
+    required TResult Function(Position location, String? address) loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(dynamic e)? error,
-    TResult Function(Position location, String address)? loaded,
+    TResult Function(Position location, String? address)? loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(dynamic e)? error,
-    TResult Function(Position location, String address)? loaded,
+    TResult Function(Position location, String? address)? loaded,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -120,7 +120,7 @@ class _$_loading implements _loading {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(dynamic e) error,
-    required TResult Function(Position location, String address) loaded,
+    required TResult Function(Position location, String? address) loaded,
   }) {
     return loading();
   }
@@ -130,7 +130,7 @@ class _$_loading implements _loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(dynamic e)? error,
-    TResult Function(Position location, String address)? loaded,
+    TResult Function(Position location, String? address)? loaded,
   }) {
     return loading?.call();
   }
@@ -140,7 +140,7 @@ class _$_loading implements _loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(dynamic e)? error,
-    TResult Function(Position location, String address)? loaded,
+    TResult Function(Position location, String? address)? loaded,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -252,7 +252,7 @@ class _$_Error implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(dynamic e) error,
-    required TResult Function(Position location, String address) loaded,
+    required TResult Function(Position location, String? address) loaded,
   }) {
     return error(e);
   }
@@ -262,7 +262,7 @@ class _$_Error implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(dynamic e)? error,
-    TResult Function(Position location, String address)? loaded,
+    TResult Function(Position location, String? address)? loaded,
   }) {
     return error?.call(e);
   }
@@ -272,7 +272,7 @@ class _$_Error implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(dynamic e)? error,
-    TResult Function(Position location, String address)? loaded,
+    TResult Function(Position location, String? address)? loaded,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -329,7 +329,7 @@ abstract class _Error implements LocationState {
 abstract class _$$_LoadedCopyWith<$Res> {
   factory _$$_LoadedCopyWith(_$_Loaded value, $Res Function(_$_Loaded) then) =
       __$$_LoadedCopyWithImpl<$Res>;
-  $Res call({Position location, String address});
+  $Res call({Position location, String? address});
 }
 
 /// @nodoc
@@ -354,7 +354,7 @@ class __$$_LoadedCopyWithImpl<$Res> extends _$LocationStateCopyWithImpl<$Res>
       address == freezed
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -367,7 +367,7 @@ class _$_Loaded implements _Loaded {
   @override
   final Position location;
   @override
-  final String address;
+  final String? address;
 
   @override
   String toString() {
@@ -399,7 +399,7 @@ class _$_Loaded implements _Loaded {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(dynamic e) error,
-    required TResult Function(Position location, String address) loaded,
+    required TResult Function(Position location, String? address) loaded,
   }) {
     return loaded(location, address);
   }
@@ -409,7 +409,7 @@ class _$_Loaded implements _Loaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(dynamic e)? error,
-    TResult Function(Position location, String address)? loaded,
+    TResult Function(Position location, String? address)? loaded,
   }) {
     return loaded?.call(location, address);
   }
@@ -419,7 +419,7 @@ class _$_Loaded implements _Loaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(dynamic e)? error,
-    TResult Function(Position location, String address)? loaded,
+    TResult Function(Position location, String? address)? loaded,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -464,11 +464,11 @@ class _$_Loaded implements _Loaded {
 }
 
 abstract class _Loaded implements LocationState {
-  const factory _Loaded(final Position location, final String address) =
+  const factory _Loaded(final Position location, final String? address) =
       _$_Loaded;
 
   Position get location;
-  String get address;
+  String? get address;
   @JsonKey(ignore: true)
   _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
       throw _privateConstructorUsedError;
