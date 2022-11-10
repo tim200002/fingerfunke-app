@@ -31,12 +31,11 @@ class PagedPostDiscoveryFeed extends StatelessWidget {
         });
   }
 
-  Widget _locationDenied(BuildContext context) => const IllustrationView(
+  Widget _locationDenied(BuildContext context) => IllustrationView(
       illustration: Illustrations.location,
       illustrationHeight: 100,
-      text: "Die App benötigt Deinen Standort für das Anzeigen "
-          "von Posts in Deiner Nähe. Bitte gebe diesen frei.",
-      action: TextButton(
+      text: l10n(context).lbl_locationRequired,
+      action: const TextButton(
           onPressed: aSettings.AppSettings.openAppSettings,
           child: Text("Standort freigeben")));
 
@@ -51,7 +50,7 @@ class PagedPostDiscoveryFeed extends StatelessWidget {
               child: BlocBuilder<LocationCubit, LocationState>(
                   builder: (context, state) => state.when(
                       error: (e) => IllustrationView.error(
-                          text: "Standort konnte nicht\ngeladen werden",
+                          text: l10n(context).lbl_locationLoadError,
                           retry: () => context.read<LocationCubit>().reload),
                       denied: () => _locationDenied(context),
                       loading: () => const Center(

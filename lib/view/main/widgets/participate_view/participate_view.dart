@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../cubits/app_cubit/app_cubit.dart';
 import '../../../../utils/app_theme.dart';
+import '../../../../utils/tools.dart';
 import '../../../post_feed/posts_list_cubit/posts_list_cubit.dart';
 import '../../../post_feed/view/compact_post_feed.dart';
 
@@ -61,10 +62,12 @@ class ParticipateView extends StatelessWidget {
                       filter: (posts) => posts
                           .where((p) => !p.isAuthor(state.user.id))
                           .toList(),
+                      emptyMessage: l10n(context).lbl_notParticipating,
                     )),
                     _PersTabItem(CompactPostsFeed(
                       query: () =>
                           PostsListCubit.queryAuthorPosts(state.user.id),
+                      emptyMessage: l10n(context).lbl_notAuthor,
                     ))
                   ],
                 )),
