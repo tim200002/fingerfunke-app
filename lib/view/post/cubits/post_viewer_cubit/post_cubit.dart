@@ -20,8 +20,7 @@ class PostCubit extends Cubit<PostState> {
   PostCubit(FirestoreId postId, {PostRepository? postRepository})
       : _postRepository = postRepository ?? PostRepositoryImpl(),
         super(PostState.loading(postId)) {
-    _postSubscription =
-        _postRepository.subscribeToPost(postId).listen((Post post) {
+    _postSubscription = _postRepository.observePost(postId).listen((Post post) {
       emit(
         PostState.normal(
           post: post,

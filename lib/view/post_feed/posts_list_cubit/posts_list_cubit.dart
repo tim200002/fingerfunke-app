@@ -9,22 +9,32 @@ import '../../../utils/type_aliases.dart';
 part 'posts_list_state.dart';
 part 'posts_list_cubit.freezed.dart';
 
+typedef PostQuery = Stream<List<Post>> Function();
 typedef PostFilter = List<Post> Function(List<Post>);
 
 class PostsListCubit extends Cubit<PostsListState> {
-  final PostRepository _postRepository = PostRepositoryImpl();
+  static final PostRepository _postRepository = PostRepositoryImpl();
 
-  final List<FirestoreId> postIds;
+  /// query all documents of which the [postIds] are passed
+  static Stream<List<Post>> queryPostsByIds(List<String> postIds) =>
+      _postRepository.observePosts(postIds);
+
+  static Stream<List<Post>> queryJoinedPosts(String userId) =>
+      _postRepository.observeJoinedPosts(userId);
+
+  static Stream<List<Post>> queryAuthorPosts(String userId) =>
+      _postRepository.observeAuthoredPosts(userId);
+
+  final PostQuery query;
   final PostFilter? filter;
 
-  PostsListCubit(this.postIds, {this.filter})
+  PostsListCubit(this.query, {this.filter})
       : super(const PostsListState.loading()) {
     refresh();
   }
 
   void refresh() async {
-    print("running refresh");
-    _postRepository.subscribeToPosts(postIds).listen(
+    query().listen(
         (p) => emit(PostsListState.neutral((filter ?? (l) => l).call(p))),
         onError: (e) => emit(PostsListState.error(e)));
   }

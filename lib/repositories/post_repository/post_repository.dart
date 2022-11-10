@@ -15,9 +15,13 @@ abstract class PostRepository {
 
   Future<void> createPost(Post post);
 
-  Stream<Post> subscribeToPost(FirestoreId postId);
+  Stream<Post> observePost(FirestoreId postId);
 
-  Stream<List<Post>> subscribeToPosts(List<FirestoreId>? postIds);
+  Stream<List<Post>> observePosts(List<FirestoreId>? postIds);
+
+  Stream<List<Post>> observeAuthoredPosts(FirestoreId userId);
+
+  Stream<List<Post>> observeJoinedPosts(FirestoreId userId);
 
   Future<Post> getPost(FirestoreId postId);
 

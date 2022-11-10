@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../cubits/app_cubit/app_cubit.dart';
 import '../../../../utils/app_theme.dart';
+import '../../../post_feed/posts_list_cubit/posts_list_cubit.dart';
 import '../../../post_feed/view/compact_post_feed.dart';
 
 /// this class prevents elements within a TabView to be rebuilt upon
@@ -30,8 +31,8 @@ class __PersTabItemState extends State<_PersTabItem>
   bool get wantKeepAlive => true;
 }
 
-class SavedView extends StatelessWidget {
-  const SavedView({super.key});
+class ParticipateView extends StatelessWidget {
+  const ParticipateView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +46,7 @@ class SavedView extends StatelessWidget {
             indicatorSize: TabBarIndicatorSize.label,
             indicatorWeight: 3,
             tabs: [
-              Tab(text: "gespeichert"),
+              Tab(text: "Teilnahmen"),
               Tab(text: "meine Posts"),
             ],
           ),
@@ -55,15 +56,16 @@ class SavedView extends StatelessWidget {
             builder: (context, state) => TabBarView(
                   children: [
                     _PersTabItem(CompactPostsFeed(
-                        postIds: state.user.savedPosts,
-                        filter: (posts) => posts
-                            .where((p) => !p.isAuthor(state.user.id))
-                            .toList())),
+                      query: () =>
+                          PostsListCubit.queryJoinedPosts(state.user.id),
+                      filter: (posts) => posts
+                          .where((p) => !p.isAuthor(state.user.id))
+                          .toList(),
+                    )),
                     _PersTabItem(CompactPostsFeed(
-                        postIds: state.user.savedPosts,
-                        filter: (posts) => posts
-                            .where((p) => p.isAuthor(state.user.id))
-                            .toList())),
+                      query: () =>
+                          PostsListCubit.queryAuthorPosts(state.user.id),
+                    ))
                   ],
                 )),
       ),

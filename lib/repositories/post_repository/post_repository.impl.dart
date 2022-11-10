@@ -16,7 +16,7 @@ class PostRepositoryImpl implements PostRepository {
   final FirebaseFunctions _functions;
   final Geoflutterfire _geo = Geoflutterfire();
   late final CollectionReference _postCollection;
-  static const FirestoreId postMemberCollection = "members";
+  static const FirestoreId postMemberCollection = "posts_members";
 
   PostRepositoryImpl(
       {FirebaseFirestore? firestore, FirebaseFunctions? functions})
@@ -40,7 +40,7 @@ class PostRepositoryImpl implements PostRepository {
     //! fetching all posts is more for debug purposes.
     // When moving to production, this should be disabled
     print("fetch: $radius");
-    if (radius == null) return subscribeToPosts(null);
+    if (radius == null) return observePosts(null);
     var stream = _geo
         .collection(collectionRef: _postCollection)
         .within(
@@ -52,14 +52,16 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Stream<Post> subscribeToPost(FirestoreId postId) {
+  Stream<Post> observePost(FirestoreId postId) {
     return _postCollection.doc(postId).snapshots().map(
           (DocumentSnapshot doc) => Post.fromDoc(doc),
         );
   }
 
   @override
-  Stream<List<Post>> subscribeToPosts(List<FirestoreId>? postIds) {
+  Stream<List<Post>> observePosts(List<FirestoreId>? postIds) {
+    //TODO: handle the case, that the user has no saved posts in a better way
+    if (postIds?.isEmpty ?? false) postIds = ["none"];
     return (postIds != null
             ? _postCollection.where('id', whereIn: postIds)
             : _postCollection)
@@ -67,6 +69,14 @@ class PostRepositoryImpl implements PostRepository {
         .map(
           (r) => r.docs.map((d) => Post.fromDoc(d)).toList(),
         );
+  }
+
+  @override
+  Stream<List<Post>> observeAuthoredPosts(FirestoreId userId) {
+    return _postCollection
+        .where('author.id', isEqualTo: userId)
+        .snapshots()
+        .map((r) => r.docs.map((d) => Post.fromDoc(d)).toList());
   }
 
   @override
@@ -125,5 +135,26 @@ class PostRepositoryImpl implements PostRepository {
         .collection(postMemberCollection)
         .snapshots()
         .map((event) => event.docs.map((u) => UserInfo.fromDoc(u)).toList());
+  }
+
+  @override
+  Stream<List<Post>> observeJoinedPosts(FirestoreId userId) {
+    StreamSubscription? subscription;
+    final controller = StreamController<List<Post>>()
+      ..onCancel = () => subscription?.cancel();
+    _firestore
+        .collectionGroup(postMemberCollection)
+        .where("id", isEqualTo: userId)
+        .snapshots()
+        .listen((event) {
+      Set<String> postIds = {};
+      for (var ref in event.docs) {
+        String? postId = ref.reference.parent.parent?.id;
+        if (postId != null) postIds.add(postId);
+      }
+      subscription?.cancel();
+      subscription = observePosts(postIds.toList()).listen(controller.add);
+    });
+    return controller.stream;
   }
 }

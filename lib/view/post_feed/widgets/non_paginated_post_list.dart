@@ -3,8 +3,6 @@ import '../../../models/post/post.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../cubit/posts_list_cubit.dart';
-
 class NonPaginatedPostList extends StatelessWidget {
   final List<Post> posts;
   final double itemMinHeight;
