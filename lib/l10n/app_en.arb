@@ -14,6 +14,7 @@
 "lbl_delete": "delete",
 "lbl_devTools": "DevTools",
 "lbl_edit": "edit",
+"lbl_mine": "mine",
 "lbl_errorAbout": "An unexpected error has occurred.\n We saved the error and started working on it",
 "lbl_errorCantView": "This content could not be shown",
 "lbl_errorTitle": "Oh no :/",

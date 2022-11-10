@@ -58,6 +58,13 @@ class HomeDrawer extends StatelessWidget {
                     ),
                     const SizedBox(height: 25),
                     ListTile(
+                      leading: const Icon(FeatherIcons.bookmark),
+                      title: Text(l10n(context).lbl_saved),
+                      onTap: () =>
+                          Navigator.of(context).pushNamed(Routes.saved),
+                    ),
+                    const SizedBox(height: 25),
+                    ListTile(
                       leading: const Icon(FeatherIcons.share2),
                       title: Text(l10n(context).lbl_socialMedia),
                       onTap: () => launchUrlString(

@@ -9,6 +9,7 @@ import 'view/moderation/mod_post_report/mod_post_report_page.dart';
 import 'view/moderation/moderation_page/moderation_page.dart';
 import 'view/my_account/view/my_account_page.dart';
 import 'view/post/view/post_page.dart';
+import 'view/saved/saved_page.dart';
 
 /// this variable holds the global routes that can be used within the app
 /// the widgets used with this routing should end with the suffix 'Page' to
@@ -26,6 +27,7 @@ class Routes {
   static const post = "/post";
   static const postEditor = "/create";
   static const settings = "/settings";
+  static const saved = "/saved";
 }
 
 final routes = {
@@ -41,4 +43,5 @@ final routes = {
   Routes.post: (context) => const PostPage(),
   Routes.postEditor: (context) => const PostPage(editing: true),
   Routes.settings: (context) => const SettingsPage(),
+  Routes.saved: (context) => const SavedPage(),
 };

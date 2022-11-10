@@ -14,7 +14,7 @@ class MainView extends StatefulWidget {
   State<MainView> createState() => _MainViewState();
 }
 
-enum _MainViewPages { explore, saved }
+enum _MainViewPages { explore, user }
 
 class _MainViewState extends State<MainView> {
   _MainViewPages _activePage = _MainViewPages.explore;
@@ -110,11 +110,11 @@ class _MainViewState extends State<MainView> {
                 onPressed: () =>
                     Navigator.of(context).pushNamed(Routes.postEditor)),
             _bottomNavItem(context,
-                title: l10n(context).lbl_saved,
-                selected: _activePage == _MainViewPages.saved,
-                icon: FeatherIcons.heart,
+                title: l10n(context).lbl_mine,
+                selected: _activePage == _MainViewPages.user,
+                icon: FeatherIcons.user,
                 onPressed: () =>
-                    setState(() => _activePage = _MainViewPages.saved)),
+                    setState(() => _activePage = _MainViewPages.user)),
           ],
         ),
       ),

@@ -11,6 +11,7 @@
     "lbl_delete",
     "lbl_devTools",
     "lbl_edit",
+    "lbl_mine",
     "lbl_errorAbout",
     "lbl_errorCantView",
     "lbl_errorTitle",

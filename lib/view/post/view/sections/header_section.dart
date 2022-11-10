@@ -291,8 +291,8 @@ class HeaderSection extends StatelessWidget {
                                   enabled: (post?.author.id ?? "") !=
                                       appState.user.id,
                                   icon: hasPostSaved
-                                      ? Icons.favorite
-                                      : Icons.favorite_border_outlined,
+                                      ? Icons.bookmark_rounded
+                                      : Icons.bookmark_border_rounded,
                                   onPressed: () => context
                                       .read<PostCubit>()
                                       .toggleSaved(
