@@ -11,8 +11,7 @@ part 'location_state.dart';
 
 /// Stores current location of the user
 class LocationCubit extends Cubit<LocationState> {
-  final LocationRepositoryImpl _locationRepositoryImpl =
-      LocationRepositoryImpl();
+  final LocationRepository _locationRepository = LocationRepositoryImpl();
 
   LocationCubit() : super(const LocationState.loading()) {
     reload();
@@ -21,12 +20,15 @@ class LocationCubit extends Cubit<LocationState> {
   /// Load current location
   void reload() {
     emit(const LocationState.loading());
-    _locationRepositoryImpl.getLocation().then(
+    _locationRepository.getLocation().then(
         (value) async => attempt(
             () =>
                 emit(LocationState.loaded(value["position"], value["address"])),
-            onError: (e) => emit(LocationState.error(e))),
-        onError: (e) => emit(LocationState.error(e)));
+            onError: (e) => emit(LocationState.error(e))), onError: (e) {
+      emit(e is PermissionDeniedException
+          ? const LocationState.denied()
+          : LocationState.error(e));
+    });
   }
 
   /// Update location

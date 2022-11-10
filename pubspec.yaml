@@ -69,6 +69,7 @@ dependencies:
   package_info_plus: ^1.4.3
   geoflutterfire: ^3.0.1
   firebase_messaging: ^12.0.3
+  app_settings: ^4.1.8
 
 dev_dependencies:
   flutter_test:

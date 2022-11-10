@@ -7,18 +7,34 @@ class IllustrationView extends StatelessWidget {
   final String text;
   final String illustration;
   final double? illustrationWidth;
+  final double illustrationHeight;
+  final Function()? retry;
+  final Widget? action;
   const IllustrationView(
       {super.key,
-      required this.text,
       required this.illustration,
-      this.illustrationWidth});
+      required this.text,
+      this.illustrationWidth,
+      this.illustrationHeight = 250,
+      this.action,
+      this.retry});
 
-  const IllustrationView.empty({super.key, required this.text})
+  const IllustrationView.empty({super.key, required this.text, this.retry})
       : illustration = Illustrations.empty,
-        illustrationWidth = 200;
+        illustrationWidth = 200,
+        illustrationHeight = 250,
+        action = null;
+
+  const IllustrationView.error({super.key, required this.text, this.retry})
+      : illustration = Illustrations.parashute,
+        illustrationWidth = 200,
+        illustrationHeight = 140,
+        action = null;
 
   @override
   Widget build(BuildContext context) {
+    assert(retry == null || action == null,
+        "please only supply either an action or a retry function");
     return Center(
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 300),
@@ -26,20 +42,24 @@ class IllustrationView extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Illustration(
-              illustration,
-              height: null,
-              width: illustrationWidth,
-            ),
+            Illustration(illustration,
+                width: illustrationWidth, height: illustrationHeight),
             const SizedBox(
-              height: 20,
+              height: 25,
             ),
             Text(text,
                 textAlign: TextAlign.center,
                 style: GoogleFonts.signika(
                   fontSize: 17,
                   fontWeight: FontWeight.w500,
-                ))
+                )),
+            if (action != null) action!,
+            if (retry != null)
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: TextButton(
+                    onPressed: retry, child: const Text("erneut versuchen")),
+              )
           ],
         ),
       ),

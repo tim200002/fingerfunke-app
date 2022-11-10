@@ -63,8 +63,9 @@ class ExploreFilterView extends StatelessWidget {
                   const SizedBox(width: 5),
                   BlocBuilder<LocationCubit, LocationState>(
                       builder: (context, state) => AutoSizeText(state.map(
-                          loading: (_) => "Lade Standort",
-                          error: (_) => "Fehler",
+                          loading: (_) => "wird geladen",
+                          denied: (_) => "Unbekannt",
+                          error: (_) => "Unbekannt",
                           loaded: (loaded) => context
                               .read<LocationCubit>()
                               .generateAddress(loaded.address))))

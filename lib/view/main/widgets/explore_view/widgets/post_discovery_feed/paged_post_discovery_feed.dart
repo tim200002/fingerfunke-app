@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:app_settings/app_settings.dart' as aSettings;
 
 import '../../../../../../common_widgets/list_view/list_items/post_feed_image_item.dart';
 import '../../../../../../cubits/location_cubit/location_cubit.dart';
@@ -30,35 +31,14 @@ class PagedPostDiscoveryFeed extends StatelessWidget {
         });
   }
 
-  Widget _locationError(BuildContext context) {
-    return Align(
-      alignment: Alignment.center,
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 250),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Illustration(
-              Illustrations.location,
-              height: 100,
-            ),
-            const SizedBox(height: 30),
-            const Text(
-              "Die App benötigt Deinen Standort für das Anzeigen von Posts in Deiner Nähe. Bitte gebe diesen frei.",
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 20),
-            TextButton(
-                onPressed: () {
-                  context.read<LocationCubit>().reload();
-                },
-                child: const Text("erneut versuchen"))
-          ],
-        ),
-      ),
-    );
-  }
+  Widget _locationDenied(BuildContext context) => const IllustrationView(
+      illustration: Illustrations.location,
+      illustrationHeight: 100,
+      text: "Die App benötigt Deinen Standort für das Anzeigen "
+          "von Posts in Deiner Nähe. Bitte gebe diesen frei.",
+      action: TextButton(
+          onPressed: aSettings.AppSettings.openAppSettings,
+          child: Text("Standort freigeben")));
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +50,10 @@ class PagedPostDiscoveryFeed extends StatelessWidget {
           Expanded(
               child: BlocBuilder<LocationCubit, LocationState>(
                   builder: (context, state) => state.when(
-                      error: (_) => _locationError(context),
+                      error: (e) => IllustrationView.error(
+                          text: "Standort konnte nicht\ngeladen werden",
+                          retry: () => context.read<LocationCubit>().reload),
+                      denied: () => _locationDenied(context),
                       loading: () => const Center(
                           child: CircularProgressIndicator.adaptive()),
                       loaded: (location, address) =>
