@@ -40,4 +40,8 @@ post_install do |installer|
   end
 end
 
-pod 'Firebase/Auth'
+# I added this because otherwise instalation of pods fails
+#pod 'Firebase/Auth'
+#pod 'Firebase', :modular_headers => true
+#pod 'FirebaseCore', :modular_headers => true
+#pod 'GoogleUtilities', :modular_headers => true

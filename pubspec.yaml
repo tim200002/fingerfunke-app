@@ -23,16 +23,20 @@ dependencies:
 
   flutter_localizations:
     sdk: flutter 
+  
+  # firebase
+  firebase_core: ^2.2.0
+  firebase_auth: ^4.1.2
+  cloud_firestore: ^4.0.5
+  cloud_functions: ^4.0.4
+  firebase_messaging: ^14.1.0
 
   cupertino_icons: ^1.0.2
-  firebase_core: ^1.7.0
   flutter_bloc: ^8.0.0
   bloc: ^8.0.1
   freezed: ^2.1.0
   freezed_annotation: ^2.1.0
-  firebase_auth: ^3.3.6
   equatable: ^2.0.3
-  cloud_firestore: ^2.5.3
   logger: ^1.1.0
   pin_code_fields: ^7.3.0
   rxdart: ^0.27.2
@@ -43,7 +47,6 @@ dependencies:
   flutter_cache_manager: ^3.1.3
   video_player: ^2.2.7
   intl: ^0.17.0
-  cloud_functions: ^3.2.1
   dio: ^4.0.4
   mime: ^1.0.1
   path_provider: ^2.0.7
@@ -67,8 +70,11 @@ dependencies:
   geolocator: ^8.2.1
   geocoding: ^2.0.4
   package_info_plus: ^1.4.3
-  geoflutterfire: ^3.0.1
-  firebase_messaging: ^12.0.3
+  geoflutterfire:
+    git:
+      url: https://gitlab.com/fingerfunke/geoflutterfire-fork.git
+      ref: master
+  
 
 dev_dependencies:
   flutter_test:
