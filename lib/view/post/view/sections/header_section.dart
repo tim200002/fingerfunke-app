@@ -7,6 +7,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import '../../../../common_widgets/image/network_placeholder_image.dart/network_placeholder_image.dart';
 import '../../../../common_widgets/upload/video_upload_tile.dart';
 import '../../../../cubits/app_cubit/app_cubit.dart';
+import '../../../../cubits/live_config_cubit/live_config_cubit.dart';
 import '../../../../cubits/video_upload_cubit/video_upload_cubit.dart';
 import '../../../../models/asset/asset.dart';
 import '../../../../models/post/post.dart';
@@ -118,11 +119,16 @@ class HeaderSection extends StatelessWidget {
 
   final bool editing;
   final double thumbnailHeight;
+  final bool includeTitle;
   final double titleOverlap;
 
   const HeaderSection(this.editing,
-      {Key? key, this.thumbnailHeight = 350, this.titleOverlap = 40})
-      : super(key: key);
+      {Key? key,
+      this.includeTitle = false,
+      this.thumbnailHeight = 350,
+      double titleOverlap = 40})
+      : titleOverlap = includeTitle ? titleOverlap : 0,
+        super(key: key);
 
   static Widget _titleCardHeader(
       BuildContext context, double thumbnailHeight, double titleOverlap,
@@ -255,18 +261,6 @@ class HeaderSection extends StatelessWidget {
           ? []
           : [
               Padding(
-                padding: const EdgeInsets.only(
-                  right: 12.0 + AppTheme.PADDING_SIDE,
-                  top: 12.0 + AppTheme.PADDING_SIDE,
-                  bottom: 12,
-                ),
-                child: PostAppBarButton(
-                    icon: FeatherIcons.settings,
-                    onPressed: () =>
-                        PostSettingsModalContent.openAsModalBottomSheet(
-                            context)),
-              ),
-              Padding(
                   padding: const EdgeInsets.only(
                     right: AppTheme.PADDING_SIDE,
                     top: 12.0 + AppTheme.PADDING_SIDE,
@@ -298,7 +292,19 @@ class HeaderSection extends StatelessWidget {
                                       .toggleSaved(
                                           appState.user.id, hasPostSaved));
                             },
-                          )))
+                          ))),
+              Padding(
+                padding: const EdgeInsets.only(
+                  right: 12.0 + AppTheme.PADDING_SIDE,
+                  top: 12.0 + AppTheme.PADDING_SIDE,
+                  bottom: 12,
+                ),
+                child: PostAppBarButton(
+                    icon: FeatherIcons.moreVertical,
+                    onPressed: () =>
+                        PostSettingsModalContent.openAsModalBottomSheet(
+                            context)),
+              ),
             ],
       pinned: true,
       floating: false,
@@ -309,7 +315,8 @@ class HeaderSection extends StatelessWidget {
               bottomLeft: Radius.circular(30),
               bottomRight: Radius.circular(30),
               topLeft: Radius.circular(30))),
-      expandedHeight: thumbnailHeight + titleHeight - titleOverlap - 40,
+      expandedHeight: thumbnailHeight +
+          (includeTitle ? 0 : (titleHeight - titleOverlap - 40)),
       flexibleSpace: ClipRRect(
         borderRadius: const BorderRadius.vertical(bottom: Radius.circular(20)),
         child: FlexibleSpaceBar(
@@ -318,7 +325,7 @@ class HeaderSection extends StatelessWidget {
           ],
           collapseMode: editing ? CollapseMode.pin : CollapseMode.parallax,
           background: editing
-              ? _Edit(thumbnailHeight, titleOverlap)
+              ? _Edit(thumbnailHeight, titleOverlap, includeTitle)
               : BlocBuilder<PostCubit, PostState>(
                   builder: (context, state) => state.when(
                     loading: (_) => PlaceholderBox.shimmer(_loading()),
@@ -327,9 +334,11 @@ class HeaderSection extends StatelessWidget {
                         SizedBox(
                             height: thumbnailHeight,
                             child: _postThumbnail(context, post)),
-                        _titleCardHeader(context, thumbnailHeight, titleOverlap,
-                            title: post.title,
-                            disabled: post.asEvent?.isCompleted ?? false),
+                        if (!includeTitle)
+                          _titleCardHeader(
+                              context, thumbnailHeight, titleOverlap,
+                              title: post.title,
+                              disabled: post.asEvent?.isCompleted ?? false),
                       ],
                     ),
                   ),
@@ -343,7 +352,9 @@ class HeaderSection extends StatelessWidget {
 class _Edit extends StatelessWidget {
   final double thumbnailHeight;
   final double titleOverlap;
-  const _Edit(this.thumbnailHeight, this.titleOverlap, {Key? key})
+  final bool includeTitle;
+  const _Edit(this.thumbnailHeight, this.titleOverlap, this.includeTitle,
+      {Key? key})
       : super(key: key);
 
   Widget _thumbnail(
@@ -400,16 +411,18 @@ class _Edit extends StatelessWidget {
                   SizedBox(
                       height: thumbnailHeight,
                       child: _thumbnail(context, fields.videoUploadCubits)),
-                  HeaderSection._titleCardHeader(
-                    context,
-                    thumbnailHeight,
-                    titleOverlap,
-                    title: fields.title,
-                    onChanged: (t) => BlocProvider.of<PostEditorCubit>(context)
-                        .updateInformation(GeneralEditorFields.copyWithHelper(
-                            fields,
-                            title: t)),
-                  ),
+                  if (!includeTitle)
+                    HeaderSection._titleCardHeader(
+                      context,
+                      thumbnailHeight,
+                      titleOverlap,
+                      title: fields.title,
+                      onChanged: (t) =>
+                          BlocProvider.of<PostEditorCubit>(context)
+                              .updateInformation(
+                                  GeneralEditorFields.copyWithHelper(fields,
+                                      title: t)),
+                    ),
                 ],
               ),
           orElse: () => throw InvalidStateException()),

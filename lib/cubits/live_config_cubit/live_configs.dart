@@ -14,4 +14,9 @@ final List<LiveConfig> _liveConfigs = [
       description: "Einen Button für Feedback auf dem Home-Bildschirm zeigen",
       isSelected: (c) => _getState(c).hideFeedbackBtn,
       onToggle: (c, v) => _set(c, _getState(c).copyWith(hideFeedbackBtn: v))),
+  LiveConfig(
+      name: "Kompakte Titel",
+      description: "Titel auf Post Seite kompakter anzeigen",
+      isSelected: (c) => _getState(c).hideFeedbackBtn,
+      onToggle: (c, v) => _set(c, _getState(c).copyWith(hideFeedbackBtn: v))),
 ];

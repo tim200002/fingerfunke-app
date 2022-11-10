@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$LiveConfigState {
   bool get hideFeedbackBtn => throw _privateConstructorUsedError;
+  bool get compactTitle => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $LiveConfigStateCopyWith<LiveConfigState> get copyWith =>
@@ -28,7 +29,7 @@ abstract class $LiveConfigStateCopyWith<$Res> {
   factory $LiveConfigStateCopyWith(
           LiveConfigState value, $Res Function(LiveConfigState) then) =
       _$LiveConfigStateCopyWithImpl<$Res>;
-  $Res call({bool hideFeedbackBtn});
+  $Res call({bool hideFeedbackBtn, bool compactTitle});
 }
 
 /// @nodoc
@@ -43,11 +44,16 @@ class _$LiveConfigStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? hideFeedbackBtn = freezed,
+    Object? compactTitle = freezed,
   }) {
     return _then(_value.copyWith(
       hideFeedbackBtn: hideFeedbackBtn == freezed
           ? _value.hideFeedbackBtn
           : hideFeedbackBtn // ignore: cast_nullable_to_non_nullable
+              as bool,
+      compactTitle: compactTitle == freezed
+          ? _value.compactTitle
+          : compactTitle // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -58,7 +64,7 @@ abstract class _$$_SCopyWith<$Res> implements $LiveConfigStateCopyWith<$Res> {
   factory _$$_SCopyWith(_$_S value, $Res Function(_$_S) then) =
       __$$_SCopyWithImpl<$Res>;
   @override
-  $Res call({bool hideFeedbackBtn});
+  $Res call({bool hideFeedbackBtn, bool compactTitle});
 }
 
 /// @nodoc
@@ -73,11 +79,16 @@ class __$$_SCopyWithImpl<$Res> extends _$LiveConfigStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? hideFeedbackBtn = freezed,
+    Object? compactTitle = freezed,
   }) {
     return _then(_$_S(
       hideFeedbackBtn == freezed
           ? _value.hideFeedbackBtn
           : hideFeedbackBtn // ignore: cast_nullable_to_non_nullable
+              as bool,
+      compactTitle == freezed
+          ? _value.compactTitle
+          : compactTitle // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -86,14 +97,16 @@ class __$$_SCopyWithImpl<$Res> extends _$LiveConfigStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_S implements _S {
-  const _$_S(this.hideFeedbackBtn);
+  const _$_S(this.hideFeedbackBtn, this.compactTitle);
 
   @override
   final bool hideFeedbackBtn;
+  @override
+  final bool compactTitle;
 
   @override
   String toString() {
-    return 'LiveConfigState(hideFeedbackBtn: $hideFeedbackBtn)';
+    return 'LiveConfigState(hideFeedbackBtn: $hideFeedbackBtn, compactTitle: $compactTitle)';
   }
 
   @override
@@ -102,12 +115,16 @@ class _$_S implements _S {
         (other.runtimeType == runtimeType &&
             other is _$_S &&
             const DeepCollectionEquality()
-                .equals(other.hideFeedbackBtn, hideFeedbackBtn));
+                .equals(other.hideFeedbackBtn, hideFeedbackBtn) &&
+            const DeepCollectionEquality()
+                .equals(other.compactTitle, compactTitle));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(hideFeedbackBtn));
+      runtimeType,
+      const DeepCollectionEquality().hash(hideFeedbackBtn),
+      const DeepCollectionEquality().hash(compactTitle));
 
   @JsonKey(ignore: true)
   @override
@@ -116,10 +133,12 @@ class _$_S implements _S {
 }
 
 abstract class _S implements LiveConfigState {
-  const factory _S(final bool hideFeedbackBtn) = _$_S;
+  const factory _S(final bool hideFeedbackBtn, final bool compactTitle) = _$_S;
 
   @override
   bool get hideFeedbackBtn;
+  @override
+  bool get compactTitle;
   @override
   @JsonKey(ignore: true)
   _$$_SCopyWith<_$_S> get copyWith => throw _privateConstructorUsedError;

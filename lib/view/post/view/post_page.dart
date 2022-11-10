@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../common_widgets/list_view/pagination/cubit/paginated_list_cubit.dart';
 import '../../../cubits/app_cubit/app_cubit.dart';
+import '../../../cubits/live_config_cubit/live_config_cubit.dart';
 import '../../../models/message/message.dart';
 import '../../../models/post/post.dart';
 import '../../../services/pagination/message_pagination_service.dart';
@@ -19,6 +20,7 @@ import 'sections/location_section.dart';
 import 'sections/post_action_buttons.dart';
 import 'sections/post_description_section.dart';
 import 'sections/post_posted_success_view.dart';
+import 'sections/title_section.dart';
 import 'widgets/edit_loading_view.dart';
 
 class PostPage extends StatelessWidget {
@@ -32,7 +34,8 @@ class PostPage extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.surface,
         body: CustomScrollView(
           slivers: [
-            HeaderSection(editing),
+            LiveConfig.builder((config) =>
+                HeaderSection(editing, includeTitle: config.compactTitle)),
             SliverToBoxAdapter(
               child: Column(
                 children: [
@@ -45,6 +48,9 @@ class PostPage extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        LiveConfig.builder((config) => config.compactTitle
+                            ? TitleSection(editing)
+                            : Container()),
                         EventDetailSection(editing),
                         const SizedBox(height: 15),
                         PostDescriptionSection(editing),

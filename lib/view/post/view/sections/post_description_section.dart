@@ -14,7 +14,7 @@ class PostDescriptionSection extends StatelessWidget {
   final bool editing;
   const PostDescriptionSection(this.editing, {Key? key}) : super(key: key);
 
-  Widget _loading() {
+  static Widget loading() {
     return Column(children: [
       for (int i = 2; i >= 0; i--)
         PlaceholderBox.text(width: i == 0 ? 100 : null)
@@ -27,7 +27,7 @@ class PostDescriptionSection extends StatelessWidget {
         ? const _Edit()
         : BlocBuilder<PostCubit, PostState>(
             builder: (context, state) => state.when(
-                  loading: (_) => PlaceholderBox.shimmer(_loading()),
+                  loading: (_) => PlaceholderBox.shimmer(loading()),
                   normal: (post, isJoining) => Text(
                     post.description,
                     style: Theme.of(context).textTheme.subtitle2,

@@ -7,12 +7,12 @@ part 'live_configs.dart';
 part 'live_config.dart';
 
 class LiveConfigCubit extends Cubit<LiveConfigState> {
-  LiveConfigCubit() : super(const LiveConfigState(false));
+  LiveConfigCubit() : super(const LiveConfigState(false, true));
 
   void set(LiveConfigState state) => emit(state);
 }
 
 @freezed
 class LiveConfigState with _$LiveConfigState {
-  const factory LiveConfigState(bool hideFeedbackBtn) = _S;
+  const factory LiveConfigState(bool hideFeedbackBtn, bool compactTitle) = _S;
 }
