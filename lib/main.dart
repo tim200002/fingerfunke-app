@@ -15,7 +15,6 @@ import 'cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit
 import 'cubits/live_config_cubit/live_config_cubit.dart';
 import 'cubits/settings_cubit/app_settings_cubit.dart';
 import 'env.dart' as env;
-import 'models/settings/app_settings.dart';
 import 'repositories/firebase_authentication_repository/firebase_authentication_repository.dart';
 
 void main() async {

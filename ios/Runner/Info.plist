@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSCameraUsageDescription</key>
+	<string>We need usage to your camera if you want to take an image to upload, e.g., as your profile picture</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need usage to your photo library only if you intent to upload images, e.g., a profile picture from your library</string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
@@ -42,8 +46,6 @@
 		<key>NSAllowsLocalNetworking</key>
 		<string>YES</string>
 	</dict>
-	<key>NSCameraUsageDescription</key>
-	<false/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
