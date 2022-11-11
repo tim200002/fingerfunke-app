@@ -8,22 +8,30 @@ import '../utils.dart';
 
 part 'abstract_models.g.dart';
 
-abstract class DocumentSerializable {
-  Map<String, dynamic> toJson();
+abstract class Serializable {
+  const Serializable();
+  JsonMap toJson();
+
+  @override
+  String toString() => toJson().toString();
+
+  @override
+  bool operator ==(Object other) => other.toString() == toString();
+
+  @override
+  int get hashCode => toJson().hashCode;
 }
 
 @JsonSerializable(explicitToJson: true)
-class DatabaseDocument extends Equatable implements DocumentSerializable {
+class DatabaseDocument extends Equatable implements Serializable {
   final FirestoreId id;
-
-
 
   const DatabaseDocument({required this.id});
 
   @override
-  Map<String, dynamic> toJson() => _$DatabaseDocumentToJson(this);
+  JsonMap toJson() => _$DatabaseDocumentToJson(this);
 
-  factory DatabaseDocument.fromJson(Map<String, dynamic> map) =>
+  factory DatabaseDocument.fromJson(JsonMap map) =>
       _$DatabaseDocumentFromJson(map);
 
   factory DatabaseDocument.fromDoc(DocumentSnapshot document) {
@@ -35,18 +43,17 @@ class DatabaseDocument extends Equatable implements DocumentSerializable {
 }
 
 @JsonSerializable(explicitToJson: true)
-class GeneratedDocument extends DatabaseDocument{
+class GeneratedDocument extends DatabaseDocument {
   @JsonKey(toJson: dateToJson, fromJson: dateFromJson)
   final DateTime creationTime;
 
-  const GeneratedDocument(
-  {required id, required this.creationTime})
-  : super(id: id);
+  const GeneratedDocument({required id, required this.creationTime})
+      : super(id: id);
 
   @override
-  Map<String, dynamic> toJson() => _$GeneratedDocumentToJson(this);
+  JsonMap toJson() => _$GeneratedDocumentToJson(this);
 
-  factory GeneratedDocument.fromJson(Map<String, dynamic> map) =>
+  factory GeneratedDocument.fromJson(JsonMap map) =>
       _$GeneratedDocumentFromJson(map);
 
   factory GeneratedDocument.fromDoc(DocumentSnapshot document) =>
@@ -65,9 +72,9 @@ class UserGeneratedDocument extends GeneratedDocument {
       : super(id: id, creationTime: creationTime);
 
   @override
-  Map<String, dynamic> toJson() => _$UserGeneratedDocumentToJson(this);
+  JsonMap toJson() => _$UserGeneratedDocumentToJson(this);
 
-  factory UserGeneratedDocument.fromJson(Map<String, dynamic> map) =>
+  factory UserGeneratedDocument.fromJson(JsonMap map) =>
       _$UserGeneratedDocumentFromJson(map);
 
   factory UserGeneratedDocument.fromDoc(DocumentSnapshot document) =>

@@ -3,9 +3,10 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 
 import '../../models/asset/asset.dart';
+import '../../utils/type_aliases.dart';
 
 abstract class VideoRepository {
-  Future<Map<String, dynamic>> createVideoAsset();
+  Future<JsonMap> createVideoAsset();
 
   VideoUploadResponse uploadVideo(File video, String uploadUrl,
       {Function(int, int)? onSendProgress});

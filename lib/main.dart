@@ -1,3 +1,4 @@
+import 'dart:html';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -17,11 +18,12 @@ import 'cubits/settings_cubit/app_settings_cubit.dart';
 import 'env.dart' as env;
 import 'models/settings/app_settings.dart';
 import 'repositories/firebase_authentication_repository/firebase_authentication_repository.dart';
+import 'repositories/storage_repository/storage_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   //await FlutterConfig.loadEnvVariables();
-  await GetStorage.init("settings");
+  await StorageRepositoryImpl().init();
   await Firebase.initializeApp();
   final Logger _logger = Logger();
   SystemChrome.setPreferredOrientations(

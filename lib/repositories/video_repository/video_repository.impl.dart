@@ -7,6 +7,7 @@ import 'package:dio/dio.dart';
 import 'package:mime/mime.dart';
 
 import '../../models/asset/asset.dart';
+import '../../utils/type_aliases.dart';
 import 'video_repository.dart';
 
 class VideoRepositoryImpl implements VideoRepository {
@@ -24,7 +25,7 @@ class VideoRepositoryImpl implements VideoRepository {
   }
 
   @override
-  Future<Map<String, dynamic>> createVideoAsset() async {
+  Future<JsonMap> createVideoAsset() async {
     // ToDo Error Handling
     HttpsCallable callable = _functions.httpsCallable('mux-createMuxAsset');
     final results = await callable();

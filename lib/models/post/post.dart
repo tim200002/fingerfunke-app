@@ -36,13 +36,13 @@ class PostPlace {
                     longitude: r.geometry!.location.lng)
                 .hash);
 
-  factory PostPlace.fromJson(Map<String, dynamic> map) => PostPlace(
+  factory PostPlace.fromJson(JsonMap map) => PostPlace(
         address: map["address"],
         geohash: map["geohash"],
         point: map["geopoint"],
       );
 
-  Map<String, dynamic> toJson() => {
+  JsonMap toJson() => {
         "address": address,
         "geohash": geohash,
         "geopoint": point,
@@ -90,7 +90,7 @@ class Post extends UserGeneratedDocument {
   Group? get asGroup => isGroup ? (this as Group) : null;
 
   @override
-  Map<String, dynamic> toJson() {
+  JsonMap toJson() {
     if (this is Group) {
       return (this as Group).toJson();
     } else if (this is Event) {
@@ -100,7 +100,7 @@ class Post extends UserGeneratedDocument {
     }
   }
 
-  factory Post.fromJson(Map<String, dynamic> map) {
+  factory Post.fromJson(JsonMap map) {
     switch (PostType.values.firstWhere((t) => t.name == map["type"])) {
       case PostType.event:
         return Event.fromJson(map);

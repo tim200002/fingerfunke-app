@@ -4,15 +4,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../models/settings/app_settings.dart';
-import '../../repositories/settings_repository/settings_repository.dart';
+import '../../repositories/storage_repository/storage_repository.dart';
 
-part 'app_settings_state.dart';
 part 'app_settings_cubit.freezed.dart';
+part 'app_settings_state.dart';
 
 class AppSettingsCubit extends Cubit<AppSettings> {
-  final SettingsRepository _settingsRepository = SettingsRepositoryImpl();
+  final StorageRepository _storageRepository = StorageRepositoryImpl();
   AppSettingsCubit() : super(const AppSettings()) {
-    emit(_settingsRepository.getSettings());
+    emit(_storageRepository.getSettings() ?? const AppSettings());
   }
 
   factory AppSettingsCubit.of(BuildContext context) =>
@@ -27,7 +27,7 @@ class AppSettingsCubit extends Cubit<AppSettings> {
         locale: locale ?? state.locale,
         themeMode: themeMode ?? state.themeMode,
         dsAutoplay: dsAutoplay ?? state.dsAutoplay);
-    await _settingsRepository.setSettings(settings);
+    await _storageRepository.setSettings(settings);
     emit(settings);
   }
 }
