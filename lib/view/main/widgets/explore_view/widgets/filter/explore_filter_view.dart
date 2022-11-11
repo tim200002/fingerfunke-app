@@ -62,13 +62,13 @@ class ExploreFilterView extends StatelessWidget {
                   const Icon(FeatherIcons.mapPin, size: 17),
                   const SizedBox(width: 5),
                   BlocBuilder<LocationCubit, LocationState>(
-                      builder: (context, state) => AutoSizeText(state.map(
-                          loading: (_) => "wird geladen",
+                      builder: (context, state) => AutoSizeText(state.when(
+                          loading: () => "wird geladen",
                           denied: (_) => "Unbekannt",
                           error: (_) => "Unbekannt",
-                          loaded: (loaded) => context
+                          loaded: (location) => context
                               .read<LocationCubit>()
-                              .generateAddress(loaded.address))))
+                              .generateAddress(location.address))))
                 ],
               ),
             ),

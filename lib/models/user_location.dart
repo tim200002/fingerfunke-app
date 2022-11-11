@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geolocator/geolocator.dart';
 
 import '../utils/type_aliases.dart';
@@ -16,4 +17,6 @@ class UserLocation extends Serializable {
 
   @override
   JsonMap toJson() => {"position": position.toJson(), "address": address};
+
+  GeoPoint toGeoPoint() => GeoPoint(position.latitude, position.longitude);
 }

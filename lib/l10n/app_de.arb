@@ -3,5 +3,6 @@
   "lbl_locationRequired": "Die App benötigt Deinen Standort für das Anzeigen von Posts in Deiner Nähe. Bitte gebe diesen frei.",
   "lbl_accountManage": "konto verwalten",
   "lbl_exceptionAbout": "Ein unerwarteter Fehler ist aufgetreten.\n Wir haben den Fehler erfasst und machen uns gleich an die Arbeit",
-  "msg_feedEmpty" : "keine weiteren Events"
+  "msg_feedEmpty" : "keine weiteren Events",
+  "lbl_grantLocationPermission": "Standort freigeben"
 }

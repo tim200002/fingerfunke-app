@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:get_storage/get_storage.dart';
 
 import '../../models/abstract_models/abstract_models.dart';
-import '../../models/location.dart';
+import '../../models/user_location.dart';
 import '../../models/settings/app_settings.dart';
 import '../../utils/type_aliases.dart';
 

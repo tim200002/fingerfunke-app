@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../utils/illustration.dart';
@@ -31,6 +32,12 @@ class IllustrationView extends StatelessWidget {
         illustrationHeight = 140,
         action = null;
 
+  static Widget retryButton(BuildContext context, Function() onPressed) =>
+      TextButton.icon(
+          icon: const Icon(Icons.refresh),
+          onPressed: onPressed,
+          label: const Text("erneut versuchen"));
+
   @override
   Widget build(BuildContext context) {
     assert(retry == null || action == null,
@@ -56,10 +63,8 @@ class IllustrationView extends StatelessWidget {
             if (action != null) action!,
             if (retry != null)
               Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: TextButton(
-                    onPressed: retry, child: const Text("erneut versuchen")),
-              )
+                  padding: const EdgeInsets.only(top: 20),
+                  child: retryButton(context, retry!))
           ],
         ),
       ),

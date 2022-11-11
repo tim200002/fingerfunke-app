@@ -58,6 +58,7 @@
     "lbl_welcomeHello",
     "lbl_welcomeToApp",
     "lbl_noPosts",
+    "lbl_tryAgain",
     "lbl_notParticipating",
     "lbl_notAuthor",
     "lbl_locationLoadError",

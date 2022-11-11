@@ -1,4 +1,3 @@
-import 'dart:html';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,7 +7,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
 
 import 'app.dart';
@@ -16,7 +14,6 @@ import 'cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit
 import 'cubits/live_config_cubit/live_config_cubit.dart';
 import 'cubits/settings_cubit/app_settings_cubit.dart';
 import 'env.dart' as env;
-import 'models/settings/app_settings.dart';
 import 'repositories/firebase_authentication_repository/firebase_authentication_repository.dart';
 import 'repositories/storage_repository/storage_repository.dart';
 
