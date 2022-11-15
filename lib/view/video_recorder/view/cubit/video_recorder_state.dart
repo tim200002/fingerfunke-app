@@ -18,12 +18,14 @@ class CameraSettings {
 
 @freezed
 class VideoRecorderState with _$VideoRecorderState {
+  const factory VideoRecorderState.loading() = _Loading;
+
   /// generic error state. Might need to be differentiated into multiple
   /// specific states
   const factory VideoRecorderState.error(dynamic err) = _Error;
 
   /// state that handles the previewing of camera footage
-  const factory VideoRecorderState.camera() = _Camera;
+  const factory VideoRecorderState.camera(Kamera camera) = _Camera;
 
   /// state that allows the viewing of the recorded video
   const factory VideoRecorderState.viewing(File file) = _Viewing;
