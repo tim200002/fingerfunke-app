@@ -18,7 +18,7 @@ class EventEditorFields extends GeneralEditorFields {
             visibility: visibility);
 
   EventEditorFields.createEmpty()
-      : startTime = DateTime.now(),
+      : startTime = DateTime.now().add(const Duration(days: 1)),
         place = null,
         super._createEmpty();
   EventEditorFields.fromEvent(Event event)

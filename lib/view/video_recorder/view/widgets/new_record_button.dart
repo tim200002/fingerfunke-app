@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class NewRecordButton extends StatefulWidget {
   final Function() onRecordingStarted;
   final Function() onRecordingFinished;
+  final Function(int ms) onCountdownStarted;
   final int maxRecodingLength;
 
   final double _size = 80;
@@ -10,6 +11,7 @@ class NewRecordButton extends StatefulWidget {
   const NewRecordButton(
       {required this.onRecordingStarted,
       required this.onRecordingFinished,
+      required this.onCountdownStarted,
       required this.maxRecodingLength,
       Key? key})
       : super(key: key);

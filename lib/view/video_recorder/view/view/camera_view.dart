@@ -134,8 +134,9 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return _controller?.value.isInitialized == true
-        ? Scaffold(
+    return !(_controller?.value.isInitialized ?? false)
+        ? Tools.loadingScaffold()
+        : Scaffold(
             appBar: AppBar(
               actions: _controller!.value.isRecordingVideo == false
                   ? [
@@ -172,6 +173,7 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
                 FloatingActionButtonLocation.centerFloat,
             floatingActionButton: NewRecordButton(
               maxRecodingLength: 60,
+              onCountdownStarted: (ms) {},
               onRecordingStarted: () => _startRecording(),
               onRecordingFinished: () async {
                 final file = await _stopRecording();
@@ -182,8 +184,7 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
             body: Center(
               child: _fullScreenCameraPreview(context, _controller!),
             ),
-          )
-        : Tools.loadingScaffold();
+          );
   }
 
   @override
