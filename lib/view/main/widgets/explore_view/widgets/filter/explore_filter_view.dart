@@ -7,6 +7,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
 
 import '../../../../../../cubits/location_cubit/location_cubit.dart';
+import '../../../../../../utils/tools.dart';
 import '../../../../../maps/view/maps_place_picker_page.dart';
 import 'cubit/feed_filter_cubit.dart';
 
@@ -63,9 +64,9 @@ class ExploreFilterView extends StatelessWidget {
                   const SizedBox(width: 5),
                   BlocBuilder<LocationCubit, LocationState>(
                       builder: (context, state) => AutoSizeText(state.when(
-                          loading: () => "wird geladen",
-                          denied: (_) => "Unbekannt",
-                          error: (_) => "Unbekannt",
+                          loading: () => l10n(context).lbl_locationLoading,
+                          denied: (_) => l10n(context).lbl_locationUnknown,
+                          error: (_) => l10n(context).lbl_locationUnknown,
                           loaded: (location) => context
                               .read<LocationCubit>()
                               .generateAddress(location.address))))
@@ -99,7 +100,7 @@ class ExploreFilterView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Filter bearbeiten"),
+        title: Text(l10n(context).lbl_exploreFilterEdit),
         leading: IconButton(
             onPressed: () => Navigator.of(context).pop(),
             icon: const Icon(FeatherIcons.x)),
@@ -110,25 +111,25 @@ class ExploreFilterView extends StatelessWidget {
           builder: (context, filter) {
             return ListView(
               children: [
-                _sectionHeader(context, "Umkreis"),
+                _sectionHeader(context, l10n(context).lbl_filterPerimeter),
                 _locationSlider(context, filter.distance, onChanged: (v) {
                   print(v);
                   context
                       .read<FeedFilterCubit>()
                       .change(filter.copyWith(distance: v));
                 }),
-                _sectionHeader(context, "Posts"),
+                _sectionHeader(context, l10n(context).lbl_filterPosts),
                 _filterItem(
-                    "alle",
-                    "vergangene\nausblenden",
+                    l10n(context).lbl_filterAll,
+                    l10n(context).lbl_filterHidePast,
                     filter.hideCompleted,
                     (v) => context
                         .read<FeedFilterCubit>()
                         .change(filter.copyWith(hideCompleted: v))),
                 const SizedBox(height: 12),
                 _filterItem(
-                    "alle",
-                    "nur demnächst stattindende",
+                    l10n(context).lbl_filterAll,
+                    l10n(context).lbl_filterOnlyNearFuture,
                     filter.hideFarFuture,
                     (v) => context
                         .read<FeedFilterCubit>()

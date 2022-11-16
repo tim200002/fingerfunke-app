@@ -4,5 +4,19 @@
   "lbl_accountManage": "konto verwalten",
   "lbl_exceptionAbout": "Ein unerwarteter Fehler ist aufgetreten.\n Wir haben den Fehler erfasst und machen uns gleich an die Arbeit",
   "msg_feedEmpty" : "keine weiteren Events",
-  "lbl_grantLocationPermission": "Standort freigeben"
+  "lbl_tryAgain": "erneut versuchen",
+  "lbl_grantLocationPermission": "Standort freigeben",
+  "lbl_feedbackDesc": "Hey 👋\nDu hast ein Problem in der App gefunden oder möchtest uns generell Feedback geben?\nDamit hilfst du uns die App in Zukunft noch besser zu machen. Vielen Dank!",
+  "lbl_filterPerimeter": "Umkreis",
+"lbl_filterPosts": "Posts",
+"lbl_filterAll": "alle",
+"lbl_filterHidePast": "vergangene\nausblenden",
+"lbl_filterOnlyNearFuture": "nur demnächst stattindende",
+"lbl_PostsParticipating": "Teilnahmen",
+"lbl_PostsMy": "meine Posts",
+"lbl_modManDelete": "Der Beitrag verstößt gegen unsere Richtlinen. \nDen Beitrag unwiderruflich löschen.",
+"lbl_modManApprove": "Den Beitrag als 'in Ordnung' markieren",
+"lbl_modElementApprove": "Beitrag ist in Ordnung",
+"lbl_eventInPastEdit": "Das Event ist abgeschlossen.\nEs kann nicht mehr bearbeitet werden",
+"lbl_modElementDelete": "Beitrag löschen"
 }

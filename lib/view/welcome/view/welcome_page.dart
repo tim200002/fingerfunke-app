@@ -6,7 +6,8 @@ import '../../../utils/tools.dart';
 import '../../phone_login/view/phone_login_page.dart';
 
 class WelcomePage extends StatelessWidget {
-  const WelcomePage({Key? key}) : super(key: key);
+  final String? betaMessage;
+  const WelcomePage({Key? key, this.betaMessage}) : super(key: key);
 
   static Route route() {
     return MaterialPageRoute<void>(builder: (_) => const WelcomePage());
@@ -32,7 +33,7 @@ class WelcomePage extends StatelessWidget {
                   fontSize: 19,
                   fontWeight: FontWeight.w500,
                 )),
-            _betaIndicator()
+            if (betaMessage != null) _betaIndicator(betaMessage ?? "err")
           ],
         ),
       );
@@ -52,7 +53,7 @@ class WelcomePage extends StatelessWidget {
         ],
       ));
 
-  Widget _betaIndicator() {
+  Widget _betaIndicator(String msg) {
     const double indent = 10;
     return Center(
       child: Padding(
@@ -63,9 +64,9 @@ class WelcomePage extends StatelessWidget {
                 margin: const EdgeInsets.only(right: indent),
                 padding:
                     const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
-                child: const Text(
-                  "beta@Erlangen", //"βeta",
-                  style: TextStyle(
+                child: Text(
+                  msg, //"βeta",
+                  style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                       fontSize: 13),

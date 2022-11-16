@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../cubits/app_cubit/app_cubit.dart';
 import '../../utils/app_theme.dart';
+import '../../utils/tools.dart';
 import '../post_feed/posts_list_cubit/posts_list_cubit.dart';
 import '../post_feed/view/compact_post_feed.dart';
 
@@ -15,7 +16,7 @@ class SavedPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("saved posts"),
+        title: Text(l10n(context).lbl_savedTitle),
       ),
       body: Padding(
           padding: const EdgeInsets.only(

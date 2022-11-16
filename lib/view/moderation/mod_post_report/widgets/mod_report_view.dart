@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import '../../../../routes.dart';
+import '../../../../utils/tools.dart';
 import '../../../report_send/widgets/chip_chooser.dart';
 
 class ModReportView extends StatelessWidget {
@@ -24,12 +25,12 @@ class ModReportView extends StatelessWidget {
                         MaterialStateProperty.all(Colors.grey.shade500)),
                 onPressed: () => Navigator.pushNamed(context, Routes.post,
                     arguments: report.objectReference),
-                label: const Text("Beitrag öffnen"))),
-        Text("gemeldet von: ${report.author.name}"),
+                label: Text(l10n(context).lbl_modOpenPost))),
+        Text(l10n(context).lbl_modReportedBy + report.author.name),
         const SizedBox(
           height: 10,
         ),
-        const Text("gemeldet wegen:"),
+        Text(l10n(context).lbl_modReportedBecause),
         const SizedBox(
           height: 5,
         ),

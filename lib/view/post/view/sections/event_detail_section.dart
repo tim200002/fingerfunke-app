@@ -51,12 +51,12 @@ class EventDetailSection extends StatelessWidget {
                                 child: Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
-                                    children: const [
-                                      Icon(FeatherIcons.check),
-                                      SizedBox(width: 15),
+                                    children: [
+                                      const Icon(FeatherIcons.check),
+                                      const SizedBox(width: 15),
                                       Expanded(
-                                          child: Text(
-                                              "Das Event ist abgeschlossen.\nEs kann nicht mehr bearbeitet werden"))
+                                          child: Text(l10n(context)
+                                              .lbl_eventInPastEdit))
                                     ]),
                               ),
                             ),
@@ -75,8 +75,10 @@ class EventDetailSection extends StatelessWidget {
                               if (await canLaunchUrl(
                                   GoogleMapsService.getGoogleUri(
                                       post.place.address))) {
-                                await launchUrl(GoogleMapsService.getGoogleUri(
-                                    post.place.address), mode: LaunchMode.externalApplication);
+                                await launchUrl(
+                                    GoogleMapsService.getGoogleUri(
+                                        post.place.address),
+                                    mode: LaunchMode.externalApplication);
                               } else {
                                 throw 'Could not open the map.';
                               }

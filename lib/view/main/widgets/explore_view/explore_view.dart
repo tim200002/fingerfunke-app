@@ -6,6 +6,7 @@ import '../../../../cubits/live_config_cubit/live_config_cubit.dart';
 import '../../../../cubits/location_cubit/location_cubit.dart';
 import '../../../../routes.dart';
 import '../../../../utils/app_theme.dart';
+import '../../../../utils/tools.dart';
 import 'widgets/post_discovery_feed/paged_post_discovery_feed.dart';
 import 'widgets/filter/cubit/feed_filter_cubit.dart';
 import 'widgets/filter/explore_filter_view.dart';
@@ -20,7 +21,7 @@ class ExploreView extends StatelessWidget {
         icon: const Icon(FeatherIcons.menu));
   }
 
-  Widget _filterButton() {
+  Widget _filterButton(BuildContext context) {
     return Builder(
         builder: (c) => TextButton.icon(
             onPressed: () => Navigator.of(c).push(MaterialPageRoute(
@@ -33,7 +34,7 @@ class ExploreView extends StatelessWidget {
                       ),
                     ], child: const ExploreFilterView()))),
             icon: const Icon(FeatherIcons.mapPin),
-            label: const Text("Filter")));
+            label: Text(l10n(context).lbl_exploreFilter)));
   }
 
   @override
@@ -50,7 +51,7 @@ class ExploreView extends StatelessWidget {
         child: Scaffold(
           appBar: AppBar(
             leading: _drawerButton(context),
-            title: _filterButton(),
+            title: _filterButton(context),
             actions: [
               const SizedBox(
                 width: 62,

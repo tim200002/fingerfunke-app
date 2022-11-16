@@ -7,6 +7,7 @@ import '../../../../common_widgets/user/author_info.dart';
 import '../../../../models/user/user.dart';
 import '../../../../models/user_feedback.dart';
 import '../../../../repositories/user_feedback_repository/user_feedback_repository.impl.dart';
+import '../../../../utils/tools.dart';
 import '../../../../utils/util_cubits/stream/stream_subscribe_cubit.dart';
 import '../../../../utils/util_widgets/clearance_appbar.dart';
 import '../../../error/exception_view.dart';
@@ -80,7 +81,7 @@ class FeedbackManageItemPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: ClearanceAppBar.widget(context, UserClearance.development,
-            title: "Feedback"),
+            title: l10n(context).lbl_devFeedbackManTitle),
         body: Padding(
             padding: const EdgeInsets.all(20),
             child: StreamSubscribeCubit.asWidget<UserFeedback>(
@@ -110,15 +111,21 @@ class FeedbackManageItemPage extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.stretch,
                                     children: [
-                                      _metaInfoItem("Datum",
+                                      _metaInfoItem(
+                                          l10n(context).lbl_devFeedbackItemDate,
                                           text: DateFormat("dd.MM.yyyy")
                                               .format(report.creationTime)),
-                                      _metaInfoItem("App Version",
+                                      _metaInfoItem(
+                                          l10n(context)
+                                              .lbl_devFeedbackItemAppVer,
                                           text: report.appVersion),
-                                      _metaInfoItem("Kategorien",
+                                      _metaInfoItem(
+                                          l10n(context).lbl_devFeedbackItemCats,
                                           text: report.categories.fold(
                                               "", (p, e) => "$p#${e.label} ")),
-                                      _metaInfoItem("Autor",
+                                      _metaInfoItem(
+                                          l10n(context)
+                                              .lbl_devFeedbackItemAuthor,
                                           child: AuthorInfo(report.author)),
                                       const SizedBox(height: 20),
                                       _stateButton(report)

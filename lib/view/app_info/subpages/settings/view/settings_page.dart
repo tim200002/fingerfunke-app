@@ -35,13 +35,13 @@ class _SettingsPageState extends State<SettingsPage> {
         leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () => Navigator.of(context).pop()),
-        title: const Text("Einstellungen"),
+        title: Text(l10n(context).lbl_settings),
       ),
       body: BlocBuilder<AppSettingsCubit, AppSettings>(
         builder: (context, settings) {
           return ListView(
             children: [
-              SettingsSection(title: "Allgemein", tiles: [
+              SettingsSection(title: l10n(context).lbl_settingsGeneral, tiles: [
                 SettingsTile(
                     title: l10n(context).lbl_settings_language,
                     subtitle: settings.locale,
@@ -54,7 +54,7 @@ class _SettingsPageState extends State<SettingsPage> {
               ]),
               SettingsTile(
                   enabled: false,
-                  title: 'Theme',
+                  title: l10n(context).lbl_settingsTheme,
                   subtitle: toBeginningOfSentenceCase(
                       settings.themeMode.toString().substring(10)),
                   leading: const Icon(Icons.dark_mode),
@@ -64,11 +64,11 @@ class _SettingsPageState extends State<SettingsPage> {
                         builder: (context) => const SettingsThemePage(),
                       )),
               SettingsSection(
-                title: "Daten sparen",
+                title: l10n(context).lbl_settingsDataSave,
                 tiles: [
                   SettingsTile.switchTile(
-                    title: "Video-Autoplay",
-                    subtitle: 'Videos im Feed abspielen',
+                    title: l10n(context).lbl_settingsVAutoplay,
+                    subtitle: l10n(context).lbl_settingsVAutoplayDesc,
                     leading: const Icon(Icons.dark_mode),
                     switchValue: settings.dsAutoplay,
                     onToggle: (bool v) {

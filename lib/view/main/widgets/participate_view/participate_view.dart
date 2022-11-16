@@ -41,14 +41,14 @@ class ParticipateView extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: const TabBar(
-            indicatorColor: Color(0xffF0ACB0),
+          title: TabBar(
+            indicatorColor: const Color(0xffF0ACB0),
             labelColor: Colors.black,
             indicatorSize: TabBarIndicatorSize.label,
             indicatorWeight: 3,
             tabs: [
-              Tab(text: "Teilnahmen"),
-              Tab(text: "meine Posts"),
+              Tab(text: l10n(context).lbl_PostsParticipating),
+              Tab(text: l10n(context).lbl_PostsMy),
             ],
           ),
           //title: const Text('Tabs Demo'),

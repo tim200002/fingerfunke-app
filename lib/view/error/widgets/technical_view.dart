@@ -13,7 +13,7 @@ class _TechnicalExceptionView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ExpansionTile(title: const Text("technische Details"), children: [
+    return ExpansionTile(title: Text(l10n(context).lbl_techDetails), children: [
       ListTile(
         title: Text(exception.toString(),
             style: Theme.of(context).textTheme.labelMedium),

@@ -52,13 +52,14 @@ class PostParticipantsView extends StatelessWidget {
                         builder: (context, state) => state.when(
                             loading: () => const Center(
                                 child: CircularProgressIndicator.adaptive()),
-                            error: (e) =>
-                                const Center(child: Text("Fehler beim Laden")),
+                            error: (e) => Center(
+                                child: Text(l10n(context).lbl_loadError)),
                             neutral: (members) => members.isEmpty
-                                ? const Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 20),
+                                ? Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 20),
                                     child: Text(
-                                      "keine Teilnehmer",
+                                      l10n(context).lbl_postNoMembers,
                                       textAlign: TextAlign.center,
                                     ))
                                 : Column(

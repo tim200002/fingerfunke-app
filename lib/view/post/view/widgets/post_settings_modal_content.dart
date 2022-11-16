@@ -84,7 +84,8 @@ class PostSettingsModalContent extends StatelessWidget {
                       onTap: () async {
                         Navigator.of(context).pop();
                         await context.read<PostCubit>().deletePost();
-                        Tools.showSnackbar(context, "Post gelöscht");
+                        Tools.showSnackbar(
+                            context, l10n(context).msg_postDeleted);
                         Navigator.of(context).pop();
                       },
                     ),

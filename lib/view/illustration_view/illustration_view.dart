@@ -3,6 +3,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../utils/illustration.dart';
+import '../../utils/tools.dart';
 
 class IllustrationView extends StatelessWidget {
   final String text;
@@ -36,7 +37,7 @@ class IllustrationView extends StatelessWidget {
       TextButton.icon(
           icon: const Icon(Icons.refresh),
           onPressed: onPressed,
-          label: const Text("erneut versuchen"));
+          label: Text(l10n(context).lbl_tryAgain));
 
   @override
   Widget build(BuildContext context) {
