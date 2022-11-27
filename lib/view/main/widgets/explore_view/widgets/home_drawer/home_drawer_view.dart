@@ -50,12 +50,13 @@ class HomeDrawer extends StatelessWidget {
                     const SizedBox(
                       height: 15,
                     ),
-                    ListTile(
+                    //TODO: reenable once groups become available
+                    /*ListTile(
                       leading: const Icon(FeatherIcons.users),
                       title: Text(l10n(context).lbl_groups),
                       enabled: false,
                       onTap: () => DevTools.showToDoSnackbar(context),
-                    ),
+                    ),*/
                     const SizedBox(height: 25),
                     ListTile(
                       leading: const Icon(FeatherIcons.bookmark),
