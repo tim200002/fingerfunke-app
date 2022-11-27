@@ -100,11 +100,13 @@ class ExploreFilterView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n(context).lbl_exploreFilterEdit),
-        leading: IconButton(
-            onPressed: () => Navigator.of(context).pop(),
-            icon: const Icon(FeatherIcons.x)),
-      ),
+          title: Text(l10n(context).lbl_exploreFilterEdit),
+          automaticallyImplyLeading: false,
+          actions: [
+            IconButton(
+                onPressed: () => Navigator.of(context).pop(),
+                icon: const Icon(FeatherIcons.check))
+          ]),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: BlocBuilder<FeedFilterCubit, FeedFilterState>(

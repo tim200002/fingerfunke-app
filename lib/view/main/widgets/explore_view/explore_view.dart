@@ -21,18 +21,37 @@ class ExploreView extends StatelessWidget {
         icon: const Icon(FeatherIcons.menu));
   }
 
+  Route _filterRoute(BuildContext c) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          MultiBlocProvider(providers: [
+        BlocProvider.value(
+          value: BlocProvider.of<FeedFilterCubit>(c),
+        ),
+        BlocProvider.value(
+          value: BlocProvider.of<LocationCubit>(c),
+        ),
+      ], child: const ExploreFilterView()),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, -1.0);
+        const end = Offset.zero;
+        const curve = Curves.ease;
+
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
+  }
+
   Widget _filterButton(BuildContext context) {
     return Builder(
         builder: (c) => TextButton.icon(
-            onPressed: () => Navigator.of(c).push(MaterialPageRoute(
-                builder: (context) => MultiBlocProvider(providers: [
-                      BlocProvider.value(
-                        value: BlocProvider.of<FeedFilterCubit>(c),
-                      ),
-                      BlocProvider.value(
-                        value: BlocProvider.of<LocationCubit>(c),
-                      ),
-                    ], child: const ExploreFilterView()))),
+            onPressed: () => Navigator.of(c).push(_filterRoute(c)),
             icon: const Icon(FeatherIcons.mapPin),
             label: Text(l10n(context).lbl_exploreFilter)));
   }

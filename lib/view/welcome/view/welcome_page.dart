@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../utils/beta_indicator.dart';
 import '../../../utils/illustration.dart';
 import '../../../utils/tools.dart';
 import '../../phone_login/view/phone_login_page.dart';
@@ -54,24 +55,10 @@ class WelcomePage extends StatelessWidget {
       ));
 
   Widget _betaIndicator(String msg) {
-    const double indent = 10;
     return Center(
       child: Padding(
           padding: const EdgeInsets.only(top: 20),
-          child: CustomPaint(
-              painter: const _Chevron(Colors.blue, indent),
-              child: Container(
-                margin: const EdgeInsets.only(right: indent),
-                padding:
-                    const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
-                child: Text(
-                  msg, //"βeta",
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      fontSize: 13),
-                ),
-              ))),
+          child: BetaIndicator(message: msg)),
     );
   }
 
@@ -90,26 +77,4 @@ class WelcomePage extends StatelessWidget {
       ),
     );
   }
-}
-
-class _Chevron extends CustomPainter {
-  final Color color;
-  final double indent;
-  const _Chevron(this.color, this.indent);
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    Path path = Path()
-      ..moveTo(0, 0)
-      ..lineTo(0, size.height)
-      ..lineTo(size.width, size.height)
-      ..lineTo(size.width - indent, size.height / 2)
-      ..lineTo(size.width, 0)
-      ..close();
-
-    canvas.drawPath(path, Paint()..color = color);
-  }
-
-  @override
-  bool shouldRepaint(_) => false;
 }
