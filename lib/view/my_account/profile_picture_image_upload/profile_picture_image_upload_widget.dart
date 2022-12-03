@@ -43,32 +43,39 @@ class ProfilePictureImageUploadWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AppCubit, AppState>(builder: (context, state) {
-      return InkWell(
-        onTap: () async {
-          selectImage(state.user.id, context);
-        },
-        child: SizedBox.square(
-          dimension: userImageSize,
-          child: Stack(
-            //fit: StackFit.passthrough,
-            children: [
-              UserImage(
-                state.user.picture,
-                diameter: userImageSize.round(),
-              ),
-              Align(
-                  alignment: Alignment.bottomRight,
-                  child: Container(
+    return BlocBuilder<AppCubit, AppState>(
+        buildWhen: ((previous, current) =>
+            previous.user.picture != current.user.picture),
+        builder: (context, state) {
+          logger.i("rebuild");
+          logger.i(state);
+          return InkWell(
+            onTap: () async {
+              selectImage(state.user.id, context);
+            },
+            child: SizedBox.square(
+              dimension: userImageSize,
+              child: Stack(
+                //fit: StackFit.passthrough,
+                children: [
+                  UserImage(
+                    state.user.picture,
+                    diameter: userImageSize.round(),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: Container(
                       padding: const EdgeInsets.all(6),
                       decoration: BoxDecoration(
                           color: Colors.white.withAlpha(200),
                           borderRadius: BorderRadius.circular(20)),
-                      child: const Icon(Icons.edit, size: 20)))
-            ],
-          ),
-        ),
-      );
-    });
+                      child: const Icon(Icons.edit, size: 20),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+        });
   }
 }

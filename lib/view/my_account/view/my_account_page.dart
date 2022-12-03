@@ -36,39 +36,38 @@ class _ProfileSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AppCubit, AppState>(
-      builder: (context, state) {
-        final user = state.user;
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 30),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Padding(
-                  padding: EdgeInsets.only(left: 10, right: 20),
-                  child: ProfilePictureImageUploadWidget()),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 7),
-                      child: Text(
-                        user.name,
-                        style: Theme.of(context).textTheme.headline4,
-                      ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 30),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const Padding(
+              padding: EdgeInsets.only(left: 10, right: 20),
+              child: ProfilePictureImageUploadWidget()),
+          BlocBuilder<AppCubit, AppState>(
+            buildWhen: (previous, current) =>
+                previous.user.name != current.user.name,
+            builder: (context, state) => Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 7),
+                    child: Text(
+                      state.user.name,
+                      style: Theme.of(context).textTheme.headline4,
                     ),
-                    const Text(
-                        //ToDo: Show the user's real phone number
-                        "+49 123 456 7890"),
-                  ],
-                ),
-              )
-            ],
+                  ),
+                  const Text(
+                      //ToDo: Show the user's real phone number
+                      "+49 123 456 7890"),
+                ],
+              ),
+            ),
           ),
-        );
-      },
+        ],
+      ),
     );
   }
 }

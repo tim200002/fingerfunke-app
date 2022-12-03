@@ -42,7 +42,7 @@ class PostRepositoryImpl implements PostRepository {
     print("fetch: $radius");
     if (radius == null) return observePosts(null);
     var stream = _geo
-        .collection(collectionRef: _postCollection)
+        .collection(collectionRef: _postCollection as Query<Map<String, dynamic>>)
         .within(
             center: GeoFirePoint(point.latitude, point.longitude),
             radius: radius,
