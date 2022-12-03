@@ -110,7 +110,7 @@ class VideoUploadCubit extends Cubit<VideoUploadState> {
     try {
       if (_canUploadVideo) {
         emit(VideoUploadState.uploading(video, thumbail, 0));
-        // To prevent cerating new Asset when only upload failed, the Upload URL and assetIt are cached
+        // To prevent creating new Asset when only upload failed, the Upload URL and assetIt are cached
         if (uploadUrl == null || assetId == null) {
           await _createAsset();
         }
@@ -219,6 +219,8 @@ class VideoUploadCubit extends Cubit<VideoUploadState> {
 
   @override
   Future<void> close() async {
+    _logger.i("close");
+    
     _cancelToken?.cancel();
     _assetSubscription?.cancel();
 
