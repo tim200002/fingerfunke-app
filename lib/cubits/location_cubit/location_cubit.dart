@@ -1,33 +1,34 @@
+import 'package:app_settings/app_settings.dart' as aSettings;
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:geolocator/geolocator.dart';
 
-import '../../repositories/location_repository/location_repository.dart';
-import '../../utils/tools.dart';
+import '../../models/user_location.dart';
+import '../../repositories/position_repository/position_repository.dart';
+import '../../services/location_service.dart';
 
 part 'location_cubit.freezed.dart';
-
 part 'location_state.dart';
 
 /// Stores current location of the user
 class LocationCubit extends Cubit<LocationState> {
-  final LocationRepositoryImpl _locationRepositoryImpl =
-      LocationRepositoryImpl();
+  final LocationService _locationService = LocationService();
 
   LocationCubit() : super(const LocationState.loading()) {
-    reload();
+    refresh(request: false);
   }
 
   /// Load current location
-  void reload() {
+  void refresh({bool request = true}) {
     emit(const LocationState.loading());
-    _locationRepositoryImpl.getLocation().then(
-        (value) async => attempt(
-            () =>
-                emit(LocationState.loaded(value["position"], value["address"])),
-            onError: (e) => emit(LocationState.error(e))),
-        onError: (e) => emit(LocationState.error(e)));
+    _locationService.getLocation(request: request).then(
+        (p) => emit(LocationState.loaded(p)),
+        onError: (e) => emit(e is AppPermissionDeniedException
+            ? LocationState.denied(e.permanent)
+            : LocationState.error(e)));
   }
+
+  Future<void> openSettings() => aSettings.AppSettings.openAppSettings();
 
   /// Update location
   void updateLocation(
@@ -40,19 +41,19 @@ class LocationCubit extends Cubit<LocationState> {
       double speedAccuracy = 0,
       double accuracy = 0,
       double speed = 0,
-      double altitude = 0}) {
+      double altitude = 0}) async {
     emit(const LocationState.loading());
-    emit(LocationState.loaded(
-        Position(
-            latitude: lat,
-            longitude: lng,
-            timestamp: timestamp ?? DateTime.now(),
-            heading: heading,
-            speedAccuracy: speedAccuracy,
-            accuracy: accuracy,
-            speed: speed,
-            altitude: altitude),
-        address ?? "Fehler bei der Addressgenerierung"));
+    var position = Position(
+        latitude: lat,
+        longitude: lng,
+        timestamp: timestamp ?? DateTime.now(),
+        heading: heading,
+        speedAccuracy: speedAccuracy,
+        accuracy: accuracy,
+        speed: speed,
+        altitude: altitude);
+
+    emit(LocationState.loaded(await _locationService.setPosition(position)));
   }
 
   /// Returns address of location

@@ -21,13 +21,13 @@ class UserInfo extends DatabaseDocument {
   bool operator ==(Object other) => super.hashCode == hashCode;
 
   @override
-  Map<String, dynamic> toJson() => <String, dynamic>{
+  JsonMap toJson() => <String, dynamic>{
         "id": id,
         "name": name,
         "picture": picture,
       };
 
-  factory UserInfo.fromJson(Map<String, dynamic> map) => UserInfo(
+  factory UserInfo.fromJson(JsonMap map) => UserInfo(
         id: map['id'] as String,
         name: map['name'] as String,
         picture: map['picture'] as String?,
@@ -79,7 +79,7 @@ class User extends DatabaseDocument {
   }
 
   @override
-  Map<String, dynamic> toJson() => <String, dynamic>{
+  JsonMap toJson() => <String, dynamic>{
         'id': id,
         'name': name,
         'picture': picture,
@@ -89,7 +89,7 @@ class User extends DatabaseDocument {
         'fcmToken': fcmToken
       };
 
-  factory User.fromJson(Map<String, dynamic> map) => User(
+  factory User.fromJson(JsonMap map) => User(
       id: map['id'] as String,
       name: map['name'] as String,
       picture: map['picture'] as String?,

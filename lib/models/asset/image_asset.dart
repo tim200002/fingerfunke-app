@@ -15,7 +15,7 @@ class ImageAsset extends Asset {
             type: asset_type.video);
 
   @override
-  Map<String, dynamic> toJson() {
+  JsonMap toJson() {
     return {
       "id": id,
       "creationTime": dateToJson(creationTime),
@@ -25,7 +25,7 @@ class ImageAsset extends Asset {
     };
   }
 
-  factory ImageAsset.fromJson(Map<String, dynamic> map) {
+  factory ImageAsset.fromJson(JsonMap map) {
     return ImageAsset(
       id: map["id"] as String,
       creationTime: dateFromJson(map['creationTime'] as int),

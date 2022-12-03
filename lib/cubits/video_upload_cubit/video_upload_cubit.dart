@@ -16,6 +16,7 @@ import '../../models/asset/asset.dart';
 import '../../repositories/video_repository/video_repository.dart';
 import '../../repositories/video_repository/video_repository.impl.dart';
 import '../../utils/exceptions.dart';
+import '../../utils/type_aliases.dart';
 
 part 'video_upload_cubit.freezed.dart';
 part 'video_upload_state.dart';
@@ -144,8 +145,7 @@ class VideoUploadCubit extends Cubit<VideoUploadState> {
 
   /// create Mux Asset and store its values
   Future<void> _createAsset() async {
-    Map<String, dynamic> assetResponse =
-        await _videoRepository.createVideoAsset();
+    JsonMap assetResponse = await _videoRepository.createVideoAsset();
 
     uploadUrl = assetResponse["uploadUrl"];
     assetId = assetResponse["id"];

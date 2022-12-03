@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -30,35 +29,26 @@ class PagedPostDiscoveryFeed extends StatelessWidget {
         });
   }
 
-  Widget _locationError(BuildContext context) {
-    return Align(
-      alignment: Alignment.center,
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 250),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Illustration(
-              Illustrations.location,
-              height: 100,
-            ),
-            const SizedBox(height: 30),
-            const Text(
-              "Die App benötigt Deinen Standort für das Anzeigen von Posts in Deiner Nähe. Bitte gebe diesen frei.",
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 20),
-            TextButton(
-                onPressed: () {
-                  context.read<LocationCubit>().reload();
-                },
-                child: const Text("erneut versuchen"))
-          ],
-        ),
-      ),
-    );
-  }
+  Widget _locationDenied(BuildContext context, bool permanent) =>
+      IllustrationView(
+          illustration: Illustrations.location,
+          illustrationHeight: 100,
+          text: l10n(context).lbl_locationRequired,
+          action: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              if (permanent) const SizedBox(height: 20),
+              TextButton(
+                  onPressed: permanent
+                      ? context.read<LocationCubit>().openSettings
+                      : context.read<LocationCubit>().refresh,
+                  child: Text(l10n(context).lbl_grantLocationPermission)),
+              if (permanent)
+                IllustrationView.retryButton(
+                    context, context.read<LocationCubit>().refresh)
+            ],
+          ));
 
   @override
   Widget build(BuildContext context) {
@@ -70,16 +60,18 @@ class PagedPostDiscoveryFeed extends StatelessWidget {
           Expanded(
               child: BlocBuilder<LocationCubit, LocationState>(
                   builder: (context, state) => state.when(
-                      error: (_) => _locationError(context),
+                      error: (e) => IllustrationView.error(
+                          text: l10n(context).lbl_locationLoadError,
+                          retry: () => context.read<LocationCubit>().refresh),
+                      denied: (p) => _locationDenied(context, p),
                       loading: () => const Center(
                           child: CircularProgressIndicator.adaptive()),
-                      loaded: (location, address) =>
+                      loaded: (location) =>
                           BlocBuilder<FeedFilterCubit, FeedFilterState>(
                               builder: (context, filter) {
                             var stream = PostRepositoryImpl()
                                 .observeNearbyPosts(
-                                    point: GeoPoint(
-                                        location.latitude, location.longitude),
+                                    point: location.toGeoPoint(),
                                     radius: filter.distance,
                                     worker: (l) => context
                                         .read<FeedFilterCubit>()

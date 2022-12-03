@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../utils/tools.dart';
+import '../../../../../utils/type_aliases.dart';
 import '/oss_licenses.dart';
 
 class OssLicensesPage extends StatelessWidget {
@@ -65,7 +66,7 @@ class OssLicensesPage extends StatelessWidget {
 
 class MiscOssLicenseSingle extends StatelessWidget {
   final String name;
-  final Map<String, dynamic> json;
+  final JsonMap json;
 
   String? get version => json['version'];
   String? get description => json['description'];

@@ -1,3 +1,4 @@
+import '../../../utils/tools.dart';
 import '../cubit/network_image_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -56,7 +57,7 @@ class NetworkPlaceholderImage extends StatelessWidget {
                     ),
                     const SizedBox(height: 15),
                     Text(
-                      "Bild konnte nicht\ngeladen werden",
+                      l10n(context).lbl_imageLoadError,
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.bodyMedium,
                     )

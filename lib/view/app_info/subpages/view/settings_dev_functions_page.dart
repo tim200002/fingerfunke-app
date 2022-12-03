@@ -7,6 +7,7 @@ import '../../../../repositories/post_repository/post_repository.impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../utils/tools.dart';
 import '../../../../utils/util_widgets/clearance_appbar.dart';
 
 class DevFunctionsPage extends StatelessWidget {
@@ -16,7 +17,7 @@ class DevFunctionsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: ClearanceAppBar.widget(context, UserClearance.development,
-          title: "Dev Funktionen"),
+          title: l10n(context).lbl_devActions),
       body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: LiveConfig.builder(

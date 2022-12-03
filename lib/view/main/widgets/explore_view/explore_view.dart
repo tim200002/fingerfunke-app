@@ -6,6 +6,7 @@ import '../../../../cubits/live_config_cubit/live_config_cubit.dart';
 import '../../../../cubits/location_cubit/location_cubit.dart';
 import '../../../../routes.dart';
 import '../../../../utils/app_theme.dart';
+import '../../../../utils/tools.dart';
 import 'widgets/post_discovery_feed/paged_post_discovery_feed.dart';
 import 'widgets/filter/cubit/feed_filter_cubit.dart';
 import 'widgets/filter/explore_filter_view.dart';
@@ -20,20 +21,39 @@ class ExploreView extends StatelessWidget {
         icon: const Icon(FeatherIcons.menu));
   }
 
-  Widget _filterButton() {
+  Route _filterRoute(BuildContext c) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          MultiBlocProvider(providers: [
+        BlocProvider.value(
+          value: BlocProvider.of<FeedFilterCubit>(c),
+        ),
+        BlocProvider.value(
+          value: BlocProvider.of<LocationCubit>(c),
+        ),
+      ], child: const ExploreFilterView()),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, -1.0);
+        const end = Offset.zero;
+        const curve = Curves.ease;
+
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
+  }
+
+  Widget _filterButton(BuildContext context) {
     return Builder(
         builder: (c) => TextButton.icon(
-            onPressed: () => Navigator.of(c).push(MaterialPageRoute(
-                builder: (context) => MultiBlocProvider(providers: [
-                      BlocProvider.value(
-                        value: BlocProvider.of<FeedFilterCubit>(c),
-                      ),
-                      BlocProvider.value(
-                        value: BlocProvider.of<LocationCubit>(c),
-                      ),
-                    ], child: const ExploreFilterView()))),
+            onPressed: () => Navigator.of(c).push(_filterRoute(c)),
             icon: const Icon(FeatherIcons.mapPin),
-            label: const Text("Filter")));
+            label: Text(l10n(context).lbl_exploreFilter)));
   }
 
   @override
@@ -50,7 +70,7 @@ class ExploreView extends StatelessWidget {
         child: Scaffold(
           appBar: AppBar(
             leading: _drawerButton(context),
-            title: _filterButton(),
+            title: _filterButton(context),
             actions: [
               const SizedBox(
                 width: 62,

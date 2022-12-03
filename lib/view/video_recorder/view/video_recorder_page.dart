@@ -50,9 +50,14 @@ class VideoRecorderPage extends StatelessWidget {
         child: Scaffold(
           body: BlocBuilder<VideoRecorderCubit, VideoRecorderState>(
             builder: (context, state) => state.when(
+              loading: () =>
+                  const Center(child: CircularProgressIndicator.adaptive()),
               missingPermission: () => const MissingCameraPermissionView(),
               error: ExceptionView.builder,
-              camera: () => CameraView(),
+              camera: (c) {
+                print("emitted camera state");
+                return CameraView(camera: c, key: Key("${c.hashCode}"));
+              },
               viewing: (file) => PlaybackView(file),
             ),
           ),

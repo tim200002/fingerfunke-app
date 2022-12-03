@@ -29,7 +29,7 @@ class UserRepositoryImpl implements UserRepository {
       String? picture,
       int? age,
       List<FirestoreId>? savedPosts}) async {
-    final Map<String, dynamic> updateMap = {
+    final JsonMap updateMap = {
       'name': name,
       'picture': picture,
       'age': age,
@@ -63,7 +63,7 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<void> setToken(String userId, String key, Map<String, dynamic> value) {
+  Future<void> setToken(String userId, String key, JsonMap value) {
     return _userCollection.doc(userId).collection("tokens").doc(key).set(value);
   }
 }

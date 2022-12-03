@@ -31,7 +31,9 @@ class App extends StatelessWidget {
       child: BlocBuilder<FirebaseAuthenticationCubitCubit,
           FirebaseAuthenticationCubitState>(
         builder: (context, state) => state.when(
-            unauthenticated: () => buildApp(const WelcomePage()),
+            unauthenticated: () => buildApp(const WelcomePage(
+                  betaMessage: "beta@Erlangen",
+                )),
             authenticatedWaitingForUserToBeFetched: (_) =>
                 buildApp(const SplashPage()),
             autehnticationNoUserCreated: (uid) =>

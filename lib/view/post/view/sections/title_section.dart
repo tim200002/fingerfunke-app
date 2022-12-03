@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../utils/app_theme.dart';
 import '../../../../utils/exceptions.dart';
 import '../../../../utils/placeholder_box.dart';
 import '../../../../utils/tools.dart';
@@ -15,10 +16,9 @@ class TitleSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextStyle titleStyle = Theme.of(context)
-        .textTheme
-        .headline5!
-        .copyWith(fontWeight: FontWeight.w600, height: 1.3);
+    final titleStyle = AppTheme.textStyleCondensed(
+        style: const TextStyle(
+            fontWeight: FontWeight.bold, fontSize: 23, color: Colors.black));
 
     return Padding(
         padding: const EdgeInsets.only(bottom: 20, top: 10),
@@ -59,8 +59,6 @@ class _Edit extends StatelessWidget {
         child: TextFormField(
           initialValue: fields.title,
           style: titleStyle,
-          minLines: 1,
-          maxLines: 2,
           maxLength: 160,
           onChanged: (value) => BlocProvider.of<PostEditorCubit>(context)
               .updateInformation(

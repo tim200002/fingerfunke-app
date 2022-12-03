@@ -7,9 +7,11 @@ import '../../../../../../common_widgets/image/user_image/user_image.dart';
 import '../../../../../../cubits/app_cubit/app_cubit.dart';
 import '../../../../../../models/user/user.dart';
 import '../../../../../../routes.dart';
+import '../../../../../../utils/beta_indicator.dart';
 import '../../../../../../utils/dev_tools.dart';
 import '../../../../../../utils/tools.dart';
 import '../../../../../../utils/util_widgets/clearance_builder.dart';
+import '../../../../../welcome/view/welcome_page.dart';
 
 part './profile_section.dart';
 
@@ -47,16 +49,16 @@ class HomeDrawer extends StatelessWidget {
                   padding: EdgeInsets.zero,
                   children: [
                     const _ProfileSection(),
-                    const SizedBox(
-                      height: 15,
-                    ),
+                    //TODO: reenable once groups become available
+                    /*const SizedBox(height: 15),
                     ListTile(
                       leading: const Icon(FeatherIcons.users),
                       title: Text(l10n(context).lbl_groups),
                       enabled: false,
                       onTap: () => DevTools.showToDoSnackbar(context),
                     ),
-                    const SizedBox(height: 25),
+                    const SizedBox(height: 25),*/
+
                     ListTile(
                       leading: const Icon(FeatherIcons.bookmark),
                       title: Text(l10n(context).lbl_saved),
@@ -78,6 +80,12 @@ class HomeDrawer extends StatelessWidget {
                           Navigator.of(context).pushNamed(Routes.about),
                     ),
                     const SizedBox(height: 25),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 20),
+                      child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: BetaIndicator(message: "beta@Erlangen")),
+                    ),
                     ClearanceBuilder(
                       clearance: UserClearance.development,
                       builder: (_, c) => ListTile(

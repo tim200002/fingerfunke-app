@@ -40,8 +40,8 @@ class _PlaybackViewState extends State<PlaybackView> {
             appBar: AppBar(
               leading: IconButton(
                 icon: const Icon(Icons.close),
-                onPressed: () => BlocProvider.of<VideoRecorderCubit>(context)
-                    .recordNewVideoClip(),
+                onPressed: () =>
+                    BlocProvider.of<VideoRecorderCubit>(context).reload(),
               ),
               title: Text(l10n(context).lbl_cameraPreview),
             ),
