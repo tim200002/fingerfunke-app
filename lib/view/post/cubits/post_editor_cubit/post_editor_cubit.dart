@@ -151,19 +151,13 @@ class PostEditorCubit extends Cubit<PostEditorState> {
 
   /// submit and upload a post to the database. returns if post is valid
   Future<void> submit() {
-    void disposeVideoUploadCubits(List<VideoUploadCubit> uploadCubits) {
-      for (var cubit in uploadCubits) {
-        cubit.close();
-      }
-    }
-
     return state.maybeWhen(
         editEvent: (eventEditorFields, _) async {
           emit(const PostEditorState.submitting());
           try {
             var eventId = await _createEventFromFields(eventEditorFields);
             emit(PostEditorState.submitted(eventId));
-            disposeVideoUploadCubits(eventEditorFields.videoUploadCubits);
+            _disposeVideoUploadCubits(eventEditorFields.videoUploadCubits);
           } catch (err) {
             emit(PostEditorState.error(err.toString()));
           }
@@ -181,6 +175,25 @@ class PostEditorCubit extends Cubit<PostEditorState> {
         },
         orElse: () => throw InvalidStateException());
   }
+
+  
+  /// Do necessary cleanup when cubit is closed
+  /// Especially remove no longer used video upload cubits so they can free their memory
+  @override
+  Future<void> close() {
+    // delete all VideoUploadCubits
+    // whe npost has sucessfuly been posted this is already done when sending it away
+    // we must catch the time, when post editor has been closed before sending
+    state.whenOrNull(
+        editEvent: ((eventEditorFields, _) =>
+            _disposeVideoUploadCubits(eventEditorFields.videoUploadCubits)),
+        editGroup: (groupEditorFields, _) =>
+            _disposeVideoUploadCubits(groupEditorFields.videoUploadCubits));
+
+    return super.close();
+  }
+
+
 
   /// create Event from given [fields]
   ///
@@ -238,6 +251,7 @@ class PostEditorCubit extends Cubit<PostEditorState> {
     }
   }*/
 
+
   /// helper to map the List of uploadCubits to a list of assets
   ///
   /// This will throw an error if at least on upload cubit has not finished uploading
@@ -255,5 +269,14 @@ class PostEditorCubit extends Cubit<PostEditorState> {
         .toList();
   }
 
+  /// Given a list of [uploadCubits] clsoe all cubits so they can free their ressources
+  void _disposeVideoUploadCubits(List<VideoUploadCubit> uploadCubits) {
+    for (var cubit in uploadCubits) {
+      cubit.close();
+    }
+  }
+
   bool get isEditingExistingPost => postToBeEdited != null;
+
+ 
 }
