@@ -25,6 +25,7 @@ class NetworkImageCubit extends Cubit<NetworkImageState> {
       String shortendUrl = url.split(',')[1];
       Uint8List decodedBytes = base64Decode(shortendUrl);
       ImageProvider<Object> image = MemoryImage(decodedBytes);
+      print("Network image cubit");
       emit(NetworkImageState.imageLoaded(image));
     }
     // handle images which are real files

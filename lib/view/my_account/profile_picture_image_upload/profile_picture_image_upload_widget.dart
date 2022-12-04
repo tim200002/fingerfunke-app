@@ -1,3 +1,5 @@
+import 'package:uuid/uuid.dart';
+
 import '../../../common_widgets/image/user_image/user_image.dart';
 import '../../../cubits/app_cubit/app_cubit.dart';
 import '../../../utils/tools.dart';
@@ -47,8 +49,6 @@ class ProfilePictureImageUploadWidget extends StatelessWidget {
         buildWhen: ((previous, current) =>
             previous.user.picture != current.user.picture),
         builder: (context, state) {
-          logger.i("rebuild");
-          logger.i(state);
           return InkWell(
             onTap: () async {
               selectImage(state.user.id, context);
@@ -61,6 +61,10 @@ class ProfilePictureImageUploadWidget extends StatelessWidget {
                   UserImage(
                     state.user.picture,
                     diameter: userImageSize.round(),
+                    // Add key because otherwise will not update correctly
+                    // when given the picture is a good key, sice should only update
+                    // if picture changes
+                    key: Key(state.user.picture ?? const Uuid().v4()),
                   ),
                   Align(
                     alignment: Alignment.bottomRight,

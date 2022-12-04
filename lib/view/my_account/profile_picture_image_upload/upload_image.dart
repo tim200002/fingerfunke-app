@@ -67,6 +67,7 @@ Future<void> uploadProfilePictureBase64Encoded(
         }
 
         await userRepository.updateUser(userId, picture: dataUrl);
+        print("update finished");
 
         Navigator.of(context).pop();
       }();
