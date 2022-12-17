@@ -16,7 +16,6 @@ class PostRepositoryImpl implements PostRepository {
   final Geoflutterfire _geo = Geoflutterfire();
   late final CollectionReference _postCollection;
   late final CollectionReference _userCollection;
-  static const FirestoreId postMemberCollection = "posts_members";
 
   PostRepositoryImpl(
       {FirebaseFirestore? firestore, FirebaseFunctions? functions})
@@ -113,15 +112,18 @@ class PostRepositoryImpl implements PostRepository {
   @override
   Future<void> addPostMember(
           {required FirestoreId postId, required FirestoreId userId}) =>
-      _postCollection.doc(postId).update({
-        "members": FieldValue.arrayUnion([userId])
-      });
+      _togglePostMember(postId, userId, true);
 
   @override
   Future<void> removePostMember(
           {required FirestoreId postId, required FirestoreId userId}) =>
+      _togglePostMember(postId, userId, false);
+
+  Future<void> _togglePostMember(
+          FirestoreId postId, FirestoreId userId, bool add) =>
       _postCollection.doc(postId).update({
-        "members": FieldValue.arrayRemove([userId])
+        "members": (add ? FieldValue.arrayUnion : FieldValue.arrayRemove)
+            .call([userId])
       });
 
   @override
