@@ -170,11 +170,11 @@ class VideoUploadCubit extends Cubit<VideoUploadState> {
     _assetSubscription =
         _videoRepository.subscribeToTemporaryAsset(id).listen((asset) {
       switch (asset.state) {
-        case asset_state.processing:
+        case AssetState.processing:
           {
             return;
           }
-        case asset_state.ready:
+        case AssetState.ready:
           {
             completer.complete(asset);
             _assetSubscription?.cancel();
@@ -220,7 +220,7 @@ class VideoUploadCubit extends Cubit<VideoUploadState> {
   @override
   Future<void> close() async {
     _logger.i("close");
-    
+
     _cancelToken?.cancel();
     _assetSubscription?.cancel();
 

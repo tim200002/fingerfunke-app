@@ -1,4 +1,4 @@
-import 'package:app_settings/app_settings.dart' as aSettings;
+import 'package:app_settings/app_settings.dart' as app_ettings;
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:geolocator/geolocator.dart';
@@ -28,7 +28,7 @@ class LocationCubit extends Cubit<LocationState> {
             : LocationState.error(e)));
   }
 
-  Future<void> openSettings() => aSettings.AppSettings.openAppSettings();
+  Future<void> openSettings() => app_ettings.AppSettings.openAppSettings();
 
   /// Update location
   void updateLocation(

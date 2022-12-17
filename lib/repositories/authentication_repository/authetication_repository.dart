@@ -5,7 +5,7 @@ import '../../utils/type_aliases.dart';
 
 part 'authentication_repository.impl.dart';
 
-enum SIGN_IN_STATE { unauthenticated, signedInAnonymously, signedIn }
+enum SignInState { unauthenticated, signedInAnonymously, signedIn }
 
 abstract class AutheticationRepository {
   /// Allow user to sign in without an official account
@@ -40,7 +40,7 @@ abstract class AutheticationRepository {
   */
 
   /// Return the current state of sign in (loggedOut, anonymously or with credentials)
-  SIGN_IN_STATE getSignInState();
+  SignInState getSignInState();
 
   FirestoreId? getUserId();
 
@@ -50,5 +50,5 @@ abstract class AutheticationRepository {
   /// any events. Therfore the receiver will only receive the first event
   /// emmitted after subscribing.
   /// To get the current SIGN_IN_STATE please consider using getSignInState()
-  Stream<SIGN_IN_STATE> getSignInStateStream();
+  Stream<SignInState> getSignInStateStream();
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../models/user/user.dart';
-import '../../utils/app_tools.dart';
 import '../../view/user_profile/profile_view.dart';
 import '../image/user_image/user_image.dart';
 

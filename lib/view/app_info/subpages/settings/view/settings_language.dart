@@ -1,6 +1,6 @@
-import '../../../../../cubits/settings_cubit/app_settings_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../../cubits/settings_cubit/app_settings_cubit.dart';
 
 class SettingsLanguage extends StatefulWidget {
   const SettingsLanguage({Key? key}) : super(key: key);

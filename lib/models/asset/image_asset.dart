@@ -7,12 +7,12 @@ class ImageAsset extends Asset {
       {required FirestoreId id,
       required DateTime creationTime,
       required this.downloadUrl,
-      required asset_state state})
+      required AssetState state})
       : super._(
             id: id,
             creationTime: creationTime,
             state: state,
-            type: asset_type.video);
+            type: AssetType.video);
 
   @override
   JsonMap toJson() {
@@ -21,7 +21,7 @@ class ImageAsset extends Asset {
       "creationTime": dateToJson(creationTime),
       "downloadUrl": downloadUrl,
       "state": _assetStateEnumMap[state],
-      "type": _assetTypeEnumMap[asset_type.video]
+      "type": _assetTypeEnumMap[AssetType.video]
     };
   }
 
@@ -38,7 +38,7 @@ class ImageAsset extends Asset {
       ImageAsset.fromJson(documentSnaphsotToJson(document));
 
   factory ImageAsset.createWithId(
-          {required String downloadUrl, required asset_state state}) =>
+          {required String downloadUrl, required AssetState state}) =>
       ImageAsset(
           id: const Uuid().v4(),
           creationTime: DateTime.now(),

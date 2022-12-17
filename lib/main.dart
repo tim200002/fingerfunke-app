@@ -79,7 +79,7 @@ class AppInflater extends StatelessWidget {
           create: (context) => LiveConfigCubit(),
         ),
       ],
-      child: App(),
+      child: const App(),
     );
   }
 }

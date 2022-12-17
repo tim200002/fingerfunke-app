@@ -219,6 +219,7 @@ class PostEditorCubit extends Cubit<PostEditorState> {
           startTime: fields.startTime,
           place: fields.place);
     }
+    return null;
   }
 
   /// create Group from given [fields]

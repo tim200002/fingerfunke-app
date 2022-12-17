@@ -7,7 +7,6 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import '../../../../common_widgets/image/network_placeholder_image.dart/network_placeholder_image.dart';
 import '../../../../common_widgets/upload/video_upload_tile.dart';
 import '../../../../cubits/app_cubit/app_cubit.dart';
-import '../../../../cubits/live_config_cubit/live_config_cubit.dart';
 import '../../../../cubits/video_upload_cubit/video_upload_cubit.dart';
 import '../../../../models/asset/asset.dart';
 import '../../../../models/post/post.dart';
@@ -201,9 +200,8 @@ class HeaderSection extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () => Navigator.of(context).push(FullscreenVideoPage.route(
-            url: VideoRepositoryImpl().createPlaybackUrl(
-                (post.media.firstWhere((e) => e.type == asset_type.video)
-                    as VideoAsset)))),
+            url: VideoRepositoryImpl().createPlaybackUrl((post.media
+                .firstWhere((e) => e.type == AssetType.video) as VideoAsset)))),
         child: Stack(children: [
           NetworkPlaceholderImage(
             VideoRepositoryImpl()

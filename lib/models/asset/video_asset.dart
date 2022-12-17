@@ -8,12 +8,12 @@ class VideoAsset extends Asset {
       required DateTime creationTime,
       this.assetId,
       this.playbackId,
-      required asset_state state})
+      required AssetState state})
       : super._(
             id: id,
             creationTime: creationTime,
             state: state,
-            type: asset_type.video);
+            type: AssetType.video);
 
   @override
   JsonMap toJson() => {
@@ -22,7 +22,7 @@ class VideoAsset extends Asset {
         "assetId": assetId,
         "playbackId": playbackId,
         "state": _assetStateEnumMap[state],
-        "type": _assetTypeEnumMap[asset_type.video]
+        "type": _assetTypeEnumMap[AssetType.video]
       };
 
   factory VideoAsset.fromJson(JsonMap map) => VideoAsset(

@@ -4,10 +4,9 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import '../../../models/post/post.dart';
 import '../../../repositories/post_repository/post_repository.dart';
 import '../../../repositories/post_repository/post_repository.impl.dart';
-import '../../../utils/type_aliases.dart';
 
-part 'posts_list_state.dart';
 part 'posts_list_cubit.freezed.dart';
+part 'posts_list_state.dart';
 
 typedef PostQuery = Stream<List<Post>> Function();
 typedef PostFilter = List<Post> Function(List<Post>);

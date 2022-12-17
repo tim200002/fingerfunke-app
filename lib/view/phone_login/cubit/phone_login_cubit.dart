@@ -28,7 +28,8 @@ class PhoneLoginCubit extends Cubit<PhoneLoginState> {
             emit(const PhoneLoginState.waitForLogIn());
             await _authenticationRepository.signIn(phoneAuthCredentials);
           } on FirebaseAuthException catch (exception) {
-            _logger.e("Error Sending Code to Phone number: Error Code ${exception}");
+            _logger
+                .e("Error Sending Code to Phone number: Error Code $exception");
             final SignInWithCredentialFailure reasonForFailure =
                 SignInWithCredentialFailure.fromCode(exception);
             emit(PhoneLoginState.enterPhoneNumber(
@@ -38,7 +39,8 @@ class PhoneLoginCubit extends Cubit<PhoneLoginState> {
         verificationFailed: (exception) {
           final VerifyPhoneNumberFailure reasonForFailure =
               VerifyPhoneNumberFailure.fromCode(exception.code);
-          _logger.e("Error Sending Code to Phone number: Error Code ${exception}");
+          _logger
+              .e("Error Sending Code to Phone number: Error Code $exception");
           emit(PhoneLoginState.enterPhoneNumber(
               withErrorMessage: reasonForFailure.message));
         },

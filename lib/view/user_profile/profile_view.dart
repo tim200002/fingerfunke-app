@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../common_widgets/image/user_image/user_image.dart';
 import '../../cubits/user_cubit/user_cubit.dart';
-import '../../models/user/user.dart';
 import '../error/exception_view.dart';
 
 class UserProfileView extends StatelessWidget {
@@ -31,7 +30,7 @@ class UserProfileView extends StatelessWidget {
               curve: Curves.easeIn,
               duration: const Duration(milliseconds: 100),
               child: state.when(
-                  loading: () => Container(
+                  loading: () => const SizedBox(
                       height: 100,
                       child:
                           Center(child: CircularProgressIndicator.adaptive())),
@@ -53,7 +52,7 @@ class UserProfileView extends StatelessWidget {
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },
-                                  icon: Icon(FeatherIcons.x))
+                                  icon: const Icon(FeatherIcons.x))
                             ],
                           ),
                           const SizedBox(height: 18),

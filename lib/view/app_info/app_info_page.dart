@@ -26,13 +26,13 @@ class AppInfoPage extends StatelessWidget {
                     SettingsTile(
                         title: l10n(context).lbl_privacy,
                         leading: const Icon(Icons.privacy_tip_outlined),
-                        onPressed: (context) =>
-                            launch("https://fingerfunke.app/privacy.html")),
+                        onPressed: (context) => launchUrl(
+                            Uri.https("fingerfunke.app", "/privacy.html"))),
                     SettingsTile(
                         title: l10n(context).lbl_imprint,
                         leading: const Icon(Icons.notes_rounded),
-                        onPressed: (context) =>
-                            launch("https://fingerfunke.app/impressum.html")),
+                        onPressed: (context) => launchUrl(
+                            Uri.https("fingerfunke.app", "/impressum.html"))),
                     SettingsTile(
                         title: l10n(context).lbl_licenses,
                         leading: const Icon(Icons.gavel_outlined),

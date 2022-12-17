@@ -65,6 +65,7 @@ class UserFeedback extends UserGeneratedDocument {
 
   @override
   int get hashCode => toString().hashCode;
+  @override
   bool operator ==(Object other) => hashCode == other.hashCode;
 
   factory UserFeedback.fromDoc(DocumentSnapshot document) =>

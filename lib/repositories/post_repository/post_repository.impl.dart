@@ -8,6 +8,7 @@ import '../../models/asset/asset.dart';
 import '../../models/post/post.dart';
 import '../../models/user/user.dart';
 import '../../models/utils.dart';
+import '../../utils/tools.dart';
 import '../../utils/type_aliases.dart';
 import 'post_repository.dart';
 
@@ -37,7 +38,7 @@ class PostRepositoryImpl implements PostRepository {
       final List<Post> Function(List<Post> posts)? worker}) {
     //! fetching all posts is more for debug purposes.
     // When moving to production, this should be disabled
-    print("fetch: $radius");
+    logger.d("fetch: $radius");
     if (radius == null) return observePosts(null);
     var stream = _geo
         .collection(

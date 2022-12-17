@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../utils/tools.dart';
 import '../../error/exception_view.dart';
 import 'cubit/video_recorder_cubit.dart';
 import 'view/camera_view.dart';
@@ -55,7 +56,7 @@ class VideoRecorderPage extends StatelessWidget {
               missingPermission: () => const MissingCameraPermissionView(),
               error: ExceptionView.builder,
               camera: (c) {
-                print("emitted camera state");
+                logger.d("emitted camera state");
                 return CameraView(camera: c, key: Key("${c.hashCode}"));
               },
               viewing: (file) => PlaybackView(file),

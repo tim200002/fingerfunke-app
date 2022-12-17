@@ -82,8 +82,6 @@ class Post extends UserGeneratedDocument {
       required this.members})
       : super(id: id, author: author, creationTime: creationTime);
 
-  int get hashCode => toJson().hashCode;
-
   bool get isEvent => type == PostType.event;
   bool get isGroup => type == PostType.recurrent;
 

@@ -115,7 +115,7 @@ class ExploreFilterView extends StatelessWidget {
               children: [
                 _sectionHeader(context, l10n(context).lbl_filterPerimeter),
                 _locationSlider(context, filter.distance, onChanged: (v) {
-                  print(v);
+                  logger.d(v);
                   context
                       .read<FeedFilterCubit>()
                       .change(filter.copyWith(distance: v));

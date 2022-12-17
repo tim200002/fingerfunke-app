@@ -7,10 +7,9 @@ import '../../../../cubits/location_cubit/location_cubit.dart';
 import '../../../../routes.dart';
 import '../../../../utils/app_theme.dart';
 import '../../../../utils/tools.dart';
-import 'widgets/post_discovery_feed/paged_post_discovery_feed.dart';
 import 'widgets/filter/cubit/feed_filter_cubit.dart';
 import 'widgets/filter/explore_filter_view.dart';
-import 'widgets/home_drawer/home_drawer_view.dart';
+import 'widgets/post_discovery_feed/paged_post_discovery_feed.dart';
 
 class ExploreView extends StatelessWidget {
   const ExploreView({super.key});

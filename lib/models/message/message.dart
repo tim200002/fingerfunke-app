@@ -8,17 +8,17 @@ import '../abstract_models/abstract_models.dart';
 import '../user/user.dart';
 import '../utils.dart';
 
-enum message_type { video, text }
+enum MessageType { video, text }
 
 const _messageTypeEnumMap = {
-  message_type.video: 'video',
-  message_type.text: 'text',
+  MessageType.video: 'video',
+  MessageType.text: 'text',
 };
 
 class InvalidMessageTypeException implements Exception {}
 
 class Message extends UserGeneratedDocument {
-  final message_type type;
+  final MessageType type;
 
   const Message({
     required FirestoreId id,
@@ -40,11 +40,11 @@ class Message extends UserGeneratedDocument {
 
   factory Message.fromJson(JsonMap map) {
     switch ($enumDecode(_messageTypeEnumMap, map['type'])) {
-      case message_type.video:
+      case MessageType.video:
         {
           return VideoMessage.fromJson(map);
         }
-      case message_type.text:
+      case MessageType.text:
         {
           return TextMessage.fromJson(map);
         }
@@ -74,14 +74,14 @@ class VideoMessage extends Message {
             author: author,
             id: id,
             creationTime: creationTime,
-            type: message_type.video);
+            type: MessageType.video);
 
   @override
   JsonMap toJson() => {
         'id': id,
         'author': author.toJson(),
         'creationTime': dateToJson(creationTime),
-        'type': _messageTypeEnumMap[message_type.video],
+        'type': _messageTypeEnumMap[MessageType.video],
         'video': video
       };
 
@@ -123,14 +123,14 @@ class TextMessage extends Message {
             author: author,
             id: id,
             creationTime: creationTime,
-            type: message_type.text);
+            type: MessageType.text);
 
   @override
   JsonMap toJson() => {
         'id': id,
         'author': author.toJson(),
         'creationTime': dateToJson(creationTime),
-        'type': _messageTypeEnumMap[message_type.text],
+        'type': _messageTypeEnumMap[MessageType.text],
         'text': text
       };
 

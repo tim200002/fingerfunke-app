@@ -7,6 +7,8 @@ import '../../../cache/media_cache/media_cache.impl.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../utils/tools.dart';
+
 part 'network_image_state.dart';
 part 'network_image_cubit.freezed.dart';
 
@@ -25,7 +27,7 @@ class NetworkImageCubit extends Cubit<NetworkImageState> {
       String shortendUrl = url.split(',')[1];
       Uint8List decodedBytes = base64Decode(shortendUrl);
       ImageProvider<Object> image = MemoryImage(decodedBytes);
-      print("Network image cubit");
+      logger.d("Network image cubit");
       emit(NetworkImageState.imageLoaded(image));
     }
     // handle images which are real files

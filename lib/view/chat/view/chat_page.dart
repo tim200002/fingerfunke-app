@@ -64,7 +64,7 @@ class ChatPage extends StatelessWidget {
                       ),*/
                       itemBuilder: (message) {
                         switch (message.type) {
-                          case message_type.text:
+                          case MessageType.text:
                             return ChatMessage(message as TextMessage);
                           default:
                             return ExceptionView(

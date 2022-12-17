@@ -8,10 +8,8 @@ import '../../../../../../cubits/app_cubit/app_cubit.dart';
 import '../../../../../../models/user/user.dart';
 import '../../../../../../routes.dart';
 import '../../../../../../utils/beta_indicator.dart';
-import '../../../../../../utils/dev_tools.dart';
 import '../../../../../../utils/tools.dart';
 import '../../../../../../utils/util_widgets/clearance_builder.dart';
-import '../../../../../welcome/view/welcome_page.dart';
 
 part './profile_section.dart';
 

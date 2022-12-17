@@ -39,7 +39,7 @@ class PostFeedImageItem extends StatelessWidget {
     return BlocProvider(
         create: (context) => VideoPlaybackCubit(
             url: VideoRepositoryImpl().createPlaybackUrl((_post.media
-                .firstWhere((e) => e.type == asset_type.video) as VideoAsset)),
+                .firstWhere((e) => e.type == AssetType.video) as VideoAsset)),
             autoplay: true,
             loop: false),
         child: !greyscale

@@ -5,7 +5,6 @@ import '../../../../../common_widgets/image/user_image/user_image.dart';
 import '../../../../../models/post/post.dart';
 import '../../../../../utils/tools.dart';
 import '../../../../../utils/util_widgets/floating_modal.dart';
-import '../../../cubits/post_viewer_cubit/post_cubit.dart';
 import 'cubit/post_members_cubit.dart';
 
 class PostParticipantsView extends StatelessWidget {

@@ -55,7 +55,7 @@ class AuthenticaionRepositoryImpl implements AutheticationRepository {
   }
 
   @override
-  SIGN_IN_STATE getSignInState() {
+  SignInState getSignInState() {
     User? currentUser = _firebaseAuth.currentUser;
     return _mapUserToSignInState(currentUser);
   }
@@ -67,19 +67,19 @@ class AuthenticaionRepositoryImpl implements AutheticationRepository {
   }
 
   @override
-  Stream<SIGN_IN_STATE> getSignInStateStream() {
+  Stream<SignInState> getSignInStateStream() {
     return _firebaseAuth
         .authStateChanges()
         .map((user) => _mapUserToSignInState(user));
   }
 
-  SIGN_IN_STATE _mapUserToSignInState(User? user) {
+  SignInState _mapUserToSignInState(User? user) {
     if (user == null) {
-      return SIGN_IN_STATE.unauthenticated;
+      return SignInState.unauthenticated;
     } else if (user.isAnonymous) {
-      return SIGN_IN_STATE.signedInAnonymously;
+      return SignInState.signedInAnonymously;
     } else {
-      return SIGN_IN_STATE.signedIn;
+      return SignInState.signedIn;
     }
   }
 }

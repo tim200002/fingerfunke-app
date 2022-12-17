@@ -15,6 +15,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SimpleBlocObserver extends BlocObserver {
   @override
+  // ignore: unnecessary_overrides
   void onChange(BlocBase bloc, Change change) {
     super.onChange(bloc, change);
     //print('${bloc.runtimeType} $change');

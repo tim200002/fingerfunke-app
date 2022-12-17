@@ -44,10 +44,10 @@ class DevFunctionsPage extends StatelessWidget {
                                   assetId:
                                       "9h00XEtc4P3TbTXvChyimCMkPAfbVbkEGNEkNh7jBCsc",
                                   creationTime: DateTime.now(),
-                                  state: asset_state.ready)
+                                  state: AssetState.ready)
                             ],
                             startTime: DateTime.now(),
-                            members: []));
+                            members: const []));
                       },
                       child: const Text("CreateRandomPost"),
                     )

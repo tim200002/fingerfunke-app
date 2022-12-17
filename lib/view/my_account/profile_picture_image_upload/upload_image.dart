@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'dart:convert';
 
 import 'package:flutter_image_compress/flutter_image_compress.dart';
-import 'package:logger/logger.dart';
 
 import '../../../repositories/user_repository/user_repository.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +10,6 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../utils/tools.dart';
-
-Logger logger = Logger();
 
 Future<void> uploadProfilePictureBase64Encoded(
     String userId, ImageSource source, BuildContext context,
@@ -38,7 +35,6 @@ Future<void> uploadProfilePictureBase64Encoded(
     return;
   }
 
-
   await showDialog(
     context: context,
     builder: (context) {
@@ -51,7 +47,8 @@ Future<void> uploadProfilePictureBase64Encoded(
 
         if (imagebytes == null) {
           // Something went wrong wile cropping
-          Tools.showSnackbar(context, "Something went wrong cropping your image, please try again!");
+          Tools.showSnackbar(context,
+              "Something went wrong cropping your image, please try again!");
           return Navigator.of(context).pop();
         }
 
@@ -62,12 +59,13 @@ Future<void> uploadProfilePictureBase64Encoded(
         // check that data url fits in max length allowed by firebase i.e. 1048487
         if (dataUrl.length > 1048487) {
           logger.e("Data URL to long to sucessfully transmit file to firebase");
-          Tools.showSnackbar(context, "Your Image size is too large to be used as a profile picture");
+          Tools.showSnackbar(context,
+              "Your Image size is too large to be used as a profile picture");
           Navigator.of(context).pop();
         }
 
         await userRepository.updateUser(userId, picture: dataUrl);
-        print("update finished");
+        logger.d("update finished");
 
         Navigator.of(context).pop();
       }();
