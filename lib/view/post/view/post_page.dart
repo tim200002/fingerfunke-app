@@ -11,7 +11,6 @@ import '../../../utils/app_theme.dart';
 import '../../../utils/tools.dart';
 import '../../error/exception_view.dart';
 import '../cubits/post_editor_cubit/post_editor_cubit.dart';
-import '../cubits/post_member_cubit/post_member_cubit.dart';
 import '../cubits/post_viewer_cubit/post_cubit.dart';
 import 'sections/author_section.dart';
 import 'sections/event_detail_section.dart';
@@ -78,12 +77,12 @@ class PostPage extends StatelessWidget {
     final postId = ModalRoute.of(context)!.settings.arguments as String;
     return MultiBlocProvider(providers: [
       BlocProvider<PostCubit>(
-        create: (_) => PostCubit(postId),
+        create: (_) => PostCubit(
+          postId,
+          userId: context.read<AppCubit>().state.user.id,
+        ),
       ),
-      BlocProvider<PostMemberCubit>(
-          create: (_) => PostMemberCubit(
-              postId: postId,
-              user: context.read<AppCubit>().state.user.toInfo())),
+
       // it makes sense to already provide the chat message cubit here
       // so that when opening the chat initial messages are typically already loaded
       // therefore we require the cubit to be instantly built -> lazy is set to false

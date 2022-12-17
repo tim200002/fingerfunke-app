@@ -38,7 +38,7 @@ class PostPlace {
 
   factory PostPlace.fromJson(JsonMap map) => PostPlace(
         address: map["address"],
-        geohash: map["geohash"],
+        geohash: map["geohash"] ?? "EMPTY",
         point: map["geopoint"],
       );
 
@@ -62,7 +62,7 @@ class Post extends UserGeneratedDocument {
   final PostVisibility visibility;
   final PostPlace place;
 
-  //final List<FirestoreId> interstedUserIds;
+  final List<FirestoreId> members;
   //final List<UserInfo> interstedUsers;
 
   final List<Asset> media;
@@ -78,7 +78,8 @@ class Post extends UserGeneratedDocument {
       required DateTime creationTime,
       required this.visibility,
       required this.place,
-      required this.media})
+      required this.media,
+      required this.members})
       : super(id: id, author: author, creationTime: creationTime);
 
   int get hashCode => toJson().hashCode;
@@ -132,6 +133,7 @@ class Post extends UserGeneratedDocument {
         creationTime,
         visibility,
         place,
-        media
+        media,
+        members
       ];
 }

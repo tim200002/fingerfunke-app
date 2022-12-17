@@ -16,15 +16,16 @@ class PostCubit extends Cubit<PostState> {
   final PostRepository _postRepository;
   final UserRepository _userRepository = UserRepositoryImpl();
 
+  FirestoreId userId;
   late final StreamSubscription _postSubscription;
-  PostCubit(FirestoreId postId, {PostRepository? postRepository})
+
+  PostCubit(FirestoreId postId,
+      {required this.userId, PostRepository? postRepository})
       : _postRepository = postRepository ?? PostRepositoryImpl(),
         super(PostState.loading(postId)) {
     _postSubscription = _postRepository.observePost(postId).listen((Post post) {
       emit(
-        PostState.normal(
-          post: post,
-        ),
+        PostState.normal(post, _userIsMember(post)),
       );
     });
   }
@@ -42,6 +43,16 @@ class PostCubit extends Cubit<PostState> {
       _userRepository.unsavePost(userId, postId);
     }
   }
+
+  bool _userIsMember(Post post) => post.members.contains(userId);
+
+  Future<void>? joinPost() => state.whenOrNull<Future<void>>(
+      normal: (post, _) =>
+          PostRepositoryImpl().addPostMember(postId: post.id, userId: userId));
+
+  Future<void>? leavePost() => state.whenOrNull(
+      normal: (post, _) => PostRepositoryImpl()
+          .removePostMember(postId: post.id, userId: userId));
 
   @override
   Future<void> close() {

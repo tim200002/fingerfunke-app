@@ -28,7 +28,7 @@ class TitleSection extends StatelessWidget {
                 builder: (context, state) => state.when(
                     loading: (_) => PlaceholderBox.shimmer(
                         PostDescriptionSection.loading()),
-                    normal: (post, isJoining) => Text(
+                    normal: (post, _) => Text(
                           post.title,
                           overflow: TextOverflow.ellipsis,
                           style: post.asEvent?.isCompleted ?? false

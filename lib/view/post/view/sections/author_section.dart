@@ -26,7 +26,7 @@ class AuthorSection extends StatelessWidget {
         : BlocBuilder<PostCubit, PostState>(
             builder: (context, state) => state.when(
                 loading: (_) => PlaceholderBox.shimmer(_loading()),
-                normal: (post, isJoining) => Center(
+                normal: (post, _) => Center(
                       child: Padding(
                         padding: const EdgeInsets.all(12),
                         child: Text(

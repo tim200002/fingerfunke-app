@@ -27,7 +27,7 @@ class LocationSection extends StatelessWidget {
         : BlocBuilder<PostCubit, PostState>(
             builder: (context, state) => state.when(
                 loading: (_) => PlaceholderBox.shimmer(_loading()),
-                normal: (post, isJoining) => post is! Event
+                normal: (post, _) => post is! Event
                     ? Text(l10n(context).msg_postOnlyEventsSupported)
                     : StaticMapsProvider(address: post.place.address)));
   }

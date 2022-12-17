@@ -19,19 +19,19 @@ mixin _$PostState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String postId) loading,
-    required TResult Function(Post post, bool isJoining) normal,
+    required TResult Function(Post post, bool isMember) normal,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String postId)? loading,
-    TResult Function(Post post, bool isJoining)? normal,
+    TResult Function(Post post, bool isMember)? normal,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String postId)? loading,
-    TResult Function(Post post, bool isJoining)? normal,
+    TResult Function(Post post, bool isMember)? normal,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -135,7 +135,7 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String postId) loading,
-    required TResult Function(Post post, bool isJoining) normal,
+    required TResult Function(Post post, bool isMember) normal,
   }) {
     return loading(postId);
   }
@@ -144,7 +144,7 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String postId)? loading,
-    TResult Function(Post post, bool isJoining)? normal,
+    TResult Function(Post post, bool isMember)? normal,
   }) {
     return loading?.call(postId);
   }
@@ -153,7 +153,7 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String postId)? loading,
-    TResult Function(Post post, bool isJoining)? normal,
+    TResult Function(Post post, bool isMember)? normal,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -207,7 +207,7 @@ abstract class _Loading implements PostState {
 abstract class _$$_NormalCopyWith<$Res> {
   factory _$$_NormalCopyWith(_$_Normal value, $Res Function(_$_Normal) then) =
       __$$_NormalCopyWithImpl<$Res>;
-  $Res call({Post post, bool isJoining});
+  $Res call({Post post, bool isMember});
 }
 
 /// @nodoc
@@ -222,16 +222,16 @@ class __$$_NormalCopyWithImpl<$Res> extends _$PostStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? post = freezed,
-    Object? isJoining = freezed,
+    Object? isMember = freezed,
   }) {
     return _then(_$_Normal(
-      post: post == freezed
+      post == freezed
           ? _value.post
           : post // ignore: cast_nullable_to_non_nullable
               as Post,
-      isJoining: isJoining == freezed
-          ? _value.isJoining
-          : isJoining // ignore: cast_nullable_to_non_nullable
+      isMember == freezed
+          ? _value.isMember
+          : isMember // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -240,17 +240,16 @@ class __$$_NormalCopyWithImpl<$Res> extends _$PostStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Normal implements _Normal {
-  const _$_Normal({required this.post, this.isJoining = false});
+  const _$_Normal(this.post, this.isMember);
 
   @override
   final Post post;
   @override
-  @JsonKey()
-  final bool isJoining;
+  final bool isMember;
 
   @override
   String toString() {
-    return 'PostState.normal(post: $post, isJoining: $isJoining)';
+    return 'PostState.normal(post: $post, isMember: $isMember)';
   }
 
   @override
@@ -259,14 +258,14 @@ class _$_Normal implements _Normal {
         (other.runtimeType == runtimeType &&
             other is _$_Normal &&
             const DeepCollectionEquality().equals(other.post, post) &&
-            const DeepCollectionEquality().equals(other.isJoining, isJoining));
+            const DeepCollectionEquality().equals(other.isMember, isMember));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(post),
-      const DeepCollectionEquality().hash(isJoining));
+      const DeepCollectionEquality().hash(isMember));
 
   @JsonKey(ignore: true)
   @override
@@ -277,29 +276,29 @@ class _$_Normal implements _Normal {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String postId) loading,
-    required TResult Function(Post post, bool isJoining) normal,
+    required TResult Function(Post post, bool isMember) normal,
   }) {
-    return normal(post, isJoining);
+    return normal(post, isMember);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(String postId)? loading,
-    TResult Function(Post post, bool isJoining)? normal,
+    TResult Function(Post post, bool isMember)? normal,
   }) {
-    return normal?.call(post, isJoining);
+    return normal?.call(post, isMember);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String postId)? loading,
-    TResult Function(Post post, bool isJoining)? normal,
+    TResult Function(Post post, bool isMember)? normal,
     required TResult orElse(),
   }) {
     if (normal != null) {
-      return normal(post, isJoining);
+      return normal(post, isMember);
     }
     return orElse();
   }
@@ -337,11 +336,10 @@ class _$_Normal implements _Normal {
 }
 
 abstract class _Normal implements PostState {
-  const factory _Normal({required final Post post, final bool isJoining}) =
-      _$_Normal;
+  const factory _Normal(final Post post, final bool isMember) = _$_Normal;
 
   Post get post;
-  bool get isJoining;
+  bool get isMember;
   @JsonKey(ignore: true)
   _$$_NormalCopyWith<_$_Normal> get copyWith =>
       throw _privateConstructorUsedError;

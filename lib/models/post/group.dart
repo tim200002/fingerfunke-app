@@ -10,17 +10,18 @@ class Group extends Post {
     required PostVisibility visibility,
     required PostPlace place,
     required List<Asset> media,
+    required List<FirestoreId> members,
   }) : super._(
-          id: id,
-          type: PostType.recurrent,
-          author: author,
-          title: title,
-          description: description,
-          creationTime: creationTime,
-          visibility: visibility,
-          place: place,
-          media: media,
-        );
+            id: id,
+            type: PostType.recurrent,
+            author: author,
+            title: title,
+            description: description,
+            creationTime: creationTime,
+            visibility: visibility,
+            place: place,
+            media: media,
+            members: members);
 
   @override
   JsonMap toJson() => {
@@ -33,21 +34,22 @@ class Group extends Post {
         "visibility": visibility.name,
         "location": place.toJson(),
         "media": media.map((e) => e.toJson()).toList(),
+        "members": members
       };
 
   factory Group.fromJson(JsonMap map) => Group(
-        id: map["id"] as String,
-        creationTime: dateFromJson(map['creationTime'] as int),
-        author: UserInfo.fromJson(map["author"] as JsonMap),
-        title: map["title"] as String,
-        description: map["description"] as String,
-        visibility: PostVisibility.values
-            .firstWhere((t) => t.name == map["visibility"]),
-        place: PostPlace.fromJson(map["place"]),
-        media: (map['media'] as List<dynamic>)
-            .map((e) => Asset.fromJson(e as JsonMap))
-            .toList(),
-      );
+      id: map["id"] as String,
+      creationTime: dateFromJson(map['creationTime'] as int),
+      author: UserInfo.fromJson(map["author"] as JsonMap),
+      title: map["title"] as String,
+      description: map["description"] as String,
+      visibility:
+          PostVisibility.values.firstWhere((t) => t.name == map["visibility"]),
+      place: PostPlace.fromJson(map["place"]),
+      media: (map['media'] as List<dynamic>)
+          .map((e) => Asset.fromJson(e as JsonMap))
+          .toList(),
+      members: map["members"] as List<FirestoreId>);
 
   factory Group.fromDoc(DocumentSnapshot document) =>
       Group.fromJson(documentSnaphsotToJson(document));
@@ -59,17 +61,18 @@ class Group extends Post {
     required PostVisibility visibility,
     required PostPlace place,
     required List<Asset> media,
+    required List<FirestoreId> members,
   }) =>
       Group(
-        id: const Uuid().v4(),
-        author: author,
-        title: title,
-        description: description,
-        creationTime: DateTime.now(),
-        visibility: visibility,
-        place: place,
-        media: media,
-      );
+          id: const Uuid().v4(),
+          author: author,
+          title: title,
+          description: description,
+          creationTime: DateTime.now(),
+          visibility: visibility,
+          place: place,
+          media: media,
+          members: members);
 
   @override
   List<Object> get props => [

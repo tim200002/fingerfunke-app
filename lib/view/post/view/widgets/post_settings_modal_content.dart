@@ -9,9 +9,8 @@ import '../../../../utils/dev_tools.dart';
 import '../../../../utils/tools.dart';
 import '../../../../utils/util_widgets/floating_modal.dart';
 import '../../../report_send/report_send_page.dart';
-import '../../cubits/post_member_cubit/post_member_cubit.dart';
 import '../../cubits/post_viewer_cubit/post_cubit.dart';
-import 'post_participants_view.dart';
+import 'post_participants.dart/post_participants_view.dart';
 
 class PostSettingsModalContent extends StatelessWidget {
   const PostSettingsModalContent._({Key? key}) : super(key: key);
@@ -20,8 +19,6 @@ class PostSettingsModalContent extends StatelessWidget {
     return showFloatingModalBottomSheet<void>(
         context: context,
         builder: (_) => MultiBlocProvider(providers: [
-              BlocProvider<PostMemberCubit>.value(
-                  value: context.read<PostMemberCubit>()),
               BlocProvider<PostCubit>.value(
                 value: context.read<PostCubit>(),
               )
@@ -35,12 +32,9 @@ class PostSettingsModalContent extends StatelessWidget {
             loading: (_) => const SizedBox(
                 height: 200,
                 child: Center(child: CircularProgressIndicator.adaptive())),
-            normal: (post, isJoining) {
+            normal: (post, isMember) {
               bool isAuthor = post.isUserAuthor(
                   BlocProvider.of<AppCubit>(context).state.user.toInfo());
-
-              bool isParticipant =
-                  context.read<PostMemberCubit>().userIsMember();
 
               return Column(
                 mainAxisSize: MainAxisSize.min,
@@ -50,7 +44,8 @@ class PostSettingsModalContent extends StatelessWidget {
                       title: Text(l10n(context).lbl_postMembers),
                       onTap: () {
                         Navigator.of(context).pop();
-                        PostParticipantsView.openAsModalBottomSheet(context);
+                        PostParticipantsView.openAsModalBottomSheet(
+                            context, post);
                       }),
                   if (isAuthor &&
                       (!post.isEvent || !(post as Event).isCompleted))
@@ -64,7 +59,7 @@ class PostSettingsModalContent extends StatelessWidget {
                             .then((_) => Navigator.of(context).pop());
                       },
                     ),
-                  if (isParticipant && !isAuthor)
+                  if (isMember && !isAuthor)
                     ListTile(
                       leading: const Icon(FeatherIcons.logOut),
                       title: Text(l10n(context).lbl_leavePost),

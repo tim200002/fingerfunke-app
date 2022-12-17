@@ -13,17 +13,16 @@ import 'post_repository.dart';
 
 class PostRepositoryImpl implements PostRepository {
   final FirebaseFirestore _firestore;
-  final FirebaseFunctions _functions;
   final Geoflutterfire _geo = Geoflutterfire();
   late final CollectionReference _postCollection;
+  late final CollectionReference _userCollection;
   static const FirestoreId postMemberCollection = "posts_members";
 
   PostRepositoryImpl(
       {FirebaseFirestore? firestore, FirebaseFunctions? functions})
-      : _firestore = firestore ?? FirebaseFirestore.instance,
-        _functions =
-            functions ?? FirebaseFunctions.instanceFor(region: 'europe-west3') {
+      : _firestore = firestore ?? FirebaseFirestore.instance {
     _postCollection = _firestore.collection('posts');
+    _userCollection = _firestore.collection('users');
   }
 
   @override
@@ -42,7 +41,8 @@ class PostRepositoryImpl implements PostRepository {
     print("fetch: $radius");
     if (radius == null) return observePosts(null);
     var stream = _geo
-        .collection(collectionRef: _postCollection as Query<Map<String, dynamic>>)
+        .collection(
+            collectionRef: _postCollection as Query<Map<String, dynamic>>)
         .within(
             center: GeoFirePoint(point.latitude, point.longitude),
             radius: radius,
@@ -112,49 +112,31 @@ class PostRepositoryImpl implements PostRepository {
 
   @override
   Future<void> addPostMember(
-          {required FirestoreId postId, required UserInfo user}) =>
-      _postCollection
-          .doc(postId)
-          .collection(postMemberCollection)
-          .doc(user.id)
-          .set(user.toJson());
+          {required FirestoreId postId, required FirestoreId userId}) =>
+      _postCollection.doc(postId).update({
+        "members": FieldValue.arrayUnion([userId])
+      });
 
   @override
   Future<void> removePostMember(
-          {required FirestoreId postId, required String userId}) =>
-      _postCollection
-          .doc(postId)
-          .collection(postMemberCollection)
-          .doc(userId)
-          .delete();
+          {required FirestoreId postId, required FirestoreId userId}) =>
+      _postCollection.doc(postId).update({
+        "members": FieldValue.arrayRemove([userId])
+      });
 
   @override
-  Stream<List<UserInfo>> observePostMembers(FirestoreId postId) {
-    return _postCollection
-        .doc(postId)
-        .collection(postMemberCollection)
-        .snapshots()
-        .map((event) => event.docs.map((u) => UserInfo.fromDoc(u)).toList());
+  Future<List<UserInfo>> getPostMembers(Post post) async {
+    final List<UserInfo> members = [];
+
+    for (FirestoreId userId in post.members) {
+      members.add(UserInfo.fromDoc(await _userCollection.doc(userId).get()));
+    }
+    return members;
   }
 
   @override
-  Stream<List<Post>> observeJoinedPosts(FirestoreId userId) {
-    StreamSubscription? subscription;
-    final controller = StreamController<List<Post>>()
-      ..onCancel = () => subscription?.cancel();
-    _firestore
-        .collectionGroup(postMemberCollection)
-        .where("id", isEqualTo: userId)
-        .snapshots()
-        .listen((event) {
-      Set<String> postIds = {};
-      for (var ref in event.docs) {
-        String? postId = ref.reference.parent.parent?.id;
-        if (postId != null) postIds.add(postId);
-      }
-      subscription?.cancel();
-      subscription = observePosts(postIds.toList()).listen(controller.add);
-    });
-    return controller.stream;
-  }
+  Stream<List<Post>> observeJoinedPosts(FirestoreId userId) => _postCollection
+      .where("members", arrayContains: userId)
+      .snapshots()
+      .map((e) => e.docs.map((d) => Post.fromDoc(d)).toList());
 }

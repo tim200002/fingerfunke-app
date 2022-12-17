@@ -28,7 +28,7 @@ class PostDescriptionSection extends StatelessWidget {
         : BlocBuilder<PostCubit, PostState>(
             builder: (context, state) => state.when(
                   loading: (_) => PlaceholderBox.shimmer(loading()),
-                  normal: (post, isJoining) => Text(
+                  normal: (post, _) => Text(
                     post.description,
                     style: Theme.of(context).textTheme.subtitle2,
                   ),

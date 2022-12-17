@@ -46,7 +46,8 @@ class DevFunctionsPage extends StatelessWidget {
                                   creationTime: DateTime.now(),
                                   state: asset_state.ready)
                             ],
-                            startTime: DateTime.now()));
+                            startTime: DateTime.now(),
+                            members: []));
                       },
                       child: const Text("CreateRandomPost"),
                     )

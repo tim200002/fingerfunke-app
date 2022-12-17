@@ -329,7 +329,7 @@ class HeaderSection extends StatelessWidget {
               : BlocBuilder<PostCubit, PostState>(
                   builder: (context, state) => state.when(
                     loading: (_) => PlaceholderBox.shimmer(_loading()),
-                    normal: (post, isJoining) => Stack(
+                    normal: (post, _) => Stack(
                       children: [
                         SizedBox(
                             height: thumbnailHeight,

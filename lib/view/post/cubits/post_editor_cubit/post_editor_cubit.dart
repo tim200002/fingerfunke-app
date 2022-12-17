@@ -176,7 +176,6 @@ class PostEditorCubit extends Cubit<PostEditorState> {
         orElse: () => throw InvalidStateException());
   }
 
-  
   /// Do necessary cleanup when cubit is closed
   /// Especially remove no longer used video upload cubits so they can free their memory
   @override
@@ -193,8 +192,6 @@ class PostEditorCubit extends Cubit<PostEditorState> {
     return super.close();
   }
 
-
-
   /// create Event from given [fields]
   ///
   /// if the editor has been created from an event then only update fields
@@ -209,9 +206,9 @@ class PostEditorCubit extends Cubit<PostEditorState> {
           visibility: fields.visibility,
           place: fields.place!,
           media: _videoUploadCubitsToAssetsHelper(fields.videoUploadCubits),
-          startTime: fields.startTime);
+          startTime: fields.startTime,
+          members: [currentUser.id]);
       await _postRepository.createPost(event);
-      await _postRepository.addPostMember(postId: event.id, user: currentUser);
       return event.id;
     } else {
       await _postRepository.updatePost(postToBeEdited!.id,
@@ -251,7 +248,6 @@ class PostEditorCubit extends Cubit<PostEditorState> {
     }
   }*/
 
-
   /// helper to map the List of uploadCubits to a list of assets
   ///
   /// This will throw an error if at least on upload cubit has not finished uploading
@@ -277,6 +273,4 @@ class PostEditorCubit extends Cubit<PostEditorState> {
   }
 
   bool get isEditingExistingPost => postToBeEdited != null;
-
- 
 }

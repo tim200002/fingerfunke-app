@@ -11,7 +11,7 @@ abstract class PostRepository {
   Stream<List<Post>> observeNearbyPosts(
       {required GeoPoint point, required double radius});
 
-  Stream<List<UserInfo>> observePostMembers(String postId);
+  Future<List<UserInfo>> getPostMembers(Post post);
 
   Future<void> createPost(Post post);
 
@@ -36,8 +36,8 @@ abstract class PostRepository {
       DateTime? startTime});
 
   Future<void> addPostMember(
-      {required FirestoreId postId, required UserInfo user});
+      {required FirestoreId postId, required FirestoreId userId});
 
   Future<void> removePostMember(
-      {required FirestoreId postId, required String userId});
+      {required FirestoreId postId, required FirestoreId userId});
 }
