@@ -9,6 +9,7 @@ class Group extends Post {
     required DateTime creationTime,
     required PostVisibility visibility,
     required PostPlace place,
+    required Map<String, List<String>> geohashesByRadius,
     required List<Asset> media,
     required List<FirestoreId> members,
   }) : super._(
@@ -20,8 +21,11 @@ class Group extends Post {
             creationTime: creationTime,
             visibility: visibility,
             place: place,
+            geohashesByRadius: geohashesByRadius,
             media: media,
             members: members);
+
+
 
   @override
   JsonMap toJson() => {
@@ -32,7 +36,8 @@ class Group extends Post {
         "title": title,
         "description": description,
         "visibility": visibility.name,
-        "location": place.toJson(),
+        "place": place.toJson(),
+        "geohashesByRadius": geohashesByRadius,
         "media": media.map((e) => e.toJson()).toList(),
         "members": members
       };
@@ -46,6 +51,7 @@ class Group extends Post {
       visibility:
           PostVisibility.values.firstWhere((t) => t.name == map["visibility"]),
       place: PostPlace.fromJson(map["place"]),
+      geohashesByRadius: map["geohashesByRadius"],
       media: (map['media'] as List<dynamic>)
           .map((e) => Asset.fromJson(e as JsonMap))
           .toList(),
@@ -62,17 +68,30 @@ class Group extends Post {
     required PostPlace place,
     required List<Asset> media,
     required List<FirestoreId> members,
-  }) =>
-      Group(
-          id: const Uuid().v4(),
-          author: author,
-          title: title,
-          description: description,
-          creationTime: DateTime.now(),
-          visibility: visibility,
-          place: place,
-          media: media,
-          members: members);
+  })  {
+    final GeoHasher geoHasher = GeoHasher();
+    final Map<String, List<String>> geohashMap = {};
+    for (final int radius in AppConfig.locationQueryRadiusLevel) {
+      final List<String> geohashesForRadius =
+          geoHasher.getGeohashesWithinRadius(place.point.longitude,
+              place.point.latitude, (radius * 1000).toDouble(),
+              precision: AppConfig.defaultGeoHashPrecision);
+      geohashMap[radius.toString()] = geohashesForRadius;
+    }
+
+    return Group(
+      id: const Uuid().v4(),
+      author: author,
+      title: title,
+      description: description,
+      creationTime: DateTime.now(),
+      visibility: visibility,
+      place: place,
+      geohashesByRadius: geohashMap,
+      media: media,
+      members: members
+    );
+  }
 
   @override
   List<Object> get props => [
