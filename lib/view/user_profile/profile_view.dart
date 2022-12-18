@@ -43,9 +43,20 @@ class UserProfileView extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              UserImage(
-                                user.picture,
-                                diameter: 55,
+                              Row(
+                                children: [
+                                  UserImage(
+                                    user.picture,
+                                    diameter: 55,
+                                  ),
+                                  const SizedBox(width: 20),
+                                  Text(user.name,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge
+                                          ?.copyWith(
+                                              fontWeight: FontWeight.bold)),
+                                ],
                               ),
                               IconButton(
                                   padding: EdgeInsets.zero,
@@ -55,12 +66,6 @@ class UserProfileView extends StatelessWidget {
                                   icon: const Icon(FeatherIcons.x))
                             ],
                           ),
-                          const SizedBox(height: 18),
-                          Text(user.name,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge
-                                  ?.copyWith(fontWeight: FontWeight.bold)),
                           const SizedBox(height: 20),
                           /*Text(
                         "BIO",

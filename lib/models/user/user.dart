@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../../utils/json_tools.dart';
 import '../../utils/type_aliases.dart';
 import '../abstract_models/abstract_models.dart';
 import '../utils.dart';
@@ -61,6 +62,7 @@ class User extends DatabaseDocument {
   final UserClearance? clearance;
   final List<FirestoreId> savedPosts;
   final String? fcmToken;
+  final Map<String, String> socialMedia;
 
   const User(
       {required FirestoreId id,
@@ -69,6 +71,7 @@ class User extends DatabaseDocument {
       this.savedPosts = const [],
       this.age,
       this.clearance = UserClearance.user,
+      this.socialMedia = const {},
       this.fcmToken})
       : super(id: id);
 
@@ -86,6 +89,7 @@ class User extends DatabaseDocument {
         'savedPosts': savedPosts,
         'age': age,
         'clearance': clearance?.level,
+        'socialMedia': socialMedia,
         'fcmToken': fcmToken
       };
 
@@ -98,10 +102,12 @@ class User extends DatabaseDocument {
               .map((e) => e as String)
               .toList()
           : [],
-      age: map['age'] as int?,
-      clearance: UserClearance.values
-          .firstWhere((e) => e.level >= (map['clearance'] as int? ?? 0)),
-      fcmToken: map['fcmToken']);
+      age: JsonTools.nullable<int>(map, "age"),
+      socialMedia:
+          JsonTools.nullable<Map<String, String>>(map, "socialMedia") ?? {},
+      clearance: UserClearance.values.firstWhere(
+          (e) => e.level >= (JsonTools.nullable<int>(map, "clearance") ?? 0)),
+      fcmToken: JsonTools.nullable<String>(map, "fcmToken"));
 
   factory User.fromDoc(DocumentSnapshot document) =>
       User.fromJson(documentSnaphsotToJson(document));

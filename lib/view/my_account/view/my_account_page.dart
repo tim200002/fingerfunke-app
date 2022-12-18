@@ -1,4 +1,5 @@
 import '../../../cubits/app_cubit/app_cubit.dart';
+import '../../../routes.dart';
 import '../../../utils/tools.dart';
 import '../../../utils/util_widgets/page_screen.dart';
 import '../profile_picture_image_upload/profile_picture_image_upload_widget.dart';
@@ -52,16 +53,14 @@ class _ProfileSection extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 7),
-                    child: Text(
-                      state.user.name,
-                      style: Theme.of(context).textTheme.headline4,
-                    ),
+                  Text(
+                    state.user.name,
+                    style: Theme.of(context).textTheme.headline4,
                   ),
+                  /*const SizedBox(height: 7),
                   const Text(
                       //ToDo: Show the user's real phone number
-                      "+49 123 456 7890"),
+                      "+49 123 456 7890"),*/
                 ],
               ),
             ),
@@ -85,15 +84,12 @@ class _AccountSection extends StatelessWidget {
         SettingsTile(
             title: l10n(context).lbl_socialMedia,
             leading: const Icon(Icons.link_rounded),
-            enabled: false,
-            onPressed: null),
+            onPressed: (c) =>
+                Navigator.of(c).pushNamed(Routes.linkSocialMedia)),
         SettingsTile(
-          title: l10n(context).lbl_accountManage,
-          leading: const Icon(Icons.account_circle_outlined),
-          onPressed: (context) {
-            Navigator.of(context).pushNamed("/manageAccount");
-          },
-        ),
+            title: l10n(context).lbl_accountManage,
+            leading: const Icon(Icons.account_circle_outlined),
+            onPressed: (c) => Navigator.of(c).pushNamed(Routes.manageAccount)),
       ],
     );
   }
