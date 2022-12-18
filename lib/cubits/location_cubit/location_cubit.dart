@@ -57,7 +57,7 @@ class LocationCubit extends Cubit<LocationState> {
   }
 
   /// Returns address of location
-  String generateAddress(String? address) {
+  static String generateAddress(String? address) {
     if (address == null) return "dein Standort";
     if (address.contains('+')) {
       return address.split(",")[0].trim().split(" ").last;

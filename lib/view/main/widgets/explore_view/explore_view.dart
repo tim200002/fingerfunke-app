@@ -26,7 +26,11 @@ class ExploreView extends StatelessWidget {
             onPressed: () => ExploreFilterView.navigate(
                 c), //Navigator.of(c).push(_filterRoute(c)),
             icon: const Icon(FeatherIcons.mapPin),
-            label: Text(l10n(context).lbl_exploreFilter)));
+            label: BlocBuilder<LocationCubit, LocationState>(
+                builder: (context, state) => state.maybeWhen(
+                    loaded: (location) =>
+                        Text(LocationCubit.generateAddress(location.address)),
+                    orElse: () => Text(l10n(context).lbl_exploreFilter)))));
   }
 
   @override
