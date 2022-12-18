@@ -73,7 +73,7 @@ class ExploreFilterView extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: Column(
           children: [
-            ElevatedButton(
+            TextButton(
               onPressed: () => Navigator.of(context).push(MaterialPageRoute(
                   builder: (context2) => BlocProvider.value(
                         value: BlocProvider.of<LocationCubit>(context),
@@ -97,7 +97,8 @@ class ExploreFilterView extends StatelessWidget {
                           denied: (_) => l10n(context).lbl_locationUnknown,
                           error: (_) => l10n(context).lbl_locationUnknown,
                           loaded: (location) =>
-                              LocationCubit.generateAddress(location.address))))
+                              location.getCityName() ??
+                              l10n(context).lbl_locationUnknown)))
                 ],
               ),
             ),

@@ -57,7 +57,7 @@ class BottomNavItem extends StatelessWidget {
             // Replace with a Row for horizontal icon + text
             children: [
               Container(
-                  margin: EdgeInsets.only(bottom: 3),
+                  margin: const EdgeInsets.only(bottom: 3),
                   padding:
                       const EdgeInsets.symmetric(vertical: 7, horizontal: 20),
                   decoration: selected

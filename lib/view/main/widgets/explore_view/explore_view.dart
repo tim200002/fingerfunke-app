@@ -6,9 +6,8 @@ import '../../../../cubits/live_config_cubit/live_config_cubit.dart';
 import '../../../../cubits/location_cubit/location_cubit.dart';
 import '../../../../routes.dart';
 import '../../../../utils/app_theme.dart';
-import '../../../../utils/tools.dart';
 import 'widgets/filter/cubit/feed_filter_cubit.dart';
-import 'widgets/filter/explore_filter_view.dart';
+import 'widgets/filter/explore_filter_button.dart';
 import 'widgets/post_discovery_feed/paged_post_discovery_feed.dart';
 
 class ExploreView extends StatelessWidget {
@@ -18,19 +17,6 @@ class ExploreView extends StatelessWidget {
     return IconButton(
         onPressed: () => Scaffold.of(outerContext).openDrawer(),
         icon: const Icon(FeatherIcons.menu));
-  }
-
-  Widget _filterButton(BuildContext context) {
-    return Builder(
-        builder: (c) => TextButton.icon(
-            onPressed: () => ExploreFilterView.navigate(
-                c), //Navigator.of(c).push(_filterRoute(c)),
-            icon: const Icon(FeatherIcons.mapPin),
-            label: BlocBuilder<LocationCubit, LocationState>(
-                builder: (context, state) => state.maybeWhen(
-                    loaded: (location) =>
-                        Text(LocationCubit.generateAddress(location.address)),
-                    orElse: () => Text(l10n(context).lbl_exploreFilter)))));
   }
 
   @override
@@ -47,7 +33,7 @@ class ExploreView extends StatelessWidget {
         child: Scaffold(
           appBar: AppBar(
             leading: _drawerButton(context),
-            title: _filterButton(context),
+            title: const ExploreFilterButton(),
             actions: [
               const SizedBox(
                 width: 62,

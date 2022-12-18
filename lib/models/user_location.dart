@@ -19,4 +19,7 @@ class UserLocation extends Serializable {
   JsonMap toJson() => {"position": position.toJson(), "address": address};
 
   GeoPoint toGeoPoint() => GeoPoint(position.latitude, position.longitude);
+
+  String? getCityName() =>
+      address.split(",")[address.contains('+') ? 0 : 1].trim().split(" ").last;
 }
