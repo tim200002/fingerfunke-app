@@ -12,7 +12,36 @@ import '../../../../../maps/view/maps_place_picker_page.dart';
 import 'cubit/feed_filter_cubit.dart';
 
 class ExploreFilterView extends StatelessWidget {
-  const ExploreFilterView({Key? key}) : super(key: key);
+  const ExploreFilterView._({Key? key}) : super(key: key);
+
+  static Widget _providers(BuildContext context) {
+    return MultiBlocProvider(providers: [
+      BlocProvider.value(
+        value: BlocProvider.of<FeedFilterCubit>(context),
+      ),
+      BlocProvider.value(
+        value: BlocProvider.of<LocationCubit>(context),
+      ),
+    ], child: const ExploreFilterView._());
+  }
+
+  static void navigate(BuildContext context) {
+    showDialog<void>(
+        context: context,
+        //useSafeArea: false,
+        barrierDismissible: true, // user must tap button!
+        builder: (_) => Align(
+            alignment: Alignment.topCenter,
+            child: Material(
+                type: MaterialType.transparency,
+                child: ClipRRect(
+                  borderRadius:
+                      const BorderRadius.vertical(bottom: Radius.circular(20)),
+                  child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxHeight: 600),
+                      child: _providers(context)),
+                ))));
+  }
 
   Widget _filterItem(
       String off, String on, bool value, Function(bool) onChanged) {
@@ -98,50 +127,56 @@ class ExploreFilterView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          title: Text(l10n(context).lbl_exploreFilterEdit),
-          automaticallyImplyLeading: false,
-          actions: [
-            IconButton(
-                onPressed: () => Navigator.of(context).pop(),
-                icon: const Icon(FeatherIcons.check))
+    return Container(
+      color: Colors.white,
+      child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            AppBar(
+                title: Text(l10n(context).lbl_exploreFilterEdit),
+                automaticallyImplyLeading: false,
+                actions: [
+                  IconButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      icon: const Icon(FeatherIcons.check))
+                ]),
+            BlocBuilder<FeedFilterCubit, FeedFilterState>(
+              builder: (context, filter) {
+                return ListView(
+                  padding:
+                      const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                  shrinkWrap: true,
+                  children: [
+                    _sectionHeader(context, l10n(context).lbl_filterPerimeter),
+                    _locationSlider(context, filter.distance, onChanged: (v) {
+                      logger.d(v);
+                      context
+                          .read<FeedFilterCubit>()
+                          .change(filter.copyWith(distance: v));
+                    }),
+                    _sectionHeader(context, l10n(context).lbl_filterPosts),
+                    _filterItem(
+                        l10n(context).lbl_filterAll,
+                        l10n(context).lbl_filterHidePast,
+                        filter.hideCompleted,
+                        (v) => context
+                            .read<FeedFilterCubit>()
+                            .change(filter.copyWith(hideCompleted: v))),
+                    const SizedBox(height: 12),
+                    _filterItem(
+                        l10n(context).lbl_filterAll,
+                        l10n(context).lbl_filterOnlyNearFuture,
+                        filter.hideFarFuture,
+                        (v) => context
+                            .read<FeedFilterCubit>()
+                            .change(filter.copyWith(hideFarFuture: v))),
+                    //_filterItem("alle anzeigen", "alte verstecken")
+                  ],
+                );
+              },
+            ),
           ]),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: BlocBuilder<FeedFilterCubit, FeedFilterState>(
-          builder: (context, filter) {
-            return ListView(
-              children: [
-                _sectionHeader(context, l10n(context).lbl_filterPerimeter),
-                _locationSlider(context, filter.distance, onChanged: (v) {
-                  logger.d(v);
-                  context
-                      .read<FeedFilterCubit>()
-                      .change(filter.copyWith(distance: v));
-                }),
-                _sectionHeader(context, l10n(context).lbl_filterPosts),
-                _filterItem(
-                    l10n(context).lbl_filterAll,
-                    l10n(context).lbl_filterHidePast,
-                    filter.hideCompleted,
-                    (v) => context
-                        .read<FeedFilterCubit>()
-                        .change(filter.copyWith(hideCompleted: v))),
-                const SizedBox(height: 12),
-                _filterItem(
-                    l10n(context).lbl_filterAll,
-                    l10n(context).lbl_filterOnlyNearFuture,
-                    filter.hideFarFuture,
-                    (v) => context
-                        .read<FeedFilterCubit>()
-                        .change(filter.copyWith(hideFarFuture: v))),
-                //_filterItem("alle anzeigen", "alte verstecken")
-              ],
-            );
-          },
-        ),
-      ),
     );
   }
 }
