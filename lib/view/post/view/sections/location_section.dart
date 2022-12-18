@@ -6,7 +6,8 @@ import '../../../../utils/exceptions.dart';
 import '../../../../utils/placeholder_box.dart';
 import '../../../../utils/tools.dart';
 import '../../../maps/view/static_maps_provider.dart';
-import '../../cubits/post_editor_cubit/post_editor_cubit.dart';
+import '../../cubits/abstract_post_editor_cubit/abstract_post_editor_cubit.dart';
+import '../../cubits/abstract_post_editor_cubit/event_editor_cubit.dart';
 import '../../cubits/post_viewer_cubit/post_cubit.dart';
 
 /// Shows structured information about the event
@@ -34,15 +35,18 @@ class LocationSection extends StatelessWidget {
 }
 
 class _Edit extends StatelessWidget {
-  const _Edit({Key? key}) : super(key: key);
+  const _Edit({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PostEditorCubit, PostEditorState>(
+    EventEditorCubit eventEditorCubit = context.read<EventEditorCubit>();
+    return BlocBuilder<EventEditorCubit, PostEditorState>(
+      // ToDo Build when to only update after change to the map
       builder: (context, state) => state.maybeWhen(
-          editEvent: (eventEditorFields, _) => StaticMapsProvider(
-              address: eventEditorFields.place?.address ?? ""),
+          editing: (_,__ ) => StaticMapsProvider(
+              address: eventEditorCubit.place?.address ?? ""),
           orElse: () => throw InvalidStateException()),
     );
   }
 }
+

@@ -54,9 +54,7 @@ enum UserClearance {
   const UserClearance(this.level, this.label, this.color);
 }
 
-class User extends DatabaseDocument {
-  final String name;
-  final String? picture;
+class User extends UserInfo {
   final int? age;
   final UserClearance? clearance;
   final List<FirestoreId> savedPosts;
@@ -64,13 +62,13 @@ class User extends DatabaseDocument {
 
   const User(
       {required FirestoreId id,
-      required this.name,
-      this.picture,
+      required String name,
+      String? picture,
       this.savedPosts = const [],
       this.age,
       this.clearance = UserClearance.user,
       this.fcmToken})
-      : super(id: id);
+      : super( id: id, name: name, picture: picture);
 
   UserInfo toInfo() => UserInfo(id: id, name: name, picture: picture);
 

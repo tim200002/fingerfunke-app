@@ -9,8 +9,8 @@ import '../../../models/post/post.dart';
 import '../../../services/pagination/message_pagination_service.dart';
 import '../../../utils/app_theme.dart';
 import '../../../utils/tools.dart';
-import '../../error/exception_view.dart';
-import '../cubits/post_editor_cubit/post_editor_cubit.dart';
+import '../cubits/abstract_post_editor_cubit/abstract_post_editor_cubit.dart';
+import '../cubits/abstract_post_editor_cubit/event_editor_cubit.dart';
 import '../cubits/post_viewer_cubit/post_cubit.dart';
 import 'sections/author_section.dart';
 import 'sections/event_detail_section.dart';
@@ -22,11 +22,11 @@ import 'sections/post_posted_success_view.dart';
 import 'sections/title_section.dart';
 import 'widgets/edit_loading_view.dart';
 
-class PostPage extends StatelessWidget {
+class EventPage extends StatelessWidget {
   static const String editingHeroTag = "postEditor";
   final bool editing;
 
-  const PostPage({Key? key, this.editing = false}) : super(key: key);
+  const EventPage({Key? key, this.editing = false}) : super(key: key);
 
   Widget _content(BuildContext context) {
     return Scaffold(
@@ -95,31 +95,31 @@ class PostPage extends StatelessWidget {
   }
 
   Widget _editProviders(BuildContext context, Function(BuildContext) builder) {
-    final Post? post = ModalRoute.of(context)!.settings.arguments != null
-        ? ModalRoute.of(context)!.settings.arguments as Post
+    final Event? event = ModalRoute.of(context)!.settings.arguments != null
+        ? ModalRoute.of(context)!.settings.arguments as Event
         : null;
-    return BlocBuilder<AppCubit, AppState>(builder: (context, state) {
-      final user = state.user;
-      return BlocProvider<PostEditorCubit>(
-        create: (context) =>
-            PostEditorCubit(currentUser: user.toInfo(), postToBeEdited: post),
-        child: BlocConsumer<PostEditorCubit, PostEditorState>(
-          buildWhen: (prev, curr) => prev.runtimeType != curr.runtimeType,
-          listener: (context, state) =>
-              state.whenOrNull(error: (e) => Tools.showSnackbar(context, e)),
-          builder: (context, state) => state.when(
-            loading: () => EditLoadingView(message: l10n(context).lbl_loading),
-            editEvent: (_, __) => builder(context),
-            editGroup: (fields, inputValid) => ExceptionView(
-                exception: Exception("editing groups is not yet possible")),
+
+    final user = BlocProvider.of<AppCubit>(context).state.user;
+    return BlocProvider<EventEditorCubit>(
+      create: (context) {
+        if (event == null) {
+          return EventEditorCubit.createEmpty(user);
+        } else {
+          return EventEditorCubit.fromEvent(user, event);
+        }
+      },
+      child: BlocBuilder<EventEditorCubit, PostEditorState>(
+        builder: (context, state) {
+          return state.when(
+            editing: (_,__) => builder(context),
             error: (message) => const EditErrorView(),
             submitted: (id) => PostPostedSuccessView(postId: id),
             submitting: () =>
                 EditLoadingView(message: l10n(context).lbl_submitting),
-          ),
-        ),
-      );
-    });
+          );
+        },
+      ),
+    );
   }
 
   @override

@@ -218,6 +218,7 @@ class PostEditorCubit extends Cubit<PostEditorState> {
           media: _videoUploadCubitsToAssetsHelper(fields.videoUploadCubits),
           startTime: fields.startTime,
           place: fields.place);
+          return null;
     }
     return null;
   }

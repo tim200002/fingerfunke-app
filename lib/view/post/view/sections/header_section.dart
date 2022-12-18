@@ -12,14 +12,12 @@ import '../../../../models/asset/asset.dart';
 import '../../../../models/post/post.dart';
 import '../../../../repositories/video_repository/video_repository.impl.dart';
 import '../../../../utils/app_theme.dart';
-import '../../../../utils/exceptions.dart';
 import '../../../../utils/placeholder_box.dart';
 import '../../../../utils/tools.dart';
 import '../../../fullscreen_video/view/fullscreen_video_page.dart';
 import '../../../video_recorder/view/video_recorder_page.dart';
-import '../../cubits/post_editor_cubit/post_editor_cubit.dart';
+import '../../cubits/abstract_post_editor_cubit/event_editor_cubit.dart';
 import '../../cubits/post_viewer_cubit/post_cubit.dart';
-import '../../editor_models/general_editor_fields.dart';
 import '../widgets/post_settings_modal_content.dart';
 
 /// Widget to display a button with additional [widget] on the left. This widget
@@ -355,75 +353,104 @@ class _Edit extends StatelessWidget {
       {Key? key})
       : super(key: key);
 
-  Widget _thumbnail(
-    BuildContext context,
-    List<VideoUploadCubit> uploadCubits,
-  ) {
-    return ClipRRect(
-        borderRadius: const BorderRadius.vertical(
-          bottom: HeaderSection.imgBorderRadius,
-        ),
-        child: InkWell(
-          onTap: uploadCubits.isNotEmpty
-              ? null
-              : () async {
-                  File? video = await Navigator.push<File?>(
-                      context, VideoRecorderPage.route());
-                  if (video != null) {
-                    context.read<PostEditorCubit>().addVideo(video);
-                  }
-                },
-          child: (uploadCubits.isNotEmpty)
-              ? VideoUploadTile(
-                  cubit: uploadCubits[0],
-                  onDelete: (cubitId) =>
-                      context.read<PostEditorCubit>().removeVideo(cubitId),
-                  height: 210,
-                )
-              : Container(
-                  height: 210,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .primaryContainer
-                        .withOpacity(0.6),
-                    borderRadius: const BorderRadius.vertical(
-                        bottom: Radius.circular(10)),
-                  ),
-                  child: Center(
-                      child: Icon(
-                    FeatherIcons.video,
-                    color: Theme.of(context).colorScheme.onPrimaryContainer,
-                    size: 40,
-                  )),
-                ),
-        ));
+  @override
+  Widget build(BuildContext context) {
+    EventEditorCubit eventEditorCubit =
+        BlocProvider.of<EventEditorCubit>(context);
+    return Stack(
+      children: [
+        SizedBox(
+            height: thumbnailHeight,
+            child: _Thumbnail(eventEditorCubit.videoUploadCubits.isNotEmpty
+                ? eventEditorCubit.videoUploadCubits[0]
+                : null)),
+        if (!includeTitle)
+          HeaderSection._titleCardHeader(
+            context,
+            thumbnailHeight,
+            titleOverlap,
+            title: eventEditorCubit.title,
+            onChanged: (title) =>
+                BlocProvider.of<EventEditorCubit>(context).updateTitle(title),
+          ),
+      ],
+    );
+  }
+}
+
+class _Thumbnail extends StatefulWidget {
+  final VideoUploadCubit? initialUploadCubit;
+  const _Thumbnail(this.initialUploadCubit, {super.key});
+
+  @override
+  State<_Thumbnail> createState() => __ThumbnailState();
+}
+
+class __ThumbnailState extends State<_Thumbnail> {
+  late VideoUploadCubit? uploadCubit;
+  @override
+  void initState() {
+    uploadCubit = widget.initialUploadCubit;
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PostEditorCubit, PostEditorState>(
-      builder: (context, state) => state.maybeWhen(
-          editEvent: (fields, _) => Stack(
-                children: [
-                  SizedBox(
-                      height: thumbnailHeight,
-                      child: _thumbnail(context, fields.videoUploadCubits)),
-                  if (!includeTitle)
-                    HeaderSection._titleCardHeader(
-                      context,
-                      thumbnailHeight,
-                      titleOverlap,
-                      title: fields.title,
-                      onChanged: (t) =>
-                          BlocProvider.of<PostEditorCubit>(context)
-                              .updateInformation(
-                                  GeneralEditorFields.copyWithHelper(fields,
-                                      title: t)),
-                    ),
-                ],
+    return ClipRRect(
+      borderRadius: const BorderRadius.vertical(
+        bottom: HeaderSection.imgBorderRadius,
+      ),
+      child: InkWell(
+        onTap: uploadCubit != null
+            ? null
+            : () async {
+                File? video = await Navigator.push<File?>(
+                    context, VideoRecorderPage.route());
+                if (video != null) {
+                  EventEditorCubit eventEditorCubit =
+                      context.read<EventEditorCubit>();
+
+                  VideoUploadCubit videoUploadCubit = VideoUploadCubit.fromFile(
+                      video,
+                      onVideoUploaded: () => eventEditorCubit.validateInput());
+                  setState(() {
+                    uploadCubit=videoUploadCubit;
+                  });
+                  context
+                      .read<EventEditorCubit>()
+                      .addVideoUploadCubit(videoUploadCubit);
+                }
+              },
+        child: (uploadCubit != null)
+            ? VideoUploadTile(
+                cubit: uploadCubit!,
+                onDelete: (cubitId) {
+                  context.read<EventEditorCubit>().removeVideoUploadCubit(cubitId);
+                  setState(() {
+                    uploadCubit = null;
+                  });
+                },  
+                height: 210,
+              )
+            : Container(
+                height: 210,
+                decoration: BoxDecoration(
+                  color: Theme.of(context)
+                      .colorScheme
+                      .primaryContainer
+                      .withOpacity(0.6),
+                  borderRadius:
+                      const BorderRadius.vertical(bottom: Radius.circular(10)),
+                ),
+                child: Center(
+                  child: Icon(
+                    FeatherIcons.video,
+                    color: Theme.of(context).colorScheme.onPrimaryContainer,
+                    size: 40,
+                  ),
+                ),
               ),
-          orElse: () => throw InvalidStateException()),
+      ),
     );
   }
 }

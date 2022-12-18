@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../models/post/post.dart';
 import '../../../../services/google_maps_service.dart';
-import '../../../../utils/exceptions.dart';
 import '../../../../utils/extensions/date_time.dart';
 import '../../../../utils/placeholder_box.dart';
 import '../../../../utils/tools.dart';
 import '../../../maps/view/maps_place_picker_page.dart';
-import '../../cubits/post_editor_cubit/post_editor_cubit.dart';
+import '../../cubits/abstract_post_editor_cubit/event_editor_cubit.dart';
 import '../../cubits/post_viewer_cubit/post_cubit.dart';
 import '../widgets/icon_text_item.dart';
 
@@ -22,7 +22,7 @@ class EventDetailSection extends StatelessWidget {
   const EventDetailSection(this.editing, {Key? key}) : super(key: key);
 
   Widget _loading() {
-    // including this would clutter the loading UI. Therefore i left it out
+    // including this would clutter the loading UI. Therefore I left it out
     return Container();
   }
 
@@ -32,60 +32,61 @@ class EventDetailSection extends StatelessWidget {
         ? const _Edit()
         : BlocBuilder<PostCubit, PostState>(
             builder: (context, state) => state.when(
-                loading: (_) => PlaceholderBox.shimmer(_loading()),
-                normal: (post, _) => post is! Event
-                    ? Text(l10n(context).msg_postOnlyEventsSupported)
-                    : Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          if (post.isCompleted)
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 20),
-                              child: Container(
-                                padding: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                    color: Colors.teal.shade50,
-                                    borderRadius: BorderRadius.circular(6)),
-                                child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      const Icon(FeatherIcons.check),
-                                      const SizedBox(width: 15),
-                                      Expanded(
-                                          child: Text(l10n(context)
-                                              .lbl_eventInPastEdit))
-                                    ]),
-                              ),
+              loading: (_) => PlaceholderBox.shimmer(_loading()),
+              normal: (post, _) => post is! Event
+                  ? Text(l10n(context).msg_postOnlyEventsSupported)
+                  : Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (post.isCompleted)
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 20),
+                            child: Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                  color: Colors.teal.shade50,
+                                  borderRadius: BorderRadius.circular(6)),
+                              child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    const Icon(FeatherIcons.check),
+                                    const SizedBox(width: 15),
+                                    Expanded(
+                                        child: Text(
+                                            l10n(context).lbl_eventInPastEdit))
+                                  ]),
                             ),
-                          IconTextItem(
-                              icon: FeatherIcons.calendar,
-                              label: post.startTime.dateString,
-                              subLabel: l10n(context)
-                                  .lbl_postTime(post.startTime.timeString)),
-                          IconTextItem(
-                            icon: FeatherIcons.mapPin,
-                            label: post.place.address.split(',')[0],
-                            subLabel: post.place.address.split(',').length < 2
-                                ? null
-                                : post.place.address.split(',')[1],
-                            onTap: () async {
-                              if (await canLaunchUrl(
-                                  GoogleMapsService.getGoogleUri(
-                                      post.place.address))) {
-                                await launchUrl(
-                                    GoogleMapsService.getGoogleUri(
-                                        post.place.address),
-                                    mode: LaunchMode.externalApplication);
-                              } else {
-                                throw 'Could not open the map.';
-                              }
-                            },
                           ),
-                        ],
-                      )));
+                        IconTextItem(
+                            icon: FeatherIcons.calendar,
+                            label: post.startTime.dateString,
+                            subLabel: l10n(context)
+                                .lbl_postTime(post.startTime.timeString)),
+                        IconTextItem(
+                          icon: FeatherIcons.mapPin,
+                          label: post.place.address.split(',')[0],
+                          subLabel: post.place.address.split(',').length < 2
+                              ? null
+                              : post.place.address.split(',')[1],
+                          onTap: () async {
+                            if (await canLaunchUrl(
+                                GoogleMapsService.getGoogleUri(
+                                    post.place.address))) {
+                              await launchUrl(
+                                  GoogleMapsService.getGoogleUri(
+                                      post.place.address),
+                                  mode: LaunchMode.externalApplication);
+                            } else {
+                              throw 'Could not open the map.';
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+            ),
+          );
   }
 }
 
@@ -94,75 +95,117 @@ class _Edit extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PostEditorCubit, PostEditorState>(
-      builder: (context, state) => state.maybeWhen(
-          editEvent: (eventEditorFields, _) => Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconTextItem(
-                      icon: Icons.calendar_today_rounded,
-                      label: eventEditorFields.startTime.dateString,
-                      subLabel: l10n(context)
-                          .lbl_postTime(eventEditorFields.startTime.timeString),
-                      onTap: () => showDatePicker(
-                            context: context,
-                            initialDate: eventEditorFields.startTime,
-                            firstDate: DateTime(2021),
-                            lastDate: DateTime.now().add(
-                              const Duration(days: 365),
-                            ),
-                          ).then(
-                            (pickedDate) {
-                              if (pickedDate != null) {
-                                showTimePicker(
-                                        context: context,
-                                        initialTime: eventEditorFields
-                                            .startTime.timeOfDay)
-                                    .then((time) {
-                                  if (time != null) {
-                                    context
-                                        .read<PostEditorCubit>()
-                                        .updateInformation(
-                                            eventEditorFields.copyWith(
-                                                startTime: eventEditorFields
-                                                    .startTime
-                                                    .copyTime(time)
-                                                    .copyDate(pickedDate)));
-                                  }
-                                });
-                              }
-                            },
-                          )),
-                  IconTextItem(
-                    icon: Icons.location_on_outlined,
-                    label: eventEditorFields.place != null
-                        ? eventEditorFields.place!.address.split(',')[0]
-                        : l10n(context).lbl_locationChoose,
-                    subLabel: eventEditorFields.place == null
-                        ? null
-                        : eventEditorFields.place!.address.split(',').length < 2
-                            ? null
-                            : eventEditorFields.place!.address.split(',')[1],
-                    onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context2) =>
-                              BlocProvider<PostEditorCubit>.value(
-                            value: BlocProvider.of<PostEditorCubit>(context),
-                            child: MapsPlacePickerPage(
-                              onPlacePicked: (pickResult) => context
-                                  .read<PostEditorCubit>()
-                                  .updateInformation(eventEditorFields.copyWith(
-                                      place: PostPlace.fromPick(pickResult))),
-                            ),
-                          ),
-                        )),
-                  )
-                ],
-              ),
-          orElse: () => throw InvalidStateException()),
+    EventEditorCubit eventEditorCubit =
+        BlocProvider.of<EventEditorCubit>(context);
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        _DatePicker(eventEditorCubit.startTime),
+        _AdressPicker(eventEditorCubit.place)
+      ],
     );
+  }
+}
+
+class _DatePicker extends StatefulWidget {
+  final DateTime? initialDate;
+  const _DatePicker(this.initialDate, {super.key});
+
+  @override
+  State<_DatePicker> createState() => __DatePickerState();
+}
+
+class __DatePickerState extends State<_DatePicker> {
+  late DateTime date;
+
+  @override
+  void initState() {
+    date = widget.initialDate ?? DateTime.now();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return IconTextItem(
+      icon: Icons.calendar_today_rounded,
+      label: date.dateString,
+      subLabel: l10n(context).lbl_postTime(date.timeString),
+      onTap: () => showDatePicker(
+        context: context,
+        initialDate: date,
+        firstDate: DateTime.now(),
+        lastDate: DateTime.now().add(
+          const Duration(days: 365),
+        ),
+      ).then(
+        (pickedDate) {
+          if (pickedDate != null) {
+            showTimePicker(
+                    context: context, initialTime: DateTime.now().timeOfDay)
+                .then((time) {
+              if (time != null) {
+                DateTime newDate = DateTime(pickedDate.year, pickedDate.month,
+                    pickedDate.day, time.hour, time.minute, 0, 0, 0);
+                setState(() {
+                  date = newDate;
+                });
+                context.read<EventEditorCubit>().updateStartTime(newDate);
+              }
+            });
+          }
+        },
+      ),
+    );
+  }
+}
+
+class _AdressPicker extends StatefulWidget {
+  final PostPlace? initialPlace;
+  const _AdressPicker(this.initialPlace, {super.key});
+
+  @override
+  State<_AdressPicker> createState() => __AdressPickerState();
+}
+
+class __AdressPickerState extends State<_AdressPicker> {
+  PostPlace? place;
+
+  @override
+  void initState() {
+    place = widget.initialPlace;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return IconTextItem(
+      icon: Icons.location_on_outlined,
+      label: place != null
+          ? place!.address.split(',')[0]
+          : l10n(context).lbl_locationChoose,
+      subLabel: place == null
+          ? null
+          : place!.address.split(',').length < 2
+              ? null
+              : place!.address.split(',')[1],
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => MapsPlacePickerPage(
+            onPlacePicked: (pickResult) => _onPlacePicked(pickResult),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _onPlacePicked(PickResult pickResult) {
+    setState(() {
+      place = PostPlace.fromPick(pickResult);
+      context.read<EventEditorCubit>().updatePlace(place);
+    });
   }
 }

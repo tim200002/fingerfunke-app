@@ -1,4 +1,4 @@
-part of 'post_editor_cubit.dart';
+part of 'post_editor_cubit';
 
 @freezed
 class PostEditorState with _$PostEditorState {

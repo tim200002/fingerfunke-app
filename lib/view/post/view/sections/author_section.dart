@@ -25,15 +25,17 @@ class AuthorSection extends StatelessWidget {
         ? Container() // show nothing on editing
         : BlocBuilder<PostCubit, PostState>(
             builder: (context, state) => state.when(
-                loading: (_) => PlaceholderBox.shimmer(_loading()),
-                normal: (post, _) => Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(12),
-                        child: Text(
-                          l10n(context).lbl_postCreatedBy(post.author.name),
-                          style: Theme.of(context).textTheme.caption,
-                        ),
-                      ),
-                    )));
+              loading: (_) => PlaceholderBox.shimmer(_loading()),
+              normal: (post, _) => Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Text(
+                    l10n(context).lbl_postCreatedBy(post.author.name),
+                    style: Theme.of(context).textTheme.caption,
+                  ),
+                ),
+              ),
+            ),
+          );
   }
 }

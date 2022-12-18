@@ -8,7 +8,8 @@ import '../../../../models/message/message.dart';
 import '../../../../routes.dart';
 import '../../../../utils/tools.dart';
 import '../../../chat/view/chat_page.dart';
-import '../../cubits/post_editor_cubit/post_editor_cubit.dart';
+import '../../cubits/abstract_post_editor_cubit/abstract_post_editor_cubit.dart';
+import '../../cubits/abstract_post_editor_cubit/event_editor_cubit.dart';
 import '../../cubits/post_viewer_cubit/post_cubit.dart';
 
 /// Buttons on the post page. In viewing mode, these are used to allow the user
@@ -131,7 +132,7 @@ class _Edit extends StatelessWidget {
                 : _lightenColor(
                     Theme.of(context).colorScheme.onBackground, 0.4),
             onTap: valid
-                ? () => context.read<PostEditorCubit>().submit()
+                ? () => context.read<EventEditorCubit>().submit()
                 : () => Tools.showSnackbar(
                     context, l10n(context).msg_editFieldsMissing),
           ))
@@ -140,10 +141,11 @@ class _Edit extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PostEditorCubit, PostEditorState>(
-        builder: (context, state) => state.maybeWhen(
-            orElse: () => Container(),
-            editEvent: (_, valid) => _sendButton(context, false, valid: valid),
-            submitting: () => _sendButton(context, true)));
+    return BlocBuilder<EventEditorCubit, PostEditorState>(
+      builder: (context, state) => state.maybeWhen(
+          orElse: () => Container(),
+          editing: (_, valid) => _sendButton(context, false, valid: valid),
+          submitting: () => _sendButton(context, true)),
+    );
   }
 }
