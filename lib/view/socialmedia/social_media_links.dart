@@ -13,7 +13,9 @@ class _SocialAccount {
 }
 
 class SocialMediaLinks extends StatelessWidget {
-  const SocialMediaLinks({super.key});
+  final User user;
+
+  const SocialMediaLinks({super.key, required this.user});
 
   //TODO: it's a bit ugly to do these calculations on the view side
   List<_SocialAccount> _getAccounts(User user) {
@@ -31,23 +33,28 @@ class SocialMediaLinks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AppCubit, AppState>(builder: (context, state) {
-      List<_SocialAccount> accounts = _getAccounts(state.user);
-      return Wrap(
-        spacing: 10,
-        runSpacing: 10,
-        children: [
-          for (_SocialAccount a in accounts)
-            IconButton(
-                onPressed: () => {
-                      launchUrl(
-                          Uri.https(a.service.host,
-                              "${a.service.profilePath}${a.username}"),
-                          mode: LaunchMode.externalNonBrowserApplication)
-                    },
-                icon: Icon(a.service.icon))
-        ],
-      );
-    });
+    List<_SocialAccount> accounts = _getAccounts(user);
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const SizedBox(height: 30),
+        Wrap(
+          spacing: 10,
+          runSpacing: 10,
+          children: [
+            for (_SocialAccount a in accounts)
+              IconButton(
+                  onPressed: () => {
+                        launchUrl(
+                            Uri.https(a.service.host,
+                                "${a.service.profilePath}${a.username}"),
+                            mode: LaunchMode.externalNonBrowserApplication)
+                      },
+                  icon: Icon(a.service.icon))
+          ],
+        ),
+      ],
+    );
   }
 }
