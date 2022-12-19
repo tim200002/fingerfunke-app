@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../cubits/app_cubit/app_cubit.dart';
 import '../../models/user/user.dart';
 import 'social_media_services.dart';
 

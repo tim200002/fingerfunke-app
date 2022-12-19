@@ -15,7 +15,8 @@ abstract class UserRepository {
       String? picture,
       int? age,
       List<FirestoreId>? savedPosts,
-      Map<String, String> socialMedia});
+      Map<String, String> socialMedia,
+      String? bio});
 
   Future<void> savePost(FirestoreId userId, FirestoreId postId);
   Future<void> unsavePost(FirestoreId userId, FirestoreId postId);

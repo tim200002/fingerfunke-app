@@ -2,6 +2,7 @@ import '../../../cubits/app_cubit/app_cubit.dart';
 import '../../../routes.dart';
 import '../../../utils/tools.dart';
 import '../../../utils/util_widgets/page_screen.dart';
+import '../../user_bio/user_bio_editor.dart';
 import '../profile_picture_image_upload/profile_picture_image_upload_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,8 +22,20 @@ class MyAccountPage extends StatelessWidget {
               onPressed: () => Navigator.of(context).pop(),
               icon: const Icon(Icons.close))),
       body: ListView(
-        children: const [
-          _ProfileSection(),
+        children: [
+          Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.grey.shade200),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: const [
+                _ProfileSection(),
+                UserBioEditor(),
+              ],
+            ),
+          ),
           _AccountSection(),
         ],
       ),
@@ -55,7 +68,7 @@ class _ProfileSection extends StatelessWidget {
                 children: [
                   Text(
                     state.user.name,
-                    style: Theme.of(context).textTheme.headline4,
+                    style: Theme.of(context).textTheme.headline5,
                   ),
                   /*const SizedBox(height: 7),
                   const Text(

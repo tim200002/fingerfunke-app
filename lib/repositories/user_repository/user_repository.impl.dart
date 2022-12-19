@@ -29,13 +29,15 @@ class UserRepositoryImpl implements UserRepository {
       String? picture,
       int? age,
       List<FirestoreId>? savedPosts,
-      Map<String, String>? socialMedia}) async {
+      Map<String, String>? socialMedia,
+      String? bio}) async {
     final JsonMap updateMap = {
       'name': name,
       'picture': picture,
       'age': age,
       'savedPosts': savedPosts,
-      'socialMedia': socialMedia
+      'socialMedia': socialMedia,
+      'bio': bio
     }..removeWhere((key, value) => value == null);
     await _userCollection.doc(userId).update(updateMap);
   }

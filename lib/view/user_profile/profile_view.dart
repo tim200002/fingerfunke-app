@@ -67,16 +67,14 @@ class UserProfileView extends StatelessWidget {
                                   icon: const Icon(FeatherIcons.x))
                             ],
                           ),
-                          const SizedBox(height: 20),
-                          /*Text(
-                        "BIO",
-                        style: GoogleFonts.signika(
-                            fontSize: 13, fontWeight: FontWeight.bold),
-                      ),*/
-                          Text(
-                            "Demo Text Voluptatem voluptas architecto vero et voluptatem ut ut et. Illum dolorum consequatur id quia. Vel aut quasi qui veniam ut assumenda",
-                            style: GoogleFonts.signika(fontSize: 15),
-                          ),
+                          if (user.bio?.isNotEmpty ?? false)
+                            Padding(
+                              padding: const EdgeInsets.only(top: 25),
+                              child: Text(
+                                user.bio!,
+                                style: GoogleFonts.signika(fontSize: 15),
+                              ),
+                            ),
                           SocialMediaLinks(user: user),
                           const SizedBox(height: 30),
                         ],
