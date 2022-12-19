@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../common_widgets/image/user_image/user_image.dart';
 import '../../cubits/user_cubit/user_cubit.dart';
 import '../error/exception_view.dart';
+import '../socialmedia/social_media_links.dart';
 
 class UserProfileView extends StatelessWidget {
   final String userId;
@@ -43,9 +44,20 @@ class UserProfileView extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              UserImage(
-                                user.picture,
-                                diameter: 55,
+                              Row(
+                                children: [
+                                  UserImage(
+                                    user.picture,
+                                    diameter: 55,
+                                  ),
+                                  const SizedBox(width: 20),
+                                  Text(user.name,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge
+                                          ?.copyWith(
+                                              fontWeight: FontWeight.bold)),
+                                ],
                               ),
                               IconButton(
                                   padding: EdgeInsets.zero,
@@ -55,22 +67,15 @@ class UserProfileView extends StatelessWidget {
                                   icon: const Icon(FeatherIcons.x))
                             ],
                           ),
-                          const SizedBox(height: 18),
-                          Text(user.name,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge
-                                  ?.copyWith(fontWeight: FontWeight.bold)),
-                          const SizedBox(height: 20),
-                          /*Text(
-                        "BIO",
-                        style: GoogleFonts.signika(
-                            fontSize: 13, fontWeight: FontWeight.bold),
-                      ),*/
-                          Text(
-                            "Demo Text Voluptatem voluptas architecto vero et voluptatem ut ut et. Illum dolorum consequatur id quia. Vel aut quasi qui veniam ut assumenda",
-                            style: GoogleFonts.signika(fontSize: 15),
-                          ),
+                          if (user.bio?.isNotEmpty ?? false)
+                            Padding(
+                              padding: const EdgeInsets.only(top: 25),
+                              child: Text(
+                                user.bio!,
+                                style: GoogleFonts.signika(fontSize: 15),
+                              ),
+                            ),
+                          SocialMediaLinks(user: user),
                           const SizedBox(height: 30),
                         ],
                       )))),

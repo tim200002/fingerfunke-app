@@ -8,6 +8,7 @@ import 'view/feedback/send/feedback_send_page.dart';
 import 'view/moderation/mod_post_report/mod_post_report_page.dart';
 import 'view/moderation/moderation_page/moderation_page.dart';
 import 'view/my_account/view/my_account_page.dart';
+import 'view/socialmedia/user_socialmedia_page.dart';
 import 'view/post/view/post_page.dart';
 import 'view/saved/saved_page.dart';
 
@@ -21,7 +22,8 @@ class Routes {
   static const devtools = "/devtools";
   static const feedback = "/feedback";
   static const licenses = "/about/licenses";
-  static const manageAccount = "/manageAccount";
+  static const manageAccount = "/account/manage";
+  static const linkSocialMedia = "/account/social";
   static const moderation = "/moderation";
   static const moderationPosts = "/moderation/posts";
   static const post = "/post";
@@ -38,6 +40,7 @@ final routes = {
   Routes.feedback: (context) => const FeedbackSendPage(),
   Routes.licenses: (context) => const OssLicensesPage(),
   Routes.manageAccount: (context) => const ManageAccountPage(),
+  Routes.linkSocialMedia: (context) => const UserSocialMediaPage(),
   Routes.moderation: (context) => const ModerationPage(),
   Routes.moderationPosts: (context) => const ModPostReportPage(),
   Routes.post: (context) => const PostPage(),

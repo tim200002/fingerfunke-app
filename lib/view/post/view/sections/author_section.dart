@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../utils/placeholder_box.dart';
 import '../../../../utils/tools.dart';
+import '../../../user_profile/profile_view.dart';
 import '../../cubits/post_viewer_cubit/post_cubit.dart';
 
 /// shows information about the author of the post.
@@ -27,12 +28,15 @@ class AuthorSection extends StatelessWidget {
             builder: (context, state) => state.when(
                 loading: (_) => PlaceholderBox.shimmer(_loading()),
                 normal: (post, _) => Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(12),
-                        child: Text(
-                          l10n(context).lbl_postCreatedBy(post.author.name),
-                          style: Theme.of(context).textTheme.caption,
-                        ),
+                      child: InkWell(
+                        onTap: () => UserProfileView.showAsBottomSheet(context,
+                            userId: post.author.id),
+                        child: Padding(
+                            padding: const EdgeInsets.all(12),
+                            child: Text(
+                              l10n(context).lbl_postCreatedBy(post.author.name),
+                              style: Theme.of(context).textTheme.caption,
+                            )),
                       ),
                     )));
   }
