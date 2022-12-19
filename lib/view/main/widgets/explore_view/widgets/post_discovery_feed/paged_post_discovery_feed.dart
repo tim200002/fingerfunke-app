@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../../common_widgets/list_view/list_items/post_feed_image_item.dart';
+import '../../../../../../common_widgets/list_items/post_feed_image_item.dart';
 import '../../../../../../cubits/location_cubit/location_cubit.dart';
 import '../../../../../../cubits/settings_cubit/app_settings_cubit.dart';
 import '../../../../../../models/post/post.dart';

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
-import '../../../../../common_widgets/list_view/pagination/cubit/paginated_list_cubit.dart';
 import '../../../../../cubits/app_cubit/app_cubit.dart';
 import '../../../../../models/message/message.dart';
 import '../../../../../routes.dart';
 import '../../../../../utils/tools.dart';
+import '../../../../chat/cubit/chat_cubit_cubit.dart';
 import '../../../../chat/view/chat_page.dart';
 import '../../../cubits/abstract_post_editor_cubit/abstract_post_editor_cubit.dart';
 import '../../../cubits/post_viewer_cubit/post_cubit.dart';
@@ -91,8 +91,8 @@ class PostActionButtons extends StatelessWidget {
                               arguments: ChatArguments(
                                 chatName: post.title,
                                 postId: post.id,
-                                paginatedListCubit: BlocProvider.of<
-                                    PaginatedListCubit<Message>>(context),
+                                chatCubit: BlocProvider.of<
+                                    ChatCubit>(context),
                               ),
                             )),
                   ),

@@ -58,37 +58,38 @@ class ExploreView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-        providers: [
-          BlocProvider<FeedFilterCubit>(
-            create: (context) => FeedFilterCubit(),
-          ),
-          BlocProvider<LocationCubit>(
-            create: (context) => LocationCubit(),
-          ),
-        ],
-        child: Scaffold(
-          appBar: AppBar(
-            leading: _drawerButton(context),
-            title: _filterButton(context),
-            actions: [
-              const SizedBox(
-                width: 62,
-              ),
-              LiveConfig.builder((config) => config.hideFeedbackBtn
-                  ? Container()
-                  : IconButton(
-                      onPressed: () =>
-                          Navigator.of(context).pushNamed(Routes.feedback),
-                      icon: const Icon(Icons.thumbs_up_down_rounded)))
-            ],
-          ),
-          body: Container(
-              padding: const EdgeInsets.only(
-                  left: AppTheme.PADDING_SIDE,
-                  right: AppTheme.PADDING_SIDE,
-                  top: 15),
-              clipBehavior: Clip.none,
-              child: const PagedPostDiscoveryFeed()),
-        ));
+      providers: [
+        BlocProvider<FeedFilterCubit>(
+          create: (context) => FeedFilterCubit(),
+        ),
+        BlocProvider<LocationCubit>(
+          create: (context) => LocationCubit(),
+        ),
+      ],
+      child: Scaffold(
+        appBar: AppBar(
+          leading: _drawerButton(context),
+          title: _filterButton(context),
+          actions: [
+            const SizedBox(
+              width: 62,
+            ),
+            LiveConfig.builder((config) => config.hideFeedbackBtn
+                ? Container()
+                : IconButton(
+                    onPressed: () =>
+                        Navigator.of(context).pushNamed(Routes.feedback),
+                    icon: const Icon(Icons.thumbs_up_down_rounded)))
+          ],
+        ),
+        body: Container(
+            padding: const EdgeInsets.only(
+                left: AppTheme.PADDING_SIDE,
+                right: AppTheme.PADDING_SIDE,
+                top: 15),
+            clipBehavior: Clip.none,
+            child: const PagedPostDiscoveryFeed()),
+      ),
+    );
   }
 }

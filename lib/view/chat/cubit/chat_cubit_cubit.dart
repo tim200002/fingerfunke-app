@@ -1,33 +1,38 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import '../../../../services/pagination/firestore_pagination_service.dart';
+import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:logger/logger.dart';
 
-part 'paginated_list_state.dart';
-part 'paginated_list_cubit.freezed.dart';
+import '../../../cubits/paginated_list_cubit/paginated_list_cubit_interface.dart';
+import '../../../cubits/paginated_list_cubit/paginated_list_state_interface.dart';
+import '../../../models/message/message.dart';
+import '../../../services/pagination/message_pagination_service.dart';
+import '../../../utils/type_aliases.dart';
 
-class PaginatedListCubit<T> extends Cubit<PaginatedListState<T>> {
-  final FirestorePaginationService _paginationService;
+part 'chat_cubit_state.dart';
+
+class ChatCubit extends Cubit<ChatState>
+    implements PaginatedListCubitInterface {
+  final MessagePaginationService _paginationService;
   late final StreamSubscription _itemsStreamSubscription;
-
   final Logger _logger = Logger();
-  PaginatedListCubit({required FirestorePaginationService paginationService})
-      : _paginationService = paginationService,
-        super(PaginatedListState<T>(
-            items: [], isLoading: true, reachedEnd: false)) {
+
+  ChatCubit(FirestoreId postId)
+      : _paginationService = MessagePaginationService(postId),
+        super(const ChatState(items: [], isLoading: true, reachedEnd: false)) {
     _itemsStreamSubscription = _paginationService.getItemsStream().listen(
-          (items) => emit(state.copyWith(items: items as List<T>)),
+          (items) => emit(state.copyWith(items: items)),
         );
     requestNewPage();
   }
-
+  @override
   Future<void> requestNewPage() async {
     _logger.i("Paginated list, load new page");
     // ToDo Frage sollten wir das hier machen, für mich gibt es keinen Grund warum nicht
     // es macht es halt minimimal intransparent, insbesondere da ich es in der Liste auch checke
-    if(!state.reachedEnd){
+    if (!state.reachedEnd) {
       emit(state.copyWith(isLoading: true));
       bool hasReachedEnd = await _paginationService.requestNewPage();
       emit(state.copyWith(isLoading: false, reachedEnd: hasReachedEnd));

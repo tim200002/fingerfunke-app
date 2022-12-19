@@ -1,18 +1,19 @@
-import '../../../utils/tools.dart';
-import '../../image/network_placeholder_image.dart/network_placeholder_image.dart';
-import '../../user/author_info.dart';
-import '../../../models/asset/asset.dart';
-import '../../../models/post/post.dart';
-import '../../../repositories/video_repository/video_repository.impl.dart';
-import '../../../routes.dart';
-import '../../../utils/app_theme.dart';
-import '../../../utils/type_aliases.dart';
+
 import 'package:flutter/material.dart';
-import '../../../utils/extensions/date_time.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../video/video_playback_cubit/video_playback_cubit.dart';
-import '../../video/view/video_playback_view.dart';
+import '../../../../../../common_widgets/image/network_placeholder_image.dart/network_placeholder_image.dart';
+import '../../../../../../common_widgets/user/author_info.dart';
+import '../../../../../../common_widgets/video/video_playback_cubit/video_playback_cubit.dart';
+import '../../../../../../common_widgets/video/view/video_playback_view.dart';
+import '../../../../../../models/asset/asset.dart';
+import '../../../../../../models/post/post.dart';
+import '../../../../../../repositories/video_repository/video_repository.impl.dart';
+import '../../../../../../routes.dart';
+import '../../../../../../utils/app_theme.dart';
+import '../../../../../../utils/extensions/date_time.dart';
+import '../../../../../../utils/tools.dart';
+import '../../../../../../utils/type_aliases.dart';
 
 class PostFeedImageItem extends StatelessWidget {
   final Post _post;

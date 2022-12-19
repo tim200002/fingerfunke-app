@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../common_widgets/list_view/pagination/cubit/paginated_list_cubit.dart';
 import '../../../../cubits/app_cubit/app_cubit.dart';
 import '../../../../cubits/live_config_cubit/live_config_cubit.dart';
-import '../../../../models/message/message.dart';
 import '../../../../models/post/post.dart';
-import '../../../../services/pagination/message_pagination_service.dart';
 import '../../../../utils/app_theme.dart';
 import '../../../../utils/tools.dart';
+import '../../../chat/cubit/chat_cubit_cubit.dart';
 import '../../cubits/abstract_post_editor_cubit/abstract_post_editor_cubit.dart';
 import '../../cubits/post_viewer_cubit/post_cubit.dart';
 import '../../shared_widgets/edit_loading_view.dart';
@@ -87,8 +85,7 @@ class EventPage extends StatelessWidget {
       // so that when opening the chat initial messages are typically already loaded
       // therefore we require the cubit to be instantly built -> lazy is set to false
       BlocProvider(
-        create: (_) => PaginatedListCubit<Message>(
-            paginationService: MessagePaginationService(postId)),
+        create: (_) => ChatCubit(postId),
         lazy: false,
       )
     ], child: builder(context));
