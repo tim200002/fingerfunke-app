@@ -8,7 +8,7 @@ import 'view/feedback/send/feedback_send_page.dart';
 import 'view/moderation/mod_post_report/mod_post_report_page.dart';
 import 'view/moderation/moderation_page/moderation_page.dart';
 import 'view/my_account/view/my_account_page.dart';
-import 'view/post/view/event_page.dart';
+import 'view/post/event/view/event_page.dart';
 import 'view/saved/saved_page.dart';
 
 /// this variable holds the global routes that can be used within the app

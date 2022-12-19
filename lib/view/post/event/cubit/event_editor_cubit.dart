@@ -1,26 +1,27 @@
-import '../../../../models/asset/asset.dart';
-import '../../../../models/post/post.dart';
-import '../../../../models/user/user.dart';
-import '../../../../repositories/post_repository/post_repository.dart';
-import '../../../../repositories/post_repository/post_repository.impl.dart';
-import 'abstract_post_editor_cubit.dart';
-import 'updateTracker.dart';
+import '../../../../../../models/asset/asset.dart';
+import '../../../../../../models/post/post.dart';
+import '../../../../../../models/user/user.dart';
+import '../../../../../../repositories/post_repository/post_repository.dart';
+import '../../../../../../repositories/post_repository/post_repository.impl.dart';
+import '../../cubits/abstract_post_editor_cubit/abstract_post_editor_cubit.dart';
+import 'event_update_tracker.dart';
 
 class EventEditorCubit extends AbstractPostEditorCubit {
   final PostRepository _postRepository = PostRepositoryImpl();
 
-  DateTime? startTime;
+  DateTime startTime;
   EventEditorCubit.createEmpty(UserInfo user)
-      : super.createEmpty(user, EventUpdateTracker());
+      : startTime=DateTime.now(), super.createEmpty(user, const EventUpdateTracker());
 
   EventEditorCubit.fromEvent(UserInfo user, Event event)
       : startTime = event.startTime,
-        super.fromPost(user, event, EventUpdateTracker());
+        super.fromPost(user, event, const EventUpdateTracker());
 
-  void updateStartTime(DateTime? startTime) => this.startTime = startTime;
+  void updateStartTime(DateTime startTime) => this.startTime = startTime;
 
   @override
   bool validateInput() {
+    print("validate");
     return startTime != null && super.validateInput();
   }
 
@@ -40,7 +41,7 @@ class EventEditorCubit extends AbstractPostEditorCubit {
             visibility: visibility,
             place: place!,
             media: videoAssets,
-            startTime: startTime!,
+            startTime: startTime,
             members: [user.id]);
         await _postRepository.createPost(event);
         emit(PostEditorState.submitted(event.id));
@@ -50,7 +51,7 @@ class EventEditorCubit extends AbstractPostEditorCubit {
             title: title,
             description: description,
             media: videoAssets,
-            startTime: startTime!,
+            startTime: startTime,
             place: place!);
         emit(PostEditorState.submitted(originalPost!.id));
       }

@@ -24,17 +24,19 @@ class CompactPostsFeed extends StatelessWidget {
         children: [
           Expanded(
             child: BlocProvider<PostsListCubit>(
-                create: (_) => PostsListCubit(query, filter: filter),
-                child: BlocBuilder<PostsListCubit, PostsListState>(
-                    builder: (context, state) => state.when(
-                        error: (e) => ExceptionView(exception: e),
-                        loading: () => const Center(
-                              child: CircularProgressIndicator.adaptive(),
-                            ),
-                        neutral: (p) => p.isEmpty
-                            ? IllustrationView.empty(
-                                text: emptyMessage ?? l10n(context).lbl_noPosts)
-                            : NonPaginatedPostList(p)))),
+              create: (_) => PostsListCubit(query, filter: filter),
+              child: BlocBuilder<PostsListCubit, PostsListState>(
+                builder: (context, state) => state.when(
+                    error: (e) => ExceptionView(exception: e),
+                    loading: () => const Center(
+                          child: CircularProgressIndicator.adaptive(),
+                        ),
+                    neutral: (p) => p.isEmpty
+                        ? IllustrationView.empty(
+                            text: emptyMessage ?? l10n(context).lbl_noPosts)
+                        : NonPaginatedPostList(p)),
+              ),
+            ),
           )
         ],
       ),

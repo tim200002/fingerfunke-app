@@ -5,8 +5,7 @@ import '../../../../cubits/video_upload_cubit/video_upload_cubit.dart';
 import '../../../../models/asset/asset.dart';
 import '../../../../models/post/post.dart';
 import '../../../../models/user/user.dart';
-import '../../../../utils/type_aliases.dart';
-import 'updateTracker.dart';
+import 'post_updateTracker.dart';
 
 part 'abstract_post_editor_state.dart';
 part 'abstract_post_editor_cubit.freezed.dart';
@@ -16,7 +15,7 @@ abstract class AbstractPostEditorCubit extends Cubit<PostEditorState> {
   final UserInfo user;
 
   // To track updates
-  final PostUpdateTracker updateTracker;
+  PostUpdateTracker updateTracker;
 
   // Fields of the editor
   final Post? originalPost; // only set if created from post
@@ -60,7 +59,7 @@ abstract class AbstractPostEditorCubit extends Cubit<PostEditorState> {
     }
     void updatePlace(PostPlace? place) {
        this.place = place;
-       updateTracker.addUpdatePlace();
+       updateTracker = updateTracker.addUpdatePlace();
        _emitFieldUpdate();
     }
     void addVideoUploadCubit(VideoUploadCubit videoUploadCubit){
@@ -74,10 +73,6 @@ abstract class AbstractPostEditorCubit extends Cubit<PostEditorState> {
       cubitToDelete.close();
 
       videoUploadCubits = videoUploadCubits.where((cubit) => cubit.id != cubitId).toList();
-
-      List<VideoUploadCubit> removeCubitByIdFromList(
-              List<VideoUploadCubit> uploadCubits, String cubitId) =>
-          uploadCubits.where((cubit) => cubit.id != cubitId).toList();
     }
 
     Future<void> submit() => throw(UnimplementedError("You must override this in child classes"));

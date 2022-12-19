@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../utils/app_theme.dart';
-import '../../../../utils/placeholder_box.dart';
-import '../../../../utils/tools.dart';
-import '../../cubits/abstract_post_editor_cubit/event_editor_cubit.dart';
-import '../../cubits/post_viewer_cubit/post_cubit.dart';
+import '../../../../../utils/app_theme.dart';
+import '../../../../../utils/placeholder_box.dart';
+import '../../../../../utils/tools.dart';
+import '../../../cubits/post_viewer_cubit/post_cubit.dart';
+import '../../cubit/event_editor_cubit.dart';
 import 'post_description_section.dart';
 
 class TitleSection extends StatelessWidget {

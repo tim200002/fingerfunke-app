@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../common_widgets/list_view/pagination/cubit/paginated_list_cubit.dart';
-import '../../../cubits/app_cubit/app_cubit.dart';
-import '../../../cubits/live_config_cubit/live_config_cubit.dart';
-import '../../../models/message/message.dart';
-import '../../../models/post/post.dart';
-import '../../../services/pagination/message_pagination_service.dart';
-import '../../../utils/app_theme.dart';
-import '../../../utils/tools.dart';
-import '../cubits/abstract_post_editor_cubit/abstract_post_editor_cubit.dart';
-import '../cubits/abstract_post_editor_cubit/event_editor_cubit.dart';
-import '../cubits/post_viewer_cubit/post_cubit.dart';
+import '../../../../common_widgets/list_view/pagination/cubit/paginated_list_cubit.dart';
+import '../../../../cubits/app_cubit/app_cubit.dart';
+import '../../../../cubits/live_config_cubit/live_config_cubit.dart';
+import '../../../../models/message/message.dart';
+import '../../../../models/post/post.dart';
+import '../../../../services/pagination/message_pagination_service.dart';
+import '../../../../utils/app_theme.dart';
+import '../../../../utils/tools.dart';
+import '../../cubits/abstract_post_editor_cubit/abstract_post_editor_cubit.dart';
+import '../../cubits/post_viewer_cubit/post_cubit.dart';
+import '../../shared_widgets/edit_loading_view.dart';
+import '../../shared_widgets/post_posted_success_view.dart';
+import '../cubit/event_editor_cubit.dart';
 import 'sections/author_section.dart';
 import 'sections/event_detail_section.dart';
 import 'sections/header_section.dart';
 import 'sections/location_section.dart';
 import 'sections/post_action_buttons.dart';
 import 'sections/post_description_section.dart';
-import 'sections/post_posted_success_view.dart';
 import 'sections/title_section.dart';
-import 'widgets/edit_loading_view.dart';
 
 class EventPage extends StatelessWidget {
   static const String editingHeroTag = "postEditor";

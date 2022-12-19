@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
-import '../../../../common_widgets/list_view/pagination/cubit/paginated_list_cubit.dart';
-import '../../../../cubits/app_cubit/app_cubit.dart';
-import '../../../../models/message/message.dart';
-import '../../../../routes.dart';
-import '../../../../utils/tools.dart';
-import '../../../chat/view/chat_page.dart';
-import '../../cubits/abstract_post_editor_cubit/abstract_post_editor_cubit.dart';
-import '../../cubits/abstract_post_editor_cubit/event_editor_cubit.dart';
-import '../../cubits/post_viewer_cubit/post_cubit.dart';
+import '../../../../../common_widgets/list_view/pagination/cubit/paginated_list_cubit.dart';
+import '../../../../../cubits/app_cubit/app_cubit.dart';
+import '../../../../../models/message/message.dart';
+import '../../../../../routes.dart';
+import '../../../../../utils/tools.dart';
+import '../../../../chat/view/chat_page.dart';
+import '../../../cubits/abstract_post_editor_cubit/abstract_post_editor_cubit.dart';
+import '../../../cubits/post_viewer_cubit/post_cubit.dart';
+import '../../cubit/event_editor_cubit.dart';
 
 /// Buttons on the post page. In viewing mode, these are used to allow the user
 /// to join posts and access the chat. In [editing] mode the button is used to

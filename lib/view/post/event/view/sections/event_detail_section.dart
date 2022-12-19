@@ -4,15 +4,15 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../../models/post/post.dart';
-import '../../../../services/google_maps_service.dart';
-import '../../../../utils/extensions/date_time.dart';
-import '../../../../utils/placeholder_box.dart';
-import '../../../../utils/tools.dart';
-import '../../../maps/view/maps_place_picker_page.dart';
-import '../../cubits/abstract_post_editor_cubit/event_editor_cubit.dart';
-import '../../cubits/post_viewer_cubit/post_cubit.dart';
-import '../widgets/icon_text_item.dart';
+import '../../../../../models/post/post.dart';
+import '../../../../../services/google_maps_service.dart';
+import '../../../../../utils/extensions/date_time.dart';
+import '../../../../../utils/placeholder_box.dart';
+import '../../../../../utils/tools.dart';
+import '../../../../maps/view/maps_place_picker_page.dart';
+import '../../../cubits/post_viewer_cubit/post_cubit.dart';
+import '../../../shared_widgets/icon_text_item.dart';
+import '../../cubit/event_editor_cubit.dart';
 
 /// Shows structured information about the event
 /// In [editing] mode, the values of these fields can be changed
@@ -111,7 +111,7 @@ class _Edit extends StatelessWidget {
 }
 
 class _DatePicker extends StatefulWidget {
-  final DateTime? initialDate;
+  final DateTime initialDate;
   const _DatePicker(this.initialDate, {super.key});
 
   @override
@@ -123,7 +123,7 @@ class __DatePickerState extends State<_DatePicker> {
 
   @override
   void initState() {
-    date = widget.initialDate ?? DateTime.now();
+    date = widget.initialDate;
     super.initState();
   }
 

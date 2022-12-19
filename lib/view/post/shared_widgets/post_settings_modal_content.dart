@@ -8,8 +8,8 @@ import '../../../../routes.dart';
 import '../../../../utils/dev_tools.dart';
 import '../../../../utils/tools.dart';
 import '../../../../utils/util_widgets/floating_modal.dart';
-import '../../../report_send/report_send_page.dart';
-import '../../cubits/post_viewer_cubit/post_cubit.dart';
+import '../../report_send/report_send_page.dart';
+import '../cubits/post_viewer_cubit/post_cubit.dart';
 import 'post_participants.dart/post_participants_view.dart';
 
 class PostSettingsModalContent extends StatelessWidget {

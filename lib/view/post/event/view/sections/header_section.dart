@@ -4,21 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
-import '../../../../common_widgets/image/network_placeholder_image.dart/network_placeholder_image.dart';
-import '../../../../common_widgets/upload/video_upload_tile.dart';
-import '../../../../cubits/app_cubit/app_cubit.dart';
-import '../../../../cubits/video_upload_cubit/video_upload_cubit.dart';
-import '../../../../models/asset/asset.dart';
-import '../../../../models/post/post.dart';
-import '../../../../repositories/video_repository/video_repository.impl.dart';
-import '../../../../utils/app_theme.dart';
-import '../../../../utils/placeholder_box.dart';
-import '../../../../utils/tools.dart';
-import '../../../fullscreen_video/view/fullscreen_video_page.dart';
-import '../../../video_recorder/view/video_recorder_page.dart';
-import '../../cubits/abstract_post_editor_cubit/event_editor_cubit.dart';
-import '../../cubits/post_viewer_cubit/post_cubit.dart';
-import '../widgets/post_settings_modal_content.dart';
+import '../../../../../common_widgets/image/network_placeholder_image.dart/network_placeholder_image.dart';
+import '../../../../../common_widgets/upload/video_upload_tile.dart';
+import '../../../../../cubits/app_cubit/app_cubit.dart';
+import '../../../../../cubits/video_upload_cubit/video_upload_cubit.dart';
+import '../../../../../models/asset/asset.dart';
+import '../../../../../models/post/post.dart';
+import '../../../../../repositories/video_repository/video_repository.impl.dart';
+import '../../../../../utils/app_theme.dart';
+import '../../../../../utils/placeholder_box.dart';
+import '../../../../../utils/tools.dart';
+import '../../../../fullscreen_video/view/fullscreen_video_page.dart';
+import '../../../../video_recorder/view/video_recorder_page.dart';
+import '../../../cubits/post_viewer_cubit/post_cubit.dart';
+import '../../../shared_widgets/post_settings_modal_content.dart';
+import '../../cubit/event_editor_cubit.dart';
 
 /// Widget to display a button with additional [widget] on the left. This widget
 /// can for example be used to display an Icon or loading indicator

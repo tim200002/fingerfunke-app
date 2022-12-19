@@ -1,9 +1,9 @@
-import '../../../../utils/placeholder_box.dart';
+import '../../../../../utils/placeholder_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../utils/tools.dart';
-import '../../cubits/abstract_post_editor_cubit/event_editor_cubit.dart';
-import '../../cubits/post_viewer_cubit/post_cubit.dart';
+import '../../../../../utils/tools.dart';
+import '../../../cubits/post_viewer_cubit/post_cubit.dart';
+import '../../cubit/event_editor_cubit.dart';
 
 /// This section is used to display the describtion text of the post.
 /// In [editing] mode, the text is editable
