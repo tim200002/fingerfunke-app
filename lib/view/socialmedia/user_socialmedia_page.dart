@@ -53,7 +53,7 @@ class UserSocialMediaPage extends StatelessWidget {
                               fillColor: Colors.grey.shade100,
                               filled: true,
                               border: InputBorder.none,
-                              hintText: "username",
+                              hintText: l10n(context).lbl_socialMediaUsername,
                               prefixText: "@"),
                         )),
                     const SizedBox(height: 5),
@@ -69,7 +69,7 @@ class UserSocialMediaPage extends StatelessWidget {
                               socialMedia: accounts);
                           Navigator.of(context).pop();
                         },
-                        child: const Text("save"))
+                        child: Text(l10n(context).lbl_save))
                   ],
                 ))));
   }
@@ -92,7 +92,9 @@ class UserSocialMediaPage extends StatelessWidget {
                 children: [
                   Text(service.name),
                   Text(
-                    username != null ? "@$username" : "not linked",
+                    username != null
+                        ? "@$username"
+                        : l10n(context).lbl_socialMediaNotLinked,
                     style: username != null
                         ? const TextStyle(
                             fontSize: 18,

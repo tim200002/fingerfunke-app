@@ -1,6 +1,7 @@
 {
   "@@locale": "en",
   "lbl_account": "account",
+  "lbl_save": "save",
   "@lbl_account": {},
   "lbl_accountManage": "manage account",
   "@lbl_accountManage": {},

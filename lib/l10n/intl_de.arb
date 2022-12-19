@@ -1,6 +1,7 @@
 {
   "@@locale": "de",
   "lbl_account": "Konto",
+  "lbl_save":"speichern",
   "@lbl_account": {},
   "lbl_accountManage": "Konto verwalten",
   "@lbl_accountManage": {},

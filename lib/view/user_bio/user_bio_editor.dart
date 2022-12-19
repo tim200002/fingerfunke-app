@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../cubits/app_cubit/app_cubit.dart';
 import '../../models/user/user.dart';
 import '../../repositories/user_repository/user_repository.dart';
+import '../../utils/tools.dart';
 
 class UserBioEditor extends StatelessWidget {
   const UserBioEditor({super.key});
@@ -25,9 +26,9 @@ class UserBioEditor extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const Text(
-                      "bio",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                    Text(
+                      l10n(context).lbl_userBio,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 20),
                     ClipRRect(
@@ -41,7 +42,7 @@ class UserBioEditor extends StatelessWidget {
                               fillColor: Colors.grey.shade100,
                               filled: true,
                               border: InputBorder.none,
-                              hintText: "describe yourself"),
+                              hintText: l10n(context).lbl_describeYourself),
                         )),
                     const SizedBox(height: 5),
                     TextButton(
@@ -50,7 +51,7 @@ class UserBioEditor extends StatelessWidget {
                           userRepository.updateUser(user.id, bio: value);
                           Navigator.of(context).pop();
                         },
-                        child: const Text("save"))
+                        child: Text(l10n(context).lbl_save))
                   ],
                 ))));
   }
@@ -61,9 +62,9 @@ class UserBioEditor extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
       children: [
-        const Text(
-          "bio",
-          style: TextStyle(fontWeight: FontWeight.bold),
+        Text(
+          l10n(context).lbl_userBio,
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 7),
         BlocBuilder<AppCubit, AppState>(
@@ -72,7 +73,7 @@ class UserBioEditor extends StatelessWidget {
                   child: (state.user.bio?.isNotEmpty ?? false)
                       ? Text(state.user.bio!)
                       : Text(
-                          "add a short text about yourself",
+                          l10n(context).lbl_bioInfo,
                           style: TextStyle(
                               color: Colors.grey.shade600,
                               fontStyle: FontStyle.italic),
