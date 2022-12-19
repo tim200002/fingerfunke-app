@@ -63,6 +63,7 @@ class User extends DatabaseDocument {
   final List<FirestoreId> savedPosts;
   final String? fcmToken;
   final Map<String, String> socialMedia;
+  final String? bio;
 
   const User(
       {required FirestoreId id,
@@ -72,6 +73,7 @@ class User extends DatabaseDocument {
       this.age,
       this.clearance = UserClearance.user,
       this.socialMedia = const {},
+      this.bio,
       this.fcmToken})
       : super(id: id);
 
@@ -90,7 +92,8 @@ class User extends DatabaseDocument {
         'age': age,
         'clearance': clearance?.level,
         'socialMedia': socialMedia,
-        'fcmToken': fcmToken
+        'fcmToken': fcmToken,
+        'bio': bio
       };
 
   factory User.fromJson(JsonMap map) => User(
@@ -103,15 +106,36 @@ class User extends DatabaseDocument {
               .toList()
           : [],
       age: JsonTools.nullable<int>(map, "age"),
-      socialMedia:
-          JsonTools.nullable<Map<String, String>>(map, "socialMedia") ?? {},
+      socialMedia: JsonTools.nullable<Map<String, dynamic>>(map, "socialMedia")
+              ?.map<String, String>(
+                  (key, value) => MapEntry(key, value.toString())) ??
+          {},
       clearance: UserClearance.values.firstWhere(
           (e) => e.level >= (JsonTools.nullable<int>(map, "clearance") ?? 0)),
+      bio: JsonTools.nullable<String>(map, "bio"),
       fcmToken: JsonTools.nullable<String>(map, "fcmToken"));
 
   factory User.fromDoc(DocumentSnapshot document) =>
       User.fromJson(documentSnaphsotToJson(document));
 
   @override
-  List<Object?> get props => [id, name, picture, age, savedPosts, clearance];
+  int get hashCode => toJson().hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      other is User ? other.hashCode == hashCode : false;
+
+  //TODO: for some reason, equatable did not detect some changes. therefor i implemented manual == for user [-Robin]
+  @override
+  List<Object?> get props => [
+        id,
+        name,
+        picture,
+        age,
+        savedPosts,
+        clearance,
+        fcmToken,
+        socialMedia,
+        bio
+      ];
 }

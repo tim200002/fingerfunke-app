@@ -8,7 +8,7 @@ import 'view/feedback/send/feedback_send_page.dart';
 import 'view/moderation/mod_post_report/mod_post_report_page.dart';
 import 'view/moderation/moderation_page/moderation_page.dart';
 import 'view/my_account/view/my_account_page.dart';
-import 'view/my_account/view/user_socialmedia_page.dart';
+import 'view/socialmedia/user_socialmedia_page.dart';
 import 'view/post/view/post_page.dart';
 import 'view/saved/saved_page.dart';
 

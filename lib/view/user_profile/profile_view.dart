@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../common_widgets/image/user_image/user_image.dart';
 import '../../cubits/user_cubit/user_cubit.dart';
 import '../error/exception_view.dart';
+import '../socialmedia/social_media_links.dart';
 
 class UserProfileView extends StatelessWidget {
   final String userId;
@@ -76,6 +77,8 @@ class UserProfileView extends StatelessWidget {
                             "Demo Text Voluptatem voluptas architecto vero et voluptatem ut ut et. Illum dolorum consequatur id quia. Vel aut quasi qui veniam ut assumenda",
                             style: GoogleFonts.signika(fontSize: 15),
                           ),
+                          const SizedBox(height: 30),
+                          const SocialMediaLinks(),
                           const SizedBox(height: 30),
                         ],
                       )))),
