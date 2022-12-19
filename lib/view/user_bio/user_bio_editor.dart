@@ -34,6 +34,7 @@ class UserBioEditor extends StatelessWidget {
                     ClipRRect(
                         borderRadius: BorderRadius.circular(5),
                         child: TextField(
+                          maxLength: 200,
                           maxLines: 4,
                           controller: bioController,
                           /*style: const TextStyle(
