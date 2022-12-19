@@ -117,7 +117,7 @@ class UserSocialMediaPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: true,
-        appBar: AppBar(title: Text(l10n(context).lbl_socialMedia)),
+        appBar: AppBar(title: Text(l10n(context).lbl_linkSocialMedia)),
         body: BlocBuilder<AppCubit, AppState>(
             builder: (context, state) => ListView.builder(
                   key: Key("${state.user.socialMedia}"),

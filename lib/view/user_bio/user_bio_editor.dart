@@ -57,31 +57,28 @@ class UserBioEditor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(bottom: 20, left: 10, right: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Text(
-            "bio",
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 7),
-          BlocBuilder<AppCubit, AppState>(
-              builder: (context, state) => InkWell(
-                    onTap: () => _showEditDialog(context, state.user),
-                    child: (state.user.bio?.isNotEmpty ?? false)
-                        ? Text(state.user.bio!)
-                        : Text(
-                            "add a short text about yourself",
-                            style: TextStyle(
-                                color: Colors.grey.shade600,
-                                fontStyle: FontStyle.italic),
-                          ),
-                  )),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const Text(
+          "bio",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 7),
+        BlocBuilder<AppCubit, AppState>(
+            builder: (context, state) => InkWell(
+                  onTap: () => _showEditDialog(context, state.user),
+                  child: (state.user.bio?.isNotEmpty ?? false)
+                      ? Text(state.user.bio!)
+                      : Text(
+                          "add a short text about yourself",
+                          style: TextStyle(
+                              color: Colors.grey.shade600,
+                              fontStyle: FontStyle.italic),
+                        ),
+                )),
+      ],
     );
   }
 }

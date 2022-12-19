@@ -24,6 +24,8 @@ class MyAccountPage extends StatelessWidget {
       body: ListView(
         children: [
           Container(
+            padding: const EdgeInsets.all(20),
+            margin: const EdgeInsets.only(bottom: 20),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 color: Colors.grey.shade200),
@@ -32,11 +34,12 @@ class MyAccountPage extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: const [
                 _ProfileSection(),
+                SizedBox(height: 20),
                 UserBioEditor(),
               ],
             ),
           ),
-          _AccountSection(),
+          const _AccountSection(),
         ],
       ),
     );
@@ -50,36 +53,33 @@ class _ProfileSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 30),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const Padding(
-              padding: EdgeInsets.only(left: 10, right: 20),
-              child: ProfilePictureImageUploadWidget()),
-          BlocBuilder<AppCubit, AppState>(
-            buildWhen: (previous, current) =>
-                previous.user.name != current.user.name,
-            builder: (context, state) => Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    state.user.name,
-                    style: Theme.of(context).textTheme.headline5,
-                  ),
-                  /*const SizedBox(height: 7),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const Padding(
+            padding: EdgeInsets.only(right: 20),
+            child: ProfilePictureImageUploadWidget()),
+        BlocBuilder<AppCubit, AppState>(
+          buildWhen: (previous, current) =>
+              previous.user.name != current.user.name,
+          builder: (context, state) => Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  state.user.name,
+                  style: Theme.of(context).textTheme.headline5,
+                ),
+                /*const SizedBox(height: 7),
                   const Text(
                       //ToDo: Show the user's real phone number
                       "+49 123 456 7890"),*/
-                ],
-              ),
+              ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -95,7 +95,7 @@ class _AccountSection extends StatelessWidget {
       title: l10n(context).lbl_account,
       tiles: [
         SettingsTile(
-            title: l10n(context).lbl_socialMedia,
+            title: l10n(context).lbl_linkSocialMedia,
             leading: const Icon(Icons.link_rounded),
             onPressed: (c) =>
                 Navigator.of(c).pushNamed(Routes.linkSocialMedia)),
