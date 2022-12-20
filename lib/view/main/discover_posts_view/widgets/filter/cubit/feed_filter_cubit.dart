@@ -11,6 +11,7 @@ class FeedFilterCubit extends Cubit<FeedFilterState> {
   FeedFilterCubit() : super(const FeedFilterState(radius: 10, hideCompleted: false, hideFarFuture: true));
 
   void change(FeedFilterState changed) {
+    print("change");
     emit(changed);
   }
 

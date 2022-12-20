@@ -65,8 +65,9 @@ class DiscoverFeed extends StatelessWidget {
                   const Center(child: CircularProgressIndicator.adaptive()),
               loaded: (location) =>
                   BlocBuilder<FeedFilterCubit, FeedFilterState>(
-                builder: (context, locationFilters) =>
-                    BlocProvider<DiscoverFeedCubit>(
+                builder: (context, locationFilters) {
+                    return BlocProvider<DiscoverFeedCubit>(
+                  key: Key(locationFilters.hashCode.toString()),
                   create: (_) => DiscoverFeedCubit(
                       userLocation: location, filters: locationFilters),
                   child:
@@ -94,7 +95,7 @@ class DiscoverFeed extends StatelessWidget {
                       ),
                     ),
                   ),
-                ),
+                );},
               ),
             ),
           ),

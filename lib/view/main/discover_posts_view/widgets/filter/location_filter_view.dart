@@ -129,7 +129,6 @@ class LocationFilterView extends StatelessWidget {
               children: [
                 _sectionHeader(context, l10n(context).lbl_filterPerimeter),
                 _locationSlider(context, filter.radius, onChanged: (v) {
-                  logger.d(v);
                   context
                       .read<FeedFilterCubit>()
                       .change(filter.copyWith(radius: v));
