@@ -8,40 +8,12 @@ import '../../utils/type_aliases.dart';
 import '../../utils/utility_classes/geohash.dart';
 import '../abstract_models/abstract_models.dart';
 import '../asset/asset.dart';
+import '../place.dart';
 import '../user/user.dart';
 import '../utils.dart';
 
 part 'event.dart';
 part 'group.dart';
-
-class PostPlace {
-  final String address;
-  final GeoPoint point;
-
-  const PostPlace({
-    required this.address,
-    required this.point,
-  });
-
-  const PostPlace.demo()
-      : this(address: "null", point: const GeoPoint(0, 0));
-
-  PostPlace.fromPick(PickResult r)
-      : this(
-            address: r.formattedAddress!,
-            point: GeoPoint(r.geometry!.location.lat, r.geometry!.location.lat),
-            );
-
-  factory PostPlace.fromJson(JsonMap map) => PostPlace(
-        address: map["address"],
-        point: map["geopoint"],
-      );
-
-  JsonMap toJson() => {
-        "address": address,
-        "geopoint": point,
-      };
-}
 
 enum PostType { event, recurrent }
 
@@ -54,7 +26,7 @@ class Post extends UserGeneratedDocument {
   final String title;
   final String description;
   final PostVisibility visibility;
-  final PostPlace place;
+  final Place place;
   final Map<String, List<String>> geohashesByRadius;
 
   final List<FirestoreId> members;

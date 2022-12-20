@@ -1,6 +1,5 @@
 part of 'chat_cubit_cubit.dart';
 
-@freezed
 class ChatState  extends Equatable implements PaginatedListStateInterface<Message> { 
 
   final List<Message>? _items;

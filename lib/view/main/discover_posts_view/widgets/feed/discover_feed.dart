@@ -11,6 +11,7 @@ import '../../../../../../../utils/tools.dart';
 import '../../../../../common_widgets/paginated_list/paged_paginated_list.dart';
 import '../../../../illustration_view/illustration_view.dart';
 import '../filter/cubit/feed_filter_cubit.dart';
+import '../filter/cubit/feed_filter_state.dart';
 import 'cubit/discover_feed_cubit.dart';
 
 class DiscoverFeed extends StatelessWidget {

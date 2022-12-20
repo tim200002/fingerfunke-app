@@ -5,6 +5,7 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 
 import '../../models/asset/asset.dart';
+import '../../models/place.dart';
 import '../../models/post/post.dart';
 import '../../models/user/user.dart';
 import '../../models/utils.dart';
@@ -94,7 +95,7 @@ class PostRepositoryImpl implements PostRepository {
       {PostVisibility? visibility,
       String? title,
       String? description,
-      PostPlace? place,
+      Place? place,
       List<Asset>? media,
       DateTime? startTime}) async {
     //TODO: würde diese Methode nicht ungesetzte Felder mit null überschreiben?

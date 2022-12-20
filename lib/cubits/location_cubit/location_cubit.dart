@@ -1,9 +1,9 @@
 import 'package:app_settings/app_settings.dart' as app_ettings;
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:geolocator/geolocator.dart';
 
-import '../../models/user_location.dart';
+import '../../models/place.dart';
 import '../../repositories/position_repository/position_repository.dart';
 import '../../services/location_service.dart';
 
@@ -35,25 +35,16 @@ class LocationCubit extends Cubit<LocationState> {
       // TODO: This can results in incorrect Position objects, but it can't be changed due to the conversion of PickResult into Position
       {required double lat,
       required double lng,
-      String? address,
-      DateTime? timestamp,
-      double heading = 0,
-      double speedAccuracy = 0,
-      double accuracy = 0,
-      double speed = 0,
-      double altitude = 0}) async {
-    emit(const LocationState.loading());
-    var position = Position(
-        latitude: lat,
-        longitude: lng,
-        timestamp: timestamp ?? DateTime.now(),
-        heading: heading,
-        speedAccuracy: speedAccuracy,
-        accuracy: accuracy,
-        speed: speed,
-        altitude: altitude);
-
-    emit(LocationState.loaded(await _locationService.setPosition(position)));
+      required String? address
+      }) async {
+      print("update");
+      emit(const LocationState.loading());
+      if(address != null){
+        Place place = Place(position: Coordinate(lat, lng), address: address);
+        return emit(LocationState.loaded(await _locationService.setPosition(place: place)));
+      }
+      final Coordinate position = Coordinate(lat, lng);
+      return emit(LocationState.loaded(await _locationService.setPosition(position: position)));
   }
 
   /// Returns address of location

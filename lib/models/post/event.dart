@@ -11,7 +11,7 @@ class Event extends Post {
     required String description,
     required DateTime creationTime,
     required PostVisibility visibility,
-    required PostPlace place,
+    required Place place,
     required Map<String, List<String>> geohashesByRadius,
     required List<Asset> media,
     required this.startTime,
@@ -56,7 +56,7 @@ class Event extends Post {
       description: map["description"] as String,
       visibility:
           PostVisibility.values.firstWhere((t) => t.name == map["visibility"]),
-      place: PostPlace.fromJson(map["place"]),
+      place: Place.fromJson(map["place"]),
       geohashesByRadius: map["geohashesByRadius"] == null
       ? {}
       : (map["geohashesByRadius"] as JsonMap).map((key, value) =>
@@ -78,7 +78,7 @@ class Event extends Post {
       required String title,
       required String description,
       required PostVisibility visibility,
-      required PostPlace place,
+      required Place place,
       required List<Asset> media,
       required DateTime startTime,
       required List<FirestoreId> members}) {
@@ -86,8 +86,8 @@ class Event extends Post {
     final Map<String, List<String>> geohashMap = {};
     for (final int radius in AppConfig.locationQueryRadiusLevel) {
       final List<String> geohashesForRadius =
-          geoHasher.getGeohashesWithinRadius(place.point.longitude,
-              place.point.latitude, (radius * 1000).toDouble(),
+          geoHasher.getGeohashesWithinRadius(place.position.longitude,
+              place.position.latitude, (radius * 1000).toDouble(),
               precision: AppConfig.defaultGeoHashPrecision);
       geohashMap[radius.toString()] = geohashesForRadius;
     }

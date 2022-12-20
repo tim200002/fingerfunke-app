@@ -4,6 +4,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../../models/place.dart';
 import '../../../../../models/post/post.dart';
 import '../../../../../services/google_maps_service.dart';
 import '../../../../../utils/extensions/date_time.dart';
@@ -163,7 +164,7 @@ class __DatePickerState extends State<_DatePicker> {
 }
 
 class _AdressPicker extends StatefulWidget {
-  final PostPlace? initialPlace;
+  final Place? initialPlace;
   const _AdressPicker(this.initialPlace, {super.key});
 
   @override
@@ -171,7 +172,7 @@ class _AdressPicker extends StatefulWidget {
 }
 
 class __AdressPickerState extends State<_AdressPicker> {
-  PostPlace? place;
+  Place? place;
 
   @override
   void initState() {
@@ -204,7 +205,7 @@ class __AdressPickerState extends State<_AdressPicker> {
 
   void _onPlacePicked(PickResult pickResult) {
     setState(() {
-      place = PostPlace.fromPick(pickResult);
+      place = Place.fromGoogleMapsPick(pickResult);
       context.read<EventEditorCubit>().updatePlace(place);
     });
   }

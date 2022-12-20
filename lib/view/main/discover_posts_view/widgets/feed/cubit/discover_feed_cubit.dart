@@ -7,9 +7,9 @@ import 'package:logger/logger.dart';
 import '../../../../../../cubits/paginated_list_cubit/paginated_list_cubit_interface.dart';
 import '../../../../../../cubits/paginated_list_cubit/paginated_list_state_interface.dart';
 import '../../../../../../models/post/post.dart';
-import '../../../../../../models/user_location.dart';
+import '../../../../../../models/place.dart';
 import '../../../../../../services/pagination/discovery_feed_pagination_service.dart';
-import '../../filter/cubit/feed_filter_cubit.dart';
+import '../../filter/cubit/feed_filter_state.dart';
 
 part 'discover_feed_state.dart';
 
@@ -20,7 +20,7 @@ class DiscoverFeedCubit extends Cubit<DiscoverFeedState>
   late StreamSubscription _itemsStreamSubscription;
 
   DiscoverFeedCubit(
-      {required UserLocation userLocation, required FeedFilterState filters})
+      {required Place userLocation, required FeedFilterState filters})
       : super(const DiscoverFeedState(
             items: null, isLoading: false, reachedEnd: false)) {
     _paginationService = DiscoveryFeedPaginationService(userLocation, filters);

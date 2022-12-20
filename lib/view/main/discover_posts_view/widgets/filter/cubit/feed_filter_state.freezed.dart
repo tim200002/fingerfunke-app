@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'feed_filter_cubit.dart';
+part of 'feed_filter_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,12 +14,17 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+FeedFilterState _$FeedFilterStateFromJson(Map<String, dynamic> json) {
+  return _FeedFilterState.fromJson(json);
+}
+
 /// @nodoc
 mixin _$FeedFilterState {
   int get radius => throw _privateConstructorUsedError;
   bool get hideCompleted => throw _privateConstructorUsedError;
   bool get hideFarFuture => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $FeedFilterStateCopyWith<FeedFilterState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -110,12 +115,15 @@ class __$$_FeedFilterStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$_FeedFilterState implements _FeedFilterState {
   const _$_FeedFilterState(
       {required this.radius,
       required this.hideCompleted,
       required this.hideFarFuture});
+
+  factory _$_FeedFilterState.fromJson(Map<String, dynamic> json) =>
+      _$$_FeedFilterStateFromJson(json);
 
   @override
   final int radius;
@@ -124,34 +132,17 @@ class _$_FeedFilterState implements _FeedFilterState {
   @override
   final bool hideFarFuture;
 
-  @override
-  String toString() {
-    return 'FeedFilterState(radius: $radius, hideCompleted: $hideCompleted, hideFarFuture: $hideFarFuture)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_FeedFilterState &&
-            const DeepCollectionEquality().equals(other.radius, radius) &&
-            const DeepCollectionEquality()
-                .equals(other.hideCompleted, hideCompleted) &&
-            const DeepCollectionEquality()
-                .equals(other.hideFarFuture, hideFarFuture));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(radius),
-      const DeepCollectionEquality().hash(hideCompleted),
-      const DeepCollectionEquality().hash(hideFarFuture));
-
   @JsonKey(ignore: true)
   @override
   _$$_FeedFilterStateCopyWith<_$_FeedFilterState> get copyWith =>
       __$$_FeedFilterStateCopyWithImpl<_$_FeedFilterState>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_FeedFilterStateToJson(
+      this,
+    );
+  }
 }
 
 abstract class _FeedFilterState implements FeedFilterState {
@@ -159,6 +150,9 @@ abstract class _FeedFilterState implements FeedFilterState {
       {required final int radius,
       required final bool hideCompleted,
       required final bool hideFarFuture}) = _$_FeedFilterState;
+
+  factory _FeedFilterState.fromJson(Map<String, dynamic> json) =
+      _$_FeedFilterState.fromJson;
 
   @override
   int get radius;

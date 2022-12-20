@@ -21,7 +21,7 @@ mixin _$LocationState {
     required TResult Function() loading,
     required TResult Function(dynamic e) error,
     required TResult Function(bool permanent) denied,
-    required TResult Function(UserLocation location) loaded,
+    required TResult Function(Place location) loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -29,7 +29,7 @@ mixin _$LocationState {
     TResult Function()? loading,
     TResult Function(dynamic e)? error,
     TResult Function(bool permanent)? denied,
-    TResult Function(UserLocation location)? loaded,
+    TResult Function(Place location)? loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -37,7 +37,7 @@ mixin _$LocationState {
     TResult Function()? loading,
     TResult Function(dynamic e)? error,
     TResult Function(bool permanent)? denied,
-    TResult Function(UserLocation location)? loaded,
+    TResult Function(Place location)? loaded,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -127,7 +127,7 @@ class _$_loading implements _loading {
     required TResult Function() loading,
     required TResult Function(dynamic e) error,
     required TResult Function(bool permanent) denied,
-    required TResult Function(UserLocation location) loaded,
+    required TResult Function(Place location) loaded,
   }) {
     return loading();
   }
@@ -138,7 +138,7 @@ class _$_loading implements _loading {
     TResult Function()? loading,
     TResult Function(dynamic e)? error,
     TResult Function(bool permanent)? denied,
-    TResult Function(UserLocation location)? loaded,
+    TResult Function(Place location)? loaded,
   }) {
     return loading?.call();
   }
@@ -149,7 +149,7 @@ class _$_loading implements _loading {
     TResult Function()? loading,
     TResult Function(dynamic e)? error,
     TResult Function(bool permanent)? denied,
-    TResult Function(UserLocation location)? loaded,
+    TResult Function(Place location)? loaded,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -265,7 +265,7 @@ class _$_Error implements _Error {
     required TResult Function() loading,
     required TResult Function(dynamic e) error,
     required TResult Function(bool permanent) denied,
-    required TResult Function(UserLocation location) loaded,
+    required TResult Function(Place location) loaded,
   }) {
     return error(e);
   }
@@ -276,7 +276,7 @@ class _$_Error implements _Error {
     TResult Function()? loading,
     TResult Function(dynamic e)? error,
     TResult Function(bool permanent)? denied,
-    TResult Function(UserLocation location)? loaded,
+    TResult Function(Place location)? loaded,
   }) {
     return error?.call(e);
   }
@@ -287,7 +287,7 @@ class _$_Error implements _Error {
     TResult Function()? loading,
     TResult Function(dynamic e)? error,
     TResult Function(bool permanent)? denied,
-    TResult Function(UserLocation location)? loaded,
+    TResult Function(Place location)? loaded,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -408,7 +408,7 @@ class _$_Denied implements _Denied {
     required TResult Function() loading,
     required TResult Function(dynamic e) error,
     required TResult Function(bool permanent) denied,
-    required TResult Function(UserLocation location) loaded,
+    required TResult Function(Place location) loaded,
   }) {
     return denied(permanent);
   }
@@ -419,7 +419,7 @@ class _$_Denied implements _Denied {
     TResult Function()? loading,
     TResult Function(dynamic e)? error,
     TResult Function(bool permanent)? denied,
-    TResult Function(UserLocation location)? loaded,
+    TResult Function(Place location)? loaded,
   }) {
     return denied?.call(permanent);
   }
@@ -430,7 +430,7 @@ class _$_Denied implements _Denied {
     TResult Function()? loading,
     TResult Function(dynamic e)? error,
     TResult Function(bool permanent)? denied,
-    TResult Function(UserLocation location)? loaded,
+    TResult Function(Place location)? loaded,
     required TResult orElse(),
   }) {
     if (denied != null) {
@@ -490,7 +490,7 @@ abstract class _Denied implements LocationState {
 abstract class _$$_LoadedCopyWith<$Res> {
   factory _$$_LoadedCopyWith(_$_Loaded value, $Res Function(_$_Loaded) then) =
       __$$_LoadedCopyWithImpl<$Res>;
-  $Res call({UserLocation location});
+  $Res call({Place location});
 }
 
 /// @nodoc
@@ -510,7 +510,7 @@ class __$$_LoadedCopyWithImpl<$Res> extends _$LocationStateCopyWithImpl<$Res>
       location == freezed
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
-              as UserLocation,
+              as Place,
     ));
   }
 }
@@ -521,7 +521,7 @@ class _$_Loaded implements _Loaded {
   const _$_Loaded(this.location);
 
   @override
-  final UserLocation location;
+  final Place location;
 
   @override
   String toString() {
@@ -551,7 +551,7 @@ class _$_Loaded implements _Loaded {
     required TResult Function() loading,
     required TResult Function(dynamic e) error,
     required TResult Function(bool permanent) denied,
-    required TResult Function(UserLocation location) loaded,
+    required TResult Function(Place location) loaded,
   }) {
     return loaded(location);
   }
@@ -562,7 +562,7 @@ class _$_Loaded implements _Loaded {
     TResult Function()? loading,
     TResult Function(dynamic e)? error,
     TResult Function(bool permanent)? denied,
-    TResult Function(UserLocation location)? loaded,
+    TResult Function(Place location)? loaded,
   }) {
     return loaded?.call(location);
   }
@@ -573,7 +573,7 @@ class _$_Loaded implements _Loaded {
     TResult Function()? loading,
     TResult Function(dynamic e)? error,
     TResult Function(bool permanent)? denied,
-    TResult Function(UserLocation location)? loaded,
+    TResult Function(Place location)? loaded,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -621,9 +621,9 @@ class _$_Loaded implements _Loaded {
 }
 
 abstract class _Loaded implements LocationState {
-  const factory _Loaded(final UserLocation location) = _$_Loaded;
+  const factory _Loaded(final Place location) = _$_Loaded;
 
-  UserLocation get location;
+  Place get location;
   @JsonKey(ignore: true)
   _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
       throw _privateConstructorUsedError;

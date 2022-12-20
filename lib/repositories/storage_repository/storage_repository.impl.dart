@@ -4,6 +4,7 @@ part of 'storage_repository.dart';
 class StorageRepositoryImpl implements StorageRepository {
   final sBox = GetStorage("settings");
   final lBox = GetStorage("location");
+  final lfBox = GetStorage("location_filter");
 
   @override
   AppSettings? getSettings() => _getJson(sBox, onData: AppSettings.fromJson);
@@ -12,10 +13,16 @@ class StorageRepositoryImpl implements StorageRepository {
   setSettings(AppSettings settings) => _setJson(sBox, settings);
 
   @override
-  UserLocation? getLocation() => _getJson(lBox, onData: UserLocation.fromJson);
+  Place? getLocation() => _getJson(lBox, onData: Place.fromJson);
 
   @override
-  setLocation(UserLocation location) => _setJson(lBox, location);
+  setLocation(Place location) => _setJson(lBox, location);
+
+  @override
+  FeedFilterState? get feedFilterSettings => _getJson(lfBox, onData: FeedFilterState.fromJson);
+
+  @override
+  Future<void> setFeedFilterSettings(FeedFilterState feedFilterSettings) => _setJson(lfBox, feedFilterSettings);
 
   // HELPER FUNCTIONS
 
@@ -23,6 +30,7 @@ class StorageRepositoryImpl implements StorageRepository {
   Future<void> init() async {
     await GetStorage.init("settings");
     await GetStorage.init("location");
+    await GetStorage.init("location_filter");
   }
 
   Future<void> _setJson(
@@ -42,4 +50,6 @@ class StorageRepositoryImpl implements StorageRepository {
     }
     return null;
   }
+
+
 }

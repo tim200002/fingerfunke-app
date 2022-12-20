@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../models/post/post.dart';
-import '../../models/user_location.dart';
-import '../../view/main/discover_posts_view/widgets/filter/cubit/feed_filter_cubit.dart';
+import '../../models/place.dart';
+import '../../view/main/discover_posts_view/widgets/filter/cubit/feed_filter_state.dart';
 import 'firestore_pagination_service.dart';
 
 class DiscoveryFeedPaginationService extends FirestorePaginationService<Post> {
-  final UserLocation userLocation;
+  final Place userLocation;
   final FeedFilterState filters;
 
   DiscoveryFeedPaginationService(this.userLocation, this.filters,
@@ -18,9 +18,9 @@ class DiscoveryFeedPaginationService extends FirestorePaginationService<Post> {
           firestore: (firestore ?? FirebaseFirestore.instance),
         );
   static Query<Map<String, dynamic>> _createQuery(FirebaseFirestore firestore,
-      UserLocation userLocation, FeedFilterState filters) {
+      Place userLocation, FeedFilterState filters) {
 
-    print(filters.radius);
+    print(userLocation.geohash);
 
     Query<Map<String, dynamic>> query = firestore.collection('posts').where(
         'geohashesByRadius.${filters.radius}',

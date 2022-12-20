@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../cubits/video_upload_cubit/video_upload_cubit.dart';
 import '../../../../models/asset/asset.dart';
+import '../../../../models/place.dart';
 import '../../../../models/post/post.dart';
 import '../../../../models/user/user.dart';
 import 'post_updateTracker.dart';
@@ -23,7 +24,7 @@ abstract class AbstractPostEditorCubit extends Cubit<PostEditorState> {
   String description = "";
   PostVisibility visibility = PostVisibility.visible;
   List<VideoUploadCubit> videoUploadCubits = [];
-  PostPlace? place;
+  Place? place;
 
   AbstractPostEditorCubit.createEmpty(this.user, this.updateTracker)
       :originalPost=null, super(PostEditorState.editing(updateTracker, false));
@@ -57,7 +58,7 @@ abstract class AbstractPostEditorCubit extends Cubit<PostEditorState> {
       this.videoUploadCubits = videoUploadCubits;
       _emitFieldUpdate();
     }
-    void updatePlace(PostPlace? place) {
+    void updatePlace(Place? place) {
        this.place = place;
        updateTracker = updateTracker.addUpdatePlace();
        _emitFieldUpdate();

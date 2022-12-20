@@ -3,9 +3,10 @@ import 'dart:async';
 import 'package:get_storage/get_storage.dart';
 
 import '../../models/abstract_models/abstract_models.dart';
-import '../../models/user_location.dart';
+import '../../models/place.dart';
 import '../../models/settings/app_settings.dart';
 import '../../utils/type_aliases.dart';
+import '../../view/main/discover_posts_view/widgets/filter/cubit/feed_filter_state.dart';
 
 part 'storage_repository.impl.dart';
 
@@ -19,8 +20,13 @@ abstract class StorageRepository {
   Future<void> setSettings(AppSettings settings);
 
   /// Gets the user's location object from local storage
-  UserLocation? getLocation();
+  Place? getLocation();
 
   /// Persists the user's location within local storage
-  Future<void> setLocation(UserLocation location);
+  Future<void> setLocation(Place location);
+
+  FeedFilterState? get feedFilterSettings;
+
+  Future<void> setFeedFilterSettings(FeedFilterState feedFilterSettings);
+
 }

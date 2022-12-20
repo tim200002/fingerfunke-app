@@ -7,6 +7,7 @@ import '../../../../cubits/location_cubit/location_cubit.dart';
 import '../../../../routes.dart';
 import '../../../../utils/app_theme.dart';
 import '../../../../utils/tools.dart';
+import '../../../repositories/storage_repository/storage_repository.dart';
 import 'widgets/feed/discover_feed.dart';
 import 'widgets/filter/cubit/feed_filter_cubit.dart';
 import 'widgets/filter/location_filter_view.dart';
@@ -63,7 +64,10 @@ class DiscoverView extends StatelessWidget {
           create: (context) => LocationCubit(),
         ),
         BlocProvider<FeedFilterCubit>(
-          create: (_) => FeedFilterCubit(),
+          create: (_) {
+            final StorageRepository storageRepository = StorageRepositoryImpl();
+            return FeedFilterCubit(storageRepository: storageRepository, initialFeedFilterState: storageRepository.feedFilterSettings);
+          } 
         )
       ],
       child: Builder(

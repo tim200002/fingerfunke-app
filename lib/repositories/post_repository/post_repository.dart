@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../models/asset/asset.dart';
+import '../../models/place.dart';
 import '../../models/post/post.dart';
 import '../../models/user/user.dart';
 import '../../utils/type_aliases.dart';
@@ -31,7 +32,7 @@ abstract class PostRepository {
       {PostVisibility? visibility,
       String? title,
       String? description,
-      PostPlace? place,
+      Place? place,
       List<Asset>? media,
       DateTime? startTime});
 

@@ -59,6 +59,7 @@ void main() {
     //endregion
 
     // test proximityHash
+    print(geohash.getGeohashesWithinRadius(2.294776, 48.858156, 1000, precision: 7));
     expect(geohash.getGeohashesWithinRadius(2.294776, 48.858156, 1000, precision: 7).length, 600);
 
   });
