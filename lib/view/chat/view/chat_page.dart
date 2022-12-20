@@ -67,6 +67,7 @@ class ChatPage extends StatelessWidget {
                         }
                       },
                       onRequestNewPage: () => arguments.chatCubit.requestNewPage(),
+                      listLoadIndicator: const Center(child: CircularProgressIndicator.adaptive()),
                     ),
                   ),
                 ),

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
-import '../../../routes.dart';
-import '../../../utils/tools.dart';
-import '../widgets/explore_view/explore_view.dart';
-import '../widgets/explore_view/widgets/home_drawer/home_drawer_view.dart';
-import '../widgets/participate_view/participate_view.dart';
+import '../../routes.dart';
+import '../../utils/tools.dart';
+import 'discover_posts_view/discover_view.dart';
+import 'participate_view/participate_view.dart';
+import 'widgets/home_drawer/home_drawer_view.dart';
 
 class MainView extends StatefulWidget {
   const MainView({Key? key}) : super(key: key);
@@ -89,7 +89,7 @@ class _MainViewState extends State<MainView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _activePage == _MainViewPages.explore
-          ? const ExploreView()
+          ? const DiscoverView()
           : const ParticipateView(),
       drawer: const HomeDrawer(),
       bottomNavigationBar: BottomAppBar(

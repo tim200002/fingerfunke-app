@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 abstract class PaginatedListStateInterface<T>{
 
   const PaginatedListStateInterface();
-  List<T> get items;
+  List<T>? get items;
   bool get isLoading;
   bool get reachedEnd;
-
-  int get itemCount;
 }

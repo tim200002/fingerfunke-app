@@ -7,43 +7,41 @@ import '../../cubits/paginated_list_cubit/paginated_list_state_interface.dart';
 /// List must be wrapped with a bloc builder that handles rebuilding.
 /// When giving it all the required parameters list will automatically
 /// fetch new pages until it reached end
-class PaginatedList<T> extends StatelessWidget {
+class PagedPaginatedList<T> extends StatelessWidget {
   /// state of the list, must confirm with the interface
   final PaginatedListStateInterface<T> state;
 
   /// function envoked on each list item to create widget given the data
   final Widget Function(T) _itemBuilder;
 
+
+  /// Element to show once reached end of list
+  final Widget endIndicator;
+
+  /// Element to show while loading new items
+  final Widget loadingIndicator;
+
   /// function to call to load new items
   final void Function() onRequestNewPage;
 
-  /// message displayed when list reached last element
-  final String? endMessage;
-
-  final Widget? endWidget;
-
-  /// optional function to turn on and off shrinkWrap depending on the number of items in the list
-  /// this is currently needed to shrink the list down in the comment section
-  final bool Function(int)? shouldShrinkWrap;
-
   final bool reverse;
 
-  /// what to show when list is loading new elements
-  final Widget? loadingIndicator;
+  /// pagination Distance, must be known to efficiently prefetch
+  final int paginationDistance;
 
-  /// widget to show while the list is loading
-  final Widget listLoadIndicator;
+  /// starts loading new elements this many elements before reaching end
+  final int prefetch;
 
-  const PaginatedList(
+
+  const PagedPaginatedList(
       {required this.state,
       required Widget Function(T) itemBuilder,
       required this.onRequestNewPage,
-      required this.listLoadIndicator,
+      required this.endIndicator,
+      required this.loadingIndicator,
+      this.paginationDistance = 20,
+      this.prefetch = 3,
       this.reverse = false,
-      this.endMessage,
-      this.endWidget,
-      this.shouldShrinkWrap,
-      this.loadingIndicator,
       Key? key})
       : _itemBuilder = itemBuilder,
         super(key: key);
@@ -54,51 +52,36 @@ class PaginatedList<T> extends StatelessWidget {
   /// ToDo we could look out for a better algorithm which fetches beforehand depending on pagination distance
   bool _shouldLoadNewItems(
       PaginatedListStateInterface<T> state, int currentIndex) {
-    if (state.reachedEnd) {
-      return false;
-    }
-    return currentIndex == state.items!.length - 1;
+    if (state.isLoading) return false;
+    if (state.reachedEnd) return false;
+    bool isInLastPage =
+        (state.items!.length - (currentIndex + 1)) < paginationDistance;
+    if (!isInLastPage) return false;
+    int itemsTillEndOfPagination =
+        (paginationDistance - (currentIndex + 1)) % paginationDistance;
+    if (itemsTillEndOfPagination != prefetch) return false;
+    return true;
   }
 
   bool _currentElementIsIndicator(
       PaginatedListStateInterface<T> state, int index) {
-    return index == state.items!.length - 1;
-  }
+    return index == state.items!.length; }
 
   Widget? _createIndicator(
       PaginatedListStateInterface<T> state, BuildContext context) {
     if (state.isLoading) {
       return loadingIndicator;
     } else {
-      return endWidget ??
-          (endMessage != null
-              ? Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Container(
-                      padding: const EdgeInsets.all(8.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25),
-                        color: Theme.of(context)
-                            .colorScheme
-                            .onSurface
-                            .withOpacity(0.08),
-                      ),
-                      child: Text(endMessage!,
-                          style: Theme.of(context).textTheme.labelMedium),
-                    ),
-                  ),
-                )
-              : null);
+      return endIndicator;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return state.items != null ? ListView.builder(
-      itemCount: state.items!.length,
-      shrinkWrap:
-          shouldShrinkWrap != null ? shouldShrinkWrap!(state.items!.length) : false,
+    return state.items != null ? PageView.builder(
+      scrollDirection: Axis.vertical,
+      // +1 to facilitate loading, end indicator
+      itemCount: state.items!.length + 1,
       reverse: reverse,
       itemBuilder: (context, index) {
         //Check if we reached bottom of list
@@ -112,12 +95,13 @@ class PaginatedList<T> extends StatelessWidget {
             child: _itemBuilder(state.items![index]),
             onItemCreated: () {
               if (_shouldLoadNewItems(state, index)) {
+                print("request new Page");
                 onRequestNewPage();
               }
             },
           );
         }
       },
-    ) : listLoadIndicator ;
+    ) : loadingIndicator ;
   }
 }

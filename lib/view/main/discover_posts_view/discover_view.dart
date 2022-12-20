@@ -7,12 +7,12 @@ import '../../../../cubits/location_cubit/location_cubit.dart';
 import '../../../../routes.dart';
 import '../../../../utils/app_theme.dart';
 import '../../../../utils/tools.dart';
+import 'widgets/feed/discover_feed.dart';
 import 'widgets/filter/cubit/feed_filter_cubit.dart';
-import 'widgets/filter/explore_filter_view.dart';
-import 'widgets/post_discovery_feed/paged_post_discovery_feed.dart';
+import 'widgets/filter/location_filter_view.dart';
 
-class ExploreView extends StatelessWidget {
-  const ExploreView({super.key});
+class DiscoverView extends StatelessWidget {
+  const DiscoverView({super.key});
 
   Widget _drawerButton(BuildContext outerContext) {
     return IconButton(
@@ -30,7 +30,7 @@ class ExploreView extends StatelessWidget {
         BlocProvider.value(
           value: BlocProvider.of<LocationCubit>(c),
         ),
-      ], child: const ExploreFilterView()),
+      ], child: const LocationFilterView()),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(0.0, -1.0);
         const end = Offset.zero;
@@ -59,36 +59,40 @@ class ExploreView extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<FeedFilterCubit>(
-          create: (context) => FeedFilterCubit(),
-        ),
         BlocProvider<LocationCubit>(
           create: (context) => LocationCubit(),
         ),
+        BlocProvider<FeedFilterCubit>(
+          create: (_) => FeedFilterCubit(),
+        )
       ],
-      child: Scaffold(
-        appBar: AppBar(
-          leading: _drawerButton(context),
-          title: _filterButton(context),
-          actions: [
-            const SizedBox(
-              width: 62,
+      child: Builder(
+        builder: (context) {
+          return Scaffold(
+            appBar: AppBar(
+              leading: _drawerButton(context),
+              title: _filterButton(context),
+              actions: [
+                const SizedBox(
+                  width: 62,
+                ),
+                LiveConfig.builder((config) => config.hideFeedbackBtn
+                    ? Container()
+                    : IconButton(
+                        onPressed: () =>
+                            Navigator.of(context).pushNamed(Routes.feedback),
+                        icon: const Icon(Icons.thumbs_up_down_rounded)))
+              ],
             ),
-            LiveConfig.builder((config) => config.hideFeedbackBtn
-                ? Container()
-                : IconButton(
-                    onPressed: () =>
-                        Navigator.of(context).pushNamed(Routes.feedback),
-                    icon: const Icon(Icons.thumbs_up_down_rounded)))
-          ],
-        ),
-        body: Container(
-            padding: const EdgeInsets.only(
-                left: AppTheme.PADDING_SIDE,
-                right: AppTheme.PADDING_SIDE,
-                top: 15),
-            clipBehavior: Clip.none,
-            child: const PagedPostDiscoveryFeed()),
+            body: Container(
+                padding: const EdgeInsets.only(
+                    left: AppTheme.PADDING_SIDE,
+                    right: AppTheme.PADDING_SIDE,
+                    top: 15),
+                clipBehavior: Clip.none,
+                child: const DiscoverFeed()),
+          );
+        },
       ),
     );
   }

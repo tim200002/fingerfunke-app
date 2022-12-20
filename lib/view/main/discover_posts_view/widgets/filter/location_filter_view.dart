@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,12 +5,13 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
 
 import '../../../../../../cubits/location_cubit/location_cubit.dart';
+import '../../../../../../utils/app_config.dart';
 import '../../../../../../utils/tools.dart';
-import '../../../../../maps/view/maps_place_picker_page.dart';
+import '../../../../maps/view/maps_place_picker_page.dart';
 import 'cubit/feed_filter_cubit.dart';
 
-class ExploreFilterView extends StatelessWidget {
-  const ExploreFilterView({Key? key}) : super(key: key);
+class LocationFilterView extends StatelessWidget {
+  const LocationFilterView({Key? key}) : super(key: key);
 
   Widget _filterItem(
       String off, String on, bool value, Function(bool) onChanged) {
@@ -38,52 +37,67 @@ class ExploreFilterView extends StatelessWidget {
     );
   }
 
-  Widget _locationSlider(BuildContext context, double? value,
-      {double max = 35, required Function(double?) onChanged}) {
+  Widget _locationSlider(BuildContext context, int radius,
+      {required Function(int) onChanged}) {
+    final int numberOfDivisions = AppConfig.locationQueryRadiusLevel.length;
+
     return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        child: Column(
-          children: [
-            ElevatedButton(
-              onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context2) => BlocProvider.value(
-                        value: BlocProvider.of<LocationCubit>(context),
-                        child: MapsPlacePickerPage(
-                            onPlacePicked: (PickResult pickResult) => context
-                                .read<LocationCubit>()
-                                .updateLocation(
-                                    lat: pickResult.geometry!.location.lat,
-                                    lng: pickResult.geometry!.location.lng,
-                                    address: pickResult.formattedAddress)),
-                      ))),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(FeatherIcons.mapPin, size: 17),
-                  const SizedBox(width: 5),
-                  BlocBuilder<LocationCubit, LocationState>(
-                      builder: (context, state) => AutoSizeText(state.when(
-                          loading: () => l10n(context).lbl_locationLoading,
-                          denied: (_) => l10n(context).lbl_locationUnknown,
-                          error: (_) => l10n(context).lbl_locationUnknown,
-                          loaded: (location) => context
-                              .read<LocationCubit>()
-                              .generateAddress(location.address))))
-                ],
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Column(
+        children: [
+          ElevatedButton(
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context2) => BlocProvider.value(
+                  value: BlocProvider.of<LocationCubit>(context),
+                  child: MapsPlacePickerPage(
+                      onPlacePicked: (PickResult pickResult) => context
+                          .read<LocationCubit>()
+                          .updateLocation(
+                              lat: pickResult.geometry!.location.lat,
+                              lng: pickResult.geometry!.location.lng,
+                              address: pickResult.formattedAddress)),
+                ),
               ),
             ),
-            const SizedBox(height: 10),
-            Slider(
-              value: math.max(5, math.min(max, value ?? max)),
-              max: max,
-              divisions: 6,
-              min: 5,
-              label: value != null ? "+ ${value.floor()} km" : "alle",
-              onChanged: (v) => onChanged(v < max ? v : null),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(FeatherIcons.mapPin, size: 17),
+                const SizedBox(width: 5),
+                BlocBuilder<LocationCubit, LocationState>(
+                  builder: (context, state) => AutoSizeText(state.when(
+                    loading: () => l10n(context).lbl_locationLoading,
+                    denied: (_) => l10n(context).lbl_locationUnknown,
+                    error: (_) => l10n(context).lbl_locationUnknown,
+                    loaded: (location) => context
+                        .read<LocationCubit>()
+                        .generateAddress(location.address),
+                  )),
+                )
+              ],
             ),
-          ],
-        ));
+          ),
+          const SizedBox(height: 10),
+          Slider(
+            value: AppConfig.locationQueryRadiusLevel
+                .indexOf(radius)
+                .toDouble(), // math.max(minRadius, math.min(maxRadius, value ?? maxRadius)),
+            max: (numberOfDivisions - 1).toDouble(),
+            divisions: numberOfDivisions,
+            min: 0,
+            label: "+ $radius km",
+            onChanged: (v) {
+              int rangeIndex = v.round();
+              int radiusLevel = AppConfig.locationQueryRadiusLevel[rangeIndex];
+              onChanged(radiusLevel);
+              //onChanged(v < max ? v : null),
+            },
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _sectionHeader(BuildContext context, String title) {
@@ -114,11 +128,11 @@ class ExploreFilterView extends StatelessWidget {
             return ListView(
               children: [
                 _sectionHeader(context, l10n(context).lbl_filterPerimeter),
-                _locationSlider(context, filter.distance, onChanged: (v) {
+                _locationSlider(context, filter.radius, onChanged: (v) {
                   logger.d(v);
                   context
                       .read<FeedFilterCubit>()
-                      .change(filter.copyWith(distance: v));
+                      .change(filter.copyWith(radius: v));
                 }),
                 _sectionHeader(context, l10n(context).lbl_filterPosts),
                 _filterItem(

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../cubits/app_cubit/app_cubit.dart';
-import '../../../../utils/app_theme.dart';
-import '../../../../utils/tools.dart';
-import '../../../post_feed/posts_list_cubit/posts_list_cubit.dart';
-import '../../../post_feed/view/compact_post_feed.dart';
+import '../../../cubits/app_cubit/app_cubit.dart';
+import '../../../utils/app_theme.dart';
+import '../../../utils/tools.dart';
+import '../../post_feed/posts_list_cubit/posts_list_cubit.dart';
+import '../../post_feed/view/compact_post_feed.dart';
 
 /// this class prevents elements within a TabView to be rebuilt upon
 /// tab switching. In our case, this means that we do not (unnecessarily)

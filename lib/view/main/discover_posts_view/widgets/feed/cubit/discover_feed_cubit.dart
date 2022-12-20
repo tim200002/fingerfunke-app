@@ -2,31 +2,34 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:logger/logger.dart';
 
-import '../../../cubits/paginated_list_cubit/paginated_list_cubit_interface.dart';
-import '../../../cubits/paginated_list_cubit/paginated_list_state_interface.dart';
-import '../../../models/message/message.dart';
-import '../../../services/pagination/message_pagination_service.dart';
-import '../../../utils/type_aliases.dart';
+import '../../../../../../cubits/paginated_list_cubit/paginated_list_cubit_interface.dart';
+import '../../../../../../cubits/paginated_list_cubit/paginated_list_state_interface.dart';
+import '../../../../../../models/post/post.dart';
+import '../../../../../../models/user_location.dart';
+import '../../../../../../services/pagination/discovery_feed_pagination_service.dart';
+import '../../filter/cubit/feed_filter_cubit.dart';
 
-part 'chat_cubit_state.dart';
+part 'discover_feed_state.dart';
 
-class ChatCubit extends Cubit<ChatState>
+class DiscoverFeedCubit extends Cubit<DiscoverFeedState>
     implements PaginatedListCubitInterface {
-  final MessagePaginationService _paginationService;
-  late final StreamSubscription _itemsStreamSubscription;
   final Logger _logger = Logger();
+  late DiscoveryFeedPaginationService _paginationService;
+  late StreamSubscription _itemsStreamSubscription;
 
-  ChatCubit(FirestoreId postId)
-      : _paginationService = MessagePaginationService(postId),
-        super(const ChatState(items: null, isLoading: false, reachedEnd: false)) {
+  DiscoverFeedCubit(
+      {required UserLocation userLocation, required FeedFilterState filters})
+      : super(const DiscoverFeedState(
+            items: null, isLoading: false, reachedEnd: false)) {
+    _paginationService = DiscoveryFeedPaginationService(userLocation, filters);
     _itemsStreamSubscription = _paginationService.getItemsStream().listen(
           (items) => emit(state.copyWith(items: items)),
         );
     requestNewPage();
   }
+
   @override
   Future<void> requestNewPage() async {
     _logger.i("Paginated list, load new page");
