@@ -68,7 +68,8 @@ class DiscoverFeed extends StatelessWidget {
                   BlocBuilder<FeedFilterCubit, FeedFilterState>(
                 builder: (context, locationFilters) {
                     return BlocProvider<DiscoverFeedCubit>(
-                  key: Key(locationFilters.hashCode.toString()),
+                  //! Not sure if this is valid 
+                  key: Key(locationFilters.toString()+location.toString()),
                   create: (_) => DiscoverFeedCubit(
                       userLocation: location, filters: locationFilters),
                   child:

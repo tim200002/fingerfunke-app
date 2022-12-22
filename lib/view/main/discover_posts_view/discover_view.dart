@@ -109,4 +109,3 @@ class FilterButton extends StatelessWidget {
                 orElse: () => l10n(c).lbl_exploreFilter))));
   }
 }
-
