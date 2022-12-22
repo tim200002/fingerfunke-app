@@ -12,7 +12,7 @@ class AppPermissionDeniedException implements Exception {
 class PositionRepositoryImpl implements PositionRepository {
   /// Generates current location
   @override
-  Future<Position> getDevicePosition(
+  Future<Coordinate> getDevicePosition(
       {LocationPermission? existingPermission, bool request = false}) async {
     final LocationPermission permission =
         existingPermission ?? await Geolocator.checkPermission();
@@ -24,17 +24,17 @@ class PositionRepositoryImpl implements PositionRepository {
       LocationPermission res = await Geolocator.requestPermission();
       return getDevicePosition(existingPermission: res, request: false);
     } else {
-      return Geolocator.getCurrentPosition(
-              desiredAccuracy: LocationAccuracy.medium)
-          .timeout(const Duration(seconds: 5));
+      final Position position = await Geolocator.getCurrentPosition(
+              desiredAccuracy: LocationAccuracy.medium).timeout(const Duration(seconds: 5));
+      return Coordinate(position.latitude, position.longitude);
     }
   }
 
   /// Returns address of location
   @override
-  Future<String> generateAddress(Position pos) async {
+  Future<String> generateAddress(Coordinate position) async {
     List<geocoding.Placemark> placeMarks =
-        await geocoding.placemarkFromCoordinates(pos.latitude, pos.longitude);
+        await geocoding.placemarkFromCoordinates(position.latitude, position.longitude);
     return """${placeMarks[0].street}, ${placeMarks[0].postalCode} ${placeMarks[0].locality}, ${placeMarks[0].country}""";
   }
 }

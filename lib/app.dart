@@ -5,7 +5,7 @@ import 'models/settings/app_settings.dart';
 import 'routes.dart';
 import 'utils/app_theme.dart';
 import 'view/create_account/view/create_account_view.dart';
-import 'view/main/view/main_view.dart';
+import 'view/main/main_view.dart';
 import 'view/splash/view/splash_page.dart';
 import 'view/welcome/view/welcome_page.dart';
 import 'package:flutter/material.dart';

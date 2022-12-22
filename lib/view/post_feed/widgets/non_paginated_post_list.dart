@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../common_widgets/list_view/list_items/post_feed_image_item.dart';
+import '../../../common_widgets/list_items/post_feed_image_item.dart';
 import '../../../models/post/post.dart';
 
 class NonPaginatedPostList extends StatelessWidget {

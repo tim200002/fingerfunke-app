@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:geoflutterfire/geoflutterfire.dart';
 
 import '../../models/asset/asset.dart';
+import '../../models/place.dart';
 import '../../models/post/post.dart';
 import '../../models/user/user.dart';
 import '../../models/utils.dart';
@@ -14,7 +14,6 @@ import 'post_repository.dart';
 
 class PostRepositoryImpl implements PostRepository {
   final FirebaseFirestore _firestore;
-  final Geoflutterfire _geo = Geoflutterfire();
   late final CollectionReference _postCollection;
   late final CollectionReference _userCollection;
 
@@ -31,25 +30,6 @@ class PostRepositoryImpl implements PostRepository {
     await _postCollection.doc(post.id).set(postJson);
   }
 
-  @override
-  Stream<List<Post>> observeNearbyPosts(
-      {required GeoPoint point,
-      required double? radius,
-      final List<Post> Function(List<Post> posts)? worker}) {
-    //! fetching all posts is more for debug purposes.
-    // When moving to production, this should be disabled
-    logger.d("fetch: $radius");
-    if (radius == null) return observePosts(null);
-    var stream = _geo
-        .collection(
-            collectionRef: _postCollection as Query<Map<String, dynamic>>)
-        .within(
-            center: GeoFirePoint(point.latitude, point.longitude),
-            radius: radius,
-            field: "place")
-        .map((doc) => doc.map((doc) => Post.fromDoc(doc)).toList());
-    return worker != null ? stream.map(worker) : stream;
-  }
 
   @override
   Stream<Post> observePost(FirestoreId postId) {
@@ -94,7 +74,7 @@ class PostRepositoryImpl implements PostRepository {
       {PostVisibility? visibility,
       String? title,
       String? description,
-      PostPlace? place,
+      Place? place,
       List<Asset>? media,
       DateTime? startTime}) async {
     //TODO: würde diese Methode nicht ungesetzte Felder mit null überschreiben?

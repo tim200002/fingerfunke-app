@@ -1,53 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:geoflutterfire/geoflutterfire.dart';
-import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../utils/app_config.dart';
 import '../../utils/type_aliases.dart';
+import '../../utils/utility_classes/geohash.dart';
 import '../abstract_models/abstract_models.dart';
 import '../asset/asset.dart';
+import '../place.dart';
 import '../user/user.dart';
 import '../utils.dart';
 
 part 'event.dart';
 part 'group.dart';
-
-class PostPlace {
-  final String address;
-  final String geohash;
-  final GeoPoint point;
-
-  const PostPlace({
-    required this.address,
-    required this.geohash,
-    required this.point,
-  });
-
-  const PostPlace.demo()
-      : this(address: "null", geohash: "abcd", point: const GeoPoint(0, 0));
-
-  PostPlace.fromPick(PickResult r)
-      : this(
-            address: r.formattedAddress!,
-            point: GeoPoint(r.geometry!.location.lat, r.geometry!.location.lat),
-            geohash: Geoflutterfire()
-                .point(
-                    latitude: r.geometry!.location.lat,
-                    longitude: r.geometry!.location.lng)
-                .hash);
-
-  factory PostPlace.fromJson(JsonMap map) => PostPlace(
-        address: map["address"],
-        geohash: map["geohash"] ?? "EMPTY",
-        point: map["geopoint"],
-      );
-
-  JsonMap toJson() => {
-        "address": address,
-        "geohash": geohash,
-        "geopoint": point,
-      };
-}
 
 enum PostType { event, recurrent }
 
@@ -60,7 +24,8 @@ class Post extends UserGeneratedDocument {
   final String title;
   final String description;
   final PostVisibility visibility;
-  final PostPlace place;
+  final Place place;
+  final Map<String, List<String>> geohashesByRadius;
 
   final List<FirestoreId> members;
   //final List<UserInfo> interstedUsers;
@@ -78,6 +43,7 @@ class Post extends UserGeneratedDocument {
       required DateTime creationTime,
       required this.visibility,
       required this.place,
+      required this.geohashesByRadius,
       required this.media,
       required this.members})
       : super(id: id, author: author, creationTime: creationTime);
