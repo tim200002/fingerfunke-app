@@ -25,28 +25,35 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<void> updateUser(FirestoreId userId,
-      {String? name, String? picture, int? age, List<FirestoreId>? savedPosts}) async {
-    final Map<String, dynamic> updateMap = {
+      {String? name,
+      String? picture,
+      int? age,
+      List<FirestoreId>? savedPosts,
+      Map<String, String>? socialMedia,
+      String? bio}) async {
+    final JsonMap updateMap = {
       'name': name,
       'picture': picture,
       'age': age,
-      'savedPosts': savedPosts
+      'savedPosts': savedPosts,
+      'socialMedia': socialMedia,
+      'bio': bio
     }..removeWhere((key, value) => value == null);
     await _userCollection.doc(userId).update(updateMap);
   }
 
   @override
   Future<void> savePost(FirestoreId userId, FirestoreId postId) {
-    return _userCollection.doc(userId).update(
-      {"savedPosts": FieldValue.arrayUnion([postId])}
-    );
+    return _userCollection.doc(userId).update({
+      "savedPosts": FieldValue.arrayUnion([postId])
+    });
   }
 
   @override
   Future<void> unsavePost(FirestoreId userId, FirestoreId postId) {
-    return _userCollection.doc(userId).update(
-      {"savedPosts": FieldValue.arrayRemove([postId])}
-    );
+    return _userCollection.doc(userId).update({
+      "savedPosts": FieldValue.arrayRemove([postId])
+    });
   }
 
   @override
@@ -57,5 +64,10 @@ class UserRepositoryImpl implements UserRepository {
       }
       return User.fromDoc(documentSnapshot);
     });
+  }
+
+  @override
+  Future<void> setToken(String userId, String key, JsonMap value) {
+    return _userCollection.doc(userId).collection("tokens").doc(key).set(value);
   }
 }

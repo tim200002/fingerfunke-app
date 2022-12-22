@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 
 import '../../../../cubits/live_config_cubit/live_config_cubit.dart';
@@ -23,20 +22,20 @@ class DevToolsPage extends StatelessWidget {
           shrinkWrap: true,
           children: [
             SettingsTile(
-              title: "Nutzer-Feedback",
-              subtitle: "Probleme und Anregungen",
+              title: l10n(context).lbl_devFeedback,
+              subtitle: l10n(context).lbl_devFeedbackDesc,
               trailing: const Icon(Icons.arrow_forward_ios),
               onPressed: (_) => Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => const FeedbackManagePage())),
             ),
             SettingsTile(
-              title: "Entwicklungs-Funktionen",
-              subtitle: "Entwicklungswerkzeuge für Testzwecke",
+              title: l10n(context).lbl_devActions,
+              subtitle: l10n(context).lbl_devActionsDesc,
               trailing: const Icon(Icons.arrow_forward_ios),
               onPressed: (_) => Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => const DevFunctionsPage())),
             ),
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
             LiveConfig.builder(
               (config) => SettingsSection(
                   title: "Feature-Flags",

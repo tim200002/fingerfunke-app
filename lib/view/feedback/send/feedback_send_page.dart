@@ -47,16 +47,17 @@ class FeedbackSendPage extends StatelessWidget {
                       ),
                   sent: () => Scaffold(
                         appBar: AppBar(),
-                        body: const Center(
+                        body: Center(
                             child: Text(
-                          "Danke!\n😊",
+                          l10n(context).lbl_feedbackThanks,
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 20),
                         )),
                       ),
                   editing: ((categories, title, description) => Scaffold(
-                        appBar: AppBar(title: const Text("send feedback")),
+                        appBar: AppBar(
+                            title: Text(l10n(context).lbl_feedbackTitle)),
                         body: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: SingleChildScrollView(
@@ -64,12 +65,11 @@ class FeedbackSendPage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
                               const SizedBox(height: 30),
-                              const Text(
-                                  "Hey 👋\nDu hast ein Problem in der App gefunden oder möchtest uns generell Feedback geben?\nDamit hilfst du uns die App in Zukunft noch besser zu machen. Vielen Dank!"),
+                              Text(l10n(context).lbl_feedbackDesc),
                               const SizedBox(height: 30),
                               //_feedbackType(),
                               //SizedBox(height: 40),
-                              Text("Kategorie",
+                              Text(l10n(context).lbl_feedbackCategory,
                                   style: Theme.of(context).textTheme.headline6),
                               const SizedBox(height: 20),
                               ChipChooser<UserFeedbackCategories>(
@@ -86,10 +86,10 @@ class FeedbackSendPage extends StatelessWidget {
                                 maxLines: 1,
                                 style: const TextStyle(
                                     fontSize: 17, fontWeight: FontWeight.w600),
-                                decoration: const InputDecoration(
+                                decoration: InputDecoration(
                                   border: InputBorder.none,
-                                  hintText: "Titel Deines Feedbacks",
-                                  hintStyle: TextStyle(
+                                  hintText: l10n(context).lbl_feedbackYourTitle,
+                                  hintStyle: const TextStyle(
                                       color: Colors.grey, fontSize: 17),
                                 ),
                               ),
@@ -98,10 +98,11 @@ class FeedbackSendPage extends StatelessWidget {
                                 controller: description,
                                 maxLines: null,
                                 onChanged: (value) => {},
-                                decoration: const InputDecoration(
+                                decoration: InputDecoration(
                                   border: InputBorder.none,
-                                  hintText: "Schreibe hier Dein Feedback :)",
-                                  hintStyle: TextStyle(color: Colors.grey),
+                                  hintText: l10n(context).lbl_feedbackYourText,
+                                  hintStyle:
+                                      const TextStyle(color: Colors.grey),
                                 ),
                               ),
                               const SizedBox(height: 100)
@@ -111,14 +112,14 @@ class FeedbackSendPage extends StatelessWidget {
                         floatingActionButton: ElevatedButton.icon(
                             onPressed: () {
                               if (title.value.text.isEmpty) {
-                                Tools.showSnackbar(
-                                    context, "Bitte gib einen Titel an");
+                                Tools.showSnackbar(context,
+                                    l10n(context).msg_feedbackMissingTitle);
                                 return;
                               }
                               context.read<FeedbackSendCubit>().send();
                             },
                             icon: const Icon(FeatherIcons.send),
-                            label: const Text("senden")),
+                            label: Text(l10n(context).lbl_feedbackSend)),
                       ))),
             )));
   }

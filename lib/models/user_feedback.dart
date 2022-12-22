@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
+import '../utils/type_aliases.dart';
 import 'abstract_models/abstract_models.dart';
 import 'user/user.dart';
 import 'utils.dart';
@@ -48,30 +49,29 @@ class UserFeedback extends UserGeneratedDocument {
             creationTime: creationTime);
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      "id": id,
-      "author": author.toJson(),
-      "creationTime": dateToJson(creationTime),
-      "categories": categories.map((e) => e.name).toList(),
-      "state": state.name,
-      "appVersion": appVersion,
-      "title": title,
-      "description": description
-    };
-  }
+  JsonMap toJson() => {
+        "id": id,
+        "author": author.toJson(),
+        "creationTime": dateToJson(creationTime),
+        "categories": categories.map((e) => e.name).toList(),
+        "state": state.name,
+        "appVersion": appVersion,
+        "title": title,
+        "description": description
+      };
 
   @override
   String toString() => toJson().toString();
 
   @override
   int get hashCode => toString().hashCode;
+  @override
   bool operator ==(Object other) => hashCode == other.hashCode;
 
   factory UserFeedback.fromDoc(DocumentSnapshot document) =>
       UserFeedback.fromJson(documentSnaphsotToJson(document));
 
-  factory UserFeedback.fromJson(Map<String, dynamic> map) {
+  factory UserFeedback.fromJson(JsonMap map) {
     return UserFeedback(
       id: map["id"] as String,
       author: UserInfo.fromJson(map["author"]),

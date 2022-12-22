@@ -1,3 +1,5 @@
+import 'package:uuid/uuid.dart';
+
 import '../../../common_widgets/image/user_image/user_image.dart';
 import '../../../cubits/app_cubit/app_cubit.dart';
 import '../../../utils/tools.dart';
@@ -43,32 +45,41 @@ class ProfilePictureImageUploadWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AppCubit, AppState>(builder: (context, state) {
-      return InkWell(
-        onTap: () async {
-          selectImage(state.user.id, context);
-        },
-        child: SizedBox.square(
-          dimension: userImageSize,
-          child: Stack(
-            //fit: StackFit.passthrough,
-            children: [
-              UserImage(
-                state.user.picture,
-                diameter: userImageSize.round(),
-              ),
-              Align(
-                  alignment: Alignment.bottomRight,
-                  child: Container(
+    return BlocBuilder<AppCubit, AppState>(
+        buildWhen: ((previous, current) =>
+            previous.user.picture != current.user.picture),
+        builder: (context, state) {
+          return InkWell(
+            onTap: () async {
+              selectImage(state.user.id, context);
+            },
+            child: SizedBox.square(
+              dimension: userImageSize,
+              child: Stack(
+                //fit: StackFit.passthrough,
+                children: [
+                  UserImage(
+                    state.user.picture,
+                    diameter: userImageSize.round(),
+                    // Add key because otherwise will not update correctly
+                    // when given the picture is a good key, sice should only update
+                    // if picture changes
+                    key: Key(state.user.picture ?? const Uuid().v4()),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: Container(
                       padding: const EdgeInsets.all(6),
                       decoration: BoxDecoration(
                           color: Colors.white.withAlpha(200),
                           borderRadius: BorderRadius.circular(20)),
-                      child: const Icon(Icons.edit, size: 20)))
-            ],
-          ),
-        ),
-      );
-    });
+                      child: const Icon(Icons.edit, size: 20),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+        });
   }
 }

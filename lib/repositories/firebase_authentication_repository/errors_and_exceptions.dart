@@ -1,3 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
+import '../../env.dart' as env;
+
+
 class LogOutFailure implements Exception {}
 
 class VerifyPhoneNumberFailure implements Exception {
@@ -10,7 +15,13 @@ class VerifyPhoneNumberFailure implements Exception {
         return const VerifyPhoneNumberFailure(
             'Phone number is not valid or badly formatted');
       default:
-        return const VerifyPhoneNumberFailure();
+        {
+          if (env.SHOW_VERBOSE_UI_ERROR_MESSAGES) {
+            return VerifyPhoneNumberFailure(
+                'VerifyPhoneNumberFailure $code');
+          }
+          return const VerifyPhoneNumberFailure();
+        }
     }
   }
 
@@ -18,11 +29,11 @@ class VerifyPhoneNumberFailure implements Exception {
 }
 
 class SignInWithCredentialFailure implements Exception {
-  const SignInWithCredentialFailure(
-      [this.message = 'An unknown exception occurred.']);
+  const SignInWithCredentialFailure(this.message);
 
-  factory SignInWithCredentialFailure.fromCode(String code) {
-    switch (code) {
+  factory SignInWithCredentialFailure.fromCode(
+      FirebaseAuthException exception) {
+    switch (exception.code) {
       case 'invalid-verification-code':
         return const SignInWithCredentialFailure('Code invalid');
       case 'invalid-verification-id':
@@ -32,7 +43,8 @@ class SignInWithCredentialFailure implements Exception {
         return const SignInWithCredentialFailure(
             'User account has been disabled. You cannot use this phone number again.');
       default:
-        return const SignInWithCredentialFailure();
+        return SignInWithCredentialFailure(
+            exception.message ?? 'An unknown exception occurred.');
     }
   }
 

@@ -8,10 +8,10 @@ class Group extends Post {
     required String description,
     required DateTime creationTime,
     required PostVisibility visibility,
-    required String location,
-    //required this.postPlace,
+    required Place place,
+    required Map<String, List<String>> geohashesByRadius,
     required List<Asset> media,
-    required List<UserInfo> participants,
+    required List<FirestoreId> members,
   }) : super._(
             id: id,
             type: PostType.recurrent,
@@ -20,45 +20,42 @@ class Group extends Post {
             description: description,
             creationTime: creationTime,
             visibility: visibility,
-            location: location,
+            place: place,
+            geohashesByRadius: geohashesByRadius,
             media: media,
-            participants: participants);
+            members: members);
+
+
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      "id": id,
-      "creationTime": dateToJson(creationTime),
-      "author": author.toJson(),
-      "type": PostType.recurrent,
-      "title": title,
-      "description": description,
-      "visibility": visibility.name,
-      "location": location,
-      "media": media.map((e) => e.toJson()).toList(),
-      "participants": participants.map((user) => user.toJson()).toList(),
-    };
-  }
+  JsonMap toJson() => {
+        "id": id,
+        "creationTime": dateToJson(creationTime),
+        "author": author.toJson(),
+        "type": PostType.recurrent,
+        "title": title,
+        "description": description,
+        "visibility": visibility.name,
+        "place": place.toJson(),
+        "geohashesByRadius": geohashesByRadius,
+        "media": media.map((e) => e.toJson()).toList(),
+        "members": members
+      };
 
-  factory Group.fromJson(Map<String, dynamic> map) {
-    return Group(
+  factory Group.fromJson(JsonMap map) => Group(
       id: map["id"] as String,
       creationTime: dateFromJson(map['creationTime'] as int),
-      author: UserInfo.fromJson(map["author"] as Map<String, dynamic>),
+      author: UserInfo.fromJson(map["author"] as JsonMap),
       title: map["title"] as String,
       description: map["description"] as String,
       visibility:
           PostVisibility.values.firstWhere((t) => t.name == map["visibility"]),
-      location: map["location"] as String,
+      place: Place.fromJson(map["place"]),
+      geohashesByRadius: map["geohashesByRadius"],
       media: (map['media'] as List<dynamic>)
-          .map((e) => Asset.fromJson(e as Map<String, dynamic>))
+          .map((e) => Asset.fromJson(e as JsonMap))
           .toList(),
-      participants: (map["participants"] as List<dynamic>)
-          .map((participant) =>
-              UserInfo.fromJson(participant as Map<String, dynamic>))
-          .toList(),
-    );
-  }
+      members: map["members"] as List<FirestoreId>);
 
   factory Group.fromDoc(DocumentSnapshot document) =>
       Group.fromJson(documentSnaphsotToJson(document));
@@ -68,21 +65,33 @@ class Group extends Post {
     required String title,
     required String description,
     required PostVisibility visibility,
-    required String location,
-    //required GeoHash postPlace,
+    required Place place,
     required List<Asset> media,
-  }) =>
-      Group(
-        id: const Uuid().v4(),
-        author: author,
-        title: title,
-        description: description,
-        creationTime: DateTime.now(),
-        visibility: visibility,
-        location: location,
-        media: media,
-        participants: [author],
-      );
+    required List<FirestoreId> members,
+  })  {
+    final GeoHasher geoHasher = GeoHasher();
+    final Map<String, List<String>> geohashMap = {};
+    for (final int radius in AppConfig.locationQueryRadiusLevel) {
+      final List<String> geohashesForRadius =
+          geoHasher.getGeohashesWithinRadius(place.position.longitude,
+              place.position.latitude, (radius * 1000).toDouble(),
+              precision: AppConfig.defaultGeoHashPrecision);
+      geohashMap[radius.toString()] = geohashesForRadius;
+    }
+
+    return Group(
+      id: const Uuid().v4(),
+      author: author,
+      title: title,
+      description: description,
+      creationTime: DateTime.now(),
+      visibility: visibility,
+      place: place,
+      geohashesByRadius: geohashMap,
+      media: media,
+      members: members
+    );
+  }
 
   @override
   List<Object> get props => [

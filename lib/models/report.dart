@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uuid/uuid.dart';
 
+import '../utils/type_aliases.dart';
 import 'abstract_models/abstract_models.dart';
 import 'user/user.dart';
 import 'utils.dart';
@@ -39,22 +40,20 @@ class Report extends UserGeneratedDocument {
             creationTime: creationTime);
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      "id": id,
-      "objectReference": objectReference,
-      "author": author.toJson(),
-      "reasons": reasons.map((e) => e.name).toList(),
-      "type": type.name,
-      "state": state.name,
-      "creationTime": dateToJson(creationTime),
-    };
-  }
+  JsonMap toJson() => {
+        "id": id,
+        "objectReference": objectReference,
+        "author": author.toJson(),
+        "reasons": reasons.map((e) => e.name).toList(),
+        "type": type.name,
+        "state": state.name,
+        "creationTime": dateToJson(creationTime)
+      };
 
   factory Report.fromDoc(DocumentSnapshot document) =>
       Report.fromJson(documentSnaphsotToJson(document));
 
-  factory Report.fromJson(Map<String, dynamic> map) {
+  factory Report.fromJson(JsonMap map) {
     return Report(
         id: map["id"] as String,
         creationTime: dateFromJson(map['creationTime'] as int),

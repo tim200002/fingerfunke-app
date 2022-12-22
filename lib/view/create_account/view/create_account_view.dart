@@ -54,9 +54,9 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                   controller: _userNameController,
                   style: const TextStyle(
                       fontSize: 30, fontWeight: FontWeight.w900),
-                  decoration: const InputDecoration(
-                      hintStyle: TextStyle(color: Colors.grey),
-                      hintText: "z.B. Julia",
+                  decoration: InputDecoration(
+                      hintStyle: const TextStyle(color: Colors.grey),
+                      hintText: l10n(context).lbl_loginNameHint,
                       border: InputBorder.none),
                 ),
                 const SizedBox(height: 60)

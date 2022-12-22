@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../utils/extensions/first_where_or_null.dart';
+import '../../utils/app_config.dart';
 import '../../utils/type_aliases.dart';
+import '../../utils/utility_classes/geohash.dart';
 import '../abstract_models/abstract_models.dart';
 import '../asset/asset.dart';
+import '../place.dart';
 import '../user/user.dart';
 import '../utils.dart';
 
@@ -20,21 +21,18 @@ class InvalidPostTypeException implements Exception {}
 
 class Post extends UserGeneratedDocument {
   final PostType type;
-
   final String title;
   final String description;
-
   final PostVisibility visibility;
+  final Place place;
+  final Map<String, List<String>> geohashesByRadius;
 
-  final String location;
-  //final GeoHash postPlace;
-
-  //final List<FirestoreId> interstedUserIds;
+  final List<FirestoreId> members;
   //final List<UserInfo> interstedUsers;
 
   final List<Asset> media;
 
-  final List<UserInfo> participants;
+  //final List<UserInfo> participants;
 
   const Post._(
       {required FirestoreId id,
@@ -44,13 +42,11 @@ class Post extends UserGeneratedDocument {
       required this.description,
       required DateTime creationTime,
       required this.visibility,
-      required this.location,
-      //required this.postPlace,
+      required this.place,
+      required this.geohashesByRadius,
       required this.media,
-      required this.participants})
+      required this.members})
       : super(id: id, author: author, creationTime: creationTime);
-
-  int get hashCode => toJson().hashCode;
 
   bool get isEvent => type == PostType.event;
   bool get isGroup => type == PostType.recurrent;
@@ -59,7 +55,7 @@ class Post extends UserGeneratedDocument {
   Group? get asGroup => isGroup ? (this as Group) : null;
 
   @override
-  Map<String, dynamic> toJson() {
+  JsonMap toJson() {
     if (this is Group) {
       return (this as Group).toJson();
     } else if (this is Event) {
@@ -69,7 +65,7 @@ class Post extends UserGeneratedDocument {
     }
   }
 
-  factory Post.fromJson(Map<String, dynamic> map) {
+  factory Post.fromJson(JsonMap map) {
     switch (PostType.values.firstWhere((t) => t.name == map["type"])) {
       case PostType.event:
         return Event.fromJson(map);
@@ -80,17 +76,13 @@ class Post extends UserGeneratedDocument {
     }
   }
 
-  bool isUserParticipant(UserInfo? participant) {
-    if (participant == null) return false;
-    return participants.firstWhereOrNull((user) => user.id == participant.id) !=
-            null
-        ? true
-        : false;
-  }
-
   bool isUserAuthor(UserInfo? user) {
     if (user == null) return false;
     return author.id == user.id;
+  }
+
+  bool isAuthor(FirestoreId? userId) {
+    return author.id == userId;
   }
 
   factory Post.fromDoc(DocumentSnapshot document) =>
@@ -104,8 +96,8 @@ class Post extends UserGeneratedDocument {
         description,
         creationTime,
         visibility,
-        location,
-        // postPlace,
-        media
+        place,
+        media,
+        members
       ];
 }

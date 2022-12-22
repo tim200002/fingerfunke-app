@@ -52,7 +52,13 @@ class PhoneLoginPage extends StatelessWidget {
                       ),
                       child: BlocProvider<PhoneLoginCubit>(
                         create: (BuildContext context) => PhoneLoginCubit(),
-                        child: BlocBuilder<PhoneLoginCubit, PhoneLoginState>(
+                        child: BlocConsumer<PhoneLoginCubit, PhoneLoginState>(
+                          listener: ((context, state) => state.whenOrNull<void>(
+                                  enterPhoneNumber: (message) {
+                                if (message != null) {
+                                  Tools.showSnackbar(context, message);
+                                }
+                              })),
                           // only for rebuild between different screens therefore only when real class changes
                           buildWhen: (previousState, state) =>
                               previousState.runtimeType != state.runtimeType,

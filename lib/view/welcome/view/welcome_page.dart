@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../utils/beta_indicator.dart';
 import '../../../utils/illustration.dart';
 import '../../../utils/tools.dart';
 import '../../phone_login/view/phone_login_page.dart';
 
 class WelcomePage extends StatelessWidget {
-  const WelcomePage({Key? key}) : super(key: key);
+  final String? betaMessage;
+  const WelcomePage({Key? key, this.betaMessage}) : super(key: key);
 
   static Route route() {
     return MaterialPageRoute<void>(builder: (_) => const WelcomePage());
@@ -32,7 +34,7 @@ class WelcomePage extends StatelessWidget {
                   fontSize: 19,
                   fontWeight: FontWeight.w500,
                 )),
-            _betaIndicator()
+            if (betaMessage != null) _betaIndicator(betaMessage ?? "err")
           ],
         ),
       );
@@ -52,25 +54,11 @@ class WelcomePage extends StatelessWidget {
         ],
       ));
 
-  Widget _betaIndicator() {
-    const double indent = 10;
+  Widget _betaIndicator(String msg) {
     return Center(
       child: Padding(
           padding: const EdgeInsets.only(top: 20),
-          child: CustomPaint(
-              painter: const _Chevron(Colors.blue, indent),
-              child: Container(
-                margin: const EdgeInsets.only(right: indent),
-                padding:
-                    const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
-                child: const Text(
-                  "beta@Erlangen", //"βeta",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      fontSize: 13),
-                ),
-              ))),
+          child: BetaIndicator(message: msg)),
     );
   }
 
@@ -78,6 +66,7 @@ class WelcomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
           children: [
@@ -88,26 +77,4 @@ class WelcomePage extends StatelessWidget {
       ),
     );
   }
-}
-
-class _Chevron extends CustomPainter {
-  final Color color;
-  final double indent;
-  const _Chevron(this.color, this.indent);
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    Path path = Path()
-      ..moveTo(0, 0)
-      ..lineTo(0, size.height)
-      ..lineTo(size.width, size.height)
-      ..lineTo(size.width - indent, size.height / 2)
-      ..lineTo(size.width, 0)
-      ..close();
-
-    canvas.drawPath(path, Paint()..color = color);
-  }
-
-  @override
-  bool shouldRepaint(_) => false;
 }

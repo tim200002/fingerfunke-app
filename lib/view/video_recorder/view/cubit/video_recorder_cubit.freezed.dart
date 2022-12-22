@@ -18,24 +18,27 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$VideoRecorderState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() loading,
     required TResult Function(dynamic err) error,
-    required TResult Function() camera,
+    required TResult Function(Kamera camera) camera,
     required TResult Function(File file) viewing,
     required TResult Function() missingPermission,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? loading,
     TResult Function(dynamic err)? error,
-    TResult Function()? camera,
+    TResult Function(Kamera camera)? camera,
     TResult Function(File file)? viewing,
     TResult Function()? missingPermission,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loading,
     TResult Function(dynamic err)? error,
-    TResult Function()? camera,
+    TResult Function(Kamera camera)? camera,
     TResult Function(File file)? viewing,
     TResult Function()? missingPermission,
     required TResult orElse(),
@@ -43,6 +46,7 @@ mixin _$VideoRecorderState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Loading value) loading,
     required TResult Function(_Error value) error,
     required TResult Function(_Camera value) camera,
     required TResult Function(_Viewing value) viewing,
@@ -51,6 +55,7 @@ mixin _$VideoRecorderState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
     TResult Function(_Camera value)? camera,
     TResult Function(_Viewing value)? viewing,
@@ -59,6 +64,7 @@ mixin _$VideoRecorderState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
     TResult Function(_Camera value)? camera,
     TResult Function(_Viewing value)? viewing,
@@ -83,6 +89,128 @@ class _$VideoRecorderStateCopyWithImpl<$Res>
   final VideoRecorderState _value;
   // ignore: unused_field
   final $Res Function(VideoRecorderState) _then;
+}
+
+/// @nodoc
+abstract class _$$_LoadingCopyWith<$Res> {
+  factory _$$_LoadingCopyWith(
+          _$_Loading value, $Res Function(_$_Loading) then) =
+      __$$_LoadingCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_LoadingCopyWithImpl<$Res>
+    extends _$VideoRecorderStateCopyWithImpl<$Res>
+    implements _$$_LoadingCopyWith<$Res> {
+  __$$_LoadingCopyWithImpl(_$_Loading _value, $Res Function(_$_Loading) _then)
+      : super(_value, (v) => _then(v as _$_Loading));
+
+  @override
+  _$_Loading get _value => super._value as _$_Loading;
+}
+
+/// @nodoc
+
+class _$_Loading implements _Loading {
+  const _$_Loading();
+
+  @override
+  String toString() {
+    return 'VideoRecorderState.loading()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_Loading);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loading,
+    required TResult Function(dynamic err) error,
+    required TResult Function(Kamera camera) camera,
+    required TResult Function(File file) viewing,
+    required TResult Function() missingPermission,
+  }) {
+    return loading();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? loading,
+    TResult Function(dynamic err)? error,
+    TResult Function(Kamera camera)? camera,
+    TResult Function(File file)? viewing,
+    TResult Function()? missingPermission,
+  }) {
+    return loading?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loading,
+    TResult Function(dynamic err)? error,
+    TResult Function(Kamera camera)? camera,
+    TResult Function(File file)? viewing,
+    TResult Function()? missingPermission,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Error value) error,
+    required TResult Function(_Camera value) camera,
+    required TResult Function(_Viewing value) viewing,
+    required TResult Function(_MissingPermission value) missingPermission,
+  }) {
+    return loading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Error value)? error,
+    TResult Function(_Camera value)? camera,
+    TResult Function(_Viewing value)? viewing,
+    TResult Function(_MissingPermission value)? missingPermission,
+  }) {
+    return loading?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Error value)? error,
+    TResult Function(_Camera value)? camera,
+    TResult Function(_Viewing value)? viewing,
+    TResult Function(_MissingPermission value)? missingPermission,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Loading implements VideoRecorderState {
+  const factory _Loading() = _$_Loading;
 }
 
 /// @nodoc
@@ -148,8 +276,9 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() loading,
     required TResult Function(dynamic err) error,
-    required TResult Function() camera,
+    required TResult Function(Kamera camera) camera,
     required TResult Function(File file) viewing,
     required TResult Function() missingPermission,
   }) {
@@ -159,8 +288,9 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? loading,
     TResult Function(dynamic err)? error,
-    TResult Function()? camera,
+    TResult Function(Kamera camera)? camera,
     TResult Function(File file)? viewing,
     TResult Function()? missingPermission,
   }) {
@@ -170,8 +300,9 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loading,
     TResult Function(dynamic err)? error,
-    TResult Function()? camera,
+    TResult Function(Kamera camera)? camera,
     TResult Function(File file)? viewing,
     TResult Function()? missingPermission,
     required TResult orElse(),
@@ -185,6 +316,7 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Loading value) loading,
     required TResult Function(_Error value) error,
     required TResult Function(_Camera value) camera,
     required TResult Function(_Viewing value) viewing,
@@ -196,6 +328,7 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
     TResult Function(_Camera value)? camera,
     TResult Function(_Viewing value)? viewing,
@@ -207,6 +340,7 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
     TResult Function(_Camera value)? camera,
     TResult Function(_Viewing value)? viewing,
@@ -233,6 +367,7 @@ abstract class _Error implements VideoRecorderState {
 abstract class _$$_CameraCopyWith<$Res> {
   factory _$$_CameraCopyWith(_$_Camera value, $Res Function(_$_Camera) then) =
       __$$_CameraCopyWithImpl<$Res>;
+  $Res call({Kamera camera});
 }
 
 /// @nodoc
@@ -244,60 +379,86 @@ class __$$_CameraCopyWithImpl<$Res>
 
   @override
   _$_Camera get _value => super._value as _$_Camera;
+
+  @override
+  $Res call({
+    Object? camera = freezed,
+  }) {
+    return _then(_$_Camera(
+      camera == freezed
+          ? _value.camera
+          : camera // ignore: cast_nullable_to_non_nullable
+              as Kamera,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_Camera implements _Camera {
-  const _$_Camera();
+  const _$_Camera(this.camera);
+
+  @override
+  final Kamera camera;
 
   @override
   String toString() {
-    return 'VideoRecorderState.camera()';
+    return 'VideoRecorderState.camera(camera: $camera)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Camera);
+        (other.runtimeType == runtimeType &&
+            other is _$_Camera &&
+            const DeepCollectionEquality().equals(other.camera, camera));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(camera));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_CameraCopyWith<_$_Camera> get copyWith =>
+      __$$_CameraCopyWithImpl<_$_Camera>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() loading,
     required TResult Function(dynamic err) error,
-    required TResult Function() camera,
+    required TResult Function(Kamera camera) camera,
     required TResult Function(File file) viewing,
     required TResult Function() missingPermission,
   }) {
-    return camera();
+    return camera(this.camera);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? loading,
     TResult Function(dynamic err)? error,
-    TResult Function()? camera,
+    TResult Function(Kamera camera)? camera,
     TResult Function(File file)? viewing,
     TResult Function()? missingPermission,
   }) {
-    return camera?.call();
+    return camera?.call(this.camera);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loading,
     TResult Function(dynamic err)? error,
-    TResult Function()? camera,
+    TResult Function(Kamera camera)? camera,
     TResult Function(File file)? viewing,
     TResult Function()? missingPermission,
     required TResult orElse(),
   }) {
     if (camera != null) {
-      return camera();
+      return camera(this.camera);
     }
     return orElse();
   }
@@ -305,6 +466,7 @@ class _$_Camera implements _Camera {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Loading value) loading,
     required TResult Function(_Error value) error,
     required TResult Function(_Camera value) camera,
     required TResult Function(_Viewing value) viewing,
@@ -316,6 +478,7 @@ class _$_Camera implements _Camera {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
     TResult Function(_Camera value)? camera,
     TResult Function(_Viewing value)? viewing,
@@ -327,6 +490,7 @@ class _$_Camera implements _Camera {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
     TResult Function(_Camera value)? camera,
     TResult Function(_Viewing value)? viewing,
@@ -341,7 +505,12 @@ class _$_Camera implements _Camera {
 }
 
 abstract class _Camera implements VideoRecorderState {
-  const factory _Camera() = _$_Camera;
+  const factory _Camera(final Kamera camera) = _$_Camera;
+
+  Kamera get camera;
+  @JsonKey(ignore: true)
+  _$$_CameraCopyWith<_$_Camera> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -408,8 +577,9 @@ class _$_Viewing implements _Viewing {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() loading,
     required TResult Function(dynamic err) error,
-    required TResult Function() camera,
+    required TResult Function(Kamera camera) camera,
     required TResult Function(File file) viewing,
     required TResult Function() missingPermission,
   }) {
@@ -419,8 +589,9 @@ class _$_Viewing implements _Viewing {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? loading,
     TResult Function(dynamic err)? error,
-    TResult Function()? camera,
+    TResult Function(Kamera camera)? camera,
     TResult Function(File file)? viewing,
     TResult Function()? missingPermission,
   }) {
@@ -430,8 +601,9 @@ class _$_Viewing implements _Viewing {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loading,
     TResult Function(dynamic err)? error,
-    TResult Function()? camera,
+    TResult Function(Kamera camera)? camera,
     TResult Function(File file)? viewing,
     TResult Function()? missingPermission,
     required TResult orElse(),
@@ -445,6 +617,7 @@ class _$_Viewing implements _Viewing {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Loading value) loading,
     required TResult Function(_Error value) error,
     required TResult Function(_Camera value) camera,
     required TResult Function(_Viewing value) viewing,
@@ -456,6 +629,7 @@ class _$_Viewing implements _Viewing {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
     TResult Function(_Camera value)? camera,
     TResult Function(_Viewing value)? viewing,
@@ -467,6 +641,7 @@ class _$_Viewing implements _Viewing {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
     TResult Function(_Camera value)? camera,
     TResult Function(_Viewing value)? viewing,
@@ -530,8 +705,9 @@ class _$_MissingPermission implements _MissingPermission {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() loading,
     required TResult Function(dynamic err) error,
-    required TResult Function() camera,
+    required TResult Function(Kamera camera) camera,
     required TResult Function(File file) viewing,
     required TResult Function() missingPermission,
   }) {
@@ -541,8 +717,9 @@ class _$_MissingPermission implements _MissingPermission {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? loading,
     TResult Function(dynamic err)? error,
-    TResult Function()? camera,
+    TResult Function(Kamera camera)? camera,
     TResult Function(File file)? viewing,
     TResult Function()? missingPermission,
   }) {
@@ -552,8 +729,9 @@ class _$_MissingPermission implements _MissingPermission {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loading,
     TResult Function(dynamic err)? error,
-    TResult Function()? camera,
+    TResult Function(Kamera camera)? camera,
     TResult Function(File file)? viewing,
     TResult Function()? missingPermission,
     required TResult orElse(),
@@ -567,6 +745,7 @@ class _$_MissingPermission implements _MissingPermission {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Loading value) loading,
     required TResult Function(_Error value) error,
     required TResult Function(_Camera value) camera,
     required TResult Function(_Viewing value) viewing,
@@ -578,6 +757,7 @@ class _$_MissingPermission implements _MissingPermission {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
     TResult Function(_Camera value)? camera,
     TResult Function(_Viewing value)? viewing,
@@ -589,6 +769,7 @@ class _$_MissingPermission implements _MissingPermission {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Loading value)? loading,
     TResult Function(_Error value)? error,
     TResult Function(_Camera value)? camera,
     TResult Function(_Viewing value)? viewing,

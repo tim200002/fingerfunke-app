@@ -11,7 +11,7 @@ class MessagePaginationService extends FirestorePaginationService<Message> {
             (firestore ?? FirebaseFirestore.instance)
                 .collection('posts')
                 .doc(postId)
-                .collection('messages')
+                .collection('posts_messages')
                 .orderBy('creationTime', descending: true),
             (QueryDocumentSnapshot messageDocument) =>
                 Message.fromDoc(messageDocument),

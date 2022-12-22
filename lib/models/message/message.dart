@@ -8,16 +8,17 @@ import '../abstract_models/abstract_models.dart';
 import '../user/user.dart';
 import '../utils.dart';
 
-enum message_type { video, text }
+enum MessageType { video, text }
+
 const _messageTypeEnumMap = {
-  message_type.video: 'video',
-  message_type.text: 'text',
+  MessageType.video: 'video',
+  MessageType.text: 'text',
 };
 
 class InvalidMessageTypeException implements Exception {}
 
 class Message extends UserGeneratedDocument {
-  final message_type type;
+  final MessageType type;
 
   const Message({
     required FirestoreId id,
@@ -27,7 +28,7 @@ class Message extends UserGeneratedDocument {
   }) : super(author: author, id: id, creationTime: creationTime);
 
   @override
-  Map<String, dynamic> toJson() {
+  JsonMap toJson() {
     if (this is VideoMessage) {
       return (this as VideoMessage).toJson();
     } else if (this is TextMessage) {
@@ -37,13 +38,13 @@ class Message extends UserGeneratedDocument {
     }
   }
 
-  factory Message.fromJson(Map<String, dynamic> map) {
+  factory Message.fromJson(JsonMap map) {
     switch ($enumDecode(_messageTypeEnumMap, map['type'])) {
-      case message_type.video:
+      case MessageType.video:
         {
           return VideoMessage.fromJson(map);
         }
-      case message_type.text:
+      case MessageType.text:
         {
           return TextMessage.fromJson(map);
         }
@@ -73,24 +74,22 @@ class VideoMessage extends Message {
             author: author,
             id: id,
             creationTime: creationTime,
-            type: message_type.video);
+            type: MessageType.video);
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'author': author.toJson(),
-      'creationTime': dateToJson(creationTime),
-      'type': _messageTypeEnumMap[message_type.video],
-      'video': video
-    };
-  }
+  JsonMap toJson() => {
+        'id': id,
+        'author': author.toJson(),
+        'creationTime': dateToJson(creationTime),
+        'type': _messageTypeEnumMap[MessageType.video],
+        'video': video
+      };
 
-  factory VideoMessage.fromJson(Map<String, dynamic> map) {
+  factory VideoMessage.fromJson(JsonMap map) {
     return VideoMessage(
       id: map['id'] as String,
       author: UserInfo.fromJson(
-        map['author'] as Map<String, dynamic>,
+        map['author'] as JsonMap,
       ),
       creationTime: dateFromJson(map['creationTime'] as int),
       video: map['video'] as String,
@@ -124,30 +123,26 @@ class TextMessage extends Message {
             author: author,
             id: id,
             creationTime: creationTime,
-            type: message_type.text);
+            type: MessageType.text);
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'author': author.toJson(),
-      'creationTime': dateToJson(creationTime),
-      'type': _messageTypeEnumMap[message_type.text],
-      'text': text
-    };
-  }
+  JsonMap toJson() => {
+        'id': id,
+        'author': author.toJson(),
+        'creationTime': dateToJson(creationTime),
+        'type': _messageTypeEnumMap[MessageType.text],
+        'text': text
+      };
 
   @override
-  factory TextMessage.fromJson(Map<String, dynamic> map) {
-    return TextMessage(
-      id: map['id'] as String,
-      author: UserInfo.fromJson(
-        map['author'] as Map<String, dynamic>,
-      ),
-      creationTime: dateFromJson(map['creationTime'] as int),
-      text: map['text'] as String,
-    );
-  }
+  factory TextMessage.fromJson(JsonMap map) => TextMessage(
+        id: map['id'] as String,
+        author: UserInfo.fromJson(
+          map['author'] as JsonMap,
+        ),
+        creationTime: dateFromJson(map['creationTime'] as int),
+        text: map['text'] as String,
+      );
 
   factory TextMessage.fromDoc(DocumentSnapshot document) =>
       TextMessage.fromJson(documentSnaphsotToJson(document));

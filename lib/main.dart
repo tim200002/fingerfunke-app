@@ -7,35 +7,32 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_config/flutter_config.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
 
 import 'app.dart';
 import 'cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
 import 'cubits/live_config_cubit/live_config_cubit.dart';
-import 'cubits/settings_cubit/settings_cubit.dart';
-import 'models/settings/settings_model.dart'
-    as settings;
+import 'cubits/settings_cubit/app_settings_cubit.dart';
+import 'env.dart' as env;
 import 'repositories/firebase_authentication_repository/firebase_authentication_repository.dart';
-import 'repositories/settings_repository/settings_repository.dart';
+import 'repositories/storage_repository/storage_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await FlutterConfig.loadEnvVariables();
-  await GetStorage.init();
+  //await FlutterConfig.loadEnvVariables();
+  await StorageRepositoryImpl().init();
   await Firebase.initializeApp();
   final Logger _logger = Logger();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
   // choose envrionment
-  switch (FlutterConfig.get('FIREBASE_ENVIRONMENT')) {
+  switch (env.FIREBASE_ENVIRONMENT) {
     case 'local':
       {
         _logger.i("Using local environment");
         Logger.level = Level.debug;
-        String? emulatorIp = FlutterConfig.get('EMULATOR_IP');
+        String? emulatorIp = env.EMULATOR_IP;
         if (emulatorIp == null) {
           _logger.e("No IP for Emulator provided, falling back to localhost ");
           emulatorIp = "localhost";
@@ -76,20 +73,13 @@ class AppInflater extends StatelessWidget {
               firebaseAuthenticationRepository),
         ),
         BlocProvider(
-          create: (context) => SettingsCubit(SettingsRepositoryImpl()),
+          create: (context) => AppSettingsCubit(),
         ),
         BlocProvider(
           create: (context) => LiveConfigCubit(),
         ),
       ],
-      child: BlocBuilder<SettingsCubit, settings.Settings>(
-        builder: (context, state) {
-          return AnimatedSwitcher(
-            duration: const Duration(milliseconds: 250),
-            child: App(state.themeMode),
-          );
-        },
-      ),
+      child: const App(),
     );
   }
 }

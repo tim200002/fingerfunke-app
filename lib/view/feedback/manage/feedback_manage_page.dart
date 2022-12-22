@@ -4,9 +4,10 @@ import 'package:intl/intl.dart';
 
 import '../../../common_widgets/helper_widgets.dart';
 import '../../../models/user/user.dart';
+import '../../../utils/tools.dart';
 import '../../../utils/util_widgets/clearance_appbar.dart';
 import '../../error/exception_view.dart';
-import '../../moderation/mod_post_report/mod_post_report_page.dart';
+import '../../illustration_view/illustration_view.dart';
 import 'cubit/feedback_manage_cubit.dart';
 import 'mamage_item/feedback_manage_item_page.dart';
 
@@ -19,7 +20,7 @@ class FeedbackManagePage extends StatelessWidget {
         create: (context) => FeedbackManageCubit(),
         child: Scaffold(
             appBar: ClearanceAppBar.widget(context, UserClearance.development,
-                title: "Feedback",
+                title: l10n(context).lbl_devFeedbackManTitle,
                 actions: [
                   BlocBuilder<FeedbackManageCubit, FeedbackManageState>(
                       builder: (context, state) => state.maybeWhen(
@@ -40,8 +41,11 @@ class FeedbackManagePage extends StatelessWidget {
                             child: CircularProgressIndicator.adaptive()),
                         error: ExceptionView.builder,
                         neutral: (items, onlyOpen) => items.isEmpty
-                            ? ModPostReportPage.emptyIndicator(
-                                "kein ${onlyOpen ? "offenes " : ""}Feedback vorhanden")
+                            ? IllustrationView.empty(
+                                text: onlyOpen
+                                    ? l10n(context)
+                                        .lbl_devFeedbackNoOpenFeedback
+                                    : l10n(context).lbl_devFeedbackNoFeedback)
                             : ListView.builder(
                                 itemCount: items.length,
                                 itemBuilder: (context, i) => InkWell(

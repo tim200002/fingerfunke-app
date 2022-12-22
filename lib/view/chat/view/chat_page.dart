@@ -1,9 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import '../../../common_widgets/list_view/pagination/cubit/paginated_list_cubit.dart';
-import '../../../common_widgets/list_view/pagination/view/paginated_list.dart';
+import '../../../common_widgets/paginated_list/paginated_list.dart';
 import '../../../cubits/app_cubit/app_cubit.dart';
 import '../../../models/message/message.dart';
 import '../../../utils/tools.dart';
+import '../cubit/chat_cubit_cubit.dart';
 import '../widgets/chat_message.dart';
 import '../widgets/chat_editor/chat_editor.dart';
 import '../../error/exception_view.dart';
@@ -15,11 +15,10 @@ class InvalidMessageTypeExcpetion implements Exception {}
 
 class ChatArguments {
   final FirestoreId postId;
-  final PaginatedListCubit<Message> paginatedListCubit;
+  final ChatCubit chatCubit;
   final String? chatName;
 
-  ChatArguments(
-      {required this.postId, required this.paginatedListCubit, this.chatName});
+  ChatArguments({required this.postId, required this.chatCubit, this.chatName});
 }
 
 class ChatPage extends StatelessWidget {
@@ -52,19 +51,14 @@ class ChatPage extends StatelessWidget {
             child: Column(
               children: [
                 Expanded(
-                  child: BlocProvider.value(
-                    value: arguments.paginatedListCubit,
-                    child: PaginatedList<Message>(
+                  child: BlocBuilder<ChatCubit, ChatState>(
+                    bloc: arguments.chatCubit,
+                    builder: (context, state) => PaginatedList<Message>(
+                      state: state,
                       reverse: true,
-                      /*endWidget: const Center(
-                        child: Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 30),
-                            child: Text("Beginn der Unterhaltung")),
-                      ),*/
                       itemBuilder: (message) {
                         switch (message.type) {
-                          case message_type.text:
+                          case MessageType.text:
                             return ChatMessage(message as TextMessage);
                           default:
                             return ExceptionView(
@@ -72,6 +66,8 @@ class ChatPage extends StatelessWidget {
                             );
                         }
                       },
+                      onRequestNewPage: () => arguments.chatCubit.requestNewPage(),
+                      listLoadIndicator: const Center(child: CircularProgressIndicator.adaptive()),
                     ),
                   ),
                 ),

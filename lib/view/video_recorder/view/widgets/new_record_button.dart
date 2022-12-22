@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 
 class NewRecordButton extends StatefulWidget {
-  final Function() onRecordingStarted;
-  final Function() onRecordingFinished;
+  final Function() onStartPressed;
+  final Function() onStopPressed;
   final int maxRecodingLength;
+  final bool isRecording;
 
   final double _size = 80;
   final double _margin = 10;
   const NewRecordButton(
-      {required this.onRecordingStarted,
-      required this.onRecordingFinished,
+      {required this.onStartPressed,
+      required this.onStopPressed,
       required this.maxRecodingLength,
+      required this.isRecording,
       Key? key})
       : super(key: key);
 
@@ -21,7 +23,6 @@ class NewRecordButton extends StatefulWidget {
 class _NewRecordButtonState extends State<NewRecordButton>
     with SingleTickerProviderStateMixin {
   late final AnimationController _animationController;
-  bool isRecording = false;
 
   @override
   void initState() {
@@ -30,29 +31,20 @@ class _NewRecordButtonState extends State<NewRecordButton>
         duration: Duration(seconds: widget.maxRecodingLength), vsync: this);
     _animationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        widget.onRecordingFinished.call();
+        widget.onStopPressed.call();
       }
     });
-  }
-
-  void _startRecording() {
-    _animationController.forward();
-    setState(() {
-      isRecording = true;
-    });
+    if (widget.isRecording) _animationController.forward();
   }
 
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
       duration: const Duration(microseconds: 300),
-      child: isRecording == false
+      child: !widget.isRecording
           ? InkWell(
               enableFeedback: false,
-              onTap: () {
-                widget.onRecordingStarted();
-                _startRecording();
-              },
+              onTap: widget.onStartPressed,
               child: Container(
                 margin: EdgeInsets.all(widget._margin),
                 width: widget._size - widget._margin * 2,
@@ -66,7 +58,7 @@ class _NewRecordButtonState extends State<NewRecordButton>
             )
           : InkWell(
               enableFeedback: false,
-              onTap: widget.onRecordingFinished,
+              onTap: widget.onStopPressed,
               child: Stack(
                 alignment: Alignment.center,
                 children: [

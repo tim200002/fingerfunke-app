@@ -1,9 +1,11 @@
 import 'cubits/app_cubit/app_cubit.dart';
 import 'cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
+import 'cubits/settings_cubit/app_settings_cubit.dart';
+import 'models/settings/app_settings.dart';
 import 'routes.dart';
 import 'utils/app_theme.dart';
 import 'view/create_account/view/create_account_view.dart';
-import 'view/home/view/home_view.dart';
+import 'view/main/main_view.dart';
 import 'view/splash/view/splash_page.dart';
 import 'view/welcome/view/welcome_page.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +15,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SimpleBlocObserver extends BlocObserver {
   @override
+  // ignore: unnecessary_overrides
   void onChange(BlocBase bloc, Change change) {
     super.onChange(bloc, change);
     //print('${bloc.runtimeType} $change');
@@ -20,8 +23,7 @@ class SimpleBlocObserver extends BlocObserver {
 }
 
 class App extends StatelessWidget {
-  final ThemeMode themeMode;
-  const App(this.themeMode, {Key? key}) : super(key: key);
+  const App({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,36 +32,43 @@ class App extends StatelessWidget {
       child: BlocBuilder<FirebaseAuthenticationCubitCubit,
           FirebaseAuthenticationCubitState>(
         builder: (context, state) => state.when(
-            unauthenticated: () =>
-                buildApp(const WelcomePage(), themeMode: themeMode),
+            unauthenticated: () => buildApp(const WelcomePage(
+                  betaMessage: "beta@Erlangen",
+                )),
             authenticatedWaitingForUserToBeFetched: (_) =>
-                buildApp(const SplashPage(), themeMode: themeMode),
+                buildApp(const SplashPage()),
             autehnticationNoUserCreated: (uid) =>
-                buildApp(const CreateAccountView(), themeMode: themeMode),
-            authenticated: (user) => BlocOverrides.runZoned(
-                () => BlocProvider(
-                      create: (context) => AppCubit(user),
-                      child: buildApp(const HomeView(),
-                          themeMode: themeMode, routes: routes),
-                    ),
-                blocObserver: SimpleBlocObserver())),
+                buildApp(const CreateAccountView()),
+            authenticated: (user) {
+              AppCubit.setUserVars(user.id);
+              return BlocOverrides.runZoned(
+                  () => BlocProvider(
+                        create: (context) => AppCubit(user),
+                        child: buildApp(const MainView(), routes: routes),
+                      ),
+                  blocObserver: SimpleBlocObserver());
+            }),
       ),
     );
   }
 
   Widget buildApp(Widget home,
-      {ThemeMode? themeMode,
-      Map<String, Widget Function(BuildContext)> routes =
+      {Map<String, Widget Function(BuildContext)> routes =
           const <String, WidgetBuilder>{}}) {
-    return MaterialApp(
-      routes: routes,
-      theme: AppTheme.mainTheme,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      //darkTheme: AppTheme.darkTheme,
-      themeMode: themeMode, //TODO change back to themeMode
-      debugShowCheckedModeBanner: false,
-      home: home,
-    );
+    return BlocBuilder<AppSettingsCubit, AppSettings>(
+        builder: (context, settings) => MaterialApp(
+              routes: routes,
+              locale: settings.locale == "system"
+                  ? null
+                  : Locale(settings.locale.split("_").first),
+              theme: AppTheme.mainTheme,
+              darkTheme: AppTheme.darkTheme,
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales: AppLocalizations.supportedLocales,
+              //darkTheme: AppTheme.darkTheme,
+              themeMode: settings.themeMode,
+              debugShowCheckedModeBanner: false,
+              home: home,
+            ));
   }
 }

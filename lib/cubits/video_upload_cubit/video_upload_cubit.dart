@@ -16,6 +16,7 @@ import '../../models/asset/asset.dart';
 import '../../repositories/video_repository/video_repository.dart';
 import '../../repositories/video_repository/video_repository.impl.dart';
 import '../../utils/exceptions.dart';
+import '../../utils/type_aliases.dart';
 
 part 'video_upload_cubit.freezed.dart';
 part 'video_upload_state.dart';
@@ -110,7 +111,7 @@ class VideoUploadCubit extends Cubit<VideoUploadState> {
     try {
       if (_canUploadVideo) {
         emit(VideoUploadState.uploading(video, thumbail, 0));
-        // To prevent cerating new Asset when only upload failed, the Upload URL and assetIt are cached
+        // To prevent creating new Asset when only upload failed, the Upload URL and assetIt are cached
         if (uploadUrl == null || assetId == null) {
           await _createAsset();
         }
@@ -144,8 +145,7 @@ class VideoUploadCubit extends Cubit<VideoUploadState> {
 
   /// create Mux Asset and store its values
   Future<void> _createAsset() async {
-    Map<String, dynamic> assetResponse =
-        await _videoRepository.createVideoAsset();
+    JsonMap assetResponse = await _videoRepository.createVideoAsset();
 
     uploadUrl = assetResponse["uploadUrl"];
     assetId = assetResponse["id"];
@@ -170,11 +170,11 @@ class VideoUploadCubit extends Cubit<VideoUploadState> {
     _assetSubscription =
         _videoRepository.subscribeToTemporaryAsset(id).listen((asset) {
       switch (asset.state) {
-        case asset_state.processing:
+        case AssetState.processing:
           {
             return;
           }
-        case asset_state.ready:
+        case AssetState.ready:
           {
             completer.complete(asset);
             _assetSubscription?.cancel();
@@ -219,6 +219,8 @@ class VideoUploadCubit extends Cubit<VideoUploadState> {
 
   @override
   Future<void> close() async {
+    _logger.i("close");
+
     _cancelToken?.cancel();
     _assetSubscription?.cancel();
 

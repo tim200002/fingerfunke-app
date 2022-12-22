@@ -2,39 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../models/user/user.dart';
-import '../../../utils/illustration.dart';
+import '../../../utils/tools.dart';
 import '../../../utils/util_widgets/clearance_appbar.dart';
 import '../../error/exception_view.dart';
+import '../../illustration_view/illustration_view.dart';
 import 'cubit/mod_post_cubit.dart';
 import 'widgets/mod_report_view.dart';
 
 class ModPostReportPage extends StatelessWidget {
   const ModPostReportPage({Key? key}) : super(key: key);
-
-  static Widget emptyIndicator(String text) {
-    return Center(
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 300),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Illustration(
-              Illustrations.empty,
-              height: null,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Text(
-              text,
-              textAlign: TextAlign.center,
-            )
-          ],
-        ),
-      ),
-    );
-  }
 
   void _performAction(BuildContext context, bool accept) {
     showDialog(
@@ -42,20 +18,21 @@ class ModPostReportPage extends StatelessWidget {
         builder: (BuildContext ctx) {
           return AlertDialog(
             actionsPadding: const EdgeInsets.symmetric(horizontal: 7),
-            title: Text('Bestätigen:  ' + (accept ? "❌" : "✅")),
+            title: Text(
+                l10n(context).lbl_modManConfirm + '  ' + (accept ? "❌" : "✅")),
             content: Text(accept
-                ? "Der Beitrag verstößt gegen unsere Richtlinen. \nDen Beitrag unwiderruflich löschen."
-                : 'Den Beitrag als "in Ordnung" markieren'),
+                ? l10n(context).lbl_modManDelete
+                : l10n(context).lbl_modManApprove),
             actions: [
               TextButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: const Text('abbrechen')),
+                  child: Text(l10n(context).lbl_modManCancel)),
               ElevatedButton(
                   onPressed: () {
                     context.read<ModPostCubit>().closeReport(accept);
                     Navigator.of(context).pop();
                   },
-                  child: const Text('Ja'))
+                  child: Text(l10n(context).lbl_modManYes))
             ],
           );
         });
@@ -67,7 +44,7 @@ class ModPostReportPage extends StatelessWidget {
       create: (context) => ModPostCubit(),
       child: Scaffold(
           appBar: ClearanceAppBar.widget(context, UserClearance.moderation,
-              title: "gemeldete Posts"),
+              title: l10n(context).lbl_modReportedPosts),
           body: Padding(
             padding: const EdgeInsets.all(20),
             child: BlocBuilder<ModPostCubit, ModPostState>(
@@ -75,14 +52,15 @@ class ModPostReportPage extends StatelessWidget {
                     loading: () => const Center(
                         child: CircularProgressIndicator.adaptive()),
                     error: ExceptionView.builder,
-                    empty: () => emptyIndicator("keine offenen Meldungen"),
+                    empty: () => IllustrationView.empty(
+                        text: l10n(context).lbl_modNoReports),
                     neutral: (report, count) => Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(bottom: 20),
                               child: Text(
-                                "$count offene Meldungen",
+                                "$count " + l10n(context).lbl_modOpenReports,
                                 textAlign: TextAlign.center,
                               ),
                             ),
@@ -122,8 +100,9 @@ class ModPostReportPage extends StatelessWidget {
                                                                 .shade300)),
                                             onPressed: () =>
                                                 _performAction(context, false),
-                                            child: const Text(
-                                              "Beitrag\nist okay",
+                                            child: Text(
+                                              l10n(context)
+                                                  .lbl_modElementApprove,
                                               textAlign: TextAlign.center,
                                             )),
                                       ),
@@ -140,8 +119,9 @@ class ModPostReportPage extends StatelessWidget {
                                                                 .red.shade300)),
                                             onPressed: () =>
                                                 _performAction(context, true),
-                                            child: const Text(
-                                              "Beitrag\nlöschen",
+                                            child: Text(
+                                              l10n(context)
+                                                  .lbl_modElementDelete,
                                               textAlign: TextAlign.center,
                                             )),
                                       )

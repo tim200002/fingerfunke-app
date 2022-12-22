@@ -18,7 +18,7 @@ class MessageRepositoryImpl implements MessageRepository {
   Future<void> createMessage(FirestoreId postId, Message message) async {
     await _postCollection
         .doc(postId)
-        .collection('messages')
+        .collection('posts_messages')
         .doc(message.id)
         .set(message.toJson());
   }

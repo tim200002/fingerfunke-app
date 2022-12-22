@@ -14,7 +14,8 @@ class ManageAccountPage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: ListView(children: [
-          ElevatedButton.icon(
+          const SizedBox(height: 50),
+          TextButton.icon(
             icon: const Icon(FeatherIcons.logOut),
             label: Text(l10n(context).lbl_signOut),
             onPressed: () {

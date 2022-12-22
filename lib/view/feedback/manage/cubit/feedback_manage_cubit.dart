@@ -6,9 +6,10 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import '../../../../models/user_feedback.dart';
 import '../../../../repositories/user_feedback_repository/user_feedback_repository.dart';
 import '../../../../repositories/user_feedback_repository/user_feedback_repository.impl.dart';
+import '../../../../utils/tools.dart';
 
-part 'feedback_manage_state.dart';
 part 'feedback_manage_cubit.freezed.dart';
+part 'feedback_manage_state.dart';
 
 class FeedbackManageCubit extends Cubit<FeedbackManageState> {
   StreamSubscription<List<UserFeedback>>? _subscription;
@@ -23,7 +24,7 @@ class FeedbackManageCubit extends Cubit<FeedbackManageState> {
     await _subscription?.cancel();
     _subscription =
         _fbRepository.observeReports(onlyOpen: onlyOpen).listen((r) {
-      print("snappyshot");
+      logger.d("snappyshot");
       emit(FeedbackManageState.neutral(List.of(r), onlyOpen));
     }, onError: (e) => emit(FeedbackManageState.error(e)));
   }

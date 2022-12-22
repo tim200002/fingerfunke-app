@@ -9,23 +9,25 @@ import '../utils.dart';
 part 'image_asset.dart';
 part 'video_asset.dart';
 
-enum asset_type { video, image }
+enum AssetType { video, image }
+
 const _assetTypeEnumMap = {
-  asset_type.video: 'video',
-  asset_type.image: 'image',
+  AssetType.video: 'video',
+  AssetType.image: 'image',
 };
 
-enum asset_state { processing, ready }
+enum AssetState { processing, ready }
+
 const _assetStateEnumMap = {
-  asset_state.processing: 'processing',
-  asset_state.ready: 'ready',
+  AssetState.processing: 'processing',
+  AssetState.ready: 'ready',
 };
 
 class InvalidAssetTypeException implements Exception {}
 
 class Asset extends GeneratedDocument {
-  final asset_type type;
-  final asset_state state;
+  final AssetType type;
+  final AssetState state;
 
   const Asset._(
       {required FirestoreId id,
@@ -35,7 +37,7 @@ class Asset extends GeneratedDocument {
       : super(id: id, creationTime: creationTime);
 
   @override
-  Map<String, dynamic> toJson() {
+  JsonMap toJson() {
     if (this is VideoAsset) {
       return (this as VideoAsset).toJson();
     } else {
@@ -43,9 +45,9 @@ class Asset extends GeneratedDocument {
     }
   }
 
-  factory Asset.fromJson(Map<String, dynamic> map) {
+  factory Asset.fromJson(JsonMap map) {
     switch ($enumDecode(_assetTypeEnumMap, map["type"])) {
-      case asset_type.video:
+      case AssetType.video:
         {
           return VideoAsset.fromJson(map);
         }

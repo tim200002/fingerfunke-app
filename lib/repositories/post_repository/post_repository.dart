@@ -1,13 +1,26 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '../../models/asset/asset.dart';
+import '../../models/place.dart';
 import '../../models/post/post.dart';
+import '../../models/user/user.dart';
 import '../../utils/type_aliases.dart';
 
 abstract class PostRepository {
+
+  Future<List<UserInfo>> getPostMembers(Post post);
+
   Future<void> createPost(Post post);
 
-  Stream<Post> subscribeToPost(FirestoreId postId);
+  Stream<Post> observePost(FirestoreId postId);
+
+  Stream<List<Post>> observePosts(List<FirestoreId>? postIds);
+
+  Stream<List<Post>> observeAuthoredPosts(FirestoreId userId);
+
+  Stream<List<Post>> observeJoinedPosts(FirestoreId userId);
 
   Future<Post> getPost(FirestoreId postId);
 
@@ -17,12 +30,13 @@ abstract class PostRepository {
       {PostVisibility? visibility,
       String? title,
       String? description,
-      String? location,
+      Place? place,
       List<Asset>? media,
       DateTime? startTime});
 
-  /// make current user member of post
-  Future<Post> joinPost({required FirestoreId postId});
+  Future<void> addPostMember(
+      {required FirestoreId postId, required FirestoreId userId});
 
-  Future<Post> leavePost({required FirestoreId postId});
+  Future<void> removePostMember(
+      {required FirestoreId postId, required FirestoreId userId});
 }
