@@ -1,6 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:geoflutterfire/geoflutterfire.dart';
-import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../utils/app_config.dart';

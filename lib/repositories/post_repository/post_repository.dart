@@ -9,8 +9,6 @@ import '../../models/user/user.dart';
 import '../../utils/type_aliases.dart';
 
 abstract class PostRepository {
-  Stream<List<Post>> observeNearbyPosts(
-      {required GeoPoint point, required double radius});
 
   Future<List<UserInfo>> getPostMembers(Post post);
 

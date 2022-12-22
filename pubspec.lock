@@ -539,15 +539,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
-  geoflutterfire:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: master
-      resolved-ref: "9fa49ff94a9ce4e9d43f2b80672f06e0f9ca4856"
-      url: "https://gitlab.com/fingerfunke/geoflutterfire-fork.git"
-    source: git
-    version: "3.0.4"
   geolocator:
     dependency: "direct main"
     description:
