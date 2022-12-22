@@ -21,7 +21,6 @@ class DiscoverView extends StatelessWidget {
         icon: const Icon(FeatherIcons.menu));
   }
 
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -71,16 +70,11 @@ class DiscoverView extends StatelessWidget {
 class FilterButton extends StatelessWidget {
   const FilterButton({super.key});
 
-  Route _filterRoute(BuildContext c) {
+  /*Route _filterRoute(BuildContext c) {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) =>
           MultiBlocProvider(providers: [
-        BlocProvider.value(
-          value: BlocProvider.of<FeedFilterCubit>(c),
-        ),
-        BlocProvider.value(
-          value: BlocProvider.of<LocationCubit>(c),
-        ),
+       
       ], child: const LocationFilterView()),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(0.0, -1.0);
@@ -96,12 +90,12 @@ class FilterButton extends StatelessWidget {
         );
       },
     );
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
     return TextButton.icon(
-        onPressed: () => Navigator.of(context).push(_filterRoute(context)),
+        onPressed: () => LocationFilterView.navigate(context),
         icon: const Icon(FeatherIcons.mapPin),
         label: BlocBuilder<LocationCubit, LocationState>(
             builder: (c, state) => Text(state.maybeWhen(
