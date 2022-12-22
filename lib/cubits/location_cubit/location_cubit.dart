@@ -46,13 +46,4 @@ class LocationCubit extends Cubit<LocationState> {
       final Coordinate position = Coordinate(lat, lng);
       return emit(LocationState.loaded(await _locationService.setPosition(position: position)));
   }
-
-  /// Returns address of location
-  String generateAddress(String? address) {
-    if (address == null) return "dein Standort";
-    if (address.contains('+')) {
-      return address.split(",")[0].trim().split(" ").last;
-    }
-    return address.split(",")[1].trim().split(" ").last;
-  }
 }

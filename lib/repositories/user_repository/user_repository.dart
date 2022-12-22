@@ -11,7 +11,12 @@ abstract class UserRepository {
   Future<void> createUser(User user);
   Future<void> setToken(String userId, String key, JsonMap value);
   Future<void> updateUser(FirestoreId userId,
-      {String? name, String? picture, int? age, List<FirestoreId>? savedPosts});
+      {String? name,
+      String? picture,
+      int? age,
+      List<FirestoreId>? savedPosts,
+      Map<String, String> socialMedia,
+      String? bio});
 
   Future<void> savePost(FirestoreId userId, FirestoreId postId);
   Future<void> unsavePost(FirestoreId userId, FirestoreId postId);

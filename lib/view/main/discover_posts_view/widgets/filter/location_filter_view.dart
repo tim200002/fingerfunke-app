@@ -120,9 +120,7 @@ class _LocationSliderState extends State<_LocationSlider> {
                     loading: () => l10n(context).lbl_locationLoading,
                     denied: (_) => l10n(context).lbl_locationUnknown,
                     error: (_) => l10n(context).lbl_locationUnknown,
-                    loaded: (location) => context
-                        .read<LocationCubit>()
-                        .generateAddress(location.address),
+                    loaded: (location) => location.getCityName(),
                   )),
                 )
               ],

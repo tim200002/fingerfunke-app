@@ -21,6 +21,56 @@ class DiscoverView extends StatelessWidget {
         icon: const Icon(FeatherIcons.menu));
   }
 
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<LocationCubit>(
+          create: (context) => LocationCubit(),
+        ),
+        BlocProvider<FeedFilterCubit>(create: (_) {
+          final StorageRepository storageRepository = StorageRepositoryImpl();
+          return FeedFilterCubit(
+              storageRepository: storageRepository,
+              initialFeedFilterState: storageRepository.feedFilterSettings);
+        })
+      ],
+      child: Builder(
+        builder: (context) {
+          return Scaffold(
+            appBar: AppBar(
+              leading: _drawerButton(context),
+              title: const FilterButton(),
+              actions: [
+                const SizedBox(
+                  width: 62,
+                ),
+                LiveConfig.builder((config) => config.hideFeedbackBtn
+                    ? Container()
+                    : IconButton(
+                        onPressed: () =>
+                            Navigator.of(context).pushNamed(Routes.feedback),
+                        icon: const Icon(Icons.thumbs_up_down_rounded)))
+              ],
+            ),
+            body: Container(
+                padding: const EdgeInsets.only(
+                    left: AppTheme.PADDING_SIDE,
+                    right: AppTheme.PADDING_SIDE,
+                    top: 15),
+                clipBehavior: Clip.none,
+                child: const DiscoverFeed()),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class FilterButton extends StatelessWidget {
+  const FilterButton({super.key});
+
   Route _filterRoute(BuildContext c) {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) =>
@@ -48,56 +98,15 @@ class DiscoverView extends StatelessWidget {
     );
   }
 
-  Widget _filterButton(BuildContext context) {
-    return Builder(
-        builder: (c) => TextButton.icon(
-            onPressed: () => Navigator.of(c).push(_filterRoute(c)),
-            icon: const Icon(FeatherIcons.mapPin),
-            label: Text(l10n(context).lbl_exploreFilter)));
-  }
-
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<LocationCubit>(
-          create: (context) => LocationCubit(),
-        ),
-        BlocProvider<FeedFilterCubit>(
-          create: (_) {
-            final StorageRepository storageRepository = StorageRepositoryImpl();
-            return FeedFilterCubit(storageRepository: storageRepository, initialFeedFilterState: storageRepository.feedFilterSettings);
-          } 
-        )
-      ],
-      child: Builder(
-        builder: (context) {
-          return Scaffold(
-            appBar: AppBar(
-              leading: _drawerButton(context),
-              title: _filterButton(context),
-              actions: [
-                const SizedBox(
-                  width: 62,
-                ),
-                LiveConfig.builder((config) => config.hideFeedbackBtn
-                    ? Container()
-                    : IconButton(
-                        onPressed: () =>
-                            Navigator.of(context).pushNamed(Routes.feedback),
-                        icon: const Icon(Icons.thumbs_up_down_rounded)))
-              ],
-            ),
-            body: Container(
-                padding: const EdgeInsets.only(
-                    left: AppTheme.PADDING_SIDE,
-                    right: AppTheme.PADDING_SIDE,
-                    top: 15),
-                clipBehavior: Clip.none,
-                child: const DiscoverFeed()),
-          );
-        },
-      ),
-    );
+    return TextButton.icon(
+        onPressed: () => Navigator.of(context).push(_filterRoute(context)),
+        icon: const Icon(FeatherIcons.mapPin),
+        label: BlocBuilder<LocationCubit, LocationState>(
+            builder: (c, state) => Text(state.maybeWhen(
+                loaded: (l) => l.getCityName(),
+                orElse: () => l10n(c).lbl_exploreFilter))));
   }
 }
+

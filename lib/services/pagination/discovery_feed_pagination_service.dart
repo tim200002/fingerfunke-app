@@ -20,7 +20,6 @@ class DiscoveryFeedPaginationService extends FirestorePaginationService<Post> {
   static Query<Map<String, dynamic>> _createQuery(FirebaseFirestore firestore,
       Place userLocation, FeedFilterState filters) {
 
-    print(userLocation.geohash);
 
     Query<Map<String, dynamic>> query = firestore.collection('posts').where(
         'geohashesByRadius.${filters.radius}',
