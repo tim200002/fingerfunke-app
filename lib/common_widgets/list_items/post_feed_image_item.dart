@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -32,6 +31,17 @@ class PostFeedImageItem extends StatelessWidget {
       this.video = false})
       : super(key: key);
 
+  Widget _inPastView({bool inPast = false, required Widget child}) {
+    return inPast
+        ? ColorFiltered(
+            colorFilter: const ColorFilter.mode(
+              Colors.grey,
+              BlendMode.saturation,
+            ),
+            child: child)
+        : child;
+  }
+
   Widget _videoBackgroundView(BuildContext context, {bool greyscale = false}) {
     Widget videoPlayback = VideoPlaybackView(
       fit: BoxFit.cover,
@@ -43,14 +53,7 @@ class PostFeedImageItem extends StatelessWidget {
                 .firstWhere((e) => e.type == AssetType.video) as VideoAsset)),
             autoplay: true,
             loop: false),
-        child: !greyscale
-            ? videoPlayback
-            : ColorFiltered(
-                colorFilter: const ColorFilter.mode(
-                  Colors.grey,
-                  BlendMode.saturation,
-                ),
-                child: videoPlayback));
+        child: videoPlayback);
   }
 
   Widget _imageBackgroundView(BuildContext context) {
@@ -75,10 +78,11 @@ class PostFeedImageItem extends StatelessWidget {
               color: Colors.white,
             ),
           )
-        : video
-            ? _videoBackgroundView(context,
-                greyscale: _post.asEvent?.isCompleted ?? false)
-            : _imageBackgroundView(context);
+        : _inPastView(
+            inPast: _post.asEvent?.isCompleted ?? false,
+            child: video
+                ? _videoBackgroundView(context)
+                : _imageBackgroundView(context));
   }
 
   Widget _eventDateWidget(BuildContext context) {
