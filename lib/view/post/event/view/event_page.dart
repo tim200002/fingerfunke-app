@@ -31,8 +31,7 @@ class EventPage extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.surface,
         body: CustomScrollView(
           slivers: [
-            LiveConfig.builder((config) =>
-                HeaderSection(editing, includeTitle: config.compactTitle)),
+            HeaderSection(editing, includeTitle: true),
             SliverToBoxAdapter(
               child: Column(
                 children: [
@@ -45,9 +44,7 @@ class EventPage extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        LiveConfig.builder((config) => config.compactTitle
-                            ? TitleSection(editing)
-                            : Container()),
+                        TitleSection(editing),
                         EventDetailSection(editing),
                         const SizedBox(height: 15),
                         PostDescriptionSection(editing),
@@ -108,7 +105,7 @@ class EventPage extends StatelessWidget {
       child: BlocBuilder<EventEditorCubit, PostEditorState>(
         builder: (context, state) {
           return state.when(
-            editing: (_,__) => builder(context),
+            editing: (_, __) => builder(context),
             error: (message) => const EditErrorView(),
             submitted: (id) => PostPostedSuccessView(postId: id),
             submitting: () =>
