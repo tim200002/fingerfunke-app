@@ -65,18 +65,19 @@ class HomeDrawer extends StatelessWidget {
                     ),
                     const SizedBox(height: 25),
                     ListTile(
+                      leading: const Icon(FeatherIcons.info),
+                      title: Text(l10n(context).lbl_information),
+                      onTap: () =>
+                          Navigator.of(context).pushNamed(Routes.about),
+                    ),
+                    ListTile(
                       leading: const Icon(FeatherIcons.share2),
                       title: Text(l10n(context).lbl_socialMedia),
                       onTap: () => launchUrlString(
                           "https://instagram.com/fingerfunke",
                           mode: LaunchMode.externalApplication),
                     ),
-                    ListTile(
-                      leading: const Icon(FeatherIcons.info),
-                      title: Text(l10n(context).lbl_information),
-                      onTap: () =>
-                          Navigator.of(context).pushNamed(Routes.about),
-                    ),
+
                     const SizedBox(height: 25),
                     const Padding(
                       padding: EdgeInsets.symmetric(vertical: 20),

@@ -13,6 +13,24 @@ import '../../app_info/app_info_page.dart';
 class MyAccountPage extends StatelessWidget {
   const MyAccountPage({Key? key}) : super(key: key);
 
+  Widget _userProfile() {
+    return Container(
+      padding: const EdgeInsets.all(30),
+      margin: const EdgeInsets.only(bottom: 20, left: 10, right: 10, top: 10),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10), color: Colors.grey.shade200),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: const [
+          _ProfileSection(),
+          SizedBox(height: 20),
+          UserBioEditor(),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return PageScreen(
@@ -23,22 +41,7 @@ class MyAccountPage extends StatelessWidget {
               icon: const Icon(Icons.close))),
       body: ListView(
         children: [
-          Container(
-            padding: const EdgeInsets.all(20),
-            margin: const EdgeInsets.only(bottom: 20),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.grey.shade200),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisSize: MainAxisSize.min,
-              children: const [
-                _ProfileSection(),
-                SizedBox(height: 20),
-                UserBioEditor(),
-              ],
-            ),
-          ),
+          _userProfile(),
           const _AccountSection(),
         ],
       ),
