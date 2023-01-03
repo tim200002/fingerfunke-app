@@ -67,7 +67,12 @@ class ChatPage extends StatelessWidget {
                         }
                       },
                       onRequestNewPage: () => arguments.chatCubit.requestNewPage(),
-                      listLoadIndicator: const Center(child: CircularProgressIndicator.adaptive()),
+                      initialLoadIndicator: const Center(child: CircularProgressIndicator.adaptive()),
+                      endIndicator: Center(child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text("You reached thed end of the list", style: Theme.of(context).textTheme.labelMedium),
+                      )),
+                      loadingIndicator: const Center(child: CircularProgressIndicator.adaptive()),
                     ),
                   ),
                 ),

@@ -14,25 +14,26 @@ class PaginatedList<T> extends StatelessWidget {
   /// function envoked on each list item to create widget given the data
   final Widget Function(T) _itemBuilder;
 
+  /// Element to show once reached end of list
+  final Widget endIndicator;
+
+  /// Element to show while loading new items
+  final Widget loadingIndicator;
+
+
   /// function to call to load new items
   final void Function() onRequestNewPage;
-
-  /// message displayed when list reached last element
-  final String? endMessage;
-
-  final Widget? endWidget;
 
   /// optional function to turn on and off shrinkWrap depending on the number of items in the list
   /// this is currently needed to shrink the list down in the comment section
   final bool Function(int)? shouldShrinkWrap;
 
+  
   final bool reverse;
 
-  /// what to show when list is loading new elements
-  final Widget? loadingIndicator;
-
-  /// widget to show while the list is loading
-  final Widget listLoadIndicator;
+  /// widget to show while the list is loading for the first time 
+  /// after the initialization
+  final Widget initialLoadIndicator;
 
   /// pagination Distance, must be known to efficiently prefetch
   final int paginationDistance;
@@ -44,14 +45,13 @@ class PaginatedList<T> extends StatelessWidget {
       {required this.state,
       required Widget Function(T) itemBuilder,
       required this.onRequestNewPage,
-      required this.listLoadIndicator,
+      required this.endIndicator,
+      required this.loadingIndicator,
+      required this.initialLoadIndicator,
       this.paginationDistance = 20,
       this.prefetch = 3,
       this.reverse = false,
-      this.endMessage,
-      this.endWidget,
       this.shouldShrinkWrap,
-      this.loadingIndicator,
       Key? key})
       : _itemBuilder = itemBuilder,
         super(key: key);
@@ -82,33 +82,14 @@ class PaginatedList<T> extends StatelessWidget {
     if (state.isLoading) {
       return loadingIndicator;
     } else {
-      return endWidget ??
-          (endMessage != null
-              ? Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Container(
-                      padding: const EdgeInsets.all(8.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25),
-                        color: Theme.of(context)
-                            .colorScheme
-                            .onSurface
-                            .withOpacity(0.08),
-                      ),
-                      child: Text(endMessage!,
-                          style: Theme.of(context).textTheme.labelMedium),
-                    ),
-                  ),
-                )
-              : null);
+      return endIndicator;
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return state.items != null ? ListView.builder(
-      itemCount: state.items!.length,
+      itemCount: state.items!.length + 1,
       shrinkWrap:
           shouldShrinkWrap != null ? shouldShrinkWrap!(state.items!.length) : false,
       reverse: reverse,
@@ -130,6 +111,6 @@ class PaginatedList<T> extends StatelessWidget {
           );
         }
       },
-    ) : listLoadIndicator ;
+    ) : initialLoadIndicator ;
   }
 }

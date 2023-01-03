@@ -95,7 +95,6 @@ class PagedPaginatedList<T> extends StatelessWidget {
             child: _itemBuilder(state.items![index]),
             onItemCreated: () {
               if (_shouldLoadNewItems(state, index)) {
-                print("request new Page");
                 onRequestNewPage();
               }
             },
