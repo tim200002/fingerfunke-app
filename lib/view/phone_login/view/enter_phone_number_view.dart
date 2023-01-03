@@ -13,14 +13,12 @@ class EnterPhoneNumberView extends StatefulWidget {
 }
 
 class _EnterPhoneNumberViewState extends State<EnterPhoneNumberView> {
-  final _phoneInputController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
-
+  String number = "";
+  bool inputValid = false;
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: BlocBuilder<PhoneLoginCubit, PhoneLoginState>(
+    return 
+      BlocBuilder<PhoneLoginCubit, PhoneLoginState>(
         builder: (context, state) => Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -41,27 +39,35 @@ class _EnterPhoneNumberViewState extends State<EnterPhoneNumberView> {
                     ),
                   ),
                   initialCountryCode: 'DE',
-                  onChanged: (nr) =>
-                      _phoneInputController.text = nr.countryCode + nr.number,
+                  onChanged: (nr) => setState(() {
+                     number = nr.countryCode + nr.number;
+                     inputValid = validatePhoneNumber(nr.countryCode, nr.number);
+                  })
+                   
+                  
+                     
                 )),
             ElevatedButton(
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  BlocProvider.of<PhoneLoginCubit>(context)
-                      .sendSMSCode(phoneNumber: _phoneInputController.text);
-                }
-              },
+              onPressed: inputValid ? () => BlocProvider.of<PhoneLoginCubit>(context)
+                .sendSMSCode(phoneNumber: number) : null,
               child: Text(l10n(context).lbl_loginSendCode),
             )
           ],
         ),
-      ),
     );
   }
 
+  bool validatePhoneNumber(String countryCode, String number){
+    //!ToDo better validation logic
+    if(number.length < 8){
+      return false;
+    }
+    return true;
+  }
+
+
   @override
   void dispose() {
-    _phoneInputController.dispose();
     super.dispose();
   }
 }
