@@ -28,7 +28,7 @@ class NetworkImageCubit extends Cubit<NetworkImageState> {
       Uint8List decodedBytes = base64Decode(shortendUrl);
       ImageProvider<Object> image = MemoryImage(decodedBytes);
       logger.d("Network image cubit");
-      emit(NetworkImageState.imageLoaded(image));
+      _secureEmit(NetworkImageState.imageLoaded(image));
     }
     // handle images which are real files
     else {
@@ -36,11 +36,19 @@ class NetworkImageCubit extends Cubit<NetworkImageState> {
           .getSingleImageFile(
             url,
           ) // maxHeight: height, maxWidth: width)
-          .then((image) => emit(NetworkImageState.imageLoaded(image)),
-              onError: (e) => emit(NetworkImageState.error(e)))
+          .then((image) => _secureEmit(NetworkImageState.imageLoaded(image)),
+              onError: (e) => _secureEmit(NetworkImageState.error(e)))
           .catchError((error, stacktrace) {
-        emit(NetworkImageState.error(error));
+        _secureEmit(NetworkImageState.error(error));
       });
     }
+  }
+
+  void _secureEmit(NetworkImageState state){
+    if(isClosed){
+      return;
+    }
+
+    return emit(state);
   }
 }

@@ -32,7 +32,7 @@ abstract class FirestorePaginationService<T> {
 
   FirestorePaginationService(this._startQuery, this._mapper,
       {required this.firestore, this.paginationDistance = 20});
-
+  
   // requests new page and adds elements to pagination
   // returns true if no new posts could be found
   Future<bool> requestNewPage() async {
@@ -72,7 +72,11 @@ abstract class FirestorePaginationService<T> {
     // construct new query limited to start and end -> elements can be included in the middle
     // if not start is provided elements can also be included at the front
     endDocumentOfThisQuery = documents.last;
-    newQuery = newQuery.endAtDocument(endDocumentOfThisQuery);
+    newQuery = _startQuery.endAtDocument(endDocumentOfThisQuery);
+    
+    if (lastDocument != null) {
+      newQuery = newQuery.startAfterDocument(lastDocument!);
+    }
 
     //-----------------------------------------------------------------------
 

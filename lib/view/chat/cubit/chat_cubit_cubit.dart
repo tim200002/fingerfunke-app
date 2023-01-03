@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:logger/logger.dart';
 
 import '../../../cubits/paginated_list_cubit/paginated_list_cubit_interface.dart';

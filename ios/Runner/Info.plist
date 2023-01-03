@@ -52,7 +52,7 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>We need usage to your camera if you want to take an image to upload, e.g., as your profile picture</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
+	<key>NSLocationAlwaysAndWhenInUsageDescription</key>
 	<string>Our App is based on Geofiltering to show you the nearest events. Therefore, we require to access your location.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We need usage to your photo library only if you intent to upload images, e.g., a profile picture from your library</string>

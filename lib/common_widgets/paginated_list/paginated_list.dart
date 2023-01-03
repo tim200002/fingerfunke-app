@@ -34,11 +34,19 @@ class PaginatedList<T> extends StatelessWidget {
   /// widget to show while the list is loading
   final Widget listLoadIndicator;
 
+  /// pagination Distance, must be known to efficiently prefetch
+  final int paginationDistance;
+
+  /// starts loading new elements this many elements before reaching end
+  final int prefetch;
+
   const PaginatedList(
       {required this.state,
       required Widget Function(T) itemBuilder,
       required this.onRequestNewPage,
       required this.listLoadIndicator,
+      this.paginationDistance = 20,
+      this.prefetch = 3,
       this.reverse = false,
       this.endMessage,
       this.endWidget,
@@ -54,16 +62,20 @@ class PaginatedList<T> extends StatelessWidget {
   /// ToDo we could look out for a better algorithm which fetches beforehand depending on pagination distance
   bool _shouldLoadNewItems(
       PaginatedListStateInterface<T> state, int currentIndex) {
-    if (state.reachedEnd) {
-      return false;
-    }
-    return currentIndex == state.items!.length - 1;
+    if (state.isLoading) return false;
+    if (state.reachedEnd) return false;
+    bool isInLastPage =
+        (state.items!.length - (currentIndex + 1)) < paginationDistance;
+    if (!isInLastPage) return false;
+    int itemsTillEndOfPagination =
+        (paginationDistance - (currentIndex + 1)) % paginationDistance;
+    if (itemsTillEndOfPagination != prefetch) return false;
+    return true;
   }
 
   bool _currentElementIsIndicator(
-      PaginatedListStateInterface<T> state, int index) {
-    return index == state.items!.length - 1;
-  }
+    PaginatedListStateInterface<T> state, int index) {
+  return index == state.items!.length; }
 
   Widget? _createIndicator(
       PaginatedListStateInterface<T> state, BuildContext context) {
