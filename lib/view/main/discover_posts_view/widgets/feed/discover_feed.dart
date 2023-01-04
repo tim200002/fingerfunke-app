@@ -67,37 +67,40 @@ class DiscoverFeed extends StatelessWidget {
               loaded: (location) =>
                   BlocBuilder<FeedFilterCubit, FeedFilterState>(
                 builder: (context, locationFilters) {
-                    return BlocProvider<DiscoverFeedCubit>(
-                  //! Not sure if this is valid 
-                  key: Key(locationFilters.toString()+location.toString()),
-                  create: (_) => DiscoverFeedCubit(
-                      userLocation: location, filters: locationFilters),
-                  child:
-                      // This will forcfully lead to rebuild whenever settings change, however,
-                      // it should be mroe efficient then doing same operation on a per post level
-                      // worth it in my opinion
-                      BlocBuilder<AppSettingsCubit, AppSettings>(
-                    buildWhen: ((previous, current) =>
-                        previous.dsAutoplay != current.dsAutoplay),
-                    builder: (context, settings) =>
-                        BlocBuilder<DiscoverFeedCubit, DiscoverFeedState>(
-                      builder: (context, state) => PagedPaginatedList<Post>(
-                        state: state,
-                        itemBuilder: (post) => PostFeedImageItem(
-                          post,
-                          video: settings.dsAutoplay,
-                          key: ValueKey(post.id),
+                  return BlocProvider<DiscoverFeedCubit>(
+                    // Necessary to trigger rebuilds whenever location or filters change
+                    key: Key(locationFilters.hashCode.toString() +
+                        location.hashCode.toString()),
+                    create: (_) => DiscoverFeedCubit(
+                        userLocation: location, filters: locationFilters),
+                    child:
+                        // This will forcfully lead to rebuild whenever settings change, however,
+                        // it should be mroe efficient then doing same operation on a per post level
+                        // worth it in my opinion
+                        BlocBuilder<AppSettingsCubit, AppSettings>(
+                      buildWhen: ((previous, current) =>
+                          previous.dsAutoplay != current.dsAutoplay),
+                      builder: (context, settings) =>
+                          BlocBuilder<DiscoverFeedCubit, DiscoverFeedState>(
+                        builder: (context, state) => PagedPaginatedList<Post>(
+                          state: state,
+                          itemBuilder: (post) => PostFeedImageItem(
+                            post,
+                            video: settings.dsAutoplay,
+                            key: ValueKey(post.id),
+                          ),
+                          onRequestNewPage: () => context
+                              .read<DiscoverFeedCubit>()
+                              .requestNewPage(),
+                          endIndicator: IllustrationView.empty(
+                              text: l10n(context).msg_feedEmpty),
+                          loadingIndicator: IllustrationView.empty(
+                              text: "One Moment we are loading new posts"),
                         ),
-                        onRequestNewPage: () =>
-                            context.read<DiscoverFeedCubit>().requestNewPage(),
-                        endIndicator: IllustrationView.empty(
-                            text: l10n(context).msg_feedEmpty),
-                        loadingIndicator: IllustrationView.empty(
-                      text: "One Moment we are loading new posts"),
                       ),
                     ),
-                  ),
-                );},
+                  );
+                },
               ),
             ),
           ),
