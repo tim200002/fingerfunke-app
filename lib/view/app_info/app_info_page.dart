@@ -5,6 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../routes.dart';
 import '../../utils/tools.dart';
 import '../../utils/util_widgets/page_screen.dart';
+import 'app_version_view.dart';
 
 class AppInfoPage extends StatelessWidget {
   const AppInfoPage({Key? key}) : super(key: key);
@@ -41,16 +42,21 @@ class AppInfoPage extends StatelessWidget {
                         }),
                   ]),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: Image.asset(
-                "assets/img/partners/bmbf_logo.jpg",
-                height: 150,
-              ),
-            )
+            const SizedBox(height: 20),
+            const BMBFIndicator(),
+            const SizedBox(height: 20),
+            const AppVersionView(),
+            const SizedBox(height: 20)
           ],
         ));
   }
+}
+
+class BMBFIndicator extends StatelessWidget {
+  static const String imageURL = "assets/img/partners/bmbf_logo.jpg";
+  const BMBFIndicator({super.key});
+  @override
+  Widget build(BuildContext _) => Image.asset(imageURL, height: 150);
 }
 
 class FFSettingsSection extends StatelessWidget {

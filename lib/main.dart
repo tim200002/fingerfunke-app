@@ -8,8 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import 'app.dart';
+import 'cubits/app_info/app_info_cubit.dart';
 import 'cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
 import 'cubits/live_config_cubit/live_config_cubit.dart';
 import 'cubits/settings_cubit/app_settings_cubit.dart';
@@ -22,6 +24,7 @@ void main() async {
   //await FlutterConfig.loadEnvVariables();
   await StorageRepositoryImpl().init();
   await Firebase.initializeApp();
+  final PackageInfo packageInfo = await PackageInfo.fromPlatform();
   final Logger _logger = Logger();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
@@ -56,28 +59,23 @@ void main() async {
       }
   }
 
-  runApp(const AppInflater());
+  runApp(AppInflater(packageInfo: packageInfo));
 }
 
 class AppInflater extends StatelessWidget {
-  const AppInflater({Key? key}) : super(key: key);
+  final PackageInfo packageInfo;
+  const AppInflater({Key? key, required this.packageInfo}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final FirebaseAuthenticationRepository firebaseAuthenticationRepository =
+    final FirebaseAuthenticationRepository authRep =
         FirebaseAuthenticationRepository();
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) => FirebaseAuthenticationCubitCubit(
-              firebaseAuthenticationRepository),
-        ),
-        BlocProvider(
-          create: (context) => AppSettingsCubit(),
-        ),
-        BlocProvider(
-          create: (context) => LiveConfigCubit(),
-        ),
+        BlocProvider(create: (_) => AppSettingsCubit()),
+        BlocProvider(create: (_) => LiveConfigCubit()),
+        BlocProvider(create: (_) => AppInfoCubit(packageInfo)),
+        BlocProvider(create: (_) => FirebaseAuthenticationCubitCubit(authRep)),
       ],
       child: const App(),
     );

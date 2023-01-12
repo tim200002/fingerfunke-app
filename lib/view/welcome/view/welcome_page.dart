@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../utils/beta_indicator.dart';
 import '../../../utils/illustration.dart';
 import '../../../utils/tools.dart';
+import '../../app_info/app_version_view.dart';
 import '../../phone_login/view/phone_login_page.dart';
 
 class WelcomePage extends StatelessWidget {
@@ -65,11 +66,15 @@ class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
           children: [
+            const AppVersionView(
+              compact: true,
+              alignment: MainAxisAlignment.end,
+              style: TextStyle(color: Color(0xFF9E9E9E)),
+            ),
             Expanded(child: Center(child: _heroSection(context))),
             _loginSection(context)
           ],
