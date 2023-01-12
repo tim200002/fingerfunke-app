@@ -25,11 +25,13 @@ class AppVersionView extends StatelessWidget {
                   mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,
                   children: [
                     Text(
-                        (compact ? "v" : "Version:") + info.packageInfo.version,
+                        (compact ? "v" : "Version: ") +
+                            info.packageInfo.version,
                         style: style),
                     if (!compact) const SizedBox(width: 10),
                     Text(
-                      (compact ? "+" : "Build:") + info.packageInfo.buildNumber,
+                      (compact ? "+" : "Build: ") +
+                          info.packageInfo.buildNumber,
                       style: style.copyWith(fontWeight: FontWeight.bold),
                     )
                   ],

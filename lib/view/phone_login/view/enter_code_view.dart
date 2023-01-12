@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import '../../../utils/tools.dart';
 import '../cubit/phone_login_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+
+import 'code_autodetect_label.dart';
 
 class EnterCodeView extends StatelessWidget {
   final String verificationId;
@@ -23,7 +27,8 @@ class EnterCodeView extends StatelessWidget {
             children: [
               Text(l10n(context).msg_loginEnterCode,
                   style: Theme.of(context).textTheme.labelLarge),
-              _AutoDetectingLabel(active: autoDetecting)
+              if (Platform.isAndroid)
+                LoginCodeAutoDetectLabel(active: autoDetecting)
             ],
           ),
           PinCodeTextField(
@@ -36,31 +41,5 @@ class EnterCodeView extends StatelessWidget {
                   smsCode: pin,
                   context: context)),
         ]);
-  }
-}
-
-class _AutoDetectingLabel extends StatelessWidget {
-  final bool active;
-
-  const _AutoDetectingLabel({required this.active});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 10),
-      child: active
-          ? Row(
-              children: [
-                const SizedBox.square(
-                    dimension: 10,
-                    child: CircularProgressIndicator.adaptive(
-                      strokeWidth: 2,
-                    )),
-                const SizedBox(width: 10),
-                Expanded(child: Text(l10n(context).lbl_autoDetectingLoginCode))
-              ],
-            )
-          : Text(l10n(context).lbl_loginCodeNotAutoDetectable),
-    );
   }
 }
