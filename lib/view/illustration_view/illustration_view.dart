@@ -6,7 +6,7 @@ import '../../utils/tools.dart';
 
 class IllustrationView extends StatelessWidget {
   final String text;
-  final String illustration;
+  final Illustrations illustration;
   final double? illustrationWidth;
   final double illustrationHeight;
   final Function()? retry;
