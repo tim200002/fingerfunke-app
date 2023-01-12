@@ -11,10 +11,6 @@ import '../../../utils/illustration.dart';
 class PhoneLoginPage extends StatelessWidget {
   const PhoneLoginPage({Key? key}) : super(key: key);
 
-  static Route route() {
-    return MaterialPageRoute<void>(builder: (_) => const PhoneLoginPage());
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

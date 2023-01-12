@@ -190,6 +190,8 @@
   "@lbl_notParticipating": {},
   "lbl_phoneNumber": "Telefonnummer",
   "@lbl_phoneNumber": {},
+  "lbl_phoneNumberLogin": "mit Telefonnummer anmelden",
+  "@lbl_phoneNumberLogin": {},
   "lbl_postCreatedBy": "geposted von {authorName}",
   "@lbl_postCreatedBy": {
     "placeholders": {
@@ -264,6 +266,10 @@
   "@lbl_userBio": {},
   "lbl_wait": "Bitte warte.",
   "@lbl_wait": {},
+  "lbl_wallAppDev": "Die App ist zur Zeit noch in der Entwicklung.",
+  "@lbl_wallAppDev": {},
+  "lbl_wallInviteCode": "Gib hier deinen Einladungs-Code ein:",
+  "@lbl_wallInviteCode": {},
   "lbl_welcome": "Willkommen!",
   "@lbl_welcome": {},
   "lbl_welcomeHello": "Hallo!",

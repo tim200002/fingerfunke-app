@@ -24,6 +24,7 @@ class App extends StatelessWidget {
           FirebaseAuthenticationCubitState>(
         builder: (context, state) => state.when(
             unauthenticated: () => buildApp(const WelcomePage(
+                  useStaticTestphaseWall: true,
                   betaMessage: "beta@Erlangen",
                 )),
             authenticatedWaitingForUserToBeFetched: (_) =>
