@@ -70,4 +70,12 @@ class UserRepositoryImpl implements UserRepository {
   Future<void> setToken(String userId, String key, JsonMap value) {
     return _userCollection.doc(userId).collection("tokens").doc(key).set(value);
   }
+
+  @override
+  Future<void> setSessionInfo(FirestoreId userId, SessionInfo sessionInfo) =>
+      _userCollection
+          .doc(userId)
+          .collection("personal")
+          .doc("sessionInfo")
+          .set(sessionInfo.toJson());
 }

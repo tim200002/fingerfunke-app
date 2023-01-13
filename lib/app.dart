@@ -32,6 +32,7 @@ class App extends StatelessWidget {
                 buildApp(const CreateAccountView()),
             authenticated: (user) {
               AppCubit.setUserVars(user.id);
+              context.read<AppSettingsCubit>().copyToFirebase(context, user.id);
               return BlocProvider(
                 create: (context) => AppCubit(user),
                 child: buildApp(const MainView(), routes: routes),

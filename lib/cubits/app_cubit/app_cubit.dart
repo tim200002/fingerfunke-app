@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../models/user/user.dart';
@@ -12,6 +14,11 @@ part 'app_cubit.freezed.dart';
 part 'app_state.dart';
 
 class AppCubit extends Cubit<AppState> {
+  static Widget builder(
+      Widget Function(BuildContext context, AppState state) builder) {
+    return BlocBuilder<AppCubit, AppState>(builder: builder);
+  }
+
   late final StreamSubscription<User> _userSubscription;
   final UserRepository _userRepository = UserRepositoryImpl();
 

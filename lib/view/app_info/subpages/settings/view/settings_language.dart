@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../cubits/app_cubit/app_cubit.dart';
 import '../../../../../cubits/settings_cubit/app_settings_cubit.dart';
 
 class SettingsLanguage extends StatefulWidget {
@@ -18,28 +20,27 @@ class _SettingsLanguageState extends State<SettingsLanguage> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: SafeArea(
-          top: false,
-          child: ListView.builder(
+    return AppSettingsCubit.builder(
+      (_, settings) => Material(
+          child: SafeArea(
+        top: false,
+        child: ListView.builder(
             shrinkWrap: true,
             itemCount: languages.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(languages[index].values.first),
-                trailing: AppSettingsCubit.of(context).state.locale ==
-                        languages[index].keys.first
-                    ? const Icon(Icons.check)
-                    : null,
-                onTap: () => {
-                  setState(() {
-                    AppSettingsCubit.of(context)
-                        .set(locale: languages[index].keys.first);
-                  })
-                },
-              );
-            },
-          )),
+            itemBuilder: (context, index) => ListTile(
+                  title: Text(languages[index].values.first),
+                  trailing: settings.locale == languages[index].keys.first
+                      ? const Icon(Icons.check)
+                      : null,
+                  onTap: () => {
+                    setState(() {
+                      context.read<AppSettingsCubit>().set(context,
+                          settings: settings.copyWith(
+                              locale: languages[index].keys.first));
+                    })
+                  },
+                )),
+      )),
     );
   }
 }

@@ -1,3 +1,4 @@
+import '../../../../../cubits/app_cubit/app_cubit.dart';
 import '../../../../../cubits/settings_cubit/app_settings_cubit.dart';
 import '../../../../../models/settings/app_settings.dart';
 import '../../../../../utils/tools.dart';
@@ -37,9 +38,7 @@ class _SettingsPageState extends State<SettingsPage> {
             onPressed: () => Navigator.of(context).pop()),
         title: Text(l10n(context).lbl_settings),
       ),
-      body: BlocBuilder<AppSettingsCubit, AppSettings>(
-        builder: (context, settings) {
-          return ListView(
+      body: AppSettingsCubit.builder((_, settings) => ListView(
             children: [
               SettingsSection(title: l10n(context).lbl_settingsGeneral, tiles: [
                 SettingsTile(
@@ -72,15 +71,14 @@ class _SettingsPageState extends State<SettingsPage> {
                     leading: const Icon(Icons.dark_mode),
                     switchValue: settings.dsAutoplay,
                     onToggle: (bool v) {
-                      AppSettingsCubit.of(context).set(dsAutoplay: v);
+                      context.read<AppSettingsCubit>().set(context,
+                          settings: settings.copyWith(dsAutoplay: v));
                     },
                   )
                 ],
               ),
             ],
-          );
-        },
-      ),
+          )),
     );
   }
 }

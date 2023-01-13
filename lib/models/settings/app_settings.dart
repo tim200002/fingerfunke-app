@@ -19,6 +19,15 @@ class AppSettings extends Serializable {
         themeMode = themeMode ?? ThemeMode.light,
         dsAutoplay = dsAutoplay ?? true;
 
+  AppSettings copyWith(
+          {final String? locale,
+          final ThemeMode? themeMode,
+          final bool? dsAutoplay}) =>
+      AppSettings(
+          locale: locale ?? this.locale,
+          themeMode: themeMode ?? this.themeMode,
+          dsAutoplay: dsAutoplay ?? this.dsAutoplay);
+
   @override
   JsonMap toJson() => {
         "locale": locale,

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../../models/settings/session_info.dart';
 import '../../models/user/user.dart';
 import '../../utils/type_aliases.dart';
 
@@ -20,6 +21,8 @@ abstract class UserRepository {
 
   Future<void> savePost(FirestoreId userId, FirestoreId postId);
   Future<void> unsavePost(FirestoreId userId, FirestoreId postId);
+
+  Future<void> setSessionInfo(FirestoreId userId, SessionInfo sessionInfo);
 
   Stream<User> getUserSubscription(String userId);
 }
