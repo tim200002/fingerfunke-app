@@ -59,7 +59,8 @@ class PostActionButtons extends StatelessWidget {
               return Stack(
                 children: <Widget>[
                   if (!post.isUserAuthor(
-                      context.read<AppCubit>().state.user.toInfo()))
+                          context.read<AppCubit>().state.user.toInfo()) &&
+                      (isMember || !(post.asEvent?.isCompleted ?? false)))
                     Align(
                         alignment: Alignment.bottomCenter,
                         child: _mainFAB(context,
@@ -91,8 +92,7 @@ class PostActionButtons extends StatelessWidget {
                               arguments: ChatArguments(
                                 chatName: post.title,
                                 postId: post.id,
-                                chatCubit: BlocProvider.of<
-                                    ChatCubit>(context),
+                                chatCubit: BlocProvider.of<ChatCubit>(context),
                               ),
                             )),
                   ),
