@@ -2,12 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
+import '../../../common_widgets/info_view.dart';
 import '../../../utils/tools.dart';
 import '../../error/exception_view.dart';
 import 'cubit/video_recorder_cubit.dart';
 import 'view/camera_view.dart';
-import 'view/missing_camera_permission_view.dart';
 import 'view/playback_view.dart';
 
 /// This is the UI for recording video content within the App. The result will
@@ -53,7 +54,11 @@ class VideoRecorderPage extends StatelessWidget {
             builder: (context, state) => state.when(
               loading: () =>
                   const Center(child: CircularProgressIndicator.adaptive()),
-              missingPermission: () => const MissingCameraPermissionView(),
+              missingPermission: () => InfoView(
+                showBackButton: true,
+                text: l10n(context).lbl_cameraPermissionError,
+                icon: FeatherIcons.cameraOff,
+              ),
               error: ExceptionView.builder,
               camera: (c) {
                 logger.d("emitted camera state");
