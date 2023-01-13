@@ -11,9 +11,9 @@ import '../../../../../../utils/tools.dart';
 import '../../../../maps/view/maps_place_picker_page.dart';
 import 'cubit/feed_filter_cubit.dart';
 import 'cubit/feed_filter_state.dart';
+import 'simple_filter_item.dart';
 
 part "location_slider.dart";
-part "filter_item.dart";
 
 class LocationFilterView extends StatelessWidget {
   const LocationFilterView._({Key? key}) : super(key: key);
@@ -59,49 +59,47 @@ class LocationFilterView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final FeedFilterState initalFilterState =
-        context.read<FeedFilterCubit>().state;
-    return Container(
-        color: Colors.white,
-        child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              AppBar(
-                  title: Text(l10n(context).lbl_exploreFilterEdit),
-                  automaticallyImplyLeading: false,
-                  actions: [
-                    IconButton(
-                        onPressed: () => Navigator.of(context).pop(),
-                        icon: const Icon(FeatherIcons.check))
-                  ]),
-              ListView(
-                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-                shrinkWrap: true,
+    return BlocBuilder<FeedFilterCubit, FeedFilterState>(
+        builder: (_, state) => Container(
+            color: Colors.white,
+            child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  _sectionHeader(context, l10n(context).lbl_filterPerimeter),
-                  _LocationSlider(initalFilterState.radius, (v) {
-                    context.read<FeedFilterCubit>().updateRadius(v);
-                  }),
-                  _sectionHeader(context, l10n(context).lbl_filterPosts),
-                  _FilterItem(
-                      l10n(context).lbl_filterAll,
-                      l10n(context).lbl_filterHidePast,
-                      initalFilterState.hideCompleted,
-                      (v) => context
-                          .read<FeedFilterCubit>()
-                          .updateHidecCompleted(v)),
-                  const SizedBox(height: 12),
-                  _FilterItem(
-                      l10n(context).lbl_filterAll,
-                      l10n(context).lbl_filterOnlyNearFuture,
-                      initalFilterState.hideFarFuture,
-                      (v) => context
-                          .read<FeedFilterCubit>()
-                          .updateHideFartFuture(v)),
-                  //_filterItem("alle anzeigen", "alte verstecken")
-                ],
-              ),
-            ]));
+                  AppBar(
+                      title: Text(l10n(context).lbl_exploreFilterEdit),
+                      automaticallyImplyLeading: false,
+                      actions: [
+                        IconButton(
+                            onPressed: () => Navigator.of(context).pop(),
+                            icon: const Icon(FeatherIcons.check))
+                      ]),
+                  ListView(
+                    padding:
+                        const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                    shrinkWrap: true,
+                    children: [
+                      _sectionHeader(
+                          context, l10n(context).lbl_filterPerimeter),
+                      _LocationSlider(state.radius, (v) {
+                        context.read<FeedFilterCubit>().updateRadius(v);
+                      }),
+                      _sectionHeader(context, l10n(context).lbl_filterPosts),
+                      SimpleToggle(
+                          label: l10n(context).lbl_filterHidePast,
+                          enabled: state.hideCompleted,
+                          onChanged: context
+                              .read<FeedFilterCubit>()
+                              .updateHidecCompleted),
+                      const SizedBox(height: 12),
+                      SimpleToggle(
+                          label: l10n(context).lbl_filterOnlyNearFuture,
+                          enabled: state.hideFarFuture,
+                          onChanged: context
+                              .read<FeedFilterCubit>()
+                              .updateHideFartFuture)
+                    ],
+                  ),
+                ])));
   }
 }
