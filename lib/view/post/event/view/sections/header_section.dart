@@ -3,8 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../../common_widgets/image/network_placeholder_image.dart/network_placeholder_image.dart';
+import '../../../../../common_widgets/list_items/in_past_filter.dart';
+import '../../../../../common_widgets/list_items/post_feed_image_item.dart';
 import '../../../../../common_widgets/upload/video_upload_tile.dart';
 import '../../../../../cubits/app_cubit/app_cubit.dart';
 import '../../../../../cubits/video_upload_cubit/video_upload_cubit.dart';
@@ -201,15 +204,17 @@ class HeaderSection extends StatelessWidget {
             url: VideoRepositoryImpl().createPlaybackUrl((post.media
                 .firstWhere((e) => e.type == AssetType.video) as VideoAsset)))),
         child: Stack(children: [
-          NetworkPlaceholderImage(
-            VideoRepositoryImpl()
-                .createThumbnailUrl(post.media[0] as VideoAsset),
-            Container(
-              color: Colors.grey,
-            ),
-            width: MediaQuery.of(context).size.width.toInt(),
-            fit: BoxFit.cover,
-          ),
+          InPastFilter(
+              isInPast: post.asEvent?.isCompleted ?? false,
+              child: NetworkPlaceholderImage(
+                VideoRepositoryImpl()
+                    .createThumbnailUrl(post.media[0] as VideoAsset),
+                Container(
+                  color: Colors.grey,
+                ),
+                width: MediaQuery.of(context).size.width.toInt(),
+                fit: BoxFit.cover,
+              )),
           const Center(
             child: Icon(
               Icons.play_arrow_rounded,
@@ -414,7 +419,7 @@ class __ThumbnailState extends State<_Thumbnail> {
                       video,
                       onVideoUploaded: () => eventEditorCubit.validateInput());
                   setState(() {
-                    uploadCubit=videoUploadCubit;
+                    uploadCubit = videoUploadCubit;
                   });
                   context
                       .read<EventEditorCubit>()
@@ -425,11 +430,13 @@ class __ThumbnailState extends State<_Thumbnail> {
             ? VideoUploadTile(
                 cubit: uploadCubit!,
                 onDelete: (cubitId) {
-                  context.read<EventEditorCubit>().removeVideoUploadCubit(cubitId);
+                  context
+                      .read<EventEditorCubit>()
+                      .removeVideoUploadCubit(cubitId);
                   setState(() {
                     uploadCubit = null;
                   });
-                },  
+                },
                 height: 210,
               )
             : Container(

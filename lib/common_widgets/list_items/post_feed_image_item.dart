@@ -13,6 +13,7 @@ import '../../../../../../utils/app_theme.dart';
 import '../../../../../../utils/extensions/date_time.dart';
 import '../../../../../../utils/tools.dart';
 import '../../../../../../utils/type_aliases.dart';
+import 'in_past_filter.dart';
 
 class PostFeedImageItem extends StatelessWidget {
   final Post _post;
@@ -30,17 +31,6 @@ class PostFeedImageItem extends StatelessWidget {
       this.onNavigatedBackToThisItem,
       this.video = false})
       : super(key: key);
-
-  Widget _inPastView({bool inPast = false, required Widget child}) {
-    return inPast
-        ? ColorFiltered(
-            colorFilter: const ColorFilter.mode(
-              Colors.grey,
-              BlendMode.saturation,
-            ),
-            child: child)
-        : child;
-  }
 
   Widget _videoBackgroundView(BuildContext context, {bool greyscale = false}) {
     Widget videoPlayback = VideoPlaybackView(
@@ -78,8 +68,8 @@ class PostFeedImageItem extends StatelessWidget {
               color: Colors.white,
             ),
           )
-        : _inPastView(
-            inPast: _post.asEvent?.isCompleted ?? false,
+        : InPastFilter(
+            isInPast: _post.asEvent?.isCompleted ?? false,
             child: video
                 ? _videoBackgroundView(context)
                 : _imageBackgroundView(context));

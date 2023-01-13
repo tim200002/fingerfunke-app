@@ -47,12 +47,12 @@ class EventDetailSection extends StatelessWidget {
                             child: Container(
                               padding: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
-                                  color: Colors.teal.shade50,
+                                  color: Colors.grey.shade300,
                                   borderRadius: BorderRadius.circular(6)),
                               child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    const Icon(FeatherIcons.check),
+                                    const Icon(FeatherIcons.info),
                                     const SizedBox(width: 15),
                                     Expanded(
                                         child: Text(
