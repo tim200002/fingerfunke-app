@@ -51,11 +51,11 @@ class StaticTestPhaseWall extends StatelessWidget {
     return Container(
         clipBehavior: Clip.hardEdge,
         margin: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(6), color: fieldColor),
         child: PinCodeTextField(
-            hintCharacter: "●",
+            hintCharacter: "·",
             errorAnimationController: errorAnimation,
             errorTextSpace: 0,
             animationType: AnimationType.scale,
@@ -82,7 +82,7 @@ class StaticTestPhaseWall extends StatelessWidget {
             length: 6,
             onChanged: (_) {},
             onCompleted: (value) {
-              if (codes.contains(value)) {
+              if (codes.contains(value.toUpperCase())) {
                 Navigator.of(context).pushReplacement(MaterialPageRoute<void>(
                     builder: (_) => const PhoneLoginPage()));
               } else {
@@ -95,14 +95,14 @@ class StaticTestPhaseWall extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(child: _heroSection(context)),
-            _codeSection(context),
-          ],
-        ),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+      ),
+      body: Column(
+        children: [
+          Expanded(child: _heroSection(context)),
+          _codeSection(context),
+        ],
       ),
     );
   }
