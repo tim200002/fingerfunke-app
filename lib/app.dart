@@ -5,6 +5,7 @@ import 'models/settings/app_settings.dart';
 import 'routes.dart';
 import 'utils/app_theme.dart';
 import 'view/create_account/view/create_account_view.dart';
+import 'view/main/base_view.dart';
 import 'view/main/main_view.dart';
 import 'view/splash/view/splash_page.dart';
 import 'view/welcome/view/welcome_page.dart';
@@ -35,7 +36,7 @@ class App extends StatelessWidget {
               context.read<AppSettingsCubit>().copyToFirebase(context, user.id);
               return BlocProvider(
                 create: (context) => AppCubit(user),
-                child: buildApp(const MainView(), routes: routes),
+                child: buildApp(const BaseView(), routes: routes),
               );
             }),
       ),
