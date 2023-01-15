@@ -18,7 +18,7 @@ class MapsPlacePickerPage extends StatelessWidget {
       searchingText: l10n(context).lbl_wait,
       selectText: l10n(context).lbl_mapPlaceSelect,
       outsideOfPickAreaText: l10n(context).lbl_mapPlaceNotInArea,
-      initialPosition: const LatLng(37.42796133580664, -122.085749655962),
+      initialPosition: const LatLng(47.62087969215252, 9.417152431150251),
       useCurrentLocation: true,
       selectInitialPosition: true,
       usePinPointingSearch: true,
