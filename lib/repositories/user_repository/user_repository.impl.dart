@@ -72,10 +72,10 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<void> setSessionInfo(FirestoreId userId, SessionInfo sessionInfo) =>
+  Future<void> setSessionInfo(FirestoreId userId, JsonMap infos) =>
       _userCollection
           .doc(userId)
           .collection("personal")
           .doc("sessionInfo")
-          .set(sessionInfo.toJson());
+          .set(infos, SetOptions(merge: true));
 }

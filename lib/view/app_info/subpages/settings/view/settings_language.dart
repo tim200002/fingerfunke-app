@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../cubits/app_cubit/app_cubit.dart';
 import '../../../../../cubits/settings_cubit/app_settings_cubit.dart';
+import '../../../../../services/session_info_service.dart';
 
-class SettingsLanguage extends StatefulWidget {
+class SettingsLanguage extends StatelessWidget {
   const SettingsLanguage({Key? key}) : super(key: key);
 
-  @override
-  State<SettingsLanguage> createState() => _SettingsLanguageState();
-}
-
-class _SettingsLanguageState extends State<SettingsLanguage> {
-  final languages = [
+  final languages = const [
     {"system": "System"},
     {"en_EN": "English"},
     {"de_DE": "Deutsch"}
@@ -32,12 +27,11 @@ class _SettingsLanguageState extends State<SettingsLanguage> {
                   trailing: settings.locale == languages[index].keys.first
                       ? const Icon(Icons.check)
                       : null,
-                  onTap: () => {
-                    setState(() {
-                      context.read<AppSettingsCubit>().set(context,
-                          settings: settings.copyWith(
-                              locale: languages[index].keys.first));
-                    })
+                  onTap: () {
+                    String newLocale = languages[index].keys.first;
+                    SessionInfoService.instance.setLocale(newLocale);
+                    context.read<AppSettingsCubit>().set(context,
+                        settings: settings.copyWith(locale: newLocale));
                   },
                 )),
       )),

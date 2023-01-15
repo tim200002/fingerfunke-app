@@ -97,7 +97,7 @@ class LocationFilterView extends StatelessWidget {
                           enabled: state.hideFarFuture,
                           onChanged: context
                               .read<FeedFilterCubit>()
-                              .updateHideFartFuture)
+                              .updateHideFarFuture)
                     ],
                   ),
                 ])));

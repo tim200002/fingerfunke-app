@@ -22,7 +22,7 @@ abstract class UserRepository {
   Future<void> savePost(FirestoreId userId, FirestoreId postId);
   Future<void> unsavePost(FirestoreId userId, FirestoreId postId);
 
-  Future<void> setSessionInfo(FirestoreId userId, SessionInfo sessionInfo);
+  Future<void> setSessionInfo(FirestoreId userId, JsonMap infos);
 
   Stream<User> getUserSubscription(String userId);
 }
