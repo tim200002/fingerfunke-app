@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-class PlaceholderBox extends StatelessWidget {
+class SkeletonView extends StatelessWidget {
   static const Alignment topLeft = Alignment.topLeft;
   static const Color baseColor = Color(0xFFF5F5F5);
 
@@ -21,7 +21,7 @@ class PlaceholderBox extends StatelessWidget {
   final Color color;
   final Widget? child;
 
-  const PlaceholderBox(
+  const SkeletonView(
       {Key? key,
       this.width,
       this.height,
@@ -33,7 +33,7 @@ class PlaceholderBox extends StatelessWidget {
         child = null,
         super(key: key);
 
-  const PlaceholderBox.background(
+  const SkeletonView.background(
       {Key? key,
       this.width,
       this.height,
@@ -45,26 +45,26 @@ class PlaceholderBox extends StatelessWidget {
       : color = Colors.white,
         super(key: key);
 
-  const PlaceholderBox.text(
+  const SkeletonView.text(
       {Key? key,
       this.width,
       this.alignment = topLeft,
       this.borderWidth,
+      this.color = baseColor,
       this.margin = const EdgeInsets.only(bottom: 10)})
       : height = 20,
         borderRadius = 7,
-        color = baseColor,
         child = null,
         super(key: key);
-  const PlaceholderBox.headline(
+  const SkeletonView.headline(
       {Key? key,
       this.width,
       this.alignment = topLeft,
       this.borderWidth,
+      this.color = baseColor,
       this.margin = const EdgeInsets.only(bottom: 10)})
       : height = 25,
         borderRadius = 7,
-        color = baseColor,
         child = null,
         super(key: key);
 

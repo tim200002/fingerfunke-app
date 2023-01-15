@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../utils/app_theme.dart';
-import '../../../../../utils/placeholder_box.dart';
+import '../../../../../utils/skeleton_view.dart';
 import '../../../../../utils/tools.dart';
 import '../../../cubits/post_viewer_cubit/post_cubit.dart';
 import '../../cubit/event_editor_cubit.dart';
@@ -25,7 +25,7 @@ class TitleSection extends StatelessWidget {
           : BlocBuilder<PostCubit, PostState>(
               builder: (context, state) => state.when(
                 loading: (_) =>
-                    PlaceholderBox.shimmer(PostDescriptionSection.loading()),
+                    SkeletonView.shimmer(PostDescriptionSection.loading()),
                 normal: (post, _) => Text(
                   post.title,
                   overflow: TextOverflow.ellipsis,

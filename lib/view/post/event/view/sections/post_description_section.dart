@@ -1,4 +1,4 @@
-import '../../../../../utils/placeholder_box.dart';
+import '../../../../../utils/skeleton_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../utils/tools.dart';
@@ -13,8 +13,7 @@ class PostDescriptionSection extends StatelessWidget {
 
   static Widget loading() {
     return Column(children: [
-      for (int i = 2; i >= 0; i--)
-        PlaceholderBox.text(width: i == 0 ? 100 : null)
+      for (int i = 2; i >= 0; i--) SkeletonView.text(width: i == 0 ? 100 : null)
     ]);
   }
 
@@ -24,7 +23,7 @@ class PostDescriptionSection extends StatelessWidget {
         ? const _Edit()
         : BlocBuilder<PostCubit, PostState>(
             builder: (context, state) => state.when(
-                  loading: (_) => PlaceholderBox.shimmer(loading()),
+                  loading: (_) => SkeletonView.shimmer(loading()),
                   normal: (post, _) => Text(
                     post.description,
                     style: Theme.of(context).textTheme.subtitle2,

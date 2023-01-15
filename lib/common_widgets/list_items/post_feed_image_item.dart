@@ -13,7 +13,10 @@ import '../../../../../../utils/app_theme.dart';
 import '../../../../../../utils/extensions/date_time.dart';
 import '../../../../../../utils/tools.dart';
 import '../../../../../../utils/type_aliases.dart';
+import '../../utils/skeleton_view.dart';
 import 'in_past_filter.dart';
+
+part "feed_item_loading.dart";
 
 class PostFeedImageItem extends StatelessWidget {
   final Post _post;
@@ -24,6 +27,9 @@ class PostFeedImageItem extends StatelessWidget {
   /// returning back from this detail view to then do any necessary actions
   /// (e.g. reload current post in case changes have been done on the detail page)
   final void Function(FirestoreId postId)? onNavigatedBackToThisItem;
+
+  /// a loading UI version of this Widget
+  static Widget loading() => const _FeedItemLoading();
 
   const PostFeedImageItem(this._post,
       {Key? key,

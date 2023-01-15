@@ -8,7 +8,7 @@ import '../../../../../models/place.dart';
 import '../../../../../models/post/post.dart';
 import '../../../../../services/google_maps_service.dart';
 import '../../../../../utils/extensions/date_time.dart';
-import '../../../../../utils/placeholder_box.dart';
+import '../../../../../utils/skeleton_view.dart';
 import '../../../../../utils/tools.dart';
 import '../../../../maps/view/maps_place_picker_page.dart';
 import '../../../cubits/post_viewer_cubit/post_cubit.dart';
@@ -33,7 +33,7 @@ class EventDetailSection extends StatelessWidget {
         ? const _Edit()
         : BlocBuilder<PostCubit, PostState>(
             builder: (context, state) => state.when(
-              loading: (_) => PlaceholderBox.shimmer(_loading()),
+              loading: (_) => SkeletonView.shimmer(_loading()),
               normal: (post, _) => post is! Event
                   ? Text(l10n(context).msg_postOnlyEventsSupported)
                   : Column(

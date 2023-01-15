@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../utils/placeholder_box.dart';
+import '../../../../../utils/skeleton_view.dart';
 import '../../../../../utils/tools.dart';
 import '../../../../user_profile/profile_view.dart';
 import '../../../cubits/post_viewer_cubit/post_cubit.dart';
@@ -13,7 +13,7 @@ class AuthorSection extends StatelessWidget {
   const AuthorSection(this.editing, {Key? key}) : super(key: key);
 
   Widget _loading() {
-    return const PlaceholderBox.headline(
+    return const SkeletonView.headline(
       alignment: Alignment.center,
       margin: EdgeInsets.all(12),
       width: 120,
@@ -26,7 +26,7 @@ class AuthorSection extends StatelessWidget {
         ? Container() // show nothing on editing
         : BlocBuilder<PostCubit, PostState>(
             builder: (context, state) => state.when(
-              loading: (_) => PlaceholderBox.shimmer(_loading()),
+              loading: (_) => SkeletonView.shimmer(_loading()),
               normal: (post, _) => Center(
                 child: InkWell(
                   onTap: () => UserProfileView.showAsBottomSheet(context,

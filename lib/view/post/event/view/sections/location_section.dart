@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../models/post/post.dart';
 import '../../../../../utils/exceptions.dart';
-import '../../../../../utils/placeholder_box.dart';
+import '../../../../../utils/skeleton_view.dart';
 import '../../../../../utils/tools.dart';
 import '../../../../maps/view/static_maps_provider.dart';
 import '../../../cubits/abstract_post_editor_cubit/abstract_post_editor_cubit.dart';
@@ -18,7 +18,7 @@ class LocationSection extends StatelessWidget {
   const LocationSection(this.editing, {Key? key}) : super(key: key);
 
   Widget _loading() {
-    return const PlaceholderBox(height: 140);
+    return const SkeletonView(height: 140);
   }
 
   @override
@@ -27,7 +27,7 @@ class LocationSection extends StatelessWidget {
         ? const _Edit()
         : BlocBuilder<PostCubit, PostState>(
             builder: (context, state) => state.when(
-                loading: (_) => PlaceholderBox.shimmer(_loading()),
+                loading: (_) => SkeletonView.shimmer(_loading()),
                 normal: (post, _) => post is! Event
                     ? Text(l10n(context).msg_postOnlyEventsSupported)
                     : StaticMapsProvider(address: post.place.address)));

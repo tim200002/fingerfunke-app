@@ -1,4 +1,4 @@
-import '../../../utils/placeholder_box.dart';
+import '../../../utils/skeleton_view.dart';
 import '../../../utils/tools.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -40,7 +40,7 @@ class StaticMapsProvider extends StatelessWidget {
                   fit: BoxFit.cover,
                   loadingBuilder: (_, child, process) => process == null
                       ? child
-                      : PlaceholderBox.shimmer(const PlaceholderBox(
+                      : SkeletonView.shimmer(const SkeletonView(
                           height: height,
                         )),
                   errorBuilder: ((_, __, ___) => Container(

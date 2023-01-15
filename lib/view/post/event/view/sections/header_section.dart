@@ -15,7 +15,7 @@ import '../../../../../models/asset/asset.dart';
 import '../../../../../models/post/post.dart';
 import '../../../../../repositories/video_repository/video_repository.impl.dart';
 import '../../../../../utils/app_theme.dart';
-import '../../../../../utils/placeholder_box.dart';
+import '../../../../../utils/skeleton_view.dart';
 import '../../../../../utils/tools.dart';
 import '../../../../fullscreen_video/view/fullscreen_video_page.dart';
 import '../../../../video_recorder/view/video_recorder_page.dart';
@@ -229,13 +229,13 @@ class HeaderSection extends StatelessWidget {
 
   Widget _loading() {
     return Stack(children: [
-      PlaceholderBox(height: thumbnailHeight),
-      PlaceholderBox.background(
+      SkeletonView(height: thumbnailHeight),
+      SkeletonView.background(
         height: 80,
         borderRadius: 20,
         margin: EdgeInsets.only(
             left: 15, right: 15, top: thumbnailHeight - titleOverlap),
-        child: const PlaceholderBox.headline(
+        child: const SkeletonView.headline(
           width: 100,
           alignment: Alignment.center,
         ),
@@ -329,7 +329,7 @@ class HeaderSection extends StatelessWidget {
               ? _Edit(thumbnailHeight, titleOverlap, includeTitle)
               : BlocBuilder<PostCubit, PostState>(
                   builder: (context, state) => state.when(
-                    loading: (_) => PlaceholderBox.shimmer(_loading()),
+                    loading: (_) => SkeletonView.shimmer(_loading()),
                     normal: (post, _) => Stack(
                       children: [
                         SizedBox(

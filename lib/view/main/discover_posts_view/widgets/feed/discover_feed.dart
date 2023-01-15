@@ -13,6 +13,7 @@ import '../../../../illustration_view/illustration_view.dart';
 import '../filter/cubit/feed_filter_cubit.dart';
 import '../filter/cubit/feed_filter_state.dart';
 import 'cubit/discover_feed_cubit.dart';
+import 'feed_loading_view.dart';
 
 class DiscoverFeed extends StatelessWidget {
   const DiscoverFeed({Key? key}) : super(key: key);
@@ -78,27 +79,26 @@ class DiscoverFeed extends StatelessWidget {
                         // it should be mroe efficient then doing same operation on a per post level
                         // worth it in my opinion
                         BlocBuilder<AppSettingsCubit, AppSettings>(
-                      buildWhen: ((previous, current) =>
-                          previous.dsAutoplay != current.dsAutoplay),
-                      builder: (context, settings) =>
-                          BlocBuilder<DiscoverFeedCubit, DiscoverFeedState>(
-                        builder: (context, state) => PagedPaginatedList<Post>(
-                          state: state,
-                          itemBuilder: (post) => PostFeedImageItem(
-                            post,
-                            video: settings.dsAutoplay,
-                            key: ValueKey(post.id),
-                          ),
-                          onRequestNewPage: () => context
-                              .read<DiscoverFeedCubit>()
-                              .requestNewPage(),
-                          endIndicator: IllustrationView.empty(
-                              text: l10n(context).msg_feedEmpty),
-                          loadingIndicator: IllustrationView.empty(
-                              text: "One Moment we are loading new posts"),
-                        ),
-                      ),
-                    ),
+                            buildWhen: ((previous, current) =>
+                                previous.dsAutoplay != current.dsAutoplay),
+                            builder: (context, settings) => BlocBuilder<
+                                    DiscoverFeedCubit, DiscoverFeedState>(
+                                builder: (context, state) =>
+                                    PagedPaginatedList<Post>(
+                                        state: state,
+                                        itemBuilder: (post) =>
+                                            PostFeedImageItem(
+                                              post,
+                                              video: settings.dsAutoplay,
+                                              key: ValueKey(post.id),
+                                            ),
+                                        onRequestNewPage: () => context
+                                            .read<DiscoverFeedCubit>()
+                                            .requestNewPage(),
+                                        endIndicator: IllustrationView.empty(
+                                            text: l10n(context).msg_feedEmpty),
+                                        loadingIndicator:
+                                            const FeedLoadingView()))),
                   );
                 },
               ),
