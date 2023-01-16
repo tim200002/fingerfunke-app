@@ -34,7 +34,7 @@ class SessionInfoService {
     _saveToFirestore("location", place.geohash);
   }
 
-  void setLocationDistance(double kilometers) {
+  void setLocationDistance(int kilometers) {
     _saveToFirestore("locationDistance", kilometers);
   }
 }

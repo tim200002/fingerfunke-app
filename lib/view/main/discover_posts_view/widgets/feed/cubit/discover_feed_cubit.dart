@@ -10,6 +10,7 @@ import '../../../../../../models/filter/feed_filter.dart';
 import '../../../../../../models/post/post.dart';
 import '../../../../../../models/place.dart';
 import '../../../../../../services/pagination/discovery_feed_pagination_service.dart';
+import '../../../../../../services/session_info_service.dart';
 
 part 'discover_feed_state.dart';
 
@@ -27,6 +28,7 @@ class DiscoverFeedCubit extends Cubit<DiscoverFeedState>
           (items) => emit(state.copyWith(items: items)),
         );
     requestNewPage();
+    SessionInfoService.instance.setLocation(userLocation);
   }
 
   @override

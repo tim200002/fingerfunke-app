@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../../models/filter/feed_filter.dart';
 import '../../../../../../repositories/storage_repository/storage_repository.dart';
+import '../../../../../../services/session_info_service.dart';
 
 class FeedFilterCubit extends Cubit<FeedFilter> {
   final StorageRepository _storageRepository;
@@ -16,5 +17,6 @@ class FeedFilterCubit extends Cubit<FeedFilter> {
   void set(FeedFilter changed) {
     _storageRepository.setFeedFilter(changed);
     emit(changed);
+    SessionInfoService.instance.setLocationDistance(changed.locationRadius);
   }
 }
