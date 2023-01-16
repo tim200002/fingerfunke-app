@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
@@ -6,7 +8,7 @@ import '../../../env.dart' as env;
 import '../../../utils/tools.dart';
 
 class MapsPlacePickerPage extends StatelessWidget {
-  final Function(PickResult) onPlacePicked;
+  final FutureOr Function(BuildContext, PickResult) onPlacePicked;
   const MapsPlacePickerPage({required this.onPlacePicked, Key? key})
       : super(key: key);
 
@@ -25,9 +27,9 @@ class MapsPlacePickerPage extends StatelessWidget {
       usePlaceDetailSearch: true,
       zoomGesturesEnabled: true,
       zoomControlsEnabled: false,
-      onPlacePicked: (PickResult result) {
-        onPlacePicked(result);
-        Navigator.of(context).pop();
+      onPlacePicked: (PickResult result) async {
+        await onPlacePicked(context, result);
+        Navigator.of(context).maybePop();
       },
     );
   }

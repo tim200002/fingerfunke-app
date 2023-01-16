@@ -2,27 +2,23 @@ part of 'storage_repository.dart';
 
 /// A service that stores and retrieves user settings.
 class StorageRepositoryImpl implements StorageRepository {
-  final sBox = GetStorage("settings");
-  final lBox = GetStorage("location");
-  final lfBox = GetStorage("location_filter");
+  final settingsBox = GetStorage("settings");
+  final feedFilterBox = GetStorage("feed_filter");
 
   @override
-  AppSettings? getSettings() => _getJson(sBox, onData: AppSettings.fromJson);
+  AppSettings? getSettings() =>
+      _getJson(settingsBox, onData: AppSettings.fromJson);
 
   @override
-  setSettings(AppSettings settings) => _setJson(sBox, settings);
+  setSettings(AppSettings settings) => _setJson(settingsBox, settings);
 
   @override
-  Place? getLocation() => _getJson(lBox, onData: Place.fromJson);
+  FeedFilter? getFeedFilter() =>
+      _getJson(feedFilterBox, onData: FeedFilter.fromJson);
 
   @override
-  setLocation(Place location) => _setJson(lBox, location);
-
-  @override
-  FeedFilterState? get feedFilterSettings => _getJson(lfBox, onData: FeedFilterState.fromJson);
-
-  @override
-  Future<void> setFeedFilterSettings(FeedFilterState feedFilterSettings) => _setJson(lfBox, feedFilterSettings);
+  Future<void> setFeedFilter(FeedFilter filter) =>
+      _setJson(feedFilterBox, filter);
 
   // HELPER FUNCTIONS
 
@@ -50,6 +46,4 @@ class StorageRepositoryImpl implements StorageRepository {
     }
     return null;
   }
-
-
 }

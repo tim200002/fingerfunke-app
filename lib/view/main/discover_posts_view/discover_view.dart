@@ -7,9 +7,9 @@ import '../../../../cubits/location_cubit/location_cubit.dart';
 import '../../../../routes.dart';
 import '../../../../utils/app_theme.dart';
 import '../../../../utils/tools.dart';
-import '../../../repositories/storage_repository/storage_repository.dart';
 import 'widgets/feed/discover_feed.dart';
 import 'widgets/filter/cubit/feed_filter_cubit.dart';
+import 'widgets/filter/filter_button.dart';
 import 'widgets/filter/location_filter_view.dart';
 
 class DiscoverView extends StatelessWidget {
@@ -28,12 +28,7 @@ class DiscoverView extends StatelessWidget {
         BlocProvider<LocationCubit>(
           create: (context) => LocationCubit(),
         ),
-        BlocProvider<FeedFilterCubit>(create: (_) {
-          final StorageRepository storageRepository = StorageRepositoryImpl();
-          return FeedFilterCubit(
-              storageRepository: storageRepository,
-              initialFeedFilterState: storageRepository.feedFilterSettings);
-        })
+        BlocProvider<FeedFilterCubit>(create: (_) => FeedFilterCubit.create())
       ],
       child: Builder(
         builder: (context) {
@@ -64,42 +59,5 @@ class DiscoverView extends StatelessWidget {
         },
       ),
     );
-  }
-}
-
-class FilterButton extends StatelessWidget {
-  const FilterButton({super.key});
-
-  /*Route _filterRoute(BuildContext c) {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) =>
-          MultiBlocProvider(providers: [
-       
-      ], child: const LocationFilterView()),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        const begin = Offset(0.0, -1.0);
-        const end = Offset.zero;
-        const curve = Curves.ease;
-
-        var tween =
-            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-        return SlideTransition(
-          position: animation.drive(tween),
-          child: child,
-        );
-      },
-    );
-  }*/
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton.icon(
-        onPressed: () => LocationFilterView.navigate(context),
-        icon: const Icon(FeatherIcons.mapPin),
-        label: BlocBuilder<LocationCubit, LocationState>(
-            builder: (c, state) => Text(state.maybeWhen(
-                loaded: (l) => l.getCityName(),
-                orElse: () => l10n(c).lbl_exploreFilter))));
   }
 }

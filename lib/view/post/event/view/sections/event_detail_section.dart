@@ -196,7 +196,7 @@ class __AdressPickerState extends State<_AdressPicker> {
         context,
         MaterialPageRoute(
           builder: (_) => MapsPlacePickerPage(
-            onPlacePicked: (pickResult) => _onPlacePicked(pickResult),
+            onPlacePicked: (c, pickResult) => _onPlacePicked(pickResult),
           ),
         ),
       ),

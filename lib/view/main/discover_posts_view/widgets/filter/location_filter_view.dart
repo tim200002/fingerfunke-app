@@ -1,19 +1,18 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
-import 'package:easy_debounce/easy_debounce.dart';
 
 import '../../../../../../cubits/location_cubit/location_cubit.dart';
 import '../../../../../../utils/app_config.dart';
 import '../../../../../../utils/tools.dart';
-import '../../../../maps/view/maps_place_picker_page.dart';
+import '../../../../../models/filter/feed_filter.dart';
 import 'cubit/feed_filter_cubit.dart';
-import 'cubit/feed_filter_state.dart';
+import 'location_filter_modal.dart';
 import 'simple_filter_item.dart';
 
-part "location_slider.dart";
+part 'location_buttons.dart';
 
 class LocationFilterView extends StatelessWidget {
   const LocationFilterView._({Key? key}) : super(key: key);
@@ -59,7 +58,7 @@ class LocationFilterView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<FeedFilterCubit, FeedFilterState>(
+    return BlocBuilder<FeedFilterCubit, FeedFilter>(
         builder: (_, state) => Container(
             color: Colors.white,
             child: Column(
@@ -81,23 +80,25 @@ class LocationFilterView extends StatelessWidget {
                     children: [
                       _sectionHeader(
                           context, l10n(context).lbl_filterPerimeter),
-                      _LocationSlider(state.radius, (v) {
-                        context.read<FeedFilterCubit>().updateRadius(v);
+                      _LocationButtons(state.locationRadius, (v) {
+                        context
+                            .read<FeedFilterCubit>()
+                            .set(state.copyWith(locationRadius: v));
                       }),
                       _sectionHeader(context, l10n(context).lbl_filterPosts),
                       SimpleToggle(
                           label: l10n(context).lbl_filterHidePast,
                           enabled: state.hideCompleted,
-                          onChanged: context
+                          onChanged: (v) => context
                               .read<FeedFilterCubit>()
-                              .updateHidecCompleted),
+                              .set(state.copyWith(hideCompleted: v))),
                       const SizedBox(height: 12),
                       SimpleToggle(
                           label: l10n(context).lbl_filterOnlyNearFuture,
                           enabled: state.hideFarFuture,
-                          onChanged: context
+                          onChanged: (v) => context
                               .read<FeedFilterCubit>()
-                              .updateHideFarFuture)
+                              .set(state.copyWith(hideFarFuture: v))),
                     ],
                   ),
                 ])));
