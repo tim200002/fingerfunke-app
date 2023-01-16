@@ -58,7 +58,11 @@ class LocationFilterModal extends StatelessWidget {
     return TextButton.icon(
         onPressed: () => onPressed(context),
         icon: Icon(icon),
-        label: Text(label));
+        label: Expanded(
+            child: Text(
+          label,
+          textAlign: TextAlign.left,
+        )));
   }
 
   @override
