@@ -44,7 +44,7 @@ class PostFeedImageItem extends StatelessWidget {
       thumbnail: _imageBackgroundView(context),
     );
     return BlocProvider(
-        create: (context) => VideoPlaybackCubit(
+        create: (context) => VideoPlaybackCubit.network(
             url: VideoRepositoryImpl().createPlaybackUrl((_post.media
                 .firstWhere((e) => e.type == AssetType.video) as VideoAsset)),
             autoplay: true,

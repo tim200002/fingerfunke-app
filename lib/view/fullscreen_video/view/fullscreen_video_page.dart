@@ -36,8 +36,8 @@ class FullscreenVideoPage extends StatelessWidget {
           extendBody: false,
           extendBodyBehindAppBar: true,
           body: BlocProvider(
-            create: (context) =>
-                VideoPlaybackCubit(url: url, autoplay: true, loop: true),
+            create: (context) => VideoPlaybackCubit.network(
+                url: url, autoplay: true, loop: true),
             child: Stack(
               children: [
                 Builder(builder: (context) {
