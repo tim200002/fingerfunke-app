@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'dart:math';
 import 'dart:typed_data';
 import 'package:tuple/tuple.dart';
@@ -248,7 +250,8 @@ class GeoHasher {
         double tempLon = x + width * j;
 
         if (_inCircleCheck(tempLon, tempLat, x, y, radius)) {
-          final Tuple2 centerPoint = _getCentroid(tempLon, tempLat, height, width);
+          final Tuple2 centerPoint =
+              _getCentroid(tempLon, tempLat, height, width);
 
           points.add(_convertToLonLat(
               centerPoint.item2, centerPoint.item1, longitude, latitude));
@@ -262,7 +265,7 @@ class GeoHasher {
       }
     }
 
-    for(Tuple2<double, double> point in points){
+    for (Tuple2<double, double> point in points) {
       geohashes.add(encode(point.item1, point.item2, precision: precision));
     }
 

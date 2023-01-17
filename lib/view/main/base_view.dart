@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../tutorial/tutorial_overlay.dart';
 import 'main_view.dart';
 
 class BaseView extends StatelessWidget {

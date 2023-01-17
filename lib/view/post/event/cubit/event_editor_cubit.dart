@@ -11,19 +11,14 @@ class EventEditorCubit extends AbstractPostEditorCubit {
 
   DateTime startTime;
   EventEditorCubit.createEmpty(UserInfo user)
-      : startTime=DateTime.now(), super.createEmpty(user, const EventUpdateTracker());
+      : startTime = DateTime.now(),
+        super.createEmpty(user, const EventUpdateTracker());
 
   EventEditorCubit.fromEvent(UserInfo user, Event event)
       : startTime = event.startTime,
         super.fromPost(user, event, const EventUpdateTracker());
 
   void updateStartTime(DateTime startTime) => this.startTime = startTime;
-
-  @override
-  bool validateInput() {
-    print("validate");
-    return startTime != null && super.validateInput();
-  }
 
   @override
   Future<void> submit() async {

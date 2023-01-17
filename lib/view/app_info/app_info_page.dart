@@ -56,7 +56,7 @@ class BMBFIndicator extends StatelessWidget {
   static const String imageURL = "assets/img/partners/bmbf_logo.jpg";
   const BMBFIndicator({super.key});
   @override
-  Widget build(BuildContext _) => Image.asset(imageURL, height: 150);
+  Widget build(BuildContext context) => Image.asset(imageURL, height: 150);
 }
 
 class FFSettingsSection extends StatelessWidget {

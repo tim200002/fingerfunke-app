@@ -1,13 +1,11 @@
-import '../../../../../cubits/app_cubit/app_cubit.dart';
-import '../../../../../cubits/settings_cubit/app_settings_cubit.dart';
-import '../../../../../models/settings/app_settings.dart';
-import '../../../../../utils/tools.dart';
-import '../../../../../utils/util_widgets/floating_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../../cubits/settings_cubit/app_settings_cubit.dart';
+import '../../../../../utils/tools.dart';
+import '../../../../../utils/util_widgets/floating_modal.dart';
 import 'settings_language.dart';
 import 'settings_theme_page.dart';
 

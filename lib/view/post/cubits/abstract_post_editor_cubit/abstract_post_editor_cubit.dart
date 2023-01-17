@@ -6,7 +6,7 @@ import '../../../../models/asset/asset.dart';
 import '../../../../models/place.dart';
 import '../../../../models/post/post.dart';
 import '../../../../models/user/user.dart';
-import 'post_updateTracker.dart';
+import 'post_update_tracker.dart';
 
 part 'abstract_post_editor_state.dart';
 part 'abstract_post_editor_cubit.freezed.dart';
@@ -27,12 +27,12 @@ abstract class AbstractPostEditorCubit extends Cubit<PostEditorState> {
   Place? place;
 
   AbstractPostEditorCubit.createEmpty(this.user, this.updateTracker)
-      :originalPost=null, super(PostEditorState.editing(updateTracker, false));
+      : originalPost = null,
+        super(PostEditorState.editing(updateTracker, false));
 
   AbstractPostEditorCubit.fromPost(this.user, Post post, this.updateTracker)
-      :
-      originalPost=post,
-      title = post.title,
+      : originalPost = post,
+        title = post.title,
         description = post.description,
         visibility = post.visibility,
         place = post.place,
@@ -45,42 +45,47 @@ abstract class AbstractPostEditorCubit extends Cubit<PostEditorState> {
             .toList(),
         super(PostEditorState.editing(updateTracker, true));
 
+  void updateTitle(String title) {
+    this.title = title;
+    _emitFieldUpdate();
+  }
 
-    void updateTitle(String title) {
-      this.title = title;
-      _emitFieldUpdate();
-    }
-    void updateDescription(String description) {
-      this.description = description;
-      _emitFieldUpdate();
-    }
-    void updateVideoUploadCubits(List<VideoUploadCubit> videoUploadCubits) {
-      this.videoUploadCubits = videoUploadCubits;
-      _emitFieldUpdate();
-    }
-    void updatePlace(Place? place) {
-       this.place = place;
-       updateTracker = updateTracker.addUpdatePlace();
-       _emitFieldUpdate();
-    }
-    void addVideoUploadCubit(VideoUploadCubit videoUploadCubit){
-      videoUploadCubits.add(videoUploadCubit);
-      _emitFieldUpdate();
-    }
+  void updateDescription(String description) {
+    this.description = description;
+    _emitFieldUpdate();
+  }
 
-    void removeVideoUploadCubit(String cubitId){
+  void updateVideoUploadCubits(List<VideoUploadCubit> videoUploadCubits) {
+    this.videoUploadCubits = videoUploadCubits;
+    _emitFieldUpdate();
+  }
 
-      VideoUploadCubit cubitToDelete = videoUploadCubits.firstWhere((cubit) => cubit.id == cubitId);
-      cubitToDelete.close();
+  void updatePlace(Place? place) {
+    this.place = place;
+    updateTracker = updateTracker.addUpdatePlace();
+    _emitFieldUpdate();
+  }
 
-      videoUploadCubits = videoUploadCubits.where((cubit) => cubit.id != cubitId).toList();
-    }
+  void addVideoUploadCubit(VideoUploadCubit videoUploadCubit) {
+    videoUploadCubits.add(videoUploadCubit);
+    _emitFieldUpdate();
+  }
 
-    Future<void> submit() => throw(UnimplementedError("You must override this in child classes"));
+  void removeVideoUploadCubit(String cubitId) {
+    VideoUploadCubit cubitToDelete =
+        videoUploadCubits.firstWhere((cubit) => cubit.id == cubitId);
+    cubitToDelete.close();
 
-    bool validateInput(){
-      return _validateUploadCubits() && title != "" && place != null;
-    }
+    videoUploadCubits =
+        videoUploadCubits.where((cubit) => cubit.id != cubitId).toList();
+  }
+
+  Future<void> submit() =>
+      throw (UnimplementedError("You must override this in child classes"));
+
+  bool validateInput() {
+    return _validateUploadCubits() && title != "" && place != null;
+  }
 
   bool _validateUploadCubits() {
     if (videoUploadCubits.isEmpty) {
@@ -94,14 +99,14 @@ abstract class AbstractPostEditorCubit extends Cubit<PostEditorState> {
     return true;
   }
 
-  bool _canEmitUpdate(){
+  bool _canEmitUpdate() {
     return state.maybeWhen(editing: (_, __) => true, orElse: () => false);
   }
 
-  void _emitFieldUpdate(){
-    if(_canEmitUpdate()){
-        emit(PostEditorState.editing(updateTracker, validateInput()));
-     }
+  void _emitFieldUpdate() {
+    if (_canEmitUpdate()) {
+      emit(PostEditorState.editing(updateTracker, validateInput()));
+    }
   }
 
   /// helper to map the List of uploadCubits to a list of assets

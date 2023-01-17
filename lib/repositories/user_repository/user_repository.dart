@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../models/settings/session_info.dart';
 import '../../models/user/user.dart';
 import '../../utils/type_aliases.dart';
 

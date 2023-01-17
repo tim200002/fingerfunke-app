@@ -1,9 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../cubits/app_cubit/app_cubit.dart';
 import '../../../../../cubits/settings_cubit/app_settings_cubit.dart';
-import 'package:flutter/material.dart';
-
 import 'sample_text_widget.dart';
 
 class SettingsThemePage extends StatefulWidget {

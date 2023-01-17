@@ -5,7 +5,7 @@ class _LocationButtons extends StatefulWidget {
   final int _initialRadius;
   final int _numberOfDivisions = AppConfig.locationQueryRadiusLevel.length - 1;
 
-  _LocationButtons(this._initialRadius, this._onChanged, {super.key});
+  _LocationButtons(this._initialRadius, this._onChanged);
 
   @override
   State<_LocationButtons> createState() => _LocationButtonsState();

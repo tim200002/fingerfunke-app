@@ -38,7 +38,7 @@ class PostFeedImageItem extends StatelessWidget {
       this.video = false})
       : super(key: key);
 
-  Widget _videoBackgroundView(BuildContext context, {bool greyscale = false}) {
+  Widget _videoBackgroundView(BuildContext context) {
     Widget videoPlayback = VideoPlaybackView(
       fit: BoxFit.cover,
       thumbnail: _imageBackgroundView(context),

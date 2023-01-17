@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../cubits/app_cubit/app_cubit.dart';
-import '../../../../cubits/live_config_cubit/live_config_cubit.dart';
 import '../../../../models/post/post.dart';
 import '../../../../utils/app_theme.dart';
 import '../../../../utils/tools.dart';

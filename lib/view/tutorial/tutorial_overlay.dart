@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 import '../../utils/dev_tools.dart';
 
@@ -23,7 +21,7 @@ class TutorialOverlay extends StatelessWidget {
       builder: (BuildContext context) {
         // UDE : SizedBox instead of Container for whitespaces
         return const Padding(
-            padding: const EdgeInsets.all(20), child: TutorialOverlay());
+            padding: EdgeInsets.all(20), child: TutorialOverlay());
       },
     );
   }

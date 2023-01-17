@@ -35,7 +35,7 @@ class LocationSection extends StatelessWidget {
 }
 
 class _Edit extends StatelessWidget {
-  const _Edit({super.key});
+  const _Edit();
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,6 @@ class _Edit extends StatelessWidget {
     return BlocBuilder<EventEditorCubit, PostEditorState>(
         // ToDo Build when to only update after change to the map
         builder: (context, state) {
-      print("rebuild");
       return state.maybeWhen(
           editing: (_, __) => StaticMapsProvider(
               address: eventEditorCubit.place?.address ?? ""),

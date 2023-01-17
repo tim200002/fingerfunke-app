@@ -1,7 +1,5 @@
 import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 import '../../models/asset/asset.dart';
 import '../../models/place.dart';
 import '../../models/post/post.dart';
@@ -9,7 +7,6 @@ import '../../models/user/user.dart';
 import '../../utils/type_aliases.dart';
 
 abstract class PostRepository {
-
   Future<List<UserInfo>> getPostMembers(Post post);
 
   Future<void> createPost(Post post);

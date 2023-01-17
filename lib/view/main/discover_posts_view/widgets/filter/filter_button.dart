@@ -6,7 +6,6 @@ import '../../../../../cubits/location_cubit/location_cubit.dart';
 import '../../../../../models/filter/feed_filter.dart';
 import '../../../../../models/place.dart';
 import '../../../../../utils/tools.dart';
-import '../../../../illustration_view/illustration_view.dart';
 import 'cubit/feed_filter_cubit.dart';
 import 'location_filter_view.dart';
 

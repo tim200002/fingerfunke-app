@@ -3,11 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../../common_widgets/image/network_placeholder_image.dart/network_placeholder_image.dart';
 import '../../../../../common_widgets/list_items/in_past_filter.dart';
-import '../../../../../common_widgets/list_items/post_feed_image_item.dart';
 import '../../../../../common_widgets/upload/video_upload_tile.dart';
 import '../../../../../cubits/app_cubit/app_cubit.dart';
 import '../../../../../cubits/video_upload_cubit/video_upload_cubit.dart';
@@ -385,7 +383,7 @@ class _Edit extends StatelessWidget {
 
 class _Thumbnail extends StatefulWidget {
   final VideoUploadCubit? initialUploadCubit;
-  const _Thumbnail(this.initialUploadCubit, {super.key});
+  const _Thumbnail(this.initialUploadCubit);
 
   @override
   State<_Thumbnail> createState() => __ThumbnailState();

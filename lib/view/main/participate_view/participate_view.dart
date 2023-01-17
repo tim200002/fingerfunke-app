@@ -22,6 +22,7 @@ class __PersTabItemState extends State<_PersTabItem>
     with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Padding(
         padding: const EdgeInsets.only(
             left: AppTheme.PADDING_SIDE, right: AppTheme.PADDING_SIDE, top: 15),

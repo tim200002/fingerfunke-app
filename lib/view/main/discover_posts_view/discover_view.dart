@@ -6,11 +6,9 @@ import '../../../../cubits/live_config_cubit/live_config_cubit.dart';
 import '../../../../cubits/location_cubit/location_cubit.dart';
 import '../../../../routes.dart';
 import '../../../../utils/app_theme.dart';
-import '../../../../utils/tools.dart';
 import 'widgets/feed/discover_feed.dart';
 import 'widgets/filter/cubit/feed_filter_cubit.dart';
 import 'widgets/filter/filter_button.dart';
-import 'widgets/filter/location_filter_view.dart';
 
 class DiscoverView extends StatelessWidget {
   const DiscoverView({super.key});

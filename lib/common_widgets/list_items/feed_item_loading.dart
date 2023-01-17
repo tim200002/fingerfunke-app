@@ -1,7 +1,7 @@
 part of "post_feed_image_item.dart";
 
 class _FeedItemLoading extends StatelessWidget {
-  const _FeedItemLoading({super.key});
+  const _FeedItemLoading();
 
   Widget _infoSection() {
     return Column(

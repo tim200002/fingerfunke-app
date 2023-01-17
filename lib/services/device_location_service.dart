@@ -2,7 +2,7 @@ import '../models/place.dart';
 import '../repositories/position_repository/position_repository.dart';
 
 class LocationService {
-  static PositionRepository _positionRep = PositionRepositoryImpl();
+  static final PositionRepository _positionRep = PositionRepositoryImpl();
 
   /// get the location of the user. This matches to the user's device-
   /// location

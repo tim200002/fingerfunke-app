@@ -113,7 +113,7 @@ class _Edit extends StatelessWidget {
 
 class _DatePicker extends StatefulWidget {
   final DateTime initialDate;
-  const _DatePicker(this.initialDate, {super.key});
+  const _DatePicker(this.initialDate);
 
   @override
   State<_DatePicker> createState() => __DatePickerState();
@@ -165,7 +165,7 @@ class __DatePickerState extends State<_DatePicker> {
 
 class _AdressPicker extends StatefulWidget {
   final Place? initialPlace;
-  const _AdressPicker(this.initialPlace, {super.key});
+  const _AdressPicker(this.initialPlace);
 
   @override
   State<_AdressPicker> createState() => __AdressPickerState();

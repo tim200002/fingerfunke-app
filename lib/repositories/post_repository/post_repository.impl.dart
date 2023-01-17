@@ -8,7 +8,6 @@ import '../../models/place.dart';
 import '../../models/post/post.dart';
 import '../../models/user/user.dart';
 import '../../models/utils.dart';
-import '../../utils/tools.dart';
 import '../../utils/type_aliases.dart';
 import 'post_repository.dart';
 
@@ -29,7 +28,6 @@ class PostRepositoryImpl implements PostRepository {
     var postJson = post.toJson();
     await _postCollection.doc(post.id).set(postJson);
   }
-
 
   @override
   Stream<Post> observePost(FirestoreId postId) {

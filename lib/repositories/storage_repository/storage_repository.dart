@@ -4,7 +4,6 @@ import 'package:get_storage/get_storage.dart';
 
 import '../../models/abstract_models/abstract_models.dart';
 import '../../models/filter/feed_filter.dart';
-import '../../models/place.dart';
 import '../../models/settings/app_settings.dart';
 import '../../utils/type_aliases.dart';
 

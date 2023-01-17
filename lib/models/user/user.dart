@@ -73,7 +73,7 @@ class User extends UserInfo {
       this.socialMedia = const {},
       this.bio,
       this.fcmToken})
-      : super( id: id, name: name, picture: picture);
+      : super(id: id, name: name, picture: picture);
 
   UserInfo toInfo() => UserInfo(id: id, name: name, picture: picture);
 
@@ -115,25 +115,4 @@ class User extends UserInfo {
 
   factory User.fromDoc(DocumentSnapshot document) =>
       User.fromJson(documentSnaphsotToJson(document));
-
-  @override
-  int get hashCode => toJson().hashCode;
-
-  @override
-  bool operator ==(Object other) =>
-      other is User ? other.hashCode == hashCode : false;
-
-  //TODO: for some reason, equatable did not detect some changes. therefor i implemented manual == for user [-Robin]
-  @override
-  List<Object?> get props => [
-        id,
-        name,
-        picture,
-        age,
-        savedPosts,
-        clearance,
-        fcmToken,
-        socialMedia,
-        bio
-      ];
 }

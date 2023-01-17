@@ -1,3 +1,7 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'cubits/app_cubit/app_cubit.dart';
 import 'cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
 import 'cubits/settings_cubit/app_settings_cubit.dart';
@@ -7,13 +11,8 @@ import 'services/session_info_service.dart';
 import 'utils/app_theme.dart';
 import 'view/create_account/view/create_account_view.dart';
 import 'view/main/base_view.dart';
-import 'view/main/main_view.dart';
 import 'view/splash/view/splash_page.dart';
 import 'view/welcome/view/welcome_page.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);

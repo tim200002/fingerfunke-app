@@ -13,9 +13,6 @@ class ChatMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color lightPrimary = Color.alphaBlend(
-        Theme.of(context).colorScheme.primary.withOpacity(0.1),
-        Theme.of(context).canvasColor);
     final Size size = MediaQuery.of(context).size;
     final bool amIAuthor =
         BlocProvider.of<AppCubit>(context).state.user.id == message.author.id;
@@ -45,7 +42,7 @@ class ChatMessage extends StatelessWidget {
                         width: 2),*/
                 color: amIAuthor
                     ? Theme.of(context).colorScheme.primary
-                    : Color(0xFFe9e9e9)),
+                    : const Color(0xFFe9e9e9)),
             child: Padding(
               padding: const EdgeInsets.all(_messagePadding),
               child: Column(

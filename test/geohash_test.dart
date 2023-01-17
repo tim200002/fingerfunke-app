@@ -1,7 +1,6 @@
 import 'package:fingerfunke_app/utils/utility_classes/geohash.dart';
 import 'package:test/test.dart';
 
-
 void main() {
   test('Test GeoHasher', () {
     final geohash = GeoHasher();
@@ -59,9 +58,11 @@ void main() {
     //endregion
 
     // test proximityHash
-    print(geohash.getGeohashesWithinRadius(2.294776, 48.858156, 1000, precision: 7));
-    expect(geohash.getGeohashesWithinRadius(2.294776, 48.858156, 1000, precision: 7).length, 600);
-
+    expect(
+        geohash
+            .getGeohashesWithinRadius(2.294776, 48.858156, 1000, precision: 7)
+            .length,
+        600);
   });
 
   test('Test GeoHash', () {
@@ -86,6 +87,5 @@ void main() {
     expect(geohash.isNeighbor('9v6kn8'), false);
     expect(geohash.isNeighbor(''), false);
     expect(geohash.isNeighbor('9v6kn87zg'), true);
-
   });
 }
