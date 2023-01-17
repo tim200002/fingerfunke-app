@@ -6,9 +6,10 @@ class MetaInfoService {
   static const String _showTutorial = "show_tutorial";
 
   static bool isFirstOpen() => _storageRep.getInfo(_keyFirstOpen) ?? true;
-  static void registerAppOpening() {
-    _storageRep.setInfo(_keyFirstOpen,
-        _storageRep.getInfo(_keyFirstOpen) == null ? false : true);
+
+  static void registerAppOpening() async {
+    await _storageRep.setInfo(_keyFirstOpen,
+        _storageRep.getInfo(_keyFirstOpen) == null ? true : false);
   }
 
   static Future<bool> showTutorial() async {

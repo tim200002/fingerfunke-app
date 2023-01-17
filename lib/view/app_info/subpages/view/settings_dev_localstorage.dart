@@ -20,7 +20,7 @@ class DevToolsStoragePage extends StatefulWidget {
 }
 
 class _DevToolsStoragePageState extends State<DevToolsStoragePage> {
-  StorageRepository _storage = StorageRepositoryImpl();
+  final StorageRepository _storage = StorageRepositoryImpl();
   List<_StorageBox> boxes = [];
 
   @override
@@ -49,11 +49,11 @@ class _DevToolsStoragePageState extends State<DevToolsStoragePage> {
   }
 
   String _prettyPrint(JsonMap content) =>
-      JsonEncoder.withIndent('  ').convert(content);
+      const JsonEncoder.withIndent('  ').convert(content);
 
   @override
   Widget build(BuildContext context) {
-    return boxes.length == null
+    return boxes.isEmpty
         ? _emptyView()
         : DefaultTabController(
             length: boxes.length,
@@ -61,9 +61,9 @@ class _DevToolsStoragePageState extends State<DevToolsStoragePage> {
               appBar: AppBar(
                 foregroundColor: Colors.white,
                 backgroundColor: Colors.teal,
-                title: Text("lokaler Speicher"),
+                title: const Text("lokaler Speicher"),
                 actions: [
-                  IconButton(onPressed: update, icon: Icon(Icons.refresh))
+                  IconButton(onPressed: update, icon: const Icon(Icons.refresh))
                 ],
                 bottom: TabBar(
                   indicatorColor: Colors.black,
@@ -77,7 +77,7 @@ class _DevToolsStoragePageState extends State<DevToolsStoragePage> {
                   for (_StorageBox b in boxes)
                     SingleChildScrollView(
                       child: Padding(
-                        padding: EdgeInsets.all(20),
+                        padding: const EdgeInsets.all(20),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -87,7 +87,7 @@ class _DevToolsStoragePageState extends State<DevToolsStoragePage> {
                             TextButton.icon(
                                 onPressed: () => _deleteBox(b.name),
                                 icon: const Icon(FeatherIcons.trash),
-                                label: Text("Inhalt löschen")),
+                                label: const Text("Inhalt löschen")),
                           ],
                         ),
                       ),

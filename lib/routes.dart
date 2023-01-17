@@ -1,9 +1,8 @@
-import 'package:fingerfunke_app/view/app_info/subpages/view/settings_dev_localstorage.dart';
-
 import 'view/app_info/app_info_page.dart';
 import 'view/app_info/subpages/licenses/view/oss_licenses_page.dart';
 import 'view/app_info/subpages/manage_account/view/manage_account_page.dart';
 import 'view/app_info/subpages/settings/view/settings_page.dart';
+import 'view/app_info/subpages/view/settings_dev_localstorage.dart';
 import 'view/app_info/subpages/view/settings_dev_tools_page.dart';
 import 'view/chat/view/chat_page.dart';
 import 'view/feedback/send/feedback_send_page.dart';
