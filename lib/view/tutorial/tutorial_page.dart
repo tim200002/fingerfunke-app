@@ -1,68 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:video_player/video_player.dart';
 
-import '../../common_widgets/video/video_playback_cubit/video_playback_cubit.dart';
 import '../../common_widgets/video/view/video_playback_view.dart';
 import '../../utils/tools.dart';
 
-class TutorialPage extends StatefulWidget {
+class TutorialPage extends StatelessWidget {
   static const String tutorialPath = "assets/vid/tutorial_placeholder.mp4";
   const TutorialPage({super.key});
-
-  @override
-  State<TutorialPage> createState() => _TutorialPageState();
-
-  static Widget player(
-      {required VideoPlayerController controller,
-      bool playing = false,
-      required void Function() onClick}) {
-    return controller.value.isInitialized
-        ? InkWell(
-            onTap: onClick,
-            child: Stack(alignment: Alignment.center, children: [
-              OverflowBox(
-                  maxWidth: double.infinity,
-                  maxHeight: double.infinity,
-                  alignment: Alignment.center,
-                  child: FittedBox(
-                      fit: BoxFit.cover,
-                      alignment: Alignment.center,
-                      child: SizedBox(
-                          width: 1080,
-                          height: 1920,
-                          child: VideoPlayer(controller)))),
-              if (!playing)
-                const Center(
-                    child: Icon(
-                  Icons.play_arrow_rounded,
-                  color: Colors.white,
-                  size: 80,
-                ))
-            ]),
-          )
-        : const Center(child: CircularProgressIndicator());
-  }
-}
-
-class _TutorialPageState extends State<TutorialPage> {
-  late VideoPlayerController _controller;
-  bool playing = false;
-  @override
-  void initState() {
-    super.initState();
-    _controller = VideoPlayerController.asset(TutorialPage.tutorialPath);
-    _controller.initialize().then((_) {
-      _controller.play();
-      setState(() => playing = true);
-    }, onError: (e) => logger.d("Error loading tutorial video", e));
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _controller.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +18,7 @@ class _TutorialPageState extends State<TutorialPage> {
           child: VideoPlaybackView.simple(
             source: TutorialPage.tutorialPath,
             sourceType: VideoSourceType.asset,
+            showProgressBar: true,
             fit: BoxFit.cover,
             borderRadius: BorderRadius.circular(20),
             controls: true,

@@ -70,16 +70,17 @@ class VideoPlaybackView extends StatelessWidget {
                 height: controller.value.size.height,
                 child: VideoPlayer(controller)),
           )),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: VideoProgressIndicator(
-              controller,
-              colors: VideoProgressColors(
-                  backgroundColor: Colors.transparent,
-                  playedColor: Theme.of(context).colorScheme.primary),
-              allowScrubbing: false,
+          if (showProgressBar)
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: VideoProgressIndicator(
+                controller,
+                colors: VideoProgressColors(
+                    backgroundColor: Colors.transparent,
+                    playedColor: Theme.of(context).colorScheme.primary),
+                allowScrubbing: false,
+              ),
             ),
-          ),
           if (controls) const Center(child: VideoPausedIndicator()),
         ]));
   }

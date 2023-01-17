@@ -31,6 +31,7 @@ class FullscreenVideoPage extends StatelessWidget {
         body: VideoPlaybackView.simple(
           source: url,
           sourceType: VideoSourceType.network,
+          showProgressBar: true,
           fit: BoxFit.cover,
           controls: true,
         ),
