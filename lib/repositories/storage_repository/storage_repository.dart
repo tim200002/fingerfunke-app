@@ -12,6 +12,10 @@ part 'storage_repository.impl.dart';
 abstract class StorageRepository {
   Future<void> init();
 
+  List<String> getBoxNames();
+  Map<String, dynamic> getBoxContent(String name);
+  Future<void> deleteBoxContent(String name);
+
   AppSettings? getSettings();
 
   Future<void> setSettings(AppSettings settings);

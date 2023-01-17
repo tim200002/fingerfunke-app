@@ -6,6 +6,12 @@ class StorageRepositoryImpl implements StorageRepository {
   final infoBox = GetStorage("info");
   final feedFilterBox = GetStorage("feed_filter");
 
+  late final Map<String, GetStorage> _map = {
+    "settings": settingsBox,
+    "info": infoBox,
+    "feed_filter": feedFilterBox
+  };
+
   @override
   AppSettings? getSettings() =>
       _getJson(settingsBox, onData: AppSettings.fromJson);
@@ -57,4 +63,24 @@ class StorageRepositoryImpl implements StorageRepository {
     }
     return null;
   }
+
+  @override
+  Future<void> deleteBoxContent(String name) async {
+    await _map[name]!.erase();
+  }
+
+  @override
+  Map<String, dynamic> getBoxContent(String name) {
+    List<String> keys = _map[name]!.getKeys().toList();
+    Map<String, dynamic> data = {};
+    for (String key in keys) {
+      if (_map[name]!.hasData(key)) {
+        data.putIfAbsent(key, () => _map[name]!.read(key));
+      }
+    }
+    return data;
+  }
+
+  @override
+  List<String> getBoxNames() => _map.keys.toList();
 }

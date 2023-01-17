@@ -3,6 +3,7 @@ import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 
 import '../../../../cubits/live_config_cubit/live_config_cubit.dart';
 import '../../../../models/user/user.dart';
+import '../../../../routes.dart';
 import '../../../../utils/tools.dart';
 import '../../../../utils/util_widgets/clearance_appbar.dart';
 import '../../../feedback/manage/feedback_manage_page.dart';
@@ -34,6 +35,13 @@ class DevToolsPage extends StatelessWidget {
               trailing: const Icon(Icons.arrow_forward_ios),
               onPressed: (_) => Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => const DevFunctionsPage())),
+            ),
+            SettingsTile(
+              title: "lokaler Speicher",
+              subtitle: "auf Daten im Speicher zugreifen",
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onPressed: (_) =>
+                  Navigator.of(context).pushNamed(Routes.devtoolsLocalStorage),
             ),
             const SizedBox(height: 50),
             LiveConfig.builder(
