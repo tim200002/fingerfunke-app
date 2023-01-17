@@ -8,7 +8,7 @@ class MyLicensePage extends StatelessWidget {
     //TODO decide which licenses Page to use
     return const LicensePage(
         applicationVersion: "1.0",
-        applicationName: "Fingerfunke",
+        applicationName: "fingerfunke",
         applicationIcon: Image(image: AssetImage("assets/img/brand/logo.png")));
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -24,6 +25,11 @@ class AppInfoPage extends StatelessWidget {
               child: FFSettingsSection(
                   title: l10n(context).lbl_information,
                   tiles: [
+                    SettingsTile(
+                        title: l10n(context).lbl_tutorial,
+                        leading: const Icon(FeatherIcons.bookOpen),
+                        onPressed: (context) =>
+                            Navigator.of(context).pushNamed(Routes.tutorial)),
                     SettingsTile(
                         title: l10n(context).lbl_privacy,
                         leading: const Icon(Icons.privacy_tip_outlined),

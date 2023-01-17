@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import '../../routes.dart';
+import '../../services/meta_info_service.dart';
 import '../../utils/tools.dart';
+import '../tutorial/tutorial_overlay.dart';
 import 'bottom_nav_item.dart';
 import 'discover_posts_view/discover_view.dart';
 import 'participate_view/participate_view.dart';
@@ -24,11 +26,7 @@ class _MainViewState extends State<MainView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _activePage == _MainViewPages.explore
-          ? const DiscoverView() /*Center(
-              child: ElevatedButton(
-                  onPressed: () => TutorialOverlay.asBottomSheet(context),
-                  child: Text("show")),
-            )*/
+          ? const DiscoverView()
           : const ParticipateView(),
       drawer: const HomeDrawer(),
       bottomNavigationBar: BottomAppBar(

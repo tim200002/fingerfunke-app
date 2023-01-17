@@ -11,6 +11,7 @@ import 'view/my_account/view/my_account_page.dart';
 import 'view/post/event/view/event_page.dart';
 import 'view/socialmedia/user_socialmedia_page.dart';
 import 'view/saved/saved_page.dart';
+import 'view/tutorial/tutorial_page.dart';
 
 /// this variable holds the global routes that can be used within the app
 /// the widgets used with this routing should end with the suffix 'Page' to
@@ -30,6 +31,7 @@ class Routes {
   static const postEditor = "/create";
   static const settings = "/settings";
   static const saved = "/saved";
+  static const tutorial = "/tutorial";
 }
 
 final routes = {
@@ -47,4 +49,5 @@ final routes = {
   Routes.postEditor: (context) => const EventPage(editing: true),
   Routes.settings: (context) => const SettingsPage(),
   Routes.saved: (context) => const SavedPage(),
+  Routes.tutorial: (context) => const TutorialPage(),
 };

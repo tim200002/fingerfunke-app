@@ -7,6 +7,7 @@ import 'cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit
 import 'cubits/settings_cubit/app_settings_cubit.dart';
 import 'models/settings/app_settings.dart';
 import 'routes.dart';
+import 'services/meta_info_service.dart';
 import 'services/session_info_service.dart';
 import 'utils/app_theme.dart';
 import 'view/create_account/view/create_account_view.dart';
@@ -36,6 +37,8 @@ class App extends StatelessWidget {
               SessionInfoService.init(user.id);
               SessionInfoService.instance
                   .setLocale(context.read<AppSettingsCubit>().state.locale);
+
+              MetaInfoService.registerAppOpening();
               return BlocProvider(
                 create: (context) => AppCubit(user),
                 child: buildApp(const BaseView(), routes: routes),

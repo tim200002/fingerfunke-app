@@ -6,12 +6,32 @@ import '../../../../cubits/live_config_cubit/live_config_cubit.dart';
 import '../../../../cubits/location_cubit/location_cubit.dart';
 import '../../../../routes.dart';
 import '../../../../utils/app_theme.dart';
+import '../../../services/meta_info_service.dart';
+import '../../tutorial/tutorial_overlay.dart';
 import 'widgets/feed/discover_feed.dart';
 import 'widgets/filter/cubit/feed_filter_cubit.dart';
 import 'widgets/filter/filter_button.dart';
 
-class DiscoverView extends StatelessWidget {
+class DiscoverView extends StatefulWidget {
   const DiscoverView({super.key});
+
+  @override
+  State<DiscoverView> createState() => _DiscoverViewState();
+}
+
+class _DiscoverViewState extends State<DiscoverView> {
+  @override
+  void initState() {
+    super.initState();
+
+    // show tutorial on first open
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (await MetaInfoService.showTutorial()) {
+        TutorialOverlay.asBottomSheet(context);
+      }
+    });
+  }
 
   Widget _drawerButton(BuildContext outerContext) {
     return IconButton(

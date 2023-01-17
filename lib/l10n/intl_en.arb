@@ -266,6 +266,8 @@
   "@lbl_techDetails": {},
   "lbl_tryAgain": "retry",
   "@lbl_tryAgain": {},
+  "lbl_tutorial": "introduction",
+  "@lbl_tutorial": {},
   "lbl_userBio": "bio",
   "@lbl_userBio": {},
   "lbl_wait": "Please wait.",

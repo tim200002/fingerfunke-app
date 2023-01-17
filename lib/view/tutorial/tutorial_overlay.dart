@@ -1,35 +1,73 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:video_player/video_player.dart';
 
-import '../../utils/dev_tools.dart';
+import '../../utils/tools.dart';
+import '../../utils/util_widgets/floating_modal.dart';
+import 'tutorial_page.dart';
 
-class TutorialOverlay extends StatelessWidget {
+class TutorialOverlay extends StatefulWidget {
   const TutorialOverlay({super.key});
 
   static void asBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      // color is applied to main screen when modal bottom screen is displayed
-      //barrierColor: Colors.greenAccent,
-      //background color for modal bottom screen
-      backgroundColor: Colors.transparent,
-      //elevates modal bottom screen
-      elevation: 0,
-      // gives rounded corner to modal bottom screen
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      builder: (BuildContext context) {
-        // UDE : SizedBox instead of Container for whitespaces
-        return const Padding(
-            padding: EdgeInsets.all(20), child: TutorialOverlay());
-      },
-    );
+    showFloatingModalBottomSheet(
+        context: context, builder: (context) => const TutorialOverlay());
+  }
+
+  @override
+  State<TutorialOverlay> createState() => _TutorialOverlayState();
+}
+
+class _TutorialOverlayState extends State<TutorialOverlay> {
+  late VideoPlayerController _controller;
+  @override
+  void initState() {
+    super.initState();
+    _controller = VideoPlayerController.asset(TutorialPage.tutorialPath);
+    _controller.initialize().then((_) => setState(() {}),
+        onError: (e) => logger.d("Error loading tutorial video", e));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-        child: Material(child: DevTools.placeholder("Video", height: 400)));
+    return Material(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 10, left: 20, right: 10),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    l10n(context).lbl_tutorial,
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                ),
+                IconButton(
+                    onPressed: () => Navigator.of(context).maybePop(),
+                    icon: const Icon(FeatherIcons.x))
+              ],
+            ),
+          ),
+          Container(
+              margin: const EdgeInsets.all(10),
+              height: 200.0,
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(5),
+                  child: TutorialPage.player(
+                      controller: _controller,
+                      onClick: () => Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                              builder: (_) => const TutorialPage())))))
+        ],
+      ),
+    );
   }
 }

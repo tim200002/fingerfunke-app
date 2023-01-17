@@ -18,5 +18,9 @@ abstract class StorageRepository {
 
   FeedFilter? getFeedFilter();
 
+  T? getInfo<T>(String key);
+
+  Future<void> setInfo<T>(String key, T value);
+
   Future<void> setFeedFilter(FeedFilter feedFilter);
 }
