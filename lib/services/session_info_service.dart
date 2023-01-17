@@ -28,6 +28,10 @@ class SessionInfoService {
         "locale", (locale == "system" ? Intl.getCurrentLocale() : locale));
   }
 
+  void setAppVersion(String version) {
+    _saveToFirestore("app_version", version);
+  }
+
   void setLocation(Place place) {
     _saveToFirestore("location", place.geohash);
   }

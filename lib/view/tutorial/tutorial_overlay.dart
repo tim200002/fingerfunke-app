@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:video_player/video_player.dart';
 
 import '../../common_widgets/video/view/video_playback_view.dart';
 import '../../utils/tools.dart';

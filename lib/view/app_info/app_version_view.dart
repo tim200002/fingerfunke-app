@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../cubits/app_info/app_info_cubit.dart';
 
@@ -19,19 +20,16 @@ class AppVersionView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         padding: const EdgeInsets.all(10),
-        child: BlocBuilder<AppInfoCubit, AppInfoState>(
+        child: BlocBuilder<AppInfoCubit, PackageInfo>(
             builder: (_, info) => Row(
                   mainAxisAlignment: alignment,
                   mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,
                   children: [
-                    Text(
-                        (compact ? "v" : "Version: ") +
-                            info.packageInfo.version,
+                    Text((compact ? "v" : "Version: ") + info.version,
                         style: style),
                     if (!compact) const SizedBox(width: 10),
                     Text(
-                      (compact ? "+" : "Build: ") +
-                          info.packageInfo.buildNumber,
+                      (compact ? "+" : "Build: ") + info.buildNumber,
                       style: style.copyWith(fontWeight: FontWeight.bold),
                     )
                   ],

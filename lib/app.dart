@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'cubits/app_cubit/app_cubit.dart';
+import 'cubits/app_info/app_info_cubit.dart';
 import 'cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
 import 'cubits/settings_cubit/app_settings_cubit.dart';
 import 'models/settings/app_settings.dart';
@@ -35,6 +36,8 @@ class App extends StatelessWidget {
             authenticated: (user) {
               AppCubit.setUserVars(user.id);
               SessionInfoService.init(user.id);
+              SessionInfoService.instance
+                  .setAppVersion(context.read<AppInfoCubit>().versionString);
               SessionInfoService.instance
                   .setLocale(context.read<AppSettingsCubit>().state.locale);
 
