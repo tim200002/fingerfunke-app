@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../common_widgets/video/video_playback_cubit/video_playback_cubit.dart';
+import '../../common_widgets/video/view/video_playback_view.dart';
 import '../../utils/tools.dart';
 
 class TutorialPage extends StatefulWidget {
@@ -68,15 +71,14 @@ class _TutorialPageState extends State<TutorialPage> {
           title: Text(l10n(context).lbl_tutorial),
         ),
         body: Container(
-            margin: const EdgeInsets.all(10),
-            child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: TutorialPage.player(
-                    controller: _controller,
-                    playing: playing,
-                    onClick: () {
-                      playing ? _controller.pause() : _controller.play();
-                      setState(() => playing = !playing);
-                    }))));
+          margin: const EdgeInsets.all(10),
+          child: VideoPlaybackView.simple(
+            source: TutorialPage.tutorialPath,
+            sourceType: VideoSourceType.asset,
+            fit: BoxFit.cover,
+            borderRadius: BorderRadius.circular(20),
+            controls: true,
+          ),
+        ));
   }
 }

@@ -52,10 +52,15 @@ class _PlaybackViewState extends State<PlaybackView> {
                 Navigator.of(context).pop(widget.file);
               },
             ),
-            body: VideoPlaybackView.controller(
-              fit: BoxFit.cover,
-              controller: _controller,
-            ),
+            body: FittedBox(
+                fit: BoxFit.cover,
+                child: SizedBox(
+                  width: _controller.value.size.width,
+                  height: _controller.value.size.height,
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.zero,
+                      child: VideoPlayer(_controller)),
+                )),
             extendBodyBehindAppBar: true,
           )
         : Tools.loadingScaffold();

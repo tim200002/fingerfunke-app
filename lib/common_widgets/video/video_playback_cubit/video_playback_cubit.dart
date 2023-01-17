@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import '../../../utils/logger.dart';
 import '../../../utils/type_aliases.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -50,7 +51,7 @@ class VideoPlaybackCubit extends Cubit<VideoPlaybackState> {
           ? await specificState.videoPlayerController.pause()
           : await specificState.videoPlayerController.play();
       emit(specificState.copyWith(
-          isPlaying: !specificState.videoPlayerController.value.isPlaying));
+          isPlaying: specificState.videoPlayerController.value.isPlaying));
     });
   }
 

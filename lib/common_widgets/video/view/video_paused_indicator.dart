@@ -15,8 +15,9 @@ class VideoPausedIndicator extends StatelessWidget {
             playing: (controller, _) => controller.value.isPlaying
                 ? Container()
                 : const Icon(
-                    Icons.play_arrow,
-                    size: 50,
+                    Icons.play_arrow_rounded,
+                    color: Colors.white,
+                    size: 80,
                   ),
             error: (_) => Container()),
       ),
