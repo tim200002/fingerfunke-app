@@ -1,8 +1,11 @@
+import 'package:flutter/material.dart';
+
 import '../../../../../../models/asset/asset.dart';
 import '../../../../../../models/post/post.dart';
 import '../../../../../../models/user/user.dart';
 import '../../../../../../repositories/post_repository/post_repository.dart';
 import '../../../../../../repositories/post_repository/post_repository.impl.dart';
+import '../../../../utils/extensions/date_time.dart';
 import '../../cubits/abstract_post_editor_cubit/abstract_post_editor_cubit.dart';
 import 'event_update_tracker.dart';
 
@@ -11,7 +14,9 @@ class EventEditorCubit extends AbstractPostEditorCubit {
 
   DateTime startTime;
   EventEditorCubit.createEmpty(UserInfo user)
-      : startTime = DateTime.now(),
+      : startTime = DateTime.now()
+            .add(const Duration(days: 5))
+            .withTime(const TimeOfDay(hour: 14, minute: 0)),
         super.createEmpty(user, const EventUpdateTracker());
 
   EventEditorCubit.fromEvent(UserInfo user, Event event)
