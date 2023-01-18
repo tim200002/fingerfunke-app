@@ -4,6 +4,12 @@
   "@lbl_account": {},
   "lbl_accountManage": "manage account",
   "@lbl_accountManage": {},
+  "lbl_appSocialMedia": "our {platform} account",
+  "@lbl_appSocialMedia": {
+    "placeholders": {
+      "platform": {}
+    }
+  },
   "lbl_autoDetectingLoginCode": "auto-detecting code",
   "@lbl_autoDetectingLoginCode": {},
   "lbl_bioInfo": "add a short text describing yourself",

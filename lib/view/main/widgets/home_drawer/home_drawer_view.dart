@@ -162,7 +162,7 @@ class HomeDrawer extends StatelessWidget {
                             "https://${media.toLowerCase()}.com/fingerfunke",
                             mode: LaunchMode.externalApplication);
                       },
-                      child: Text("unser $media"))
+                      child: Text(l10n(context).lbl_appSocialMedia(media)))
               ],
             ));
   }
