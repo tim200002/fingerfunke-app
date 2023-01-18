@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../common_widgets/adaptive_confirm_dialog.dart';
 import '../../../../cubits/app_cubit/app_cubit.dart';
 import '../../../../models/post/post.dart';
 import '../../../../utils/app_theme.dart';
@@ -88,6 +89,13 @@ class EventPage extends StatelessWidget {
     ], child: builder(context));
   }
 
+  Future<bool> _onEditingBackPress(BuildContext context) =>
+      AdaptiveConfirmDialog.show(context,
+          title: l10n(context).lbl_postEditGoBack,
+          description: l10n(context).lbl_postEditGoBackText,
+          okayBtnLabel: l10n(context).lbl_yes,
+          cancelBtnLabel: l10n(context).lbl_no);
+
   Widget _editProviders(BuildContext context, Function(BuildContext) builder) {
     final Event? event = ModalRoute.of(context)!.settings.arguments != null
         ? ModalRoute.of(context)!.settings.arguments as Event
@@ -104,7 +112,9 @@ class EventPage extends StatelessWidget {
       },
       child: BlocBuilder<EventEditorCubit, PostEditorState>(
           builder: (context, state) => state.when(
-              editing: (_, __) => builder(context),
+              editing: (_, __) => WillPopScope(
+                  onWillPop: () => _onEditingBackPress(context),
+                  child: builder(context)),
               error: ExceptionView.builder,
               submitted: (id) => PostPostedSuccessView(postId: id),
               submitting: () => const PostPostingView())),

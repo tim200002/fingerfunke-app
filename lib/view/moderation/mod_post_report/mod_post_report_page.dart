@@ -26,13 +26,13 @@ class ModPostReportPage extends StatelessWidget {
             actions: [
               TextButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: Text(l10n(context).lbl_modManCancel)),
+                  child: Text(l10n(context).lbl_cancel)),
               ElevatedButton(
                   onPressed: () {
                     context.read<ModPostCubit>().closeReport(accept);
                     Navigator.of(context).pop();
                   },
-                  child: Text(l10n(context).lbl_modManYes))
+                  child: Text(l10n(context).lbl_yes))
             ],
           );
         });
