@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 enum Illustrations {
   login("login"),
   party("party"),
-  fixingBugs("fixingBugs"),
+  fixingBugs("fixing_bugs"),
   empty("empty"),
   door("door"),
   dreamer("dreamer"),

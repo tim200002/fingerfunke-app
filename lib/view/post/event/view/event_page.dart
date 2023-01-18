@@ -6,10 +6,11 @@ import '../../../../models/post/post.dart';
 import '../../../../utils/app_theme.dart';
 import '../../../../utils/tools.dart';
 import '../../../chat/cubit/chat_cubit_cubit.dart';
+import '../../../error/exception_view.dart';
 import '../../cubits/abstract_post_editor_cubit/abstract_post_editor_cubit.dart';
 import '../../cubits/post_viewer_cubit/post_cubit.dart';
-import '../../shared_widgets/edit_loading_view.dart';
 import '../../shared_widgets/post_posted_success_view.dart';
+import '../../shared_widgets/post_posting_view.dart';
 import '../cubit/event_editor_cubit.dart';
 import 'sections/author_section.dart';
 import 'sections/event_detail_section.dart';
@@ -102,16 +103,11 @@ class EventPage extends StatelessWidget {
         }
       },
       child: BlocBuilder<EventEditorCubit, PostEditorState>(
-        builder: (context, state) {
-          return state.when(
-            editing: (_, __) => builder(context),
-            error: (message) => const EditErrorView(),
-            submitted: (id) => PostPostedSuccessView(postId: id),
-            submitting: () =>
-                EditLoadingView(message: l10n(context).lbl_submitting),
-          );
-        },
-      ),
+          builder: (context, state) => state.when(
+              editing: (_, __) => builder(context),
+              error: ExceptionView.builder,
+              submitted: (id) => PostPostedSuccessView(postId: id),
+              submitting: () => const PostPostingView())),
     );
   }
 
