@@ -110,8 +110,12 @@ class _CameraViewState extends State<CameraView> with TickerProviderStateMixin {
           Center(
             child: _fullScreenCameraPreview(context),
           ),
-          if (_countdownController.isAnimating)
-            Center(child: _countdownText(context))
+          AnimatedOpacity(
+              opacity: _countdownController.isAnimating ? 1.0 : 0.0,
+              duration: const Duration(milliseconds: 500),
+              child: Container(
+                  color: Colors.black.withOpacity(0.4),
+                  child: Center(child: _countdownText(context))))
         ],
       ),
     );

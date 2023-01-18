@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import '../../../utils/logger.dart';
@@ -9,6 +11,13 @@ part 'video_playback_cubit.freezed.dart';
 part 'video_playback_state.dart';
 
 class VideoPlaybackCubit extends Cubit<VideoPlaybackState> {
+  VideoPlaybackCubit.file(
+      {required File file, bool autoplay = true, bool loop = true})
+      : this(
+            controller: VideoPlayerController.file(file),
+            autoplay: autoplay,
+            loop: loop);
+
   VideoPlaybackCubit.network(
       {required Link url, bool autoplay = true, bool loop = true})
       : this(

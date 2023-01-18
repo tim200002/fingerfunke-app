@@ -50,6 +50,7 @@ class VideoRecorderPage extends StatelessWidget {
                 .appBarTheme
                 .copyWith(foregroundColor: Colors.white)),
         child: Scaffold(
+          backgroundColor: Colors.black,
           body: BlocBuilder<VideoRecorderCubit, VideoRecorderState>(
             builder: (context, state) => state.when(
               loading: () =>

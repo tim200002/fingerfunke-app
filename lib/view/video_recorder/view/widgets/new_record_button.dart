@@ -39,6 +39,7 @@ class _NewRecordButtonState extends State<NewRecordButton>
 
   @override
   Widget build(BuildContext context) {
+    const Color recordingColor = Colors.red;
     return AnimatedSwitcher(
       duration: const Duration(microseconds: 300),
       child: !widget.isRecording
@@ -69,7 +70,7 @@ class _NewRecordButtonState extends State<NewRecordButton>
                       height: widget._size,
                       child: CircularProgressIndicator(
                         strokeWidth: 8,
-                        color: Theme.of(context).colorScheme.primary,
+                        color: Colors.white,
                         value: _animationController.value,
                       ),
                     ),
@@ -79,7 +80,7 @@ class _NewRecordButtonState extends State<NewRecordButton>
                     height: widget._size - widget._margin * 2,
                     //padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primary,
+                        color: recordingColor,
                         borderRadius: BorderRadius.circular(widget._size)),
                     child: const Icon(Icons.stop_rounded, color: Colors.white),
                   )
