@@ -5,6 +5,7 @@ import '../../../../../common_widgets/image/user_image/user_image.dart';
 import '../../../../../models/post/post.dart';
 import '../../../../../utils/tools.dart';
 import '../../../../../utils/util_widgets/floating_modal.dart';
+import '../../../../common_widgets/user/user_info_view.dart';
 import 'cubit/post_members_cubit.dart';
 
 class PostParticipantsView extends StatelessWidget {
@@ -53,24 +54,9 @@ class PostParticipantsView extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: members
-                              .map((user) => Container(
-                                    margin: const EdgeInsets.symmetric(
-                                        vertical: 10),
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 3, horizontal: 20),
-                                    child: Row(
-                                      children: [
-                                        UserImage(
-                                          user.picture,
-                                          diameter: 34,
-                                        ),
-                                        const SizedBox(
-                                          width: 15,
-                                        ),
-                                        Text(user.name)
-                                      ],
-                                    ),
-                                  ))
+                              .map((user) => UserInfoView(user,
+                                  margin: const EdgeInsets.symmetric(
+                                      vertical: 12, horizontal: 20)))
                               .toList())))
         ],
       ),

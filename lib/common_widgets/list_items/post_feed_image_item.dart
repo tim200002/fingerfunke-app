@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../../common_widgets/image/network_placeholder_image.dart/network_placeholder_image.dart';
-import '../../../../../../common_widgets/user/author_info.dart';
+import '../user/user_info_view.dart';
 import '../../../../../../common_widgets/video/video_playback_cubit/video_playback_cubit.dart';
 import '../../../../../../common_widgets/video/view/video_playback_view.dart';
 import '../../../../../../models/asset/asset.dart';
@@ -146,9 +146,10 @@ class PostFeedImageItem extends StatelessWidget {
             const SizedBox(
               height: 9,
             ),
-            AuthorInfo(
+            UserInfoView(
               _post.author,
               color: Colors.white,
+              compact: true,
             ),
           ],
         ),

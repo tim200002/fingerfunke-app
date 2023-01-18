@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../common_widgets/user/user_info_view.dart';
 import '../../../../../utils/skeleton_view.dart';
 import '../../../../../utils/tools.dart';
 import '../../../../user_profile/profile_view.dart';
@@ -27,18 +28,25 @@ class AuthorSection extends StatelessWidget {
         : BlocBuilder<PostCubit, PostState>(
             builder: (context, state) => state.when(
               loading: (_) => SkeletonView.shimmer(_loading()),
-              normal: (post, _) => Center(
-                child: InkWell(
-                  onTap: () => UserProfileView.showAsBottomSheet(context,
-                      userId: post.author.id),
-                  child: Padding(
-                      padding: const EdgeInsets.all(12),
-                      child: Text(
-                        l10n(context).lbl_postCreatedBy(post.author.name),
+              normal: (post, _) => Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        l10n(context).lbl_postCreatedBy(":"),
                         style: Theme.of(context).textTheme.caption,
-                      )),
-                ),
-              ),
+                      ),
+                      const SizedBox(height: 10),
+                      Center(
+                          child: UserInfoView(
+                        post.author,
+                        vertical: true,
+                        margin: const EdgeInsets.all(10),
+                      ))
+                    ],
+                  )),
             ),
           );
   }

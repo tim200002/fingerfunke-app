@@ -3,7 +3,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../common_widgets/helper_widgets.dart';
-import '../../../../common_widgets/user/author_info.dart';
+import '../../../../common_widgets/user/user_info_view.dart';
 import '../../../../models/user/user.dart';
 import '../../../../models/user_feedback.dart';
 import '../../../../repositories/user_feedback_repository/user_feedback_repository.impl.dart';
@@ -126,7 +126,7 @@ class FeedbackManageItemPage extends StatelessWidget {
                                       _metaInfoItem(
                                           l10n(context)
                                               .lbl_devFeedbackItemAuthor,
-                                          child: AuthorInfo(report.author)),
+                                          child: UserInfoView(report.author)),
                                       const SizedBox(height: 20),
                                       _stateButton(report)
                                     ],
