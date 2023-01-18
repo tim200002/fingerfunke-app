@@ -11,6 +11,7 @@ import '../../../../../cubits/app_cubit/app_cubit.dart';
 import '../../../../../cubits/video_upload_cubit/video_upload_cubit.dart';
 import '../../../../../models/asset/asset.dart';
 import '../../../../../models/post/post.dart';
+import '../../../../../repositories/video_repository/video_repository.dart';
 import '../../../../../repositories/video_repository/video_repository.impl.dart';
 import '../../../../../utils/app_theme.dart';
 import '../../../../../utils/skeleton_view.dart';
@@ -390,6 +391,7 @@ class _Thumbnail extends StatefulWidget {
 }
 
 class __ThumbnailState extends State<_Thumbnail> {
+  final VideoRepository _videoRep = VideoRepositoryImpl();
   late VideoUploadCubit? uploadCubit;
   @override
   void initState() {
@@ -405,7 +407,14 @@ class __ThumbnailState extends State<_Thumbnail> {
       ),
       child: InkWell(
         onTap: uploadCubit != null
-            ? null
+            ? () {
+                if (uploadCubit?.hasUploaded ?? false) {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => FullscreenVideoPage(
+                          url: _videoRep
+                              .createPlaybackUrl(uploadCubit!.asset))));
+                }
+              }
             : () async {
                 File? video = await Navigator.push<File?>(
                     context, VideoRecorderPage.route());
