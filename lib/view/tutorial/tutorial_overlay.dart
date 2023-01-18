@@ -52,7 +52,7 @@ class TutorialOverlay extends StatelessWidget {
                               source: TutorialPage.tutorialPath,
                               sourceType: VideoSourceType.asset,
                               fit: BoxFit.cover,
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius: BorderRadius.circular(7),
                               controls: false),
                           const Center(
                               child: Icon(Icons.play_arrow_rounded,

@@ -10,6 +10,7 @@ import '../../../../../../routes.dart';
 import '../../../../../../utils/beta_indicator.dart';
 import '../../../../../../utils/tools.dart';
 import '../../../../../../utils/util_widgets/clearance_builder.dart';
+import '../../../../utils/util_widgets/floating_modal.dart';
 
 part './profile_section.dart';
 
@@ -71,12 +72,9 @@ class HomeDrawer extends StatelessWidget {
                           Navigator.of(context).pushNamed(Routes.about),
                     ),
                     ListTile(
-                      leading: const Icon(FeatherIcons.share2),
-                      title: Text(l10n(context).lbl_socialMedia),
-                      onTap: () => launchUrlString(
-                          "https://instagram.com/fingerfunke",
-                          mode: LaunchMode.externalApplication),
-                    ),
+                        leading: const Icon(FeatherIcons.share2),
+                        title: Text(l10n(context).lbl_socialMedia),
+                        onTap: () => _showOurSocialMediaModal(context)),
 
                     const SizedBox(height: 25),
                     const Padding(
@@ -144,5 +142,28 @@ class HomeDrawer extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _showOurSocialMediaModal(BuildContext context) {
+    if (Navigator.of(context).canPop()) Navigator.of(context).pop();
+    showFloatingModalBottomSheet(
+        context: context,
+        builder: (context) => Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                for (String media in ["Instagram", "Twitter"])
+                  TextButton(
+                      onPressed: () {
+                        if (Navigator.of(context).canPop()) {
+                          Navigator.of(context).pop();
+                        }
+                        launchUrlString(
+                            "https://${media.toLowerCase()}.com/fingerfunke",
+                            mode: LaunchMode.externalApplication);
+                      },
+                      child: Text("unser $media"))
+              ],
+            ));
   }
 }

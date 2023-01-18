@@ -51,7 +51,8 @@ class PhoneLoginCubit extends Cubit<PhoneLoginState> {
         // We could maybe use this timeout as the earlist time for which it is allowed to ask for new SMS
         codeAutoRetrievalTimeout: (verificationId) {
           state.mapOrNull(
-              enterCode: (state) => emit(state.copyWith(autoDetecting: false)));
+              enterCode: (state) =>
+                  isClosed ? null : emit(state.copyWith(autoDetecting: false)));
           _logger
               .i('CodeAutoRetrieval timeout called. This is irrelevant for us');
         });
