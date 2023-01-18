@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
-import 'package:flutter/material.dart';
-import '../../../utils/logger.dart';
-import '../../../utils/type_aliases.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:video_player/video_player.dart';
+
+import '../../../utils/logger.dart';
+import '../../../utils/type_aliases.dart';
 
 part 'video_playback_cubit.freezed.dart';
 part 'video_playback_state.dart';

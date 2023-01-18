@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../common_widgets/image/user_image/user_image.dart';
 import '../../../../../models/post/post.dart';
 import '../../../../../utils/tools.dart';
 import '../../../../../utils/util_widgets/floating_modal.dart';

@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../common_widgets/user/user_info_view.dart';
 import '../../../../../utils/skeleton_view.dart';
 import '../../../../../utils/tools.dart';
-import '../../../../user_profile/profile_view.dart';
 import '../../../cubits/post_viewer_cubit/post_cubit.dart';
 
 /// shows information about the author of the post.

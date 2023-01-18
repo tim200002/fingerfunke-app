@@ -1,11 +1,8 @@
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-
-import '../../../utils/type_aliases.dart';
-import '../video_playback_cubit/video_playback_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
 
+import '../video_playback_cubit/video_playback_cubit.dart';
 import 'video_paused_indicator.dart';
 
 enum VideoSourceType {

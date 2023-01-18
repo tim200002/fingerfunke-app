@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../../common_widgets/image/network_placeholder_image.dart/network_placeholder_image.dart';
-import '../user/user_info_view.dart';
-import '../../../../../../common_widgets/video/video_playback_cubit/video_playback_cubit.dart';
 import '../../../../../../common_widgets/video/view/video_playback_view.dart';
 import '../../../../../../models/asset/asset.dart';
 import '../../../../../../models/post/post.dart';
@@ -13,12 +10,16 @@ import '../../../../../../utils/app_theme.dart';
 import '../../../../../../utils/extensions/date_time.dart';
 import '../../../../../../utils/tools.dart';
 import '../../../../../../utils/type_aliases.dart';
+import '../../repositories/video_repository/video_repository.dart';
 import '../../utils/skeleton_view.dart';
+import '../user/user_info_view.dart';
 import 'in_past_filter.dart';
 
 part "feed_item_loading.dart";
 
 class PostFeedImageItem extends StatelessWidget {
+  final VideoRepository _repo = VideoRepositoryImpl();
+
   final Post _post;
   final double? height;
   final bool video;
@@ -31,7 +32,7 @@ class PostFeedImageItem extends StatelessWidget {
   /// a loading UI version of this Widget
   static Widget loading() => const _FeedItemLoading();
 
-  const PostFeedImageItem(this._post,
+  PostFeedImageItem(this._post,
       {Key? key,
       this.height,
       this.onNavigatedBackToThisItem,
@@ -39,30 +40,27 @@ class PostFeedImageItem extends StatelessWidget {
       : super(key: key);
 
   Widget _videoBackgroundView(BuildContext context) {
-    Widget videoPlayback = VideoPlaybackView(
-      fit: BoxFit.cover,
-      thumbnail: _imageBackgroundView(context),
-    );
-    return BlocProvider(
-        create: (context) => VideoPlaybackCubit.network(
-            url: VideoRepositoryImpl().createPlaybackUrl((_post.media
-                .firstWhere((e) => e.type == AssetType.video) as VideoAsset)),
-            autoplay: true,
-            loop: false),
-        child: videoPlayback);
+    final String source = _repo.createPlaybackUrl((_post.media
+        .firstWhere((e) => e.type == AssetType.video) as VideoAsset));
+
+    return Expanded(
+        child: VideoPlaybackView.simple(
+            source: source,
+            thumbnail: _thumbnailView(context),
+            sourceType: VideoSourceType.network,
+            fit: BoxFit.cover));
   }
 
-  Widget _imageBackgroundView(BuildContext context) {
+  Widget _thumbnailView(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
     return NetworkPlaceholderImage(
-      VideoRepositoryImpl().createThumbnailUrl(_post.media[0] as VideoAsset),
+      _repo.createThumbnailUrl(_post.media[0] as VideoAsset),
       Container(
         color: Colors.grey,
       ),
       fit: BoxFit.cover,
       width: width.toInt(),
       height: height?.toInt(),
-      //height: (width ~/ aspectRatio),
     );
   }
 
@@ -78,7 +76,7 @@ class PostFeedImageItem extends StatelessWidget {
             isInPast: _post.asEvent?.isCompleted ?? false,
             child: video
                 ? _videoBackgroundView(context)
-                : _imageBackgroundView(context));
+                : _thumbnailView(context));
   }
 
   Widget _eventDateWidget(BuildContext context) {
