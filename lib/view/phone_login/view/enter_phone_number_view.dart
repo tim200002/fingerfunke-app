@@ -17,19 +17,18 @@ class _EnterPhoneNumberViewState extends State<EnterPhoneNumberView> {
   bool inputValid = false;
   @override
   Widget build(BuildContext context) {
-    return 
-      BlocBuilder<PhoneLoginCubit, PhoneLoginState>(
-        builder: (context, state) => Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(l10n(context).lbl_phoneNumber,
-                style: Theme.of(context).textTheme.labelLarge),
-            Padding(
-                padding: const EdgeInsets.only(bottom: 20, top: 15),
-                child: Text(l10n(context).msg_loginCodeAbout)),
-            Padding(
-                padding: const EdgeInsets.only(bottom: 40),
-                child: IntlPhoneField(
+    return BlocBuilder<PhoneLoginCubit, PhoneLoginState>(
+      builder: (context, state) => Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(l10n(context).lbl_phoneNumberLogin,
+              style: Theme.of(context).textTheme.labelLarge),
+          Padding(
+              padding: const EdgeInsets.only(bottom: 20, top: 15),
+              child: Text(l10n(context).msg_loginCodeAbout)),
+          Padding(
+              padding: const EdgeInsets.only(bottom: 40),
+              child: IntlPhoneField(
                   showDropdownIcon: false,
                   disableLengthCheck: true,
                   decoration: InputDecoration(
@@ -40,31 +39,29 @@ class _EnterPhoneNumberViewState extends State<EnterPhoneNumberView> {
                   ),
                   initialCountryCode: 'DE',
                   onChanged: (nr) => setState(() {
-                     number = nr.countryCode + nr.number;
-                     inputValid = validatePhoneNumber(nr.countryCode, nr.number);
-                  })
-                   
-                  
-                     
-                )),
-            ElevatedButton(
-              onPressed: inputValid ? () => BlocProvider.of<PhoneLoginCubit>(context)
-                .sendSMSCode(phoneNumber: number) : null,
-              child: Text(l10n(context).lbl_loginSendCode),
-            )
-          ],
-        ),
+                        number = nr.countryCode + nr.number;
+                        inputValid =
+                            validatePhoneNumber(nr.countryCode, nr.number);
+                      }))),
+          ElevatedButton(
+            onPressed: inputValid
+                ? () => BlocProvider.of<PhoneLoginCubit>(context)
+                    .sendSMSCode(phoneNumber: number)
+                : null,
+            child: Text(l10n(context).lbl_loginSendCode),
+          )
+        ],
+      ),
     );
   }
 
-  bool validatePhoneNumber(String countryCode, String number){
+  bool validatePhoneNumber(String countryCode, String number) {
     //!ToDo better validation logic
-    if(number.length < 8){
+    if (number.length < 8) {
       return false;
     }
     return true;
   }
-
 
   @override
   void dispose() {

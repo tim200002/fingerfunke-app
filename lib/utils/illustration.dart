@@ -9,6 +9,7 @@ enum Illustrations {
   dreamer("dreamer"),
   location("location"),
   parashute("parashute"),
+  build("build"),
   science("science");
 
   const Illustrations(this.name);
