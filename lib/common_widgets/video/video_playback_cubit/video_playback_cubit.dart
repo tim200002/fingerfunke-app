@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:video_player/video_player.dart';
 
-import '../../../utils/logger.dart';
+import '../../../utils/tools.dart';
 import '../../../utils/type_aliases.dart';
 
 part 'video_playback_cubit.freezed.dart';
@@ -49,7 +49,7 @@ class VideoPlaybackCubit extends Cubit<VideoPlaybackState> {
         controller.setLooping(true);
       }
     }).catchError((error, stackTrace) {
-      getLogger().e("error", error, stackTrace);
+      logger.e("error when creating video playback cubit", error, stackTrace);
       if (!isClosed) emit(VideoPlaybackState.error(error));
     });
   }

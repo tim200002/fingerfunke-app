@@ -43,12 +43,11 @@ class PostFeedImageItem extends StatelessWidget {
     final String source = _repo.createPlaybackUrl((_post.media
         .firstWhere((e) => e.type == AssetType.video) as VideoAsset));
 
-    return Expanded(
-        child: VideoPlaybackView.simple(
-            source: source,
-            thumbnail: _thumbnailView(context),
-            sourceType: VideoSourceType.network,
-            fit: BoxFit.cover));
+    return VideoPlaybackView.simple(
+        source: source,
+        thumbnail: _thumbnailView(context),
+        sourceType: VideoSourceType.network,
+        fit: BoxFit.cover);
   }
 
   Widget _thumbnailView(BuildContext context) {

@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:camera/camera.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../../utils/logger.dart';
+import '../../../../utils/tools.dart';
 
 part 'video_recorder_cubit.freezed.dart';
 part 'video_recorder_state.dart';
@@ -85,7 +85,7 @@ class VideoRecorderCubit extends Cubit<VideoRecorderState> {
       List<CameraDescription> cameras, CameraLensDirection direction) {
     int cameraIndex = cameras.indexWhere((c) => c.lensDirection == direction);
     if (cameraIndex == -1) {
-      getLogger().i("There is no $direction camera available."
+      logger.i("There is no $direction camera available."
           "Falling back to default camera (index 0)");
       return cameras[0];
     }

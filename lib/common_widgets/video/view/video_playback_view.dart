@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:video_player/video_player.dart';
 
 import '../video_playback_cubit/video_playback_cubit.dart';
@@ -89,10 +90,7 @@ class VideoPlaybackView extends StatelessWidget {
         duration: const Duration(milliseconds: 100),
         child: state.when(
             initializing: () =>
-                thumbnail ??
-                const Center(
-                  child: CircularProgressIndicator(),
-                ),
+                thumbnail ?? const Center(child: CircularProgressIndicator()),
             playing: (c, p) => controls
                 ? InkWell(
                     child: _videoPlayer(context, c, p),
@@ -100,7 +98,8 @@ class VideoPlaybackView extends StatelessWidget {
                       context.read<VideoPlaybackCubit>().togglePlay();
                     })
                 : _videoPlayer(context, c, p),
-            error: (error) => ErrorWidget(error)),
+            error: (error) =>
+                const Center(child: Icon(FeatherIcons.alertCircle))),
       ),
     );
   }

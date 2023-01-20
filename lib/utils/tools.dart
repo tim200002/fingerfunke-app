@@ -9,7 +9,16 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 AppLocalizations l10n(BuildContext context) => AppLocalizations.of(context)!;
 
-final Logger logger = Logger();
+final Logger logger = Logger(
+    //filter: null, // Use the default LogFilter (-> only log in debug mode)
+    printer: PrettyPrinter(
+  methodCount: 0,
+  errorMethodCount: 5,
+  lineLength: 70,
+  colors: true,
+  printEmojis: true,
+  printTime: false,
+));
 
 attempt(Function f, {required Function(dynamic e) onError}) {
   try {
