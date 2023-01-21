@@ -322,7 +322,7 @@
   "@msg_feedbackMissingTitle": {},
   "msg_feedEmpty": "no more posts",
   "@msg_feedEmpty": {},
-  "msg_loginCodeAbout": "We send you a code to verify. This way you don't have to remember a password.",
+  "msg_loginCodeAbout": "We send you an SMS code to verify your number. This way you don't have to remember a password.\nMessage & Data rates may apply.",
   "@msg_loginCodeAbout": {},
   "msg_loginEnterCode": "Enter SMS code.",
   "@msg_loginEnterCode": {},
