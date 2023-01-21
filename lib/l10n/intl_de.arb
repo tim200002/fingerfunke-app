@@ -190,6 +190,8 @@
   "@lbl_myAccount": {},
   "lbl_newUserName": "Wie sollen dich andere nennen?",
   "@lbl_newUserName": {},
+  "lbl_next": "weiter",
+  "@lbl_next": {},
   "lbl_no": "nein",
   "@lbl_no": {},
   "lbl_noPosts": "keine Posts",
@@ -276,6 +278,20 @@
   "@lbl_submitting": {},
   "lbl_techDetails": "technische Details",
   "@lbl_techDetails": {},
+  "lbl_termsAgree": "Ich habe die {policy} gelesen, verstanden und stimme diesen zu.",
+  "@lbl_termsAgree": {
+    "placeholders": {
+      "policy": {}
+    }
+  },
+  "lbl_termsInfo": "rechtliche Informationen",
+  "@lbl_termsInfo": {},
+  "lbl_termsPrivacy": "Datenschutzerklärung",
+  "@lbl_termsPrivacy": {},
+  "lbl_termsTOC": "Nutzungsbedingungen",
+  "@lbl_termsTOC": {},
+  "lbl_termsUP": "Inhalts Richtlinien",
+  "@lbl_termsUP": {},
   "lbl_tryAgain": "erneut versuchen",
   "@lbl_tryAgain": {},
   "lbl_tutorial": "Einführung",

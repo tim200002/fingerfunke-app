@@ -7,6 +7,7 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import '../../../utils/illustration.dart';
 import '../../../utils/tools.dart';
 import '../../phone_login/view/phone_login_page.dart';
+import 'terms_agree_view.dart';
 
 class StaticTestPhaseWall extends StatelessWidget {
   final List<String> codes;
@@ -84,7 +85,7 @@ class StaticTestPhaseWall extends StatelessWidget {
             onCompleted: (value) {
               if (codes.contains(value.toUpperCase())) {
                 Navigator.of(context).pushReplacement(MaterialPageRoute<void>(
-                    builder: (_) => const PhoneLoginPage()));
+                    builder: (_) => const TermsAgreeView()));
               } else {
                 errorAnimation.add(ErrorAnimationType.shake);
               }

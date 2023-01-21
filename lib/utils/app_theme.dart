@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-// color used for illustrations: #FF6060
-// color used for illustrations: #9BDDDA
+// color used for primary illustrations:   #FF6060
+// color used for secondary illustrations: #9BDDDA
 
 /// Contains customized Theme
 class AppTheme {

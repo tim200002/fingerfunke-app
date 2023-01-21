@@ -7,6 +7,7 @@ import '../../../utils/tools.dart';
 import '../../app_info/app_version_view.dart';
 import '../../phone_login/view/phone_login_page.dart';
 import 'static_test_phase_wall.dart';
+import 'terms_agree_view.dart';
 
 class WelcomePage extends StatelessWidget {
   final String? betaMessage;
@@ -58,7 +59,7 @@ class WelcomePage extends StatelessWidget {
             onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(
                 builder: (_) => useStaticTestphaseWall
                     ? const StaticTestPhaseWall(codes: ["FUNKEN"])
-                    : const PhoneLoginPage())),
+                    : const TermsAgreeView())),
             child: Text(l10n(context).lbl_login),
           ),
         ],

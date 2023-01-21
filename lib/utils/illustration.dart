@@ -10,6 +10,7 @@ enum Illustrations {
   location("location"),
   parashute("parashute"),
   build("build"),
+  contract("contract"),
   science("science");
 
   const Illustrations(this.name);
