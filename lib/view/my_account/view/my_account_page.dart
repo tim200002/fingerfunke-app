@@ -62,15 +62,13 @@ class _ProfileSection extends StatelessWidget {
         const Padding(
             padding: EdgeInsets.only(right: 20),
             child: ProfilePictureImageUploadWidget()),
-        BlocBuilder<AppCubit, AppState>(
-          buildWhen: (previous, current) =>
-              previous.user.name != current.user.name,
-          builder: (context, state) => Expanded(
+         FirebaseAuthenticationCubitCubit.userBuilder(
+          (user) =>  Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  state.user.name,
+                  user.name,
                   style: Theme.of(context).textTheme.headline5,
                 ),
                 /*const SizedBox(height: 7),

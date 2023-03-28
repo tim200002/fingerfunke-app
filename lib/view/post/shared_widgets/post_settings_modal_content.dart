@@ -34,7 +34,7 @@ class PostSettingsModalContent extends StatelessWidget {
                 child: Center(child: CircularProgressIndicator.adaptive())),
             normal: (post, isMember) {
               bool isAuthor = post.isUserAuthor(
-                  BlocProvider.of<AppCubit>(context).state.user.toInfo());
+                  BlocProvider.of<FirebaseAuthenticationCubitCubit>(context).getUser().toInfo());
 
               return Column(
                 mainAxisSize: MainAxisSize.min,

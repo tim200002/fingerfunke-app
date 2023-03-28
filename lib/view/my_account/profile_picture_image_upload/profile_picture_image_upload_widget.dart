@@ -44,13 +44,11 @@ class ProfilePictureImageUploadWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AppCubit, AppState>(
-        buildWhen: ((previous, current) =>
-            previous.user.picture != current.user.picture),
-        builder: (context, state) {
+    return FirebaseAuthenticationCubitCubit.userBuilder(
+          (user)  {
           return InkWell(
             onTap: () async {
-              selectImage(state.user.id, context);
+              selectImage(user.id, context);
             },
             child: SizedBox.square(
               dimension: userImageSize,
@@ -58,12 +56,12 @@ class ProfilePictureImageUploadWidget extends StatelessWidget {
                 //fit: StackFit.passthrough,
                 children: [
                   UserImage(
-                    state.user.picture,
+                    user.picture,
                     diameter: userImageSize.round(),
                     // Add key because otherwise will not update correctly
-                    // when given the picture is a good key, sice should only update
+                    // when given the picture is a good key, size should only update
                     // if picture changes
-                    key: Key(state.user.picture ?? const Uuid().v4()),
+                    key: Key(user.picture ?? const Uuid().v4()),
                   ),
                   Align(
                     alignment: Alignment.bottomRight,

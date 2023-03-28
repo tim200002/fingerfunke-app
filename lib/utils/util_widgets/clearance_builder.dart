@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../cubits/app_cubit/app_cubit.dart';
+import '../../cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
 import '../../models/user/user.dart';
 
 class ClearanceBuilder extends StatelessWidget {
@@ -13,9 +12,9 @@ class ClearanceBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AppCubit, AppState>(
-      builder: (context, state) => state.user.hasClearance(clearance)
-          ? builder.call(state.user, clearance)
+    return  FirebaseAuthenticationCubitCubit.userBuilder(
+          (user) =>  user.hasClearance(clearance)
+          ? builder.call(user, clearance)
           : Container(),
     );
   }

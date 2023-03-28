@@ -261,38 +261,35 @@ class HeaderSection extends StatelessWidget {
           ? []
           : [
               Padding(
-                  padding: const EdgeInsets.only(
-                    right: AppTheme.PADDING_SIDE,
-                    top: 12.0 + AppTheme.PADDING_SIDE,
-                    bottom: 12,
-                  ),
-                  child: BlocBuilder<AppCubit, AppState>(
-                      builder: (context, appState) =>
-                          BlocBuilder<PostCubit, PostState>(
-                            builder: (context, postState) {
-                              Post? post;
-                              final postId =
-                                  context.read<PostCubit>().state.when(
-                                        normal: (p, _) {
-                                          post = p;
-                                          return p.id;
-                                        },
-                                        loading: (postId) => postId,
-                                      );
-                              final hasPostSaved =
-                                  appState.user.savedPosts.contains(postId);
-                              return PostAppBarButton(
-                                  enabled: (post?.author.id ?? "") !=
-                                      appState.user.id,
-                                  icon: hasPostSaved
-                                      ? Icons.bookmark_rounded
-                                      : Icons.bookmark_border_rounded,
-                                  onPressed: () => context
-                                      .read<PostCubit>()
-                                      .toggleSaved(
-                                          appState.user.id, hasPostSaved));
+                padding: const EdgeInsets.only(
+                  right: AppTheme.PADDING_SIDE,
+                  top: 12.0 + AppTheme.PADDING_SIDE,
+                  bottom: 12,
+                ),
+                child: FirebaseAuthenticationCubitCubit.userBuilder(
+                  (user) => BlocBuilder<PostCubit, PostState>(
+                    builder: (context, postState) {
+                      Post? post;
+                      final postId = context.read<PostCubit>().state.when(
+                            normal: (p, _) {
+                              post = p;
+                              return p.id;
                             },
-                          ))),
+                            loading: (postId) => postId,
+                          );
+                      final hasPostSaved = user.savedPosts.contains(postId);
+                      return PostAppBarButton(
+                          enabled: (post?.author.id ?? "") != user.id,
+                          icon: hasPostSaved
+                              ? Icons.bookmark_rounded
+                              : Icons.bookmark_border_rounded,
+                          onPressed: () => context
+                              .read<PostCubit>()
+                              .toggleSaved(user.id, hasPostSaved));
+                    },
+                  ),
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.only(
                   right: 12.0 + AppTheme.PADDING_SIDE,

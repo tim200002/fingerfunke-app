@@ -75,7 +75,7 @@ class EventPage extends StatelessWidget {
       BlocProvider<PostCubit>(
         create: (_) => PostCubit(
           postId,
-          userId: context.read<AppCubit>().state.user.id,
+          userId: context.read<FirebaseAuthenticationCubitCubit>().getUser().id,
         ),
       ),
 
@@ -101,7 +101,7 @@ class EventPage extends StatelessWidget {
         ? ModalRoute.of(context)!.settings.arguments as Event
         : null;
 
-    final user = BlocProvider.of<AppCubit>(context).state.user;
+    final user = BlocProvider.of<FirebaseAuthenticationCubitCubit>(context).getUser();
     return BlocProvider<EventEditorCubit>(
       create: (context) {
         if (event == null) {

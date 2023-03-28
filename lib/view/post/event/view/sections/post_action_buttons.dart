@@ -58,7 +58,7 @@ class PostActionButtons extends StatelessWidget {
               return Stack(
                 children: <Widget>[
                   if (!post.isUserAuthor(
-                          context.read<AppCubit>().state.user.toInfo()) &&
+                          context.read<FirebaseAuthenticationCubitCubit>().getUser().toInfo()) &&
                       (isMember || !(post.asEvent?.isCompleted ?? false)))
                     Align(
                         alignment: Alignment.bottomCenter,

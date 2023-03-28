@@ -66,18 +66,19 @@ class UserBioEditor extends StatelessWidget {
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 7),
-        BlocBuilder<AppCubit, AppState>(
-            builder: (context, state) => InkWell(
-                  onTap: () => _showEditDialog(context, state.user),
-                  child: (state.user.bio?.isNotEmpty ?? false)
-                      ? Text(state.user.bio!)
-                      : Text(
-                          l10n(context).lbl_bioInfo,
-                          style: TextStyle(
-                              color: Colors.grey.shade600,
-                              fontStyle: FontStyle.italic),
-                        ),
-                )),
+        FirebaseAuthenticationCubitCubit.userBuilder(
+          (user) => InkWell(
+            onTap: () => _showEditDialog(context, user),
+            child: (user.bio?.isNotEmpty ?? false)
+                ? Text(user.bio!)
+                : Text(
+                    l10n(context).lbl_bioInfo,
+                    style: TextStyle(
+                        color: Colors.grey.shade600,
+                        fontStyle: FontStyle.italic),
+                  ),
+          ),
+        ),
       ],
     );
   }

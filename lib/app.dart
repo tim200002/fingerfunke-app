@@ -21,6 +21,9 @@ class App extends StatelessWidget {
       duration: const Duration(milliseconds: 250),
       child: BlocBuilder<FirebaseAuthenticationCubitCubit,
           FirebaseAuthenticationCubitState>(
+        // Only update on runtime state changes not on updates within a user
+        buildWhen: ((previous, current) =>
+            previous.runtimeType != current.runtimeType),
         builder: (context, state) => state.when(
             unauthenticated: () => buildApp(const WelcomePage(
                   useStaticTestphaseWall: true,
@@ -31,18 +34,7 @@ class App extends StatelessWidget {
             autehnticationNoUserCreated: (uid) =>
                 buildApp(const CreateAccountView()),
             authenticated: (user) {
-              AppCubit.setUserVars(user.id);
-              SessionInfoService.init(user.id);
-              SessionInfoService.instance
-                  .setAppVersion(context.read<AppInfoCubit>().versionString);
-              SessionInfoService.instance
-                  .setLocale(context.read<AppSettingsCubit>().state.locale);
-
-              MetaInfoService.registerAppOpening();
-              return BlocProvider(
-                create: (context) => AppCubit(user),
-                child: buildApp(const BaseView(), routes: routes),
-              );
+              return buildApp(const BaseView(), routes: routes);
             }),
       ),
     );
@@ -52,19 +44,20 @@ class App extends StatelessWidget {
       {Map<String, Widget Function(BuildContext)> routes =
           const <String, WidgetBuilder>{}}) {
     return BlocBuilder<AppSettingsCubit, AppSettings>(
-        builder: (context, settings) => MaterialApp(
-              routes: routes,
-              locale: settings.locale == "system"
-                  ? null
-                  : Locale(settings.locale.split("_").first),
-              theme: AppTheme.mainTheme,
-              darkTheme: AppTheme.darkTheme,
-              localizationsDelegates: AppLocalizations.localizationsDelegates,
-              supportedLocales: AppLocalizations.supportedLocales,
-              //darkTheme: AppTheme.darkTheme,
-              themeMode: settings.themeMode,
-              debugShowCheckedModeBanner: false,
-              home: home,
-            ));
+      builder: (context, settings) => MaterialApp(
+        routes: routes,
+        locale: settings.locale == "system"
+            ? null
+            : Locale(settings.locale.split("_").first),
+        theme: AppTheme.mainTheme,
+        darkTheme: AppTheme.darkTheme,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        //darkTheme: AppTheme.darkTheme,
+        themeMode: settings.themeMode,
+        debugShowCheckedModeBanner: false,
+        home: home,
+      ),
+    );
   }
 }

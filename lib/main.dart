@@ -70,7 +70,26 @@ void main() async {
 
 class AppInflater extends StatelessWidget {
   final PackageInfo packageInfo;
-  const AppInflater({Key? key, required this.packageInfo}) : super(key: key);
+
+  /// This function handles all the functions that must be executed
+  /// on login for proper user management etc.
+  // ignore: prefer_function_declarations_over_variables
+  final Future<void> Function(user_models.User) logInHandler = (user) async {
+    // To make messaging work
+    final fcmToken = await FirebaseMessaging.instance.getToken();
+    await NotificationService.setFCMToken(user.id, fcmToken);
+
+    // To keep track of sessions
+    SessionInfoService.init(user.id);
+    final packageInfo = await PackageInfo.fromPlatform();
+    SessionInfoService.instance
+        .setAppVersion("${packageInfo.version}+${packageInfo.buildNumber}");
+
+    // To keep track of logins
+    MetaInfoService.registerAppOpening();
+  };
+
+  AppInflater({Key? key, required this.packageInfo}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +100,13 @@ class AppInflater extends StatelessWidget {
         BlocProvider(create: (_) => AppSettingsCubit()),
         BlocProvider(create: (_) => LiveConfigCubit()),
         BlocProvider(create: (_) => AppInfoCubit(packageInfo)),
-        BlocProvider(create: (_) => FirebaseAuthenticationCubitCubit(authRep)),
+        BlocProvider(
+            lazy: false,
+            create: (_) =>
+                FirebaseAuthenticationCubitCubit(authRep, logInHandler)),
+        BlocProvider(
+          create: (_) => LocationCubit(),
+        )
       ],
       child: const App(),
     );

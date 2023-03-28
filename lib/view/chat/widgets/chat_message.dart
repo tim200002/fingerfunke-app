@@ -1,4 +1,4 @@
-import '../../../cubits/app_cubit/app_cubit.dart';
+import '../../../cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
 import '../../../models/message/message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,7 +15,7 @@ class ChatMessage extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     final bool amIAuthor =
-        BlocProvider.of<AppCubit>(context).state.user.id == message.author.id;
+        BlocProvider.of<FirebaseAuthenticationCubitCubit>(context).getUser().id == message.author.id;
     return Padding(
       padding: const EdgeInsets.all(_messageMargin),
       child: Row(

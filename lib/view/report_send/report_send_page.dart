@@ -111,9 +111,8 @@ class ReportSendPage extends StatelessWidget {
   //TODO: add scaffold
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AppCubit, AppState>(
-      builder: (context, state) {
-        final user = state.user;
+    return  FirebaseAuthenticationCubitCubit.userBuilder(
+          (user)  {
         return BlocProvider<ReportSendCubit>(
           create: (context) => ReportSendCubit(
               doc: post, type: ReportType.post, author: user.toInfo()),

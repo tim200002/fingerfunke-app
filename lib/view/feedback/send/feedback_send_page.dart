@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
-import '../../../cubits/app_cubit/app_cubit.dart';
+import '../../../cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
 import '../../../utils/tools.dart';
 import '../../error/exception_view.dart';
 import '../../report_send/widgets/chip_chooser.dart';
@@ -35,92 +35,92 @@ class FeedbackSendPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AppCubit, AppState>(
-        builder: (context, state) => BlocProvider(
-            create: (context) => FeedbackSendCubit(author: state.user.toInfo()),
-            child: BlocBuilder<FeedbackSendCubit, FeedbackSendState>(
-              builder: (context, state) => state.when(
-                  error: (e) => ExceptionView.fromErrorClosable(e),
-                  sending: () => const Scaffold(
-                        body:
-                            Center(child: CircularProgressIndicator.adaptive()),
-                      ),
-                  sent: () => Scaffold(
-                        appBar: AppBar(),
-                        body: Center(
-                            child: Text(
-                          l10n(context).lbl_feedbackThanks,
-                          textAlign: TextAlign.center,
+    return FirebaseAuthenticationCubitCubit.userBuilder(
+      (user) => BlocProvider(
+        create: (context) => FeedbackSendCubit(author: user.toInfo()),
+        child: BlocBuilder<FeedbackSendCubit, FeedbackSendState>(
+          builder: (context, state) => state.when(
+            error: (e) => ExceptionView.fromErrorClosable(e),
+            sending: () => const Scaffold(
+              body: Center(child: CircularProgressIndicator.adaptive()),
+            ),
+            sent: () => Scaffold(
+              appBar: AppBar(),
+              body: Center(
+                  child: Text(
+                l10n(context).lbl_feedbackThanks,
+                textAlign: TextAlign.center,
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              )),
+            ),
+            editing: ((categories, title, description) => Scaffold(
+                  appBar: AppBar(title: Text(l10n(context).lbl_feedbackTitle)),
+                  body: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: SingleChildScrollView(
+                        child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const SizedBox(height: 30),
+                        Text(l10n(context).lbl_feedbackDesc),
+                        const SizedBox(height: 30),
+                        //_feedbackType(),
+                        //SizedBox(height: 40),
+                        Text(l10n(context).lbl_feedbackCategory,
+                            style: Theme.of(context).textTheme.headline6),
+                        const SizedBox(height: 20),
+                        ChipChooser<UserFeedbackCategories>(
+                            selected: categories,
+                            onChanged: (r) => context
+                                .read<FeedbackSendCubit>()
+                                .setCategories(r),
+                            chips: UserFeedbackCategories.values
+                                .map((e) => ChipData(e.label, e))
+                                .toList()),
+                        const SizedBox(height: 30),
+                        TextFormField(
+                          controller: title,
+                          maxLines: 1,
                           style: const TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 20),
-                        )),
-                      ),
-                  editing: ((categories, title, description) => Scaffold(
-                        appBar: AppBar(
-                            title: Text(l10n(context).lbl_feedbackTitle)),
-                        body: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: SingleChildScrollView(
-                              child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              const SizedBox(height: 30),
-                              Text(l10n(context).lbl_feedbackDesc),
-                              const SizedBox(height: 30),
-                              //_feedbackType(),
-                              //SizedBox(height: 40),
-                              Text(l10n(context).lbl_feedbackCategory,
-                                  style: Theme.of(context).textTheme.headline6),
-                              const SizedBox(height: 20),
-                              ChipChooser<UserFeedbackCategories>(
-                                  selected: categories,
-                                  onChanged: (r) => context
-                                      .read<FeedbackSendCubit>()
-                                      .setCategories(r),
-                                  chips: UserFeedbackCategories.values
-                                      .map((e) => ChipData(e.label, e))
-                                      .toList()),
-                              const SizedBox(height: 30),
-                              TextFormField(
-                                controller: title,
-                                maxLines: 1,
-                                style: const TextStyle(
-                                    fontSize: 17, fontWeight: FontWeight.w600),
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: l10n(context).lbl_feedbackYourTitle,
-                                  hintStyle: const TextStyle(
-                                      color: Colors.grey, fontSize: 17),
-                                ),
-                              ),
-                              const SizedBox(height: 10),
-                              TextFormField(
-                                controller: description,
-                                maxLines: null,
-                                onChanged: (value) => {},
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: l10n(context).lbl_feedbackYourText,
-                                  hintStyle:
-                                      const TextStyle(color: Colors.grey),
-                                ),
-                              ),
-                              const SizedBox(height: 100)
-                            ],
-                          )),
+                              fontSize: 17, fontWeight: FontWeight.w600),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: l10n(context).lbl_feedbackYourTitle,
+                            hintStyle: const TextStyle(
+                                color: Colors.grey, fontSize: 17),
+                          ),
                         ),
-                        floatingActionButton: ElevatedButton.icon(
-                            onPressed: () {
-                              if (title.value.text.isEmpty) {
-                                Tools.showSnackbar(context,
-                                    l10n(context).msg_feedbackMissingTitle);
-                                return;
-                              }
-                              context.read<FeedbackSendCubit>().send();
-                            },
-                            icon: const Icon(FeatherIcons.send),
-                            label: Text(l10n(context).lbl_feedbackSend)),
-                      ))),
-            )));
+                        const SizedBox(height: 10),
+                        TextFormField(
+                          controller: description,
+                          maxLines: null,
+                          onChanged: (value) => {},
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: l10n(context).lbl_feedbackYourText,
+                            hintStyle: const TextStyle(color: Colors.grey),
+                          ),
+                        ),
+                        const SizedBox(height: 100)
+                      ],
+                    )),
+                  ),
+                  floatingActionButton: ElevatedButton.icon(
+                      onPressed: () {
+                        if (title.value.text.isEmpty) {
+                          Tools.showSnackbar(
+                              context, l10n(context).msg_feedbackMissingTitle);
+                          return;
+                        }
+                        context.read<FeedbackSendCubit>().send();
+                      },
+                      icon: const Icon(FeatherIcons.send),
+                      label: Text(l10n(context).lbl_feedbackSend)),
+                )),
+          ),
+        ),
+      ),
+    );
   }
 }

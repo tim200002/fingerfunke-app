@@ -116,16 +116,17 @@ class UserSocialMediaPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: true,
-        appBar: AppBar(title: Text(l10n(context).lbl_linkSocialMedia)),
-        body: BlocBuilder<AppCubit, AppState>(
-            builder: (context, state) => ListView.builder(
-                  key: Key("${state.user.socialMedia}"),
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-                  itemCount: SocialMediaService.services.length,
-                  itemBuilder: (context, i) => _item(
-                      context, SocialMediaService.services[i], state.user),
-                )));
+      resizeToAvoidBottomInset: true,
+      appBar: AppBar(title: Text(l10n(context).lbl_linkSocialMedia)),
+      body: FirebaseAuthenticationCubitCubit.userBuilder(
+        (user) => ListView.builder(
+          key: Key("${user.socialMedia}"),
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+          itemCount: SocialMediaService.services.length,
+          itemBuilder: (context, i) =>
+              _item(context, SocialMediaService.services[i], user),
+        ),
+      ),
+    );
   }
 }

@@ -19,13 +19,12 @@ class SavedPage extends StatelessWidget {
               left: AppTheme.PADDING_SIDE,
               right: AppTheme.PADDING_SIDE,
               top: 15),
-          child: BlocBuilder<AppCubit, AppState>(
-              builder: (context, state) => CompactPostsFeed(
-                    query: () =>
-                        PostsListCubit.queryPostsByIds(state.user.savedPosts),
-                    filter: (posts) =>
-                        posts.where((p) => !p.isAuthor(state.user.id)).toList(),
-                  ))),
+          child: FirebaseAuthenticationCubitCubit.userBuilder((user) =>
+              CompactPostsFeed(
+                query: () => PostsListCubit.queryPostsByIds(user.savedPosts),
+                filter: (posts) =>
+                    posts.where((p) => !p.isAuthor(user.id)).toList(),
+              ))),
     );
   }
 }

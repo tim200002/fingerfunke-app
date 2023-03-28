@@ -53,24 +53,22 @@ class ParticipateView extends StatelessWidget {
           ),
           //title: const Text('Tabs Demo'),
         ),
-        body: BlocBuilder<AppCubit, AppState>(
-            builder: (context, state) => TabBarView(
-                  children: [
-                    _PersTabItem(CompactPostsFeed(
-                      query: () =>
-                          PostsListCubit.queryJoinedPosts(state.user.id),
-                      filter: (posts) => posts
-                          .where((p) => !p.isAuthor(state.user.id))
-                          .toList(),
-                      emptyMessage: l10n(context).lbl_notParticipating,
-                    )),
-                    _PersTabItem(CompactPostsFeed(
-                      query: () =>
-                          PostsListCubit.queryAuthorPosts(state.user.id),
-                      emptyMessage: l10n(context).lbl_notAuthor,
-                    ))
-                  ],
-                )),
+        body: FirebaseAuthenticationCubitCubit.userBuilder(
+          (user) => TabBarView(
+            children: [
+              _PersTabItem(CompactPostsFeed(
+                query: () => PostsListCubit.queryJoinedPosts(user.id),
+                filter: (posts) =>
+                    posts.where((p) => !p.isAuthor(user.id)).toList(),
+                emptyMessage: l10n(context).lbl_notParticipating,
+              )),
+              _PersTabItem(CompactPostsFeed(
+                query: () => PostsListCubit.queryAuthorPosts(user.id),
+                emptyMessage: l10n(context).lbl_notAuthor,
+              ))
+            ],
+          ),
+        ),
       ),
     );
   }

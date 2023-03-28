@@ -47,8 +47,8 @@ class _ProfileSection extends StatelessWidget {
                         .colorScheme
                         .onBackground
                         .withOpacity(0.1)))),
-        child: BlocBuilder<AppCubit, AppState>(
-          builder: (context, state) => _profile(context, user: state.user),
+        child:  FirebaseAuthenticationCubitCubit.userBuilder(
+          (user) =>  _profile(context, user: user),
         ),
       ),
     );
