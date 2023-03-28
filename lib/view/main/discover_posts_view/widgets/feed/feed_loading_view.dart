@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../../../../../common_widgets/list_items/post_feed_image_item.dart';
@@ -15,7 +17,7 @@ class FeedLoadingView extends StatefulWidget {
 
 class _FeedLoadingViewState extends State<FeedLoadingView> {
   bool loading = true;
-
+  Timer? waitingTimer;
   @override
   void initState() {
     wait();
@@ -23,8 +25,8 @@ class _FeedLoadingViewState extends State<FeedLoadingView> {
   }
 
   wait() async {
-    await Future.delayed(widget.maxLoadingDuration);
-    setState(() => loading = false);
+    waitingTimer?.cancel();
+     waitingTimer = Timer(widget.maxLoadingDuration, () => setState(() => loading = false));
   }
 
   @override
@@ -32,5 +34,11 @@ class _FeedLoadingViewState extends State<FeedLoadingView> {
     return loading
         ? PostFeedImageItem.loading()
         : IllustrationView.empty(text: l10n(context).msg_feedEmpty);
+  }
+
+  @override
+  void dispose() {
+    waitingTimer?.cancel();
+    super.dispose();
   }
 }

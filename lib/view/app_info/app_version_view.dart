@@ -19,20 +19,21 @@ class AppVersionView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.all(10),
-        child: BlocBuilder<AppInfoCubit, PackageInfo>(
-            builder: (_, info) => Row(
-                  mainAxisAlignment: alignment,
-                  mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,
-                  children: [
-                    Text((compact ? "v" : "Version: ") + info.version,
-                        style: style),
-                    if (!compact) const SizedBox(width: 10),
-                    Text(
-                      (compact ? "+" : "Build: ") + info.buildNumber,
-                      style: style.copyWith(fontWeight: FontWeight.bold),
-                    )
-                  ],
-                )));
+      padding: const EdgeInsets.all(10),
+      child: BlocBuilder<AppInfoCubit, PackageInfo>(
+        builder: (_, info) => Row(
+          mainAxisAlignment: alignment,
+          mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,
+          children: [
+            Text((compact ? "v" : "Version: ") + info.version, style: style),
+            if (!compact) const SizedBox(width: 10),
+            Text(
+              (compact ? "+" : "Build: ") + info.buildNumber,
+              style: style.copyWith(fontWeight: FontWeight.bold),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
