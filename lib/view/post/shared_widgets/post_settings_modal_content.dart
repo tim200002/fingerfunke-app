@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
-import '../../../../cubits/app_cubit/app_cubit.dart';
 import '../../../../models/post/post.dart';
 import '../../../../routes.dart';
 import '../../../../utils/dev_tools.dart';
 import '../../../../utils/tools.dart';
 import '../../../../utils/util_widgets/floating_modal.dart';
+import '../../../cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
 import '../../report_send/report_send_page.dart';
 import '../cubits/post_viewer_cubit/post_cubit.dart';
 import 'post_participants.dart/post_participants_view.dart';

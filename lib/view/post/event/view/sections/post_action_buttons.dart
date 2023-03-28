@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
-import '../../../../../cubits/app_cubit/app_cubit.dart';
+import '../../../../../cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
 import '../../../../../routes.dart';
 import '../../../../../utils/tools.dart';
 import '../../../../chat/cubit/chat_cubit_cubit.dart';

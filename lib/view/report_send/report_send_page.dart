@@ -1,5 +1,5 @@
 import '../../common_widgets/image/network_placeholder_image.dart/network_placeholder_image.dart';
-import '../../cubits/app_cubit/app_cubit.dart';
+import '../../cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
 import '../../models/asset/asset.dart';
 import '../../models/post/post.dart';
 import '../../models/report.dart';

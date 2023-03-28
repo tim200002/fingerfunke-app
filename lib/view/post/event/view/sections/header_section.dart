@@ -7,7 +7,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import '../../../../../common_widgets/image/network_placeholder_image.dart/network_placeholder_image.dart';
 import '../../../../../common_widgets/list_items/in_past_filter.dart';
 import '../../../../../common_widgets/upload/video_upload_tile.dart';
-import '../../../../../cubits/app_cubit/app_cubit.dart';
+import '../../../../../cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
 import '../../../../../cubits/video_upload_cubit/video_upload_cubit.dart';
 import '../../../../../models/asset/asset.dart';
 import '../../../../../models/post/post.dart';

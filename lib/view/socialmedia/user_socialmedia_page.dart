@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../cubits/app_cubit/app_cubit.dart';
+import '../../cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
 import '../../models/user/user.dart';
 import '../../repositories/user_repository/user_repository.dart';
 import '../../utils/json_tools.dart';

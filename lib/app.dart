@@ -2,14 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'cubits/app_cubit/app_cubit.dart';
-import 'cubits/app_info/app_info_cubit.dart';
 import 'cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
 import 'cubits/settings_cubit/app_settings_cubit.dart';
 import 'models/settings/app_settings.dart';
 import 'routes.dart';
-import 'services/meta_info_service.dart';
-import 'services/session_info_service.dart';
 import 'utils/app_theme.dart';
 import 'view/create_account/view/create_account_view.dart';
 import 'view/main/base_view.dart';

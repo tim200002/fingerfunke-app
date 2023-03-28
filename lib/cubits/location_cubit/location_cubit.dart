@@ -1,10 +1,11 @@
-import 'package:app_settings/app_settings.dart';
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:geolocator/geolocator.dart';
 
 import '../../models/place.dart';
-import '../../repositories/position_repository/position_repository.dart';
-import '../../services/device_location_service.dart';
+import '../../repositories/geocoding_repository/geocodig_repository.dart';
+import '../../repositories/storage_repository/storage_repository.dart';
 import '../../services/session_info_service.dart';
 
 part 'location_cubit.freezed.dart';

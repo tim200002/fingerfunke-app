@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,10 +15,15 @@ import 'app.dart';
 import 'cubits/app_info/app_info_cubit.dart';
 import 'cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
 import 'cubits/live_config_cubit/live_config_cubit.dart';
+import 'cubits/location_cubit/location_cubit.dart';
 import 'cubits/settings_cubit/app_settings_cubit.dart';
 import 'env.dart' as env;
 import 'repositories/firebase_authentication_repository/firebase_authentication_repository.dart';
 import 'repositories/storage_repository/storage_repository.dart';
+import 'services/meta_info_service.dart';
+import 'services/notification_service.dart';
+import 'services/session_info_service.dart';
+import 'models/user/user.dart' as user_models;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,7 +35,7 @@ void main() async {
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
-  // choose envrionment
+  // choose environment
   switch (env.FIREBASE_ENVIRONMENT) {
     case 'local':
       {

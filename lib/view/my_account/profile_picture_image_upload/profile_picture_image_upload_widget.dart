@@ -1,12 +1,11 @@
 import 'package:uuid/uuid.dart';
 
 import '../../../common_widgets/image/user_image/user_image.dart';
-import '../../../cubits/app_cubit/app_cubit.dart';
+import '../../../cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
 import '../../../utils/tools.dart';
 import '../../../utils/util_widgets/floating_modal.dart';
 import 'upload_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfilePictureImageUploadWidget extends StatelessWidget {

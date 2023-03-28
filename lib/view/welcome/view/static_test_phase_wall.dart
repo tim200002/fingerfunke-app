@@ -6,7 +6,6 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 
 import '../../../utils/illustration.dart';
 import '../../../utils/tools.dart';
-import '../../phone_login/view/phone_login_page.dart';
 import 'terms_agree_view.dart';
 
 class StaticTestPhaseWall extends StatelessWidget {
@@ -78,7 +77,7 @@ class StaticTestPhaseWall extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             textCapitalization: TextCapitalization.characters,
-            boxShadows: [],
+            boxShadows: const [],
             appContext: context,
             length: 6,
             onChanged: (_) {},

@@ -1,8 +1,9 @@
 import 'dart:async';
-
-import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:tuple/tuple.dart';
 
 import '../../models/user/user.dart' as user_models;
 import '../../repositories/firebase_authentication_repository/firebase_authentication_repository.dart';

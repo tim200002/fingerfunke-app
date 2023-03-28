@@ -1,11 +1,10 @@
-import '../../../cubits/app_cubit/app_cubit.dart';
+import '../../../cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
 import '../../../routes.dart';
 import '../../../utils/tools.dart';
 import '../../../utils/util_widgets/page_screen.dart';
 import '../../user_bio/user_bio_editor.dart';
 import '../profile_picture_image_upload/profile_picture_image_upload_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 
 import '../../app_info/app_info_page.dart';
