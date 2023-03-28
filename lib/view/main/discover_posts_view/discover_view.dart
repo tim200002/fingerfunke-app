@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import '../../../../cubits/live_config_cubit/live_config_cubit.dart';
-import '../../../../cubits/location_cubit/location_cubit.dart';
 import '../../../../routes.dart';
 import '../../../../utils/app_theme.dart';
 import '../../../services/meta_info_service.dart';
@@ -43,9 +42,6 @@ class _DiscoverViewState extends State<DiscoverView> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<LocationCubit>(
-          create: (context) => LocationCubit(),
-        ),
         BlocProvider<FeedFilterCubit>(create: (_) => FeedFilterCubit.create())
       ],
       child: Builder(

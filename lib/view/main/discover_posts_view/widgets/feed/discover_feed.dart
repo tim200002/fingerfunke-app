@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
 
 import '../../../../../../../common_widgets/list_items/post_feed_image_item.dart';
 import '../../../../../../../cubits/location_cubit/location_cubit.dart';
@@ -31,41 +32,25 @@ class DiscoverFeed extends StatelessWidget {
         });
   }
 
-  Widget _locationDenied(BuildContext context, bool permanent) =>
-      IllustrationView(
-          illustration: Illustrations.location,
-          illustrationHeight: 100,
-          text: l10n(context).lbl_locationRequired,
-          action: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              if (permanent) const SizedBox(height: 20),
-              TextButton(
-                  onPressed: permanent
-                      ? LocationCubit.openSettings
-                      : context.read<LocationCubit>().refresh,
-                  child: Text(l10n(context).lbl_grantLocationPermission)),
-              if (permanent)
-                IllustrationView.retryButton(
-                    context, context.read<LocationCubit>().refresh)
-            ],
-          ));
-
   Widget _locationBuilders(
       Widget Function(FeedFilter filter, Place place) builder) {
     return BlocBuilder<FeedFilterCubit, FeedFilter>(
-        builder: (_, filter) => filter.useSetLocation
-            ? builder(filter, filter.setLocation)
-            : BlocBuilder<LocationCubit, LocationState>(
-                builder: (context, state) => state.when(
-                    error: (e) => IllustrationView.error(
-                        text: l10n(context).lbl_locationLoadError,
-                        retry: () => context.read<LocationCubit>().refresh),
-                    denied: (p) => _locationDenied(context, p),
-                    loading: () => const Center(
-                        child: CircularProgressIndicator.adaptive()),
-                    loaded: (location) => builder(filter, location))));
+      builder: (_, filter) => filter.useSetLocation
+          ? builder(filter, filter.setLocation)
+          : BlocBuilder<LocationCubit, LocationState>(
+              builder: (context, state) => state.when(
+                error: (e) => IllustrationView.error(
+                    text: l10n(context).lbl_locationLoadError,
+                    retry: () => context.read<LocationCubit>().loadLocation()),
+                noPosition: (permissionState) => _NoLocationWidget(
+                  permissionState: permissionState,
+                ),
+                uninitialized: () =>
+                    const Center(child: CircularProgressIndicator.adaptive()),
+                loaded: (location) => builder(filter, location),
+              ),
+            ),
+    );
   }
 
   @override
@@ -85,29 +70,67 @@ class DiscoverFeed extends StatelessWidget {
                   // it should be mroe efficient then doing same operation on a per post level
                   // worth it in my opinion
                   BlocBuilder<AppSettingsCubit, AppSettings>(
-                      buildWhen: ((previous, current) =>
-                          previous.dsAutoplay != current.dsAutoplay),
-                      builder: (context, settings) =>
-                          BlocBuilder<DiscoverFeedCubit, DiscoverFeedState>(
-                              builder: (context, state) =>
-                                  PagedPaginatedList<Post>(
-                                      state: state,
-                                      itemBuilder: (post) => PostFeedImageItem(
-                                            post,
-                                            video: settings.dsAutoplay,
-                                            key: ValueKey(post.id),
-                                          ),
-                                      onRequestNewPage: () => context
-                                          .read<DiscoverFeedCubit>()
-                                          .requestNewPage(),
-                                      endIndicator: IllustrationView.empty(
-                                          text: l10n(context).msg_feedEmpty),
-                                      loadingIndicator:
-                                          const FeedLoadingView()))),
+                buildWhen: ((previous, current) =>
+                    previous.dsAutoplay != current.dsAutoplay),
+                builder: (context, settings) =>
+                    BlocBuilder<DiscoverFeedCubit, DiscoverFeedState>(
+                  builder: (context, state) => PagedPaginatedList<Post>(
+                      state: state,
+                      itemBuilder: (post) => PostFeedImageItem(
+                            post,
+                            video: settings.dsAutoplay,
+                            key: ValueKey(post.id),
+                          ),
+                      onRequestNewPage: () =>
+                          context.read<DiscoverFeedCubit>().requestNewPage(),
+                      endIndicator: IllustrationView.empty(
+                          text: l10n(context).msg_feedEmpty),
+                      loadingIndicator: const FeedLoadingView()),
+                ),
+              ),
             ),
           ),
         ),
       ]),
+    );
+  }
+}
+
+class _NoLocationWidget extends StatelessWidget {
+  final PermissionState permissionState;
+  const _NoLocationWidget({required this.permissionState, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final bool manualWorkToDoBeforeRequest =
+        permissionState.locationPermission ==
+                LocationPermission.deniedForever ||
+            !permissionState.locationServiceEnabled;
+    return IllustrationView(
+      illustration: Illustrations.location,
+      illustrationHeight: 100,
+      text: l10n(context).lbl_locationRequired,
+      action: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (manualWorkToDoBeforeRequest) const SizedBox(height: 20),
+          if (permissionState.locationPermission ==
+              LocationPermission.deniedForever)
+            TextButton(
+                onPressed: () => Geolocator.openAppSettings(), //.then((_) => ),
+                child: Text(l10n(context).lbl_grantLocationPermission)),
+          if (!permissionState.locationServiceEnabled)
+            TextButton(
+              onPressed: () =>
+                  Geolocator.openLocationSettings(), //.then((_) => ),
+              child: const Text("Activate Location Service"),
+            ),
+          if (!manualWorkToDoBeforeRequest)
+            IllustrationView.retryButton(
+                context, context.read<LocationCubit>().loadLocation)
+        ],
+      ),
     );
   }
 }

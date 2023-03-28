@@ -9,7 +9,9 @@ import '../../../utils/tools.dart';
 
 class MapsPlacePickerPage extends StatelessWidget {
   final FutureOr Function(BuildContext, PickResult) onPlacePicked;
-  const MapsPlacePickerPage({required this.onPlacePicked, Key? key})
+  static const LatLng _defaultInitialPosition = LatLng(47.62087969215252, 9.417152431150251);
+  final LatLng initialPosition;
+  const MapsPlacePickerPage({required this.onPlacePicked, this.initialPosition = _defaultInitialPosition, Key? key})
       : super(key: key);
 
   @override
@@ -21,7 +23,7 @@ class MapsPlacePickerPage extends StatelessWidget {
       selectText: l10n(context).lbl_mapPlaceSelect,
       outsideOfPickAreaText: l10n(context).lbl_mapPlaceNotInArea,
       initialPosition: const LatLng(47.62087969215252, 9.417152431150251),
-      useCurrentLocation: true,
+      useCurrentLocation: false,
       selectInitialPosition: true,
       usePinPointingSearch: true,
       usePlaceDetailSearch: true,

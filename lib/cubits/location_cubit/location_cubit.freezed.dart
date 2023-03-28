@@ -18,50 +18,50 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$LocationState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loading,
+    required TResult Function() uninitialized,
     required TResult Function(dynamic e) error,
-    required TResult Function(bool permanent) denied,
+    required TResult Function(PermissionState permissionState) noPosition,
     required TResult Function(Place location) loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
+    TResult Function()? uninitialized,
     TResult Function(dynamic e)? error,
-    TResult Function(bool permanent)? denied,
+    TResult Function(PermissionState permissionState)? noPosition,
     TResult Function(Place location)? loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
+    TResult Function()? uninitialized,
     TResult Function(dynamic e)? error,
-    TResult Function(bool permanent)? denied,
+    TResult Function(PermissionState permissionState)? noPosition,
     TResult Function(Place location)? loaded,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_loading value) loading,
+    required TResult Function(_Uninitialized value) uninitialized,
     required TResult Function(_Error value) error,
-    required TResult Function(_Denied value) denied,
+    required TResult Function(_NoPosition value) noPosition,
     required TResult Function(_Loaded value) loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_loading value)? loading,
+    TResult Function(_Uninitialized value)? uninitialized,
     TResult Function(_Error value)? error,
-    TResult Function(_Denied value)? denied,
+    TResult Function(_NoPosition value)? noPosition,
     TResult Function(_Loaded value)? loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_loading value)? loading,
+    TResult Function(_Uninitialized value)? uninitialized,
     TResult Function(_Error value)? error,
-    TResult Function(_Denied value)? denied,
+    TResult Function(_NoPosition value)? noPosition,
     TResult Function(_Loaded value)? loaded,
     required TResult orElse(),
   }) =>
@@ -86,36 +86,38 @@ class _$LocationStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$$_loadingCopyWith<$Res> {
-  factory _$$_loadingCopyWith(
-          _$_loading value, $Res Function(_$_loading) then) =
-      __$$_loadingCopyWithImpl<$Res>;
+abstract class _$$_UninitializedCopyWith<$Res> {
+  factory _$$_UninitializedCopyWith(
+          _$_Uninitialized value, $Res Function(_$_Uninitialized) then) =
+      __$$_UninitializedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_loadingCopyWithImpl<$Res> extends _$LocationStateCopyWithImpl<$Res>
-    implements _$$_loadingCopyWith<$Res> {
-  __$$_loadingCopyWithImpl(_$_loading _value, $Res Function(_$_loading) _then)
-      : super(_value, (v) => _then(v as _$_loading));
+class __$$_UninitializedCopyWithImpl<$Res>
+    extends _$LocationStateCopyWithImpl<$Res>
+    implements _$$_UninitializedCopyWith<$Res> {
+  __$$_UninitializedCopyWithImpl(
+      _$_Uninitialized _value, $Res Function(_$_Uninitialized) _then)
+      : super(_value, (v) => _then(v as _$_Uninitialized));
 
   @override
-  _$_loading get _value => super._value as _$_loading;
+  _$_Uninitialized get _value => super._value as _$_Uninitialized;
 }
 
 /// @nodoc
 
-class _$_loading implements _loading {
-  const _$_loading();
+class _$_Uninitialized implements _Uninitialized {
+  const _$_Uninitialized();
 
   @override
   String toString() {
-    return 'LocationState.loading()';
+    return 'LocationState.uninitialized()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_loading);
+        (other.runtimeType == runtimeType && other is _$_Uninitialized);
   }
 
   @override
@@ -124,36 +126,36 @@ class _$_loading implements _loading {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loading,
+    required TResult Function() uninitialized,
     required TResult Function(dynamic e) error,
-    required TResult Function(bool permanent) denied,
+    required TResult Function(PermissionState permissionState) noPosition,
     required TResult Function(Place location) loaded,
   }) {
-    return loading();
+    return uninitialized();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
+    TResult Function()? uninitialized,
     TResult Function(dynamic e)? error,
-    TResult Function(bool permanent)? denied,
+    TResult Function(PermissionState permissionState)? noPosition,
     TResult Function(Place location)? loaded,
   }) {
-    return loading?.call();
+    return uninitialized?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
+    TResult Function()? uninitialized,
     TResult Function(dynamic e)? error,
-    TResult Function(bool permanent)? denied,
+    TResult Function(PermissionState permissionState)? noPosition,
     TResult Function(Place location)? loaded,
     required TResult orElse(),
   }) {
-    if (loading != null) {
-      return loading();
+    if (uninitialized != null) {
+      return uninitialized();
     }
     return orElse();
   }
@@ -161,43 +163,43 @@ class _$_loading implements _loading {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_loading value) loading,
+    required TResult Function(_Uninitialized value) uninitialized,
     required TResult Function(_Error value) error,
-    required TResult Function(_Denied value) denied,
+    required TResult Function(_NoPosition value) noPosition,
     required TResult Function(_Loaded value) loaded,
   }) {
-    return loading(this);
+    return uninitialized(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_loading value)? loading,
+    TResult Function(_Uninitialized value)? uninitialized,
     TResult Function(_Error value)? error,
-    TResult Function(_Denied value)? denied,
+    TResult Function(_NoPosition value)? noPosition,
     TResult Function(_Loaded value)? loaded,
   }) {
-    return loading?.call(this);
+    return uninitialized?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_loading value)? loading,
+    TResult Function(_Uninitialized value)? uninitialized,
     TResult Function(_Error value)? error,
-    TResult Function(_Denied value)? denied,
+    TResult Function(_NoPosition value)? noPosition,
     TResult Function(_Loaded value)? loaded,
     required TResult orElse(),
   }) {
-    if (loading != null) {
-      return loading(this);
+    if (uninitialized != null) {
+      return uninitialized(this);
     }
     return orElse();
   }
 }
 
-abstract class _loading implements LocationState {
-  const factory _loading() = _$_loading;
+abstract class _Uninitialized implements LocationState {
+  const factory _Uninitialized() = _$_Uninitialized;
 }
 
 /// @nodoc
@@ -262,9 +264,9 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loading,
+    required TResult Function() uninitialized,
     required TResult Function(dynamic e) error,
-    required TResult Function(bool permanent) denied,
+    required TResult Function(PermissionState permissionState) noPosition,
     required TResult Function(Place location) loaded,
   }) {
     return error(e);
@@ -273,9 +275,9 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
+    TResult Function()? uninitialized,
     TResult Function(dynamic e)? error,
-    TResult Function(bool permanent)? denied,
+    TResult Function(PermissionState permissionState)? noPosition,
     TResult Function(Place location)? loaded,
   }) {
     return error?.call(e);
@@ -284,9 +286,9 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
+    TResult Function()? uninitialized,
     TResult Function(dynamic e)? error,
-    TResult Function(bool permanent)? denied,
+    TResult Function(PermissionState permissionState)? noPosition,
     TResult Function(Place location)? loaded,
     required TResult orElse(),
   }) {
@@ -299,9 +301,9 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_loading value) loading,
+    required TResult Function(_Uninitialized value) uninitialized,
     required TResult Function(_Error value) error,
-    required TResult Function(_Denied value) denied,
+    required TResult Function(_NoPosition value) noPosition,
     required TResult Function(_Loaded value) loaded,
   }) {
     return error(this);
@@ -310,9 +312,9 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_loading value)? loading,
+    TResult Function(_Uninitialized value)? uninitialized,
     TResult Function(_Error value)? error,
-    TResult Function(_Denied value)? denied,
+    TResult Function(_NoPosition value)? noPosition,
     TResult Function(_Loaded value)? loaded,
   }) {
     return error?.call(this);
@@ -321,9 +323,9 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_loading value)? loading,
+    TResult Function(_Uninitialized value)? uninitialized,
     TResult Function(_Error value)? error,
-    TResult Function(_Denied value)? denied,
+    TResult Function(_NoPosition value)? noPosition,
     TResult Function(_Loaded value)? loaded,
     required TResult orElse(),
   }) {
@@ -344,97 +346,101 @@ abstract class _Error implements LocationState {
 }
 
 /// @nodoc
-abstract class _$$_DeniedCopyWith<$Res> {
-  factory _$$_DeniedCopyWith(_$_Denied value, $Res Function(_$_Denied) then) =
-      __$$_DeniedCopyWithImpl<$Res>;
-  $Res call({bool permanent});
+abstract class _$$_NoPositionCopyWith<$Res> {
+  factory _$$_NoPositionCopyWith(
+          _$_NoPosition value, $Res Function(_$_NoPosition) then) =
+      __$$_NoPositionCopyWithImpl<$Res>;
+  $Res call({PermissionState permissionState});
 }
 
 /// @nodoc
-class __$$_DeniedCopyWithImpl<$Res> extends _$LocationStateCopyWithImpl<$Res>
-    implements _$$_DeniedCopyWith<$Res> {
-  __$$_DeniedCopyWithImpl(_$_Denied _value, $Res Function(_$_Denied) _then)
-      : super(_value, (v) => _then(v as _$_Denied));
+class __$$_NoPositionCopyWithImpl<$Res>
+    extends _$LocationStateCopyWithImpl<$Res>
+    implements _$$_NoPositionCopyWith<$Res> {
+  __$$_NoPositionCopyWithImpl(
+      _$_NoPosition _value, $Res Function(_$_NoPosition) _then)
+      : super(_value, (v) => _then(v as _$_NoPosition));
 
   @override
-  _$_Denied get _value => super._value as _$_Denied;
+  _$_NoPosition get _value => super._value as _$_NoPosition;
 
   @override
   $Res call({
-    Object? permanent = freezed,
+    Object? permissionState = freezed,
   }) {
-    return _then(_$_Denied(
-      permanent == freezed
-          ? _value.permanent
-          : permanent // ignore: cast_nullable_to_non_nullable
-              as bool,
+    return _then(_$_NoPosition(
+      permissionState == freezed
+          ? _value.permissionState
+          : permissionState // ignore: cast_nullable_to_non_nullable
+              as PermissionState,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_Denied implements _Denied {
-  const _$_Denied(this.permanent);
+class _$_NoPosition implements _NoPosition {
+  const _$_NoPosition(this.permissionState);
 
   @override
-  final bool permanent;
+  final PermissionState permissionState;
 
   @override
   String toString() {
-    return 'LocationState.denied(permanent: $permanent)';
+    return 'LocationState.noPosition(permissionState: $permissionState)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Denied &&
-            const DeepCollectionEquality().equals(other.permanent, permanent));
+            other is _$_NoPosition &&
+            const DeepCollectionEquality()
+                .equals(other.permissionState, permissionState));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(permanent));
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(permissionState));
 
   @JsonKey(ignore: true)
   @override
-  _$$_DeniedCopyWith<_$_Denied> get copyWith =>
-      __$$_DeniedCopyWithImpl<_$_Denied>(this, _$identity);
+  _$$_NoPositionCopyWith<_$_NoPosition> get copyWith =>
+      __$$_NoPositionCopyWithImpl<_$_NoPosition>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loading,
+    required TResult Function() uninitialized,
     required TResult Function(dynamic e) error,
-    required TResult Function(bool permanent) denied,
+    required TResult Function(PermissionState permissionState) noPosition,
     required TResult Function(Place location) loaded,
   }) {
-    return denied(permanent);
+    return noPosition(permissionState);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
+    TResult Function()? uninitialized,
     TResult Function(dynamic e)? error,
-    TResult Function(bool permanent)? denied,
+    TResult Function(PermissionState permissionState)? noPosition,
     TResult Function(Place location)? loaded,
   }) {
-    return denied?.call(permanent);
+    return noPosition?.call(permissionState);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
+    TResult Function()? uninitialized,
     TResult Function(dynamic e)? error,
-    TResult Function(bool permanent)? denied,
+    TResult Function(PermissionState permissionState)? noPosition,
     TResult Function(Place location)? loaded,
     required TResult orElse(),
   }) {
-    if (denied != null) {
-      return denied(permanent);
+    if (noPosition != null) {
+      return noPosition(permissionState);
     }
     return orElse();
   }
@@ -442,47 +448,48 @@ class _$_Denied implements _Denied {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_loading value) loading,
+    required TResult Function(_Uninitialized value) uninitialized,
     required TResult Function(_Error value) error,
-    required TResult Function(_Denied value) denied,
+    required TResult Function(_NoPosition value) noPosition,
     required TResult Function(_Loaded value) loaded,
   }) {
-    return denied(this);
+    return noPosition(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_loading value)? loading,
+    TResult Function(_Uninitialized value)? uninitialized,
     TResult Function(_Error value)? error,
-    TResult Function(_Denied value)? denied,
+    TResult Function(_NoPosition value)? noPosition,
     TResult Function(_Loaded value)? loaded,
   }) {
-    return denied?.call(this);
+    return noPosition?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_loading value)? loading,
+    TResult Function(_Uninitialized value)? uninitialized,
     TResult Function(_Error value)? error,
-    TResult Function(_Denied value)? denied,
+    TResult Function(_NoPosition value)? noPosition,
     TResult Function(_Loaded value)? loaded,
     required TResult orElse(),
   }) {
-    if (denied != null) {
-      return denied(this);
+    if (noPosition != null) {
+      return noPosition(this);
     }
     return orElse();
   }
 }
 
-abstract class _Denied implements LocationState {
-  const factory _Denied(final bool permanent) = _$_Denied;
+abstract class _NoPosition implements LocationState {
+  const factory _NoPosition(final PermissionState permissionState) =
+      _$_NoPosition;
 
-  bool get permanent;
+  PermissionState get permissionState;
   @JsonKey(ignore: true)
-  _$$_DeniedCopyWith<_$_Denied> get copyWith =>
+  _$$_NoPositionCopyWith<_$_NoPosition> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -548,9 +555,9 @@ class _$_Loaded implements _Loaded {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loading,
+    required TResult Function() uninitialized,
     required TResult Function(dynamic e) error,
-    required TResult Function(bool permanent) denied,
+    required TResult Function(PermissionState permissionState) noPosition,
     required TResult Function(Place location) loaded,
   }) {
     return loaded(location);
@@ -559,9 +566,9 @@ class _$_Loaded implements _Loaded {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
+    TResult Function()? uninitialized,
     TResult Function(dynamic e)? error,
-    TResult Function(bool permanent)? denied,
+    TResult Function(PermissionState permissionState)? noPosition,
     TResult Function(Place location)? loaded,
   }) {
     return loaded?.call(location);
@@ -570,9 +577,9 @@ class _$_Loaded implements _Loaded {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
+    TResult Function()? uninitialized,
     TResult Function(dynamic e)? error,
-    TResult Function(bool permanent)? denied,
+    TResult Function(PermissionState permissionState)? noPosition,
     TResult Function(Place location)? loaded,
     required TResult orElse(),
   }) {
@@ -585,9 +592,9 @@ class _$_Loaded implements _Loaded {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_loading value) loading,
+    required TResult Function(_Uninitialized value) uninitialized,
     required TResult Function(_Error value) error,
-    required TResult Function(_Denied value) denied,
+    required TResult Function(_NoPosition value) noPosition,
     required TResult Function(_Loaded value) loaded,
   }) {
     return loaded(this);
@@ -596,9 +603,9 @@ class _$_Loaded implements _Loaded {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_loading value)? loading,
+    TResult Function(_Uninitialized value)? uninitialized,
     TResult Function(_Error value)? error,
-    TResult Function(_Denied value)? denied,
+    TResult Function(_NoPosition value)? noPosition,
     TResult Function(_Loaded value)? loaded,
   }) {
     return loaded?.call(this);
@@ -607,9 +614,9 @@ class _$_Loaded implements _Loaded {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_loading value)? loading,
+    TResult Function(_Uninitialized value)? uninitialized,
     TResult Function(_Error value)? error,
-    TResult Function(_Denied value)? denied,
+    TResult Function(_NoPosition value)? noPosition,
     TResult Function(_Loaded value)? loaded,
     required TResult orElse(),
   }) {

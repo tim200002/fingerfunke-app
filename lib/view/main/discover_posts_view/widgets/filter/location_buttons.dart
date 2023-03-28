@@ -48,14 +48,14 @@ class _LocationButtonsState extends State<_LocationButtons> {
                             : BlocBuilder<LocationCubit, LocationState>(
                                 builder: (context, state) =>
                                     AutoSizeText(state.when(
-                                  loading: () =>
+                                  uninitialized: () =>
                                       l10n(context).lbl_locationLoading,
-                                  denied: (_) =>
+                                  noPosition: (_) =>
                                       l10n(context).lbl_locationUnknown,
                                   error: (_) =>
                                       l10n(context).lbl_locationUnknown,
                                   loaded: (location) => location.getCityName(),
-                                )),
+                                ),),
                               )
                       ],
                     )),
