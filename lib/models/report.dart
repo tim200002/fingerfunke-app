@@ -3,7 +3,6 @@ import 'package:uuid/uuid.dart';
 
 import '../utils/type_aliases.dart';
 import 'abstract_models/abstract_models.dart';
-import 'user/user.dart';
 import 'utils.dart';
 
 enum ReportReason {
@@ -28,7 +27,7 @@ class Report extends UserGeneratedDocument {
 
   Report({
     String? id,
-    required UserInfo author,
+    required FirestoreId authorId,
     required this.reasons,
     required this.type,
     this.state = ReportState.open,
@@ -36,14 +35,14 @@ class Report extends UserGeneratedDocument {
     required DateTime creationTime,
   }) : super(
             id: id ?? const Uuid().v4(),
-            author: author,
+            authorId: authorId,
             creationTime: creationTime);
 
   @override
   JsonMap toJson() => {
         "id": id,
         "objectReference": objectReference,
-        "author": author.toJson(),
+        "authorId": authorId,
         "reasons": reasons.map((e) => e.name).toList(),
         "type": type.name,
         "state": state.name,
@@ -57,7 +56,7 @@ class Report extends UserGeneratedDocument {
     return Report(
         id: map["id"] as String,
         creationTime: dateFromJson(map['creationTime'] as int),
-        author: UserInfo.fromJson(map["author"]),
+        authorId: map["authorId"],
         reasons: (map["reasons"] as List<dynamic>)
             .map((e) => ReportReason.values.firstWhere((r) => r.name == e))
             .toList(),
@@ -68,7 +67,7 @@ class Report extends UserGeneratedDocument {
 
   Report copyWith(
       {String? id,
-      UserInfo? author,
+      FirestoreId? authorId,
       List<ReportReason>? reasons,
       ReportType? type,
       ReportState? state,
@@ -76,7 +75,7 @@ class Report extends UserGeneratedDocument {
       DateTime? creationTime}) {
     return Report(
         id: id ?? this.id,
-        author: author ?? this.author,
+        authorId: authorId ?? this.authorId,
         reasons: reasons ?? this.reasons,
         type: type ?? this.type,
         state: state ?? this.state,

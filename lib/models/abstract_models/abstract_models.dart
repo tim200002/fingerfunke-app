@@ -3,7 +3,6 @@ import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../utils/type_aliases.dart';
-import '../user/user.dart';
 import '../utils.dart';
 
 part 'abstract_models.g.dart';
@@ -65,10 +64,10 @@ class GeneratedDocument extends DatabaseDocument {
 
 @JsonSerializable(explicitToJson: true)
 class UserGeneratedDocument extends GeneratedDocument {
-  final UserInfo author;
+  final FirestoreId authorId;
 
   const UserGeneratedDocument(
-      {required id, required this.author, required DateTime creationTime})
+      {required id, required this.authorId, required DateTime creationTime})
       : super(id: id, creationTime: creationTime);
 
   @override
@@ -81,5 +80,5 @@ class UserGeneratedDocument extends GeneratedDocument {
       UserGeneratedDocument.fromJson(documentSnaphsotToJson(document));
 
   @override
-  List<Object?> get props => [id, author, creationTime];
+  List<Object?> get props => [id, authorId, creationTime];
 }

@@ -115,4 +115,24 @@ class User extends UserInfo {
 
   factory User.fromDoc(DocumentSnapshot document) =>
       User.fromJson(documentSnaphsotToJson(document));
+
+  User copyWith(
+          {String? name,
+          String? picture,
+          int? age,
+          UserClearance? clearance,
+          List<FirestoreId>? savedPosts,
+          String? fcmToken,
+          Map<String, String>? socialMedia,
+          String? bio}) =>
+      User(
+          id: id,
+          name: name ?? this.name,
+          picture: picture ?? this.picture,
+          age: age ?? this.age,
+          clearance: clearance ?? this.clearance,
+          savedPosts: savedPosts ?? this.savedPosts,
+          fcmToken: fcmToken ?? this.fcmToken,
+          socialMedia: socialMedia ?? this.socialMedia,
+          bio: bio ?? this.bio);
 }

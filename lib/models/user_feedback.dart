@@ -4,7 +4,6 @@ import 'package:uuid/uuid.dart';
 
 import '../utils/type_aliases.dart';
 import 'abstract_models/abstract_models.dart';
-import 'user/user.dart';
 import 'utils.dart';
 
 enum UserFeedbackCategories {
@@ -36,7 +35,7 @@ class UserFeedback extends UserGeneratedDocument {
 
   UserFeedback({
     String? id,
-    required UserInfo author,
+    required FirestoreId authorId,
     required this.title,
     required this.description,
     required this.categories,
@@ -45,13 +44,13 @@ class UserFeedback extends UserGeneratedDocument {
     required DateTime creationTime,
   }) : super(
             id: id ?? const Uuid().v4(),
-            author: author,
+            authorId: authorId,
             creationTime: creationTime);
 
   @override
   JsonMap toJson() => {
         "id": id,
-        "author": author.toJson(),
+        "authorId": authorId,
         "creationTime": dateToJson(creationTime),
         "categories": categories.map((e) => e.name).toList(),
         "state": state.name,
@@ -74,7 +73,7 @@ class UserFeedback extends UserGeneratedDocument {
   factory UserFeedback.fromJson(JsonMap map) {
     return UserFeedback(
       id: map["id"] as String,
-      author: UserInfo.fromJson(map["author"]),
+      authorId: map["authorId"],
       creationTime: dateFromJson(map['creationTime'] as int),
       categories: (map["categories"] as List<dynamic>)
           .map((e) =>
@@ -89,7 +88,7 @@ class UserFeedback extends UserGeneratedDocument {
 
   UserFeedback copyWith(
       {String? id,
-      UserInfo? author,
+      FirestoreId? authorId,
       DateTime? creationTime,
       List<UserFeedbackCategories>? categories,
       UserFeedbackState? state,
@@ -98,7 +97,7 @@ class UserFeedback extends UserGeneratedDocument {
       String? description}) {
     return UserFeedback(
         id: id ?? this.id,
-        author: author ?? this.author,
+        authorId: authorId ?? this.authorId,
         creationTime: creationTime ?? this.creationTime,
         categories: categories ?? this.categories,
         state: state ?? this.state,

@@ -5,7 +5,6 @@ import 'package:uuid/uuid.dart';
 
 import '../../utils/type_aliases.dart';
 import '../abstract_models/abstract_models.dart';
-import '../user/user.dart';
 import '../utils.dart';
 
 enum MessageType { video, text }
@@ -23,9 +22,9 @@ class Message extends UserGeneratedDocument {
   const Message({
     required FirestoreId id,
     required this.type,
-    required UserInfo author,
+    required FirestoreId authorId,
     required DateTime creationTime,
-  }) : super(author: author, id: id, creationTime: creationTime);
+  }) : super(authorId: authorId, id: id, creationTime: creationTime);
 
   @override
   JsonMap toJson() {
@@ -59,7 +58,7 @@ class Message extends UserGeneratedDocument {
       Message.fromJson(documentSnaphsotToJson(document));
 
   @override
-  List<Object?> get props => [id, type, author, creationTime];
+  List<Object?> get props => [id, type, authorId, creationTime];
 }
 
 class VideoMessage extends Message {
@@ -67,11 +66,11 @@ class VideoMessage extends Message {
 
   const VideoMessage(
       {required FirestoreId id,
-      required UserInfo author,
+      required FirestoreId authorId,
       required DateTime creationTime,
       required this.video})
       : super(
-            author: author,
+            authorId: authorId,
             id: id,
             creationTime: creationTime,
             type: MessageType.video);
@@ -79,7 +78,7 @@ class VideoMessage extends Message {
   @override
   JsonMap toJson() => {
         'id': id,
-        'author': author.toJson(),
+        'author': authorId,
         'creationTime': dateToJson(creationTime),
         'type': _messageTypeEnumMap[MessageType.video],
         'video': video
@@ -88,9 +87,7 @@ class VideoMessage extends Message {
   factory VideoMessage.fromJson(JsonMap map) {
     return VideoMessage(
       id: map['id'] as String,
-      author: UserInfo.fromJson(
-        map['author'] as JsonMap,
-      ),
+      authorId: map['authorId'],
       creationTime: dateFromJson(map['creationTime'] as int),
       video: map['video'] as String,
     );
@@ -100,15 +97,15 @@ class VideoMessage extends Message {
       VideoMessage.fromJson(documentSnaphsotToJson(document));
 
   factory VideoMessage.createWithId(
-          {required UserInfo author, required Link video}) =>
+          {required FirestoreId authorId, required Link video}) =>
       VideoMessage(
           id: const Uuid().v4(),
-          author: author,
+          authorId: authorId,
           creationTime: DateTime.now(),
           video: video);
 
   @override
-  List<Object?> get props => [id, type, author, creationTime, video];
+  List<Object?> get props => [id, type, authorId, creationTime, video];
 }
 
 class TextMessage extends Message {
@@ -116,11 +113,11 @@ class TextMessage extends Message {
 
   const TextMessage(
       {required FirestoreId id,
-      required UserInfo author,
+      required FirestoreId authorId,
       required DateTime creationTime,
       required this.text})
       : super(
-            author: author,
+            authorId: authorId,
             id: id,
             creationTime: creationTime,
             type: MessageType.text);
@@ -128,7 +125,7 @@ class TextMessage extends Message {
   @override
   JsonMap toJson() => {
         'id': id,
-        'author': author.toJson(),
+        'authorId': authorId,
         'creationTime': dateToJson(creationTime),
         'type': _messageTypeEnumMap[MessageType.text],
         'text': text
@@ -137,9 +134,7 @@ class TextMessage extends Message {
   @override
   factory TextMessage.fromJson(JsonMap map) => TextMessage(
         id: map['id'] as String,
-        author: UserInfo.fromJson(
-          map['author'] as JsonMap,
-        ),
+        authorId: map['authorId'],
         creationTime: dateFromJson(map['creationTime'] as int),
         text: map['text'] as String,
       );
@@ -148,13 +143,13 @@ class TextMessage extends Message {
       TextMessage.fromJson(documentSnaphsotToJson(document));
 
   factory TextMessage.createWithId(
-          {required UserInfo author, required String text}) =>
+          {required FirestoreId authorId, required String text}) =>
       TextMessage(
           id: const Uuid().v4(),
-          author: author,
+          authorId: authorId,
           creationTime: DateTime.now(),
           text: text);
 
   @override
-  List<Object?> get props => [id, type, author, creationTime, text];
+  List<Object?> get props => [id, type, authorId, creationTime, text];
 }
