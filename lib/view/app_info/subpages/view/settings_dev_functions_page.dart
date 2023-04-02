@@ -33,7 +33,7 @@ class DevFunctionsPage extends StatelessWidget {
                         final User? currentUser =
                             BlocProvider.of<FirebaseAuthenticationCubitCubit>(context).getUser();
                         PostRepositoryImpl().createPost(Event.createWithId(
-                            author: currentUser!.toInfo(),
+                            authorId: currentUser!.id,
                             title: "Test post ${DateTime.now().second}",
                             visibility: PostVisibility.visible,
                             description:

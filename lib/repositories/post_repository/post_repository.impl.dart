@@ -75,7 +75,6 @@ class PostRepositoryImpl implements PostRepository {
       Place? place,
       List<Asset>? media,
       DateTime? startTime}) async {
-    //TODO: würde diese Methode nicht ungesetzte Felder mit null überschreiben?
     final JsonMap updateMap = {
       'visibility': visibility?.name,
       'title': title,

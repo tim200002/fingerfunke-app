@@ -144,7 +144,7 @@ class PostFeedImageItem extends StatelessWidget {
               height: 9,
             ),
             UserInfoView(
-              _post.author,
+              _post.authorId,
               color: Colors.white,
               compact: true,
             ),

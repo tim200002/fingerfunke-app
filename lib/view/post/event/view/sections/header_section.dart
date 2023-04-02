@@ -279,7 +279,7 @@ class HeaderSection extends StatelessWidget {
                           );
                       final hasPostSaved = user.savedPosts.contains(postId);
                       return PostAppBarButton(
-                          enabled: (post?.author.id ?? "") != user.id,
+                          enabled: (post?.authorId ?? "") != user.id,
                           icon: hasPostSaved
                               ? Icons.bookmark_rounded
                               : Icons.bookmark_border_rounded,

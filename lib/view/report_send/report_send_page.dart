@@ -68,8 +68,14 @@ class ReportSendPage extends StatelessWidget {
                 const SizedBox(
                   height: 30,
                 ),
+                // ToDo Fix this
+                // Text(
+                //   l10n(context).lbl_postCreatedBy(post.author.name),
+                //   style: Theme.of(context).textTheme.bodyMedium,
+                // )
+
                 Text(
-                  l10n(context).lbl_postCreatedBy(post.author.name),
+                  l10n(context).lbl_postCreatedBy(post.authorId),
                   style: Theme.of(context).textTheme.bodyMedium,
                 )
               ],

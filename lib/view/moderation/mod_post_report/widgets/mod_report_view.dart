@@ -26,7 +26,9 @@ class ModReportView extends StatelessWidget {
                 onPressed: () => Navigator.pushNamed(context, Routes.post,
                     arguments: report.objectReference),
                 label: Text(l10n(context).lbl_modOpenPost))),
-        Text(l10n(context).lbl_modReportedBy + report.author.name),
+        // ToDo Fix it
+        // Text(l10n(context).lbl_modReportedBy + report.author.name),
+        Text(l10n(context).lbl_modReportedBy + report.authorId),
         const SizedBox(
           height: 10,
         ),

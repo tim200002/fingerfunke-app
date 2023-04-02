@@ -27,11 +27,11 @@ class FirebaseAuthenticationCubitCubit
   StreamSubscription<user_models.User>? _userDocumentSubscription;
 
   // When a user logs in, these are all functions that must be run to safely login the user
-  final Future<void> Function(user_models.User user) onLogin;
+  final Function onLogin;
 
   factory FirebaseAuthenticationCubitCubit(
       FirebaseAuthenticationRepository authenticationRepository,
-      Future<void> Function(user_models.User user) onLogin) {
+      Function onLogin) {
     final currentUser = authenticationRepository.user;
     if (currentUser == null) {
       return FirebaseAuthenticationCubitCubit._hidden(authenticationRepository,

@@ -30,7 +30,7 @@ class ReportSendCubit extends Cubit<ReportSendState> {
         emit(const ReportSendState.sending());
         if (reasons.isEmpty) return;
         Report report = Report(
-          author: author,
+          authorId: author.id,
           reasons: reasons,
           creationTime: DateTime.now(),
           type: type,
