@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get_it/get_it.dart';
 
+import '../../cache/lru_cache/lru_cache.dart';
 import '../../models/user/user.dart';
 import '../../utils/type_aliases.dart';
 
