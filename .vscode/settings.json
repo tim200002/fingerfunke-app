@@ -6,6 +6,8 @@
         "FUNKEN",
         "geocodig",
         "Geolocator",
+        "Hasher",
+        "LTRB",
         "Pers",
         "Placemark",
         "playfair",
