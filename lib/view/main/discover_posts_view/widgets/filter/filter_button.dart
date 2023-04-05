@@ -15,20 +15,17 @@ class FilterButton extends StatelessWidget {
   Widget _locationProviders(
       Widget Function(FeedFilter filter, Place? place) builder) {
     return BlocBuilder<FeedFilterCubit, FeedFilter>(
-        builder: (_, filter) => filter.useSetLocation
-            ? builder(filter, filter.setLocation)
-            : BlocBuilder<LocationCubit, LocationState>(
-                builder: (context, state) => state.maybeWhen(
-                    loaded: (p) => builder(filter, p),
-                    orElse: () => builder(filter, null))));
+        builder: (_, filter) => BlocBuilder<LocationCubit, LocationState>(
+            builder: (context, state) => state.maybeWhen(
+                loaded: (p) => builder(filter, p),
+                orElse: () => builder(filter, null))));
   }
 
   @override
   Widget build(BuildContext context) {
     return _locationProviders((filter, place) => TextButton.icon(
         onPressed: () => LocationFilterView.navigate(context),
-        icon: Icon(
-            filter.useSetLocation ? FeatherIcons.map : FeatherIcons.mapPin),
+        icon: const Icon(FeatherIcons.mapPin),
         label: Text(
           place?.getCityName() ?? l10n(context).lbl_exploreFilter,
           maxLines: 1,

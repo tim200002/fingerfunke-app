@@ -25,8 +25,9 @@ class LocationCubit extends Cubit<LocationState> {
   /// We prioritize the devices location, however, if not possible
   /// and a previous location can be found in the storage, we are making use of this
   Future<void> loadLocation() async{
-    final PermissionState permissionState = await PermissionState.loadPermissionState();
-
+     final PermissionState permissionState = await PermissionState.loadPermissionState();
+    
+    // Normal cases where we try to find real location
       // Case 1 Position denied forever
       if (permissionState.locationPermission == LocationPermission.deniedForever) {
         return await _getDeviceLocationFromStorage(permissionState);

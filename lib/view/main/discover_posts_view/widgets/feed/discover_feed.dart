@@ -35,21 +35,19 @@ class DiscoverFeed extends StatelessWidget {
   Widget _locationBuilders(
       Widget Function(FeedFilter filter, Place place) builder) {
     return BlocBuilder<FeedFilterCubit, FeedFilter>(
-      builder: (_, filter) => filter.useSetLocation
-          ? builder(filter, filter.setLocation)
-          : BlocBuilder<LocationCubit, LocationState>(
-              builder: (context, state) => state.when(
-                error: (e) => IllustrationView.error(
-                    text: l10n(context).lbl_locationLoadError,
-                    retry: () => context.read<LocationCubit>().loadLocation()),
-                noPosition: (permissionState) => _NoLocationWidget(
-                  permissionState: permissionState,
-                ),
-                uninitialized: () =>
-                    const Center(child: CircularProgressIndicator.adaptive()),
-                loaded: (location) => builder(filter, location),
-              ),
-            ),
+      builder: (_, filter) => BlocBuilder<LocationCubit, LocationState>(
+        builder: (context, state) => state.when(
+          error: (e) => IllustrationView.error(
+              text: l10n(context).lbl_locationLoadError,
+              retry: () => context.read<LocationCubit>().loadLocation()),
+          noPosition: (permissionState) => _NoLocationWidget(
+            permissionState: permissionState,
+          ),
+          uninitialized: () =>
+              const Center(child: CircularProgressIndicator.adaptive()),
+          loaded: (location) => builder(filter, location),
+        ),
+      ),
     );
   }
 

@@ -78,18 +78,23 @@ class LocationFilterModal extends StatelessWidget {
     var location = p.geometry!.location;
     Place place = await GeoCodingRepository.placeFromCoordinate(
         Coordinate(location.lat, location.lng));
-    c
-        .read<FeedFilterCubit>()
-        .update((v) => v.copyWith(setLocation: place, useSetLocation: true));
+    c.read<LocationCubit>().setLocation(place);
   }
 
   void _onMapPick(BuildContext context) =>
       Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (_) => BlocProvider.value(
               value: BlocProvider.of<FeedFilterCubit>(context),
-              child: MapsPlacePickerPage(onPlacePicked: (c, p) async {
-                await _setMapPickResult(c, p);
-              }))));
+              child: MapsPlacePickerPage(
+                onPlacePicked: (c, p) async {
+                  await _setMapPickResult(c, p);
+                },
+                // if position of user is known, set it as initial position for the map
+                // else use the default position
+                initialPosition: context.read<LocationCubit>().state.maybeWhen(
+                    loaded: (location) => location.position,
+                    orElse: () => null),
+              ))));
 
   Widget _button(BuildContext context,
       {required IconData icon,
