@@ -80,7 +80,7 @@ class _AuthorName extends StatefulWidget {
   final FirestoreId _userId;
   late final UserRepository _userRepository;
 
-  _AuthorName(this._userId, {super.key}) {
+  _AuthorName(this._userId, {Key? key}) : super(key: key) {
     _userRepository = _getIt<UserRepository>();
   }
 

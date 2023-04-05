@@ -16,6 +16,7 @@ part 'firebase_authentication_cubit_state.dart';
 /// This Cubit is responsible for handling the authentication state of the user
 class FirebaseAuthenticationCubitCubit
     extends Cubit<FirebaseAuthenticationCubitState> {
+  
   late final FirebaseAuthenticationRepository _authenticationRepository;
   final UserRepository _userRepository = UserRepositoryImpl();
 
@@ -27,11 +28,11 @@ class FirebaseAuthenticationCubitCubit
   StreamSubscription<user_models.User>? _userDocumentSubscription;
 
   // When a user logs in, these are all functions that must be run to safely login the user
-  final Function onLogin;
+  final Future<void> Function(user_models.User) onLogin;
 
   factory FirebaseAuthenticationCubitCubit(
       FirebaseAuthenticationRepository authenticationRepository,
-      Function onLogin) {
+      Future<void> Function(user_models.User) onLogin) {
     final currentUser = authenticationRepository.user;
     if (currentUser == null) {
       return FirebaseAuthenticationCubitCubit._hidden(authenticationRepository,
@@ -83,6 +84,8 @@ class FirebaseAuthenticationCubitCubit
 
     // to reduce latency we can already emit the previously fetched user
     final user_models.User authenticatedUser = userExists.item2!;
+    // do all the required work for a new login
+    await onLogin(authenticatedUser);
     emit(FirebaseAuthenticationCubitState.authenticated(authenticatedUser));
 
     // setup a subscription for the current user
@@ -118,6 +121,9 @@ class FirebaseAuthenticationCubitCubit
     final user_models.User user = user_models.User(id: uid, name: name);
     await _userRepository.createUser(user);
 
+    // do all the required work for a new login
+    await onLogin(user);
+
     // to reduce latency we can already emit the previously fetched user
     emit(FirebaseAuthenticationCubitState.authenticated(user));
 
@@ -134,9 +140,6 @@ class FirebaseAuthenticationCubitCubit
   Future<void> _createUserDocumentSubscription(user_models.User user) async {
     // check if old subscription exists, if so cancel
     await _userDocumentSubscription?.cancel();
-
-    // do all the required work for a new login
-    await onLogin(user);
 
     // create new subscription
     _userDocumentSubscription =

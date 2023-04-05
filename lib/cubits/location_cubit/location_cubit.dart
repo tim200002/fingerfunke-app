@@ -52,7 +52,7 @@ class LocationCubit extends Cubit<LocationState> {
       // Case 3 Permission for location given
       else {
         // check whether location services are enabled on device
-        if (permissionState.locationServiceEnabled) {
+        if (!permissionState.locationServiceEnabled) {
           // If not enabled, then check if location exist in storage use this otherwise deny
           return await _getDeviceLocationFromStorage(permissionState);
         }
@@ -91,7 +91,7 @@ class LocationCubit extends Cubit<LocationState> {
     }
   }
 
-  Future<void> setLocation(Place location)async {
+  Future<void> setLocation(Place location) async {
     SessionInfoService.instance.setLocation(location);
     await _storageRepository.setInfo("device_location", location);
     emit(LocationState.loaded(location));

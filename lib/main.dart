@@ -13,15 +13,13 @@ import 'package:logger/logger.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import 'app.dart';
-import 'cubits/app_info/app_info_cubit.dart';
 import 'cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
-import 'cubits/live_config_cubit/live_config_cubit.dart';
-import 'cubits/location_cubit/location_cubit.dart';
 import 'cubits/settings_cubit/app_settings_cubit.dart';
 import 'env.dart' as env;
 import 'locator.dart';
 import 'repositories/firebase_authentication_repository/firebase_authentication_repository.dart';
 import 'repositories/storage_repository/storage_repository.dart';
+import 'services/app_info_service.dart';
 import 'services/meta_info_service.dart';
 import 'services/notification_service.dart';
 import 'services/session_info_service.dart';
@@ -34,11 +32,12 @@ void main() async {
 
   // storage must be initialized async, therefore reads are sync afterwards
   await GetIt.I<StorageRepository>().init();
-  final PackageInfo packageInfo = await PackageInfo.fromPlatform();
+  await GetIt.I<AppInfoService>().init();
+
   final Logger _logger = Logger();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-  
+
   // choose environment
   switch (env.FIREBASE_ENVIRONMENT) {
     case 'local':
@@ -69,21 +68,25 @@ void main() async {
       }
   }
 
-  runApp(AppInflater(packageInfo: packageInfo));
+  runApp(AppInflater(
+   
+  ));
 }
 
 class AppInflater extends StatelessWidget {
-  final PackageInfo packageInfo;
+
+  AppInflater({Key? key}) : super(key: key);
 
   /// This function handles all the functions that must be executed
   /// on login for proper user management etc.
   // ignore: prefer_function_declarations_over_variables
-  final Future<void> Function(user_models.User, PackageInfo) logInHandler = (user, packageInfo) async {
+  final Future<void> Function(user_models.User) logInHandler = (user) async {
     // To make messaging work
     final fcmToken = await FirebaseMessaging.instance.getToken();
     await NotificationService.setFCMToken(user.id, fcmToken);
 
     // To keep track of sessions
+    final PackageInfo packageInfo = GetIt.I<AppInfoService>().packageInfo;
     SessionInfoService.init(user.id);
     SessionInfoService.instance
         .setAppVersion("${packageInfo.version}+${packageInfo.buildNumber}");
@@ -92,27 +95,15 @@ class AppInflater extends StatelessWidget {
     MetaInfoService.registerAppOpening();
   };
 
-  AppInflater({Key? key, required this.packageInfo}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    final FirebaseAuthenticationRepository authRep =
-        FirebaseAuthenticationRepository();
-
-    return
-        // provide all blocs to the app
-        MultiBlocProvider(
+    return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => AppSettingsCubit()),
-        BlocProvider(create: (_) => LiveConfigCubit()),
-        BlocProvider(create: (_) => AppInfoCubit(packageInfo)),
-        BlocProvider(
+        BlocProvider<FirebaseAuthenticationCubitCubit>(
             lazy: false,
-            create: (_) =>
-                FirebaseAuthenticationCubitCubit(authRep, logInHandler)),
-        BlocProvider(
-          create: (_) => LocationCubit(),
-        )
+            create: (_) => FirebaseAuthenticationCubitCubit(
+                GetIt.I<FirebaseAuthenticationRepository>(), logInHandler)),
+        BlocProvider(create: (_) => AppSettingsCubit()),
       ],
       child: const App(),
     );

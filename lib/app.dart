@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
+import 'cubits/live_config_cubit/live_config_cubit.dart';
+import 'cubits/location_cubit/location_cubit.dart';
 import 'cubits/settings_cubit/app_settings_cubit.dart';
 import 'models/settings/app_settings.dart';
 import 'routes.dart';
@@ -25,17 +27,23 @@ class App extends StatelessWidget {
         buildWhen: ((previous, current) =>
             previous.runtimeType != current.runtimeType),
         builder: (context, state) => state.when(
-            unauthenticated: () => buildApp(const WelcomePage(
-                  useStaticTestphaseWall: true,
-                  betaMessage: "beta@Erlangen",
-                )),
-            authenticatedWaitingForUserToBeFetched: (_) =>
-                buildApp(const SplashPage()),
-            autehnticationNoUserCreated: (uid) =>
-                buildApp(const CreateAccountView()),
-            authenticated: (user) {
-              return buildApp(const BaseView(), routes: routes);
-            }),
+          unauthenticated: () => buildApp(const WelcomePage(
+            useStaticTestphaseWall: true,
+            betaMessage: "beta@Erlangen",
+          )),
+          authenticatedWaitingForUserToBeFetched: (_) =>
+              buildApp(const SplashPage()),
+          autehnticationNoUserCreated: (uid) =>
+              buildApp(const CreateAccountView()),
+          authenticated: (user) {
+            // provided all relevant blocks that are necessary to fully use the app
+            return MultiBlocProvider(providers: [
+              BlocProvider(create: (_) => LiveConfigCubit()),
+              // BlocProvider(create: (_) => AppInfoCubit(packageInfo)),
+              BlocProvider(create: (_) => LocationCubit())
+            ], child: buildApp(const BaseView(), routes: routes));
+          },
+        ),
       ),
     );
   }
