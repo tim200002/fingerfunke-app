@@ -93,9 +93,11 @@ class __AuthorNameState extends State<_AuthorName> {
 
   @override
   void initState() {
-    widget._userRepository
-        .getUser(widget._userId)
-        .then((value) => setState(() => name = value.name));
+    widget._userRepository.getUser(widget._userId).then((value) {
+      if (mounted) {
+        setState(() => name = value.name);
+      }
+    });
     super.initState();
   }
 

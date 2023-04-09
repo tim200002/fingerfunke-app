@@ -7,6 +7,7 @@ import 'repositories/firebase_authentication_repository/firebase_authentication_
 import 'repositories/storage_repository/storage_repository.dart';
 import 'repositories/user_repository/user_repository.dart';
 import 'services/app_info_service.dart';
+import 'services/globals_service.dart';
 
 final GetIt _getIt = GetIt.instance;
 
@@ -17,4 +18,5 @@ void setupGetIt() {
   _getIt.registerSingleton<StorageRepository>(StorageRepositoryImpl());
   _getIt.registerSingleton<UserRepository>(UserRepositoryImpl());
   _getIt.registerSingleton<AppInfoService>(AppInfoService());
+  _getIt.registerSingleton<GlobalsService>(GlobalsService());
 }

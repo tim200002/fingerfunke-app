@@ -110,7 +110,7 @@ class FeedbackSendPage extends StatelessWidget {
                       onPressed: () {
                         if (title.value.text.isEmpty) {
                           Tools.showSnackbar(
-                              context, l10n(context).msg_feedbackMissingTitle);
+                              l10n(context).msg_feedbackMissingTitle);
                           return;
                         }
                         context.read<FeedbackSendCubit>().send();

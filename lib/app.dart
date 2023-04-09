@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get_it/get_it.dart';
 
 import 'cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
 import 'cubits/live_config_cubit/live_config_cubit.dart';
@@ -8,6 +9,7 @@ import 'cubits/location_cubit/location_cubit.dart';
 import 'cubits/settings_cubit/app_settings_cubit.dart';
 import 'models/settings/app_settings.dart';
 import 'routes.dart';
+import 'services/globals_service.dart';
 import 'utils/app_theme.dart';
 import 'view/create_account/view/create_account_view.dart';
 import 'view/main/base_view.dart';
@@ -53,6 +55,7 @@ class App extends StatelessWidget {
           const <String, WidgetBuilder>{}}) {
     return BlocBuilder<AppSettingsCubit, AppSettings>(
       builder: (context, settings) => MaterialApp(
+        scaffoldMessengerKey: GetIt.I<GlobalsService>().rootScaffoldMessengerKey,
         routes: routes,
         locale: settings.locale == "system"
             ? null

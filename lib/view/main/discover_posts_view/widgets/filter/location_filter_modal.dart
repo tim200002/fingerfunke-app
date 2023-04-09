@@ -40,13 +40,13 @@ class LocationFilterModal extends StatelessWidget {
 
       // Location services (i.e. GPS not enabled). Request user to enable
       if (!locationServiceEnabled) {
-        return Tools.showSnackbar(context, "Please activate location services");
+        return Tools.showSnackbar("Please activate location services");
       }
 
       // Permission denied forever. Request user to change
       if (permission == LocationPermission.deniedForever) {
         return Tools.showSnackbar(
-            context, "Please allow location permission in settings");
+             "Please allow location permission in settings");
       }
 
       // request new permission if denied
@@ -55,7 +55,7 @@ class LocationFilterModal extends StatelessWidget {
         // If user declined tell hol
         if (permission != LocationPermission.always ||
             permission != LocationPermission.whileInUse) {
-          return Tools.showSnackbar(context,
+          return Tools.showSnackbar(
               "You must accept location permission to access device location");
         }
       }
@@ -65,12 +65,9 @@ class LocationFilterModal extends StatelessWidget {
       final Place devicePlace = await GeoCodingRepository.placeFromCoordinate(
           Coordinate(devicePosition.latitude, devicePosition.longitude));
 
-      context
-          .read<FeedFilterCubit>()
-          .update((v) => v.copyWith(useSetLocation: false));
       context.read<LocationCubit>().setLocation(devicePlace);
     } catch (e) {
-      Tools.showSnackbar(context, "Something went wrong");
+      Tools.showSnackbar( "Something went wrong");
     }
   }
 

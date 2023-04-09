@@ -23,7 +23,7 @@ class ManageAccountPage extends StatelessWidget {
                   .logoutRequested()
                   .catchError(
                     (_) => Tools.showSnackbar(
-                        context, l10n(context).msg_signOutFailed),
+                         l10n(context).msg_signOutFailed),
                   );
             },
           ),

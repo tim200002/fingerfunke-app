@@ -8,15 +8,12 @@ class FeedFilter extends Serializable {
   final bool hideFarFuture;
 
   FeedFilter(
-      {
-      required this.locationRadius,
+      {required this.locationRadius,
       required this.hideCompleted,
       required this.hideFarFuture});
 
   factory FeedFilter.fallback() => FeedFilter(
-      locationRadius: 30,
-      hideCompleted: false,
-      hideFarFuture: false);
+      locationRadius: 30, hideCompleted: false, hideFarFuture: false);
 
   factory FeedFilter.fromJson(JsonMap map) => FeedFilter(
       locationRadius: map["locationRadius"],
@@ -24,9 +21,7 @@ class FeedFilter extends Serializable {
       hideFarFuture: map["hideFarFuture"]);
 
   FeedFilter copyWith(
-          {final Place? setLocation,
-          final bool? useSetLocation,
-          final int? locationRadius,
+          {final int? locationRadius,
           final bool? hideCompleted,
           final bool? hideFarFuture}) =>
       FeedFilter(

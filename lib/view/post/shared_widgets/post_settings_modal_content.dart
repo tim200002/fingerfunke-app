@@ -80,7 +80,7 @@ class PostSettingsModalContent extends StatelessWidget {
                         Navigator.of(context).pop();
                         await context.read<PostCubit>().deletePost();
                         Tools.showSnackbar(
-                            context, l10n(context).msg_postDeleted);
+                            l10n(context).msg_postDeleted);
                         Navigator.of(context).pop();
                       },
                     ),

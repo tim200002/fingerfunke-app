@@ -19,7 +19,7 @@ Future<void> uploadProfilePictureBase64Encoded(
   XFile? file = await ImagePicker().pickImage(source: source);
 
   if (file == null) {
-    Tools.showSnackbar(context, "You did not select anything");
+    Tools.showSnackbar("You did not select anything");
     return;
   }
   // crop File to right aspect ration
@@ -47,7 +47,7 @@ Future<void> uploadProfilePictureBase64Encoded(
 
         if (imagebytes == null) {
           // Something went wrong wile cropping
-          Tools.showSnackbar(context,
+          Tools.showSnackbar(
               "Something went wrong cropping your image, please try again!");
           return Navigator.of(context).pop();
         }
@@ -59,7 +59,7 @@ Future<void> uploadProfilePictureBase64Encoded(
         // check that data url fits in max length allowed by firebase i.e. 1048487
         if (dataUrl.length > 1048487) {
           logger.e("Data URL to long to sucessfully transmit file to firebase");
-          Tools.showSnackbar(context,
+          Tools.showSnackbar(
               "Your Image size is too large to be used as a profile picture");
           Navigator.of(context).pop();
         }

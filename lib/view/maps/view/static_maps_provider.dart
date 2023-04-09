@@ -25,7 +25,7 @@ class StaticMapsProvider extends StatelessWidget {
           var uri = GoogleMapsService.getGoogleUri(address);
 
           if (!(await canLaunchUrl(uri)) && address == "") {
-            Tools.showSnackbar(context, l10n(context).msg_mapCouldNotOpen);
+            Tools.showSnackbar( l10n(context).msg_mapCouldNotOpen);
             return;
           }
           await launchUrl(uri, mode: LaunchMode.externalApplication);

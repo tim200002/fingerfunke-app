@@ -76,7 +76,7 @@ class PostActionButtons extends StatelessWidget {
                                     : context.read<PostCubit>().joinPost)
                                 .call()
                                 ?.catchError(
-                                  (_) => Tools.showSnackbar(context,
+                                  (_) => Tools.showSnackbar(
                                       l10n(context).msg_errorUndefined),
                                 ))),
                   Align(
@@ -133,7 +133,7 @@ class _Edit extends StatelessWidget {
             onTap: valid
                 ? () => context.read<EventEditorCubit>().submit()
                 : () => Tools.showSnackbar(
-                    context, l10n(context).msg_editFieldsMissing),
+                    l10n(context).msg_editFieldsMissing),
           ))
     ]);
   }

@@ -52,7 +52,7 @@ class PhoneLoginPage extends StatelessWidget {
                           listener: ((context, state) => state.whenOrNull<void>(
                                   enterPhoneNumber: (message) {
                                 if (message != null) {
-                                  Tools.showSnackbar(context, message);
+                                  Tools.showSnackbar(message);
                                 }
                               })),
                           // only for rebuild between different screens therefore only when real class changes
