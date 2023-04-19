@@ -12,6 +12,7 @@ class MapsPlacePickerPage extends StatelessWidget {
   final FutureOr Function(BuildContext, PickResult) onPlacePicked;
   static const LatLng _defaultInitialPosition = LatLng(47.62087969215252, 9.417152431150251);
   late final LatLng initialPosition;
+  
   MapsPlacePickerPage({required this.onPlacePicked, Coordinate? initialPosition, Key? key})
       : super(key: key){
         if(initialPosition == null){
