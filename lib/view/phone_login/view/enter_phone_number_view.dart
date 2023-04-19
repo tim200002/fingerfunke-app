@@ -55,12 +55,22 @@ class _EnterPhoneNumberViewState extends State<EnterPhoneNumberView> {
     );
   }
 
+  /// Validates the phone number
   bool validatePhoneNumber(String countryCode, String number) {
-    //!ToDo better validation logic
-    if (number.length < 8) {
+    // edge case validation
+    if (countryCode.isEmpty) {
       return false;
     }
-    return true;
+
+    if(number.isEmpty) {
+      return false;
+    }
+
+    RegExp validPhoneNumberChecker = RegExp(
+        r"\(?\+[0-9]{1,3}\)? ?-?[0-9]{1,3} ?-?[0-9]{3,5} ?-?[0-9]{4}( ?-?[0-9]{3})?");
+    String mergedNumber = (countryCode + number);
+    print(mergedNumber);
+    return validPhoneNumberChecker.hasMatch(mergedNumber);
   }
 
   @override
