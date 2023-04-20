@@ -28,6 +28,7 @@ platform :ios do
     build_app(
       workspace: "Runner.xcworkspace", 
       scheme: "Runner",
+      output_directory: "../../build/ios"
     )
 
     upload_to_testflight
