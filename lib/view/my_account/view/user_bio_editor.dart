@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
-import '../../cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
-import '../../models/user/user.dart';
-import '../../repositories/user_repository/user_repository.dart';
-import '../../utils/tools.dart';
+import 'package:get_it/get_it.dart';
+
+import '../../../cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
+import '../../../models/user/user.dart';
+import '../../../repositories/user_repository/user_repository.dart';
+import '../../../utils/tools.dart';
+
 
 class UserBioEditor extends StatelessWidget {
-  const UserBioEditor({super.key});
+  final UserRepository userRepository = GetIt.I<UserRepository>();
+
+  UserBioEditor({super.key});
 
   void _showEditDialog(BuildContext context, User user) {
-    UserRepository userRepository = UserRepositoryImpl();
     TextEditingController bioController = TextEditingController(text: user.bio);
     showModalBottomSheet(
         context: context,
