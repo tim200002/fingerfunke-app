@@ -7,9 +7,7 @@ import '../../models/post/post.dart';
 import '../../models/report.dart';
 import '../../models/user/user.dart';
 import '../../repositories/user_repository/user_repository.dart';
-import '../../repositories/user_repository/user_repository.dart';
 import '../../repositories/video_repository/video_repository.impl.dart';
-import '../../utils/skeleton_view.dart';
 import '../../utils/tools.dart';
 import '../../utils/util_widgets/future_text.dart';
 import '../error/exception_view.dart';
@@ -34,7 +32,8 @@ class ReportSendPage extends StatelessWidget {
   }
 
   Widget _postCard(BuildContext context) {
-    Future<User> userFuture = _userRepository.getUser(post.authorId);
+    // ToDo: Cam we guarentee that the author of a post exists, as I remebeber once an author is deleted also all of his posts are deleted
+    Future<User?> userFuture = _userRepository.getUser(post.authorId);
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 30),
@@ -80,8 +79,8 @@ class ReportSendPage extends StatelessWidget {
                   height: 30,
                 ),
                 FutureText(
-                  userFuture.then(
-                      (value) => l10n(context).lbl_postCreatedBy(value.name)),
+                  userFuture.then((value) => l10n(context).lbl_postCreatedBy(
+                      value?.name ?? l10n(context).lbl_deleted_user)),
                   style: Theme.of(context).textTheme.bodyMedium,
                 )
               ],

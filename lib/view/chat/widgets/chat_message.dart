@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../repositories/user_repository/user_repository.dart';
 import '../../../utils/skeleton_view.dart';
+import '../../../utils/tools.dart';
 import '../../../utils/type_aliases.dart';
 
 class ChatMessage extends StatelessWidget {
@@ -76,13 +77,10 @@ class ChatMessage extends StatelessWidget {
 }
 
 class _AuthorName extends StatefulWidget {
-  final GetIt _getIt = GetIt.I;
   final FirestoreId _userId;
-  late final UserRepository _userRepository;
+  final UserRepository _userRepository = GetIt.I<UserRepository>();
 
-  _AuthorName(this._userId, {Key? key}) : super(key: key) {
-    _userRepository = _getIt<UserRepository>();
-  }
+  _AuthorName(this._userId, {Key? key}) : super(key: key);
 
   @override
   State<_AuthorName> createState() => __AuthorNameState();
@@ -95,7 +93,8 @@ class __AuthorNameState extends State<_AuthorName> {
   void initState() {
     widget._userRepository.getUser(widget._userId).then((value) {
       if (mounted) {
-        setState(() => name = value.name);
+      
+        setState(() => name = value?.name ?? l10n(context).lbl_deleted_user);
       }
     });
     super.initState();

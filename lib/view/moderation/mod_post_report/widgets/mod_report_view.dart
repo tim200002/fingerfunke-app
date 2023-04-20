@@ -18,7 +18,7 @@ class ModReportView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<User> authorFuture = _userRepository.getUser(report.authorId);
+    Future<User?> authorFuture = _userRepository.getUser(report.authorId);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -35,7 +35,7 @@ class ModReportView extends StatelessWidget {
                     arguments: report.objectReference),
                 label: Text(l10n(context).lbl_modOpenPost))),
         FutureText(authorFuture
-            .then((value) => l10n(context).lbl_modReportedBy + value.name)),
+            .then((value) => l10n(context).lbl_modReportedBy + (value?.name ?? l10n(context).lbl_deleted_user))),
         const SizedBox(
           height: 10,
         ),

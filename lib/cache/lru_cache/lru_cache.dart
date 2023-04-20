@@ -1,20 +1,27 @@
 import '../../utils/type_aliases.dart';
 
-class LRUCache<T>{
+/// LRU cache
+/// 
+/// Something special about this implementation is that it also accepts and stores null values.
+class LRUCache<T> {
   final int _capacity;
-  final Map<FirestoreId, T> _map = {};
+  final Map<FirestoreId, T?> _map = {};
 
   LRUCache(this._capacity);
 
   T? get(FirestoreId key) {
-    final value = _map.remove(key);
-
-    if (value != null) {
-      // put it back to the end of the map
-      // this keeps the most recently used items at the end of the map
-      _map[key] = value;
+    // If key is not present in the map, return null
+    if (!_map.containsKey(key)) {
+      return null;
     }
+
+    // key is present in the map, read value
+    final value = _map.remove(key);
     
+    // put it back to the end of the map
+    // this keeps the most recently used items at the end of the map
+    _map[key] = value;
+
     return value;
   }
 
@@ -34,6 +41,4 @@ class LRUCache<T>{
   int get length => _map.length;
 
   bool containsKey(FirestoreId key) => _map.containsKey(key);
-
-
 }

@@ -9,7 +9,7 @@ part 'errors_and_exceptions.dart';
 part 'user_repository.impl.dart';
 
 abstract class UserRepository {
-  Future<User> getUser(String userId);
+  Future<User?> getUser(String userId);
   Future<void> createUser(User user);
   Future<void> setToken(String userId, String key, JsonMap value);
   Future<void> updateUser(FirestoreId userId,

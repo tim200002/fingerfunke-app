@@ -19,20 +19,16 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<User> getUser(String userId) async {
+  Future<User?> getUser(String userId) async {
     // check whether the user is already in the cache, if so use that
     if (_userCache.containsKey(userId)) {
-      final user =  _userCache.get(userId);
-      if(user == null) {
-        throw UserNotFoundException();
-      }
-      return user;
+      return  _userCache.get(userId);
     }
 
     // user is not in cache, fetch new user from the repository
     DocumentSnapshot userSnaphsot = await _userCollection.doc(userId).get();
     if (userSnaphsot.data() == null) {
-      throw UserNotFoundException();
+      return null;
     }
     final user = User.fromDoc(userSnaphsot);
 

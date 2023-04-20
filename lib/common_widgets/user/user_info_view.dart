@@ -32,13 +32,18 @@ class UserInfoView extends StatefulWidget {
 }
 
 class _UserInfoViewState extends State<UserInfoView> {
-  UserInfo? _userInfo;
+  User? _user;
   @override
   void initState() {
     // load user from cache or repository
     widget._userRepository.getUser(widget._userId).then((value) {
       setState(() {
-        _userInfo = value.toInfo();
+        // ToDo: can we find a better solution that can handle the case that the user is deleted and thus a null value is returned?
+        if (_user == null) {
+          throw Exception(
+              "PLease use this widget only if it can be guaranteed that for the given ID a user exists");
+        }
+        _user = value!;
       });
     });
 
@@ -48,8 +53,10 @@ class _UserInfoViewState extends State<UserInfoView> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () =>
-          UserProfileView.showAsBottomSheet(context, userId: widget._userId),
+      // only make the user profile view clickable once the user is loaded
+      onTap: _user != null
+          ? () => UserProfileView.showAsBottomSheet(context, user: _user!)
+          : null,
       child: Padding(
         padding: widget.margin,
         child: widget.vertical
@@ -57,14 +64,14 @@ class _UserInfoViewState extends State<UserInfoView> {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                      UserImage(
-                          _userInfo?.picture,
-                          diameter: 50,
-                        ),
+                  UserImage(
+                    _user?.picture,
+                    diameter: 50,
+                  ),
                   const SizedBox(height: 10),
-                  _userInfo != null
+                  _user != null
                       ? Text(
-                          _userInfo!.name,
+                          _user!.name,
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium
@@ -79,14 +86,14 @@ class _UserInfoViewState extends State<UserInfoView> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-          UserImage(
-                          _userInfo?.picture,
-                          diameter: widget.compact ? 24 : 34,
-                        ),
+                  UserImage(
+                    _user?.picture,
+                    diameter: widget.compact ? 24 : 34,
+                  ),
                   SizedBox(width: widget.compact ? 6 : 15),
-                  _userInfo != null
+                  _user != null
                       ? Text(
-                          _userInfo!.name,
+                          _user!.name,
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium
@@ -99,4 +106,3 @@ class _UserInfoViewState extends State<UserInfoView> {
     );
   }
 }
-

@@ -345,5 +345,7 @@
   "msg_signedIn": "You are signed in.",
   "@msg_signedIn": {},
   "msg_signOutFailed": "Sign out failed.",
-  "@msg_signOutFailed": {}
+  "@msg_signOutFailed": {},
+  "lbl_deleted_user": "deleted user",
+  "@lbl_deleted_user": {}
 }
