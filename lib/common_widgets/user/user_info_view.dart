@@ -39,7 +39,7 @@ class _UserInfoViewState extends State<UserInfoView> {
     widget._userRepository.getUser(widget._userId).then((value) {
       setState(() {
         // ToDo: can we find a better solution that can handle the case that the user is deleted and thus a null value is returned?
-        if (_user == null) {
+        if (value == null) {
           throw Exception(
               "PLease use this widget only if it can be guaranteed that for the given ID a user exists");
         }

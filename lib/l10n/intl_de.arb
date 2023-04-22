@@ -312,6 +312,14 @@
   "@lbl_welcomeToApp": {},
   "lbl_yes": "ja",
   "@lbl_yes": {},
+  "lbl_deleted_user": "gelöschter Nutzer",
+  "@lbl_deleted_user": {},
+  "lbl_deleteAccount": "Account löschen",
+  "@lbl_deleteAccount": {},
+  "msg_deleteAccountConfirm": "Bist du dir sicher, dass du deinen Account löschen möchtest?",
+  "@msg_deleteAccountConfirm": {},
+  "msg_deleteAccountFailed": "Sorry, es gab ein Problem beim Löschen deines Accounts. Versuche es bitte später wieder.",
+  "@msg_deleteAccountFailed": {},
   "msg_chatSendingFailed": "Sorry, deine Nachricht konnte nicht gesendet werden.",
   "@msg_chatSendingFailed": {},
   "msg_editFieldsMissing": "Bitte alle Felder ausfüllen.",
@@ -345,7 +353,5 @@
   "msg_signedIn": "Du bist eingeloggt.",
   "@msg_signedIn": {},
   "msg_signOutFailed": "Log out fehlgeschlagen.",
-  "@msg_signOutFailed": {},
-  "lbl_deleted_user": "gelöschter Nutzer",
-  "@lbl_deleted_user": {}
+  "@msg_signOutFailed": {}
 }

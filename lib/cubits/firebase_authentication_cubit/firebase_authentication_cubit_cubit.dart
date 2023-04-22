@@ -16,7 +16,6 @@ part 'firebase_authentication_cubit_state.dart';
 /// This Cubit is responsible for handling the authentication state of the user
 class FirebaseAuthenticationCubitCubit
     extends Cubit<FirebaseAuthenticationCubitState> {
-  
   late final FirebaseAuthenticationRepository _authenticationRepository;
   final UserRepository _userRepository = UserRepositoryImpl();
 
@@ -47,8 +46,8 @@ class FirebaseAuthenticationCubitCubit
   }
 
   /// Private constructor to simplify initial setup
-  /// 
-  /// This constructor is only called by the factory constructor, 
+  ///
+  /// This constructor is only called by the factory constructor,
   /// it automatically subscribes to the user stream
   /// One must provide an initial state, which is used when the cubit is constructed
   FirebaseAuthenticationCubitCubit._hidden(
@@ -56,8 +55,8 @@ class FirebaseAuthenticationCubitCubit
       FirebaseAuthenticationCubitState initialAuthenticationState,
       this.onLogin)
       : super(initialAuthenticationState) {
-      _authenticationRepository = authenticationRepository;
-      _userSubscription = _authenticationRepository.userStream
+    _authenticationRepository = authenticationRepository;
+    _userSubscription = _authenticationRepository.userStream
         .listen((currentUser) => _userChanged(currentUser));
   }
 
@@ -95,12 +94,11 @@ class FirebaseAuthenticationCubitCubit
   /// Checks if the user document exists in firestore, if it does it returns the user
   Future<Tuple2<bool, user_models.User?>> _userDocumentExists(
       String uid) async {
-    try {
-      final user = await _userRepository.getUser(uid);
-      return Tuple2(true, user);
-    } on UserNotFoundException catch (_) {
+    final user = await _userRepository.getUser(uid);
+    if (user == null) {
       return const Tuple2(false, null);
     }
+    return Tuple2(true, user);
   }
 
   /// Creates a user document for the currently authenticated user in firestore
@@ -134,6 +132,12 @@ class FirebaseAuthenticationCubitCubit
   /// Try to log out when a log out is requested
   Future<void> logoutRequested() async {
     await _authenticationRepository.logOut();
+    await _userDocumentSubscription?.cancel();
+  }
+
+  /// Try to delete a user when requested
+  Future<void> deleteAccountRequested() async {
+    await _authenticationRepository.deleteAccount();
     await _userDocumentSubscription?.cancel();
   }
 

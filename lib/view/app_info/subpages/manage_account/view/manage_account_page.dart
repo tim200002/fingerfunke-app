@@ -7,6 +7,37 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 class ManageAccountPage extends StatelessWidget {
   const ManageAccountPage({Key? key}) : super(key: key);
 
+  void _showDeleteAccountDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext ctx) {
+        return AlertDialog(
+          actionsPadding: const EdgeInsets.symmetric(horizontal: 7),
+          title: Text(l10n(context).lbl_deleteAccount),
+          content: Text(l10n(context).msg_deleteAccountConfirm),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text(l10n(context).lbl_cancel),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                BlocProvider.of<FirebaseAuthenticationCubitCubit>(context)
+                    .deleteAccountRequested()
+                    .catchError(
+                      (_) => Tools.showSnackbar(
+                          l10n(context).msg_deleteAccountFailed),
+                    );
+                Navigator.of(context).pop();
+              },
+              child: Text(l10n(context).lbl_yes),
+            )
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,9 +53,15 @@ class ManageAccountPage extends StatelessWidget {
               BlocProvider.of<FirebaseAuthenticationCubitCubit>(context)
                   .logoutRequested()
                   .catchError(
-                    (_) => Tools.showSnackbar(
-                         l10n(context).msg_signOutFailed),
+                    (_) => Tools.showSnackbar(l10n(context).msg_signOutFailed),
                   );
+            },
+          ),
+                    TextButton.icon(
+            icon: const Icon(FeatherIcons.trash2),
+            label: Text(l10n(context).lbl_deleteAccount),
+            onPressed: () {
+              _showDeleteAccountDialog(context);
             },
           ),
         ]),
