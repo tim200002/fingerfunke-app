@@ -6,6 +6,10 @@ import '../../../../../common_widgets/list_items/post_feed_image_item.dart';
 import '../../../../../utils/tools.dart';
 import '../../../../illustration_view/illustration_view.dart';
 
+/// A widget that shows a loading indicator for a while and then shows an empty
+/// state if the loading takes too long.
+/// Important!!!! Due to a rebuild of the pagination service, this widget is no longer necessary, since 
+/// an empty list is now returned by the pagination service if there are no items.
 class FeedLoadingView extends StatefulWidget {
   final Duration maxLoadingDuration;
   const FeedLoadingView(

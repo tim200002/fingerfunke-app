@@ -52,7 +52,7 @@ class PostRepositoryImpl implements PostRepository {
   @override
   Stream<List<Post>> observeAuthoredPosts(FirestoreId userId) {
     return _postCollection
-        .where('author.id', isEqualTo: userId)
+        .where('authorId', isEqualTo: userId)
         .snapshots()
         .map((r) => r.docs.map((d) => Post.fromDoc(d)).toList());
   }

@@ -25,7 +25,7 @@ class _MainViewState extends State<MainView> {
     return Scaffold(
       body: _activePage == _MainViewPages.explore
           ? const DiscoverView()
-          : const ParticipateView(),
+          : ParticipateView(),
       drawer: const HomeDrawer(),
       bottomNavigationBar: BottomAppBar(
         elevation: 0,

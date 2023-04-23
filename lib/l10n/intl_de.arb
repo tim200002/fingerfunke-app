@@ -312,6 +312,8 @@
   "@lbl_welcomeToApp": {},
   "lbl_yes": "ja",
   "@lbl_yes": {},
+  "lbl_noSavedPosts": "Du hast noch keine Posts gespeichert.",
+  "@lbl_noSavedPosts": {},
   "lbl_deleted_user": "gelöschter Nutzer",
   "@lbl_deleted_user": {},
   "lbl_deleteAccount": "Account löschen",

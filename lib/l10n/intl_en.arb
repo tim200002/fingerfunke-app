@@ -316,6 +316,8 @@
   "@lbl_deleted_user": {},
   "lbl_deleteAccount": "delete account",
   "@lbl_deleteAccount": {},
+  "lbl_noSavedPosts": "no saved posts",
+  "@lbl_noSavedPosts": {},
   "msg_deleteAccountConfirm": "Are you sure you want to delete your account?",
   "@msg_deleteAccountConfirm": {},
   "msg_deleteAccountFailed": "Sorry, there was an error deleting your account. Please try again at a later time.",
