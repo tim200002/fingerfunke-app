@@ -31,7 +31,17 @@ class PostCubit extends Cubit<PostState> {
   }
 
   Future<void> deletePost() async {
-    state.whenOrNull(normal: (post, _) => _postRepository.deletePost(post.id));
+    await state.whenOrNull(
+      normal: (post, _) async {
+        if (!post.isAuthor(userId)) {
+          throw Exception("Invalid Permission, User is not author of post");
+        }
+        // first cancel the subscription to the current post
+        await _postSubscription.cancel();
+        // then delete the post
+        _postRepository.deletePost(post.id);
+      },
+    );
   }
 
   Future<void> toggleSaved(FirestoreId userId, bool hasSaved) async {

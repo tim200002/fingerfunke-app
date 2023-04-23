@@ -43,7 +43,7 @@ class _UserInfoViewState extends State<UserInfoView> {
           throw Exception(
               "PLease use this widget only if it can be guaranteed that for the given ID a user exists");
         }
-        _user = value!;
+        _user = value;
       });
     });
 
