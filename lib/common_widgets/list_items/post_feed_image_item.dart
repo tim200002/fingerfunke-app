@@ -12,6 +12,7 @@ import '../../../../../../utils/tools.dart';
 import '../../../../../../utils/type_aliases.dart';
 import '../../repositories/video_repository/video_repository.dart';
 import '../../utils/skeleton_view.dart';
+import '../image/mux_thumbnail_image/mux_thumbnail_image.dart';
 import '../user/user_info_view.dart';
 import 'in_past_filter.dart';
 
@@ -52,15 +53,8 @@ class PostFeedImageItem extends StatelessWidget {
 
   Widget _thumbnailView(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
-    return NetworkPlaceholderImage(
-      _repo.createThumbnailUrl(_post.media[0] as VideoAsset),
-      Container(
-        color: Colors.grey,
-      ),
-      fit: BoxFit.cover,
-      width: width.toInt(),
-      height: height?.toInt(),
-    );
+    return MuxThumbnailImage(_post.media[0] as VideoAsset,  width: width,
+      height: height, fit: BoxFit.cover,);
   }
 
   Widget _backgroundView(BuildContext context) {

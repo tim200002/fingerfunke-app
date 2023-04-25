@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
+import '../../../../../common_widgets/image/mux_thumbnail_image/mux_thumbnail_image.dart';
 import '../../../../../common_widgets/image/network_placeholder_image.dart/network_placeholder_image.dart';
 import '../../../../../common_widgets/list_items/in_past_filter.dart';
 import '../../../../../common_widgets/upload/video_upload_tile.dart';
@@ -205,15 +206,8 @@ class HeaderSection extends StatelessWidget {
         child: Stack(children: [
           InPastFilter(
               isInPast: post.asEvent?.isCompleted ?? false,
-              child: NetworkPlaceholderImage(
-                VideoRepositoryImpl()
-                    .createThumbnailUrl(post.media[0] as VideoAsset),
-                Container(
-                  color: Colors.grey,
-                ),
-                width: MediaQuery.of(context).size.width.toInt(),
-                fit: BoxFit.cover,
-              )),
+              child: MuxThumbnailImage(post.media[0] as VideoAsset,
+                  width: MediaQuery.of(context).size.width, fit: BoxFit.cover)),
           const Center(
             child: Icon(
               Icons.play_arrow_rounded,
