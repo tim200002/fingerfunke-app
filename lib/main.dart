@@ -15,7 +15,6 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'app.dart';
 import 'cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
 import 'cubits/settings_cubit/app_settings_cubit.dart';
-import 'env.dart' as env;
 import 'locator.dart';
 import 'repositories/firebase_authentication_repository/firebase_authentication_repository.dart';
 import 'repositories/storage_repository/storage_repository.dart';
@@ -24,10 +23,13 @@ import 'services/meta_info_service.dart';
 import 'services/notification_service.dart';
 import 'services/session_info_service.dart';
 import 'models/user/user.dart' as user_models;
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   setupGetIt();
 
   // storage must be initialized async, therefore reads are sync afterwards
@@ -39,13 +41,13 @@ void main() async {
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
   // choose environment
-  switch (env.FIREBASE_ENVIRONMENT) {
+  switch (const String.fromEnvironment("FIREBASE_ENVIRONMENT")) {
     case 'local':
       {
         _logger.i("Using local environment");
         Logger.level = Level.debug;
-        String? emulatorIp = env.EMULATOR_IP;
-        if (emulatorIp == null) {
+        String emulatorIp = const String.fromEnvironment("EMULATOR_IP", defaultValue: "");
+        if (emulatorIp.isEmpty) {
           _logger.e("No IP for Emulator provided, falling back to localhost ");
           emulatorIp = "localhost";
         }
