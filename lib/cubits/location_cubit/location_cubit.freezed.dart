@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'location_cubit.dart';
 
@@ -26,10 +26,10 @@ mixin _$LocationState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? uninitialized,
-    TResult Function(dynamic e)? error,
-    TResult Function(PermissionState permissionState)? noPosition,
-    TResult Function(Place location)? loaded,
+    TResult? Function()? uninitialized,
+    TResult? Function(dynamic e)? error,
+    TResult? Function(PermissionState permissionState)? noPosition,
+    TResult? Function(Place location)? loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -51,10 +51,10 @@ mixin _$LocationState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Uninitialized value)? uninitialized,
-    TResult Function(_Error value)? error,
-    TResult Function(_NoPosition value)? noPosition,
-    TResult Function(_Loaded value)? loaded,
+    TResult? Function(_Uninitialized value)? uninitialized,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_NoPosition value)? noPosition,
+    TResult? Function(_Loaded value)? loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -72,17 +72,18 @@ mixin _$LocationState {
 abstract class $LocationStateCopyWith<$Res> {
   factory $LocationStateCopyWith(
           LocationState value, $Res Function(LocationState) then) =
-      _$LocationStateCopyWithImpl<$Res>;
+      _$LocationStateCopyWithImpl<$Res, LocationState>;
 }
 
 /// @nodoc
-class _$LocationStateCopyWithImpl<$Res>
+class _$LocationStateCopyWithImpl<$Res, $Val extends LocationState>
     implements $LocationStateCopyWith<$Res> {
   _$LocationStateCopyWithImpl(this._value, this._then);
 
-  final LocationState _value;
   // ignore: unused_field
-  final $Res Function(LocationState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -94,14 +95,11 @@ abstract class _$$_UninitializedCopyWith<$Res> {
 
 /// @nodoc
 class __$$_UninitializedCopyWithImpl<$Res>
-    extends _$LocationStateCopyWithImpl<$Res>
+    extends _$LocationStateCopyWithImpl<$Res, _$_Uninitialized>
     implements _$$_UninitializedCopyWith<$Res> {
   __$$_UninitializedCopyWithImpl(
       _$_Uninitialized _value, $Res Function(_$_Uninitialized) _then)
-      : super(_value, (v) => _then(v as _$_Uninitialized));
-
-  @override
-  _$_Uninitialized get _value => super._value as _$_Uninitialized;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -137,10 +135,10 @@ class _$_Uninitialized implements _Uninitialized {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? uninitialized,
-    TResult Function(dynamic e)? error,
-    TResult Function(PermissionState permissionState)? noPosition,
-    TResult Function(Place location)? loaded,
+    TResult? Function()? uninitialized,
+    TResult? Function(dynamic e)? error,
+    TResult? Function(PermissionState permissionState)? noPosition,
+    TResult? Function(Place location)? loaded,
   }) {
     return uninitialized?.call();
   }
@@ -174,10 +172,10 @@ class _$_Uninitialized implements _Uninitialized {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Uninitialized value)? uninitialized,
-    TResult Function(_Error value)? error,
-    TResult Function(_NoPosition value)? noPosition,
-    TResult Function(_Loaded value)? loaded,
+    TResult? Function(_Uninitialized value)? uninitialized,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_NoPosition value)? noPosition,
+    TResult? Function(_Loaded value)? loaded,
   }) {
     return uninitialized?.call(this);
   }
@@ -206,24 +204,24 @@ abstract class _Uninitialized implements LocationState {
 abstract class _$$_ErrorCopyWith<$Res> {
   factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
       __$$_ErrorCopyWithImpl<$Res>;
+  @useResult
   $Res call({dynamic e});
 }
 
 /// @nodoc
-class __$$_ErrorCopyWithImpl<$Res> extends _$LocationStateCopyWithImpl<$Res>
+class __$$_ErrorCopyWithImpl<$Res>
+    extends _$LocationStateCopyWithImpl<$Res, _$_Error>
     implements _$$_ErrorCopyWith<$Res> {
   __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
-      : super(_value, (v) => _then(v as _$_Error));
+      : super(_value, _then);
 
-  @override
-  _$_Error get _value => super._value as _$_Error;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? e = freezed,
   }) {
     return _then(_$_Error(
-      e == freezed
+      freezed == e
           ? _value.e
           : e // ignore: cast_nullable_to_non_nullable
               as dynamic,
@@ -258,6 +256,7 @@ class _$_Error implements _Error {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ErrorCopyWith<_$_Error> get copyWith =>
       __$$_ErrorCopyWithImpl<_$_Error>(this, _$identity);
 
@@ -275,10 +274,10 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? uninitialized,
-    TResult Function(dynamic e)? error,
-    TResult Function(PermissionState permissionState)? noPosition,
-    TResult Function(Place location)? loaded,
+    TResult? Function()? uninitialized,
+    TResult? Function(dynamic e)? error,
+    TResult? Function(PermissionState permissionState)? noPosition,
+    TResult? Function(Place location)? loaded,
   }) {
     return error?.call(e);
   }
@@ -312,10 +311,10 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Uninitialized value)? uninitialized,
-    TResult Function(_Error value)? error,
-    TResult Function(_NoPosition value)? noPosition,
-    TResult Function(_Loaded value)? loaded,
+    TResult? Function(_Uninitialized value)? uninitialized,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_NoPosition value)? noPosition,
+    TResult? Function(_Loaded value)? loaded,
   }) {
     return error?.call(this);
   }
@@ -350,26 +349,25 @@ abstract class _$$_NoPositionCopyWith<$Res> {
   factory _$$_NoPositionCopyWith(
           _$_NoPosition value, $Res Function(_$_NoPosition) then) =
       __$$_NoPositionCopyWithImpl<$Res>;
+  @useResult
   $Res call({PermissionState permissionState});
 }
 
 /// @nodoc
 class __$$_NoPositionCopyWithImpl<$Res>
-    extends _$LocationStateCopyWithImpl<$Res>
+    extends _$LocationStateCopyWithImpl<$Res, _$_NoPosition>
     implements _$$_NoPositionCopyWith<$Res> {
   __$$_NoPositionCopyWithImpl(
       _$_NoPosition _value, $Res Function(_$_NoPosition) _then)
-      : super(_value, (v) => _then(v as _$_NoPosition));
+      : super(_value, _then);
 
-  @override
-  _$_NoPosition get _value => super._value as _$_NoPosition;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? permissionState = freezed,
+    Object? permissionState = null,
   }) {
     return _then(_$_NoPosition(
-      permissionState == freezed
+      null == permissionState
           ? _value.permissionState
           : permissionState // ignore: cast_nullable_to_non_nullable
               as PermissionState,
@@ -395,16 +393,16 @@ class _$_NoPosition implements _NoPosition {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_NoPosition &&
-            const DeepCollectionEquality()
-                .equals(other.permissionState, permissionState));
+            (identical(other.permissionState, permissionState) ||
+                other.permissionState == permissionState));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(permissionState));
+  int get hashCode => Object.hash(runtimeType, permissionState);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_NoPositionCopyWith<_$_NoPosition> get copyWith =>
       __$$_NoPositionCopyWithImpl<_$_NoPosition>(this, _$identity);
 
@@ -422,10 +420,10 @@ class _$_NoPosition implements _NoPosition {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? uninitialized,
-    TResult Function(dynamic e)? error,
-    TResult Function(PermissionState permissionState)? noPosition,
-    TResult Function(Place location)? loaded,
+    TResult? Function()? uninitialized,
+    TResult? Function(dynamic e)? error,
+    TResult? Function(PermissionState permissionState)? noPosition,
+    TResult? Function(Place location)? loaded,
   }) {
     return noPosition?.call(permissionState);
   }
@@ -459,10 +457,10 @@ class _$_NoPosition implements _NoPosition {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Uninitialized value)? uninitialized,
-    TResult Function(_Error value)? error,
-    TResult Function(_NoPosition value)? noPosition,
-    TResult Function(_Loaded value)? loaded,
+    TResult? Function(_Uninitialized value)? uninitialized,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_NoPosition value)? noPosition,
+    TResult? Function(_Loaded value)? loaded,
   }) {
     return noPosition?.call(this);
   }
@@ -497,24 +495,24 @@ abstract class _NoPosition implements LocationState {
 abstract class _$$_LoadedCopyWith<$Res> {
   factory _$$_LoadedCopyWith(_$_Loaded value, $Res Function(_$_Loaded) then) =
       __$$_LoadedCopyWithImpl<$Res>;
+  @useResult
   $Res call({Place location});
 }
 
 /// @nodoc
-class __$$_LoadedCopyWithImpl<$Res> extends _$LocationStateCopyWithImpl<$Res>
+class __$$_LoadedCopyWithImpl<$Res>
+    extends _$LocationStateCopyWithImpl<$Res, _$_Loaded>
     implements _$$_LoadedCopyWith<$Res> {
   __$$_LoadedCopyWithImpl(_$_Loaded _value, $Res Function(_$_Loaded) _then)
-      : super(_value, (v) => _then(v as _$_Loaded));
+      : super(_value, _then);
 
-  @override
-  _$_Loaded get _value => super._value as _$_Loaded;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? location = freezed,
+    Object? location = null,
   }) {
     return _then(_$_Loaded(
-      location == freezed
+      null == location
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
               as Place,
@@ -540,15 +538,16 @@ class _$_Loaded implements _Loaded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Loaded &&
-            const DeepCollectionEquality().equals(other.location, location));
+            (identical(other.location, location) ||
+                other.location == location));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(location));
+  int get hashCode => Object.hash(runtimeType, location);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
       __$$_LoadedCopyWithImpl<_$_Loaded>(this, _$identity);
 
@@ -566,10 +565,10 @@ class _$_Loaded implements _Loaded {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? uninitialized,
-    TResult Function(dynamic e)? error,
-    TResult Function(PermissionState permissionState)? noPosition,
-    TResult Function(Place location)? loaded,
+    TResult? Function()? uninitialized,
+    TResult? Function(dynamic e)? error,
+    TResult? Function(PermissionState permissionState)? noPosition,
+    TResult? Function(Place location)? loaded,
   }) {
     return loaded?.call(location);
   }
@@ -603,10 +602,10 @@ class _$_Loaded implements _Loaded {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Uninitialized value)? uninitialized,
-    TResult Function(_Error value)? error,
-    TResult Function(_NoPosition value)? noPosition,
-    TResult Function(_Loaded value)? loaded,
+    TResult? Function(_Uninitialized value)? uninitialized,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_NoPosition value)? noPosition,
+    TResult? Function(_Loaded value)? loaded,
   }) {
     return loaded?.call(this);
   }

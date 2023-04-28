@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'feedback_send_cubit.dart';
 
@@ -28,12 +28,12 @@ mixin _$FeedbackSendState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<UserFeedbackCategories> categories,
+    TResult? Function(List<UserFeedbackCategories> categories,
             TextEditingController title, TextEditingController description)?
         editing,
-    TResult Function()? sending,
-    TResult Function()? sent,
-    TResult Function(dynamic e)? error,
+    TResult? Function()? sending,
+    TResult? Function()? sent,
+    TResult? Function(dynamic e)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -57,10 +57,10 @@ mixin _$FeedbackSendState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Editing value)? editing,
-    TResult Function(_Sending value)? sending,
-    TResult Function(_Sent value)? sent,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Editing value)? editing,
+    TResult? Function(_Sending value)? sending,
+    TResult? Function(_Sent value)? sent,
+    TResult? Function(_Error value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -78,17 +78,18 @@ mixin _$FeedbackSendState {
 abstract class $FeedbackSendStateCopyWith<$Res> {
   factory $FeedbackSendStateCopyWith(
           FeedbackSendState value, $Res Function(FeedbackSendState) then) =
-      _$FeedbackSendStateCopyWithImpl<$Res>;
+      _$FeedbackSendStateCopyWithImpl<$Res, FeedbackSendState>;
 }
 
 /// @nodoc
-class _$FeedbackSendStateCopyWithImpl<$Res>
+class _$FeedbackSendStateCopyWithImpl<$Res, $Val extends FeedbackSendState>
     implements $FeedbackSendStateCopyWith<$Res> {
   _$FeedbackSendStateCopyWithImpl(this._value, this._then);
 
-  final FeedbackSendState _value;
   // ignore: unused_field
-  final $Res Function(FeedbackSendState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -96,6 +97,7 @@ abstract class _$$_EditingCopyWith<$Res> {
   factory _$$_EditingCopyWith(
           _$_Editing value, $Res Function(_$_Editing) then) =
       __$$_EditingCopyWithImpl<$Res>;
+  @useResult
   $Res call(
       {List<UserFeedbackCategories> categories,
       TextEditingController title,
@@ -104,30 +106,28 @@ abstract class _$$_EditingCopyWith<$Res> {
 
 /// @nodoc
 class __$$_EditingCopyWithImpl<$Res>
-    extends _$FeedbackSendStateCopyWithImpl<$Res>
+    extends _$FeedbackSendStateCopyWithImpl<$Res, _$_Editing>
     implements _$$_EditingCopyWith<$Res> {
   __$$_EditingCopyWithImpl(_$_Editing _value, $Res Function(_$_Editing) _then)
-      : super(_value, (v) => _then(v as _$_Editing));
+      : super(_value, _then);
 
-  @override
-  _$_Editing get _value => super._value as _$_Editing;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? categories = freezed,
-    Object? title = freezed,
-    Object? description = freezed,
+    Object? categories = null,
+    Object? title = null,
+    Object? description = null,
   }) {
     return _then(_$_Editing(
-      categories == freezed
+      null == categories
           ? _value._categories
           : categories // ignore: cast_nullable_to_non_nullable
               as List<UserFeedbackCategories>,
-      title == freezed
+      null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as TextEditingController,
-      description == freezed
+      null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as TextEditingController,
@@ -145,6 +145,7 @@ class _$_Editing implements _Editing {
   final List<UserFeedbackCategories> _categories;
   @override
   List<UserFeedbackCategories> get categories {
+    if (_categories is EqualUnmodifiableListView) return _categories;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_categories);
   }
@@ -166,20 +167,18 @@ class _$_Editing implements _Editing {
             other is _$_Editing &&
             const DeepCollectionEquality()
                 .equals(other._categories, _categories) &&
-            const DeepCollectionEquality().equals(other.title, title) &&
-            const DeepCollectionEquality()
-                .equals(other.description, description));
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.description, description) ||
+                other.description == description));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_categories),
-      const DeepCollectionEquality().hash(title),
-      const DeepCollectionEquality().hash(description));
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(_categories), title, description);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_EditingCopyWith<_$_Editing> get copyWith =>
       __$$_EditingCopyWithImpl<_$_Editing>(this, _$identity);
 
@@ -199,12 +198,12 @@ class _$_Editing implements _Editing {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<UserFeedbackCategories> categories,
+    TResult? Function(List<UserFeedbackCategories> categories,
             TextEditingController title, TextEditingController description)?
         editing,
-    TResult Function()? sending,
-    TResult Function()? sent,
-    TResult Function(dynamic e)? error,
+    TResult? Function()? sending,
+    TResult? Function()? sent,
+    TResult? Function(dynamic e)? error,
   }) {
     return editing?.call(categories, title, description);
   }
@@ -240,10 +239,10 @@ class _$_Editing implements _Editing {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Editing value)? editing,
-    TResult Function(_Sending value)? sending,
-    TResult Function(_Sent value)? sent,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Editing value)? editing,
+    TResult? Function(_Sending value)? sending,
+    TResult? Function(_Sent value)? sent,
+    TResult? Function(_Error value)? error,
   }) {
     return editing?.call(this);
   }
@@ -287,13 +286,10 @@ abstract class _$$_SendingCopyWith<$Res> {
 
 /// @nodoc
 class __$$_SendingCopyWithImpl<$Res>
-    extends _$FeedbackSendStateCopyWithImpl<$Res>
+    extends _$FeedbackSendStateCopyWithImpl<$Res, _$_Sending>
     implements _$$_SendingCopyWith<$Res> {
   __$$_SendingCopyWithImpl(_$_Sending _value, $Res Function(_$_Sending) _then)
-      : super(_value, (v) => _then(v as _$_Sending));
-
-  @override
-  _$_Sending get _value => super._value as _$_Sending;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -331,12 +327,12 @@ class _$_Sending implements _Sending {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<UserFeedbackCategories> categories,
+    TResult? Function(List<UserFeedbackCategories> categories,
             TextEditingController title, TextEditingController description)?
         editing,
-    TResult Function()? sending,
-    TResult Function()? sent,
-    TResult Function(dynamic e)? error,
+    TResult? Function()? sending,
+    TResult? Function()? sent,
+    TResult? Function(dynamic e)? error,
   }) {
     return sending?.call();
   }
@@ -372,10 +368,10 @@ class _$_Sending implements _Sending {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Editing value)? editing,
-    TResult Function(_Sending value)? sending,
-    TResult Function(_Sent value)? sent,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Editing value)? editing,
+    TResult? Function(_Sending value)? sending,
+    TResult? Function(_Sent value)? sent,
+    TResult? Function(_Error value)? error,
   }) {
     return sending?.call(this);
   }
@@ -407,13 +403,11 @@ abstract class _$$_SentCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_SentCopyWithImpl<$Res> extends _$FeedbackSendStateCopyWithImpl<$Res>
+class __$$_SentCopyWithImpl<$Res>
+    extends _$FeedbackSendStateCopyWithImpl<$Res, _$_Sent>
     implements _$$_SentCopyWith<$Res> {
   __$$_SentCopyWithImpl(_$_Sent _value, $Res Function(_$_Sent) _then)
-      : super(_value, (v) => _then(v as _$_Sent));
-
-  @override
-  _$_Sent get _value => super._value as _$_Sent;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -451,12 +445,12 @@ class _$_Sent implements _Sent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<UserFeedbackCategories> categories,
+    TResult? Function(List<UserFeedbackCategories> categories,
             TextEditingController title, TextEditingController description)?
         editing,
-    TResult Function()? sending,
-    TResult Function()? sent,
-    TResult Function(dynamic e)? error,
+    TResult? Function()? sending,
+    TResult? Function()? sent,
+    TResult? Function(dynamic e)? error,
   }) {
     return sent?.call();
   }
@@ -492,10 +486,10 @@ class _$_Sent implements _Sent {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Editing value)? editing,
-    TResult Function(_Sending value)? sending,
-    TResult Function(_Sent value)? sent,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Editing value)? editing,
+    TResult? Function(_Sending value)? sending,
+    TResult? Function(_Sent value)? sent,
+    TResult? Function(_Error value)? error,
   }) {
     return sent?.call(this);
   }
@@ -524,24 +518,24 @@ abstract class _Sent implements FeedbackSendState {
 abstract class _$$_ErrorCopyWith<$Res> {
   factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
       __$$_ErrorCopyWithImpl<$Res>;
+  @useResult
   $Res call({dynamic e});
 }
 
 /// @nodoc
-class __$$_ErrorCopyWithImpl<$Res> extends _$FeedbackSendStateCopyWithImpl<$Res>
+class __$$_ErrorCopyWithImpl<$Res>
+    extends _$FeedbackSendStateCopyWithImpl<$Res, _$_Error>
     implements _$$_ErrorCopyWith<$Res> {
   __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
-      : super(_value, (v) => _then(v as _$_Error));
+      : super(_value, _then);
 
-  @override
-  _$_Error get _value => super._value as _$_Error;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? e = freezed,
   }) {
     return _then(_$_Error(
-      e == freezed
+      freezed == e
           ? _value.e
           : e // ignore: cast_nullable_to_non_nullable
               as dynamic,
@@ -576,6 +570,7 @@ class _$_Error implements _Error {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ErrorCopyWith<_$_Error> get copyWith =>
       __$$_ErrorCopyWithImpl<_$_Error>(this, _$identity);
 
@@ -595,12 +590,12 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(List<UserFeedbackCategories> categories,
+    TResult? Function(List<UserFeedbackCategories> categories,
             TextEditingController title, TextEditingController description)?
         editing,
-    TResult Function()? sending,
-    TResult Function()? sent,
-    TResult Function(dynamic e)? error,
+    TResult? Function()? sending,
+    TResult? Function()? sent,
+    TResult? Function(dynamic e)? error,
   }) {
     return error?.call(e);
   }
@@ -636,10 +631,10 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Editing value)? editing,
-    TResult Function(_Sending value)? sending,
-    TResult Function(_Sent value)? sent,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Editing value)? editing,
+    TResult? Function(_Sending value)? sending,
+    TResult? Function(_Sent value)? sent,
+    TResult? Function(_Error value)? error,
   }) {
     return error?.call(this);
   }

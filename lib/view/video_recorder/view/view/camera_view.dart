@@ -2,6 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../utils/exceptions.dart';
 import '../cubit/video_recorder_cubit.dart';
 import '../widgets/new_record_button.dart';
 
@@ -100,11 +101,35 @@ class _CameraViewState extends State<CameraView> with TickerProviderStateMixin {
       ),
       extendBodyBehindAppBar: true,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: NewRecordButton(
-          isRecording: widget.camera.recording,
-          maxRecodingLength: 60,
-          onStartPressed: _startCountdown,
-          onStopPressed: context.read<VideoRecorderCubit>().stopRecording),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          // Button to open gallery, only visible when not recording
+          BlocBuilder<VideoRecorderCubit, VideoRecorderState>(
+              builder: (context, state) => state.maybeWhen(
+                    camera: (camera, isRecording) => !isRecording? Expanded(
+                      child: FloatingActionButton(
+                        onPressed:
+                            context.read<VideoRecorderCubit>().openGallery,
+                        child: const Icon(Icons.photo_library_rounded),
+                      ),
+                    ) : const Spacer(),
+                    orElse: () => throw InvalidStateException(),
+                  )),
+
+          // Button to start/stop recording
+          Expanded(
+              child: NewRecordButton(
+                  isRecording: widget.camera.recording,
+                  maxRecodingLength: 60,
+                  onStartPressed: _startCountdown,
+                  onStopPressed:
+                      context.read<VideoRecorderCubit>().stopRecording)),
+          // To align on left side
+          const Spacer()
+        ],
+      ),
       body: Stack(
         children: [
           Center(

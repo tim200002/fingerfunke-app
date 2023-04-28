@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'post_cubit.dart';
 
@@ -24,8 +24,8 @@ mixin _$PostState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String postId)? loading,
-    TResult Function(Post post, bool isMember)? normal,
+    TResult? Function(String postId)? loading,
+    TResult? Function(Post post, bool isMember)? normal,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -43,8 +43,8 @@ mixin _$PostState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Normal value)? normal,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Normal value)? normal,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -59,16 +59,18 @@ mixin _$PostState {
 /// @nodoc
 abstract class $PostStateCopyWith<$Res> {
   factory $PostStateCopyWith(PostState value, $Res Function(PostState) then) =
-      _$PostStateCopyWithImpl<$Res>;
+      _$PostStateCopyWithImpl<$Res, PostState>;
 }
 
 /// @nodoc
-class _$PostStateCopyWithImpl<$Res> implements $PostStateCopyWith<$Res> {
+class _$PostStateCopyWithImpl<$Res, $Val extends PostState>
+    implements $PostStateCopyWith<$Res> {
   _$PostStateCopyWithImpl(this._value, this._then);
 
-  final PostState _value;
   // ignore: unused_field
-  final $Res Function(PostState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -76,24 +78,24 @@ abstract class _$$_LoadingCopyWith<$Res> {
   factory _$$_LoadingCopyWith(
           _$_Loading value, $Res Function(_$_Loading) then) =
       __$$_LoadingCopyWithImpl<$Res>;
+  @useResult
   $Res call({String postId});
 }
 
 /// @nodoc
-class __$$_LoadingCopyWithImpl<$Res> extends _$PostStateCopyWithImpl<$Res>
+class __$$_LoadingCopyWithImpl<$Res>
+    extends _$PostStateCopyWithImpl<$Res, _$_Loading>
     implements _$$_LoadingCopyWith<$Res> {
   __$$_LoadingCopyWithImpl(_$_Loading _value, $Res Function(_$_Loading) _then)
-      : super(_value, (v) => _then(v as _$_Loading));
+      : super(_value, _then);
 
-  @override
-  _$_Loading get _value => super._value as _$_Loading;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? postId = freezed,
+    Object? postId = null,
   }) {
     return _then(_$_Loading(
-      postId == freezed
+      null == postId
           ? _value.postId
           : postId // ignore: cast_nullable_to_non_nullable
               as String,
@@ -119,15 +121,15 @@ class _$_Loading implements _Loading {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Loading &&
-            const DeepCollectionEquality().equals(other.postId, postId));
+            (identical(other.postId, postId) || other.postId == postId));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(postId));
+  int get hashCode => Object.hash(runtimeType, postId);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_LoadingCopyWith<_$_Loading> get copyWith =>
       __$$_LoadingCopyWithImpl<_$_Loading>(this, _$identity);
 
@@ -143,8 +145,8 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String postId)? loading,
-    TResult Function(Post post, bool isMember)? normal,
+    TResult? Function(String postId)? loading,
+    TResult? Function(Post post, bool isMember)? normal,
   }) {
     return loading?.call(postId);
   }
@@ -174,8 +176,8 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Normal value)? normal,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Normal value)? normal,
   }) {
     return loading?.call(this);
   }
@@ -207,29 +209,29 @@ abstract class _Loading implements PostState {
 abstract class _$$_NormalCopyWith<$Res> {
   factory _$$_NormalCopyWith(_$_Normal value, $Res Function(_$_Normal) then) =
       __$$_NormalCopyWithImpl<$Res>;
+  @useResult
   $Res call({Post post, bool isMember});
 }
 
 /// @nodoc
-class __$$_NormalCopyWithImpl<$Res> extends _$PostStateCopyWithImpl<$Res>
+class __$$_NormalCopyWithImpl<$Res>
+    extends _$PostStateCopyWithImpl<$Res, _$_Normal>
     implements _$$_NormalCopyWith<$Res> {
   __$$_NormalCopyWithImpl(_$_Normal _value, $Res Function(_$_Normal) _then)
-      : super(_value, (v) => _then(v as _$_Normal));
+      : super(_value, _then);
 
-  @override
-  _$_Normal get _value => super._value as _$_Normal;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? post = freezed,
-    Object? isMember = freezed,
+    Object? post = null,
+    Object? isMember = null,
   }) {
     return _then(_$_Normal(
-      post == freezed
+      null == post
           ? _value.post
           : post // ignore: cast_nullable_to_non_nullable
               as Post,
-      isMember == freezed
+      null == isMember
           ? _value.isMember
           : isMember // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -257,18 +259,17 @@ class _$_Normal implements _Normal {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Normal &&
-            const DeepCollectionEquality().equals(other.post, post) &&
-            const DeepCollectionEquality().equals(other.isMember, isMember));
+            (identical(other.post, post) || other.post == post) &&
+            (identical(other.isMember, isMember) ||
+                other.isMember == isMember));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(post),
-      const DeepCollectionEquality().hash(isMember));
+  int get hashCode => Object.hash(runtimeType, post, isMember);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_NormalCopyWith<_$_Normal> get copyWith =>
       __$$_NormalCopyWithImpl<_$_Normal>(this, _$identity);
 
@@ -284,8 +285,8 @@ class _$_Normal implements _Normal {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String postId)? loading,
-    TResult Function(Post post, bool isMember)? normal,
+    TResult? Function(String postId)? loading,
+    TResult? Function(Post post, bool isMember)? normal,
   }) {
     return normal?.call(post, isMember);
   }
@@ -315,8 +316,8 @@ class _$_Normal implements _Normal {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Normal value)? normal,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Normal value)? normal,
   }) {
     return normal?.call(this);
   }

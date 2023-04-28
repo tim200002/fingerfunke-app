@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:camera/camera.dart';
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../../utils/tools.dart';
 
@@ -43,7 +45,7 @@ class Kamera {
 /// while handling the management of resources and memory
 class VideoRecorderCubit extends Cubit<VideoRecorderState> {
   final maxRecordingsSec = 60;
-
+  
   VideoRecorderCubit() : super(const VideoRecorderState.loading()) {
     reload();
   }
@@ -51,11 +53,21 @@ class VideoRecorderCubit extends Cubit<VideoRecorderState> {
   void reload() {
     _dispose();
     emit(const VideoRecorderState.loading());
-    _initCamera().then((kamera) => emit(VideoRecorderState.camera(kamera)),
+    _initCamera().then((kamera) => emit(VideoRecorderState.camera(kamera, false)),
         onError: (e) => emit(
             (e is CameraException && e.code == "cameraPermission")
                 ? const VideoRecorderState.missingPermission()
                 : VideoRecorderState.error(e)));
+  }
+
+  void openGallery() async{
+    // Do not stop any background activity, just open gallery
+    ImagePicker().pickVideo(source: ImageSource.gallery).then((value) {
+      if (value != null) {
+        emit(VideoRecorderState.viewing(File(value.path)));
+      }
+    });
+
   }
 
   Future<Kamera> _initCamera() async {
@@ -103,21 +115,21 @@ class VideoRecorderCubit extends Cubit<VideoRecorderState> {
   }
 
   Future<void> startRecording() async {
-    state.whenOrNull(camera: (c) async {
+    state.whenOrNull(camera: (c,_) async {
       await c.controller.startVideoRecording();
       _emitCamera(c);
     });
   }
 
   Future<void> stopRecording() async {
-    state.whenOrNull(camera: (c) async {
+    state.whenOrNull(camera: (c,_) async {
       final file = await c.controller.stopVideoRecording();
       emit(VideoRecorderState.viewing(File(file.path)));
     });
   }
 
   Future<void> toggleFlash() async {
-    state.whenOrNull(camera: (c) async {
+    state.whenOrNull(camera: (c,_) async {
       await c.controller.setFlashMode(
           c.controller.value.flashMode != FlashMode.torch
               ? FlashMode.torch
@@ -127,7 +139,7 @@ class VideoRecorderCubit extends Cubit<VideoRecorderState> {
   }
 
   Future<void> toggleCamera() async {
-    state.whenOrNull(camera: (c) async {
+    state.whenOrNull(camera: (c,_) async {
       emit(const VideoRecorderState.loading());
       var cam = await _setCameraDirection(
           c.cameras,
@@ -141,11 +153,11 @@ class VideoRecorderCubit extends Cubit<VideoRecorderState> {
 
   void _emitCamera(Kamera k) {
     var kn = Kamera.copy(k);
-    emit(VideoRecorderState.camera(kn));
+    emit(VideoRecorderState.camera(kn, kn.recording));
   }
 
   Future<void> _dispose() async =>
-      state.whenOrNull(camera: (c) => c.controller.dispose());
+      state.whenOrNull(camera: (c,_) => c.controller.dispose());
 
   @override
   Future<void> close() {

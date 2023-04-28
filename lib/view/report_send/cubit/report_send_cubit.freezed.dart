@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'report_send_cubit.dart';
 
@@ -28,12 +28,12 @@ mixin _$ReportSendState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(UserGeneratedDocument doc, ReportType type,
+    TResult? Function(UserGeneratedDocument doc, ReportType type,
             List<ReportReason> reasons)?
         editing,
-    TResult Function()? sending,
-    TResult Function()? sent,
-    TResult Function(dynamic e)? error,
+    TResult? Function()? sending,
+    TResult? Function()? sent,
+    TResult? Function(dynamic e)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -57,10 +57,10 @@ mixin _$ReportSendState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Editing value)? editing,
-    TResult Function(_Sending value)? sending,
-    TResult Function(_Sent value)? sent,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Editing value)? editing,
+    TResult? Function(_Sending value)? sending,
+    TResult? Function(_Sent value)? sent,
+    TResult? Function(_Error value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -78,17 +78,18 @@ mixin _$ReportSendState {
 abstract class $ReportSendStateCopyWith<$Res> {
   factory $ReportSendStateCopyWith(
           ReportSendState value, $Res Function(ReportSendState) then) =
-      _$ReportSendStateCopyWithImpl<$Res>;
+      _$ReportSendStateCopyWithImpl<$Res, ReportSendState>;
 }
 
 /// @nodoc
-class _$ReportSendStateCopyWithImpl<$Res>
+class _$ReportSendStateCopyWithImpl<$Res, $Val extends ReportSendState>
     implements $ReportSendStateCopyWith<$Res> {
   _$ReportSendStateCopyWithImpl(this._value, this._then);
 
-  final ReportSendState _value;
   // ignore: unused_field
-  final $Res Function(ReportSendState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -96,35 +97,35 @@ abstract class _$$_EditingCopyWith<$Res> {
   factory _$$_EditingCopyWith(
           _$_Editing value, $Res Function(_$_Editing) then) =
       __$$_EditingCopyWithImpl<$Res>;
+  @useResult
   $Res call(
       {UserGeneratedDocument doc, ReportType type, List<ReportReason> reasons});
 }
 
 /// @nodoc
-class __$$_EditingCopyWithImpl<$Res> extends _$ReportSendStateCopyWithImpl<$Res>
+class __$$_EditingCopyWithImpl<$Res>
+    extends _$ReportSendStateCopyWithImpl<$Res, _$_Editing>
     implements _$$_EditingCopyWith<$Res> {
   __$$_EditingCopyWithImpl(_$_Editing _value, $Res Function(_$_Editing) _then)
-      : super(_value, (v) => _then(v as _$_Editing));
+      : super(_value, _then);
 
-  @override
-  _$_Editing get _value => super._value as _$_Editing;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? doc = freezed,
-    Object? type = freezed,
-    Object? reasons = freezed,
+    Object? doc = null,
+    Object? type = null,
+    Object? reasons = null,
   }) {
     return _then(_$_Editing(
-      doc == freezed
+      null == doc
           ? _value.doc
           : doc // ignore: cast_nullable_to_non_nullable
               as UserGeneratedDocument,
-      type == freezed
+      null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as ReportType,
-      reasons == freezed
+      null == reasons
           ? _value._reasons
           : reasons // ignore: cast_nullable_to_non_nullable
               as List<ReportReason>,
@@ -145,6 +146,7 @@ class _$_Editing implements _Editing {
   final List<ReportReason> _reasons;
   @override
   List<ReportReason> get reasons {
+    if (_reasons is EqualUnmodifiableListView) return _reasons;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_reasons);
   }
@@ -159,20 +161,18 @@ class _$_Editing implements _Editing {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Editing &&
-            const DeepCollectionEquality().equals(other.doc, doc) &&
-            const DeepCollectionEquality().equals(other.type, type) &&
+            (identical(other.doc, doc) || other.doc == doc) &&
+            (identical(other.type, type) || other.type == type) &&
             const DeepCollectionEquality().equals(other._reasons, _reasons));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(doc),
-      const DeepCollectionEquality().hash(type),
-      const DeepCollectionEquality().hash(_reasons));
+      runtimeType, doc, type, const DeepCollectionEquality().hash(_reasons));
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_EditingCopyWith<_$_Editing> get copyWith =>
       __$$_EditingCopyWithImpl<_$_Editing>(this, _$identity);
 
@@ -192,12 +192,12 @@ class _$_Editing implements _Editing {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(UserGeneratedDocument doc, ReportType type,
+    TResult? Function(UserGeneratedDocument doc, ReportType type,
             List<ReportReason> reasons)?
         editing,
-    TResult Function()? sending,
-    TResult Function()? sent,
-    TResult Function(dynamic e)? error,
+    TResult? Function()? sending,
+    TResult? Function()? sent,
+    TResult? Function(dynamic e)? error,
   }) {
     return editing?.call(doc, type, reasons);
   }
@@ -233,10 +233,10 @@ class _$_Editing implements _Editing {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Editing value)? editing,
-    TResult Function(_Sending value)? sending,
-    TResult Function(_Sent value)? sent,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Editing value)? editing,
+    TResult? Function(_Sending value)? sending,
+    TResult? Function(_Sent value)? sent,
+    TResult? Function(_Error value)? error,
   }) {
     return editing?.call(this);
   }
@@ -277,13 +277,11 @@ abstract class _$$_SendingCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_SendingCopyWithImpl<$Res> extends _$ReportSendStateCopyWithImpl<$Res>
+class __$$_SendingCopyWithImpl<$Res>
+    extends _$ReportSendStateCopyWithImpl<$Res, _$_Sending>
     implements _$$_SendingCopyWith<$Res> {
   __$$_SendingCopyWithImpl(_$_Sending _value, $Res Function(_$_Sending) _then)
-      : super(_value, (v) => _then(v as _$_Sending));
-
-  @override
-  _$_Sending get _value => super._value as _$_Sending;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -321,12 +319,12 @@ class _$_Sending implements _Sending {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(UserGeneratedDocument doc, ReportType type,
+    TResult? Function(UserGeneratedDocument doc, ReportType type,
             List<ReportReason> reasons)?
         editing,
-    TResult Function()? sending,
-    TResult Function()? sent,
-    TResult Function(dynamic e)? error,
+    TResult? Function()? sending,
+    TResult? Function()? sent,
+    TResult? Function(dynamic e)? error,
   }) {
     return sending?.call();
   }
@@ -362,10 +360,10 @@ class _$_Sending implements _Sending {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Editing value)? editing,
-    TResult Function(_Sending value)? sending,
-    TResult Function(_Sent value)? sent,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Editing value)? editing,
+    TResult? Function(_Sending value)? sending,
+    TResult? Function(_Sent value)? sent,
+    TResult? Function(_Error value)? error,
   }) {
     return sending?.call(this);
   }
@@ -397,13 +395,11 @@ abstract class _$$_SentCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_SentCopyWithImpl<$Res> extends _$ReportSendStateCopyWithImpl<$Res>
+class __$$_SentCopyWithImpl<$Res>
+    extends _$ReportSendStateCopyWithImpl<$Res, _$_Sent>
     implements _$$_SentCopyWith<$Res> {
   __$$_SentCopyWithImpl(_$_Sent _value, $Res Function(_$_Sent) _then)
-      : super(_value, (v) => _then(v as _$_Sent));
-
-  @override
-  _$_Sent get _value => super._value as _$_Sent;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -441,12 +437,12 @@ class _$_Sent implements _Sent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(UserGeneratedDocument doc, ReportType type,
+    TResult? Function(UserGeneratedDocument doc, ReportType type,
             List<ReportReason> reasons)?
         editing,
-    TResult Function()? sending,
-    TResult Function()? sent,
-    TResult Function(dynamic e)? error,
+    TResult? Function()? sending,
+    TResult? Function()? sent,
+    TResult? Function(dynamic e)? error,
   }) {
     return sent?.call();
   }
@@ -482,10 +478,10 @@ class _$_Sent implements _Sent {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Editing value)? editing,
-    TResult Function(_Sending value)? sending,
-    TResult Function(_Sent value)? sent,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Editing value)? editing,
+    TResult? Function(_Sending value)? sending,
+    TResult? Function(_Sent value)? sent,
+    TResult? Function(_Error value)? error,
   }) {
     return sent?.call(this);
   }
@@ -514,24 +510,24 @@ abstract class _Sent implements ReportSendState {
 abstract class _$$_ErrorCopyWith<$Res> {
   factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
       __$$_ErrorCopyWithImpl<$Res>;
+  @useResult
   $Res call({dynamic e});
 }
 
 /// @nodoc
-class __$$_ErrorCopyWithImpl<$Res> extends _$ReportSendStateCopyWithImpl<$Res>
+class __$$_ErrorCopyWithImpl<$Res>
+    extends _$ReportSendStateCopyWithImpl<$Res, _$_Error>
     implements _$$_ErrorCopyWith<$Res> {
   __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
-      : super(_value, (v) => _then(v as _$_Error));
+      : super(_value, _then);
 
-  @override
-  _$_Error get _value => super._value as _$_Error;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? e = freezed,
   }) {
     return _then(_$_Error(
-      e == freezed
+      freezed == e
           ? _value.e
           : e // ignore: cast_nullable_to_non_nullable
               as dynamic,
@@ -566,6 +562,7 @@ class _$_Error implements _Error {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ErrorCopyWith<_$_Error> get copyWith =>
       __$$_ErrorCopyWithImpl<_$_Error>(this, _$identity);
 
@@ -585,12 +582,12 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(UserGeneratedDocument doc, ReportType type,
+    TResult? Function(UserGeneratedDocument doc, ReportType type,
             List<ReportReason> reasons)?
         editing,
-    TResult Function()? sending,
-    TResult Function()? sent,
-    TResult Function(dynamic e)? error,
+    TResult? Function()? sending,
+    TResult? Function()? sent,
+    TResult? Function(dynamic e)? error,
   }) {
     return error?.call(e);
   }
@@ -626,10 +623,10 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Editing value)? editing,
-    TResult Function(_Sending value)? sending,
-    TResult Function(_Sent value)? sent,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Editing value)? editing,
+    TResult? Function(_Sending value)? sending,
+    TResult? Function(_Sent value)? sent,
+    TResult? Function(_Error value)? error,
   }) {
     return error?.call(this);
   }

@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'live_config_cubit.dart';
 
@@ -27,29 +27,32 @@ mixin _$LiveConfigState {
 abstract class $LiveConfigStateCopyWith<$Res> {
   factory $LiveConfigStateCopyWith(
           LiveConfigState value, $Res Function(LiveConfigState) then) =
-      _$LiveConfigStateCopyWithImpl<$Res>;
+      _$LiveConfigStateCopyWithImpl<$Res, LiveConfigState>;
+  @useResult
   $Res call({bool hideFeedbackBtn});
 }
 
 /// @nodoc
-class _$LiveConfigStateCopyWithImpl<$Res>
+class _$LiveConfigStateCopyWithImpl<$Res, $Val extends LiveConfigState>
     implements $LiveConfigStateCopyWith<$Res> {
   _$LiveConfigStateCopyWithImpl(this._value, this._then);
 
-  final LiveConfigState _value;
   // ignore: unused_field
-  final $Res Function(LiveConfigState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? hideFeedbackBtn = freezed,
+    Object? hideFeedbackBtn = null,
   }) {
     return _then(_value.copyWith(
-      hideFeedbackBtn: hideFeedbackBtn == freezed
+      hideFeedbackBtn: null == hideFeedbackBtn
           ? _value.hideFeedbackBtn
           : hideFeedbackBtn // ignore: cast_nullable_to_non_nullable
               as bool,
-    ));
+    ) as $Val);
   }
 }
 
@@ -58,24 +61,23 @@ abstract class _$$_SCopyWith<$Res> implements $LiveConfigStateCopyWith<$Res> {
   factory _$$_SCopyWith(_$_S value, $Res Function(_$_S) then) =
       __$$_SCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({bool hideFeedbackBtn});
 }
 
 /// @nodoc
-class __$$_SCopyWithImpl<$Res> extends _$LiveConfigStateCopyWithImpl<$Res>
+class __$$_SCopyWithImpl<$Res> extends _$LiveConfigStateCopyWithImpl<$Res, _$_S>
     implements _$$_SCopyWith<$Res> {
   __$$_SCopyWithImpl(_$_S _value, $Res Function(_$_S) _then)
-      : super(_value, (v) => _then(v as _$_S));
+      : super(_value, _then);
 
-  @override
-  _$_S get _value => super._value as _$_S;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? hideFeedbackBtn = freezed,
+    Object? hideFeedbackBtn = null,
   }) {
     return _then(_$_S(
-      hideFeedbackBtn == freezed
+      null == hideFeedbackBtn
           ? _value.hideFeedbackBtn
           : hideFeedbackBtn // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -101,16 +103,16 @@ class _$_S implements _S {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_S &&
-            const DeepCollectionEquality()
-                .equals(other.hideFeedbackBtn, hideFeedbackBtn));
+            (identical(other.hideFeedbackBtn, hideFeedbackBtn) ||
+                other.hideFeedbackBtn == hideFeedbackBtn));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(hideFeedbackBtn));
+  int get hashCode => Object.hash(runtimeType, hideFeedbackBtn);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_SCopyWith<_$_S> get copyWith =>
       __$$_SCopyWithImpl<_$_S>(this, _$identity);
 }

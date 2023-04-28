@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'video_recorder_cubit.dart';
 
@@ -20,25 +20,25 @@ mixin _$VideoRecorderState {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(dynamic err) error,
-    required TResult Function(Kamera camera) camera,
+    required TResult Function(Kamera camera, bool isRecording) camera,
     required TResult Function(File file) viewing,
     required TResult Function() missingPermission,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(dynamic err)? error,
-    TResult Function(Kamera camera)? camera,
-    TResult Function(File file)? viewing,
-    TResult Function()? missingPermission,
+    TResult? Function()? loading,
+    TResult? Function(dynamic err)? error,
+    TResult? Function(Kamera camera, bool isRecording)? camera,
+    TResult? Function(File file)? viewing,
+    TResult? Function()? missingPermission,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(dynamic err)? error,
-    TResult Function(Kamera camera)? camera,
+    TResult Function(Kamera camera, bool isRecording)? camera,
     TResult Function(File file)? viewing,
     TResult Function()? missingPermission,
     required TResult orElse(),
@@ -55,11 +55,11 @@ mixin _$VideoRecorderState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Error value)? error,
-    TResult Function(_Camera value)? camera,
-    TResult Function(_Viewing value)? viewing,
-    TResult Function(_MissingPermission value)? missingPermission,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_Camera value)? camera,
+    TResult? Function(_Viewing value)? viewing,
+    TResult? Function(_MissingPermission value)? missingPermission,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -78,17 +78,18 @@ mixin _$VideoRecorderState {
 abstract class $VideoRecorderStateCopyWith<$Res> {
   factory $VideoRecorderStateCopyWith(
           VideoRecorderState value, $Res Function(VideoRecorderState) then) =
-      _$VideoRecorderStateCopyWithImpl<$Res>;
+      _$VideoRecorderStateCopyWithImpl<$Res, VideoRecorderState>;
 }
 
 /// @nodoc
-class _$VideoRecorderStateCopyWithImpl<$Res>
+class _$VideoRecorderStateCopyWithImpl<$Res, $Val extends VideoRecorderState>
     implements $VideoRecorderStateCopyWith<$Res> {
   _$VideoRecorderStateCopyWithImpl(this._value, this._then);
 
-  final VideoRecorderState _value;
   // ignore: unused_field
-  final $Res Function(VideoRecorderState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -100,13 +101,10 @@ abstract class _$$_LoadingCopyWith<$Res> {
 
 /// @nodoc
 class __$$_LoadingCopyWithImpl<$Res>
-    extends _$VideoRecorderStateCopyWithImpl<$Res>
+    extends _$VideoRecorderStateCopyWithImpl<$Res, _$_Loading>
     implements _$$_LoadingCopyWith<$Res> {
   __$$_LoadingCopyWithImpl(_$_Loading _value, $Res Function(_$_Loading) _then)
-      : super(_value, (v) => _then(v as _$_Loading));
-
-  @override
-  _$_Loading get _value => super._value as _$_Loading;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -133,7 +131,7 @@ class _$_Loading implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(dynamic err) error,
-    required TResult Function(Kamera camera) camera,
+    required TResult Function(Kamera camera, bool isRecording) camera,
     required TResult Function(File file) viewing,
     required TResult Function() missingPermission,
   }) {
@@ -143,11 +141,11 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(dynamic err)? error,
-    TResult Function(Kamera camera)? camera,
-    TResult Function(File file)? viewing,
-    TResult Function()? missingPermission,
+    TResult? Function()? loading,
+    TResult? Function(dynamic err)? error,
+    TResult? Function(Kamera camera, bool isRecording)? camera,
+    TResult? Function(File file)? viewing,
+    TResult? Function()? missingPermission,
   }) {
     return loading?.call();
   }
@@ -157,7 +155,7 @@ class _$_Loading implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(dynamic err)? error,
-    TResult Function(Kamera camera)? camera,
+    TResult Function(Kamera camera, bool isRecording)? camera,
     TResult Function(File file)? viewing,
     TResult Function()? missingPermission,
     required TResult orElse(),
@@ -183,11 +181,11 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Error value)? error,
-    TResult Function(_Camera value)? camera,
-    TResult Function(_Viewing value)? viewing,
-    TResult Function(_MissingPermission value)? missingPermission,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_Camera value)? camera,
+    TResult? Function(_Viewing value)? viewing,
+    TResult? Function(_MissingPermission value)? missingPermission,
   }) {
     return loading?.call(this);
   }
@@ -217,25 +215,24 @@ abstract class _Loading implements VideoRecorderState {
 abstract class _$$_ErrorCopyWith<$Res> {
   factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
       __$$_ErrorCopyWithImpl<$Res>;
+  @useResult
   $Res call({dynamic err});
 }
 
 /// @nodoc
 class __$$_ErrorCopyWithImpl<$Res>
-    extends _$VideoRecorderStateCopyWithImpl<$Res>
+    extends _$VideoRecorderStateCopyWithImpl<$Res, _$_Error>
     implements _$$_ErrorCopyWith<$Res> {
   __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
-      : super(_value, (v) => _then(v as _$_Error));
+      : super(_value, _then);
 
-  @override
-  _$_Error get _value => super._value as _$_Error;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? err = freezed,
   }) {
     return _then(_$_Error(
-      err == freezed
+      freezed == err
           ? _value.err
           : err // ignore: cast_nullable_to_non_nullable
               as dynamic,
@@ -270,6 +267,7 @@ class _$_Error implements _Error {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ErrorCopyWith<_$_Error> get copyWith =>
       __$$_ErrorCopyWithImpl<_$_Error>(this, _$identity);
 
@@ -278,7 +276,7 @@ class _$_Error implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(dynamic err) error,
-    required TResult Function(Kamera camera) camera,
+    required TResult Function(Kamera camera, bool isRecording) camera,
     required TResult Function(File file) viewing,
     required TResult Function() missingPermission,
   }) {
@@ -288,11 +286,11 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(dynamic err)? error,
-    TResult Function(Kamera camera)? camera,
-    TResult Function(File file)? viewing,
-    TResult Function()? missingPermission,
+    TResult? Function()? loading,
+    TResult? Function(dynamic err)? error,
+    TResult? Function(Kamera camera, bool isRecording)? camera,
+    TResult? Function(File file)? viewing,
+    TResult? Function()? missingPermission,
   }) {
     return error?.call(err);
   }
@@ -302,7 +300,7 @@ class _$_Error implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(dynamic err)? error,
-    TResult Function(Kamera camera)? camera,
+    TResult Function(Kamera camera, bool isRecording)? camera,
     TResult Function(File file)? viewing,
     TResult Function()? missingPermission,
     required TResult orElse(),
@@ -328,11 +326,11 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Error value)? error,
-    TResult Function(_Camera value)? camera,
-    TResult Function(_Viewing value)? viewing,
-    TResult Function(_MissingPermission value)? missingPermission,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_Camera value)? camera,
+    TResult? Function(_Viewing value)? viewing,
+    TResult? Function(_MissingPermission value)? missingPermission,
   }) {
     return error?.call(this);
   }
@@ -367,28 +365,32 @@ abstract class _Error implements VideoRecorderState {
 abstract class _$$_CameraCopyWith<$Res> {
   factory _$$_CameraCopyWith(_$_Camera value, $Res Function(_$_Camera) then) =
       __$$_CameraCopyWithImpl<$Res>;
-  $Res call({Kamera camera});
+  @useResult
+  $Res call({Kamera camera, bool isRecording});
 }
 
 /// @nodoc
 class __$$_CameraCopyWithImpl<$Res>
-    extends _$VideoRecorderStateCopyWithImpl<$Res>
+    extends _$VideoRecorderStateCopyWithImpl<$Res, _$_Camera>
     implements _$$_CameraCopyWith<$Res> {
   __$$_CameraCopyWithImpl(_$_Camera _value, $Res Function(_$_Camera) _then)
-      : super(_value, (v) => _then(v as _$_Camera));
+      : super(_value, _then);
 
-  @override
-  _$_Camera get _value => super._value as _$_Camera;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? camera = freezed,
+    Object? camera = null,
+    Object? isRecording = null,
   }) {
     return _then(_$_Camera(
-      camera == freezed
+      null == camera
           ? _value.camera
           : camera // ignore: cast_nullable_to_non_nullable
               as Kamera,
+      null == isRecording
+          ? _value.isRecording
+          : isRecording // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -396,14 +398,16 @@ class __$$_CameraCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Camera implements _Camera {
-  const _$_Camera(this.camera);
+  const _$_Camera(this.camera, this.isRecording);
 
   @override
   final Kamera camera;
+  @override
+  final bool isRecording;
 
   @override
   String toString() {
-    return 'VideoRecorderState.camera(camera: $camera)';
+    return 'VideoRecorderState.camera(camera: $camera, isRecording: $isRecording)';
   }
 
   @override
@@ -411,15 +415,17 @@ class _$_Camera implements _Camera {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Camera &&
-            const DeepCollectionEquality().equals(other.camera, camera));
+            (identical(other.camera, camera) || other.camera == camera) &&
+            (identical(other.isRecording, isRecording) ||
+                other.isRecording == isRecording));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(camera));
+  int get hashCode => Object.hash(runtimeType, camera, isRecording);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_CameraCopyWith<_$_Camera> get copyWith =>
       __$$_CameraCopyWithImpl<_$_Camera>(this, _$identity);
 
@@ -428,23 +434,23 @@ class _$_Camera implements _Camera {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(dynamic err) error,
-    required TResult Function(Kamera camera) camera,
+    required TResult Function(Kamera camera, bool isRecording) camera,
     required TResult Function(File file) viewing,
     required TResult Function() missingPermission,
   }) {
-    return camera(this.camera);
+    return camera(this.camera, isRecording);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(dynamic err)? error,
-    TResult Function(Kamera camera)? camera,
-    TResult Function(File file)? viewing,
-    TResult Function()? missingPermission,
+    TResult? Function()? loading,
+    TResult? Function(dynamic err)? error,
+    TResult? Function(Kamera camera, bool isRecording)? camera,
+    TResult? Function(File file)? viewing,
+    TResult? Function()? missingPermission,
   }) {
-    return camera?.call(this.camera);
+    return camera?.call(this.camera, isRecording);
   }
 
   @override
@@ -452,13 +458,13 @@ class _$_Camera implements _Camera {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(dynamic err)? error,
-    TResult Function(Kamera camera)? camera,
+    TResult Function(Kamera camera, bool isRecording)? camera,
     TResult Function(File file)? viewing,
     TResult Function()? missingPermission,
     required TResult orElse(),
   }) {
     if (camera != null) {
-      return camera(this.camera);
+      return camera(this.camera, isRecording);
     }
     return orElse();
   }
@@ -478,11 +484,11 @@ class _$_Camera implements _Camera {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Error value)? error,
-    TResult Function(_Camera value)? camera,
-    TResult Function(_Viewing value)? viewing,
-    TResult Function(_MissingPermission value)? missingPermission,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_Camera value)? camera,
+    TResult? Function(_Viewing value)? viewing,
+    TResult? Function(_MissingPermission value)? missingPermission,
   }) {
     return camera?.call(this);
   }
@@ -505,9 +511,11 @@ class _$_Camera implements _Camera {
 }
 
 abstract class _Camera implements VideoRecorderState {
-  const factory _Camera(final Kamera camera) = _$_Camera;
+  const factory _Camera(final Kamera camera, final bool isRecording) =
+      _$_Camera;
 
   Kamera get camera;
+  bool get isRecording;
   @JsonKey(ignore: true)
   _$$_CameraCopyWith<_$_Camera> get copyWith =>
       throw _privateConstructorUsedError;
@@ -518,25 +526,24 @@ abstract class _$$_ViewingCopyWith<$Res> {
   factory _$$_ViewingCopyWith(
           _$_Viewing value, $Res Function(_$_Viewing) then) =
       __$$_ViewingCopyWithImpl<$Res>;
+  @useResult
   $Res call({File file});
 }
 
 /// @nodoc
 class __$$_ViewingCopyWithImpl<$Res>
-    extends _$VideoRecorderStateCopyWithImpl<$Res>
+    extends _$VideoRecorderStateCopyWithImpl<$Res, _$_Viewing>
     implements _$$_ViewingCopyWith<$Res> {
   __$$_ViewingCopyWithImpl(_$_Viewing _value, $Res Function(_$_Viewing) _then)
-      : super(_value, (v) => _then(v as _$_Viewing));
+      : super(_value, _then);
 
-  @override
-  _$_Viewing get _value => super._value as _$_Viewing;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? file = freezed,
+    Object? file = null,
   }) {
     return _then(_$_Viewing(
-      file == freezed
+      null == file
           ? _value.file
           : file // ignore: cast_nullable_to_non_nullable
               as File,
@@ -562,15 +569,15 @@ class _$_Viewing implements _Viewing {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Viewing &&
-            const DeepCollectionEquality().equals(other.file, file));
+            (identical(other.file, file) || other.file == file));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(file));
+  int get hashCode => Object.hash(runtimeType, file);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ViewingCopyWith<_$_Viewing> get copyWith =>
       __$$_ViewingCopyWithImpl<_$_Viewing>(this, _$identity);
 
@@ -579,7 +586,7 @@ class _$_Viewing implements _Viewing {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(dynamic err) error,
-    required TResult Function(Kamera camera) camera,
+    required TResult Function(Kamera camera, bool isRecording) camera,
     required TResult Function(File file) viewing,
     required TResult Function() missingPermission,
   }) {
@@ -589,11 +596,11 @@ class _$_Viewing implements _Viewing {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(dynamic err)? error,
-    TResult Function(Kamera camera)? camera,
-    TResult Function(File file)? viewing,
-    TResult Function()? missingPermission,
+    TResult? Function()? loading,
+    TResult? Function(dynamic err)? error,
+    TResult? Function(Kamera camera, bool isRecording)? camera,
+    TResult? Function(File file)? viewing,
+    TResult? Function()? missingPermission,
   }) {
     return viewing?.call(file);
   }
@@ -603,7 +610,7 @@ class _$_Viewing implements _Viewing {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(dynamic err)? error,
-    TResult Function(Kamera camera)? camera,
+    TResult Function(Kamera camera, bool isRecording)? camera,
     TResult Function(File file)? viewing,
     TResult Function()? missingPermission,
     required TResult orElse(),
@@ -629,11 +636,11 @@ class _$_Viewing implements _Viewing {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Error value)? error,
-    TResult Function(_Camera value)? camera,
-    TResult Function(_Viewing value)? viewing,
-    TResult Function(_MissingPermission value)? missingPermission,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_Camera value)? camera,
+    TResult? Function(_Viewing value)? viewing,
+    TResult? Function(_MissingPermission value)? missingPermission,
   }) {
     return viewing?.call(this);
   }
@@ -673,14 +680,11 @@ abstract class _$$_MissingPermissionCopyWith<$Res> {
 
 /// @nodoc
 class __$$_MissingPermissionCopyWithImpl<$Res>
-    extends _$VideoRecorderStateCopyWithImpl<$Res>
+    extends _$VideoRecorderStateCopyWithImpl<$Res, _$_MissingPermission>
     implements _$$_MissingPermissionCopyWith<$Res> {
   __$$_MissingPermissionCopyWithImpl(
       _$_MissingPermission _value, $Res Function(_$_MissingPermission) _then)
-      : super(_value, (v) => _then(v as _$_MissingPermission));
-
-  @override
-  _$_MissingPermission get _value => super._value as _$_MissingPermission;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -707,7 +711,7 @@ class _$_MissingPermission implements _MissingPermission {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(dynamic err) error,
-    required TResult Function(Kamera camera) camera,
+    required TResult Function(Kamera camera, bool isRecording) camera,
     required TResult Function(File file) viewing,
     required TResult Function() missingPermission,
   }) {
@@ -717,11 +721,11 @@ class _$_MissingPermission implements _MissingPermission {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(dynamic err)? error,
-    TResult Function(Kamera camera)? camera,
-    TResult Function(File file)? viewing,
-    TResult Function()? missingPermission,
+    TResult? Function()? loading,
+    TResult? Function(dynamic err)? error,
+    TResult? Function(Kamera camera, bool isRecording)? camera,
+    TResult? Function(File file)? viewing,
+    TResult? Function()? missingPermission,
   }) {
     return missingPermission?.call();
   }
@@ -731,7 +735,7 @@ class _$_MissingPermission implements _MissingPermission {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(dynamic err)? error,
-    TResult Function(Kamera camera)? camera,
+    TResult Function(Kamera camera, bool isRecording)? camera,
     TResult Function(File file)? viewing,
     TResult Function()? missingPermission,
     required TResult orElse(),
@@ -757,11 +761,11 @@ class _$_MissingPermission implements _MissingPermission {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Error value)? error,
-    TResult Function(_Camera value)? camera,
-    TResult Function(_Viewing value)? viewing,
-    TResult Function(_MissingPermission value)? missingPermission,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_Camera value)? camera,
+    TResult? Function(_Viewing value)? viewing,
+    TResult? Function(_MissingPermission value)? missingPermission,
   }) {
     return missingPermission?.call(this);
   }
