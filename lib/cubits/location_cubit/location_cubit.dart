@@ -78,7 +78,8 @@ class LocationCubit extends Cubit<LocationState> {
     try {
       // use location services to get current location
       final Position position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.medium);
+          desiredAccuracy: LocationAccuracy.best);
+      
       final Place place = await GeoCodingRepository.placeFromCoordinate(
           Coordinate(position.latitude, position.longitude));
 

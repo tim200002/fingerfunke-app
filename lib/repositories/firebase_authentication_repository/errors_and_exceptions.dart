@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../env.dart' as env;
 
 
 class LogOutFailure implements Exception {}
@@ -16,7 +15,7 @@ class VerifyPhoneNumberFailure implements Exception {
             'Phone number is not valid or badly formatted');
       default:
         {
-          if (env.SHOW_VERBOSE_UI_ERROR_MESSAGES) {
+          if (const bool.fromEnvironment("SHOW_VERBOSE_UI_ERROR_MESSAGES")) {
             return VerifyPhoneNumberFailure(
                 'VerifyPhoneNumberFailure $code');
           }

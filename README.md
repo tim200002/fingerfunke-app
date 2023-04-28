@@ -4,26 +4,22 @@
 
 ## Getting started
 
-### Developement setup
-```
-flutter-version: 3.0.3
-dart-version: 2.17.5
-dev-tools-version: 2.12.2
-```
+### First Time Setup
+The old way of downloading config files from google is deprecated. The new way is to use the `firebase CLI` as outlined [here](https://firebase.flutter.dev/docs/cli/). This has the advantage that you no longer have to deal with configuration files manually. 
 
-### Firebase Config files
+The steps for using the `firebase CLI`are
+1. If you do not already have the `firebase CLI`install it via `npm install -g firebase-tools`and login
+2. Also install the `FlutterFireCLI` by running `dart pub global activate flutterfire_cli`
+3. Once installed go to the root of this project, run `flutterfire configure` and follow the following steps
+  - Select a firebase project -> select fingerfunke
+  - Which platform should your configuration support -> select android and ios
+  - In the next step the android app should be found automatically leading to the output `Firebase android app app.fingerfunke.fingerfunke registered.`
+  - We are using a different name for the ios app, thus it is not found automatically. Thus, when prompted for `Which ios bundle id do you want to use for this configuration, e.g. 'com.example.app'?` enter the name `app.fingerfunke.fingerfunke-mobile-app`
+  - Finally select `yes`to continue
 
-Before installing the flutter app one must add the (secret) `firebase config files` to ones own developement environment. These files are kept in a private fingerfunke gitlab-repo [here](https://gitlab.com/fingerfunke/config-files). If you are part of the team you should be able to just access them. If you are new and want to contribute to this project [please contact the team](mailto:info@fingerfunke.app) and we will give you access.
+After following these steps you must also make sure that you are using the right configuration. For more information on this please refer to the `Configuration Setup` section
 
-After downlaoding these files you must copy them to the propper location
 
-```
-# for Android (google-services.json)
-android/app/google-services.json
-
-# for iOS (GoogleService-Info.plist)
-ios/GoogleService-Info.plist
-```
 
 ### Localization Files
 to enable l10n a code generator must be executed. 
@@ -34,8 +30,24 @@ It can be started in one of two ways:
   2. in VS-Code right click on `app_en.arb` and select `Generate Localizations`
 
 ### Environment Variables
+Generally the recommended way in dart to provide environment variables is via `dart-define`. Using this approach allows environment variables to be easily accessed both in dart code and in native code. A good tutorial for how to use `dart-define` is [this one](https://itnext.io/secure-your-flutter-project-the-right-way-to-set-environment-variables-with-compile-time-variables-67c3163ff9f4).
 
-You must also provide a valid `.env` file. The `.env.example` file is a blueprint how this file should look like. Prebuilt configuration for local use as well as production can be found in [the private fingerfunke gitlab repo](https://gitlab.com/fingerfunke/config-files).
+#### Configuration Setup
+The old process of copying `.env` files is obsolete. Instead you must make sure the [the private fingerfunke configuration repo](https://gitlab.com/fingerfunke/config-files) is cloned next to this repo. If this is the case, you can simply build the App for different environments using the provided run scripts in visual studio code (see `launch.json`).
+If you want to run manually this is also possible, however, you must then provide the flag `flutter run --dart-define-from-file <path to the config.json>`. It is also possible to setup automatic build scripts like in vscode for android studio. For more information please refer to [this tutorial](https://itnext.io/secure-your-flutter-project-the-right-way-to-set-environment-variables-with-compile-time-variables-67c3163ff9f4).
+
+#### Defining and Using New Environment Variables
+**Dart Code**
+To define a new environment variable, just add it to the proper `config.json` file in [the private fingerfunke configuration repo](https://gitlab.com/fingerfunke/config-files) which should be cloned next to this project (no manual copying required). The variable can then be accessed in the dart code using functions like ` String.fromEnvironment("EMULATOR_IP", defaultValue: "");`
+
+**Android Code**
+Environment variables can also be accessed in native android code. The process for this is explained very well in [this tutorial](https://itnext.io/secure-your-flutter-project-the-right-way-to-set-environment-variables-with-compile-time-variables-67c3163ff9f4)
+
+**iOS Code**
+Environment variables can also be accessed in native ios code. The process is however not document very well. I researched it with a combination of these two tutorials. [Tutorial 1](https://itnext.io/secure-your-flutter-project-the-right-way-to-set-environment-variables-with-compile-time-variables-67c3163ff9f4), [Tutorial 2](https://cocoacasts.com/tips-and-tricks-managing-build-configurations-in-xocde).
+
+In easy words, environment variables are accessible on the ios side as build settings. These, however, cannot be accessed directly. Instead one must again add the same variable to the `info.plist` file. Then oen can access the variable in code using `Bundle.main.infoDictionary?["VARIABLE"]`. Again for more information please refer to the tutorial or to Tim Lindenau.
+
 
 **List of all Environment Variables which must be set**
 |Variable|description|valid values|

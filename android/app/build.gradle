@@ -23,15 +23,28 @@ if (flutterVersionName == null) {
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'com.google.gms.google-services'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
-apply from: project(':flutter_config').projectDir.getPath() + "/dotenv.gradle"
 
-def keystoreProperties = new Properties()
-   def keystorePropertiesFile = rootProject.file('key.properties')
-   if (keystorePropertiesFile.exists()) {
-       keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-   }
+
+// Load signing configs
+// ToDo a nicer version where we identify if we are in debug or relase and do not use duplicate variable would be nicer
+// load all debug configuration
+def keystorePropertiesFileDebug = rootProject.file('../../config-files/flutter_app/android/signing/debug/key.properties')
+println  "  keystorePropertiesFileDebug:   ${keystorePropertiesFileDebug}";
+def keystoreDebug = rootProject.file('../../config-files/flutter_app/android/signing/debug/debug-keystore.jks')
+println  "  keystoreDebug:   ${keystoreDebug}";
+def keystorePropertiesDebug = new Properties()
+keystorePropertiesDebug.load(new FileInputStream(keystorePropertiesFileDebug))
+
+// load all release configuration
+def keystorePropertiesFileRelease = rootProject.file('../../config-files/flutter_app/android/signing/release/key.properties')
+println  "  keystorePropertiesFileRelease:   ${keystorePropertiesFileRelease}";
+def keystoreRelease = rootProject.file('../../config-files/flutter_app/android/signing/release/upload-keystore.jks')
+println  "  keystoreRelease:   ${keystoreRelease}";
+def keystorePropertiesRelease = new Properties()
+keystorePropertiesRelease.load(new FileInputStream(keystorePropertiesFileRelease))
+
+
 
 android {
     compileSdkVersion 33
@@ -56,17 +69,29 @@ android {
         targetSdkVersion 31
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+
+        // Access environment variables
+        resValue "string", "googleMapsApiKey", GOOGLE_MAPS_API_KEY
     }
 
     signingConfigs {
+        debug{
+            keyAlias keystorePropertiesDebug['keyAlias']
+            keyPassword keystorePropertiesDebug['keyPassword']
+            storeFile keystoreDebug
+            storePassword keystorePropertiesDebug['storePassword']
+        }
        release {
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
-            storePassword keystoreProperties['storePassword']
+            keyAlias keystorePropertiesRelease['keyAlias']
+            keyPassword keystorePropertiesRelease['keyPassword']
+            storeFile keystoreRelease
+            storePassword keystorePropertiesRelease['storePassword']
         }
     }
     buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
         release {
             signingConfig signingConfigs.release
         }
