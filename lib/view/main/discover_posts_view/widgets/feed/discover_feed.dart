@@ -15,7 +15,6 @@ import '../../../../../models/place.dart';
 import '../../../../illustration_view/illustration_view.dart';
 import '../filter/cubit/feed_filter_cubit.dart';
 import 'cubit/discover_feed_cubit.dart';
-import 'feed_loading_view.dart';
 
 class DiscoverFeed extends StatelessWidget {
   const DiscoverFeed({Key? key}) : super(key: key);
@@ -83,7 +82,7 @@ class DiscoverFeed extends StatelessWidget {
                           context.read<DiscoverFeedCubit>().requestNewPage(),
                       endIndicator: IllustrationView.empty(
                           text: l10n(context).msg_feedEmpty),
-                      loadingIndicator: PostFeedImageItem.loading()),
+                      loadingIndicator: const FeedItemLoading()),
                 ),
               ),
             ),

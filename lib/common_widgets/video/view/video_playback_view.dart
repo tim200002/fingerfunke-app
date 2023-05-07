@@ -21,6 +21,8 @@ class VideoPlaybackView extends StatelessWidget {
   final Widget? thumbnail;
   final bool controls;
   final bool showProgressBar;
+  // Whether to show an error indicator if erroring or to show the thumbnail
+  final bool overwriteErrorWithThumbnail;
 
   static Widget simple(
       {required String source,
@@ -29,6 +31,7 @@ class VideoPlaybackView extends StatelessWidget {
       bool autoplay = true,
       BoxFit fit = BoxFit.contain,
       Widget? thumbnail,
+      bool overwriteErrorWithThumbnail = false,
       bool controls = false,
       bool showProgressBar = false,
       BorderRadius borderRadius = BorderRadius.zero}) {
@@ -40,6 +43,7 @@ class VideoPlaybackView extends StatelessWidget {
       child: VideoPlaybackView(
           fit: fit,
           thumbnail: thumbnail,
+          overwriteErrorWithThumbnail: overwriteErrorWithThumbnail,
           controls: controls,
           showProgressBar: showProgressBar,
           borderRadius: borderRadius),
@@ -50,6 +54,7 @@ class VideoPlaybackView extends StatelessWidget {
       {Key? key,
       this.fit = BoxFit.contain,
       this.thumbnail,
+      this.overwriteErrorWithThumbnail = false,
       this.controls = false,
       this.showProgressBar = false,
       this.borderRadius = BorderRadius.zero})
@@ -83,14 +88,24 @@ class VideoPlaybackView extends StatelessWidget {
         ]));
   }
 
+  Widget _thumbnailView(Widget thumbnail) {
+    return SizedBox.expand(
+      child: FittedBox(
+        fit: fit,
+        child: thumbnail,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<VideoPlaybackCubit, VideoPlaybackState>(
       builder: (context, state) => AnimatedSwitcher(
         duration: const Duration(milliseconds: 100),
         child: state.when(
-            initializing: () =>
-                thumbnail ?? const Center(child: CircularProgressIndicator()),
+            initializing: () => thumbnail != null
+                ? _thumbnailView(thumbnail!)
+                : const Center(child: CircularProgressIndicator()),
             playing: (c, p) => controls
                 ? InkWell(
                     child: _videoPlayer(context, c, p),
@@ -98,8 +113,12 @@ class VideoPlaybackView extends StatelessWidget {
                       context.read<VideoPlaybackCubit>().togglePlay();
                     })
                 : _videoPlayer(context, c, p),
-            error: (error) =>
-                const Center(child: Icon(FeatherIcons.alertCircle))),
+            error: (error) {
+              if (thumbnail != null && overwriteErrorWithThumbnail) {
+                return _thumbnailView(thumbnail!);
+              }
+              return const Center(child: Icon(FeatherIcons.alertCircle));
+            }),
       ),
     );
   }

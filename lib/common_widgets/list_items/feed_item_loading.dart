@@ -1,7 +1,8 @@
 part of "post_feed_image_item.dart";
 
-class _FeedItemLoading extends StatelessWidget {
-  const _FeedItemLoading();
+/// Helper widget show loading animation in the style of how a post in the feed looks like
+class FeedItemLoading extends StatelessWidget {
+  const FeedItemLoading();
 
   Widget _infoSection() {
     return Column(

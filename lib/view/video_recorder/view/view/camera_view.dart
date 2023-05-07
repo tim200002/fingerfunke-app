@@ -2,10 +2,8 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../utils/exceptions.dart';
 import '../cubit/video_recorder_cubit.dart';
 import '../widgets/action_bar.dart';
-import '../widgets/new_record_button.dart';
 
 class CameraView extends StatefulWidget {
   static const Duration countdownLength = Duration(seconds: 3);

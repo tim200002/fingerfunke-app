@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../../common_widgets/image/network_placeholder_image.dart/network_placeholder_image.dart';
 import '../../../../../../common_widgets/video/view/video_playback_view.dart';
 import '../../../../../../models/asset/asset.dart';
 import '../../../../../../models/post/post.dart';
@@ -30,9 +29,6 @@ class PostFeedImageItem extends StatelessWidget {
   /// (e.g. reload current post in case changes have been done on the detail page)
   final void Function(FirestoreId postId)? onNavigatedBackToThisItem;
 
-  /// a loading UI version of this Widget
-  static Widget loading() => const _FeedItemLoading();
-
   PostFeedImageItem(this._post,
       {Key? key,
       this.height,
@@ -47,6 +43,7 @@ class PostFeedImageItem extends StatelessWidget {
     return VideoPlaybackView.simple(
         source: source,
         thumbnail: _thumbnailView(context),
+        overwriteErrorWithThumbnail: true,
         sourceType: VideoSourceType.network,
         fit: BoxFit.cover);
   }
