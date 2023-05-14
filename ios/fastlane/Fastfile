@@ -20,19 +20,16 @@ platform :ios do
   desc "Set initial configuration"
   lane :prepare do
     # get current build number from testflight
-    latest_testflight_build_number = latest_testflight_build_number
+    latest_testflight_build_number_var = latest_testflight_build_number
     # set build number to latest testflight build number + 1
-    ENV["FLUTTER_BUILD_NUMBER"] = latest_testflight_build_number + 1
+    ENV["FLUTTER_BUILD_NUMBER"] = (latest_testflight_build_number_var + 1).to_s
   end
 
   desc "Push a new beta build to TestFlight"
   lane :beta do
     match(type: "appstore", readonly: true)
-    
+
     build_app(
-      #skip_build_archive: true,
-      #archive_path: "../build/ios/archive/Runner.xcarchive",
-      #export_team_id: "USQLR37M94",
     )
 
     upload_to_testflight

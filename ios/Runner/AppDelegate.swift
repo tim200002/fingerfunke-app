@@ -13,8 +13,7 @@ import GoogleMaps
     GeneratedPluginRegistrant.register(with: self)
 
     // load environment variable for google maps
-    // var googleMapsApiKey: String? = ProcessInfo.processInfo.environment["GOOGLE_MAPS_API_KEY"];
-    var googleMapsApiKey = Bundle.main.infoDictionary?["GOOGLE_MAPS_API_KEY"] as! String 
+    let googleMapsApiKey = Bundle.main.infoDictionary?["GOOGLE_MAPS_API_KEY"] as! String 
     GMSServices.provideAPIKey(googleMapsApiKey)
 
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
