@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../cubits/app_cubit/app_cubit.dart';
+import '../../../../cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
 import '../../../../cubits/live_config_cubit/live_config_cubit.dart';
 import '../../../../models/asset/asset.dart';
 import '../../../../models/place.dart';
@@ -31,9 +31,9 @@ class DevFunctionsPage extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {
                         final User? currentUser =
-                            BlocProvider.of<AppCubit>(context).state.user;
+                            BlocProvider.of<FirebaseAuthenticationCubitCubit>(context).getUser();
                         PostRepositoryImpl().createPost(Event.createWithId(
-                            author: currentUser!.toInfo(),
+                            authorId: currentUser!.id,
                             title: "Test post ${DateTime.now().second}",
                             visibility: PostVisibility.visible,
                             description:

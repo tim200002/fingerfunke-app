@@ -2,10 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../services/globals_service.dart';
 
 AppLocalizations l10n(BuildContext context) => AppLocalizations.of(context)!;
 
@@ -29,8 +32,14 @@ attempt(Function f, {required Function(dynamic e) onError}) {
 }
 
 class Tools {
-  static showSnackbar(BuildContext context, String message) {
-    ScaffoldMessenger.of(context)
+  static showSnackbar(String message) {
+    ScaffoldMessengerState? state =
+        GetIt.I<GlobalsService>().rootScaffoldMessengerKey.currentState;
+    if (state == null) {
+      throw Exception("ScaffoldMessengerState is null");
+    }
+
+    state
       ..hideCurrentSnackBar()
       ..showSnackBar(
         SnackBar(

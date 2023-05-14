@@ -43,7 +43,7 @@ class VideoRepositoryImpl implements VideoRepository {
       'Connection': 'keep-alive',
     });
     final response = _dio.put(uploadUrl,
-        // ToDo find out if this stream is automatically closes when cancel token invoked
+        // ToDo find out if this stream is automatically closed when cancel token invoked
         data: file.openRead(),
         cancelToken: token,
         options: options,

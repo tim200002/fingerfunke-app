@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
-import '../../../../cubits/app_cubit/app_cubit.dart';
 import '../../../../models/post/post.dart';
 import '../../../../routes.dart';
 import '../../../../utils/dev_tools.dart';
 import '../../../../utils/tools.dart';
 import '../../../../utils/util_widgets/floating_modal.dart';
+import '../../../cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
 import '../../report_send/report_send_page.dart';
 import '../cubits/post_viewer_cubit/post_cubit.dart';
 import 'post_participants.dart/post_participants_view.dart';
@@ -34,7 +34,7 @@ class PostSettingsModalContent extends StatelessWidget {
                 child: Center(child: CircularProgressIndicator.adaptive())),
             normal: (post, isMember) {
               bool isAuthor = post.isUserAuthor(
-                  BlocProvider.of<AppCubit>(context).state.user.toInfo());
+                  BlocProvider.of<FirebaseAuthenticationCubitCubit>(context).getUser().toInfo());
 
               return Column(
                 mainAxisSize: MainAxisSize.min,
@@ -80,7 +80,7 @@ class PostSettingsModalContent extends StatelessWidget {
                         Navigator.of(context).pop();
                         await context.read<PostCubit>().deletePost();
                         Tools.showSnackbar(
-                            context, l10n(context).msg_postDeleted);
+                            l10n(context).msg_postDeleted);
                         Navigator.of(context).pop();
                       },
                     ),

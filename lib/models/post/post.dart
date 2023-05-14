@@ -37,7 +37,7 @@ class Post extends UserGeneratedDocument {
   const Post._(
       {required FirestoreId id,
       required this.type,
-      required UserInfo author,
+      required FirestoreId authorId,
       required this.title,
       required this.description,
       required DateTime creationTime,
@@ -46,7 +46,7 @@ class Post extends UserGeneratedDocument {
       required this.geohashesByRadius,
       required this.media,
       required this.members})
-      : super(id: id, author: author, creationTime: creationTime);
+      : super(id: id, authorId: authorId, creationTime: creationTime);
 
   bool get isEvent => type == PostType.event;
   bool get isGroup => type == PostType.recurrent;
@@ -78,11 +78,11 @@ class Post extends UserGeneratedDocument {
 
   bool isUserAuthor(UserInfo? user) {
     if (user == null) return false;
-    return author.id == user.id;
+    return authorId == user.id;
   }
 
   bool isAuthor(FirestoreId? userId) {
-    return author.id == userId;
+    return authorId == userId;
   }
 
   factory Post.fromDoc(DocumentSnapshot document) =>
@@ -91,7 +91,7 @@ class Post extends UserGeneratedDocument {
   List<Object> get props => [
         id,
         type,
-        author,
+        authorId,
         title,
         description,
         creationTime,

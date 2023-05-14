@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
+import '../../../../../common_widgets/image/mux_thumbnail_image/mux_thumbnail_image.dart';
 import '../../../../../common_widgets/image/network_placeholder_image.dart/network_placeholder_image.dart';
 import '../../../../../common_widgets/list_items/in_past_filter.dart';
 import '../../../../../common_widgets/upload/video_upload_tile.dart';
-import '../../../../../cubits/app_cubit/app_cubit.dart';
+import '../../../../../cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
 import '../../../../../cubits/video_upload_cubit/video_upload_cubit.dart';
 import '../../../../../models/asset/asset.dart';
 import '../../../../../models/post/post.dart';
@@ -205,15 +206,8 @@ class HeaderSection extends StatelessWidget {
         child: Stack(children: [
           InPastFilter(
               isInPast: post.asEvent?.isCompleted ?? false,
-              child: NetworkPlaceholderImage(
-                VideoRepositoryImpl()
-                    .createThumbnailUrl(post.media[0] as VideoAsset),
-                Container(
-                  color: Colors.grey,
-                ),
-                width: MediaQuery.of(context).size.width.toInt(),
-                fit: BoxFit.cover,
-              )),
+              child: MuxThumbnailImage(post.media[0] as VideoAsset,
+                  width: MediaQuery.of(context).size.width, fit: BoxFit.cover)),
           const Center(
             child: Icon(
               Icons.play_arrow_rounded,
@@ -261,38 +255,35 @@ class HeaderSection extends StatelessWidget {
           ? []
           : [
               Padding(
-                  padding: const EdgeInsets.only(
-                    right: AppTheme.PADDING_SIDE,
-                    top: 12.0 + AppTheme.PADDING_SIDE,
-                    bottom: 12,
-                  ),
-                  child: BlocBuilder<AppCubit, AppState>(
-                      builder: (context, appState) =>
-                          BlocBuilder<PostCubit, PostState>(
-                            builder: (context, postState) {
-                              Post? post;
-                              final postId =
-                                  context.read<PostCubit>().state.when(
-                                        normal: (p, _) {
-                                          post = p;
-                                          return p.id;
-                                        },
-                                        loading: (postId) => postId,
-                                      );
-                              final hasPostSaved =
-                                  appState.user.savedPosts.contains(postId);
-                              return PostAppBarButton(
-                                  enabled: (post?.author.id ?? "") !=
-                                      appState.user.id,
-                                  icon: hasPostSaved
-                                      ? Icons.bookmark_rounded
-                                      : Icons.bookmark_border_rounded,
-                                  onPressed: () => context
-                                      .read<PostCubit>()
-                                      .toggleSaved(
-                                          appState.user.id, hasPostSaved));
+                padding: const EdgeInsets.only(
+                  right: AppTheme.PADDING_SIDE,
+                  top: 12.0 + AppTheme.PADDING_SIDE,
+                  bottom: 12,
+                ),
+                child: FirebaseAuthenticationCubitCubit.userBuilder(
+                  (user) => BlocBuilder<PostCubit, PostState>(
+                    builder: (context, postState) {
+                      Post? post;
+                      final postId = context.read<PostCubit>().state.when(
+                            normal: (p, _) {
+                              post = p;
+                              return p.id;
                             },
-                          ))),
+                            loading: (postId) => postId,
+                          );
+                      final hasPostSaved = user.savedPosts.contains(postId);
+                      return PostAppBarButton(
+                          enabled: (post?.authorId ?? "") != user.id,
+                          icon: hasPostSaved
+                              ? Icons.bookmark_rounded
+                              : Icons.bookmark_border_rounded,
+                          onPressed: () => context
+                              .read<PostCubit>()
+                              .toggleSaved(user.id, hasPostSaved));
+                    },
+                  ),
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.only(
                   right: 12.0 + AppTheme.PADDING_SIDE,

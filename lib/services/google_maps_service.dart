@@ -1,5 +1,3 @@
-import '../env.dart' as env;
-
 /// This service provides functions to generate Google Maps Queries
 class GoogleMapsService {
   /// Generates a static Map google Maps query
@@ -16,7 +14,7 @@ class GoogleMapsService {
           'markers': searchQuery,
           'zoom': '15',
           'maptype': 'roadmap',
-          'key': env.GOOGLE_MAPS_API_KEY
+          'key': const String.fromEnvironment("GOOGLE_MAPS_API_KEY")
         });
   }
 

@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import '../../../common_widgets/paginated_list/paginated_list.dart';
-import '../../../cubits/app_cubit/app_cubit.dart';
+import '../../../cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
 import '../../../models/message/message.dart';
 import '../../../utils/tools.dart';
 import '../cubit/chat_cubit_cubit.dart';
@@ -78,7 +78,7 @@ class ChatPage extends StatelessWidget {
                 ),
                 ChatEditor(
                     postId: arguments.postId,
-                    author: BlocProvider.of<AppCubit>(context).state.user),
+                    author: BlocProvider.of<FirebaseAuthenticationCubitCubit>(context).getUser()),
               ],
             ),
           ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../../common_widgets/image/network_placeholder_image.dart/network_placeholder_image.dart';
 import '../../../../../../common_widgets/video/view/video_playback_view.dart';
 import '../../../../../../models/asset/asset.dart';
 import '../../../../../../models/post/post.dart';
@@ -12,6 +11,7 @@ import '../../../../../../utils/tools.dart';
 import '../../../../../../utils/type_aliases.dart';
 import '../../repositories/video_repository/video_repository.dart';
 import '../../utils/skeleton_view.dart';
+import '../image/mux_thumbnail_image/mux_thumbnail_image.dart';
 import '../user/user_info_view.dart';
 import 'in_past_filter.dart';
 
@@ -29,9 +29,6 @@ class PostFeedImageItem extends StatelessWidget {
   /// (e.g. reload current post in case changes have been done on the detail page)
   final void Function(FirestoreId postId)? onNavigatedBackToThisItem;
 
-  /// a loading UI version of this Widget
-  static Widget loading() => const _FeedItemLoading();
-
   PostFeedImageItem(this._post,
       {Key? key,
       this.height,
@@ -46,21 +43,15 @@ class PostFeedImageItem extends StatelessWidget {
     return VideoPlaybackView.simple(
         source: source,
         thumbnail: _thumbnailView(context),
+        overwriteErrorWithThumbnail: true,
         sourceType: VideoSourceType.network,
         fit: BoxFit.cover);
   }
 
   Widget _thumbnailView(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
-    return NetworkPlaceholderImage(
-      _repo.createThumbnailUrl(_post.media[0] as VideoAsset),
-      Container(
-        color: Colors.grey,
-      ),
-      fit: BoxFit.cover,
-      width: width.toInt(),
-      height: height?.toInt(),
-    );
+    return MuxThumbnailImage(_post.media[0] as VideoAsset,  width: width,
+      height: height, fit: BoxFit.cover,);
   }
 
   Widget _backgroundView(BuildContext context) {
@@ -144,7 +135,7 @@ class PostFeedImageItem extends StatelessWidget {
               height: 9,
             ),
             UserInfoView(
-              _post.author,
+              _post.authorId,
               color: Colors.white,
               compact: true,
             ),

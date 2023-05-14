@@ -35,7 +35,7 @@ class FeedbackSendCubit extends Cubit<FeedbackSendState> {
         String appVersion = "${packageInfo.version}+${packageInfo.buildNumber}";
 
         UserFeedback feedback = UserFeedback(
-            author: author,
+            authorId: author.id,
             creationTime: DateTime.now(),
             categories: cat,
             state: UserFeedbackState.open,

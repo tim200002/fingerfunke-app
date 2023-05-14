@@ -61,7 +61,7 @@ class _ChatEditorState extends State<ChatEditor> {
                             .postMessage(_controller.text)
                             .then((_) => _controller.clear())
                             .onError((_, __) => Tools.showSnackbar(
-                                context, l10n(context).msg_chatSendingFailed))
+                                l10n(context).msg_chatSendingFailed))
                         : null,
                     icon: const Icon(
                       Icons.send_rounded,

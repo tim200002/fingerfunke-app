@@ -4,39 +4,50 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import 'app.dart';
-import 'cubits/app_info/app_info_cubit.dart';
 import 'cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
-import 'cubits/live_config_cubit/live_config_cubit.dart';
 import 'cubits/settings_cubit/app_settings_cubit.dart';
-import 'env.dart' as env;
+import 'locator.dart';
 import 'repositories/firebase_authentication_repository/firebase_authentication_repository.dart';
 import 'repositories/storage_repository/storage_repository.dart';
+import 'services/app_info_service.dart';
+import 'services/meta_info_service.dart';
+import 'services/notification_service.dart';
+import 'services/session_info_service.dart';
+import 'models/user/user.dart' as user_models;
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  //await FlutterConfig.loadEnvVariables();
-  await StorageRepositoryImpl().init();
-  await Firebase.initializeApp();
-  final PackageInfo packageInfo = await PackageInfo.fromPlatform();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  setupGetIt();
+
+  // storage must be initialized async, therefore reads are sync afterwards
+  await GetIt.I<StorageRepository>().init();
+  await GetIt.I<AppInfoService>().init();
+
   final Logger _logger = Logger();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
-  // choose envrionment
-  switch (env.FIREBASE_ENVIRONMENT) {
+  // choose environment
+  switch (const String.fromEnvironment("FIREBASE_ENVIRONMENT")) {
     case 'local':
       {
         _logger.i("Using local environment");
         Logger.level = Level.debug;
-        String? emulatorIp = env.EMULATOR_IP;
-        if (emulatorIp == null) {
+        String emulatorIp = const String.fromEnvironment("EMULATOR_IP", defaultValue: "");
+        if (emulatorIp.isEmpty) {
           _logger.e("No IP for Emulator provided, falling back to localhost ");
           emulatorIp = "localhost";
         }
@@ -59,23 +70,42 @@ void main() async {
       }
   }
 
-  runApp(AppInflater(packageInfo: packageInfo));
+  runApp(AppInflater(
+   
+  ));
 }
 
 class AppInflater extends StatelessWidget {
-  final PackageInfo packageInfo;
-  const AppInflater({Key? key, required this.packageInfo}) : super(key: key);
+
+  AppInflater({Key? key}) : super(key: key);
+
+  /// This function handles all the functions that must be executed
+  /// on login for proper user management etc.
+  // ignore: prefer_function_declarations_over_variables
+  final Future<void> Function(user_models.User) logInHandler = (user) async {
+    // To make messaging work
+    final fcmToken = await FirebaseMessaging.instance.getToken();
+    await NotificationService.setFCMToken(user.id, fcmToken);
+
+    // To keep track of sessions
+    final PackageInfo packageInfo = GetIt.I<AppInfoService>().packageInfo;
+    SessionInfoService.init(user.id);
+    SessionInfoService.instance
+        .setAppVersion("${packageInfo.version}+${packageInfo.buildNumber}");
+
+    // To keep track of logins
+    MetaInfoService.registerAppOpening();
+  };
 
   @override
   Widget build(BuildContext context) {
-    final FirebaseAuthenticationRepository authRep =
-        FirebaseAuthenticationRepository();
     return MultiBlocProvider(
       providers: [
+        BlocProvider<FirebaseAuthenticationCubitCubit>(
+            lazy: false,
+            create: (_) => FirebaseAuthenticationCubitCubit(
+                GetIt.I<FirebaseAuthenticationRepository>(), logInHandler)),
         BlocProvider(create: (_) => AppSettingsCubit()),
-        BlocProvider(create: (_) => LiveConfigCubit()),
-        BlocProvider(create: (_) => AppInfoCubit(packageInfo)),
-        BlocProvider(create: (_) => FirebaseAuthenticationCubitCubit(authRep)),
       ],
       child: const App(),
     );

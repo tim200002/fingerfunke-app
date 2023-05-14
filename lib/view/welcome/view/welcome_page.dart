@@ -5,7 +5,6 @@ import '../../../utils/beta_indicator.dart';
 import '../../../utils/illustration.dart';
 import '../../../utils/tools.dart';
 import '../../app_info/app_version_view.dart';
-import '../../phone_login/view/phone_login_page.dart';
 import 'static_test_phase_wall.dart';
 import 'terms_agree_view.dart';
 

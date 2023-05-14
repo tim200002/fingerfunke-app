@@ -36,27 +36,20 @@ class _LocationButtonsState extends State<_LocationButtons> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(
-                            filterState.useSetLocation
-                                ? FeatherIcons.map
-                                : FeatherIcons.mapPin,
-                            size: 17),
+                        const Icon(FeatherIcons.mapPin, size: 17),
                         const SizedBox(width: 5),
-                        filterState.useSetLocation
-                            ? AutoSizeText(
-                                filterState.setLocation.getCityName())
-                            : BlocBuilder<LocationCubit, LocationState>(
-                                builder: (context, state) =>
-                                    AutoSizeText(state.when(
-                                  loading: () =>
-                                      l10n(context).lbl_locationLoading,
-                                  denied: (_) =>
-                                      l10n(context).lbl_locationUnknown,
-                                  error: (_) =>
-                                      l10n(context).lbl_locationUnknown,
-                                  loaded: (location) => location.getCityName(),
-                                )),
-                              )
+                        BlocBuilder<LocationCubit, LocationState>(
+                          builder: (context, state) => AutoSizeText(
+                            state.when(
+                              uninitialized: () =>
+                                  l10n(context).lbl_locationLoading,
+                              noPosition: (_) =>
+                                  l10n(context).lbl_locationUnknown,
+                              error: (_) => l10n(context).lbl_locationUnknown,
+                              loaded: (location) => location.getCityName(),
+                            ),
+                          ),
+                        )
                       ],
                     )),
           ),

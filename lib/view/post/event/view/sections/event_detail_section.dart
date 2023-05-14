@@ -4,6 +4,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../../cubits/location_cubit/location_cubit.dart';
 import '../../../../../models/place.dart';
 import '../../../../../models/post/post.dart';
 import '../../../../../services/google_maps_service.dart';
@@ -197,6 +198,9 @@ class __AdressPickerState extends State<_AdressPicker> {
         MaterialPageRoute(
           builder: (_) => MapsPlacePickerPage(
             onPlacePicked: (c, pickResult) => _onPlacePicked(pickResult),
+            initialPosition: context.read<LocationCubit>().state.maybeWhen(
+                    loaded: (location) => location.position,
+                    orElse: () => null),
           ),
         ),
       ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
-import '../../../../../cubits/app_cubit/app_cubit.dart';
+import '../../../../../cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
 import '../../../../../routes.dart';
 import '../../../../../utils/tools.dart';
 import '../../../../chat/cubit/chat_cubit_cubit.dart';
@@ -58,7 +58,7 @@ class PostActionButtons extends StatelessWidget {
               return Stack(
                 children: <Widget>[
                   if (!post.isUserAuthor(
-                          context.read<AppCubit>().state.user.toInfo()) &&
+                          context.read<FirebaseAuthenticationCubitCubit>().getUser().toInfo()) &&
                       (isMember || !(post.asEvent?.isCompleted ?? false)))
                     Align(
                         alignment: Alignment.bottomCenter,
@@ -76,7 +76,7 @@ class PostActionButtons extends StatelessWidget {
                                     : context.read<PostCubit>().joinPost)
                                 .call()
                                 ?.catchError(
-                                  (_) => Tools.showSnackbar(context,
+                                  (_) => Tools.showSnackbar(
                                       l10n(context).msg_errorUndefined),
                                 ))),
                   Align(
@@ -133,7 +133,7 @@ class _Edit extends StatelessWidget {
             onTap: valid
                 ? () => context.read<EventEditorCubit>().submit()
                 : () => Tools.showSnackbar(
-                    context, l10n(context).msg_editFieldsMissing),
+                    l10n(context).msg_editFieldsMissing),
           ))
     ]);
   }

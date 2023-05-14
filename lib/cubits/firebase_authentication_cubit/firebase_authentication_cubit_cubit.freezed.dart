@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'firebase_authentication_cubit_cubit.dart';
 
@@ -27,10 +27,10 @@ mixin _$FirebaseAuthenticationCubitState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String uid)? authenticatedWaitingForUserToBeFetched,
-    TResult Function(String uid)? autehnticationNoUserCreated,
-    TResult Function(user_models.User user)? authenticated,
-    TResult Function()? unauthenticated,
+    TResult? Function(String uid)? authenticatedWaitingForUserToBeFetched,
+    TResult? Function(String uid)? autehnticationNoUserCreated,
+    TResult? Function(user_models.User user)? authenticated,
+    TResult? Function()? unauthenticated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -54,12 +54,12 @@ mixin _$FirebaseAuthenticationCubitState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_AuthenticatedWaitingForUserToBeFetched value)?
+    TResult? Function(_AuthenticatedWaitingForUserToBeFetched value)?
         authenticatedWaitingForUserToBeFetched,
-    TResult Function(_AuthenticatedNoUserCreated value)?
+    TResult? Function(_AuthenticatedNoUserCreated value)?
         autehnticationNoUserCreated,
-    TResult Function(_Authenticated value)? authenticated,
-    TResult Function(_Unauthenticated value)? unauthenticated,
+    TResult? Function(_Authenticated value)? authenticated,
+    TResult? Function(_Unauthenticated value)? unauthenticated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -80,17 +80,20 @@ abstract class $FirebaseAuthenticationCubitStateCopyWith<$Res> {
   factory $FirebaseAuthenticationCubitStateCopyWith(
           FirebaseAuthenticationCubitState value,
           $Res Function(FirebaseAuthenticationCubitState) then) =
-      _$FirebaseAuthenticationCubitStateCopyWithImpl<$Res>;
+      _$FirebaseAuthenticationCubitStateCopyWithImpl<$Res,
+          FirebaseAuthenticationCubitState>;
 }
 
 /// @nodoc
-class _$FirebaseAuthenticationCubitStateCopyWithImpl<$Res>
+class _$FirebaseAuthenticationCubitStateCopyWithImpl<$Res,
+        $Val extends FirebaseAuthenticationCubitState>
     implements $FirebaseAuthenticationCubitStateCopyWith<$Res> {
   _$FirebaseAuthenticationCubitStateCopyWithImpl(this._value, this._then);
 
-  final FirebaseAuthenticationCubitState _value;
   // ignore: unused_field
-  final $Res Function(FirebaseAuthenticationCubitState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -99,29 +102,27 @@ abstract class _$$_AuthenticatedWaitingForUserToBeFetchedCopyWith<$Res> {
           _$_AuthenticatedWaitingForUserToBeFetched value,
           $Res Function(_$_AuthenticatedWaitingForUserToBeFetched) then) =
       __$$_AuthenticatedWaitingForUserToBeFetchedCopyWithImpl<$Res>;
+  @useResult
   $Res call({String uid});
 }
 
 /// @nodoc
 class __$$_AuthenticatedWaitingForUserToBeFetchedCopyWithImpl<$Res>
-    extends _$FirebaseAuthenticationCubitStateCopyWithImpl<$Res>
+    extends _$FirebaseAuthenticationCubitStateCopyWithImpl<$Res,
+        _$_AuthenticatedWaitingForUserToBeFetched>
     implements _$$_AuthenticatedWaitingForUserToBeFetchedCopyWith<$Res> {
   __$$_AuthenticatedWaitingForUserToBeFetchedCopyWithImpl(
       _$_AuthenticatedWaitingForUserToBeFetched _value,
       $Res Function(_$_AuthenticatedWaitingForUserToBeFetched) _then)
-      : super(_value,
-            (v) => _then(v as _$_AuthenticatedWaitingForUserToBeFetched));
+      : super(_value, _then);
 
-  @override
-  _$_AuthenticatedWaitingForUserToBeFetched get _value =>
-      super._value as _$_AuthenticatedWaitingForUserToBeFetched;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? uid = freezed,
+    Object? uid = null,
   }) {
     return _then(_$_AuthenticatedWaitingForUserToBeFetched(
-      uid == freezed
+      null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String,
@@ -148,15 +149,15 @@ class _$_AuthenticatedWaitingForUserToBeFetched
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_AuthenticatedWaitingForUserToBeFetched &&
-            const DeepCollectionEquality().equals(other.uid, uid));
+            (identical(other.uid, uid) || other.uid == uid));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(uid));
+  int get hashCode => Object.hash(runtimeType, uid);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_AuthenticatedWaitingForUserToBeFetchedCopyWith<
           _$_AuthenticatedWaitingForUserToBeFetched>
       get copyWith => __$$_AuthenticatedWaitingForUserToBeFetchedCopyWithImpl<
@@ -177,10 +178,10 @@ class _$_AuthenticatedWaitingForUserToBeFetched
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String uid)? authenticatedWaitingForUserToBeFetched,
-    TResult Function(String uid)? autehnticationNoUserCreated,
-    TResult Function(user_models.User user)? authenticated,
-    TResult Function()? unauthenticated,
+    TResult? Function(String uid)? authenticatedWaitingForUserToBeFetched,
+    TResult? Function(String uid)? autehnticationNoUserCreated,
+    TResult? Function(user_models.User user)? authenticated,
+    TResult? Function()? unauthenticated,
   }) {
     return authenticatedWaitingForUserToBeFetched?.call(uid);
   }
@@ -216,12 +217,12 @@ class _$_AuthenticatedWaitingForUserToBeFetched
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_AuthenticatedWaitingForUserToBeFetched value)?
+    TResult? Function(_AuthenticatedWaitingForUserToBeFetched value)?
         authenticatedWaitingForUserToBeFetched,
-    TResult Function(_AuthenticatedNoUserCreated value)?
+    TResult? Function(_AuthenticatedNoUserCreated value)?
         autehnticationNoUserCreated,
-    TResult Function(_Authenticated value)? authenticated,
-    TResult Function(_Unauthenticated value)? unauthenticated,
+    TResult? Function(_Authenticated value)? authenticated,
+    TResult? Function(_Unauthenticated value)? unauthenticated,
   }) {
     return authenticatedWaitingForUserToBeFetched?.call(this);
   }
@@ -262,28 +263,27 @@ abstract class _$$_AuthenticatedNoUserCreatedCopyWith<$Res> {
           _$_AuthenticatedNoUserCreated value,
           $Res Function(_$_AuthenticatedNoUserCreated) then) =
       __$$_AuthenticatedNoUserCreatedCopyWithImpl<$Res>;
+  @useResult
   $Res call({String uid});
 }
 
 /// @nodoc
 class __$$_AuthenticatedNoUserCreatedCopyWithImpl<$Res>
-    extends _$FirebaseAuthenticationCubitStateCopyWithImpl<$Res>
+    extends _$FirebaseAuthenticationCubitStateCopyWithImpl<$Res,
+        _$_AuthenticatedNoUserCreated>
     implements _$$_AuthenticatedNoUserCreatedCopyWith<$Res> {
   __$$_AuthenticatedNoUserCreatedCopyWithImpl(
       _$_AuthenticatedNoUserCreated _value,
       $Res Function(_$_AuthenticatedNoUserCreated) _then)
-      : super(_value, (v) => _then(v as _$_AuthenticatedNoUserCreated));
+      : super(_value, _then);
 
-  @override
-  _$_AuthenticatedNoUserCreated get _value =>
-      super._value as _$_AuthenticatedNoUserCreated;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? uid = freezed,
+    Object? uid = null,
   }) {
     return _then(_$_AuthenticatedNoUserCreated(
-      uid == freezed
+      null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String,
@@ -309,15 +309,15 @@ class _$_AuthenticatedNoUserCreated implements _AuthenticatedNoUserCreated {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_AuthenticatedNoUserCreated &&
-            const DeepCollectionEquality().equals(other.uid, uid));
+            (identical(other.uid, uid) || other.uid == uid));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(uid));
+  int get hashCode => Object.hash(runtimeType, uid);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_AuthenticatedNoUserCreatedCopyWith<_$_AuthenticatedNoUserCreated>
       get copyWith => __$$_AuthenticatedNoUserCreatedCopyWithImpl<
           _$_AuthenticatedNoUserCreated>(this, _$identity);
@@ -337,10 +337,10 @@ class _$_AuthenticatedNoUserCreated implements _AuthenticatedNoUserCreated {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String uid)? authenticatedWaitingForUserToBeFetched,
-    TResult Function(String uid)? autehnticationNoUserCreated,
-    TResult Function(user_models.User user)? authenticated,
-    TResult Function()? unauthenticated,
+    TResult? Function(String uid)? authenticatedWaitingForUserToBeFetched,
+    TResult? Function(String uid)? autehnticationNoUserCreated,
+    TResult? Function(user_models.User user)? authenticated,
+    TResult? Function()? unauthenticated,
   }) {
     return autehnticationNoUserCreated?.call(uid);
   }
@@ -376,12 +376,12 @@ class _$_AuthenticatedNoUserCreated implements _AuthenticatedNoUserCreated {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_AuthenticatedWaitingForUserToBeFetched value)?
+    TResult? Function(_AuthenticatedWaitingForUserToBeFetched value)?
         authenticatedWaitingForUserToBeFetched,
-    TResult Function(_AuthenticatedNoUserCreated value)?
+    TResult? Function(_AuthenticatedNoUserCreated value)?
         autehnticationNoUserCreated,
-    TResult Function(_Authenticated value)? authenticated,
-    TResult Function(_Unauthenticated value)? unauthenticated,
+    TResult? Function(_Authenticated value)? authenticated,
+    TResult? Function(_Unauthenticated value)? unauthenticated,
   }) {
     return autehnticationNoUserCreated?.call(this);
   }
@@ -420,26 +420,25 @@ abstract class _$$_AuthenticatedCopyWith<$Res> {
   factory _$$_AuthenticatedCopyWith(
           _$_Authenticated value, $Res Function(_$_Authenticated) then) =
       __$$_AuthenticatedCopyWithImpl<$Res>;
+  @useResult
   $Res call({user_models.User user});
 }
 
 /// @nodoc
 class __$$_AuthenticatedCopyWithImpl<$Res>
-    extends _$FirebaseAuthenticationCubitStateCopyWithImpl<$Res>
-    implements _$$_AuthenticatedCopyWith<$Res> {
+    extends _$FirebaseAuthenticationCubitStateCopyWithImpl<$Res,
+        _$_Authenticated> implements _$$_AuthenticatedCopyWith<$Res> {
   __$$_AuthenticatedCopyWithImpl(
       _$_Authenticated _value, $Res Function(_$_Authenticated) _then)
-      : super(_value, (v) => _then(v as _$_Authenticated));
+      : super(_value, _then);
 
-  @override
-  _$_Authenticated get _value => super._value as _$_Authenticated;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? user = freezed,
+    Object? user = null,
   }) {
     return _then(_$_Authenticated(
-      user == freezed
+      null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as user_models.User,
@@ -465,15 +464,15 @@ class _$_Authenticated implements _Authenticated {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Authenticated &&
-            const DeepCollectionEquality().equals(other.user, user));
+            (identical(other.user, user) || other.user == user));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(user));
+  int get hashCode => Object.hash(runtimeType, user);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_AuthenticatedCopyWith<_$_Authenticated> get copyWith =>
       __$$_AuthenticatedCopyWithImpl<_$_Authenticated>(this, _$identity);
 
@@ -492,10 +491,10 @@ class _$_Authenticated implements _Authenticated {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String uid)? authenticatedWaitingForUserToBeFetched,
-    TResult Function(String uid)? autehnticationNoUserCreated,
-    TResult Function(user_models.User user)? authenticated,
-    TResult Function()? unauthenticated,
+    TResult? Function(String uid)? authenticatedWaitingForUserToBeFetched,
+    TResult? Function(String uid)? autehnticationNoUserCreated,
+    TResult? Function(user_models.User user)? authenticated,
+    TResult? Function()? unauthenticated,
   }) {
     return authenticated?.call(user);
   }
@@ -531,12 +530,12 @@ class _$_Authenticated implements _Authenticated {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_AuthenticatedWaitingForUserToBeFetched value)?
+    TResult? Function(_AuthenticatedWaitingForUserToBeFetched value)?
         authenticatedWaitingForUserToBeFetched,
-    TResult Function(_AuthenticatedNoUserCreated value)?
+    TResult? Function(_AuthenticatedNoUserCreated value)?
         autehnticationNoUserCreated,
-    TResult Function(_Authenticated value)? authenticated,
-    TResult Function(_Unauthenticated value)? unauthenticated,
+    TResult? Function(_Authenticated value)? authenticated,
+    TResult? Function(_Unauthenticated value)? unauthenticated,
   }) {
     return authenticated?.call(this);
   }
@@ -577,14 +576,11 @@ abstract class _$$_UnauthenticatedCopyWith<$Res> {
 
 /// @nodoc
 class __$$_UnauthenticatedCopyWithImpl<$Res>
-    extends _$FirebaseAuthenticationCubitStateCopyWithImpl<$Res>
-    implements _$$_UnauthenticatedCopyWith<$Res> {
+    extends _$FirebaseAuthenticationCubitStateCopyWithImpl<$Res,
+        _$_Unauthenticated> implements _$$_UnauthenticatedCopyWith<$Res> {
   __$$_UnauthenticatedCopyWithImpl(
       _$_Unauthenticated _value, $Res Function(_$_Unauthenticated) _then)
-      : super(_value, (v) => _then(v as _$_Unauthenticated));
-
-  @override
-  _$_Unauthenticated get _value => super._value as _$_Unauthenticated;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -621,10 +617,10 @@ class _$_Unauthenticated implements _Unauthenticated {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String uid)? authenticatedWaitingForUserToBeFetched,
-    TResult Function(String uid)? autehnticationNoUserCreated,
-    TResult Function(user_models.User user)? authenticated,
-    TResult Function()? unauthenticated,
+    TResult? Function(String uid)? authenticatedWaitingForUserToBeFetched,
+    TResult? Function(String uid)? autehnticationNoUserCreated,
+    TResult? Function(user_models.User user)? authenticated,
+    TResult? Function()? unauthenticated,
   }) {
     return unauthenticated?.call();
   }
@@ -660,12 +656,12 @@ class _$_Unauthenticated implements _Unauthenticated {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_AuthenticatedWaitingForUserToBeFetched value)?
+    TResult? Function(_AuthenticatedWaitingForUserToBeFetched value)?
         authenticatedWaitingForUserToBeFetched,
-    TResult Function(_AuthenticatedNoUserCreated value)?
+    TResult? Function(_AuthenticatedNoUserCreated value)?
         autehnticationNoUserCreated,
-    TResult Function(_Authenticated value)? authenticated,
-    TResult Function(_Unauthenticated value)? unauthenticated,
+    TResult? Function(_Authenticated value)? authenticated,
+    TResult? Function(_Unauthenticated value)? unauthenticated,
   }) {
     return unauthenticated?.call(this);
   }

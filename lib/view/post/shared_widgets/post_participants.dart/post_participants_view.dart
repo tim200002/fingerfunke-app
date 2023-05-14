@@ -53,7 +53,7 @@ class PostParticipantsView extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: members
-                              .map((user) => UserInfoView(user,
+                              .map((user) => UserInfoView(user.id,
                                   margin: const EdgeInsets.symmetric(
                                       vertical: 12, horizontal: 20)))
                               .toList())))

@@ -47,22 +47,23 @@ class NetworkPlaceholderImage extends StatelessWidget {
                   height: height?.toDouble() ?? 1000, //TODO fix sizing issue
                 ),
                 error: (error) => Center(
-                    child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Icon(
-                      FeatherIcons.alertCircle,
-                      color: Theme.of(context).colorScheme.onPrimary,
-                    ),
-                    const SizedBox(height: 15),
-                    Text(
-                      l10n(context).lbl_imageLoadError,
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    )
-                  ],
-                )),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Icon(
+                        FeatherIcons.alertCircle,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
+                      const SizedBox(height: 15),
+                      Text(
+                        l10n(context).lbl_imageLoadError,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      )
+                    ],
+                  ),
+                ),
               ),
             ),
           ),

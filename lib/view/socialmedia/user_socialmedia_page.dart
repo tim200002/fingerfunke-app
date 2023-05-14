@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../cubits/app_cubit/app_cubit.dart';
+import '../../cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
 import '../../models/user/user.dart';
 import '../../repositories/user_repository/user_repository.dart';
 import '../../utils/json_tools.dart';
@@ -118,16 +116,17 @@ class UserSocialMediaPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: true,
-        appBar: AppBar(title: Text(l10n(context).lbl_linkSocialMedia)),
-        body: BlocBuilder<AppCubit, AppState>(
-            builder: (context, state) => ListView.builder(
-                  key: Key("${state.user.socialMedia}"),
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-                  itemCount: SocialMediaService.services.length,
-                  itemBuilder: (context, i) => _item(
-                      context, SocialMediaService.services[i], state.user),
-                )));
+      resizeToAvoidBottomInset: true,
+      appBar: AppBar(title: Text(l10n(context).lbl_linkSocialMedia)),
+      body: FirebaseAuthenticationCubitCubit.userBuilder(
+        (user) => ListView.builder(
+          key: Key("${user.socialMedia}"),
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+          itemCount: SocialMediaService.services.length,
+          itemBuilder: (context, i) =>
+              _item(context, SocialMediaService.services[i], user),
+        ),
+      ),
+    );
   }
 }

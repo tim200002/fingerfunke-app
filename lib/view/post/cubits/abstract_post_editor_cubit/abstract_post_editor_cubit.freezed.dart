@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'abstract_post_editor_cubit.dart';
 
@@ -27,10 +27,10 @@ mixin _$PostEditorState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(PostUpdateTracker updateTracker, bool valid)? editing,
-    TResult Function()? submitting,
-    TResult Function(String? postId)? submitted,
-    TResult Function(String message)? error,
+    TResult? Function(PostUpdateTracker updateTracker, bool valid)? editing,
+    TResult? Function()? submitting,
+    TResult? Function(String? postId)? submitted,
+    TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -52,10 +52,10 @@ mixin _$PostEditorState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Editing value)? editing,
-    TResult Function(_Submitting value)? submitting,
-    TResult Function(_Success value)? submitted,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Editing value)? editing,
+    TResult? Function(_Submitting value)? submitting,
+    TResult? Function(_Success value)? submitted,
+    TResult? Function(_Error value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -73,17 +73,18 @@ mixin _$PostEditorState {
 abstract class $PostEditorStateCopyWith<$Res> {
   factory $PostEditorStateCopyWith(
           PostEditorState value, $Res Function(PostEditorState) then) =
-      _$PostEditorStateCopyWithImpl<$Res>;
+      _$PostEditorStateCopyWithImpl<$Res, PostEditorState>;
 }
 
 /// @nodoc
-class _$PostEditorStateCopyWithImpl<$Res>
+class _$PostEditorStateCopyWithImpl<$Res, $Val extends PostEditorState>
     implements $PostEditorStateCopyWith<$Res> {
   _$PostEditorStateCopyWithImpl(this._value, this._then);
 
-  final PostEditorState _value;
   // ignore: unused_field
-  final $Res Function(PostEditorState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -91,29 +92,29 @@ abstract class _$$_EditingCopyWith<$Res> {
   factory _$$_EditingCopyWith(
           _$_Editing value, $Res Function(_$_Editing) then) =
       __$$_EditingCopyWithImpl<$Res>;
+  @useResult
   $Res call({PostUpdateTracker updateTracker, bool valid});
 }
 
 /// @nodoc
-class __$$_EditingCopyWithImpl<$Res> extends _$PostEditorStateCopyWithImpl<$Res>
+class __$$_EditingCopyWithImpl<$Res>
+    extends _$PostEditorStateCopyWithImpl<$Res, _$_Editing>
     implements _$$_EditingCopyWith<$Res> {
   __$$_EditingCopyWithImpl(_$_Editing _value, $Res Function(_$_Editing) _then)
-      : super(_value, (v) => _then(v as _$_Editing));
+      : super(_value, _then);
 
-  @override
-  _$_Editing get _value => super._value as _$_Editing;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? updateTracker = freezed,
-    Object? valid = freezed,
+    Object? updateTracker = null,
+    Object? valid = null,
   }) {
     return _then(_$_Editing(
-      updateTracker == freezed
+      null == updateTracker
           ? _value.updateTracker
           : updateTracker // ignore: cast_nullable_to_non_nullable
               as PostUpdateTracker,
-      valid == freezed
+      null == valid
           ? _value.valid
           : valid // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -141,19 +142,17 @@ class _$_Editing implements _Editing {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Editing &&
-            const DeepCollectionEquality()
-                .equals(other.updateTracker, updateTracker) &&
-            const DeepCollectionEquality().equals(other.valid, valid));
+            (identical(other.updateTracker, updateTracker) ||
+                other.updateTracker == updateTracker) &&
+            (identical(other.valid, valid) || other.valid == valid));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(updateTracker),
-      const DeepCollectionEquality().hash(valid));
+  int get hashCode => Object.hash(runtimeType, updateTracker, valid);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_EditingCopyWith<_$_Editing> get copyWith =>
       __$$_EditingCopyWithImpl<_$_Editing>(this, _$identity);
 
@@ -172,10 +171,10 @@ class _$_Editing implements _Editing {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(PostUpdateTracker updateTracker, bool valid)? editing,
-    TResult Function()? submitting,
-    TResult Function(String? postId)? submitted,
-    TResult Function(String message)? error,
+    TResult? Function(PostUpdateTracker updateTracker, bool valid)? editing,
+    TResult? Function()? submitting,
+    TResult? Function(String? postId)? submitted,
+    TResult? Function(String message)? error,
   }) {
     return editing?.call(updateTracker, valid);
   }
@@ -209,10 +208,10 @@ class _$_Editing implements _Editing {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Editing value)? editing,
-    TResult Function(_Submitting value)? submitting,
-    TResult Function(_Success value)? submitted,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Editing value)? editing,
+    TResult? Function(_Submitting value)? submitting,
+    TResult? Function(_Success value)? submitted,
+    TResult? Function(_Error value)? error,
   }) {
     return editing?.call(this);
   }
@@ -253,14 +252,11 @@ abstract class _$$_SubmittingCopyWith<$Res> {
 
 /// @nodoc
 class __$$_SubmittingCopyWithImpl<$Res>
-    extends _$PostEditorStateCopyWithImpl<$Res>
+    extends _$PostEditorStateCopyWithImpl<$Res, _$_Submitting>
     implements _$$_SubmittingCopyWith<$Res> {
   __$$_SubmittingCopyWithImpl(
       _$_Submitting _value, $Res Function(_$_Submitting) _then)
-      : super(_value, (v) => _then(v as _$_Submitting));
-
-  @override
-  _$_Submitting get _value => super._value as _$_Submitting;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -297,10 +293,10 @@ class _$_Submitting implements _Submitting {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(PostUpdateTracker updateTracker, bool valid)? editing,
-    TResult Function()? submitting,
-    TResult Function(String? postId)? submitted,
-    TResult Function(String message)? error,
+    TResult? Function(PostUpdateTracker updateTracker, bool valid)? editing,
+    TResult? Function()? submitting,
+    TResult? Function(String? postId)? submitted,
+    TResult? Function(String message)? error,
   }) {
     return submitting?.call();
   }
@@ -334,10 +330,10 @@ class _$_Submitting implements _Submitting {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Editing value)? editing,
-    TResult Function(_Submitting value)? submitting,
-    TResult Function(_Success value)? submitted,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Editing value)? editing,
+    TResult? Function(_Submitting value)? submitting,
+    TResult? Function(_Success value)? submitted,
+    TResult? Function(_Error value)? error,
   }) {
     return submitting?.call(this);
   }
@@ -367,24 +363,24 @@ abstract class _$$_SuccessCopyWith<$Res> {
   factory _$$_SuccessCopyWith(
           _$_Success value, $Res Function(_$_Success) then) =
       __$$_SuccessCopyWithImpl<$Res>;
+  @useResult
   $Res call({String? postId});
 }
 
 /// @nodoc
-class __$$_SuccessCopyWithImpl<$Res> extends _$PostEditorStateCopyWithImpl<$Res>
+class __$$_SuccessCopyWithImpl<$Res>
+    extends _$PostEditorStateCopyWithImpl<$Res, _$_Success>
     implements _$$_SuccessCopyWith<$Res> {
   __$$_SuccessCopyWithImpl(_$_Success _value, $Res Function(_$_Success) _then)
-      : super(_value, (v) => _then(v as _$_Success));
+      : super(_value, _then);
 
-  @override
-  _$_Success get _value => super._value as _$_Success;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? postId = freezed,
   }) {
     return _then(_$_Success(
-      postId == freezed
+      freezed == postId
           ? _value.postId
           : postId // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -410,15 +406,15 @@ class _$_Success implements _Success {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Success &&
-            const DeepCollectionEquality().equals(other.postId, postId));
+            (identical(other.postId, postId) || other.postId == postId));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(postId));
+  int get hashCode => Object.hash(runtimeType, postId);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_SuccessCopyWith<_$_Success> get copyWith =>
       __$$_SuccessCopyWithImpl<_$_Success>(this, _$identity);
 
@@ -437,10 +433,10 @@ class _$_Success implements _Success {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(PostUpdateTracker updateTracker, bool valid)? editing,
-    TResult Function()? submitting,
-    TResult Function(String? postId)? submitted,
-    TResult Function(String message)? error,
+    TResult? Function(PostUpdateTracker updateTracker, bool valid)? editing,
+    TResult? Function()? submitting,
+    TResult? Function(String? postId)? submitted,
+    TResult? Function(String message)? error,
   }) {
     return submitted?.call(postId);
   }
@@ -474,10 +470,10 @@ class _$_Success implements _Success {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Editing value)? editing,
-    TResult Function(_Submitting value)? submitting,
-    TResult Function(_Success value)? submitted,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Editing value)? editing,
+    TResult? Function(_Submitting value)? submitting,
+    TResult? Function(_Success value)? submitted,
+    TResult? Function(_Error value)? error,
   }) {
     return submitted?.call(this);
   }
@@ -511,24 +507,24 @@ abstract class _Success implements PostEditorState {
 abstract class _$$_ErrorCopyWith<$Res> {
   factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
       __$$_ErrorCopyWithImpl<$Res>;
+  @useResult
   $Res call({String message});
 }
 
 /// @nodoc
-class __$$_ErrorCopyWithImpl<$Res> extends _$PostEditorStateCopyWithImpl<$Res>
+class __$$_ErrorCopyWithImpl<$Res>
+    extends _$PostEditorStateCopyWithImpl<$Res, _$_Error>
     implements _$$_ErrorCopyWith<$Res> {
   __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
-      : super(_value, (v) => _then(v as _$_Error));
+      : super(_value, _then);
 
-  @override
-  _$_Error get _value => super._value as _$_Error;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? message = freezed,
+    Object? message = null,
   }) {
     return _then(_$_Error(
-      message == freezed
+      null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
@@ -554,15 +550,15 @@ class _$_Error implements _Error {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Error &&
-            const DeepCollectionEquality().equals(other.message, message));
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(message));
+  int get hashCode => Object.hash(runtimeType, message);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ErrorCopyWith<_$_Error> get copyWith =>
       __$$_ErrorCopyWithImpl<_$_Error>(this, _$identity);
 
@@ -581,10 +577,10 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(PostUpdateTracker updateTracker, bool valid)? editing,
-    TResult Function()? submitting,
-    TResult Function(String? postId)? submitted,
-    TResult Function(String message)? error,
+    TResult? Function(PostUpdateTracker updateTracker, bool valid)? editing,
+    TResult? Function()? submitting,
+    TResult? Function(String? postId)? submitted,
+    TResult? Function(String message)? error,
   }) {
     return error?.call(message);
   }
@@ -618,10 +614,10 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Editing value)? editing,
-    TResult Function(_Submitting value)? submitting,
-    TResult Function(_Success value)? submitted,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Editing value)? editing,
+    TResult? Function(_Submitting value)? submitting,
+    TResult? Function(_Success value)? submitted,
+    TResult? Function(_Error value)? error,
   }) {
     return error?.call(this);
   }

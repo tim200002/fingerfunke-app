@@ -40,4 +40,14 @@ class FirebaseAuthenticationRepository {
       throw LogOutFailure();
     }
   }
+
+  /// Deletes the current user's account.
+  /// 
+  /// This will also log out the user.
+  /// 
+  /// Furthermore in the backend a cloud function is triggered to delete the user document
+  /// And all the posts of the user
+  Future<void> deleteAccount() async {
+    return _firebaseAuth.currentUser?.delete();
+  }
 }

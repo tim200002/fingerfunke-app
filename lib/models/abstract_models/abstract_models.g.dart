@@ -32,7 +32,7 @@ UserGeneratedDocument _$UserGeneratedDocumentFromJson(
         Map<String, dynamic> json) =>
     UserGeneratedDocument(
       id: json['id'],
-      author: UserInfo.fromJson(json['author'] as Map<String, dynamic>),
+      authorId: json['authorId'] as String,
       creationTime: dateFromJson(json['creationTime'] as int),
     );
 
@@ -41,5 +41,5 @@ Map<String, dynamic> _$UserGeneratedDocumentToJson(
     <String, dynamic>{
       'id': instance.id,
       'creationTime': dateToJson(instance.creationTime),
-      'author': instance.author.toJson(),
+      'authorId': instance.authorId,
     };

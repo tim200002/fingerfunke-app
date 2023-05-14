@@ -35,7 +35,7 @@ class EventEditorCubit extends AbstractPostEditorCubit {
       // create new Event
       if (originalPost == null) {
         final event = Event.createWithId(
-            author: user,
+            authorId: user.id,
             title: title,
             description: description,
             visibility: visibility,

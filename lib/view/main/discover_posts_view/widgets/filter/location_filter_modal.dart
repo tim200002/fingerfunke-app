@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
 
 import '../../../../../cubits/location_cubit/location_cubit.dart';
 import '../../../../../models/place.dart';
-import '../../../../../services/device_location_service.dart';
+import '../../../../../repositories/geocoding_repository/geocodig_repository.dart';
 import '../../../../../utils/tools.dart';
 import '../../../../../utils/util_widgets/floating_modal.dart';
 import '../../../../maps/view/maps_place_picker_page.dart';
@@ -26,30 +27,71 @@ class LocationFilterModal extends StatelessWidget {
             ], child: LocationFilterModal._(key: key)));
   }
 
-  void _onSensorPick(BuildContext context) {
+  Future<void> _onSensorPick(BuildContext context) async {
     Navigator.of(context).pop();
-    context
-        .read<FeedFilterCubit>()
-        .update((v) => v.copyWith(useSetLocation: false));
-    context.read<LocationCubit>().refresh();
+
+    try {
+      // Get current location
+
+      // Check whether we can access the location
+      LocationPermission permission = await Geolocator.checkPermission();
+      final bool locationServiceEnabled =
+          await Geolocator.isLocationServiceEnabled();
+
+      // Location services (i.e. GPS not enabled). Request user to enable
+      if (!locationServiceEnabled) {
+        return Tools.showSnackbar("Please activate location services");
+      }
+
+      // Permission denied forever. Request user to change
+      if (permission == LocationPermission.deniedForever) {
+        return Tools.showSnackbar(
+             "Please allow location permission in settings");
+      }
+
+      // request new permission if denied
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        // If user declined tell hol
+        if (permission != LocationPermission.always ||
+            permission != LocationPermission.whileInUse) {
+          return Tools.showSnackbar(
+              "You must accept location permission to access device location");
+        }
+      }
+
+      // permission is granted -> get location
+      final Position devicePosition = await Geolocator.getCurrentPosition();
+      final Place devicePlace = await GeoCodingRepository.placeFromCoordinate(
+          Coordinate(devicePosition.latitude, devicePosition.longitude));
+
+      context.read<LocationCubit>().setLocation(devicePlace);
+    } catch (e) {
+      Tools.showSnackbar( "Something went wrong");
+    }
   }
 
   Future<void> _setMapPickResult(BuildContext c, PickResult p) async {
     var location = p.geometry!.location;
-    Place place = await LocationService.placeFromCoordinate(
+    Place place = await GeoCodingRepository.placeFromCoordinate(
         Coordinate(location.lat, location.lng));
-    c
-        .read<FeedFilterCubit>()
-        .update((v) => v.copyWith(setLocation: place, useSetLocation: true));
+    c.read<LocationCubit>().setLocation(place);
   }
 
   void _onMapPick(BuildContext context) =>
       Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (_) => BlocProvider.value(
               value: BlocProvider.of<FeedFilterCubit>(context),
-              child: MapsPlacePickerPage(onPlacePicked: (c, p) async {
-                await _setMapPickResult(c, p);
-              }))));
+              child: MapsPlacePickerPage(
+                onPlacePicked: (c, p) async {
+                  await _setMapPickResult(c, p);
+                },
+                // if position of user is known, set it as initial position for the map
+                // else use the default position
+                initialPosition: context.read<LocationCubit>().state.maybeWhen(
+                    loaded: (location) => location.position,
+                    orElse: () => null),
+              ))));
 
   Widget _button(BuildContext context,
       {required IconData icon,

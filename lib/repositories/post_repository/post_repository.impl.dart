@@ -52,7 +52,7 @@ class PostRepositoryImpl implements PostRepository {
   @override
   Stream<List<Post>> observeAuthoredPosts(FirestoreId userId) {
     return _postCollection
-        .where('author.id', isEqualTo: userId)
+        .where('authorId', isEqualTo: userId)
         .snapshots()
         .map((r) => r.docs.map((d) => Post.fromDoc(d)).toList());
   }
@@ -75,7 +75,6 @@ class PostRepositoryImpl implements PostRepository {
       Place? place,
       List<Asset>? media,
       DateTime? startTime}) async {
-    //TODO: würde diese Methode nicht ungesetzte Felder mit null überschreiben?
     final JsonMap updateMap = {
       'visibility': visibility?.name,
       'title': title,

@@ -51,6 +51,6 @@ final routes = {
   Routes.post: (context) => const EventPage(),
   Routes.postEditor: (context) => const EventPage(editing: true),
   Routes.settings: (context) => const SettingsPage(),
-  Routes.saved: (context) => const SavedPage(),
+  Routes.saved: (context) => SavedPage(),
   Routes.tutorial: (context) => const TutorialPage(),
 };

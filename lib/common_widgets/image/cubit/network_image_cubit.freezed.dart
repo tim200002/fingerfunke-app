@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'network_image_cubit.dart';
 
@@ -25,9 +25,9 @@ mixin _$NetworkImageState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(ImageProvider<Object> image)? imageLoaded,
-    TResult Function(Object error)? error,
+    TResult? Function()? loading,
+    TResult? Function(ImageProvider<Object> image)? imageLoaded,
+    TResult? Function(Object error)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -47,9 +47,9 @@ mixin _$NetworkImageState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
-    TResult Function(_ImageLoaded value)? imageLoaded,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_ImageLoaded value)? imageLoaded,
+    TResult? Function(_Error value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -66,17 +66,18 @@ mixin _$NetworkImageState {
 abstract class $NetworkImageStateCopyWith<$Res> {
   factory $NetworkImageStateCopyWith(
           NetworkImageState value, $Res Function(NetworkImageState) then) =
-      _$NetworkImageStateCopyWithImpl<$Res>;
+      _$NetworkImageStateCopyWithImpl<$Res, NetworkImageState>;
 }
 
 /// @nodoc
-class _$NetworkImageStateCopyWithImpl<$Res>
+class _$NetworkImageStateCopyWithImpl<$Res, $Val extends NetworkImageState>
     implements $NetworkImageStateCopyWith<$Res> {
   _$NetworkImageStateCopyWithImpl(this._value, this._then);
 
-  final NetworkImageState _value;
   // ignore: unused_field
-  final $Res Function(NetworkImageState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -88,13 +89,10 @@ abstract class _$$_LoadingCopyWith<$Res> {
 
 /// @nodoc
 class __$$_LoadingCopyWithImpl<$Res>
-    extends _$NetworkImageStateCopyWithImpl<$Res>
+    extends _$NetworkImageStateCopyWithImpl<$Res, _$_Loading>
     implements _$$_LoadingCopyWith<$Res> {
   __$$_LoadingCopyWithImpl(_$_Loading _value, $Res Function(_$_Loading) _then)
-      : super(_value, (v) => _then(v as _$_Loading));
-
-  @override
-  _$_Loading get _value => super._value as _$_Loading;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -129,9 +127,9 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(ImageProvider<Object> image)? imageLoaded,
-    TResult Function(Object error)? error,
+    TResult? Function()? loading,
+    TResult? Function(ImageProvider<Object> image)? imageLoaded,
+    TResult? Function(Object error)? error,
   }) {
     return loading?.call();
   }
@@ -163,9 +161,9 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
-    TResult Function(_ImageLoaded value)? imageLoaded,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_ImageLoaded value)? imageLoaded,
+    TResult? Function(_Error value)? error,
   }) {
     return loading?.call(this);
   }
@@ -194,26 +192,25 @@ abstract class _$$_ImageLoadedCopyWith<$Res> {
   factory _$$_ImageLoadedCopyWith(
           _$_ImageLoaded value, $Res Function(_$_ImageLoaded) then) =
       __$$_ImageLoadedCopyWithImpl<$Res>;
+  @useResult
   $Res call({ImageProvider<Object> image});
 }
 
 /// @nodoc
 class __$$_ImageLoadedCopyWithImpl<$Res>
-    extends _$NetworkImageStateCopyWithImpl<$Res>
+    extends _$NetworkImageStateCopyWithImpl<$Res, _$_ImageLoaded>
     implements _$$_ImageLoadedCopyWith<$Res> {
   __$$_ImageLoadedCopyWithImpl(
       _$_ImageLoaded _value, $Res Function(_$_ImageLoaded) _then)
-      : super(_value, (v) => _then(v as _$_ImageLoaded));
+      : super(_value, _then);
 
-  @override
-  _$_ImageLoaded get _value => super._value as _$_ImageLoaded;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? image = freezed,
+    Object? image = null,
   }) {
     return _then(_$_ImageLoaded(
-      image == freezed
+      null == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as ImageProvider<Object>,
@@ -239,15 +236,15 @@ class _$_ImageLoaded implements _ImageLoaded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ImageLoaded &&
-            const DeepCollectionEquality().equals(other.image, image));
+            (identical(other.image, image) || other.image == image));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(image));
+  int get hashCode => Object.hash(runtimeType, image);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ImageLoadedCopyWith<_$_ImageLoaded> get copyWith =>
       __$$_ImageLoadedCopyWithImpl<_$_ImageLoaded>(this, _$identity);
 
@@ -264,9 +261,9 @@ class _$_ImageLoaded implements _ImageLoaded {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(ImageProvider<Object> image)? imageLoaded,
-    TResult Function(Object error)? error,
+    TResult? Function()? loading,
+    TResult? Function(ImageProvider<Object> image)? imageLoaded,
+    TResult? Function(Object error)? error,
   }) {
     return imageLoaded?.call(image);
   }
@@ -298,9 +295,9 @@ class _$_ImageLoaded implements _ImageLoaded {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
-    TResult Function(_ImageLoaded value)? imageLoaded,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_ImageLoaded value)? imageLoaded,
+    TResult? Function(_Error value)? error,
   }) {
     return imageLoaded?.call(this);
   }
@@ -334,27 +331,24 @@ abstract class _ImageLoaded implements NetworkImageState {
 abstract class _$$_ErrorCopyWith<$Res> {
   factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
       __$$_ErrorCopyWithImpl<$Res>;
+  @useResult
   $Res call({Object error});
 }
 
 /// @nodoc
-class __$$_ErrorCopyWithImpl<$Res> extends _$NetworkImageStateCopyWithImpl<$Res>
+class __$$_ErrorCopyWithImpl<$Res>
+    extends _$NetworkImageStateCopyWithImpl<$Res, _$_Error>
     implements _$$_ErrorCopyWith<$Res> {
   __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
-      : super(_value, (v) => _then(v as _$_Error));
+      : super(_value, _then);
 
-  @override
-  _$_Error get _value => super._value as _$_Error;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? error = freezed,
+    Object? error = null,
   }) {
     return _then(_$_Error(
-      error == freezed
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as Object,
+      null == error ? _value.error : error,
     ));
   }
 }
@@ -386,6 +380,7 @@ class _$_Error implements _Error {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ErrorCopyWith<_$_Error> get copyWith =>
       __$$_ErrorCopyWithImpl<_$_Error>(this, _$identity);
 
@@ -402,9 +397,9 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(ImageProvider<Object> image)? imageLoaded,
-    TResult Function(Object error)? error,
+    TResult? Function()? loading,
+    TResult? Function(ImageProvider<Object> image)? imageLoaded,
+    TResult? Function(Object error)? error,
   }) {
     return error?.call(this.error);
   }
@@ -436,9 +431,9 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
-    TResult Function(_ImageLoaded value)? imageLoaded,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_ImageLoaded value)? imageLoaded,
+    TResult? Function(_Error value)? error,
   }) {
     return error?.call(this);
   }

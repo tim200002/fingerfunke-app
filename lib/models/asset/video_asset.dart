@@ -3,11 +3,13 @@ part of 'asset.dart';
 class VideoAsset extends Asset {
   final String? assetId;
   final String? playbackId;
+  final String? thumbnailUrl;
   const VideoAsset(
       {required FirestoreId id,
       required DateTime creationTime,
       this.assetId,
       this.playbackId,
+      this.thumbnailUrl,
       required AssetState state})
       : super._(
             id: id,
@@ -22,7 +24,8 @@ class VideoAsset extends Asset {
         "assetId": assetId,
         "playbackId": playbackId,
         "state": _assetStateEnumMap[state],
-        "type": _assetTypeEnumMap[AssetType.video]
+        "type": _assetTypeEnumMap[AssetType.video],
+        "thumbnailUrl": thumbnailUrl
       };
 
   factory VideoAsset.fromJson(JsonMap map) => VideoAsset(
@@ -31,6 +34,7 @@ class VideoAsset extends Asset {
         assetId: map["assetId"] as String?,
         playbackId: map["playbackId"] as String?,
         state: $enumDecode(_assetStateEnumMap, map["state"]),
+        thumbnailUrl: map["thumbnailUrl"] as String?,
       );
 
   factory VideoAsset.fromDoc(DocumentSnapshot document) =>

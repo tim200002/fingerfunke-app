@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>GOOGLE_MAPS_API_KEY</key>
+	<string>$(GOOGLE_MAPS_API_KEY)</string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
@@ -52,7 +54,9 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>We need usage to your camera if you want to take an image to upload, e.g., as your profile picture</string>
-	<key>NSLocationAlwaysAndWhenInUsageDescription</key>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Our App is based on Geofiltering to show you the nearest events. Therefore, we require to access your location.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Our App is based on Geofiltering to show you the nearest events. Therefore, we require to access your location.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We need usage to your photo library only if you intent to upload images, e.g., a profile picture from your library</string>
@@ -77,5 +81,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<string>NSPhotoLibraryUsageDescription</string>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
 </dict>
 </plist>

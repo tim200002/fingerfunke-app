@@ -40,7 +40,7 @@ class AuthorSection extends StatelessWidget {
                       const SizedBox(height: 10),
                       Center(
                           child: UserInfoView(
-                        post.author,
+                        post.authorId,
                         vertical: true,
                         margin: const EdgeInsets.all(10),
                       ))

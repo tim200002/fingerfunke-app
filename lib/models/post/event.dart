@@ -6,7 +6,7 @@ class Event extends Post {
 
   const Event({
     required FirestoreId id,
-    required UserInfo author,
+    required FirestoreId authorId,
     required String title,
     required String description,
     required DateTime creationTime,
@@ -19,7 +19,7 @@ class Event extends Post {
   }) : super._(
             id: id,
             type: PostType.event,
-            author: author,
+            authorId: authorId,
             title: title,
             description: description,
             creationTime: creationTime,
@@ -35,7 +35,7 @@ class Event extends Post {
   JsonMap toJson() => {
         "id": id,
         "creationTime": dateToJson(creationTime),
-        "author": author.toJson(),
+        "authorId": authorId,
         "type": "event", //_postTypeEnumMap[type],
         "title": title,
         "description": description,
@@ -51,7 +51,7 @@ class Event extends Post {
 
       id: map["id"] as String,
       creationTime: dateFromJson(map['creationTime'] as int),
-      author: UserInfo.fromJson(map["author"]),
+      authorId: map["authorId"],
       title: map["title"] as String,
       description: map["description"] as String,
       visibility:
@@ -74,7 +74,7 @@ class Event extends Post {
 
 
   factory Event.createWithId(
-      {required UserInfo author,
+      {required FirestoreId authorId,
       required String title,
       required String description,
       required PostVisibility visibility,
@@ -94,7 +94,7 @@ class Event extends Post {
 
     return Event(
         id: const Uuid().v4(),
-        author: author,
+        authorId: authorId,
         title: title,
         description: description,
         creationTime: DateTime.now(),

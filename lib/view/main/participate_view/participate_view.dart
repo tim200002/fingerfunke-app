@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 
-import '../../../cubits/app_cubit/app_cubit.dart';
+import '../../../cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
+import '../../../repositories/post_repository/post_repository.dart';
 import '../../../utils/app_theme.dart';
 import '../../../utils/tools.dart';
-import '../../post_feed/posts_list_cubit/posts_list_cubit.dart';
-import '../../post_feed/view/compact_post_feed.dart';
+import '../../illustration_view/illustration_view.dart';
+import '../../non_paginated_compact_post_feed/non_paginated_compact_post_feed.dart';
 
 /// this class prevents elements within a TabView to be rebuilt upon
 /// tab switching. In our case, this means that we do not (unnecessarily)
@@ -34,7 +35,10 @@ class __PersTabItemState extends State<_PersTabItem>
 }
 
 class ParticipateView extends StatelessWidget {
-  const ParticipateView({super.key});
+
+  final PostRepository _postRepository = GetIt.I.get<PostRepository>();
+
+  ParticipateView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -54,24 +58,26 @@ class ParticipateView extends StatelessWidget {
           ),
           //title: const Text('Tabs Demo'),
         ),
-        body: BlocBuilder<AppCubit, AppState>(
-            builder: (context, state) => TabBarView(
-                  children: [
-                    _PersTabItem(CompactPostsFeed(
-                      query: () =>
-                          PostsListCubit.queryJoinedPosts(state.user.id),
-                      filter: (posts) => posts
-                          .where((p) => !p.isAuthor(state.user.id))
-                          .toList(),
-                      emptyMessage: l10n(context).lbl_notParticipating,
+        body: FirebaseAuthenticationCubitCubit.userBuilder(
+          (user) => TabBarView(
+            children: [
+              _PersTabItem(NonPaginatedCompactPostFeed(
+                  stream: _postRepository.observeJoinedPosts(user.id),
+                  loadingIndicator: const CircularProgressIndicator(),
+                  emptyIndicator: IllustrationView.empty(
+                    text: l10n(context).lbl_notParticipating,
+                  ))),
+              _PersTabItem(
+                NonPaginatedCompactPostFeed(
+                    stream: _postRepository.observeAuthoredPosts(user.id),
+                    loadingIndicator: const CircularProgressIndicator(),
+                    emptyIndicator: IllustrationView.empty(
+                      text: l10n(context).lbl_notAuthor,
                     )),
-                    _PersTabItem(CompactPostsFeed(
-                      query: () =>
-                          PostsListCubit.queryAuthorPosts(state.user.id),
-                      emptyMessage: l10n(context).lbl_notAuthor,
-                    ))
-                  ],
-                )),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }

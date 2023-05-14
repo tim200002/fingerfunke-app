@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../../../../common_widgets/image/user_image/user_image.dart';
-import '../../../../../../cubits/app_cubit/app_cubit.dart';
 import '../../../../../../models/user/user.dart';
 import '../../../../../../routes.dart';
 import '../../../../../../utils/beta_indicator.dart';
 import '../../../../../../utils/tools.dart';
 import '../../../../../../utils/util_widgets/clearance_builder.dart';
+import '../../../../cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
 import '../../../../utils/util_widgets/floating_modal.dart';
 
 part './profile_section.dart';
@@ -17,19 +16,6 @@ part './profile_section.dart';
 class HomeDrawer extends StatelessWidget {
   static const _borderRadius = Radius.circular(27);
   const HomeDrawer({Key? key}) : super(key: key);
-
-  // ignore: unused_element
-  /*Widget _moderationItem(BuildContext context) {
-    return BlocBuilder<AppCubit, AppState>(
-      builder: (context, state) => state.user.hasClearance(User.clearanceAdmin)
-          ? ListTile(
-              leading: const Icon(FeatherIcons.monitor),
-              title: const Text('Moderation'),
-              onTap: () => Navigator.of(context).pushNamed(Routes.devtools),
-            )
-          : Container(),
-    );
-  }*/
 
   @override
   Widget build(BuildContext context) {

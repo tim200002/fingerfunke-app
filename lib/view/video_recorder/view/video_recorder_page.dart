@@ -25,20 +25,6 @@ class VideoRecorderPage extends StatelessWidget {
         settings: const RouteSettings(name: "VideoEditor"));
   }
 
-  /*
-  static Widget fullScreenCameraPreview(
-      double aspectRatio, CameraController controller) {
-    var scale = aspectRatio * controller.value.aspectRatio;
-
-    return Transform.scale(
-      scale: scale < 1 ? 1 / scale : scale,
-      child: Center(
-        child: CameraPreview(controller),
-      ),
-    );
-
-  }
-   */
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +47,7 @@ class VideoRecorderPage extends StatelessWidget {
                 icon: FeatherIcons.cameraOff,
               ),
               error: ExceptionView.builder,
-              camera: (c) {
+              camera: (c, _) {
                 logger.d("emitted camera state");
                 return CameraView(camera: c, key: Key("${c.hashCode}"));
               },

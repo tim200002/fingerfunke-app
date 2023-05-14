@@ -32,7 +32,7 @@ abstract class FirestorePaginationService<T> {
 
   FirestorePaginationService(this._startQuery, this._mapper,
       {required this.firestore, this.paginationDistance = 20});
-  
+
   // requests new page and adds elements to pagination
   // returns true if no new posts could be found
   Future<bool> requestNewPage() async {
@@ -63,6 +63,12 @@ abstract class FirestorePaginationService<T> {
       },
           onDone: () => _logger.i("Empty Query Subscription stream closed"),
           onError: (err) => _logger.e(err));
+
+      // check if we are on the first page, if so emit empty list
+      if (_allReceivedPages.isEmpty) {
+        _emitUpdatedValues([]);
+      }
+
       return true;
     }
 
@@ -73,7 +79,7 @@ abstract class FirestorePaginationService<T> {
     // if not start is provided elements can also be included at the front
     endDocumentOfThisQuery = documents.last;
     newQuery = _startQuery.endAtDocument(endDocumentOfThisQuery);
-    
+
     if (lastDocument != null) {
       newQuery = newQuery.startAfterDocument(lastDocument!);
     }
@@ -88,10 +94,24 @@ abstract class FirestorePaginationService<T> {
       _logger.i(
           "Firesore pagination service read snapshots for page index: $currentPageIndex. This page contains ${currentPageSnapshot.docs.isNotEmpty ? currentPageSnapshot.docs.length : "none"} Elements");
       // were we able to receive more documents
+      late final List<T> elements;
       if (currentPageSnapshot.docs.isNotEmpty) {
-        List<T> elements = currentPageSnapshot.docs
+        elements = currentPageSnapshot.docs
             .map((QueryDocumentSnapshot postDocument) => _mapper(postDocument))
             .toList();
+
+        // check if we are on last page and if so update last document to right value
+        if (currentPageIndex == _allReceivedPages.length - 1) {
+          lastDocument = currentPageSnapshot.docs.last;
+        }
+      } else {
+        // if there are no documents in this snapshot there are in theory two explanations
+        // 1) We reached end and there are just no more elements to query for -> however this case is already handled
+        //    in the first part of this function -> can be ignored
+        //
+        // 2) All Elements in the current page have been deleted
+        elements = [];
+      }
 
         // check if we are working on an already exisiting page (currentPageIndex < number of pages)
         // or if we have to create a new page
@@ -108,25 +128,12 @@ abstract class FirestorePaginationService<T> {
         List<T> allElements = _concatenatePagesToList();
         _emitUpdatedValues(allElements);
 
-        // check if we are on last page and if so update last document to right value
-        if (currentPageIndex == _allReceivedPages.length - 1) {
-          lastDocument = currentPageSnapshot.docs.last;
-        }
-
         // determine if we received full page, or if this page is (currently at least) the last one
         // return true if there are more posts
         if (!didReachEndCompleter.isCompleted) {
           didReachEndCompleter.complete(elements.length < paginationDistance);
         }
-      } else {
-        // if there are no documents in this snapshot there are in theory two explanations
-        // 1) We reached end and there are just no more elements to query for -> however this case is already handled
-        //    in the first part of this functio -> can be ignored
-        //
-        // 2) All Elements in the current page have been deleted -> we will ignore this for now since it shouldnt have
-        //    any negative effects besided performance
 
-      }
     },
         onDone: () => _logger.e("Pagination Stream Subscription closed"),
         onError: (err) => _logger.e(err));

@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'video_playback_cubit.dart';
 
@@ -27,11 +27,11 @@ mixin _$VideoPlaybackState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initializing,
-    TResult Function(
+    TResult? Function()? initializing,
+    TResult? Function(
             VideoPlayerController videoPlayerController, bool isPlaying)?
         playing,
-    TResult Function(Object error)? error,
+    TResult? Function(Object error)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -53,9 +53,9 @@ mixin _$VideoPlaybackState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initializing value)? initializing,
-    TResult Function(_Playing value)? playing,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initializing value)? initializing,
+    TResult? Function(_Playing value)? playing,
+    TResult? Function(_Error value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -72,17 +72,18 @@ mixin _$VideoPlaybackState {
 abstract class $VideoPlaybackStateCopyWith<$Res> {
   factory $VideoPlaybackStateCopyWith(
           VideoPlaybackState value, $Res Function(VideoPlaybackState) then) =
-      _$VideoPlaybackStateCopyWithImpl<$Res>;
+      _$VideoPlaybackStateCopyWithImpl<$Res, VideoPlaybackState>;
 }
 
 /// @nodoc
-class _$VideoPlaybackStateCopyWithImpl<$Res>
+class _$VideoPlaybackStateCopyWithImpl<$Res, $Val extends VideoPlaybackState>
     implements $VideoPlaybackStateCopyWith<$Res> {
   _$VideoPlaybackStateCopyWithImpl(this._value, this._then);
 
-  final VideoPlaybackState _value;
   // ignore: unused_field
-  final $Res Function(VideoPlaybackState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -94,14 +95,11 @@ abstract class _$$_InitializingCopyWith<$Res> {
 
 /// @nodoc
 class __$$_InitializingCopyWithImpl<$Res>
-    extends _$VideoPlaybackStateCopyWithImpl<$Res>
+    extends _$VideoPlaybackStateCopyWithImpl<$Res, _$_Initializing>
     implements _$$_InitializingCopyWith<$Res> {
   __$$_InitializingCopyWithImpl(
       _$_Initializing _value, $Res Function(_$_Initializing) _then)
-      : super(_value, (v) => _then(v as _$_Initializing));
-
-  @override
-  _$_Initializing get _value => super._value as _$_Initializing;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -138,11 +136,11 @@ class _$_Initializing implements _Initializing {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initializing,
-    TResult Function(
+    TResult? Function()? initializing,
+    TResult? Function(
             VideoPlayerController videoPlayerController, bool isPlaying)?
         playing,
-    TResult Function(Object error)? error,
+    TResult? Function(Object error)? error,
   }) {
     return initializing?.call();
   }
@@ -176,9 +174,9 @@ class _$_Initializing implements _Initializing {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initializing value)? initializing,
-    TResult Function(_Playing value)? playing,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initializing value)? initializing,
+    TResult? Function(_Playing value)? playing,
+    TResult? Function(_Error value)? error,
   }) {
     return initializing?.call(this);
   }
@@ -207,30 +205,29 @@ abstract class _$$_PlayingCopyWith<$Res> {
   factory _$$_PlayingCopyWith(
           _$_Playing value, $Res Function(_$_Playing) then) =
       __$$_PlayingCopyWithImpl<$Res>;
+  @useResult
   $Res call({VideoPlayerController videoPlayerController, bool isPlaying});
 }
 
 /// @nodoc
 class __$$_PlayingCopyWithImpl<$Res>
-    extends _$VideoPlaybackStateCopyWithImpl<$Res>
+    extends _$VideoPlaybackStateCopyWithImpl<$Res, _$_Playing>
     implements _$$_PlayingCopyWith<$Res> {
   __$$_PlayingCopyWithImpl(_$_Playing _value, $Res Function(_$_Playing) _then)
-      : super(_value, (v) => _then(v as _$_Playing));
+      : super(_value, _then);
 
-  @override
-  _$_Playing get _value => super._value as _$_Playing;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? videoPlayerController = freezed,
-    Object? isPlaying = freezed,
+    Object? videoPlayerController = null,
+    Object? isPlaying = null,
   }) {
     return _then(_$_Playing(
-      videoPlayerController == freezed
+      null == videoPlayerController
           ? _value.videoPlayerController
           : videoPlayerController // ignore: cast_nullable_to_non_nullable
               as VideoPlayerController,
-      isPlaying == freezed
+      null == isPlaying
           ? _value.isPlaying
           : isPlaying // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -258,19 +255,19 @@ class _$_Playing implements _Playing {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Playing &&
-            const DeepCollectionEquality()
-                .equals(other.videoPlayerController, videoPlayerController) &&
-            const DeepCollectionEquality().equals(other.isPlaying, isPlaying));
+            (identical(other.videoPlayerController, videoPlayerController) ||
+                other.videoPlayerController == videoPlayerController) &&
+            (identical(other.isPlaying, isPlaying) ||
+                other.isPlaying == isPlaying));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(videoPlayerController),
-      const DeepCollectionEquality().hash(isPlaying));
+  int get hashCode =>
+      Object.hash(runtimeType, videoPlayerController, isPlaying);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_PlayingCopyWith<_$_Playing> get copyWith =>
       __$$_PlayingCopyWithImpl<_$_Playing>(this, _$identity);
 
@@ -289,11 +286,11 @@ class _$_Playing implements _Playing {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initializing,
-    TResult Function(
+    TResult? Function()? initializing,
+    TResult? Function(
             VideoPlayerController videoPlayerController, bool isPlaying)?
         playing,
-    TResult Function(Object error)? error,
+    TResult? Function(Object error)? error,
   }) {
     return playing?.call(videoPlayerController, isPlaying);
   }
@@ -327,9 +324,9 @@ class _$_Playing implements _Playing {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initializing value)? initializing,
-    TResult Function(_Playing value)? playing,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initializing value)? initializing,
+    TResult? Function(_Playing value)? playing,
+    TResult? Function(_Error value)? error,
   }) {
     return playing?.call(this);
   }
@@ -364,28 +361,24 @@ abstract class _Playing implements VideoPlaybackState {
 abstract class _$$_ErrorCopyWith<$Res> {
   factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
       __$$_ErrorCopyWithImpl<$Res>;
+  @useResult
   $Res call({Object error});
 }
 
 /// @nodoc
 class __$$_ErrorCopyWithImpl<$Res>
-    extends _$VideoPlaybackStateCopyWithImpl<$Res>
+    extends _$VideoPlaybackStateCopyWithImpl<$Res, _$_Error>
     implements _$$_ErrorCopyWith<$Res> {
   __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
-      : super(_value, (v) => _then(v as _$_Error));
+      : super(_value, _then);
 
-  @override
-  _$_Error get _value => super._value as _$_Error;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? error = freezed,
+    Object? error = null,
   }) {
     return _then(_$_Error(
-      error == freezed
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as Object,
+      null == error ? _value.error : error,
     ));
   }
 }
@@ -417,6 +410,7 @@ class _$_Error implements _Error {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ErrorCopyWith<_$_Error> get copyWith =>
       __$$_ErrorCopyWithImpl<_$_Error>(this, _$identity);
 
@@ -435,11 +429,11 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initializing,
-    TResult Function(
+    TResult? Function()? initializing,
+    TResult? Function(
             VideoPlayerController videoPlayerController, bool isPlaying)?
         playing,
-    TResult Function(Object error)? error,
+    TResult? Function(Object error)? error,
   }) {
     return error?.call(this.error);
   }
@@ -473,9 +467,9 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initializing value)? initializing,
-    TResult Function(_Playing value)? playing,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initializing value)? initializing,
+    TResult? Function(_Playing value)? playing,
+    TResult? Function(_Error value)? error,
   }) {
     return error?.call(this);
   }

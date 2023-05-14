@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'post_members_cubit.dart';
 
@@ -25,9 +25,9 @@ mixin _$PostMembersState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(dynamic e)? error,
-    TResult Function(List<UserInfo> members)? neutral,
+    TResult? Function()? loading,
+    TResult? Function(dynamic e)? error,
+    TResult? Function(List<UserInfo> members)? neutral,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -47,9 +47,9 @@ mixin _$PostMembersState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_L value)? loading,
-    TResult Function(_E value)? error,
-    TResult Function(_N value)? neutral,
+    TResult? Function(_L value)? loading,
+    TResult? Function(_E value)? error,
+    TResult? Function(_N value)? neutral,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -66,17 +66,18 @@ mixin _$PostMembersState {
 abstract class $PostMembersStateCopyWith<$Res> {
   factory $PostMembersStateCopyWith(
           PostMembersState value, $Res Function(PostMembersState) then) =
-      _$PostMembersStateCopyWithImpl<$Res>;
+      _$PostMembersStateCopyWithImpl<$Res, PostMembersState>;
 }
 
 /// @nodoc
-class _$PostMembersStateCopyWithImpl<$Res>
+class _$PostMembersStateCopyWithImpl<$Res, $Val extends PostMembersState>
     implements $PostMembersStateCopyWith<$Res> {
   _$PostMembersStateCopyWithImpl(this._value, this._then);
 
-  final PostMembersState _value;
   // ignore: unused_field
-  final $Res Function(PostMembersState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -86,13 +87,11 @@ abstract class _$$_LCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_LCopyWithImpl<$Res> extends _$PostMembersStateCopyWithImpl<$Res>
+class __$$_LCopyWithImpl<$Res>
+    extends _$PostMembersStateCopyWithImpl<$Res, _$_L>
     implements _$$_LCopyWith<$Res> {
   __$$_LCopyWithImpl(_$_L _value, $Res Function(_$_L) _then)
-      : super(_value, (v) => _then(v as _$_L));
-
-  @override
-  _$_L get _value => super._value as _$_L;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -127,9 +126,9 @@ class _$_L implements _L {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(dynamic e)? error,
-    TResult Function(List<UserInfo> members)? neutral,
+    TResult? Function()? loading,
+    TResult? Function(dynamic e)? error,
+    TResult? Function(List<UserInfo> members)? neutral,
   }) {
     return loading?.call();
   }
@@ -161,9 +160,9 @@ class _$_L implements _L {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_L value)? loading,
-    TResult Function(_E value)? error,
-    TResult Function(_N value)? neutral,
+    TResult? Function(_L value)? loading,
+    TResult? Function(_E value)? error,
+    TResult? Function(_N value)? neutral,
   }) {
     return loading?.call(this);
   }
@@ -191,24 +190,24 @@ abstract class _L implements PostMembersState {
 abstract class _$$_ECopyWith<$Res> {
   factory _$$_ECopyWith(_$_E value, $Res Function(_$_E) then) =
       __$$_ECopyWithImpl<$Res>;
+  @useResult
   $Res call({dynamic e});
 }
 
 /// @nodoc
-class __$$_ECopyWithImpl<$Res> extends _$PostMembersStateCopyWithImpl<$Res>
+class __$$_ECopyWithImpl<$Res>
+    extends _$PostMembersStateCopyWithImpl<$Res, _$_E>
     implements _$$_ECopyWith<$Res> {
   __$$_ECopyWithImpl(_$_E _value, $Res Function(_$_E) _then)
-      : super(_value, (v) => _then(v as _$_E));
+      : super(_value, _then);
 
-  @override
-  _$_E get _value => super._value as _$_E;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? e = freezed,
   }) {
     return _then(_$_E(
-      e == freezed
+      freezed == e
           ? _value.e
           : e // ignore: cast_nullable_to_non_nullable
               as dynamic,
@@ -243,6 +242,7 @@ class _$_E implements _E {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ECopyWith<_$_E> get copyWith =>
       __$$_ECopyWithImpl<_$_E>(this, _$identity);
 
@@ -259,9 +259,9 @@ class _$_E implements _E {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(dynamic e)? error,
-    TResult Function(List<UserInfo> members)? neutral,
+    TResult? Function()? loading,
+    TResult? Function(dynamic e)? error,
+    TResult? Function(List<UserInfo> members)? neutral,
   }) {
     return error?.call(e);
   }
@@ -293,9 +293,9 @@ class _$_E implements _E {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_L value)? loading,
-    TResult Function(_E value)? error,
-    TResult Function(_N value)? neutral,
+    TResult? Function(_L value)? loading,
+    TResult? Function(_E value)? error,
+    TResult? Function(_N value)? neutral,
   }) {
     return error?.call(this);
   }
@@ -327,24 +327,24 @@ abstract class _E implements PostMembersState {
 abstract class _$$_NCopyWith<$Res> {
   factory _$$_NCopyWith(_$_N value, $Res Function(_$_N) then) =
       __$$_NCopyWithImpl<$Res>;
+  @useResult
   $Res call({List<UserInfo> members});
 }
 
 /// @nodoc
-class __$$_NCopyWithImpl<$Res> extends _$PostMembersStateCopyWithImpl<$Res>
+class __$$_NCopyWithImpl<$Res>
+    extends _$PostMembersStateCopyWithImpl<$Res, _$_N>
     implements _$$_NCopyWith<$Res> {
   __$$_NCopyWithImpl(_$_N _value, $Res Function(_$_N) _then)
-      : super(_value, (v) => _then(v as _$_N));
+      : super(_value, _then);
 
-  @override
-  _$_N get _value => super._value as _$_N;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? members = freezed,
+    Object? members = null,
   }) {
     return _then(_$_N(
-      members == freezed
+      null == members
           ? _value._members
           : members // ignore: cast_nullable_to_non_nullable
               as List<UserInfo>,
@@ -360,6 +360,7 @@ class _$_N implements _N {
   final List<UserInfo> _members;
   @override
   List<UserInfo> get members {
+    if (_members is EqualUnmodifiableListView) return _members;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_members);
   }
@@ -383,6 +384,7 @@ class _$_N implements _N {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_NCopyWith<_$_N> get copyWith =>
       __$$_NCopyWithImpl<_$_N>(this, _$identity);
 
@@ -399,9 +401,9 @@ class _$_N implements _N {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(dynamic e)? error,
-    TResult Function(List<UserInfo> members)? neutral,
+    TResult? Function()? loading,
+    TResult? Function(dynamic e)? error,
+    TResult? Function(List<UserInfo> members)? neutral,
   }) {
     return neutral?.call(members);
   }
@@ -433,9 +435,9 @@ class _$_N implements _N {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_L value)? loading,
-    TResult Function(_E value)? error,
-    TResult Function(_N value)? neutral,
+    TResult? Function(_L value)? loading,
+    TResult? Function(_E value)? error,
+    TResult? Function(_N value)? neutral,
   }) {
     return neutral?.call(this);
   }

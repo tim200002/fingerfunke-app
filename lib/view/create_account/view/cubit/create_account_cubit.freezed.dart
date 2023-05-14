@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'create_account_cubit.dart';
 
@@ -28,34 +28,37 @@ mixin _$CreateAccountState {
 abstract class $CreateAccountStateCopyWith<$Res> {
   factory $CreateAccountStateCopyWith(
           CreateAccountState value, $Res Function(CreateAccountState) then) =
-      _$CreateAccountStateCopyWithImpl<$Res>;
+      _$CreateAccountStateCopyWithImpl<$Res, CreateAccountState>;
+  @useResult
   $Res call({String name, bool inputValid});
 }
 
 /// @nodoc
-class _$CreateAccountStateCopyWithImpl<$Res>
+class _$CreateAccountStateCopyWithImpl<$Res, $Val extends CreateAccountState>
     implements $CreateAccountStateCopyWith<$Res> {
   _$CreateAccountStateCopyWithImpl(this._value, this._then);
 
-  final CreateAccountState _value;
   // ignore: unused_field
-  final $Res Function(CreateAccountState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = freezed,
-    Object? inputValid = freezed,
+    Object? name = null,
+    Object? inputValid = null,
   }) {
     return _then(_value.copyWith(
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      inputValid: inputValid == freezed
+      inputValid: null == inputValid
           ? _value.inputValid
           : inputValid // ignore: cast_nullable_to_non_nullable
               as bool,
-    ));
+    ) as $Val);
   }
 }
 
@@ -66,31 +69,30 @@ abstract class _$$_CreateAccountStateCopyWith<$Res>
           $Res Function(_$_CreateAccountState) then) =
       __$$_CreateAccountStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String name, bool inputValid});
 }
 
 /// @nodoc
 class __$$_CreateAccountStateCopyWithImpl<$Res>
-    extends _$CreateAccountStateCopyWithImpl<$Res>
+    extends _$CreateAccountStateCopyWithImpl<$Res, _$_CreateAccountState>
     implements _$$_CreateAccountStateCopyWith<$Res> {
   __$$_CreateAccountStateCopyWithImpl(
       _$_CreateAccountState _value, $Res Function(_$_CreateAccountState) _then)
-      : super(_value, (v) => _then(v as _$_CreateAccountState));
+      : super(_value, _then);
 
-  @override
-  _$_CreateAccountState get _value => super._value as _$_CreateAccountState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = freezed,
-    Object? inputValid = freezed,
+    Object? name = null,
+    Object? inputValid = null,
   }) {
     return _then(_$_CreateAccountState(
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      inputValid: inputValid == freezed
+      inputValid: null == inputValid
           ? _value.inputValid
           : inputValid // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -119,19 +121,17 @@ class _$_CreateAccountState implements _CreateAccountState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_CreateAccountState &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality()
-                .equals(other.inputValid, inputValid));
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.inputValid, inputValid) ||
+                other.inputValid == inputValid));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(inputValid));
+  int get hashCode => Object.hash(runtimeType, name, inputValid);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_CreateAccountStateCopyWith<_$_CreateAccountState> get copyWith =>
       __$$_CreateAccountStateCopyWithImpl<_$_CreateAccountState>(
           this, _$identity);

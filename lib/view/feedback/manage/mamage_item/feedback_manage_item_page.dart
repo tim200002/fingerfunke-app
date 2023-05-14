@@ -126,7 +126,7 @@ class FeedbackManageItemPage extends StatelessWidget {
                                       _metaInfoItem(
                                           l10n(context)
                                               .lbl_devFeedbackItemAuthor,
-                                          child: UserInfoView(report.author)),
+                                          child: UserInfoView(report.authorId)),
                                       const SizedBox(height: 20),
                                       _stateButton(report)
                                     ],

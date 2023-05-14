@@ -1,7 +1,14 @@
-import '../../../cubits/app_cubit/app_cubit.dart';
+import 'package:get_it/get_it.dart';
+
+import '../../../cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
 import '../../../models/message/message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../repositories/user_repository/user_repository.dart';
+import '../../../utils/skeleton_view.dart';
+import '../../../utils/tools.dart';
+import '../../../utils/type_aliases.dart';
 
 class ChatMessage extends StatelessWidget {
   final TextMessage message;
@@ -15,7 +22,10 @@ class ChatMessage extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     final bool amIAuthor =
-        BlocProvider.of<AppCubit>(context).state.user.id == message.author.id;
+        BlocProvider.of<FirebaseAuthenticationCubitCubit>(context)
+                .getUser()
+                .id ==
+            message.authorId;
     return Padding(
       padding: const EdgeInsets.all(_messageMargin),
       child: Row(
@@ -49,14 +59,7 @@ class ChatMessage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   if (!amIAuthor) ...[
-                    Row(
-                      children: [
-                        Text(message.author.name,
-                            style: amIAuthor
-                                ? Theme.of(context).primaryTextTheme.labelMedium
-                                : Theme.of(context).textTheme.labelMedium)
-                      ],
-                    ),
+                    _AuthorName(message.authorId),
                     const SizedBox(height: 10)
                   ],
                   Text(message.text,
@@ -70,5 +73,37 @@ class ChatMessage extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class _AuthorName extends StatefulWidget {
+  final FirestoreId _userId;
+  final UserRepository _userRepository = GetIt.I<UserRepository>();
+
+  _AuthorName(this._userId, {Key? key}) : super(key: key);
+
+  @override
+  State<_AuthorName> createState() => __AuthorNameState();
+}
+
+class __AuthorNameState extends State<_AuthorName> {
+  String? name;
+
+  @override
+  void initState() {
+    widget._userRepository.getUser(widget._userId).then((value) {
+      if (mounted) {
+      
+        setState(() => name = value?.name ?? l10n(context).lbl_deleted_user);
+      }
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return name != null
+        ? Text(name!, style: Theme.of(context).textTheme.labelMedium)
+        : SkeletonView.shimmer(const SkeletonView.text());
   }
 }

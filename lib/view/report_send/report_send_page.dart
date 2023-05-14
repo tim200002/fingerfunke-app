@@ -1,10 +1,15 @@
+import 'package:get_it/get_it.dart';
+
 import '../../common_widgets/image/network_placeholder_image.dart/network_placeholder_image.dart';
-import '../../cubits/app_cubit/app_cubit.dart';
+import '../../cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
 import '../../models/asset/asset.dart';
 import '../../models/post/post.dart';
 import '../../models/report.dart';
+import '../../models/user/user.dart';
+import '../../repositories/user_repository/user_repository.dart';
 import '../../repositories/video_repository/video_repository.impl.dart';
 import '../../utils/tools.dart';
+import '../../utils/util_widgets/future_text.dart';
 import '../error/exception_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,7 +20,9 @@ import 'widgets/chip_chooser.dart';
 
 class ReportSendPage extends StatelessWidget {
   final Post post;
-  const ReportSendPage({Key? key, required this.post}) : super(key: key);
+  final UserRepository _userRepository = GetIt.instance<UserRepository>();
+
+  ReportSendPage({Key? key, required this.post}) : super(key: key);
 
   static void navigate(BuildContext context, Post post) {
     Tools.navigate(context,
@@ -25,6 +32,9 @@ class ReportSendPage extends StatelessWidget {
   }
 
   Widget _postCard(BuildContext context) {
+    // ToDo: Cam we guarentee that the author of a post exists, as I remebeber once an author is deleted also all of his posts are deleted
+    Future<User?> userFuture = _userRepository.getUser(post.authorId);
+
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 30),
       decoration: BoxDecoration(
@@ -45,9 +55,10 @@ class ReportSendPage extends StatelessWidget {
         children: [
           Padding(
               padding: const EdgeInsets.only(right: 20),
+              // The image here should be of such low resolution that
+              // I can directly use the data url embedded in the Asset
               child: NetworkPlaceholderImage(
-                VideoRepositoryImpl()
-                    .createThumbnailUrl(post.media[0] as VideoAsset),
+                (post.media[0] as VideoAsset).thumbnailUrl!,
                 Container(
                   color: Colors.grey,
                 ),
@@ -68,8 +79,9 @@ class ReportSendPage extends StatelessWidget {
                 const SizedBox(
                   height: 30,
                 ),
-                Text(
-                  l10n(context).lbl_postCreatedBy(post.author.name),
+                FutureText(
+                  userFuture.then((value) => l10n(context).lbl_postCreatedBy(
+                      value?.name ?? l10n(context).lbl_deleted_user)),
                   style: Theme.of(context).textTheme.bodyMedium,
                 )
               ],
@@ -111,9 +123,8 @@ class ReportSendPage extends StatelessWidget {
   //TODO: add scaffold
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AppCubit, AppState>(
-      builder: (context, state) {
-        final user = state.user;
+    return FirebaseAuthenticationCubitCubit.userBuilder(
+      (user) {
         return BlocProvider<ReportSendCubit>(
           create: (context) => ReportSendCubit(
               doc: post, type: ReportType.post, author: user.toInfo()),

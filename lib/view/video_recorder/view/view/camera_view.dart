@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../cubit/video_recorder_cubit.dart';
-import '../widgets/new_record_button.dart';
+import '../widgets/action_bar.dart';
 
 class CameraView extends StatefulWidget {
   static const Duration countdownLength = Duration(seconds: 3);
@@ -100,7 +100,7 @@ class _CameraViewState extends State<CameraView> with TickerProviderStateMixin {
       ),
       extendBodyBehindAppBar: true,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: NewRecordButton(
+      floatingActionButton: RecodingActionBar(
           isRecording: widget.camera.recording,
           maxRecodingLength: 60,
           onStartPressed: _startCountdown,

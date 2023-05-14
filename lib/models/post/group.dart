@@ -3,7 +3,7 @@ part of 'post.dart';
 class Group extends Post {
   const Group({
     required FirestoreId id,
-    required UserInfo author,
+    required FirestoreId authorId,
     required String title,
     required String description,
     required DateTime creationTime,
@@ -15,7 +15,7 @@ class Group extends Post {
   }) : super._(
             id: id,
             type: PostType.recurrent,
-            author: author,
+            authorId: authorId,
             title: title,
             description: description,
             creationTime: creationTime,
@@ -31,7 +31,7 @@ class Group extends Post {
   JsonMap toJson() => {
         "id": id,
         "creationTime": dateToJson(creationTime),
-        "author": author.toJson(),
+        "author": authorId,
         "type": PostType.recurrent,
         "title": title,
         "description": description,
@@ -45,7 +45,7 @@ class Group extends Post {
   factory Group.fromJson(JsonMap map) => Group(
       id: map["id"] as String,
       creationTime: dateFromJson(map['creationTime'] as int),
-      author: UserInfo.fromJson(map["author"] as JsonMap),
+      authorId: map["authorId"],
       title: map["title"] as String,
       description: map["description"] as String,
       visibility:
@@ -61,7 +61,7 @@ class Group extends Post {
       Group.fromJson(documentSnaphsotToJson(document));
 
   factory Group.createWithId({
-    required UserInfo author,
+    required FirestoreId authorId,
     required String title,
     required String description,
     required PostVisibility visibility,
@@ -81,7 +81,7 @@ class Group extends Post {
 
     return Group(
       id: const Uuid().v4(),
-      author: author,
+      authorId: authorId,
       title: title,
       description: description,
       creationTime: DateTime.now(),

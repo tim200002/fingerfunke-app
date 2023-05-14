@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'feedback_manage_cubit.dart';
 
@@ -26,9 +26,9 @@ mixin _$FeedbackManageState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(List<UserFeedback> feedback, bool showClosed)? neutral,
-    TResult Function(dynamic e)? error,
+    TResult? Function()? loading,
+    TResult? Function(List<UserFeedback> feedback, bool showClosed)? neutral,
+    TResult? Function(dynamic e)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -48,9 +48,9 @@ mixin _$FeedbackManageState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Neutral value)? neutral,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Neutral value)? neutral,
+    TResult? Function(_Error value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -67,17 +67,18 @@ mixin _$FeedbackManageState {
 abstract class $FeedbackManageStateCopyWith<$Res> {
   factory $FeedbackManageStateCopyWith(
           FeedbackManageState value, $Res Function(FeedbackManageState) then) =
-      _$FeedbackManageStateCopyWithImpl<$Res>;
+      _$FeedbackManageStateCopyWithImpl<$Res, FeedbackManageState>;
 }
 
 /// @nodoc
-class _$FeedbackManageStateCopyWithImpl<$Res>
+class _$FeedbackManageStateCopyWithImpl<$Res, $Val extends FeedbackManageState>
     implements $FeedbackManageStateCopyWith<$Res> {
   _$FeedbackManageStateCopyWithImpl(this._value, this._then);
 
-  final FeedbackManageState _value;
   // ignore: unused_field
-  final $Res Function(FeedbackManageState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -89,13 +90,10 @@ abstract class _$$_LoadingCopyWith<$Res> {
 
 /// @nodoc
 class __$$_LoadingCopyWithImpl<$Res>
-    extends _$FeedbackManageStateCopyWithImpl<$Res>
+    extends _$FeedbackManageStateCopyWithImpl<$Res, _$_Loading>
     implements _$$_LoadingCopyWith<$Res> {
   __$$_LoadingCopyWithImpl(_$_Loading _value, $Res Function(_$_Loading) _then)
-      : super(_value, (v) => _then(v as _$_Loading));
-
-  @override
-  _$_Loading get _value => super._value as _$_Loading;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -131,9 +129,9 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(List<UserFeedback> feedback, bool showClosed)? neutral,
-    TResult Function(dynamic e)? error,
+    TResult? Function()? loading,
+    TResult? Function(List<UserFeedback> feedback, bool showClosed)? neutral,
+    TResult? Function(dynamic e)? error,
   }) {
     return loading?.call();
   }
@@ -165,9 +163,9 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Neutral value)? neutral,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Neutral value)? neutral,
+    TResult? Function(_Error value)? error,
   }) {
     return loading?.call(this);
   }
@@ -196,30 +194,29 @@ abstract class _$$_NeutralCopyWith<$Res> {
   factory _$$_NeutralCopyWith(
           _$_Neutral value, $Res Function(_$_Neutral) then) =
       __$$_NeutralCopyWithImpl<$Res>;
+  @useResult
   $Res call({List<UserFeedback> feedback, bool showClosed});
 }
 
 /// @nodoc
 class __$$_NeutralCopyWithImpl<$Res>
-    extends _$FeedbackManageStateCopyWithImpl<$Res>
+    extends _$FeedbackManageStateCopyWithImpl<$Res, _$_Neutral>
     implements _$$_NeutralCopyWith<$Res> {
   __$$_NeutralCopyWithImpl(_$_Neutral _value, $Res Function(_$_Neutral) _then)
-      : super(_value, (v) => _then(v as _$_Neutral));
+      : super(_value, _then);
 
-  @override
-  _$_Neutral get _value => super._value as _$_Neutral;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? feedback = freezed,
-    Object? showClosed = freezed,
+    Object? feedback = null,
+    Object? showClosed = null,
   }) {
     return _then(_$_Neutral(
-      feedback == freezed
+      null == feedback
           ? _value._feedback
           : feedback // ignore: cast_nullable_to_non_nullable
               as List<UserFeedback>,
-      showClosed == freezed
+      null == showClosed
           ? _value.showClosed
           : showClosed // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -236,6 +233,7 @@ class _$_Neutral implements _Neutral {
   final List<UserFeedback> _feedback;
   @override
   List<UserFeedback> get feedback {
+    if (_feedback is EqualUnmodifiableListView) return _feedback;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_feedback);
   }
@@ -254,18 +252,17 @@ class _$_Neutral implements _Neutral {
         (other.runtimeType == runtimeType &&
             other is _$_Neutral &&
             const DeepCollectionEquality().equals(other._feedback, _feedback) &&
-            const DeepCollectionEquality()
-                .equals(other.showClosed, showClosed));
+            (identical(other.showClosed, showClosed) ||
+                other.showClosed == showClosed));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_feedback),
-      const DeepCollectionEquality().hash(showClosed));
+      runtimeType, const DeepCollectionEquality().hash(_feedback), showClosed);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_NeutralCopyWith<_$_Neutral> get copyWith =>
       __$$_NeutralCopyWithImpl<_$_Neutral>(this, _$identity);
 
@@ -283,9 +280,9 @@ class _$_Neutral implements _Neutral {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(List<UserFeedback> feedback, bool showClosed)? neutral,
-    TResult Function(dynamic e)? error,
+    TResult? Function()? loading,
+    TResult? Function(List<UserFeedback> feedback, bool showClosed)? neutral,
+    TResult? Function(dynamic e)? error,
   }) {
     return neutral?.call(feedback, showClosed);
   }
@@ -317,9 +314,9 @@ class _$_Neutral implements _Neutral {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Neutral value)? neutral,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Neutral value)? neutral,
+    TResult? Function(_Error value)? error,
   }) {
     return neutral?.call(this);
   }
@@ -354,25 +351,24 @@ abstract class _Neutral implements FeedbackManageState {
 abstract class _$$_ErrorCopyWith<$Res> {
   factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
       __$$_ErrorCopyWithImpl<$Res>;
+  @useResult
   $Res call({dynamic e});
 }
 
 /// @nodoc
 class __$$_ErrorCopyWithImpl<$Res>
-    extends _$FeedbackManageStateCopyWithImpl<$Res>
+    extends _$FeedbackManageStateCopyWithImpl<$Res, _$_Error>
     implements _$$_ErrorCopyWith<$Res> {
   __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
-      : super(_value, (v) => _then(v as _$_Error));
+      : super(_value, _then);
 
-  @override
-  _$_Error get _value => super._value as _$_Error;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? e = freezed,
   }) {
     return _then(_$_Error(
-      e == freezed
+      freezed == e
           ? _value.e
           : e // ignore: cast_nullable_to_non_nullable
               as dynamic,
@@ -407,6 +403,7 @@ class _$_Error implements _Error {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ErrorCopyWith<_$_Error> get copyWith =>
       __$$_ErrorCopyWithImpl<_$_Error>(this, _$identity);
 
@@ -424,9 +421,9 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? loading,
-    TResult Function(List<UserFeedback> feedback, bool showClosed)? neutral,
-    TResult Function(dynamic e)? error,
+    TResult? Function()? loading,
+    TResult? Function(List<UserFeedback> feedback, bool showClosed)? neutral,
+    TResult? Function(dynamic e)? error,
   }) {
     return error?.call(e);
   }
@@ -458,9 +455,9 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Neutral value)? neutral,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Neutral value)? neutral,
+    TResult? Function(_Error value)? error,
   }) {
     return error?.call(this);
   }
