@@ -1,0 +1,113 @@
+version: 2.1
+orbs:
+  flutter: circleci/flutter@2.0.2
+  android: circleci/android@2.3.0
+
+
+jobs:
+  deploy-to-testflight:
+    macos:
+      xcode: "14.2.0"
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "b2:6f:07:01:53:11:92:f0:fa:1f:39:34:4f:8b:c5:5e"
+
+      - checkout
+      - run:
+          name: Checkout Config File Repo
+          command: git clone git@gitlab.com:fingerfunke/config-files.git
+          working_directory: ~/
+    
+
+      - flutter/install_sdk_and_pub:
+          version: 3.7.12
+      - flutter/install_ios_pod
+      - flutter/install_ios_gem
+
+      - run:
+          name: Config Fastlane (Setup Signing, ...)
+          command: bundle exec fastlane prepare
+          working_directory: ios
+      
+      - run:
+          name: Config Other Environment Values (Android & iOS)
+          command: ./setup_environment.sh
+          working_directory: .circleci/scripts
+
+      - run:
+          name: Build iOS
+          command:  flutter build ipa --release --dart-define-from-file=../config-files/flutter_app/config.production.json --export-options-plist=./ios/export_options.plist
+          
+      - run:
+          name: Deploy iOS to Testflight
+          command: bundle exec fastlane testflight
+          working_directory: ios
+          
+      - store_artifacts:
+          path: ./build/ios/ipa/fingerfunke_app.ipa
+      
+      - store_artifacts:
+          path: ./ios/Podfile.lock
+      
+      - store_artifacts:
+          path: ./ios/Gemfile.lock
+
+  build-android:
+    executor:
+      name: android/android-machine
+      resource-class: large
+      tag: 2023.04.1
+
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "b2:6f:07:01:53:11:92:f0:fa:1f:39:34:4f:8b:c5:5e"
+
+      - checkout
+      - run:
+          name: Checkout Config File Repo
+          command: git clone git@gitlab.com:fingerfunke/config-files.git
+          working_directory: ~/
+    
+
+      - flutter/install_sdk_and_pub:
+          version: 3.7.12
+      #- flutter/install_android_gradle_dependencies
+      #- flutter/install_android_gem
+
+      # - run:
+      #     name: Config Fastlane (Setup Signing, ...)
+      #     command: bundle exec fastlane prepare
+      #     working_directory: ios
+      
+      - run:
+          name: Config Other Environment Values (Android & iOS)
+          command: ./setup_environment.sh
+          working_directory: .circleci/scripts
+
+      - run:
+          name: Build Android
+          command:  flutter build apk --dart-define-from-file ../config-files/flutter_app/config.production.json
+          
+      - store_artifacts:
+          path: ./build/app/outputs/flutter-apk/app-release.apk
+      
+
+
+workflows:
+  deploy-to-testflight-workflow:
+    jobs:
+      - build-approval:
+          type: approval
+      - deploy-to-testflight:
+          requires:
+            - build-approval
+  build-android-workflow:
+    jobs:
+      - build-approval:
+          type: approval
+      - build-android:
+          requires:
+            - build-approval
+
