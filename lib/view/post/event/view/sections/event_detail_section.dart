@@ -196,11 +196,13 @@ class __AdressPickerState extends State<_AdressPicker> {
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (_) => MapsPlacePickerPage(
-            onPlacePicked: (c, pickResult) => _onPlacePicked(pickResult),
+          builder: (context) => MapsPlacePickerPage(
+            onPlacePicked: (pickResult) {
+              _onPlacePicked(pickResult);
+              Navigator.pop(context);
+            },
             initialPosition: context.read<LocationCubit>().state.maybeWhen(
-                    loaded: (location) => location.position,
-                    orElse: () => null),
+                loaded: (location) => location.position, orElse: () => null),
           ),
         ),
       ),
