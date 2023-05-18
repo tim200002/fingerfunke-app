@@ -12,7 +12,9 @@ import '../../../../../../../utils/tools.dart';
 import '../../../../../common_widgets/paginated_list/paged_paginated_list.dart';
 import '../../../../../models/filter/feed_filter.dart';
 import '../../../../../models/place.dart';
+import '../../../../../repositories/geocoding_repository/geocodig_repository.dart';
 import '../../../../illustration_view/illustration_view.dart';
+import '../../../../maps/view/maps_place_picker_page.dart';
 import '../filter/cubit/feed_filter_cubit.dart';
 import 'cubit/discover_feed_cubit.dart';
 
@@ -39,8 +41,7 @@ class DiscoverFeed extends StatelessWidget {
           error: (e) => IllustrationView.error(
               text: l10n(context).lbl_locationLoadError,
               retry: () => context.read<LocationCubit>().loadLocation()),
-          noPosition: (permissionState) => _NoLocationWidget(
-            permissionState: permissionState,
+          noPosition: (permissionState) => const _NoLocationWidget(
           ),
           uninitialized: () =>
               const Center(child: CircularProgressIndicator.adaptive()),
@@ -94,15 +95,10 @@ class DiscoverFeed extends StatelessWidget {
 }
 
 class _NoLocationWidget extends StatelessWidget {
-  final PermissionState permissionState;
-  const _NoLocationWidget({required this.permissionState, super.key});
+  const _NoLocationWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final bool manualWorkToDoBeforeRequest =
-        permissionState.locationPermission ==
-                LocationPermission.deniedForever ||
-            !permissionState.locationServiceEnabled;
     return IllustrationView(
       illustration: Illustrations.location,
       illustrationHeight: 100,
@@ -111,23 +107,33 @@ class _NoLocationWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          if (manualWorkToDoBeforeRequest) const SizedBox(height: 20),
-          if (permissionState.locationPermission ==
-              LocationPermission.deniedForever)
+          const SizedBox(height: 20),
+          ...[
             TextButton(
                 onPressed: () => Geolocator.openAppSettings(), //.then((_) => ),
                 child: Text(l10n(context).lbl_grantLocationPermission)),
-          if (!permissionState.locationServiceEnabled)
             TextButton(
-              onPressed: () =>
-                  Geolocator.openLocationSettings(), //.then((_) => ),
-              child: const Text("Activate Location Service"),
-            ),
-          if (!manualWorkToDoBeforeRequest)
-            IllustrationView.retryButton(
-                context, context.read<LocationCubit>().loadLocation)
+                onPressed: () =>
+                    _maunallyPickLocation(context), //.then((_) => ),
+                child: Text(l10n(context).lbl_manuallyChooseLocation)),
+          ],
         ],
       ),
     );
   }
+
+  Future<void> _maunallyPickLocation(BuildContext context) =>
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => MapsPlacePickerPage(
+            onPlacePicked: (p) async {
+              var location = p.geometry!.location;
+              Place place = await GeoCodingRepository.placeFromCoordinate(
+                  Coordinate(location.lat, location.lng));
+              context.read<LocationCubit>().setLocation(place);
+              Navigator.of(context).pop();
+            },
+          ),
+        ),
+      );
 }

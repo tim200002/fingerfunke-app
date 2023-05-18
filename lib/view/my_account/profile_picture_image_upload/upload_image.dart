@@ -23,12 +23,13 @@ Future<void> uploadProfilePictureBase64Encoded(
     return;
   }
   // crop File to right aspect ration
-  File? cropped = await ImageCropper().cropImage(
+  CroppedFile? cropped = await ImageCropper().cropImage(
     maxWidth: 400,
     sourcePath: file.path,
     cropStyle: CropStyle.circle,
     aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
   );
+
 
   // abort
   if (cropped == null) {

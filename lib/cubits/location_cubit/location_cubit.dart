@@ -63,12 +63,13 @@ class LocationCubit extends Cubit<LocationState> {
 
   Future<void> _getDeviceLocationFromStorage(PermissionState permissionState) async {
     try {
-      final Place? deviceLocationFromStorage =
-          _storageRepository.getInfo("device_location");
-      if (deviceLocationFromStorage == null) {
+      Map<String, dynamic>? deviceLocationMap = await _storageRepository.getInfo("device_location");
+      if (deviceLocationMap == null) {
         return emit(LocationState.noPosition(permissionState));
       }
-      return emit(LocationState.loaded(deviceLocationFromStorage));
+      final Place deviceLocation = Place.fromJson(deviceLocationMap);
+      
+      return emit(LocationState.loaded(deviceLocation));
     } catch (e) {
       return emit(LocationState.error(e));
     }

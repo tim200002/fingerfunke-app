@@ -46,7 +46,7 @@ class LocationFilterModal extends StatelessWidget {
       // Permission denied forever. Request user to change
       if (permission == LocationPermission.deniedForever) {
         return Tools.showSnackbar(
-             "Please allow location permission in settings");
+            "Please allow location permission in settings");
       }
 
       // request new permission if denied
@@ -67,7 +67,7 @@ class LocationFilterModal extends StatelessWidget {
 
       context.read<LocationCubit>().setLocation(devicePlace);
     } catch (e) {
-      Tools.showSnackbar( "Something went wrong");
+      Tools.showSnackbar("Something went wrong");
     }
   }
 
@@ -80,11 +80,11 @@ class LocationFilterModal extends StatelessWidget {
 
   void _onMapPick(BuildContext context) =>
       Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (_) => BlocProvider.value(
+          builder: (context) => BlocProvider.value(
               value: BlocProvider.of<FeedFilterCubit>(context),
               child: MapsPlacePickerPage(
-                onPlacePicked: (c, p) async {
-                  await _setMapPickResult(c, p);
+                onPlacePicked: (p) async {
+                  await _setMapPickResult(context, p);
                 },
                 // if position of user is known, set it as initial position for the map
                 // else use the default position

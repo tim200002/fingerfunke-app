@@ -49,9 +49,15 @@ jobs:
       
       - store_artifacts:
           path: ./ios/Podfile.lock
+          destination: cache-ios
       
       - store_artifacts:
           path: ./ios/Gemfile.lock
+          destination: cache-ios
+        
+      - store_artifacts:
+          path: ./pubspec.lock
+          destination: cache-ios
 
   build-android:
     executor:
@@ -92,6 +98,10 @@ jobs:
           
       - store_artifacts:
           path: ./build/app/outputs/flutter-apk/app-release.apk
+      
+      - store_artifacts:
+          path: ./pubspec.lock
+          destination: cache-android
       
 
 

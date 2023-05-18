@@ -8,14 +8,14 @@ import '../../../models/place.dart';
 import '../../../utils/tools.dart';
 
 class MapsPlacePickerPage extends StatelessWidget {
-  final FutureOr Function(BuildContext, PickResult) onPlacePicked;
-  static const LatLng _defaultInitialPosition = LatLng(47.62087969215252, 9.417152431150251);
+  final FutureOr Function(PickResult) onPlacePicked;
+  static const LatLng _defaultInitialPosition = LatLng(49.583332, 11.016667);
   late final LatLng initialPosition;
   
   MapsPlacePickerPage({required this.onPlacePicked, Coordinate? initialPosition, Key? key})
       : super(key: key){
         if(initialPosition == null){
-          this.initialPosition == _defaultInitialPosition;
+          this.initialPosition = _defaultInitialPosition;
         }
         else{
           this.initialPosition = LatLng(initialPosition.latitude, initialPosition.longitude);
@@ -38,8 +38,7 @@ class MapsPlacePickerPage extends StatelessWidget {
       zoomGesturesEnabled: true,
       zoomControlsEnabled: false,
       onPlacePicked: (PickResult result) async {
-        await onPlacePicked(context, result);
-        Navigator.of(context).maybePop();
+        await onPlacePicked(result);
       },
     );
   }
