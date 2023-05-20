@@ -41,7 +41,7 @@ jobs:
           
       - run:
           name: Deploy iOS to Testflight
-          command: bundle exec fastlane testflight
+          command: bundle exec fastlane release_to_testflight
           working_directory: ios
           
       - store_artifacts:
@@ -49,15 +49,15 @@ jobs:
       
       - store_artifacts:
           path: ./ios/Podfile.lock
-          destination: cache-ios
+          destination: cache-ios/Podfile.lock
       
       - store_artifacts:
           path: ./ios/Gemfile.lock
-          destination: cache-ios
+          destination: cache-ios/Gemfile.lock
         
       - store_artifacts:
           path: ./pubspec.lock
-          destination: cache-ios
+          destination: cache-ios/pubspec.lock
 
   build-android:
     executor:
@@ -101,7 +101,7 @@ jobs:
       
       - store_artifacts:
           path: ./pubspec.lock
-          destination: cache-android
+          destination: cache-android/pubspec.lock
       
 
 
@@ -120,4 +120,3 @@ workflows:
       - build-android:
           requires:
             - build-approval
-

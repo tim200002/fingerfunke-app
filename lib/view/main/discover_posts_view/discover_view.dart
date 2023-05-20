@@ -68,7 +68,7 @@ class _DiscoverViewState extends State<DiscoverView> {
                     right: AppTheme.PADDING_SIDE,
                     top: 15),
                 clipBehavior: Clip.none,
-                child: const DiscoverFeed()),
+                child: DiscoverFeed()),
           );
         },
       ),

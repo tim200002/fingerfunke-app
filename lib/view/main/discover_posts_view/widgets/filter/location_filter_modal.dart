@@ -78,20 +78,26 @@ class LocationFilterModal extends StatelessWidget {
     c.read<LocationCubit>().setLocation(place);
   }
 
-  void _onMapPick(BuildContext context) =>
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => BlocProvider.value(
-              value: BlocProvider.of<FeedFilterCubit>(context),
-              child: MapsPlacePickerPage(
-                onPlacePicked: (p) async {
-                  await _setMapPickResult(context, p);
-                },
-                // if position of user is known, set it as initial position for the map
-                // else use the default position
-                initialPosition: context.read<LocationCubit>().state.maybeWhen(
-                    loaded: (location) => location.position,
-                    orElse: () => null),
-              ))));
+  void _onMapPick(BuildContext context) {
+    final FeedFilterCubit filterCubit = context.read<FeedFilterCubit>();
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) => BlocProvider.value(
+          value: filterCubit,
+          child: MapsPlacePickerPage(
+            onPlacePicked: (p) async {
+              await _setMapPickResult(context, p);
+              Navigator.of(context).pop();
+            },
+            // if position of user is known, set it as initial position for the map
+            // else use the default position
+            initialPosition: context.read<LocationCubit>().state.maybeWhen(
+                loaded: (location) => location.position, orElse: () => null),
+          ),
+        ),
+      ),
+    );
+  }
 
   Widget _button(BuildContext context,
       {required IconData icon,

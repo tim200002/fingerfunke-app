@@ -30,7 +30,7 @@ class VideoUploadTile extends StatelessWidget {
             onPressed: () => onDelete(cubit.id),
             icon: const Icon(
               FeatherIcons.trash2,
-              color: Colors.white,
+              color: Colors.black,
             ),
           ),
         ),

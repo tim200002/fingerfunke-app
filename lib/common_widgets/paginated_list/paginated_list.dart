@@ -28,7 +28,7 @@ class PaginatedList<T> extends StatelessWidget {
   /// this is currently needed to shrink the list down in the comment section
   final bool Function(int)? shouldShrinkWrap;
 
-  
+  /// if true the list will be reversed
   final bool reverse;
 
   /// widget to show while the list is loading for the first time 

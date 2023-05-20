@@ -73,6 +73,7 @@ dependencies:
   easy_debounce: ^2.0.2+1
   provider: ^6.0.5
   get_it: ^7.2.0
+  firebase_ui_firestore: ^1.5.1
   
 
 dev_dependencies:

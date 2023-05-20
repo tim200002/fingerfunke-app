@@ -6,7 +6,6 @@ import '../../../../cubits/firebase_authentication_cubit/firebase_authentication
 import '../../../../models/post/post.dart';
 import '../../../../utils/app_theme.dart';
 import '../../../../utils/tools.dart';
-import '../../../chat/cubit/chat_cubit_cubit.dart';
 import '../../../error/exception_view.dart';
 import '../../cubits/abstract_post_editor_cubit/abstract_post_editor_cubit.dart';
 import '../../cubits/post_viewer_cubit/post_cubit.dart';
@@ -78,14 +77,6 @@ class EventPage extends StatelessWidget {
           userId: context.read<FirebaseAuthenticationCubitCubit>().getUser().id,
         ),
       ),
-
-      // it makes sense to already provide the chat message cubit here
-      // so that when opening the chat initial messages are typically already loaded
-      // therefore we require the cubit to be instantly built -> lazy is set to false
-      BlocProvider(
-        create: (_) => ChatCubit(postId),
-        lazy: false,
-      )
     ], child: builder(context));
   }
 

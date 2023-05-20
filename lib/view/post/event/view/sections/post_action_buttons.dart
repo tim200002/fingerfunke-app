@@ -5,7 +5,6 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import '../../../../../cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
 import '../../../../../routes.dart';
 import '../../../../../utils/tools.dart';
-import '../../../../chat/cubit/chat_cubit_cubit.dart';
 import '../../../../chat/view/chat_page.dart';
 import '../../../cubits/abstract_post_editor_cubit/abstract_post_editor_cubit.dart';
 import '../../../cubits/post_viewer_cubit/post_cubit.dart';
@@ -57,8 +56,10 @@ class PostActionButtons extends StatelessWidget {
             normal: (post, isMember) {
               return Stack(
                 children: <Widget>[
-                  if (!post.isUserAuthor(
-                          context.read<FirebaseAuthenticationCubitCubit>().getUser().toInfo()) &&
+                  if (!post.isUserAuthor(context
+                          .read<FirebaseAuthenticationCubitCubit>()
+                          .getUser()
+                          .toInfo()) &&
                       (isMember || !(post.asEvent?.isCompleted ?? false)))
                     Align(
                         alignment: Alignment.bottomCenter,
@@ -91,7 +92,6 @@ class PostActionButtons extends StatelessWidget {
                               arguments: ChatArguments(
                                 chatName: post.title,
                                 postId: post.id,
-                                chatCubit: BlocProvider.of<ChatCubit>(context),
                               ),
                             )),
                   ),
@@ -132,8 +132,7 @@ class _Edit extends StatelessWidget {
                     Theme.of(context).colorScheme.onBackground, 0.4),
             onTap: valid
                 ? () => context.read<EventEditorCubit>().submit()
-                : () => Tools.showSnackbar(
-                    l10n(context).msg_editFieldsMissing),
+                : () => Tools.showSnackbar(l10n(context).msg_editFieldsMissing),
           ))
     ]);
   }

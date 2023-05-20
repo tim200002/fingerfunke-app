@@ -24,11 +24,11 @@ platform :ios do
   end
 
   desc "Push a new beta build to TestFlight"
-  lane :testflight do
+  lane :release_to_testflight do
     upload_to_testflight(
       ipa: "../build/ios/ipa/fingerfunke_app.ipa",
       skip_waiting_for_build_processing: true,
-      apple_id: ENV["APPLE_ID"],
+      apple_id: ENV["APP_APPLE_ID"],
     )
   end
 end

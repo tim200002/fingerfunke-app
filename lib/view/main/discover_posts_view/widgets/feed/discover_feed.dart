@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../../../../../../common_widgets/list_items/post_feed_image_item.dart';
 import '../../../../../../../cubits/location_cubit/location_cubit.dart';
@@ -9,28 +11,48 @@ import '../../../../../../../models/post/post.dart';
 import '../../../../../../../models/settings/app_settings.dart';
 import '../../../../../../../utils/illustration.dart';
 import '../../../../../../../utils/tools.dart';
-import '../../../../../common_widgets/paginated_list/paged_paginated_list.dart';
+import '../../../../../common_widgets/paginated_list/firebase_paged_paginated_list.dart';
 import '../../../../../models/filter/feed_filter.dart';
 import '../../../../../models/place.dart';
 import '../../../../../repositories/geocoding_repository/geocodig_repository.dart';
 import '../../../../illustration_view/illustration_view.dart';
 import '../../../../maps/view/maps_place_picker_page.dart';
 import '../filter/cubit/feed_filter_cubit.dart';
-import 'cubit/discover_feed_cubit.dart';
 
 class DiscoverFeed extends StatelessWidget {
-  const DiscoverFeed({Key? key}) : super(key: key);
+  DiscoverFeed({Key? key}) : super(key: key);
 
-  Widget feedList(
-      {required List<Post> items,
-      required Widget Function(Post) itemBuilder,
-      required Widget endIndicator}) {
-    return PageView.builder(
-        scrollDirection: Axis.vertical,
-        itemCount: items.length + 1,
-        itemBuilder: (context, i) {
-          return i >= items.length ? endIndicator : itemBuilder(items[i]);
-        });
+  final FirebaseFirestore _firestore = GetIt.I.get<FirebaseFirestore>();
+
+  /// Creates a query for the discover feed
+  Query<Post> _createQuery(Place userLocation, FeedFilter filters) {
+    Query<Map<String, dynamic>> untypedQuery = _firestore
+        .collection('posts')
+        .where('geohashesByRadius.${filters.locationRadius}',
+            arrayContains: userLocation.geohash);
+
+    if (filters.hideFarFuture) {
+      DateTime farFuture = DateTime.now();
+      farFuture = farFuture.add(const Duration(days: 30));
+      untypedQuery = untypedQuery.where('startTime',
+          isLessThanOrEqualTo: farFuture.millisecondsSinceEpoch);
+    }
+
+    if (filters.hideCompleted) {
+      untypedQuery = untypedQuery.where('startTime',
+          isGreaterThanOrEqualTo: DateTime.now().millisecondsSinceEpoch);
+    }
+
+    // ugly hack: Problem after inequality first order by must start with same field
+    untypedQuery = untypedQuery
+        .orderBy('startTime')
+        .orderBy('creationTime', descending: true);
+
+    Query<Post> typedQuery = untypedQuery.withConverter<Post>(
+        fromFirestore: (snapshot, _) => Post.fromDoc(snapshot),
+        toFirestore: (post, _) => post.toJson());
+
+    return typedQuery;
   }
 
   Widget _locationBuilders(
@@ -41,8 +63,7 @@ class DiscoverFeed extends StatelessWidget {
           error: (e) => IllustrationView.error(
               text: l10n(context).lbl_locationLoadError,
               retry: () => context.read<LocationCubit>().loadLocation()),
-          noPosition: (permissionState) => const _NoLocationWidget(
-          ),
+          noPosition: (permissionState) => const _NoLocationWidget(),
           uninitialized: () =>
               const Center(child: CircularProgressIndicator.adaptive()),
           loaded: (location) => builder(filter, location),
@@ -58,35 +79,28 @@ class DiscoverFeed extends StatelessWidget {
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
         Expanded(
           child: _locationBuilders(
-            (filter, place) => BlocProvider<DiscoverFeedCubit>(
-              // Necessary to trigger rebuilds whenever location or filters change
-              key: Key(filter.hashCode.toString() + place.hashCode.toString()),
-              create: (_) =>
-                  DiscoverFeedCubit(userLocation: place, filters: filter),
-              child:
-                  // This will forcfully lead to rebuild whenever settings change, however,
-                  // it should be mroe efficient then doing same operation on a per post level
-                  // worth it in my opinion
-                  BlocBuilder<AppSettingsCubit, AppSettings>(
-                buildWhen: ((previous, current) =>
-                    previous.dsAutoplay != current.dsAutoplay),
-                builder: (context, settings) =>
-                    BlocBuilder<DiscoverFeedCubit, DiscoverFeedState>(
-                  builder: (context, state) => PagedPaginatedList<Post>(
-                      state: state,
-                      itemBuilder: (post) => PostFeedImageItem(
-                            post,
-                            video: settings.dsAutoplay,
-                            key: ValueKey(post.id),
-                          ),
-                      onRequestNewPage: () =>
-                          context.read<DiscoverFeedCubit>().requestNewPage(),
-                      endIndicator: IllustrationView.empty(
-                          text: l10n(context).msg_feedEmpty),
-                      loadingIndicator: const FeedItemLoading()),
-                ),
-              ),
-            ),
+            (filter, place) =>
+                // This will forcefully lead to rebuild whenever settings change, however,
+                // it should be more efficient than doing same operation on a per post level
+                // worth it in my opinion
+                BlocBuilder<AppSettingsCubit, AppSettings>(
+                    buildWhen: ((previous, current) =>
+                        previous.dsAutoplay != current.dsAutoplay),
+                    builder: (context, settings) {
+                      final query = _createQuery(place, filter);
+                      return FirebasePagedPAginatedList<Post>(
+                          query: query,
+                          itemBuilder: (post) => PostFeedImageItem(
+                                post,
+                                video: settings.dsAutoplay,
+                                key: ValueKey(post.id),
+                              ),
+                          emptyListIndicator: IllustrationView.empty(
+                              text: l10n(context).msg_feedEmpty),
+                          endIndicator: IllustrationView.empty(
+                              text: l10n(context).msg_feedEmpty),
+                          loadingIndicator: const FeedItemLoading());
+                    }),
           ),
         ),
       ]),

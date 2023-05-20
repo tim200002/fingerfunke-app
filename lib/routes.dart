@@ -39,7 +39,7 @@ class Routes {
 final routes = {
   Routes.about: (context) => const AppInfoPage(),
   Routes.account: (context) => const MyAccountPage(),
-  Routes.chat: (context) => const ChatPage(),
+  Routes.chat: (context) => ChatPage(),
   Routes.devtools: (context) => const DevToolsPage(),
   Routes.devtoolsLocalStorage: (context) => const DevToolsStoragePage(),
   Routes.feedback: (context) => const FeedbackSendPage(),
