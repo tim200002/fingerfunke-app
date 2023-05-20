@@ -1,0 +1,53 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:android)
+
+platform :android do
+  desc "Set initial configuration"
+  lane :prepare do
+    setup_circle_ci
+  end
+
+  desc "Submit a new Beta Build to Firebase App distribution"
+  lane :beta_firebase_distribution do
+    latest_release = firebase_app_distribution_get_latest_release(
+      app: ENV["FIREBASE_APP_ID"],
+      service_credentials_file: "../../config-files/flutter_app/android/firebase/app_distribution_service_account.json"
+    )
+    
+    build_number = latest_release[:buildVersion].to_i + 1
+    ENV["FIREBASE_BUILD_NUMBER"] = build_number.to_s
+
+    sh("flutter build apk --dart-define-from-file=../config-files/flutter_app/config.production.json --build-number=$FIREBASE_BUILD_NUMBER")
+
+    if File.exist? "../../release_notes.txt"
+      release_notes = File.read("../../release_notes.txt")
+      puts "Release notes found"
+    else
+      release_notes = nil
+      puts "No release notes found"
+    end
+
+    release = firebase_app_distribution(
+      app: ENV["FIREBASE_APP_ID"],
+      service_credentials_file: "../../config-files/flutter_app/android/firebase/app_distribution_service_account.json",
+      android_artifact_type: "APK",
+      android_artifact_path: "../build/app/outputs/flutter-apk/app-release.apk",
+      release_notes: release_notes,
+      groups: "internal-testers",
+    )
+  end
+end

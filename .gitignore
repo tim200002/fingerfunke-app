@@ -49,3 +49,6 @@ app.*.map.json
 *.env
 lib/env.dart
 config.json
+
+changes.txt
+release_notes.txt

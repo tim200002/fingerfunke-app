@@ -24,11 +24,17 @@ platform :ios do
   end
 
   desc "Push a new beta build to TestFlight"
-  lane :release_to_testflight do
+  lane :beta_testflight do
+    build_number = latest_testflight_build_number + 1
+    ENV["TESTFLIGHT_BUILD_NUMBER"] = build_number.to_s
+
+    flutter build ipa --release --dart-define-from-file=../config-files/flutter_app/config.production.json --export-options-plist=./export_options.plist --build-number=$TESTFLIGHT_BUILD_NUMBER
+    
     upload_to_testflight(
       ipa: "../build/ios/ipa/fingerfunke_app.ipa",
       skip_waiting_for_build_processing: true,
       apple_id: ENV["APP_APPLE_ID"],
     )
+
   end
 end
