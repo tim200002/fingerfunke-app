@@ -1,5 +1,16 @@
 # Changelog 
 
+## 0.5.2
+
+### Bug Fixes
+
+### Features
+
+### Miscellaneous
+- Setup full CI/CD setup for automatic releases to firebase app distribution
+
+
+
 ## 0.5.1
 
 ### Bug Fixes
