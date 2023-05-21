@@ -23,13 +23,37 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 Set initial configuration
 
-### ios beta
+### ios beta_testflight_pre_build
 
 ```sh
-[bundle exec] fastlane ios beta
+[bundle exec] fastlane ios beta_testflight_pre_build
 ```
 
-Push a new beta build to TestFlight
+Push a new beta build to TestFlight (steps executed before build)
+
+### ios beta_testflight_post_build
+
+```sh
+[bundle exec] fastlane ios beta_testflight_post_build
+```
+
+Push a new beta build to TestFlight (steps executed after build)
+
+### ios beta_firebase_distribution_pre_build
+
+```sh
+[bundle exec] fastlane ios beta_firebase_distribution_pre_build
+```
+
+Push a new beta build to Firebase App distribution (steps exxecuted before build)
+
+### ios beta_firebase_distribution_post_build
+
+```sh
+[bundle exec] fastlane ios beta_firebase_distribution_post_build
+```
+
+Push a new beta build to Firebase App distribution (steps exxecuted after build)
 
 ----
 

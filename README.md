@@ -2,6 +2,13 @@
 
 ## Who are we
 
+## Build Environment
+If you build the App, please make sure you are using the following build environment
+- Flutter 3.10.1
+- Dart 3.0.1
+- CocoaPods 1.10.1 (low version has to do with CI/CD pipeline)
+
+
 ## Getting started
 
 ### First Time Setup
@@ -18,7 +25,6 @@ The steps for using the `firebase CLI`are
   - Finally select `yes`to continue
 
 After following these steps you must also make sure that you are using the right configuration. For more information on this please refer to the `Configuration Setup` section
-
 
 
 ### Localization Files
@@ -59,10 +65,11 @@ Now you are ready to start developing. Have fun and thanks for contributing :)
 
 # Releases
 
-Releases are named using [sematic versioning](https://semver.org/lang/de/) in addition with the current build number. A valid release tag would therefore look somehting like this `v1.2.4+2`. Please `tag` every release in Git and add meaningful release notes
+Releases are named using [sematic versioning](https://semver.org/lang/de/) meaning, there are three different types of releases:
 
 - Major release: A major release increments the first number. This is done when there are significant changes in the feature set of the App
-- Minor Release: A minor release increments the second nunber. This is done when new functionality has been added to the App
-- Patch release: A patch release icrements the third number. This is done when only bugs have been fixed
+- Minor Release: A minor release increments the second number. This is done when new functionality has been added to the App
+- Patch release: A patch release increments the third number. This is done when only bugs have been fixed
 
-The build number must automatically be incremented with every new release
+## How to create a new release
+To simplify the process of releasing, there is a [Tools](Repo)

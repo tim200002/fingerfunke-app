@@ -4,26 +4,34 @@ orbs:
   android: circleci/android@2.3.0
 
 
-jobs:
-  deploy-to-testflight:
-    macos:
-      xcode: "14.2.0"
+commands:
+  prepare:
     steps:
-      - add_ssh_keys:
-          fingerprints:
-            - "b2:6f:07:01:53:11:92:f0:fa:1f:39:34:4f:8b:c5:5e"
-
-      - checkout
-      
       - run:
           name: Checkout Config File Repo
-          command: git clone git@gitlab.com:fingerfunke/config-files.git
-          working_directory: ~/
-      - run:
-          name: Checkout Tools File Repo
-          command: git clone git@gitlab.com:fingerfunke/tools.git
+          # clone config files repo and store path in env variable
+          command: |
+            git clone git@gitlab.com:fingerfunke/config-files.git
+            cd config-files
+            echo "Config files path is $(pwd)"
           working_directory: ~/
       
+      - run:
+          name: Checkout Tools File Repo
+          # clone ans store tools repo and store path in env variable
+          command: |
+            git clone git@gitlab.com:fingerfunke/tools.git
+            cd tools
+            echo "Tools path is $(pwd)"
+          working_directory: ~/
+
+      - run:
+          name: Config Other Environment Values (Android & iOS)
+          command: ./setup_environment.sh
+          working_directory: .circleci/scripts
+  
+  create-release-notes:
+    steps:
       - run:
           name: Create release notes
           # check if circle tag is available, if yes use tools to build release notes
@@ -35,28 +43,66 @@ jobs:
             else
               echo "CIRCLE_TAG is not set"
             fi
-    
+          
 
+
+
+jobs:
+  deploy-firebase-distribution-ios:
+    macos:
+      xcode: "14.2.0"
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "b2:6f:07:01:53:11:92:f0:fa:1f:39:34:4f:8b:c5:5e"
+
+      - checkout
+      - prepare
+
+      - create-release-notes
+    
+      # caching works well we keep that
       - flutter/install_sdk_and_pub:
           version: 3.10.1
-      - flutter/install_ios_pod
-      - flutter/install_ios_gem
+      
+      # For both caching is difficult, so we skip for now
+      # - flutter/install_ios_gem
+      # - flutter/install_ios_pod
+      # Instead do operations manually
+      - run:
+          name: Install iOS Gem (no cache)
+          command: bundle install
+          working_directory: ios
+      
+      - run:
+          name: Install iOS Pod (no cache)
+          command: pod install
+          working_directory: ios
+
 
       - run:
           name: Config Fastlane (Setup Signing, ...)
           command: bundle exec fastlane prepare
           working_directory: ios
-      
-      - run:
-          name: Config Other Environment Values (Android & iOS)
-          command: ./setup_environment.sh
-          working_directory: .circleci/scripts
 
       - run:
-          name: Beta Release iOS (Testflight)
-          command: bundle exec fastlane beta_testflight
+          name: Pre Build Steps
+          command: bundle exec fastlane beta_firebase_distribution_pre_build
           working_directory: ios
-           
+
+      - run:
+          name: Build App
+          command: |
+            cd ios/fastlane
+            source ../../.circleci/scripts/read_env_file.sh
+            cd ../..
+            flutter build ios --dart-define-from-file=$CONFIG_FILES_PATH/flutter_app/config.production.json --build-number=$FIREBASE_BUILD_NUMBER --no-codesign --release
+
+      - run:
+          name: Post Build Steps
+          command: bundle exec fastlane beta_firebase_distribution_post_build
+          working_directory: ios
+
       - store_artifacts:
           path: ./ios/Podfile.lock
           destination: cache-ios/Podfile.lock
@@ -81,31 +127,22 @@ jobs:
             - "b2:6f:07:01:53:11:92:f0:fa:1f:39:34:4f:8b:c5:5e"
 
       - checkout
-      - run:
-          name: Checkout Config File Repo
-          command: git clone git@gitlab.com:fingerfunke/config-files.git
-          working_directory: ~/
-      - run:
-          name: Checkout Tools File Repo
-          command: git clone git@gitlab.com:fingerfunke/tools.git
-          working_directory: ~/
+      - prepare
+      - create-release-notes
 
-      - run:
-          name: Create release notes
-          # check if circle tag is available, if yes use tools to build release notes
-          command: |
-            if [ -n "$CIRCLE_TAG" ]; then
-              echo "CIRCLE_TAG is set to $CIRCLE_TAG"
-              echo "Creating release notes"
-              python ../tools/get_release_notes_from_changelog.py CHANGELOG.md
-            else
-              echo "CIRCLE_TAG is not set"
-            fi
-
+      # caching works well we keep that
       - flutter/install_sdk_and_pub:
-          version: 3.7.12
-      - flutter/install_android_gradle_dependencies
-      - flutter/install_android_gem
+          version: 3.10.1
+      
+      # This one throws error and I don't really know what does it
+      # - flutter/install_android_gradle_dependencies
+
+      # This on provides difficulties with cache, for now without cache
+      #- flutter/install_android_gem
+      - run:
+          name: Install Android Gem (no cache)
+          command: bundle install
+          working_directory: android
 
       - run:
           name: Config Fastlane (Setup Signing, ...)
@@ -113,29 +150,64 @@ jobs:
           working_directory: android
       
       - run:
-          name: Config Other Environment Values (Android & iOS)
-          command: ./setup_environment.sh
-          working_directory: .circleci/scripts
-
-      - run:
-          name: Beta Release Android (Firebase App Distribution)
-          command: bundle exec fastlane beta_firebase_distribution
+          name: Pre Build Steps
+          command: bundle exec fastlane beta_firebase_distribution_pre_build
           working_directory: android
-     
+      
+      - run:
+          name: Build App
+          command: |
+            cd android/fastlane
+            source ../../.circleci/scripts/read_env_file.sh
+            cd ../..
+            flutter build apk --dart-define-from-file=$CONFIG_FILES_PATH/flutter_app/config.production.json --build-number=$FIREBASE_BUILD_NUMBER
+      
+      - run:
+          name: Post Build Steps
+          command: bundle exec fastlane beta_firebase_distribution_post_build
+          working_directory: android
+
+      
       - store_artifacts:
           path: ./pubspec.lock
           destination: cache-android/pubspec.lock
+      
+      - store_artifacts:
+          path: ./android/Gemfile.lock
+          destination: cache-ios/Gemfile.lock
       
 
 
 workflows:
   deploy-beta:
     jobs:
-      - deploy-to-testflight
-      - deploy-firebase-distribution-android
+      - deploy-firebase-distribution-ios:
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+      - deploy-firebase-distribution-android:
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+  manual-deploy-beta:
+    jobs:
+      - approval:
+          type: approval
+          # on all branches but only if no tag is set
+          filters:
+            tags:
+              ignore: /.*/
 
-    filters:
-      tags:
-        only: /^v.*/
-      branches:
-        ignore: /.*/
+      - deploy-firebase-distribution-ios:
+          requires:
+            - approval
+
+      - deploy-firebase-distribution-android:
+          requires:
+            - approval
+
+    

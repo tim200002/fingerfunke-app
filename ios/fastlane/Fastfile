@@ -16,25 +16,125 @@
 default_platform(:ios)
 
 platform :ios do
+
+before_all do
+    setup_circle_ci
+end
+
+# function to automatically append a variable to .env file
+# while adding it should check if varable exists, if no then append to bottom
+# otherwise overwrite value
+def append_to_env_file(variable, value)
+  # check if file exists
+  if !File.exist? ".env"
+    # if not exists then create file and add variable
+    File.open(".env", "w") do |f|
+      f.puts "#{variable}=#{value}"
+    end
+    return
+  end
+
+  # check if variable exists
+  variable_exits = File.foreach(".env").grep(/#{variable}/).any?
+  if variable_exits
+    # if exists then overwrite value
+    # read file
+    file = File.read(".env")
+    # replace value
+    new_contents = file.gsub(/#{variable}=.*/, "#{variable}=#{value}")
+    # write file
+    File.open(".env", "w") {|f| f.puts new_contents }
+  else
+    # if not exists then append to bottom
+    File.open(".env", "a") do |f|
+      f.puts "\n#{variable}=#{value}"
+    end
+  end
+end
   
   desc "Set initial configuration"
   lane :prepare do
-    setup_circle_ci
-    match(type: "appstore", readonly: true)
+  # setup_circle_ci
+  config_files_path = File.expand_path("../../../../config-files", __FILE__)
+  append_to_env_file("CONFIG_FILES_PATH", config_files_path)
+end
+
+  desc "Push a new beta build to TestFlight (steps executed before build)"
+  lane :beta_testflight_pre_build do
+    build_number = latest_testflight_build_number + 1
+    ENV["TESTFLIGHT_BUILD_NUMBER"] = build_number.to_s    
   end
 
-  desc "Push a new beta build to TestFlight"
-  lane :beta_testflight do
-    build_number = latest_testflight_build_number + 1
-    ENV["TESTFLIGHT_BUILD_NUMBER"] = build_number.to_s
+  desc "Push a new beta build to TestFlight (steps executed after build)"
+  lane :beta_testflight_post_build do
+    match(type: "appstore", readonly: true)
 
-    flutter build ipa --release --dart-define-from-file=../config-files/flutter_app/config.production.json --export-options-plist=./export_options.plist --build-number=$TESTFLIGHT_BUILD_NUMBER
-    
+    team_id = CredentialsManager::AppfileConfig.try_fetch_value(:team_id)
+    # Build IPA from arhive
+    gym(
+      output_name: "fingerfunke_app.ipa",
+      export_method: "ad-hoc",
+      archive_path: "../build/ios/archive/Runner.xcarchive",
+      skip_build_archive: true,
+      output_directory: "../build/ios/ipa",
+      export_team_id: team_id
+    )
+
     upload_to_testflight(
       ipa: "../build/ios/ipa/fingerfunke_app.ipa",
       skip_waiting_for_build_processing: true,
       apple_id: ENV["APP_APPLE_ID"],
     )
-
   end
+
+
+  desc "Push a new beta build to Firebase App distribution (steps exxecuted before build)"
+  lane :beta_firebase_distribution_pre_build do
+    # find absolute path to config files directory
+    config_files_path = File.expand_path("../../../../config-files", __FILE__)
+
+    latest_release = firebase_app_distribution_get_latest_release(
+      app: ENV["FIREBASE_APP_ID_IOS"],
+      service_credentials_file: config_files_path + "/flutter_app/android/firebase/app_distribution_service_account.json"
+    )
+    
+    build_number = (latest_release[:buildVersion].to_i + 1).to_s
+    append_to_env_file("FIREBASE_BUILD_NUMBER",build_number)
+  end
+
+  desc "Push a new beta build to Firebase App distribution (steps exxecuted after build)"
+  lane :beta_firebase_distribution_post_build do
+    config_files_path = ENV["CONFIG_FILES_PATH"]
+    match(type: "appstore", readonly: true)
+    match(type: "adhoc", readonly: true, force_for_new_devices: true)
+
+    team_id = CredentialsManager::AppfileConfig.try_fetch_value(:team_id)
+    # # Build IPA from arhive
+    build_app(
+      scheme: "Runner",
+      workspace: "Runner.xcworkspace",
+      output_name: "fingerfunke_app.ipa",
+      export_method: "ad-hoc",
+      output_directory: "../build/ios/ipa",
+      export_team_id: team_id,
+      #export_options: "./export_options/export_options_adhoc.plist"
+    )
+
+    if File.exist? "../../release_notes.txt"
+      release_notes = File.read("../../release_notes.txt")
+      puts "Release notes found"
+    else
+      release_notes = nil
+      puts "No release notes found"
+    end
+
+    release = firebase_app_distribution(
+      app: ENV["FIREBASE_APP_ID_IOS"],
+      service_credentials_file: config_files_path + "/flutter_app/android/firebase/app_distribution_service_account.json",
+      ipa_path: "../build/ios/ipa/fingerfunke_app.ipa",
+      release_notes: release_notes,
+      groups: "internal-testers",
+    )
+  end
+
 end
