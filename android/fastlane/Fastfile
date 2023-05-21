@@ -16,22 +16,60 @@
 default_platform(:android)
 
 platform :android do
-  desc "Set initial configuration"
-  lane :prepare do
-    setup_circle_ci
+# function to automatically append a variable to .env file
+# while adding it should check if varable exists, if no then append to bottom
+# otherwise overwrite value
+def append_to_env_file(variable, value)
+  # check if file exists
+  if !File.exist? ".env"
+    # if not exists then create file and add variable
+    File.open(".env", "w") do |f|
+      f.puts "#{variable}=#{value}"
+    end
+    return
   end
 
-  desc "Submit a new Beta Build to Firebase App distribution"
-  lane :beta_firebase_distribution do
+  # check if variable exists
+  variable_exits = File.foreach(".env").grep(/#{variable}/).any?
+  if variable_exits
+    # if exists then overwrite value
+    # read file
+    file = File.read(".env")
+    # replace value
+    new_contents = file.gsub(/#{variable}=.*/, "#{variable}=#{value}")
+    # write file
+    File.open(".env", "w") {|f| f.puts new_contents }
+  else
+    # if not exists then append to bottom
+    File.open(".env", "a") do |f|
+      f.puts "\n#{variable}=#{value}"
+    end
+  end
+end
+
+  desc "Set initial configuration"
+  lane :prepare do
+    config_files_path = File.expand_path("../../../../config-files", __FILE__)
+
+    append_to_env_file("CONFIG_FILES_PATH", config_files_path)
+  end
+
+  desc "Submit a new Beta Build to Firebase App distribution (steps executed before build)"
+  lane :beta_firebase_distribution_pre_build do
+    config_files_path = ENV["CONFIG_FILES_PATH"]
+
     latest_release = firebase_app_distribution_get_latest_release(
-      app: ENV["FIREBASE_APP_ID"],
-      service_credentials_file: "../../config-files/flutter_app/android/firebase/app_distribution_service_account.json"
+      app: ENV["FIREBASE_APP_ID_ANDROID"],
+      service_credentials_file: config_files_path + "/flutter_app/android/firebase/app_distribution_service_account.json"
     )
     
-    build_number = latest_release[:buildVersion].to_i + 1
-    ENV["FIREBASE_BUILD_NUMBER"] = build_number.to_s
+    build_number = (latest_release[:buildVersion].to_i + 1).to_s
+    append_to_env_file("FIREBASE_BUILD_NUMBER",build_number)
+  end
 
-    sh("flutter build apk --dart-define-from-file=../config-files/flutter_app/config.production.json --build-number=$FIREBASE_BUILD_NUMBER")
+  desc "Submit a new Beta Build to Firebase App distribution (steps executed after build)"
+  lane :beta_firebase_distribution_post_build do
+    config_files_path = ENV["CONFIG_FILES_PATH"]
 
     if File.exist? "../../release_notes.txt"
       release_notes = File.read("../../release_notes.txt")
@@ -42,8 +80,8 @@ platform :android do
     end
 
     release = firebase_app_distribution(
-      app: ENV["FIREBASE_APP_ID"],
-      service_credentials_file: "../../config-files/flutter_app/android/firebase/app_distribution_service_account.json",
+      app: ENV["FIREBASE_APP_ID_ANDROID"],
+      service_credentials_file:  config_files_path + "/flutter_app/android/firebase/app_distribution_service_account.json",
       android_artifact_type: "APK",
       android_artifact_path: "../build/app/outputs/flutter-apk/app-release.apk",
       release_notes: release_notes,
