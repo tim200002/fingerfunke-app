@@ -1,5 +1,18 @@
 # Changelog 
 
+## 0.5.3
+
+### Bug Fixes
+- Buffer Overflow in Chat beim Keyboard (Input ist jetzt in Safe Area gewrapped)
+- Videos sollten jetzt ohne Audio gezeigt werden (bitte jemand testen)
+
+### Features
+
+### Miscellaneous
+- Better Pagination. Creation of Pagination and Widget are separated again. This allws me to prefetch chat messages.
+
+
+
 ## 0.5.2
 
 ### Bug Fixes
