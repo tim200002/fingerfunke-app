@@ -1,28 +1,28 @@
-import '../creation_aware_widget/creation_aware_widget.dart';
 import 'package:flutter/material.dart';
-import '../../cubits/paginated_list_cubit/paginated_list_state_interface.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-/// This is a template for a very easy paginated list
-///
-/// List must be wrapped with a bloc builder that handles rebuilding.
-/// When giving it all the required parameters list will automatically
-/// fetch new pages until it reached end
+import '../../cubits/better_pagination/cubit/better_pagination_cubit.dart';
+import '../../view/error/exception_view.dart';
+
 class PaginatedList<T> extends StatelessWidget {
-  /// state of the list, must confirm with the interface
-  final PaginatedListStateInterface<T> state;
-
   /// function envoked on each list item to create widget given the data
-  final Widget Function(T) _itemBuilder;
+  final Widget Function(T) itemBuilder;
 
   /// Element to show once reached end of list
   final Widget endIndicator;
 
+  // widget to show while the list is loading for the first time
+  /// after the initialization
+  final Widget initialLoadIndicator;
+
   /// Element to show while loading new items
-  final Widget loadingIndicator;
+  final Widget nextItemsLoadingIndicator;
 
+  /// Element to show while loading new items
+  final Widget emptyListIndicator;
 
-  /// function to call to load new items
-  final void Function() onRequestNewPage;
+  /// starts loading new elements this many elements before reaching end
+  final int prefetchDistance;
 
   /// optional function to turn on and off shrinkWrap depending on the number of items in the list
   /// this is currently needed to shrink the list down in the comment section
@@ -31,86 +31,75 @@ class PaginatedList<T> extends StatelessWidget {
   /// if true the list will be reversed
   final bool reverse;
 
-  /// widget to show while the list is loading for the first time 
-  /// after the initialization
-  final Widget initialLoadIndicator;
-
-  /// pagination Distance, must be known to efficiently prefetch
-  final int paginationDistance;
-
-  /// starts loading new elements this many elements before reaching end
-  final int prefetch;
+  /// If context cannot be used for reading the cubit, the cubit can be passed directly
+  final BetterPaginationCubit<T>? cubit;
 
   const PaginatedList(
-      {required this.state,
-      required Widget Function(T) itemBuilder,
-      required this.onRequestNewPage,
+      {required this.itemBuilder,
       required this.endIndicator,
-      required this.loadingIndicator,
       required this.initialLoadIndicator,
-      this.paginationDistance = 20,
-      this.prefetch = 3,
+      required this.nextItemsLoadingIndicator,
+      required this.emptyListIndicator,
+      this.prefetchDistance = 3,
       this.reverse = false,
       this.shouldShrinkWrap,
-      Key? key})
-      : _itemBuilder = itemBuilder,
-        super(key: key);
-
-  /// if the current element created equals the last element of the list it is clear that we must load new ones
-  ///
-  /// If we would have reached end last element is not creation aware, could therefoe never trigger this
-  /// ToDo we could look out for a better algorithm which fetches beforehand depending on pagination distance
-  bool _shouldLoadNewItems(
-      PaginatedListStateInterface<T> state, int currentIndex) {
-    if (state.isLoading) return false;
-    if (state.reachedEnd) return false;
-    bool isInLastPage =
-        (state.items!.length - (currentIndex + 1)) < paginationDistance;
-    if (!isInLastPage) return false;
-    int itemsTillEndOfPagination =
-        (paginationDistance - (currentIndex + 1)) % paginationDistance;
-    if (itemsTillEndOfPagination != prefetch) return false;
-    return true;
-  }
-
-  bool _currentElementIsIndicator(
-    PaginatedListStateInterface<T> state, int index) {
-  return index == state.items!.length; }
-
-  Widget? _createIndicator(
-      PaginatedListStateInterface<T> state, BuildContext context) {
-    if (state.isLoading) {
-      return loadingIndicator;
-    } else {
-      return endIndicator;
-    }
-  }
+      this.cubit,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
-    return state.items != null ? ListView.builder(
-      itemCount: state.items!.length + 1,
-      shrinkWrap:
-          shouldShrinkWrap != null ? shouldShrinkWrap!(state.items!.length) : false,
-      reverse: reverse,
-      itemBuilder: (context, index) {
-        //Check if we reached bottom of list
-        // if yes shown indicator
-        if (_currentElementIsIndicator(state, index)) {
-          return _createIndicator(state, context) ?? Container();
-        }
-        // if not create element
-        else {
-          return CreationAwareWidget(
-            child: _itemBuilder(state.items![index]),
-            onItemCreated: () {
-              if (_shouldLoadNewItems(state, index)) {
-                onRequestNewPage();
-              }
-            },
-          );
-        }
-      },
-    ) : initialLoadIndicator ;
+    return BlocBuilder<BetterPaginationCubit<T>, BetterPaginationState<T>>(
+      bloc: cubit,
+      builder: (context, state) {
+          
+      BetterPaginationState<T> snapshot = state;
+      if (snapshot.hasError) {
+        return ExceptionView(exception: snapshot.error);
+      }
+      if (snapshot.isFetching) {
+        return initialLoadIndicator;
+      }
+
+      // Nothing to show
+      if (snapshot.items.isEmpty) {
+        return emptyListIndicator;
+      }
+
+      // Show Normal List
+      return ListView.builder(
+        scrollDirection: Axis.vertical,
+        reverse: reverse,
+        shrinkWrap: shouldShrinkWrap != null
+            ? shouldShrinkWrap!(snapshot.items.length)
+            : false,
+        itemCount: snapshot.items.length + 1,
+        itemBuilder: (context, index) {
+          // if we reached the end of the currently obtained items, we try to
+          // obtain more items
+          if (!snapshot.isFetchingMore &&
+              snapshot.hasMore &&
+              index + prefetchDistance == snapshot.items.length) {
+            // Tell FirestoreQueryBuilder to try to obtain more items.
+            // It is safe to call this function from within the build method.
+            if(cubit != null){
+              cubit!.fetchNextPage();
+            }else{
+              context.read<BetterPaginationCubit<T>>().fetchNextPage();
+            }
+          }
+
+          // if we reached the end of the currently obtained items we must distinguish two cases
+          if (index == snapshot.items.length) {
+            // if we are currently fetching more items we show the loading indicator
+            if (snapshot.isFetchingMore) {
+              return nextItemsLoadingIndicator;
+            }
+            // if we are not fetching more items we reached the end of the list
+            return endIndicator;
+          }
+          return itemBuilder(snapshot.items[index]);
+        },
+      );
+    });
   }
 }

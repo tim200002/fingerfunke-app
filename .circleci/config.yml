@@ -193,21 +193,21 @@ workflows:
               only: /^v.*/
             branches:
               ignore: /.*/
-  manual-deploy-beta:
-    jobs:
-      - approval:
-          type: approval
-          # on all branches but only if no tag is set
-          filters:
-            tags:
-              ignore: /.*/
+  # manual-deploy-beta:
+  #   jobs:
+  #     - approval:
+  #         type: approval
+  #         # on all branches but only if no tag is set
+  #         filters:
+  #           tags:
+  #             ignore: /.*/
 
-      - deploy-firebase-distribution-ios:
-          requires:
-            - approval
+  #     - deploy-firebase-distribution-ios:
+  #         requires:
+  #           - approval
 
-      - deploy-firebase-distribution-android:
-          requires:
-            - approval
+  #     - deploy-firebase-distribution-android:
+  #         requires:
+  #           - approval
 
     

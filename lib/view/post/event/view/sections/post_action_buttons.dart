@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
+import '../../../../../cubits/better_pagination/cubit/better_pagination_cubit.dart';
 import '../../../../../cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
+import '../../../../../models/message/message.dart';
 import '../../../../../routes.dart';
 import '../../../../../utils/tools.dart';
 import '../../../../chat/view/chat_page.dart';
@@ -92,6 +94,8 @@ class PostActionButtons extends StatelessWidget {
                               arguments: ChatArguments(
                                 chatName: post.title,
                                 postId: post.id,
+                                chatMessagePaginationCubit: context
+                                    .read<BetterPaginationCubit<Message>>(),
                               ),
                             )),
                   ),

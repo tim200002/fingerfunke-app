@@ -27,49 +27,51 @@ class _ChatEditorState extends State<ChatEditor> {
         builder: (context) {
           final ChatEditorCubit chatEditorCubit =
               BlocProvider.of<ChatEditorCubit>(context);
-          return Padding(
-            padding: const EdgeInsets.only(left: 8.0, bottom: 8.0, top: 8.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade200,
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                    child: TextField(
-                      minLines: 1,
-                      maxLines: 6,
-                      textCapitalization: TextCapitalization.sentences,
-                      controller: _controller,
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 9, horizontal: 25),
-                        border: InputBorder.none,
-                        hintText: l10n(context).lbl_chatNewMessage,
+          return SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 8.0, top: 8.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade200,
+                        borderRadius: BorderRadius.circular(25),
                       ),
-                      onChanged: (value) =>
-                          chatEditorCubit.validateMessage(value),
+                      child: TextField(
+                        minLines: 1,
+                        maxLines: 6,
+                        textCapitalization: TextCapitalization.sentences,
+                        controller: _controller,
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 9, horizontal: 25),
+                          border: InputBorder.none,
+                          hintText: l10n(context).lbl_chatNewMessage,
+                        ),
+                        onChanged: (value) =>
+                            chatEditorCubit.validateMessage(value),
+                      ),
                     ),
                   ),
-                ),
-                BlocBuilder<ChatEditorCubit, ChatEditorState>(
-                  builder: (context, state) => IconButton(
-                    onPressed: state.isValid
-                        ? () => chatEditorCubit
-                            .postMessage(_controller.text)
-                            .then((_) => _controller.clear())
-                            .onError((_, __) => Tools.showSnackbar(
-                                l10n(context).msg_chatSendingFailed))
-                        : null,
-                    icon: const Icon(
-                      Icons.send_rounded,
-                      color: Colors.black,
+                  BlocBuilder<ChatEditorCubit, ChatEditorState>(
+                    builder: (context, state) => IconButton(
+                      onPressed: state.isValid
+                          ? () => chatEditorCubit
+                              .postMessage(_controller.text)
+                              .then((_) => _controller.clear())
+                              .onError((_, __) => Tools.showSnackbar(
+                                  l10n(context).msg_chatSendingFailed))
+                          : null,
+                      icon: const Icon(
+                        Icons.send_rounded,
+                        color: Colors.black,
+                      ),
                     ),
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
           );
         },

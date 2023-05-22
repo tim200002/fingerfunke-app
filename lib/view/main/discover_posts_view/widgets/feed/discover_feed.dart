@@ -11,7 +11,8 @@ import '../../../../../../../models/post/post.dart';
 import '../../../../../../../models/settings/app_settings.dart';
 import '../../../../../../../utils/illustration.dart';
 import '../../../../../../../utils/tools.dart';
-import '../../../../../common_widgets/paginated_list/firebase_paged_paginated_list.dart';
+import '../../../../../common_widgets/paginated_list/paged_paginated_list.dart';
+import '../../../../../cubits/better_pagination/cubit/better_pagination_cubit.dart';
 import '../../../../../models/filter/feed_filter.dart';
 import '../../../../../models/place.dart';
 import '../../../../../repositories/geocoding_repository/geocodig_repository.dart';
@@ -78,18 +79,20 @@ class DiscoverFeed extends StatelessWidget {
       borderRadius: BorderRadius.circular(10),
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
         Expanded(
-          child: _locationBuilders(
-            (filter, place) =>
-                // This will forcefully lead to rebuild whenever settings change, however,
-                // it should be more efficient than doing same operation on a per post level
-                // worth it in my opinion
-                BlocBuilder<AppSettingsCubit, AppSettings>(
-                    buildWhen: ((previous, current) =>
-                        previous.dsAutoplay != current.dsAutoplay),
-                    builder: (context, settings) {
-                      final query = _createQuery(place, filter);
-                      return FirebasePagedPAginatedList<Post>(
-                          query: query,
+          child: _locationBuilders((filter, place) =>
+              // This will forcefully lead to rebuild whenever settings change, however,
+              // it should be more efficient than doing same operation on a per post level
+              // worth it in my opinion
+              BlocBuilder<AppSettingsCubit, AppSettings>(
+                  buildWhen: ((previous, current) =>
+                      previous.dsAutoplay != current.dsAutoplay),
+                  builder: (context, settings) {
+                    final query = _createQuery(place, filter);
+                    return BlocProvider<BetterPaginationCubit<Post>>(
+                      create: (_) => BetterPaginationCubit<Post>(
+                        query,
+                      ),
+                      child: PagedPaginatedList<Post>(
                           itemBuilder: (post) => PostFeedImageItem(
                                 post,
                                 video: settings.dsAutoplay,
@@ -99,9 +102,9 @@ class DiscoverFeed extends StatelessWidget {
                               text: l10n(context).msg_feedEmpty),
                           endIndicator: IllustrationView.empty(
                               text: l10n(context).msg_feedEmpty),
-                          loadingIndicator: const FeedItemLoading());
-                    }),
-          ),
+                          loadingIndicator: const FeedItemLoading()),
+                    );
+                  })),
         ),
       ]),
     );

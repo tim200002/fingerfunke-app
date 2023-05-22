@@ -39,15 +39,21 @@ class VideoPlaybackCubit extends Cubit<VideoPlaybackState> {
       : super(const VideoPlaybackState.initializing()) {
     controller.initialize().then((_) {
       if (isClosed) return;
-      emit(
-        VideoPlaybackState.playing(controller, autoplay),
-      );
+      
+      // We are an App for people with hearing disabilities
+      // any sound in video does not make sense
+      controller.setVolume(0);
+
       if (autoplay) {
         controller.play();
       }
       if (loop) {
         controller.setLooping(true);
       }
+
+      emit(
+        VideoPlaybackState.playing(controller, autoplay),
+      );
     }).catchError((error, stackTrace) {
       logger.e("error when creating video playback cubit", error, stackTrace);
       if (!isClosed) emit(VideoPlaybackState.error(error));

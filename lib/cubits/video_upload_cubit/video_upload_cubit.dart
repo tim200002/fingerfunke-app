@@ -225,13 +225,18 @@ class VideoUploadCubit extends Cubit<VideoUploadState> {
     _assetSubscription?.cancel();
 
     if (_mustCleanUpTemporaryAsset) {
-      _videoRepository
-          .deleteTemporaryAsset(assetId!)
-          .then((_) => _logger.i("temporary asset deleted from firestore"))
-          .catchError(
-            (_) => _logger
-                .i("Temporary Video Asset has not been deleted from Firestore"),
-          );
+      // For now do not do this, instead we have cloud function to automatically clean up assets older than some time
+      // This has the advantage that we do not have to care about actions being synchronous and stuff
+      // before we had the problem that this here was executed before asset was moved and this then has led
+      // to sometimes deleting videos references somewhere else
+
+      // _videoRepository
+      //     .deleteTemporaryAsset(assetId!)
+      //     .then((_) => _logger.i("temporary asset deleted from firestore"))
+      //     .catchError(
+      //       (_) => _logger
+      //           .i("Temporary Video Asset has not been deleted from Firestore"),
+      //     );
     }
     return super.close();
   }

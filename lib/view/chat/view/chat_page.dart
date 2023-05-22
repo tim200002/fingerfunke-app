@@ -1,7 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:get_it/get_it.dart';
-import '../../../common_widgets/paginated_list/firebase_paginated_list.dart';
+import '../../../common_widgets/paginated_list/paginated_list.dart';
+import '../../../cubits/better_pagination/cubit/better_pagination_cubit.dart';
 import '../../../cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
 import '../../../models/message/message.dart';
 import '../../../utils/tools.dart';
@@ -17,25 +16,16 @@ class InvalidMessageTypeExcpetion implements Exception {}
 class ChatArguments {
   final FirestoreId postId;
   final String? chatName;
+  final BetterPaginationCubit<Message> chatMessagePaginationCubit;
 
-  ChatArguments({required this.postId, this.chatName});
+  ChatArguments(
+      {required this.chatMessagePaginationCubit,
+      required this.postId,
+      this.chatName});
 }
 
 class ChatPage extends StatelessWidget {
-  final FirebaseFirestore _firestore = GetIt.I.get<FirebaseFirestore>();
-
-  ChatPage({Key? key}) : super(key: key);
-
-  Query<Message> _getQuery(FirestoreId postId) {
-    return _firestore
-        .collection('posts')
-        .doc(postId)
-        .collection('posts_messages')
-        .orderBy('creationTime', descending: true)
-        .withConverter<Message>(
-            fromFirestore: (snapshot, _) => Message.fromDoc(snapshot),
-            toFirestore: (message, _) => message.toJson());
-  }
+  const ChatPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -64,35 +54,37 @@ class ChatPage extends StatelessWidget {
             child: Column(
               children: [
                 Expanded(
-                    child: FirebasePaginatedList<Message>(
+                  child:  PaginatedList<Message>(
+                      cubit: arguments.chatMessagePaginationCubit,
                       reverse: true,
-                      initialLoadIndicator: const Center(child: CircularProgressIndicator.adaptive()),
-                  query: _getQuery(arguments.postId),
-                  itemBuilder: (message) {
-                    switch (message.type) {
-                      case MessageType.text:
-                        return ChatMessage(message as TextMessage);
-                      default:
-                        return ExceptionView(
-                          exception: InvalidMessageTypeExcpetion(),
-                        );
-                    }
-                  },
-                  emptyListIndicator: Center(
-                      child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text("No messages",
-                        style: Theme.of(context).textTheme.labelMedium),
-                  )),
-                  endIndicator: Center(
-                      child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(l10n(context).lbl_chatNoMoreMessages,
-                        style: Theme.of(context).textTheme.labelMedium),
-                  )),
-                  nextItemsLoadingIndicator:
-                      const Center(child: CircularProgressIndicator.adaptive()),
-                )),
+                      initialLoadIndicator: const Center(
+                          child: CircularProgressIndicator.adaptive()),
+                      itemBuilder: (message) {
+                        switch (message.type) {
+                          case MessageType.text:
+                            return ChatMessage(message as TextMessage);
+                          default:
+                            return ExceptionView(
+                              exception: InvalidMessageTypeExcpetion(),
+                            );
+                        }
+                      },
+                      emptyListIndicator: Center(
+                          child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text("No messages",
+                            style: Theme.of(context).textTheme.labelMedium),
+                      )),
+                      endIndicator: Center(
+                          child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(l10n(context).lbl_chatNoMoreMessages,
+                            style: Theme.of(context).textTheme.labelMedium),
+                      )),
+                      nextItemsLoadingIndicator: const Center(
+                          child: CircularProgressIndicator.adaptive()),
+                    ),
+                ),
                 ChatEditor(
                     postId: arguments.postId,
                     author: BlocProvider.of<FirebaseAuthenticationCubitCubit>(
