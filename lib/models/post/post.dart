@@ -81,6 +81,11 @@ class Post extends UserGeneratedDocument {
     return authorId == user.id;
   }
 
+  bool isUserMember(UserInfo? user) {
+    if (user == null) return false;
+    return members.contains(user.id);
+  }
+
   bool isAuthor(FirestoreId? userId) {
     return authorId == userId;
   }

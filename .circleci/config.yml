@@ -193,6 +193,7 @@ workflows:
               only: /^v.*/
             branches:
               ignore: /.*/
+  
   # manual-deploy-beta:
   #   jobs:
   #     - approval:

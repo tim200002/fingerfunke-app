@@ -5,6 +5,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import '../../../../../cubits/better_pagination/cubit/better_pagination_cubit.dart';
 import '../../../../../cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
 import '../../../../../models/message/message.dart';
+import '../../../../../models/user/user.dart';
 import '../../../../../routes.dart';
 import '../../../../../utils/tools.dart';
 import '../../../../chat/view/chat_page.dart';
@@ -56,49 +57,54 @@ class PostActionButtons extends StatelessWidget {
         builder: (context, state) => state.when(
             loading: (_) => Container(),
             normal: (post, isMember) {
+              final UserInfo loggedInUser = context
+                  .read<FirebaseAuthenticationCubitCubit>()
+                  .getUser()
+                  .toInfo();
               return Stack(
                 children: <Widget>[
-                  if (!post.isUserAuthor(context
-                          .read<FirebaseAuthenticationCubitCubit>()
-                          .getUser()
-                          .toInfo()) &&
+                  if (!post.isUserAuthor(loggedInUser) &&
                       (isMember || !(post.asEvent?.isCompleted ?? false)))
                     Align(
-                        alignment: Alignment.bottomCenter,
-                        child: _mainFAB(context,
-                            title: isMember
-                                ? l10n(context).lbl_joinedPost
-                                : l10n(context).lbl_joinPost,
-                            icon: isMember ? Icons.check : Icons.add,
-                            isLoading: false,
-                            color: isMember
-                                ? Theme.of(context).colorScheme.secondary
-                                : Theme.of(context).colorScheme.primary,
-                            onTap: () => (isMember
-                                    ? context.read<PostCubit>().leavePost
-                                    : context.read<PostCubit>().joinPost)
-                                .call()
-                                ?.catchError(
-                                  (_) => Tools.showSnackbar(
-                                      l10n(context).msg_errorUndefined),
-                                ))),
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: FloatingActionButton(
-                        heroTag: "post_chat",
-                        backgroundColor:
-                            Theme.of(context).colorScheme.onBackground,
-                        child: const Icon(Icons.chat_bubble_outline_rounded),
-                        onPressed: () => Navigator.of(context).pushNamed(
-                              Routes.chat,
-                              arguments: ChatArguments(
-                                chatName: post.title,
-                                postId: post.id,
-                                chatMessagePaginationCubit: context
-                                    .read<BetterPaginationCubit<Message>>(),
-                              ),
-                            )),
-                  ),
+                      alignment: Alignment.bottomCenter,
+                      child: _mainFAB(
+                        context,
+                        title: isMember
+                            ? l10n(context).lbl_joinedPost
+                            : l10n(context).lbl_joinPost,
+                        icon: isMember ? Icons.check : Icons.add,
+                        isLoading: false,
+                        color: isMember
+                            ? Theme.of(context).colorScheme.secondary
+                            : Theme.of(context).colorScheme.primary,
+                        onTap: () => (isMember
+                                ? context.read<PostCubit>().leavePost
+                                : context.read<PostCubit>().joinPost)
+                            .call()
+                            ?.catchError(
+                              (_) => Tools.showSnackbar(
+                                  l10n(context).msg_errorUndefined),
+                            ),
+                      ),
+                    ),
+                  if (post.isUserMember(loggedInUser))
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: FloatingActionButton(
+                          heroTag: "post_chat",
+                          backgroundColor:
+                              Theme.of(context).colorScheme.onBackground,
+                          child: const Icon(Icons.chat_bubble_outline_rounded),
+                          onPressed: () => Navigator.of(context).pushNamed(
+                                Routes.chat,
+                                arguments: ChatArguments(
+                                  chatName: post.title,
+                                  postId: post.id,
+                                  chatMessagePaginationCubit: context
+                                      .read<BetterPaginationCubit<Message>>(),
+                                ),
+                              )),
+                    ),
                 ],
               );
             }));
