@@ -125,22 +125,19 @@ class _RecodingActionBarState extends State<RecodingActionBar>
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        Expanded(
-          child: AnimatedSwitcher(
-              duration: const Duration(microseconds: 300),
-              child: _getGalleryButton(context)),
-        ),
-        Expanded(
-          child: AnimatedSwitcher(
-              duration: const Duration(microseconds: 300),
-              child: _getRecordButton(context)),
-        ),
-        const Spacer(),
-      ],
+    return AnimatedSwitcher(
+       duration: const Duration(microseconds: 300),
+      child: Row(
+        
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            child: _getGalleryButton(context),
+          ),
+          _getRecordButton(context),
+          const Spacer(),
+        ],
+      ),
     );
   }
 
