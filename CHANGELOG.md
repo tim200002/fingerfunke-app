@@ -1,5 +1,17 @@
 # Changelog 
 
+## 0.5.4
+
+### Bug Fixes
+- Chat-Funktion bei einem Event ist für jeden einsehbar. Wäre es besser es so einzustellen, dass es nur für Teilnehmende einzusehen ist?
+- Beim Aufnehmen eines Videos für den Post, bleibt nach dem runterzählen ein grauer Streifen auf der linken Seite.
+
+### Features
+
+### Miscellaneous
+
+
+
 ## 0.5.3
 
 ### Bug Fixes
