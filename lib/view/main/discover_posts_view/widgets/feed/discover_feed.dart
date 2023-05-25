@@ -80,31 +80,31 @@ class DiscoverFeed extends StatelessWidget {
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
         Expanded(
           child: _locationBuilders((filter, place) =>
-              // This will forcefully lead to rebuild whenever settings change, however,
-              // it should be more efficient than doing same operation on a per post level
-              // worth it in my opinion
               BlocBuilder<AppSettingsCubit, AppSettings>(
-                  buildWhen: ((previous, current) =>
-                      previous.dsAutoplay != current.dsAutoplay),
-                  builder: (context, settings) {
-                    final query = _createQuery(place, filter);
-                    return BlocProvider<BetterPaginationCubit<Post>>(
-                      create: (_) => BetterPaginationCubit<Post>(
-                        query,
-                      ),
-                      child: PagedPaginatedList<Post>(
-                          itemBuilder: (post) => PostFeedImageItem(
-                                post,
-                                video: settings.dsAutoplay,
-                                key: ValueKey(post.id),
-                              ),
-                          emptyListIndicator: IllustrationView.empty(
-                              text: l10n(context).msg_feedEmpty),
-                          endIndicator: IllustrationView.empty(
-                              text: l10n(context).msg_feedEmpty),
-                          loadingIndicator: const FeedItemLoading()),
-                    );
-                  })),
+                buildWhen: ((previous, current) =>
+                    previous.dsAutoplay != current.dsAutoplay),
+                builder: (context, settings) {
+                  final query = _createQuery(place, filter);
+                  return BlocProvider<BetterPaginationCubit<Post>>(
+                    // Necessary to trigger rebuilds whenever location or filters change
+                    key: Key(filter.hashCode.toString() + place.hashCode.toString()),
+                    create: (_) => BetterPaginationCubit<Post>(
+                      query,
+                    ),
+                    child: PagedPaginatedList<Post>(
+                        itemBuilder: (post) => PostFeedImageItem(
+                              post,
+                              video: settings.dsAutoplay,
+                              key: ValueKey(post.id),
+                            ),
+                        emptyListIndicator: IllustrationView.empty(
+                            text: l10n(context).msg_feedEmpty),
+                        endIndicator: IllustrationView.empty(
+                            text: l10n(context).msg_feedEmpty),
+                        loadingIndicator: const FeedItemLoading()),
+                  );
+                },
+              )),
         ),
       ]),
     );
