@@ -1,5 +1,17 @@
 # Changelog 
 
+## 0.5.5
+
+### Bug Fixes
+- Feed wird nicht geupdated wenn Filter verändert wird
+
+### Features
+
+### Miscellaneous
+- Großer Änderung für unseren Feed. Es gibt jetzt keinen Filter mehr für alte Feed, stattdessen started man immer bei den neuen Posts kann jetzt aber (paginiert) in beide Richtungen scrollen. Das ganze braucht natürlich noch ein bisschen testing, also bittet testet es!
+
+
+
 ## 0.5.4
 
 ### Bug Fixes
