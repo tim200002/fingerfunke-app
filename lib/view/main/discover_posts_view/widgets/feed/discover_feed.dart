@@ -11,8 +11,8 @@ import '../../../../../../../models/post/post.dart';
 import '../../../../../../../models/settings/app_settings.dart';
 import '../../../../../../../utils/illustration.dart';
 import '../../../../../../../utils/tools.dart';
-import '../../../../../common_widgets/paginated_list/paged_paginated_list.dart';
-import '../../../../../cubits/better_pagination/cubit/better_pagination_cubit.dart';
+import '../../../../../common_widgets/paginated_list/paged_paginated_list_double_direction.dart';
+import '../../../../../cubits/better_pagination/cubit/double_pagination_cubit.dart';
 import '../../../../../models/filter/feed_filter.dart';
 import '../../../../../models/place.dart';
 import '../../../../../repositories/geocoding_repository/geocodig_repository.dart';
@@ -25,23 +25,36 @@ class DiscoverFeed extends StatelessWidget {
 
   final FirebaseFirestore _firestore = GetIt.I.get<FirebaseFirestore>();
 
-  /// Creates a query for the discover feed
-  Query<Post> _createQuery(Place userLocation, FeedFilter filters) {
+  Query<Post> _createBackwardQuery(Place userLocation, FeedFilter filters) {
     Query<Map<String, dynamic>> untypedQuery = _firestore
         .collection('posts')
         .where('geohashesByRadius.${filters.locationRadius}',
-            arrayContains: userLocation.geohash);
+            arrayContains: userLocation.geohash)
+        .where('startTime',
+            isLessThanOrEqualTo: DateTime.now().millisecondsSinceEpoch)
+        .orderBy('startTime', descending: true);
+
+    Query<Post> typedQuery = untypedQuery.withConverter<Post>(
+        fromFirestore: (snapshot, _) => Post.fromDoc(snapshot),
+        toFirestore: (post, _) => post.toJson());
+
+    return typedQuery;
+  }
+
+  /// Creates a query for the discover feed
+  Query<Post> _createForwardQuery(Place userLocation, FeedFilter filters) {
+    Query<Map<String, dynamic>> untypedQuery = _firestore
+        .collection('posts')
+        .where('geohashesByRadius.${filters.locationRadius}',
+            arrayContains: userLocation.geohash)
+        .where('startTime',
+            isGreaterThanOrEqualTo: DateTime.now().millisecondsSinceEpoch);
 
     if (filters.hideFarFuture) {
       DateTime farFuture = DateTime.now();
       farFuture = farFuture.add(const Duration(days: 30));
       untypedQuery = untypedQuery.where('startTime',
           isLessThanOrEqualTo: farFuture.millisecondsSinceEpoch);
-    }
-
-    if (filters.hideCompleted) {
-      untypedQuery = untypedQuery.where('startTime',
-          isGreaterThanOrEqualTo: DateTime.now().millisecondsSinceEpoch);
     }
 
     // ugly hack: Problem after inequality first order by must start with same field
@@ -84,14 +97,15 @@ class DiscoverFeed extends StatelessWidget {
                 buildWhen: ((previous, current) =>
                     previous.dsAutoplay != current.dsAutoplay),
                 builder: (context, settings) {
-                  final query = _createQuery(place, filter);
-                  return BlocProvider<BetterPaginationCubit<Post>>(
+                  return BlocProvider<DoublePaginationCubit<Post>>(
                     // Necessary to trigger rebuilds whenever location or filters change
-                    key: Key(filter.hashCode.toString() + place.hashCode.toString()),
-                    create: (_) => BetterPaginationCubit<Post>(
-                      query,
+                    key: Key(
+                        filter.hashCode.toString() + place.hashCode.toString()),
+                    create: (_) => DoublePaginationCubit<Post>(
+                      _createForwardQuery(place, filter),
+                      _createBackwardQuery(place, filter),
                     ),
-                    child: PagedPaginatedList<Post>(
+                    child: PagedPaginatedListDoubleDirection<Post>(
                         itemBuilder: (post) => PostFeedImageItem(
                               post,
                               video: settings.dsAutoplay,
@@ -99,8 +113,10 @@ class DiscoverFeed extends StatelessWidget {
                             ),
                         emptyListIndicator: IllustrationView.empty(
                             text: l10n(context).msg_feedEmpty),
-                        endIndicator: IllustrationView.empty(
-                            text: l10n(context).msg_feedEmpty),
+                        endIndicatorForward: IllustrationView.empty(
+                            text: l10n(context).msg_feedNoMoreNewPosts),
+                        endIndicatorBackward: IllustrationView.empty(
+                            text: l10n(context).msg_feedNoMoreOldPosts),
                         loadingIndicator: const FeedItemLoading()),
                   );
                 },

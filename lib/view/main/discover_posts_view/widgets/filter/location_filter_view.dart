@@ -86,12 +86,6 @@ class LocationFilterView extends StatelessWidget {
                             .set(state.copyWith(locationRadius: v));
                       }),
                       _sectionHeader(context, l10n(context).lbl_filterPosts),
-                      SimpleToggle(
-                          label: l10n(context).lbl_filterHidePast,
-                          enabled: state.hideCompleted,
-                          onChanged: (v) => context
-                              .read<FeedFilterCubit>()
-                              .set(state.copyWith(hideCompleted: v))),
                       const SizedBox(height: 12),
                       SimpleToggle(
                           label: l10n(context).lbl_filterOnlyNearFuture,
