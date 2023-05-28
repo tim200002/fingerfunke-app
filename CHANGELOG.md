@@ -1,5 +1,18 @@
 # Changelog 
 
+## 0.5.6
+
+### Bug Fixes
+- Mehr Padding für Keyboard beim Chat
+
+### Features
+
+### Miscellaneous
+- Datenbank Restrukturierung. Es gibt jetzt ein festes Feld für das main asset und nicht länger so ein komisches Array, wo wir einfach das erste Element nehmen. Das Array können wir gerne für weitere Assets verwenden (weiterer Bilder, PDFs, ...) aber da das main Asset ja pflicht is, ergibt es für mich so deutlich mehr sinn.
+- Teilnahmen und meine Posts wurden restrukturiert, so dass es keine Duplikate mehr geben sollte. All meine posts sind in meine Posts, und nur mosts an denen ich Teil genomemen habe, die nicht aber meine sind, sind bei Teilnahmen
+
+
+
 ## 0.5.5
 
 ### Bug Fixes
