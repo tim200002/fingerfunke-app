@@ -78,4 +78,10 @@ class __SendAnimationState extends State<_SendAnimation>
           )
         ]));
   }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 }

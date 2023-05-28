@@ -23,7 +23,7 @@ abstract class AbstractPostEditorCubit extends Cubit<PostEditorState> {
   String title = "";
   String description = "";
   PostVisibility visibility = PostVisibility.visible;
-  List<VideoUploadCubit> videoUploadCubits = [];
+  VideoUploadCubit? mainVideoUploadCubit;
   Place? place;
 
   AbstractPostEditorCubit.createEmpty(this.user, this.updateTracker)
@@ -36,13 +36,7 @@ abstract class AbstractPostEditorCubit extends Cubit<PostEditorState> {
         description = post.description,
         visibility = post.visibility,
         place = post.place,
-        videoUploadCubits = post.media
-            .map(
-              (videoAsset) => VideoUploadCubit.fromExistingAsset(
-                videoAsset as VideoAsset,
-              ),
-            )
-            .toList(),
+        mainVideoUploadCubit = VideoUploadCubit.fromExistingAsset(post.mainAsset as VideoAsset),
         super(PostEditorState.editing(updateTracker, true));
 
   void updateTitle(String title) {
@@ -55,10 +49,15 @@ abstract class AbstractPostEditorCubit extends Cubit<PostEditorState> {
     _emitFieldUpdate();
   }
 
-  void updateVideoUploadCubits(List<VideoUploadCubit> videoUploadCubits) {
-    this.videoUploadCubits = videoUploadCubits;
+  void updateMainVideoUploadCubit(VideoUploadCubit? videoUploadCubit) {
+    mainVideoUploadCubit = videoUploadCubit;
     _emitFieldUpdate();
   }
+
+  // void updateVideoUploadCubits(List<VideoUploadCubit> videoUploadCubits) {
+  //   this.videoUploadCubits = videoUploadCubits;
+  //   _emitFieldUpdate();
+  // }
 
   void updatePlace(Place? place) {
     this.place = place;
@@ -66,38 +65,57 @@ abstract class AbstractPostEditorCubit extends Cubit<PostEditorState> {
     _emitFieldUpdate();
   }
 
-  void addVideoUploadCubit(VideoUploadCubit videoUploadCubit) {
-    videoUploadCubits.add(videoUploadCubit);
+  void addMainVideoUploadCubit(VideoUploadCubit videoUploadCubit) {
+    assert(mainVideoUploadCubit == null, "There can only be one main video upload cubit");
+    mainVideoUploadCubit = videoUploadCubit;
     _emitFieldUpdate();
   }
 
-  void removeVideoUploadCubit(String cubitId) {
-    VideoUploadCubit cubitToDelete =
-        videoUploadCubits.firstWhere((cubit) => cubit.id == cubitId);
-    cubitToDelete.close();
+  // void addVideoUploadCubit(VideoUploadCubit videoUploadCubit) {
+  //   videoUploadCubits.add(videoUploadCubit);
+  //   _emitFieldUpdate();
+  // }
 
-    videoUploadCubits =
-        videoUploadCubits.where((cubit) => cubit.id != cubitId).toList();
+  void removeMainVideoUploadCubit() {
+    mainVideoUploadCubit?.close();
+    mainVideoUploadCubit = null;
+    _emitFieldUpdate();
   }
+
+  // void removeVideoUploadCubit(String cubitId) {
+  //   VideoUploadCubit cubitToDelete =
+  //       videoUploadCubits.firstWhere((cubit) => cubit.id == cubitId);
+  //   cubitToDelete.close();
+
+  //   videoUploadCubits =
+  //       videoUploadCubits.where((cubit) => cubit.id != cubitId).toList();
+  // }
 
   Future<void> submit() =>
       throw (UnimplementedError("You must override this in child classes"));
 
   bool validateInput() {
-    return _validateUploadCubits() && title != "" && place != null;
+    return  title != "" && place != null && _validateMainVideoUploadCubit();
   }
 
-  bool _validateUploadCubits() {
-    if (videoUploadCubits.isEmpty) {
+  bool _validateMainVideoUploadCubit() {
+    if (mainVideoUploadCubit == null) {
       return false;
     }
-    for (var cubit in videoUploadCubits) {
-      if (!cubit.hasUploaded) {
-        return false;
-      }
-    }
-    return true;
+    return mainVideoUploadCubit!.hasUploaded;
   }
+
+  // bool _validateUploadCubits() {
+  //   if (videoUploadCubits.isEmpty) {
+  //     return false;
+  //   }
+  //   for (var cubit in videoUploadCubits) {
+  //     if (!cubit.hasUploaded) {
+  //       return false;
+  //     }
+  //   }
+  //   return true;
+  // }
 
   bool _canEmitUpdate() {
     return state.maybeWhen(editing: (_, __) => true, orElse: () => false);
@@ -109,6 +127,13 @@ abstract class AbstractPostEditorCubit extends Cubit<PostEditorState> {
     }
   }
 
+  Asset videoUploadCubitToAssetHelper(VideoUploadCubit uploadCubit) =>
+      uploadCubit.state.maybeWhen(
+        uploaded: (_, asset) => asset,
+        orElse: () =>
+            throw Exception("VideoUploadCubit has not finished uploading yet"),
+      );
+
   /// helper to map the List of uploadCubits to a list of assets
   ///
   /// This will throw an error if at least on upload cubit has not finished uploading
@@ -117,17 +142,14 @@ abstract class AbstractPostEditorCubit extends Cubit<PostEditorState> {
       List<VideoUploadCubit> uploadCubits) {
     return uploadCubits
         .map(
-          (cubit) => cubit.state.maybeWhen(
-            uploaded: (_, asset) => asset,
-            orElse: () => throw Exception(
-                "At least one cubit has not finished uploading"),
-          ),
+          (cubit) => videoUploadCubitToAssetHelper(cubit),
         )
         .toList();
   }
 
   /// Given a list of [uploadCubits] clsoe all cubits so they can free their ressources
   void _disposeVideoUploadCubits(List<VideoUploadCubit> uploadCubits) {
+  
     for (var cubit in uploadCubits) {
       cubit.close();
     }
@@ -138,9 +160,10 @@ abstract class AbstractPostEditorCubit extends Cubit<PostEditorState> {
   @override
   Future<void> close() {
     // delete all VideoUploadCubits
-    // whe npost has sucessfuly been posted this is already done when sending it away
+    // when post has sucessfuly been posted this is already done when sending it away
     // we must catch the time, when post editor has been closed before sending
-    _disposeVideoUploadCubits(videoUploadCubits);
+    //_disposeVideoUploadCubits(videoUploadCubits);
+    mainVideoUploadCubit?.close();
 
     return super.close();
   }

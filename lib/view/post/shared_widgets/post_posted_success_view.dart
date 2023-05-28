@@ -15,13 +15,12 @@ class PostPostedSuccessView extends StatelessWidget {
         postId != null
             ? Navigator.popAndPushNamed(context, Routes.post, arguments: postId)
             : Navigator.pop(context);
-        //Navigator.of(context).pop();
       }
     });
     return GestureDetector(
       onTap: () {
         hasPopped = true;
-        Navigator.of(context).pop();
+        Navigator.pop(context);
       },
       child: Scaffold(
         body: Center(

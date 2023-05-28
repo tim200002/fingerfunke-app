@@ -73,14 +73,14 @@ class PostRepositoryImpl implements PostRepository {
       String? title,
       String? description,
       Place? place,
-      List<Asset>? media,
+      Asset? mainAsset,
       DateTime? startTime}) async {
     final JsonMap updateMap = {
       'visibility': visibility?.name,
       'title': title,
       'description': description,
       'place': place?.toJson(),
-      'media': media?.map((asset) => asset.toJson()).toList(),
+      'mainAsset': mainAsset?.toJson(),
       'startTime': startTime != null ? dateToJson(startTime) : null
     }..removeWhere((key, value) => value == null);
 
@@ -115,8 +115,14 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Stream<List<Post>> observeJoinedPosts(FirestoreId userId) => _postCollection
-      .where("members", arrayContains: userId)
+  Stream<List<Post>> observeJoinedPosts(FirestoreId userId, {bool excludeAuthored=false}) { 
+    Query query = _postCollection
+      .where("members", arrayContains: userId);
+    if (excludeAuthored) {
+      query = query.where("authorId", isNotEqualTo: userId);
+    }
+    return query
       .snapshots()
       .map((e) => e.docs.map((d) => Post.fromDoc(d)).toList());
+  }
 }

@@ -62,7 +62,7 @@ class ParticipateView extends StatelessWidget {
           (user) => TabBarView(
             children: [
               _PersTabItem(NonPaginatedCompactPostFeed(
-                  stream: _postRepository.observeJoinedPosts(user.id),
+                  stream: _postRepository.observeJoinedPosts(user.id, excludeAuthored: true),
                   loadingIndicator: const CircularProgressIndicator(),
                   emptyIndicator: IllustrationView.empty(
                     text: l10n(context).lbl_notParticipating,

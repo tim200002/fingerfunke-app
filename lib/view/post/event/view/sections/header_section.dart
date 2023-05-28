@@ -201,12 +201,11 @@ class HeaderSection extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () => Navigator.of(context).push(FullscreenVideoPage.route(
-            url: VideoRepositoryImpl().createPlaybackUrl((post.media
-                .firstWhere((e) => e.type == AssetType.video) as VideoAsset)))),
+            url: VideoRepositoryImpl().createPlaybackUrl((post.mainAsset) as VideoAsset))),
         child: Stack(children: [
           InPastFilter(
               isInPast: post.asEvent?.isCompleted ?? false,
-              child: MuxThumbnailImage(post.media[0] as VideoAsset,
+              child: MuxThumbnailImage(post.mainAsset as VideoAsset,
                   width: MediaQuery.of(context).size.width, fit: BoxFit.cover)),
           const Center(
             child: Icon(
@@ -356,9 +355,7 @@ class _Edit extends StatelessWidget {
       children: [
         SizedBox(
             height: thumbnailHeight,
-            child: _Thumbnail(eventEditorCubit.videoUploadCubits.isNotEmpty
-                ? eventEditorCubit.videoUploadCubits[0]
-                : null)),
+            child: _Thumbnail(eventEditorCubit.mainVideoUploadCubit)),
         if (!includeTitle)
           HeaderSection._titleCardHeader(
             context,
@@ -421,7 +418,7 @@ class __ThumbnailState extends State<_Thumbnail> {
                   });
                   context
                       .read<EventEditorCubit>()
-                      .addVideoUploadCubit(videoUploadCubit);
+                      .addMainVideoUploadCubit(videoUploadCubit);
                 }
               },
         child: (uploadCubit != null)
@@ -430,7 +427,7 @@ class __ThumbnailState extends State<_Thumbnail> {
                 onDelete: (cubitId) {
                   context
                       .read<EventEditorCubit>()
-                      .removeVideoUploadCubit(cubitId);
+                      .removeMainVideoUploadCubit();
                   setState(() {
                     uploadCubit = null;
                   });

@@ -37,8 +37,8 @@ class PostFeedImageItem extends StatelessWidget {
       : super(key: key);
 
   Widget _videoBackgroundView(BuildContext context) {
-    final String source = _repo.createPlaybackUrl((_post.media
-        .firstWhere((e) => e.type == AssetType.video) as VideoAsset));
+    final String source =
+        _repo.createPlaybackUrl(_post.mainAsset as VideoAsset);
 
     return VideoPlaybackView.simple(
         source: source,
@@ -50,23 +50,18 @@ class PostFeedImageItem extends StatelessWidget {
 
   Widget _thumbnailView(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
-    return MuxThumbnailImage(_post.media[0] as VideoAsset,  width: width,
-      height: height, fit: BoxFit.cover,);
+    return MuxThumbnailImage(
+      _post.mainAsset as VideoAsset,
+      width: width,
+      height: height,
+      fit: BoxFit.cover,
+    );
   }
 
   Widget _backgroundView(BuildContext context) {
-    return _post.media.isEmpty
-        ? const Center(
-            child: Icon(
-              Icons.image,
-              color: Colors.white,
-            ),
-          )
-        : InPastFilter(
-            isInPast: _post.asEvent?.isCompleted ?? false,
-            child: video
-                ? _videoBackgroundView(context)
-                : _thumbnailView(context));
+    return InPastFilter(
+        isInPast: _post.asEvent?.isCompleted ?? false,
+        child: video ? _videoBackgroundView(context) : _thumbnailView(context));
   }
 
   Widget _eventDateWidget(BuildContext context) {

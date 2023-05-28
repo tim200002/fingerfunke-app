@@ -1,3 +1,4 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uuid/uuid.dart';
 
@@ -30,7 +31,8 @@ class Post extends UserGeneratedDocument {
   final List<FirestoreId> members;
   //final List<UserInfo> interstedUsers;
 
-  final List<Asset> media;
+  final Asset mainAsset;
+  //final List<Asset> media;
 
   //final List<UserInfo> participants;
 
@@ -44,7 +46,7 @@ class Post extends UserGeneratedDocument {
       required this.visibility,
       required this.place,
       required this.geohashesByRadius,
-      required this.media,
+      required this.mainAsset,
       required this.members})
       : super(id: id, authorId: authorId, creationTime: creationTime);
 
@@ -102,7 +104,7 @@ class Post extends UserGeneratedDocument {
         creationTime,
         visibility,
         place,
-        media,
+        mainAsset,
         members
       ];
 }

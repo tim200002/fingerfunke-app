@@ -17,7 +17,7 @@ abstract class PostRepository {
 
   Stream<List<Post>> observeAuthoredPosts(FirestoreId userId);
 
-  Stream<List<Post>> observeJoinedPosts(FirestoreId userId);
+  Stream<List<Post>> observeJoinedPosts(FirestoreId userId, {bool excludeAuthored=false});
 
   Future<Post> getPost(FirestoreId postId);
 
@@ -28,7 +28,7 @@ abstract class PostRepository {
       String? title,
       String? description,
       Place? place,
-      List<Asset>? media,
+      Asset? mainAsset,
       DateTime? startTime});
 
   Future<void> addPostMember(

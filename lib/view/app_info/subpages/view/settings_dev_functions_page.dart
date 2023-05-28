@@ -31,7 +31,9 @@ class DevFunctionsPage extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {
                         final User? currentUser =
-                            BlocProvider.of<FirebaseAuthenticationCubitCubit>(context).getUser();
+                            BlocProvider.of<FirebaseAuthenticationCubitCubit>(
+                                    context)
+                                .getUser();
                         PostRepositoryImpl().createPost(Event.createWithId(
                             authorId: currentUser!.id,
                             title: "Test post ${DateTime.now().second}",
@@ -39,14 +41,12 @@ class DevFunctionsPage extends StatelessWidget {
                             description:
                                 "Dieser post ist ein post der nur zu testzwecken um ${DateTime.now().toString()} erstellt wurde",
                             place: Place.demo(),
-                            media: [
-                              VideoAsset(
-                                  id: "test",
-                                  assetId:
-                                      "9h00XEtc4P3TbTXvChyimCMkPAfbVbkEGNEkNh7jBCsc",
-                                  creationTime: DateTime.now(),
-                                  state: AssetState.ready)
-                            ],
+                            mainAsset: VideoAsset(
+                                id: "test",
+                                assetId:
+                                    "9h00XEtc4P3TbTXvChyimCMkPAfbVbkEGNEkNh7jBCsc",
+                                creationTime: DateTime.now(),
+                                state: AssetState.ready),
                             startTime: DateTime.now(),
                             members: const []));
                       },

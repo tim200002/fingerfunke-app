@@ -10,7 +10,7 @@ class Group extends Post {
     required PostVisibility visibility,
     required Place place,
     required Map<String, List<String>> geohashesByRadius,
-    required List<Asset> media,
+    required Asset mainAsset,
     required List<FirestoreId> members,
   }) : super._(
             id: id,
@@ -22,7 +22,7 @@ class Group extends Post {
             visibility: visibility,
             place: place,
             geohashesByRadius: geohashesByRadius,
-            media: media,
+            mainAsset: mainAsset,
             members: members);
 
 
@@ -38,7 +38,7 @@ class Group extends Post {
         "visibility": visibility.name,
         "place": place.toJson(),
         "geohashesByRadius": geohashesByRadius,
-        "media": media.map((e) => e.toJson()).toList(),
+        "mainAsset": mainAsset.toJson(),
         "members": members
       };
 
@@ -52,9 +52,7 @@ class Group extends Post {
           PostVisibility.values.firstWhere((t) => t.name == map["visibility"]),
       place: Place.fromJson(map["place"]),
       geohashesByRadius: map["geohashesByRadius"],
-      media: (map['media'] as List<dynamic>)
-          .map((e) => Asset.fromJson(e as JsonMap))
-          .toList(),
+      mainAsset: Asset.fromJson(map["mainAsset"]),
       members: map["members"] as List<FirestoreId>);
 
   factory Group.fromDoc(DocumentSnapshot document) =>
@@ -66,7 +64,7 @@ class Group extends Post {
     required String description,
     required PostVisibility visibility,
     required Place place,
-    required List<Asset> media,
+    required Asset mainAsset,
     required List<FirestoreId> members,
   })  {
     final GeoHasher geoHasher = GeoHasher();
@@ -88,7 +86,7 @@ class Group extends Post {
       visibility: visibility,
       place: place,
       geohashesByRadius: geohashMap,
-      media: media,
+      mainAsset: mainAsset,
       members: members
     );
   }

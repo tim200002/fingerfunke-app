@@ -90,4 +90,10 @@ class BetterPaginationCubit<T> extends Cubit<BetterPaginationState<T>> {
       },
     );
   }
+
+  @override
+  Future<void> close() {
+    _querySubscription?.cancel();
+    return super.close();
+  }
 }

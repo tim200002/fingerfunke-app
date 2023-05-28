@@ -53,10 +53,13 @@ class PostSettingsModalContent extends StatelessWidget {
                       leading: const Icon(FeatherIcons.edit),
                       title: Text(l10n(context).lbl_edit),
                       onTap: () {
-                        Navigator.of(context).pop();
-                        Navigator.pushNamed(context, Routes.postEditor,
-                                arguments: post)
-                            .then((_) => Navigator.of(context).pop());
+                        // pop the modal
+                        Navigator.pop(context);
+
+                        // pop current scree and replace with editor
+                        Navigator.of(context).popAndPushNamed(
+                            Routes.postEditor,
+                            arguments: post);
                       },
                     ),
                   if (isMember && !isAuthor)

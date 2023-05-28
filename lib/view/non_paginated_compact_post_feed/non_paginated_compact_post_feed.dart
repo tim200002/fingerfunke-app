@@ -27,6 +27,7 @@ class NonPaginatedCompactPostFeed extends StatelessWidget {
         stream: stream,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
+            print(snapshot.error);
             return ExceptionView(exception: snapshot.error);
           }
           if (snapshot.hasData) {

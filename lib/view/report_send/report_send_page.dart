@@ -58,7 +58,7 @@ class ReportSendPage extends StatelessWidget {
               // The image here should be of such low resolution that
               // I can directly use the data url embedded in the Asset
               child: NetworkPlaceholderImage(
-                (post.media[0] as VideoAsset).thumbnailUrl!,
+                (post.mainAsset as VideoAsset).thumbnailUrl!,
                 Container(
                   color: Colors.grey,
                 ),

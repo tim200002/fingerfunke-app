@@ -13,7 +13,7 @@ class Event extends Post {
     required PostVisibility visibility,
     required Place place,
     required Map<String, List<String>> geohashesByRadius,
-    required List<Asset> media,
+    required Asset mainAsset,
     required this.startTime,
     required List<FirestoreId> members,
   }) : super._(
@@ -25,8 +25,8 @@ class Event extends Post {
             creationTime: creationTime,
             visibility: visibility,
             place: place,
-            media: media,
-             geohashesByRadius: geohashesByRadius,
+            mainAsset: mainAsset,
+            geohashesByRadius: geohashesByRadius,
             members: members);
 
   bool get isCompleted => DateTime.now().isAfter(startTime);
@@ -42,7 +42,7 @@ class Event extends Post {
         "visibility": visibility.name,
         "place": place.toJson(),
         "geohashesByRadius": geohashesByRadius,
-        "media": media.map((e) => e.toJson()).toList(),
+        "mainAsset": mainAsset.toJson(),
         "startTime": dateToJson(startTime),
         "members": members
       };
@@ -62,9 +62,7 @@ class Event extends Post {
       : (map["geohashesByRadius"] as JsonMap).map((key, value) =>
           MapEntry(key,
               (value as List<dynamic>).map((e) => e as String).toList())),
-      media: (map['media'] as List<dynamic>)
-          .map((e) => Asset.fromJson(e as JsonMap))
-          .toList(),
+      mainAsset: Asset.fromJson(map["mainAsset"]),
       startTime: dateFromJson(map['startTime'] as int),
       members: (map["members"] as List).map((e) => e.toString()).toList());
 
@@ -79,7 +77,7 @@ class Event extends Post {
       required String description,
       required PostVisibility visibility,
       required Place place,
-      required List<Asset> media,
+      required Asset mainAsset,
       required DateTime startTime,
       required List<FirestoreId> members}) {
     final GeoHasher geoHasher = GeoHasher();
@@ -101,7 +99,7 @@ class Event extends Post {
         visibility: visibility,
         place: place,
         geohashesByRadius: geohashMap,
-        media: media,
+        mainAsset: mainAsset,
         startTime: startTime,
         members: members);
   }
