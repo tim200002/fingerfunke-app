@@ -5,11 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import '../../../../../common_widgets/image/mux_thumbnail_image/mux_thumbnail_image.dart';
-import '../../../../../common_widgets/image/network_placeholder_image.dart/network_placeholder_image.dart';
 import '../../../../../common_widgets/list_items/in_past_filter.dart';
 import '../../../../../common_widgets/upload/video_upload_tile.dart';
 import '../../../../../cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
-import '../../../../../cubits/video_upload_cubit/video_upload_cubit.dart';
+import '../../../../../cubits/upload/video/video_upload_cubit.dart';
 import '../../../../../models/asset/asset.dart';
 import '../../../../../models/post/post.dart';
 import '../../../../../repositories/video_repository/video_repository.dart';
@@ -201,7 +200,8 @@ class HeaderSection extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () => Navigator.of(context).push(FullscreenVideoPage.route(
-            url: VideoRepositoryImpl().createPlaybackUrl((post.mainAsset) as VideoAsset))),
+            url: VideoRepositoryImpl()
+                .createPlaybackUrl((post.mainAsset) as VideoAsset))),
         child: Stack(children: [
           InPastFilter(
               isInPast: post.asEvent?.isCompleted ?? false,
@@ -371,7 +371,7 @@ class _Edit extends StatelessWidget {
 }
 
 class _Thumbnail extends StatefulWidget {
-  final VideoUploadCubit? initialUploadCubit;
+  final BetterVideoUploadCubit? initialUploadCubit;
   const _Thumbnail(this.initialUploadCubit);
 
   @override
@@ -380,11 +380,40 @@ class _Thumbnail extends StatefulWidget {
 
 class __ThumbnailState extends State<_Thumbnail> {
   final VideoRepository _videoRep = VideoRepositoryImpl();
-  late VideoUploadCubit? uploadCubit;
+  late BetterVideoUploadCubit? uploadCubit;
   @override
   void initState() {
     uploadCubit = widget.initialUploadCubit;
     super.initState();
+  }
+
+  Future<void> _onTapFunction(BuildContext context) async {
+    // if no upload cubit, push new upload cubit
+    if (uploadCubit == null) {
+      File? video =
+          await Navigator.push<File?>(context, VideoRecorderPage.route());
+      if (video != null) {
+        EventEditorCubit eventEditorCubit = context.read<EventEditorCubit>();
+
+        BetterVideoUploadCubit videoUploadCubit =
+            BetterVideoUploadCubit.fromFile(video,
+                onVideoUploaded: () => eventEditorCubit.validateInput());
+        setState(() {
+          uploadCubit = videoUploadCubit;
+        });
+
+        context
+            .read<EventEditorCubit>()
+            .addMainVideoUploadCubit(videoUploadCubit);
+      }
+    }
+
+    // if upload cubit but state is not uploaded, do nothing
+    uploadCubit!.state.maybeWhen(
+        uploaded: (asset) => () => Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => FullscreenVideoPage(
+                url: _videoRep.createPlaybackUrl(asset as VideoAsset)))),
+        orElse: () => null);
   }
 
   @override
@@ -394,40 +423,12 @@ class __ThumbnailState extends State<_Thumbnail> {
         bottom: HeaderSection.imgBorderRadius,
       ),
       child: InkWell(
-        onTap: uploadCubit != null
-            ? () {
-                if (uploadCubit?.hasUploaded ?? false) {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => FullscreenVideoPage(
-                          url: _videoRep
-                              .createPlaybackUrl(uploadCubit!.asset))));
-                }
-              }
-            : () async {
-                File? video = await Navigator.push<File?>(
-                    context, VideoRecorderPage.route());
-                if (video != null) {
-                  EventEditorCubit eventEditorCubit =
-                      context.read<EventEditorCubit>();
-
-                  VideoUploadCubit videoUploadCubit = VideoUploadCubit.fromFile(
-                      video,
-                      onVideoUploaded: () => eventEditorCubit.validateInput());
-                  setState(() {
-                    uploadCubit = videoUploadCubit;
-                  });
-                  context
-                      .read<EventEditorCubit>()
-                      .addMainVideoUploadCubit(videoUploadCubit);
-                }
-              },
+        onTap: () => _onTapFunction(context),
         child: (uploadCubit != null)
             ? VideoUploadTile(
                 cubit: uploadCubit!,
                 onDelete: (cubitId) {
-                  context
-                      .read<EventEditorCubit>()
-                      .removeMainVideoUploadCubit();
+                  context.read<EventEditorCubit>().removeMainVideoUploadCubit();
                   setState(() {
                     uploadCubit = null;
                   });

@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../../cubits/video_upload_cubit/video_upload_cubit.dart';
+import '../../../../cubits/upload/video/video_upload_cubit.dart';
 import '../../../../models/asset/asset.dart';
 import '../../../../models/place.dart';
 import '../../../../models/post/post.dart';
@@ -23,7 +23,7 @@ abstract class AbstractPostEditorCubit extends Cubit<PostEditorState> {
   String title = "";
   String description = "";
   PostVisibility visibility = PostVisibility.visible;
-  VideoUploadCubit? mainVideoUploadCubit;
+  BetterVideoUploadCubit? mainVideoUploadCubit;
   Place? place;
 
   AbstractPostEditorCubit.createEmpty(this.user, this.updateTracker)
@@ -36,7 +36,7 @@ abstract class AbstractPostEditorCubit extends Cubit<PostEditorState> {
         description = post.description,
         visibility = post.visibility,
         place = post.place,
-        mainVideoUploadCubit = VideoUploadCubit.fromExistingAsset(post.mainAsset as VideoAsset),
+        mainVideoUploadCubit = BetterVideoUploadCubit.fromExistingAsset(post.mainAsset as VideoAsset),
         super(PostEditorState.editing(updateTracker, true));
 
   void updateTitle(String title) {
@@ -49,12 +49,12 @@ abstract class AbstractPostEditorCubit extends Cubit<PostEditorState> {
     _emitFieldUpdate();
   }
 
-  void updateMainVideoUploadCubit(VideoUploadCubit? videoUploadCubit) {
+  void updateMainVideoUploadCubit(BetterVideoUploadCubit? videoUploadCubit) {
     mainVideoUploadCubit = videoUploadCubit;
     _emitFieldUpdate();
   }
 
-  // void updateVideoUploadCubits(List<VideoUploadCubit> videoUploadCubits) {
+  // void updateVideoUploadCubits(List<BetterVideoUploadCubit> videoUploadCubits) {
   //   this.videoUploadCubits = videoUploadCubits;
   //   _emitFieldUpdate();
   // }
@@ -65,13 +65,13 @@ abstract class AbstractPostEditorCubit extends Cubit<PostEditorState> {
     _emitFieldUpdate();
   }
 
-  void addMainVideoUploadCubit(VideoUploadCubit videoUploadCubit) {
+  void addMainVideoUploadCubit(BetterVideoUploadCubit videoUploadCubit) {
     assert(mainVideoUploadCubit == null, "There can only be one main video upload cubit");
     mainVideoUploadCubit = videoUploadCubit;
     _emitFieldUpdate();
   }
 
-  // void addVideoUploadCubit(VideoUploadCubit videoUploadCubit) {
+  // void addVideoUploadCubit(BetterVideoUploadCubit videoUploadCubit) {
   //   videoUploadCubits.add(videoUploadCubit);
   //   _emitFieldUpdate();
   // }
@@ -83,7 +83,7 @@ abstract class AbstractPostEditorCubit extends Cubit<PostEditorState> {
   }
 
   // void removeVideoUploadCubit(String cubitId) {
-  //   VideoUploadCubit cubitToDelete =
+  //   BetterVideoUploadCubit cubitToDelete =
   //       videoUploadCubits.firstWhere((cubit) => cubit.id == cubitId);
   //   cubitToDelete.close();
 
@@ -127,11 +127,11 @@ abstract class AbstractPostEditorCubit extends Cubit<PostEditorState> {
     }
   }
 
-  Asset videoUploadCubitToAssetHelper(VideoUploadCubit uploadCubit) =>
+  Asset videoUploadCubitToAssetHelper(BetterVideoUploadCubit uploadCubit) =>
       uploadCubit.state.maybeWhen(
-        uploaded: (_, asset) => asset,
+        uploaded: (asset) => asset,
         orElse: () =>
-            throw Exception("VideoUploadCubit has not finished uploading yet"),
+            throw Exception("BetterVideoUploadCubit has not finished uploading yet"),
       );
 
   /// helper to map the List of uploadCubits to a list of assets
@@ -139,7 +139,7 @@ abstract class AbstractPostEditorCubit extends Cubit<PostEditorState> {
   /// This will throw an error if at least on upload cubit has not finished uploading
   /// and therefore the asset does not exist yet
   List<Asset> videoUploadCubitsToAssetsHelper(
-      List<VideoUploadCubit> uploadCubits) {
+      List<BetterVideoUploadCubit> uploadCubits) {
     return uploadCubits
         .map(
           (cubit) => videoUploadCubitToAssetHelper(cubit),
@@ -148,7 +148,7 @@ abstract class AbstractPostEditorCubit extends Cubit<PostEditorState> {
   }
 
   /// Given a list of [uploadCubits] clsoe all cubits so they can free their ressources
-  void _disposeVideoUploadCubits(List<VideoUploadCubit> uploadCubits) {
+  void _disposeVideoUploadCubits(List<BetterVideoUploadCubit> uploadCubits) {
   
     for (var cubit in uploadCubits) {
       cubit.close();

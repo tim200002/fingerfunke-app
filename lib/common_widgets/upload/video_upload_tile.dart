@@ -1,4 +1,5 @@
-import '../../cubits/video_upload_cubit/video_upload_cubit.dart';
+import '../../cubits/upload/file_upload_state.dart';
+import '../../cubits/upload/video/video_upload_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -6,7 +7,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 class VideoUploadTile extends StatelessWidget {
   final double height;
 
-  final VideoUploadCubit cubit;
+  final BetterVideoUploadCubit cubit;
 
   final Function(String) onDelete;
 
@@ -111,15 +112,15 @@ class VideoUploadTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return LimitedBox(
       maxHeight: height,
-      child: BlocBuilder<VideoUploadCubit, VideoUploadState>(
+      child: BlocBuilder<BetterVideoUploadCubit, FileUploadState>(
         bloc: cubit,
         builder: (context, state) => state.when(
           initial: () => loadingTile(context, null, 0),
-          uploading: (_, thumb, progress) =>
-              loadingTile(context, thumb, progress),
-          processing: (_, thumb) => loadingTile(context, thumb, 80),
-          uploaded: (thumb, _) => uploadedTile(thumb),
-          uploadError: (error, _, thumb) => uploadErrorTile(thumb, context),
+          uploading: (progress) =>
+              loadingTile(context, cubit.thumbnail, progress),
+          processing: () => loadingTile(context, cubit.thumbnail, 80),
+          uploaded: (_) => uploadedTile(cubit.thumbnail),
+          uploadError: (error) => uploadErrorTile(cubit.thumbnail, context),
         ),
       ),
     );
