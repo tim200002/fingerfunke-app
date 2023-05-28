@@ -118,6 +118,7 @@ class BetterVideoUploadCubit extends Cubit<FileUploadState> implements FileUploa
   ///
   /// Will reuse same Video previously used (if there is one)
   /// if there is no video this function will do nothing
+  @override
   void retryUpload() {
     state.maybeWhen(
         uploadError: (_) => _uploadVideo(_video!),
@@ -194,6 +195,7 @@ class BetterVideoUploadCubit extends Cubit<FileUploadState> implements FileUploa
     return thumbnail;
   }
 
+  @override
   bool get hasUploaded => state.maybeWhen(uploaded: (_) => true, orElse: () => false);
 
   @override

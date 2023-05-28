@@ -16,7 +16,7 @@ class EnterCodeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    PhoneLoginCubit _phoneLoginCubit =
+    PhoneLoginCubit phoneLoginCubit =
         BlocProvider.of<PhoneLoginCubit>(context);
     return Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -36,7 +36,7 @@ class EnterCodeView extends StatelessWidget {
               keyboardType: TextInputType.number,
               length: 6,
               onChanged: (pin) {},
-              onCompleted: (pin) => _phoneLoginCubit.signInWithCode(
+              onCompleted: (pin) => phoneLoginCubit.signInWithCode(
                   verificationId: verificationId,
                   smsCode: pin,
                   context: context)),
