@@ -146,8 +146,8 @@ class _Edit extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                                                 ListTile(
-                          leading: const Icon(Icons.photo_library),
-                          title: Text("Video"),
+                          leading: const Icon(Icons.videocam),
+                          title: Text(l10n(context).lbl_selectVideo),
                           onTap: () async {
                             Navigator.pop(context);
                             
@@ -160,7 +160,7 @@ class _Edit extends StatelessWidget {
                         ),
                         ListTile(
                           leading: const Icon(Icons.photo_library),
-                          title: Text("Foto auswählen"),
+                          title: Text(l10n(context).lbl_selectPhoto),
                           onTap: () async {
                             Navigator.pop(context);
                             XFile? result = await ImagePicker()
@@ -172,8 +172,8 @@ class _Edit extends StatelessWidget {
                           },
                         ),
                         ListTile(
-                          leading: const Icon(Icons.camera_alt),
-                          title: Text("Dateien auswählen"),
+                          leading: const Icon(Icons.insert_drive_file_rounded),
+                          title: Text(l10n(context).lbl_selectFile),
                           onTap: () async {
                             Navigator.pop(context);
                             FilePickerResult? result =

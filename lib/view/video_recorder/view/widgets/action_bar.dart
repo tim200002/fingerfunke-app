@@ -47,19 +47,21 @@ class _RecodingActionBarState extends State<RecodingActionBar>
     if (isRecording || widget.isRecording) {
       return const Spacer();
     }
-    return FloatingActionButton(
-      onPressed: isShowingGallery
-          ? null
-          : () async {
-              setState(() {
-                isShowingGallery = true;
-              });
-              await context.read<VideoRecorderCubit>().openGallery();
-              setState(() {
-                isShowingGallery = false;
-              });
-            },
-      child: const Icon(Icons.photo_library_rounded),
+    return Expanded(
+      child: FloatingActionButton(
+        onPressed: isShowingGallery
+            ? null
+            : () async {
+                setState(() {
+                  isShowingGallery = true;
+                });
+                await context.read<VideoRecorderCubit>().openGallery();
+                setState(() {
+                  isShowingGallery = false;
+                });
+              },
+        child: const Icon(Icons.photo_library_rounded),
+      ),
     );
   }
 
@@ -126,14 +128,11 @@ class _RecodingActionBarState extends State<RecodingActionBar>
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
-       duration: const Duration(microseconds: 300),
+      duration: const Duration(microseconds: 300),
       child: Row(
-        
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Expanded(
-            child: _getGalleryButton(context),
-          ),
+          _getGalleryButton(context),
           _getRecordButton(context),
           const Spacer(),
         ],
