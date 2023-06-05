@@ -24,8 +24,8 @@ class FullscreenPdfViewer extends StatelessWidget {
                   loading: () => const Center(
                         child: CircularProgressIndicator.adaptive(),
                       ),
-                  loaded: (pdfData) => PDFView(
-                        pdfData: pdfData,
+                  loaded: (file) => PDFView(
+                        filePath: file.path,
                       ),
                   error: (error) => ExceptionView(exception: error));
             },

@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../common_widgets/image/fullscreen_image_page/fullscreen_image_page.dart';
 import '../../../../../common_widgets/upload/upload_tile.dart';
-import '../../../../../models/asset/asset.dart';
-import '../../../../fullscreen_video/view/fullscreen_video_page.dart';
 import '../../../cubits/abstract_post_editor_cubit/abstract_post_editor_cubit.dart';
 import '../../../cubits/post_viewer_cubit/post_cubit.dart';
 import '../../cubit/event_editor_cubit.dart';
-import '../widgets/media_tiles/image_tile.dart';
 import '../widgets/media_tiles/media_tile.dart';
 
 class ExtraMediaSection extends StatefulWidget {

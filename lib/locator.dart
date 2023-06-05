@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fingerfunke_app/repositories/video_repository/video_repository.impl.dart';
+import 'repositories/video_repository/video_repository.impl.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
-
 import 'cache/lru_cache/lru_cache.dart';
 import 'models/user/user.dart';
 import 'repositories/firebase_authentication_repository/firebase_authentication_repository.dart';
@@ -27,4 +26,5 @@ void setupGetIt() {
   _getIt.registerSingleton<AppInfoService>(AppInfoService());
   _getIt.registerSingleton<GlobalsService>(GlobalsService());
   _getIt.registerSingleton<VideoRepository>(VideoRepositoryImpl());
+  //_getIt.registerSingleton<CacheManager>(DefaultCacheManager());
 }
