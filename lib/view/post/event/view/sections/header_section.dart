@@ -406,14 +406,16 @@ class __ThumbnailState extends State<_Thumbnail> {
             .read<EventEditorCubit>()
             .addMainVideoUploadCubit(videoUploadCubit);
       }
-    }
-
-    // if upload cubit but state is not uploaded, do nothing
+    }else{
+          // if upload cubit but state is not uploaded, do nothing
     uploadCubit!.state.maybeWhen(
         uploaded: (asset) => () => Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => FullscreenVideoPage(
                 url: _videoRep.createPlaybackUrl(asset as VideoAsset)))),
         orElse: () => null);
+    }
+
+
   }
 
   @override
