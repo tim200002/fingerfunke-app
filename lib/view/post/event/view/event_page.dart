@@ -19,6 +19,7 @@ import '../../shared_widgets/post_posting_view.dart';
 import '../cubit/event_editor_cubit.dart';
 import 'sections/author_section.dart';
 import 'sections/event_detail_section.dart';
+import 'sections/extra_media_section.dart';
 import 'sections/header_section.dart';
 import 'sections/location_section.dart';
 import 'sections/post_action_buttons.dart';
@@ -56,6 +57,8 @@ class EventPage extends StatelessWidget {
                         PostDescriptionSection(editing),
                         const SizedBox(height: 24),
                         LocationSection(editing),
+                        const SizedBox(height: 24),
+                        ExtraMediaSection(editing),
                         const SizedBox(height: 24),
                         AuthorSection(editing),
                         const SizedBox(height: 96),

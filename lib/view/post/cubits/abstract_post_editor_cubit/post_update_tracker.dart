@@ -6,14 +6,16 @@ import 'package:equatable/equatable.dart';
 /// whenever the field changed that we are interested in
 abstract class PostUpdateTracker extends Equatable{
   final int updatePlaceCounter;
+  final int updateMediaCounter;
 
-  const PostUpdateTracker({required this.updatePlaceCounter});
+  const PostUpdateTracker({required this.updatePlaceCounter, required this.updateMediaCounter});
 
   PostUpdateTracker addUpdatePlace() => copyWith(updatePlaceCounter: updatePlaceCounter+1);
+  PostUpdateTracker addUpdateMedia() => copyWith(updateMediaCounter: updateMediaCounter+1);
   
-  PostUpdateTracker copyWith({int? updatePlaceCounter});
+  PostUpdateTracker copyWith({int? updatePlaceCounter, int? updateMediaCounter});
 
   @override
-  List<Object?> get props => [updatePlaceCounter];
+  List<Object?> get props => [updatePlaceCounter, updateMediaCounter];
 
 }

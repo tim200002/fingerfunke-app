@@ -28,9 +28,11 @@ class EventEditorCubit extends AbstractPostEditorCubit {
   @override
   Future<void> submit() async {
     emit(const PostEditorState.submitting());
-    // Assume Validation happened sucessfully before, thus fields are guaranteed to not be null
-    final Asset mainAsset = videoUploadCubitToAssetHelper(mainVideoUploadCubit!);
     
+    // Assume Validation happened sucessfully before, thus fields are guaranteed to not be null
+    final Asset mainAsset = mediaUploadCubitToAssetHelper(mainVideoUploadCubit!);
+    final List<Asset> media = mediaUploadCubitsToAssetHelper(mediaUploadCubits);
+
     try {
       // create new Event
       if (originalPost == null) {
@@ -42,6 +44,7 @@ class EventEditorCubit extends AbstractPostEditorCubit {
             place: place!,
             mainAsset: mainAsset,
             startTime: startTime,
+            media: media,
             members: [user.id]);
         await _postRepository.createPost(event);
         emit(PostEditorState.submitted(event.id));
@@ -51,6 +54,7 @@ class EventEditorCubit extends AbstractPostEditorCubit {
             title: title,
             description: description,
             mainAsset: mainAsset,
+            media: media,
             startTime: startTime,
             place: place!);
         emit(PostEditorState.submitted(originalPost!.id));

@@ -1,26 +1,27 @@
-import '../../cubits/upload/file_upload_state.dart';
-import '../../cubits/upload/video/video_upload_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
-class VideoUploadTile extends StatelessWidget {
-  final double height;
+import '../../cubits/upload/file_upload_cubit.dart';
+import '../../cubits/upload/file_upload_state.dart';
 
-  final BetterVideoUploadCubit cubit;
+class UploadTile extends StatelessWidget {
+  final double height;
+  final double? width;
+
+  final FileUploadCubit cubit;
 
   final Function(String) onDelete;
 
   static const double abortButtonRadius = 20;
-
-  const VideoUploadTile(
+  const UploadTile(
       {required this.cubit,
       required this.height,
+      this.width,
       required this.onDelete,
-      Key? key})
-      : super(key: key);
+      super.key});
 
-  Widget abortButton() {
+  Widget _abortButton() {
     return SafeArea(
       child: Align(
         alignment: Alignment.topRight,
@@ -39,7 +40,7 @@ class VideoUploadTile extends StatelessWidget {
     );
   }
 
-  Widget getImage(ImageProvider? thumbnail) {
+  Widget _getImage(ImageProvider? thumbnail) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: Container(
@@ -49,6 +50,7 @@ class VideoUploadTile extends StatelessWidget {
             : Image(
                 image: thumbnail,
                 height: height,
+                width: width,
                 fit: BoxFit.cover,
               ),
       ),
@@ -59,7 +61,7 @@ class VideoUploadTile extends StatelessWidget {
       BuildContext context, ImageProvider? thumbnail, int progress) {
     double size = 50;
     return Stack(fit: StackFit.expand, alignment: Alignment.center, children: [
-      getImage(thumbnail),
+      _getImage(thumbnail),
       Center(
         child: Container(
           height: size + 10,
@@ -75,7 +77,7 @@ class VideoUploadTile extends StatelessWidget {
       const Center(
           child: SizedBox.square(
               dimension: 50, child: CircularProgressIndicator())),
-      abortButton()
+      _abortButton()
     ]);
   }
 
@@ -83,7 +85,7 @@ class VideoUploadTile extends StatelessWidget {
     return Stack(
       fit: StackFit.expand,
       alignment: Alignment.center,
-      children: [getImage(thumbnail), abortButton()],
+      children: [_getImage(thumbnail), _abortButton()],
     );
   }
 
@@ -92,7 +94,7 @@ class VideoUploadTile extends StatelessWidget {
       fit: StackFit.expand,
       alignment: Alignment.center,
       children: [
-        getImage(thumbnail),
+        _getImage(thumbnail),
         Center(
           child: IconButton(
             iconSize: height / 2,
@@ -103,16 +105,17 @@ class VideoUploadTile extends StatelessWidget {
             onPressed: () => cubit.retryUpload(),
           ),
         ),
-        abortButton()
+        _abortButton()
       ],
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return LimitedBox(
-      maxHeight: height,
-      child: BlocBuilder<BetterVideoUploadCubit, FileUploadState>(
+    return SizedBox(
+      height: height,
+      width: width,
+      child: BlocBuilder<FileUploadCubit, FileUploadState>(
         bloc: cubit,
         builder: (context, state) => state.when(
           initial: () => loadingTile(context, null, 0),
