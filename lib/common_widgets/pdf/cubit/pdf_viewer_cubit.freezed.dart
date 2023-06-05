@@ -19,21 +19,21 @@ mixin _$PdfViewerState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(Uint8List pdfData) loaded,
+    required TResult Function(File pdfFile) loaded,
     required TResult Function(Object? error) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(Uint8List pdfData)? loaded,
+    TResult? Function(File pdfFile)? loaded,
     TResult? Function(Object? error)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(Uint8List pdfData)? loaded,
+    TResult Function(File pdfFile)? loaded,
     TResult Function(Object? error)? error,
     required TResult orElse(),
   }) =>
@@ -118,7 +118,7 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(Uint8List pdfData) loaded,
+    required TResult Function(File pdfFile) loaded,
     required TResult Function(Object? error) error,
   }) {
     return loading();
@@ -128,7 +128,7 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(Uint8List pdfData)? loaded,
+    TResult? Function(File pdfFile)? loaded,
     TResult? Function(Object? error)? error,
   }) {
     return loading?.call();
@@ -138,7 +138,7 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(Uint8List pdfData)? loaded,
+    TResult Function(File pdfFile)? loaded,
     TResult Function(Object? error)? error,
     required TResult orElse(),
   }) {
@@ -192,7 +192,7 @@ abstract class _$$_LoadedCopyWith<$Res> {
   factory _$$_LoadedCopyWith(_$_Loaded value, $Res Function(_$_Loaded) then) =
       __$$_LoadedCopyWithImpl<$Res>;
   @useResult
-  $Res call({Uint8List pdfData});
+  $Res call({File pdfFile});
 }
 
 /// @nodoc
@@ -205,13 +205,13 @@ class __$$_LoadedCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? pdfData = null,
+    Object? pdfFile = null,
   }) {
     return _then(_$_Loaded(
-      pdfData: null == pdfData
-          ? _value.pdfData
-          : pdfData // ignore: cast_nullable_to_non_nullable
-              as Uint8List,
+      pdfFile: null == pdfFile
+          ? _value.pdfFile
+          : pdfFile // ignore: cast_nullable_to_non_nullable
+              as File,
     ));
   }
 }
@@ -219,14 +219,14 @@ class __$$_LoadedCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Loaded implements _Loaded {
-  const _$_Loaded({required this.pdfData});
+  const _$_Loaded({required this.pdfFile});
 
   @override
-  final Uint8List pdfData;
+  final File pdfFile;
 
   @override
   String toString() {
-    return 'PdfViewerState.loaded(pdfData: $pdfData)';
+    return 'PdfViewerState.loaded(pdfFile: $pdfFile)';
   }
 
   @override
@@ -234,12 +234,11 @@ class _$_Loaded implements _Loaded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Loaded &&
-            const DeepCollectionEquality().equals(other.pdfData, pdfData));
+            (identical(other.pdfFile, pdfFile) || other.pdfFile == pdfFile));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(pdfData));
+  int get hashCode => Object.hash(runtimeType, pdfFile);
 
   @JsonKey(ignore: true)
   @override
@@ -251,32 +250,32 @@ class _$_Loaded implements _Loaded {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(Uint8List pdfData) loaded,
+    required TResult Function(File pdfFile) loaded,
     required TResult Function(Object? error) error,
   }) {
-    return loaded(pdfData);
+    return loaded(pdfFile);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(Uint8List pdfData)? loaded,
+    TResult? Function(File pdfFile)? loaded,
     TResult? Function(Object? error)? error,
   }) {
-    return loaded?.call(pdfData);
+    return loaded?.call(pdfFile);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(Uint8List pdfData)? loaded,
+    TResult Function(File pdfFile)? loaded,
     TResult Function(Object? error)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(pdfData);
+      return loaded(pdfFile);
     }
     return orElse();
   }
@@ -317,9 +316,9 @@ class _$_Loaded implements _Loaded {
 }
 
 abstract class _Loaded implements PdfViewerState {
-  const factory _Loaded({required final Uint8List pdfData}) = _$_Loaded;
+  const factory _Loaded({required final File pdfFile}) = _$_Loaded;
 
-  Uint8List get pdfData;
+  File get pdfFile;
   @JsonKey(ignore: true)
   _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
       throw _privateConstructorUsedError;
@@ -386,7 +385,7 @@ class _$_Error implements _Error {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(Uint8List pdfData) loaded,
+    required TResult Function(File pdfFile) loaded,
     required TResult Function(Object? error) error,
   }) {
     return error(this.error);
@@ -396,7 +395,7 @@ class _$_Error implements _Error {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(Uint8List pdfData)? loaded,
+    TResult? Function(File pdfFile)? loaded,
     TResult? Function(Object? error)? error,
   }) {
     return error?.call(this.error);
@@ -406,7 +405,7 @@ class _$_Error implements _Error {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(Uint8List pdfData)? loaded,
+    TResult Function(File pdfFile)? loaded,
     TResult Function(Object? error)? error,
     required TResult orElse(),
   }) {
