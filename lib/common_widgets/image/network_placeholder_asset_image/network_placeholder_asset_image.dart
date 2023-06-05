@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 class NetworkPlaceholderAssetImage extends StatelessWidget {
   final Link imageUrl;
   final AssetImage placeholder;
-  final int? height;
-  final int? width;
+  final double? height;
+  final double? width;
   final BoxFit? fit;
   const NetworkPlaceholderAssetImage(this.imageUrl, this.placeholder,
       {Key? key, this.height, this.width, this.fit})

@@ -5,7 +5,7 @@ import '../../../utils/type_aliases.dart';
 class CircularNetworkImage extends StatelessWidget {
   final Link imageUrl;
   final AssetImage placeholder;
-  final int? diameter;
+  final double? diameter;
   const CircularNetworkImage(this.imageUrl, this.placeholder,
       {Key? key, this.diameter})
       : super(key: key);
