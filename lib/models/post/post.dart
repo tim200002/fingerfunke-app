@@ -32,7 +32,7 @@ class Post extends UserGeneratedDocument {
   //final List<UserInfo> interstedUsers;
 
   final Asset mainAsset;
-  //final List<Asset> media;
+  final List<Asset> media;
 
   //final List<UserInfo> participants;
 
@@ -47,7 +47,8 @@ class Post extends UserGeneratedDocument {
       required this.place,
       required this.geohashesByRadius,
       required this.mainAsset,
-      required this.members})
+      required this.members,
+      required this.media})
       : super(id: id, authorId: authorId, creationTime: creationTime);
 
   bool get isEvent => type == PostType.event;
@@ -105,6 +106,7 @@ class Post extends UserGeneratedDocument {
         visibility,
         place,
         mainAsset,
-        members
+        members,
+        media
       ];
 }

@@ -11,6 +11,7 @@ class Group extends Post {
     required Place place,
     required Map<String, List<String>> geohashesByRadius,
     required Asset mainAsset,
+    required List<Asset> media,
     required List<FirestoreId> members,
   }) : super._(
             id: id,
@@ -23,9 +24,8 @@ class Group extends Post {
             place: place,
             geohashesByRadius: geohashesByRadius,
             mainAsset: mainAsset,
+            media: media,
             members: members);
-
-
 
   @override
   JsonMap toJson() => {
@@ -39,7 +39,8 @@ class Group extends Post {
         "place": place.toJson(),
         "geohashesByRadius": geohashesByRadius,
         "mainAsset": mainAsset.toJson(),
-        "members": members
+        "members": members,
+        "media": media.map((e) => e.toJson()).toList(),
       };
 
   factory Group.fromJson(JsonMap map) => Group(
@@ -53,6 +54,9 @@ class Group extends Post {
       place: Place.fromJson(map["place"]),
       geohashesByRadius: map["geohashesByRadius"],
       mainAsset: Asset.fromJson(map["mainAsset"]),
+      media: (map["media"] as List<JsonMap>)
+          .map((e) => Asset.fromJson(e))
+          .toList(),
       members: map["members"] as List<FirestoreId>);
 
   factory Group.fromDoc(DocumentSnapshot document) =>
@@ -65,8 +69,9 @@ class Group extends Post {
     required PostVisibility visibility,
     required Place place,
     required Asset mainAsset,
+    required List<Asset> media,
     required List<FirestoreId> members,
-  })  {
+  }) {
     final GeoHasher geoHasher = GeoHasher();
     final Map<String, List<String>> geohashMap = {};
     for (final int radius in AppConfig.locationQueryRadiusLevel) {
@@ -78,17 +83,17 @@ class Group extends Post {
     }
 
     return Group(
-      id: const Uuid().v4(),
-      authorId: authorId,
-      title: title,
-      description: description,
-      creationTime: DateTime.now(),
-      visibility: visibility,
-      place: place,
-      geohashesByRadius: geohashMap,
-      mainAsset: mainAsset,
-      members: members
-    );
+        id: const Uuid().v4(),
+        authorId: authorId,
+        title: title,
+        description: description,
+        creationTime: DateTime.now(),
+        visibility: visibility,
+        place: place,
+        geohashesByRadius: geohashMap,
+        mainAsset: mainAsset,
+        media: media,
+        members: members);
   }
 
   @override

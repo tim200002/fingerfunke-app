@@ -74,6 +74,10 @@ dependencies:
   provider: ^6.0.5
   get_it: ^7.2.0
   firebase_ui_firestore: ^1.5.1
+  firebase_storage: ^11.2.1
+  file_picker: ^5.3.1
+  cached_network_image: ^3.2.3
+  flutter_pdfview: ^1.3.1
   
 
 dev_dependencies:
@@ -102,6 +106,7 @@ flutter:
     - assets/img/
     - assets/img/images/
     - assets/img/placeholder/
+    - assets/img/illustrations/
     - assets/img/illustrations/undraw/
     - assets/img/brand/
     - assets/img/partners/

@@ -2,15 +2,13 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:bloc/bloc.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
-import 'package:uuid/uuid.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
-import '../../../cache/media_cache/media_cache.dart';
 import '../../../models/asset/asset.dart';
 import '../../../repositories/video_repository/video_repository.dart';
 import '../../../utils/exceptions.dart';
@@ -18,18 +16,15 @@ import '../../../utils/type_aliases.dart';
 import '../file_upload_cubit.dart';
 import '../file_upload_state.dart';
 
-class BetterVideoUploadCubit extends Cubit<FileUploadState> implements FileUploadCubit {
+class BetterVideoUploadCubit extends FileUploadCubit{
   final VideoRepository _videoRepository = GetIt.I<VideoRepository>();
-  final MediaCache _mediaCache = GetIt.I<MediaCache>();
   final Logger _logger = Logger();
-
-  // to distinguish between different instances of this class
-  final String id = const Uuid().v4();
 
   // file to be uploaded itself
   late final File? _video;
 
   // thumbnail of the video
+  @override
   late final ImageProvider thumbnail;
 
   final Function? _onVideoUploaded;
@@ -48,10 +43,7 @@ class BetterVideoUploadCubit extends Cubit<FileUploadState> implements FileUploa
   /// 4) update temporary document once video has been updated
   BetterVideoUploadCubit.fromFile(File video, {Function? onVideoUploaded})
       : _onVideoUploaded = onVideoUploaded,
-        _video = video,
-        super(
-          const FileUploadState.initial(),
-        ) {
+        _video = video {
     _createThumbnailFromVideoFile(_video!).then((thumbnail) {
       this.thumbnail = thumbnail;
       _uploadVideo(_video!);
@@ -63,16 +55,9 @@ class BetterVideoUploadCubit extends Cubit<FileUploadState> implements FileUploa
   /// Sometimes we just want to be able to show an already existing asset (mainly when editing a post)
   /// This allows us to do this while keeping same function set mainly possibility to delete video
   BetterVideoUploadCubit.fromExistingAsset(VideoAsset videoAsset)
-      : _onVideoUploaded = null,
-        super(
-          const FileUploadState.initial(),
-        ) {
-    _createThumbnailFromNetworkAsset(videoAsset).then((thumbnail) {
-      this.thumbnail = thumbnail;
-      emit(FileUploadState.uploaded(videoAsset));
-    }).catchError((err) {
-      emit(FileUploadState.uploadError(err));
-    });
+      : _onVideoUploaded = null {
+        thumbnail = _createThumbnailFromNetworkAsset(videoAsset);
+        emit(FileUploadState.uploaded(videoAsset));
   }
 
   Future<void> _uploadVideo(File video) async {
@@ -188,16 +173,13 @@ class BetterVideoUploadCubit extends Cubit<FileUploadState> implements FileUploa
     return MemoryImage(thumbnailData);
   }
 
-  Future<ImageProvider> _createThumbnailFromNetworkAsset(
-      VideoAsset videoAsset) async {
+  ImageProvider _createThumbnailFromNetworkAsset(
+      VideoAsset videoAsset)  {
     final String downloadUrl = _videoRepository.createThumbnailUrl(videoAsset);
-    final thumbnail = await _mediaCache.getSingleImageFile(downloadUrl);
-    return thumbnail;
+    return CachedNetworkImageProvider(downloadUrl, errorListener: () => emit(const FileUploadState.uploadError("Could not load thumbnail")));
   }
 
-  @override
-  bool get hasUploaded => state.maybeWhen(uploaded: (_) => true, orElse: () => false);
-
+  
   @override
   Future<void> close() {
     _cancelToken?.cancel();

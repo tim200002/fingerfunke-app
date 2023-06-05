@@ -1,6 +1,10 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../../../cubits/better_pagination/cubit/better_pagination_cubit.dart';
 import '../../../../../cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
@@ -8,7 +12,9 @@ import '../../../../../models/message/message.dart';
 import '../../../../../models/user/user.dart';
 import '../../../../../routes.dart';
 import '../../../../../utils/tools.dart';
+import '../../../../../utils/util_widgets/floating_modal.dart';
 import '../../../../chat/view/chat_page.dart';
+import '../../../../video_recorder/view/video_recorder_page.dart';
 import '../../../cubits/abstract_post_editor_cubit/abstract_post_editor_cubit.dart';
 import '../../../cubits/post_viewer_cubit/post_cubit.dart';
 import '../../cubit/event_editor_cubit.dart';
@@ -126,6 +132,64 @@ class _Edit extends StatelessWidget {
         .toColor();
   }
 
+  Widget _addMediaButton(BuildContext outerContext, EventEditorCubit cubit) {
+    return Align(
+      alignment: Alignment.bottomLeft,
+      child: FloatingActionButton(
+          backgroundColor: Theme.of(outerContext).colorScheme.onBackground,
+          child: const Icon(Icons.add),
+          onPressed: () {
+            // open pop up with different sources
+            showFloatingModalBottomSheet(
+                context: outerContext,
+                builder: (context) => Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                                                ListTile(
+                          leading: const Icon(Icons.photo_library),
+                          title: Text("Video"),
+                          onTap: () async {
+                            Navigator.pop(context);
+                            
+                            // open video recorder page
+                             File? video = await Navigator.push<File?>(context, VideoRecorderPage.route());
+                            if (video != null) {
+                              cubit.addMediaFromFile(video);
+                            }
+                          },
+                        ),
+                        ListTile(
+                          leading: const Icon(Icons.photo_library),
+                          title: Text("Foto auswählen"),
+                          onTap: () async {
+                            Navigator.pop(context);
+                            XFile? result = await ImagePicker()
+                                .pickImage(source: ImageSource.gallery);
+                            if (result != null) {
+                              File file = File(result.path);
+                              cubit.addMediaFromFile(file);
+                            }
+                          },
+                        ),
+                        ListTile(
+                          leading: const Icon(Icons.camera_alt),
+                          title: Text("Dateien auswählen"),
+                          onTap: () async {
+                            Navigator.pop(context);
+                            FilePickerResult? result =
+                                await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ["pdf"]);
+                            if (result != null) {
+                              File file = File(result.files.single.path!);
+                              cubit.addMediaFromFile(file);
+                            }
+                          },
+                        ),
+                      ],
+                    ));
+          }),
+    );
+  }
+
   Widget _sendButton(BuildContext context, bool processing,
       {bool valid = true}) {
     return Stack(children: <Widget>[
@@ -152,7 +216,12 @@ class _Edit extends StatelessWidget {
     return BlocBuilder<EventEditorCubit, PostEditorState>(
       builder: (context, state) => state.maybeWhen(
           orElse: () => Container(),
-          editing: (_, valid) => _sendButton(context, false, valid: valid),
+          editing: (_, valid) =>
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                Expanded(child: _addMediaButton(context, context.read<EventEditorCubit>())),
+                _sendButton(context, false, valid: valid),
+                Spacer()
+              ]),
           submitting: () => _sendButton(context, true)),
     );
   }

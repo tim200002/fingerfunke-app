@@ -6,7 +6,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import '../../../../../common_widgets/image/mux_thumbnail_image/mux_thumbnail_image.dart';
 import '../../../../../common_widgets/list_items/in_past_filter.dart';
-import '../../../../../common_widgets/upload/video_upload_tile.dart';
+import '../../../../../common_widgets/upload/upload_tile.dart';
 import '../../../../../cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
 import '../../../../../cubits/upload/video/video_upload_cubit.dart';
 import '../../../../../models/asset/asset.dart';
@@ -425,7 +425,7 @@ class __ThumbnailState extends State<_Thumbnail> {
       child: InkWell(
         onTap: () => _onTapFunction(context),
         child: (uploadCubit != null)
-            ? VideoUploadTile(
+            ? UploadTile(
                 cubit: uploadCubit!,
                 onDelete: (cubitId) {
                   context.read<EventEditorCubit>().removeMainVideoUploadCubit();
