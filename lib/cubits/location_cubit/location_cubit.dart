@@ -6,7 +6,6 @@ import 'package:geolocator/geolocator.dart';
 import '../../models/place.dart';
 import '../../repositories/geocoding_repository/geocodig_repository.dart';
 import '../../repositories/storage_repository/storage_repository.dart';
-import '../../services/session_info_service.dart';
 
 part 'location_cubit.freezed.dart';
 part 'location_state.dart';
@@ -85,7 +84,6 @@ class LocationCubit extends Cubit<LocationState> {
           Coordinate(position.latitude, position.longitude));
 
       // update all the locations where a permission is stored
-      SessionInfoService.instance.setLocation(place);
       await _storageRepository.setInfo("device_location", place);
 
       return emit(LocationState.loaded(place));
@@ -95,7 +93,6 @@ class LocationCubit extends Cubit<LocationState> {
   }
 
   Future<void> setLocation(Place location) async {
-    SessionInfoService.instance.setLocation(location);
     await _storageRepository.setInfo("device_location", location);
     emit(LocationState.loaded(location));
   }

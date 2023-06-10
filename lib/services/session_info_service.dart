@@ -1,6 +1,5 @@
 import 'package:intl/intl.dart';
 
-import '../models/place.dart';
 import '../repositories/user_repository/user_repository.dart';
 import '../utils/type_aliases.dart';
 
@@ -32,11 +31,16 @@ class SessionInfoService {
     _saveToFirestore("app_version", version);
   }
 
-  void setLocation(Place place) {
-    _saveToFirestore("location", place.geohash);
+  void setOperatingSystem(String operatingSystem) {
+    _saveToFirestore("operating_system", operatingSystem);
   }
 
-  void setLocationDistance(int kilometers) {
-    _saveToFirestore("locationDistance", kilometers);
-  }
+
+  // void setLocation(Place place) {
+  //   _saveToFirestore("location", place.geohash);
+  // }
+
+  // void setLocationDistance(int kilometers) {
+  //   _saveToFirestore("locationDistance", kilometers);
+  // }
 }

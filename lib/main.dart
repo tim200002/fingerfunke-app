@@ -92,6 +92,7 @@ class AppInflater extends StatelessWidget {
     SessionInfoService.init(user.id);
     SessionInfoService.instance
         .setAppVersion("${packageInfo.version}+${packageInfo.buildNumber}");
+    SessionInfoService.instance.setOperatingSystem(Platform.operatingSystem);
 
     // To keep track of logins
     MetaInfoService.registerAppOpening();
