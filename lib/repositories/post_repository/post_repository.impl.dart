@@ -74,6 +74,7 @@ class PostRepositoryImpl implements PostRepository {
       String? description,
       Place? place,
       Asset? mainAsset,
+      List<Asset>? media,
       DateTime? startTime}) async {
     final JsonMap updateMap = {
       'visibility': visibility?.name,
@@ -81,6 +82,7 @@ class PostRepositoryImpl implements PostRepository {
       'description': description,
       'place': place?.toJson(),
       'mainAsset': mainAsset?.toJson(),
+      'media': media?.map((e) => e.toJson()).toList(),
       'startTime': startTime != null ? dateToJson(startTime) : null
     }..removeWhere((key, value) => value == null);
 

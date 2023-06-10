@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'network_image_cubit.dart';
+part of 'pdf_viewer_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,47 +15,47 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$NetworkImageState {
+mixin _$PdfViewerState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(ImageProvider<Object> image) imageLoaded,
-    required TResult Function(Object error) error,
+    required TResult Function(File pdfFile) loaded,
+    required TResult Function(Object? error) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(ImageProvider<Object> image)? imageLoaded,
-    TResult? Function(Object error)? error,
+    TResult? Function(File pdfFile)? loaded,
+    TResult? Function(Object? error)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(ImageProvider<Object> image)? imageLoaded,
-    TResult Function(Object error)? error,
+    TResult Function(File pdfFile)? loaded,
+    TResult Function(Object? error)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Loading value) loading,
-    required TResult Function(_ImageLoaded value) imageLoaded,
+    required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_ImageLoaded value)? imageLoaded,
+    TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
-    TResult Function(_ImageLoaded value)? imageLoaded,
+    TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) =>
@@ -63,16 +63,16 @@ mixin _$NetworkImageState {
 }
 
 /// @nodoc
-abstract class $NetworkImageStateCopyWith<$Res> {
-  factory $NetworkImageStateCopyWith(
-          NetworkImageState value, $Res Function(NetworkImageState) then) =
-      _$NetworkImageStateCopyWithImpl<$Res, NetworkImageState>;
+abstract class $PdfViewerStateCopyWith<$Res> {
+  factory $PdfViewerStateCopyWith(
+          PdfViewerState value, $Res Function(PdfViewerState) then) =
+      _$PdfViewerStateCopyWithImpl<$Res, PdfViewerState>;
 }
 
 /// @nodoc
-class _$NetworkImageStateCopyWithImpl<$Res, $Val extends NetworkImageState>
-    implements $NetworkImageStateCopyWith<$Res> {
-  _$NetworkImageStateCopyWithImpl(this._value, this._then);
+class _$PdfViewerStateCopyWithImpl<$Res, $Val extends PdfViewerState>
+    implements $PdfViewerStateCopyWith<$Res> {
+  _$PdfViewerStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -89,7 +89,7 @@ abstract class _$$_LoadingCopyWith<$Res> {
 
 /// @nodoc
 class __$$_LoadingCopyWithImpl<$Res>
-    extends _$NetworkImageStateCopyWithImpl<$Res, _$_Loading>
+    extends _$PdfViewerStateCopyWithImpl<$Res, _$_Loading>
     implements _$$_LoadingCopyWith<$Res> {
   __$$_LoadingCopyWithImpl(_$_Loading _value, $Res Function(_$_Loading) _then)
       : super(_value, _then);
@@ -102,7 +102,7 @@ class _$_Loading implements _Loading {
 
   @override
   String toString() {
-    return 'NetworkImageState.loading()';
+    return 'PdfViewerState.loading()';
   }
 
   @override
@@ -118,8 +118,8 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(ImageProvider<Object> image) imageLoaded,
-    required TResult Function(Object error) error,
+    required TResult Function(File pdfFile) loaded,
+    required TResult Function(Object? error) error,
   }) {
     return loading();
   }
@@ -128,8 +128,8 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(ImageProvider<Object> image)? imageLoaded,
-    TResult? Function(Object error)? error,
+    TResult? Function(File pdfFile)? loaded,
+    TResult? Function(Object? error)? error,
   }) {
     return loading?.call();
   }
@@ -138,8 +138,8 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(ImageProvider<Object> image)? imageLoaded,
-    TResult Function(Object error)? error,
+    TResult Function(File pdfFile)? loaded,
+    TResult Function(Object? error)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -152,7 +152,7 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Loading value) loading,
-    required TResult Function(_ImageLoaded value) imageLoaded,
+    required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
   }) {
     return loading(this);
@@ -162,7 +162,7 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_ImageLoaded value)? imageLoaded,
+    TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
   }) {
     return loading?.call(this);
@@ -172,7 +172,7 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
-    TResult Function(_ImageLoaded value)? imageLoaded,
+    TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -183,101 +183,99 @@ class _$_Loading implements _Loading {
   }
 }
 
-abstract class _Loading implements NetworkImageState {
+abstract class _Loading implements PdfViewerState {
   const factory _Loading() = _$_Loading;
 }
 
 /// @nodoc
-abstract class _$$_ImageLoadedCopyWith<$Res> {
-  factory _$$_ImageLoadedCopyWith(
-          _$_ImageLoaded value, $Res Function(_$_ImageLoaded) then) =
-      __$$_ImageLoadedCopyWithImpl<$Res>;
+abstract class _$$_LoadedCopyWith<$Res> {
+  factory _$$_LoadedCopyWith(_$_Loaded value, $Res Function(_$_Loaded) then) =
+      __$$_LoadedCopyWithImpl<$Res>;
   @useResult
-  $Res call({ImageProvider<Object> image});
+  $Res call({File pdfFile});
 }
 
 /// @nodoc
-class __$$_ImageLoadedCopyWithImpl<$Res>
-    extends _$NetworkImageStateCopyWithImpl<$Res, _$_ImageLoaded>
-    implements _$$_ImageLoadedCopyWith<$Res> {
-  __$$_ImageLoadedCopyWithImpl(
-      _$_ImageLoaded _value, $Res Function(_$_ImageLoaded) _then)
+class __$$_LoadedCopyWithImpl<$Res>
+    extends _$PdfViewerStateCopyWithImpl<$Res, _$_Loaded>
+    implements _$$_LoadedCopyWith<$Res> {
+  __$$_LoadedCopyWithImpl(_$_Loaded _value, $Res Function(_$_Loaded) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? image = null,
+    Object? pdfFile = null,
   }) {
-    return _then(_$_ImageLoaded(
-      null == image
-          ? _value.image
-          : image // ignore: cast_nullable_to_non_nullable
-              as ImageProvider<Object>,
+    return _then(_$_Loaded(
+      pdfFile: null == pdfFile
+          ? _value.pdfFile
+          : pdfFile // ignore: cast_nullable_to_non_nullable
+              as File,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_ImageLoaded implements _ImageLoaded {
-  const _$_ImageLoaded(this.image);
+class _$_Loaded implements _Loaded {
+  const _$_Loaded({required this.pdfFile});
 
   @override
-  final ImageProvider<Object> image;
+  final File pdfFile;
 
   @override
   String toString() {
-    return 'NetworkImageState.imageLoaded(image: $image)';
+    return 'PdfViewerState.loaded(pdfFile: $pdfFile)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ImageLoaded &&
-            (identical(other.image, image) || other.image == image));
+            other is _$_Loaded &&
+            (identical(other.pdfFile, pdfFile) || other.pdfFile == pdfFile));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, image);
+  int get hashCode => Object.hash(runtimeType, pdfFile);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ImageLoadedCopyWith<_$_ImageLoaded> get copyWith =>
-      __$$_ImageLoadedCopyWithImpl<_$_ImageLoaded>(this, _$identity);
+  _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
+      __$$_LoadedCopyWithImpl<_$_Loaded>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(ImageProvider<Object> image) imageLoaded,
-    required TResult Function(Object error) error,
+    required TResult Function(File pdfFile) loaded,
+    required TResult Function(Object? error) error,
   }) {
-    return imageLoaded(image);
+    return loaded(pdfFile);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(ImageProvider<Object> image)? imageLoaded,
-    TResult? Function(Object error)? error,
+    TResult? Function(File pdfFile)? loaded,
+    TResult? Function(Object? error)? error,
   }) {
-    return imageLoaded?.call(image);
+    return loaded?.call(pdfFile);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(ImageProvider<Object> image)? imageLoaded,
-    TResult Function(Object error)? error,
+    TResult Function(File pdfFile)? loaded,
+    TResult Function(Object? error)? error,
     required TResult orElse(),
   }) {
-    if (imageLoaded != null) {
-      return imageLoaded(image);
+    if (loaded != null) {
+      return loaded(pdfFile);
     }
     return orElse();
   }
@@ -286,44 +284,43 @@ class _$_ImageLoaded implements _ImageLoaded {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Loading value) loading,
-    required TResult Function(_ImageLoaded value) imageLoaded,
+    required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
   }) {
-    return imageLoaded(this);
+    return loaded(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_ImageLoaded value)? imageLoaded,
+    TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
   }) {
-    return imageLoaded?.call(this);
+    return loaded?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
-    TResult Function(_ImageLoaded value)? imageLoaded,
+    TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
-    if (imageLoaded != null) {
-      return imageLoaded(this);
+    if (loaded != null) {
+      return loaded(this);
     }
     return orElse();
   }
 }
 
-abstract class _ImageLoaded implements NetworkImageState {
-  const factory _ImageLoaded(final ImageProvider<Object> image) =
-      _$_ImageLoaded;
+abstract class _Loaded implements PdfViewerState {
+  const factory _Loaded({required final File pdfFile}) = _$_Loaded;
 
-  ImageProvider<Object> get image;
+  File get pdfFile;
   @JsonKey(ignore: true)
-  _$$_ImageLoadedCopyWith<_$_ImageLoaded> get copyWith =>
+  _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -332,12 +329,12 @@ abstract class _$$_ErrorCopyWith<$Res> {
   factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
       __$$_ErrorCopyWithImpl<$Res>;
   @useResult
-  $Res call({Object error});
+  $Res call({Object? error});
 }
 
 /// @nodoc
 class __$$_ErrorCopyWithImpl<$Res>
-    extends _$NetworkImageStateCopyWithImpl<$Res, _$_Error>
+    extends _$PdfViewerStateCopyWithImpl<$Res, _$_Error>
     implements _$$_ErrorCopyWith<$Res> {
   __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
       : super(_value, _then);
@@ -345,10 +342,10 @@ class __$$_ErrorCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? error = null,
+    Object? error = freezed,
   }) {
     return _then(_$_Error(
-      null == error ? _value.error : error,
+      error: freezed == error ? _value.error : error,
     ));
   }
 }
@@ -356,14 +353,14 @@ class __$$_ErrorCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Error implements _Error {
-  const _$_Error(this.error);
+  const _$_Error({this.error});
 
   @override
-  final Object error;
+  final Object? error;
 
   @override
   String toString() {
-    return 'NetworkImageState.error(error: $error)';
+    return 'PdfViewerState.error(error: $error)';
   }
 
   @override
@@ -388,8 +385,8 @@ class _$_Error implements _Error {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(ImageProvider<Object> image) imageLoaded,
-    required TResult Function(Object error) error,
+    required TResult Function(File pdfFile) loaded,
+    required TResult Function(Object? error) error,
   }) {
     return error(this.error);
   }
@@ -398,8 +395,8 @@ class _$_Error implements _Error {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(ImageProvider<Object> image)? imageLoaded,
-    TResult? Function(Object error)? error,
+    TResult? Function(File pdfFile)? loaded,
+    TResult? Function(Object? error)? error,
   }) {
     return error?.call(this.error);
   }
@@ -408,8 +405,8 @@ class _$_Error implements _Error {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(ImageProvider<Object> image)? imageLoaded,
-    TResult Function(Object error)? error,
+    TResult Function(File pdfFile)? loaded,
+    TResult Function(Object? error)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -422,7 +419,7 @@ class _$_Error implements _Error {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Loading value) loading,
-    required TResult Function(_ImageLoaded value) imageLoaded,
+    required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
   }) {
     return error(this);
@@ -432,7 +429,7 @@ class _$_Error implements _Error {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Loading value)? loading,
-    TResult? Function(_ImageLoaded value)? imageLoaded,
+    TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
   }) {
     return error?.call(this);
@@ -442,7 +439,7 @@ class _$_Error implements _Error {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
-    TResult Function(_ImageLoaded value)? imageLoaded,
+    TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -453,10 +450,10 @@ class _$_Error implements _Error {
   }
 }
 
-abstract class _Error implements NetworkImageState {
-  const factory _Error(final Object error) = _$_Error;
+abstract class _Error implements PdfViewerState {
+  const factory _Error({final Object? error}) = _$_Error;
 
-  Object get error;
+  Object? get error;
   @JsonKey(ignore: true)
   _$$_ErrorCopyWith<_$_Error> get copyWith =>
       throw _privateConstructorUsedError;

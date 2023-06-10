@@ -29,6 +29,7 @@ abstract class PostRepository {
       String? description,
       Place? place,
       Asset? mainAsset,
+      List<Asset>? media,
       DateTime? startTime});
 
   Future<void> addPostMember(

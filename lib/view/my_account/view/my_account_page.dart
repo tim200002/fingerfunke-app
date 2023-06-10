@@ -1,7 +1,6 @@
 import 'package:get_it/get_it.dart';
 
 import '../../../cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
-import '../../../models/user/user.dart';
 import '../../../repositories/user_repository/user_repository.dart';
 import '../../../routes.dart';
 import '../../../utils/tools.dart';

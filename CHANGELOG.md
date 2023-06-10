@@ -1,5 +1,17 @@
 # Changelog 
 
+## 0.6.0
+
+### Bug Fixes
+
+### Features
+- Possibility to upload images videos and pdfs with events. However, there might be some bugs here and there.
+
+### Miscellaneous
+- New way to handle caching
+
+
+
 ## 0.5.6
 
 ### Bug Fixes

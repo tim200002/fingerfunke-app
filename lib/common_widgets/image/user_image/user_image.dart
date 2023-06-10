@@ -5,7 +5,7 @@ import '../circular_network_image/circular_network_image.dart';
 
 class UserImage extends StatelessWidget {
   final Link? imageUrl;
-  final int? diameter;
+  final double? diameter;
   final AssetImage placeholder =
       const AssetImage("assets/img/placeholder/profile_avatar_placeholder.png");
   const UserImage(this.imageUrl, {Key? key, this.diameter}) : super(key: key);

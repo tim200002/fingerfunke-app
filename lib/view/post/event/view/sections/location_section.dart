@@ -43,9 +43,15 @@ class _Edit extends StatelessWidget {
     return BlocBuilder<EventEditorCubit, PostEditorState>(
         // ToDo Build when to only update after change to the map
         builder: (context, state) {
+      final cubit = context.read<EventEditorCubit>();
       return state.maybeWhen(
-          editing: (_, __) => StaticMapsProvider(
-              address: eventEditorCubit.place?.address ?? ""),
+          editing: (_, __) {
+            if(cubit.place == null) {
+              return Container();
+            }
+            return StaticMapsProvider(
+              address: eventEditorCubit.place?.address ?? "");
+          } ,
           orElse: () => throw InvalidStateException());
     });
   }

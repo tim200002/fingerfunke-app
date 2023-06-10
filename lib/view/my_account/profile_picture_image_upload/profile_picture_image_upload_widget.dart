@@ -57,7 +57,7 @@ class ProfilePictureImageUploadWidget extends StatelessWidget {
                 children: [
                   UserImage(
                     user.picture,
-                    diameter: userImageSize.round(),
+                    diameter: userImageSize.round().toDouble(),
                     // Add key because otherwise will not update correctly
                     // when given the picture is a good key, size should only update
                     // if picture changes

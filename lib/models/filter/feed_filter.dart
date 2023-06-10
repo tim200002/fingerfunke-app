@@ -1,6 +1,5 @@
 import '../../utils/type_aliases.dart';
 import '../abstract_models/abstract_models.dart';
-import '../place.dart';
 
 class FeedFilter extends Serializable {
   final int locationRadius;

@@ -10,12 +10,12 @@ import '../../cubit/event_editor_cubit.dart';
 class PostDescriptionSection extends StatelessWidget {
   final bool editing;
   const PostDescriptionSection(this.editing, {Key? key}) : super(key: key);
-
   static Widget loading() {
     return Column(children: [
       for (int i = 2; i >= 0; i--) SkeletonView.text(width: i == 0 ? 100 : null)
     ]);
   }
+
 
   @override
   Widget build(BuildContext context) {

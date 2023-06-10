@@ -24,5 +24,3 @@ import GoogleMaps
         firebaseAuth.setAPNSToken(deviceToken, type: AuthAPNSTokenType.unknown)
     }*/
 }
-
-
