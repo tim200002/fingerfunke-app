@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
+import '../../../../../common_widgets/adaptive_confirm_dialog.dart';
 import '../../../../../common_widgets/image/mux_thumbnail_image/mux_thumbnail_image.dart';
 import '../../../../../common_widgets/list_items/in_past_filter.dart';
 import '../../../../../common_widgets/upload/upload_tile.dart';
@@ -248,7 +249,17 @@ class HeaderSection extends StatelessWidget {
             bottom: 12),
         child: PostAppBarButton(
             icon: editing ? Icons.close_rounded : Icons.arrow_back_ios_rounded,
-            onPressed: () => Navigator.of(context).pop()),
+            onPressed: () async {
+              if(!editing){
+                return Navigator.of(context).pop();
+              }
+              
+                bool shouldPop = await _onEditingBackPress(context);
+                if(shouldPop){
+                  Navigator.of(context).pop();
+                }
+              
+            } ),
       ),
       actions: editing
           ? []
@@ -337,6 +348,15 @@ class HeaderSection extends StatelessWidget {
       ),
     );
   }
+
+
+  Future<bool> _onEditingBackPress(BuildContext context) =>
+      AdaptiveConfirmDialog.show(context,
+          title: l10n(context).lbl_postEditGoBack,
+          description: l10n(context).lbl_postEditGoBackText,
+          okayBtnLabel: l10n(context).lbl_yes,
+          cancelBtnLabel: l10n(context).lbl_no);
+
 }
 
 class _Edit extends StatelessWidget {

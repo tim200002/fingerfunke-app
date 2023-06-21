@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../../../common_widgets/adaptive_confirm_dialog.dart';
 import '../../../../cubits/better_pagination/cubit/better_pagination_cubit.dart';
 import '../../../../cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
 import '../../../../models/message/message.dart';
 import '../../../../models/post/post.dart';
 import '../../../../utils/app_theme.dart';
-import '../../../../utils/tools.dart';
 import '../../../../utils/type_aliases.dart';
 import '../../../error/exception_view.dart';
 import '../../cubits/abstract_post_editor_cubit/abstract_post_editor_cubit.dart';
@@ -35,47 +33,49 @@ class EventPage extends StatelessWidget {
 
   Widget _content(BuildContext context) {
     return Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        body: CustomScrollView(
-          slivers: [
-            HeaderSection(editing, includeTitle: true),
-            SliverToBoxAdapter(
-              child: Column(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.only(
-                      left: AppTheme.PADDING_SIDE + 8,
-                      right: AppTheme.PADDING_SIDE + 8,
-                      top: AppTheme.PADDING_SIDE,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TitleSection(editing),
-                        EventDetailSection(editing),
-                        const SizedBox(height: 15),
-                        PostDescriptionSection(editing),
-                        const SizedBox(height: 24),
-                        LocationSection(editing),
-                        const SizedBox(height: 24),
-                        ExtraMediaSection(editing),
-                        const SizedBox(height: 24),
-                        AuthorSection(editing),
-                        const SizedBox(height: 96),
-                      ],
-                    ),
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      body: CustomScrollView(
+        slivers: [
+          HeaderSection(editing, includeTitle: true),
+          SliverToBoxAdapter(
+            child: Column(
+              children: [
+                Container(
+                  padding: const EdgeInsets.only(
+                    left: AppTheme.PADDING_SIDE + 8,
+                    right: AppTheme.PADDING_SIDE + 8,
+                    top: AppTheme.PADDING_SIDE,
                   ),
-                ],
-              ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TitleSection(editing),
+                      EventDetailSection(editing),
+                      const SizedBox(height: 15),
+                      PostDescriptionSection(editing),
+                      const SizedBox(height: 24),
+                      LocationSection(editing),
+                      const SizedBox(height: 24),
+                      ExtraMediaSection(editing),
+                      const SizedBox(height: 24),
+                      AuthorSection(editing),
+                      const SizedBox(height: 96),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: AppTheme.PADDING_SIDE),
-            child: PostActionButtons(editing)));
+          ),
+        ],
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Padding(
+          padding:
+              const EdgeInsets.symmetric(horizontal: AppTheme.PADDING_SIDE),
+          child: PostActionButtons(editing)),
+    );
   }
+
 
   Widget _viewProviders(BuildContext context, Function(BuildContext) builder) {
     final postId = ModalRoute.of(context)!.settings.arguments as String;
@@ -109,13 +109,6 @@ class EventPage extends StatelessWidget {
             toFirestore: (message, _) => message.toJson());
   }
 
-  Future<bool> _onEditingBackPress(BuildContext context) =>
-      AdaptiveConfirmDialog.show(context,
-          title: l10n(context).lbl_postEditGoBack,
-          description: l10n(context).lbl_postEditGoBackText,
-          okayBtnLabel: l10n(context).lbl_yes,
-          cancelBtnLabel: l10n(context).lbl_no);
-
   Widget _editProviders(BuildContext context, Function(BuildContext) builder) {
     final Event? event = ModalRoute.of(context)!.settings.arguments != null
         ? ModalRoute.of(context)!.settings.arguments as Event
@@ -133,9 +126,7 @@ class EventPage extends StatelessWidget {
       },
       child: BlocBuilder<EventEditorCubit, PostEditorState>(
           builder: (context, state) => state.when(
-              editing: (_, __) => WillPopScope(
-                  onWillPop: () => _onEditingBackPress(context),
-                  child: builder(context)),
+              editing: (_, __) => builder(context),
               error: ExceptionView.builder,
               submitted: (id) => PostPostedSuccessView(postId: id),
               submitting: () => const PostPostingView())),
