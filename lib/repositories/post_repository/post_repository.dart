@@ -15,7 +15,7 @@ abstract class PostRepository {
 
   Stream<List<Post>> observePosts(List<FirestoreId>? postIds);
 
-  Stream<List<Post>> observeAuthoredPosts(FirestoreId userId);
+  Stream<List<Post>> observeAuthoredPosts(FirestoreId userId, {bool excludeDeleted=true});
 
   Stream<List<Post>> observeJoinedPosts(FirestoreId userId, {bool excludeAuthored=false});
 
@@ -31,6 +31,8 @@ abstract class PostRepository {
       Asset? mainAsset,
       List<Asset>? media,
       DateTime? startTime});
+
+  Future<void> moderatePost(FirestoreId postId, {required bool shouldBeDeleted});
 
   Future<void> addPostMember(
       {required FirestoreId postId, required FirestoreId userId});

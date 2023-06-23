@@ -17,21 +17,20 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'cubit/report_send_cubit.dart';
 import 'widgets/chip_chooser.dart';
 
-class ReportSendPage extends StatelessWidget {
+class PostReportSendPage extends StatelessWidget {
   final Post post;
   final UserRepository _userRepository = GetIt.instance<UserRepository>();
 
-  ReportSendPage({Key? key, required this.post}) : super(key: key);
+  PostReportSendPage({Key? key, required this.post}) : super(key: key);
 
   static void navigate(BuildContext context, Post post) {
     Tools.navigate(context,
-        builder: (isDialog) => ReportSendPage(
+        builder: (isDialog) => PostReportSendPage(
               post: post,
             ));
   }
 
   Widget _postCard(BuildContext context) {
-    // ToDo: Cam we guarentee that the author of a post exists, as I remebeber once an author is deleted also all of his posts are deleted
     Future<User?> userFuture = _userRepository.getUser(post.authorId);
 
     return Container(
@@ -160,7 +159,7 @@ class ReportSendPage extends StatelessWidget {
                 floatingActionButton: ElevatedButton.icon(
                     onPressed: reasons.isEmpty
                         ? null
-                        : () => context.read<ReportSendCubit>().send(),
+                        : () => context.read<ReportSendCubit>().send("posts"),
                     icon: const Icon(FeatherIcons.send),
                     label: Text(l10n(context).lbl_report)),
               ),

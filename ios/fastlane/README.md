@@ -45,7 +45,7 @@ Push a new beta build to TestFlight (steps executed after build)
 [bundle exec] fastlane ios beta_firebase_distribution_pre_build
 ```
 
-Push a new beta build to Firebase App distribution (steps exxecuted before build)
+Push a new beta build to Firebase App distribution (steps executed before build)
 
 ### ios beta_firebase_distribution_post_build
 

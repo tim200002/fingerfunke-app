@@ -43,12 +43,14 @@ class SocialMediaLinks extends StatelessWidget {
           children: [
             for (_SocialAccount a in accounts)
               IconButton(
-                  onPressed: () => {
-                        launchUrl(
-                            Uri.https(a.service.host,
-                                "${a.service.profilePath}${a.username}"),
-                            mode: LaunchMode.externalNonBrowserApplication)
-                      },
+                  onPressed: () {
+                    final Uri uri = Uri.https(a.service.host,
+                        "${a.service.profilePath}${a.username}");
+
+                    launchUrl(
+                      uri,
+                    );
+                  },
                   icon: Icon(a.service.icon))
           ],
         ),

@@ -69,16 +69,11 @@ class _ProfileSection extends StatelessWidget {
             padding: EdgeInsets.only(right: 20),
             child: ProfilePictureImageUploadWidget()),
         FirebaseAuthenticationCubitCubit.userBuilder(
-          (user) => Expanded(
+          (user) => const Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: const [
+              children: [
                 UserNameEditor(),
-
-                /*const SizedBox(height: 7),
-                  const Text(
-                      //ToDo: Show the user's real phone number
-                      "+49 123 456 7890"),*/
               ],
             ),
           ),

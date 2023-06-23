@@ -24,6 +24,7 @@ class Report extends UserGeneratedDocument {
   final ReportType type;
   final ReportState state;
   final String objectReference;
+  final String objectReferenceFullPath;
 
   Report({
     String? id,
@@ -33,6 +34,7 @@ class Report extends UserGeneratedDocument {
     this.state = ReportState.open,
     required this.objectReference,
     required DateTime creationTime,
+    required this.objectReferenceFullPath,
   }) : super(
             id: id ?? const Uuid().v4(),
             authorId: authorId,
@@ -42,11 +44,13 @@ class Report extends UserGeneratedDocument {
   JsonMap toJson() => {
         "id": id,
         "objectReference": objectReference,
+        "objectReferenceFullPath": objectReferenceFullPath,
         "authorId": authorId,
         "reasons": reasons.map((e) => e.name).toList(),
         "type": type.name,
         "state": state.name,
         "creationTime": dateToJson(creationTime)
+
       };
 
   factory Report.fromDoc(DocumentSnapshot document) =>
@@ -62,7 +66,9 @@ class Report extends UserGeneratedDocument {
             .toList(),
         type: ReportType.values.firstWhere((r) => r.name == map["type"]),
         state: ReportState.values.firstWhere((r) => r.name == map["state"]),
-        objectReference: map["objectReference"]);
+        objectReference: map["objectReference"],
+        objectReferenceFullPath: map["objectReferenceFullPath"]
+        );
   }
 
   Report copyWith(
@@ -72,6 +78,7 @@ class Report extends UserGeneratedDocument {
       ReportType? type,
       ReportState? state,
       String? objectReference,
+      String? objectReferenceFullPath,
       DateTime? creationTime}) {
     return Report(
         id: id ?? this.id,
@@ -80,6 +87,7 @@ class Report extends UserGeneratedDocument {
         type: type ?? this.type,
         state: state ?? this.state,
         objectReference: objectReference ?? this.objectReference,
+        objectReferenceFullPath: objectReferenceFullPath ?? this.objectReferenceFullPath,
         creationTime: creationTime ?? this.creationTime);
   }
 }

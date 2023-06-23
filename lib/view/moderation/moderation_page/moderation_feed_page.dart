@@ -1,16 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../models/report.dart';
 import '../../../models/user/user.dart';
 import '../../../utils/tools.dart';
 import '../../../utils/util_widgets/clearance_appbar.dart';
 import '../../error/exception_view.dart';
 import '../../illustration_view/illustration_view.dart';
-import 'cubit/mod_post_cubit.dart';
-import 'widgets/mod_report_view.dart';
+import '../cubit/mod_cubit.dart';
 
-class ModPostReportPage extends StatelessWidget {
-  const ModPostReportPage({Key? key}) : super(key: key);
+class ModFeedPage extends StatelessWidget {
+  final ReportType reportType;
+  final Future Function(Report) onReportAccepted;
+  final Widget Function(Report) ReportView;
+
+  const ModFeedPage(
+      {required this.ReportView, required this.onReportAccepted, required this.reportType, super.key});
+
+  static Route route(
+      {required Widget Function(Report) ReportView,
+      required Future Function(Report) onReportAccepted,
+      required ReportType reportType
+      }) {
+    return MaterialPageRoute(
+        builder: (context) => ModFeedPage(
+            ReportView: ReportView, onReportAccepted: onReportAccepted, reportType: reportType));
+  }
 
   void _performAction(BuildContext context, bool accept) {
     showDialog(
@@ -29,7 +44,7 @@ class ModPostReportPage extends StatelessWidget {
                   child: Text(l10n(context).lbl_cancel)),
               ElevatedButton(
                   onPressed: () {
-                    context.read<ModPostCubit>().closeReport(accept);
+                    context.read<ModCubit>().closeReport(accept);
                     Navigator.of(context).pop();
                   },
                   child: Text(l10n(context).lbl_yes))
@@ -40,14 +55,15 @@ class ModPostReportPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<ModPostCubit>(
-      create: (context) => ModPostCubit(),
+    return BlocProvider<ModCubit>(
+      create: (context) => ModCubit(
+          reportType: reportType, onReportAccepted: onReportAccepted),
       child: Scaffold(
           appBar: ClearanceAppBar.widget(context, UserClearance.moderation,
               title: l10n(context).lbl_modReportedPosts),
           body: Padding(
             padding: const EdgeInsets.all(20),
-            child: BlocBuilder<ModPostCubit, ModPostState>(
+            child: BlocBuilder<ModCubit, ModState>(
                 builder: (context, state) => state.when(
                     loading: () => const Center(
                         child: CircularProgressIndicator.adaptive()),
@@ -85,47 +101,49 @@ class ModPostReportPage extends StatelessWidget {
                                     child: SingleChildScrollView(
                                         child: Padding(
                                             padding: const EdgeInsets.all(15),
-                                            child:
-                                                ModReportView(report: report))),
+                                            child: ReportView(report))),
                                   ),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: ElevatedButton(
-                                            style: ButtonStyle(
-                                                backgroundColor:
-                                                    MaterialStateColor
-                                                        .resolveWith((states) =>
-                                                            Colors.teal
-                                                                .shade300)),
-                                            onPressed: () =>
-                                                _performAction(context, false),
-                                            child: Text(
-                                              l10n(context)
-                                                  .lbl_modElementApprove,
-                                              textAlign: TextAlign.center,
-                                            )),
-                                      ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      Expanded(
-                                        child: ElevatedButton(
-                                            style: ButtonStyle(
-                                                backgroundColor:
-                                                    MaterialStateColor
-                                                        .resolveWith((states) =>
-                                                            Colors
-                                                                .red.shade300)),
-                                            onPressed: () =>
-                                                _performAction(context, true),
-                                            child: Text(
-                                              l10n(context)
-                                                  .lbl_modElementDelete,
-                                              textAlign: TextAlign.center,
-                                            )),
-                                      )
-                                    ],
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: ElevatedButton(
+                                              style: ButtonStyle(
+                                                  backgroundColor:
+                                                      MaterialStateColor
+                                                          .resolveWith((states) =>
+                                                              Colors.teal
+                                                                  .shade300)),
+                                              onPressed: () =>
+                                                  _performAction(context, false),
+                                              child: Text(
+                                                l10n(context)
+                                                    .lbl_modElementApprove,
+                                                textAlign: TextAlign.center,
+                                              )),
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        Expanded(
+                                          child: ElevatedButton(
+                                              style: ButtonStyle(
+                                                  backgroundColor:
+                                                      MaterialStateColor
+                                                          .resolveWith((states) =>
+                                                              Colors
+                                                                  .red.shade300)),
+                                              onPressed: () =>
+                                                  _performAction(context, true),
+                                              child: Text(
+                                                l10n(context)
+                                                    .lbl_modElementDelete,
+                                                textAlign: TextAlign.center,
+                                              )),
+                                        )
+                                      ],
+                                    ),
                                   )
                                 ],
                               ),

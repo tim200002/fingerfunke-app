@@ -1,4 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'repositories/message_repository.dart/message_repository.impl.dart';
+import 'repositories/report_repository/report_repository.impl.dart';
+import 'repositories/message_repository.dart/message_repository.dart';
+import 'repositories/report_repository/report_repository.dart';
 import 'repositories/video_repository/video_repository.impl.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
@@ -26,5 +30,7 @@ void setupGetIt() {
   _getIt.registerSingleton<AppInfoService>(AppInfoService());
   _getIt.registerSingleton<GlobalsService>(GlobalsService());
   _getIt.registerSingleton<VideoRepository>(VideoRepositoryImpl());
+  _getIt.registerSingleton<ReportRepository>(ReportRepositoryImpl());
+  _getIt.registerSingleton<MessageRepository>(MessageRepositoryImpl());
   //_getIt.registerSingleton<CacheManager>(DefaultCacheManager());
 }

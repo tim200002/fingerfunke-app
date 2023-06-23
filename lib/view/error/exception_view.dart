@@ -48,50 +48,52 @@ class ExceptionView extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool showClose = closable && Navigator.of(context).canPop();
     return Scaffold(
-        appBar: AppBar(
-          //title: Text("😳"),
-          automaticallyImplyLeading: false,
-          leading: showClose
-              ? IconButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  icon: const Icon(Icons.close_rounded))
-              : null,
-        ),
-        extendBodyBehindAppBar: true,
-        body: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: SingleChildScrollView(
-              child: Column(
-                //mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Padding(
-                      padding: const EdgeInsets.only(top: 140, bottom: 60),
-                      child: Center(
-                          child: Illustration(
-                        Illustrations.fixingBugs,
-                        height: 150,
-                      ))),
-                  Text(l10n(context).lbl_errorTitle,
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headline4),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    l10n(context).lbl_errorAbout,
-                    textAlign: TextAlign.center,
-                    //style: Theme.of(context).textTheme.headline3
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  _TechnicalExceptionView(
-                    exception: exception,
-                    trace: trace,
-                  ),
-                ],
+      appBar: AppBar(
+        //title: Text("😳"),
+        automaticallyImplyLeading: false,
+        leading: showClose
+            ? IconButton(
+                onPressed: () => Navigator.of(context).pop(),
+                icon: const Icon(Icons.close_rounded))
+            : null,
+      ),
+      extendBodyBehindAppBar: true,
+      body: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: SingleChildScrollView(
+          child: Column(
+            //mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                  padding: const EdgeInsets.only(top: 140, bottom: 60),
+                  child: Center(
+                      child: Illustration(
+                    Illustrations.fixingBugs,
+                    height: 150,
+                  ))),
+              Text(l10n(context).lbl_errorTitle,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headline4),
+              const SizedBox(
+                height: 10,
               ),
-            )));
+              Text(
+                l10n(context).lbl_errorAbout,
+                textAlign: TextAlign.center,
+                //style: Theme.of(context).textTheme.headline3
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              _TechnicalExceptionView(
+                exception: exception,
+                trace: trace,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

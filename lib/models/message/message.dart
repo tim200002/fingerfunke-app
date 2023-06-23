@@ -9,6 +9,8 @@ import '../utils.dart';
 
 enum MessageType { video, text }
 
+enum MessageVisibility { visible, deleted }
+
 const _messageTypeEnumMap = {
   MessageType.video: 'video',
   MessageType.text: 'text',
@@ -18,10 +20,12 @@ class InvalidMessageTypeException implements Exception {}
 
 class Message extends UserGeneratedDocument {
   final MessageType type;
+  final MessageVisibility visibility;
 
   const Message({
     required FirestoreId id,
     required this.type,
+    required this.visibility,
     required FirestoreId authorId,
     required DateTime creationTime,
   }) : super(authorId: authorId, id: id, creationTime: creationTime);
@@ -66,18 +70,21 @@ class VideoMessage extends Message {
 
   const VideoMessage(
       {required FirestoreId id,
+      required MessageVisibility visibility,
       required FirestoreId authorId,
       required DateTime creationTime,
       required this.video})
       : super(
             authorId: authorId,
             id: id,
+            visibility: visibility,
             creationTime: creationTime,
             type: MessageType.video);
 
   @override
   JsonMap toJson() => {
         'id': id,
+        'visibility': visibility.name,
         'author': authorId,
         'creationTime': dateToJson(creationTime),
         'type': _messageTypeEnumMap[MessageType.video],
@@ -90,6 +97,9 @@ class VideoMessage extends Message {
       authorId: map['authorId'],
       creationTime: dateFromJson(map['creationTime'] as int),
       video: map['video'] as String,
+      visibility: map['visibility'] != null
+          ? MessageVisibility.values.firstWhere((t) => t.name == map['visibility'])
+          : MessageVisibility.visible,
     );
   }
 
@@ -101,6 +111,7 @@ class VideoMessage extends Message {
       VideoMessage(
           id: const Uuid().v4(),
           authorId: authorId,
+          visibility: MessageVisibility.visible,
           creationTime: DateTime.now(),
           video: video);
 
@@ -115,10 +126,12 @@ class TextMessage extends Message {
       {required FirestoreId id,
       required FirestoreId authorId,
       required DateTime creationTime,
+      required MessageVisibility visibility,
       required this.text})
       : super(
             authorId: authorId,
             id: id,
+            visibility: visibility,
             creationTime: creationTime,
             type: MessageType.text);
 
@@ -128,7 +141,8 @@ class TextMessage extends Message {
         'authorId': authorId,
         'creationTime': dateToJson(creationTime),
         'type': _messageTypeEnumMap[MessageType.text],
-        'text': text
+        'text': text,
+        'visibility': visibility.name
       };
 
   @override
@@ -137,6 +151,9 @@ class TextMessage extends Message {
         authorId: map['authorId'],
         creationTime: dateFromJson(map['creationTime'] as int),
         text: map['text'] as String,
+        visibility: map['visibility'] != null
+            ? MessageVisibility.values.firstWhere((t) => t.name == map['visibility'])
+            : MessageVisibility.visible,
       );
 
   factory TextMessage.fromDoc(DocumentSnapshot document) =>
@@ -147,6 +164,7 @@ class TextMessage extends Message {
       TextMessage(
           id: const Uuid().v4(),
           authorId: authorId,
+          visibility: MessageVisibility.visible,
           creationTime: DateTime.now(),
           text: text);
 

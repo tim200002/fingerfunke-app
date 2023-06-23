@@ -50,9 +50,14 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Stream<List<Post>> observeAuthoredPosts(FirestoreId userId) {
-    return _postCollection
-        .where('authorId', isEqualTo: userId)
+  Stream<List<Post>> observeAuthoredPosts(FirestoreId userId,
+      {bool excludeDeleted = true}) {
+    Query query = _postCollection.where('authorId', isEqualTo: userId);
+    if (excludeDeleted) {
+      query =
+          query.where('visibility', isNotEqualTo: PostVisibility.deleted.name);
+    }
+    return query
         .snapshots()
         .map((r) => r.docs.map((d) => Post.fromDoc(d)).toList());
   }
@@ -89,6 +94,15 @@ class PostRepositoryImpl implements PostRepository {
     _postCollection.doc(postId).update(updateMap);
   }
 
+  Future<void> moderatePost(FirestoreId postId,
+      {required bool shouldBeDeleted}) async {
+    return _postCollection.doc(postId).update({
+      "visibility": shouldBeDeleted
+          ? PostVisibility.deleted.name
+          : PostVisibility.visible.name
+    });
+  }
+
   @override
   Future<void> addPostMember(
           {required FirestoreId postId, required FirestoreId userId}) =>
@@ -117,14 +131,17 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Stream<List<Post>> observeJoinedPosts(FirestoreId userId, {bool excludeAuthored=false}) { 
+  Stream<List<Post>> observeJoinedPosts(FirestoreId userId,
+      {bool excludeAuthored = false}) {
     Query query = _postCollection
-      .where("members", arrayContains: userId);
+        .where("members", arrayContains: userId)
+        .where("visibility", isEqualTo: PostVisibility.visible.name);
+
     if (excludeAuthored) {
       query = query.where("authorId", isNotEqualTo: userId);
     }
     return query
-      .snapshots()
-      .map((e) => e.docs.map((d) => Post.fromDoc(d)).toList());
+        .snapshots()
+        .map((e) => e.docs.map((d) => Post.fromDoc(d)).toList());
   }
 }

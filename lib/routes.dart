@@ -6,7 +6,6 @@ import 'view/app_info/subpages/view/settings_dev_localstorage.dart';
 import 'view/app_info/subpages/view/settings_dev_tools_page.dart';
 import 'view/chat/view/chat_page.dart';
 import 'view/feedback/send/feedback_send_page.dart';
-import 'view/moderation/mod_post_report/mod_post_report_page.dart';
 import 'view/moderation/moderation_page/moderation_page.dart';
 import 'view/my_account/view/my_account_page.dart';
 import 'view/post/event/view/event_page.dart';
@@ -46,8 +45,7 @@ final routes = {
   Routes.licenses: (context) => const OssLicensesPage(),
   Routes.manageAccount: (context) => const ManageAccountPage(),
   Routes.linkSocialMedia: (context) => const UserSocialMediaPage(),
-  Routes.moderation: (context) => const ModerationPage(),
-  Routes.moderationPosts: (context) => const ModPostReportPage(),
+  Routes.moderation: (context) => ModerationPage(),
   Routes.post: (context) =>  EventPage(),
   Routes.postEditor: (context) => EventPage(editing: true),
   Routes.settings: (context) => const SettingsPage(),

@@ -1,20 +1,20 @@
 import 'package:get_it/get_it.dart';
 
-import '../../../../models/report.dart';
+import '../../../models/report.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
-import '../../../../models/user/user.dart';
-import '../../../../repositories/user_repository/user_repository.dart';
-import '../../../../routes.dart';
-import '../../../../utils/tools.dart';
-import '../../../../utils/util_widgets/future_text.dart';
-import '../../../report_send/widgets/chip_chooser.dart';
+import '../../../models/user/user.dart';
+import '../../../repositories/user_repository/user_repository.dart';
+import '../../../routes.dart';
+import '../../../utils/tools.dart';
+import '../../../utils/util_widgets/future_text.dart';
+import '../../report_send/widgets/chip_chooser.dart';
 
-class ModReportView extends StatelessWidget {
+class ModPostReportView extends StatelessWidget {
   final Report report;
   final UserRepository _userRepository = GetIt.instance<UserRepository>();
-  ModReportView({Key? key, required this.report}) : super(key: key);
+  ModPostReportView({Key? key, required this.report}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

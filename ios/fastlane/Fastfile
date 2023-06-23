@@ -71,13 +71,14 @@ end
 
     team_id = CredentialsManager::AppfileConfig.try_fetch_value(:team_id)
     # Build IPA from arhive
-    gym(
+    build_app(
+      scheme: "Runner",
+      workspace: "Runner.xcworkspace",
       output_name: "fingerfunke_app.ipa",
-      export_method: "ad-hoc",
-      archive_path: "../build/ios/archive/Runner.xcarchive",
-      skip_build_archive: true,
+      export_method: "app-store",
       output_directory: "../build/ios/ipa",
-      export_team_id: team_id
+      export_team_id: team_id,
+      #export_options: "./export_options/export_options_adhoc.plist"
     )
 
     upload_to_testflight(
@@ -88,7 +89,7 @@ end
   end
 
 
-  desc "Push a new beta build to Firebase App distribution (steps exxecuted before build)"
+  desc "Push a new beta build to Firebase App distribution (steps executed before build)"
   lane :beta_firebase_distribution_pre_build do
     # find absolute path to config files directory
     config_files_path = File.expand_path("../../../../config-files", __FILE__)

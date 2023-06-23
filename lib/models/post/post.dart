@@ -16,7 +16,7 @@ part 'group.dart';
 
 enum PostType { event, recurrent }
 
-enum PostVisibility { visible, hidden }
+enum PostVisibility { visible, hidden, deleted }
 
 class InvalidPostTypeException implements Exception {}
 

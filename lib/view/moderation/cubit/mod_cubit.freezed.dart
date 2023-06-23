@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'mod_post_cubit.dart';
+part of 'mod_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$ModPostState {
+mixin _$ModState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
@@ -69,16 +69,15 @@ mixin _$ModPostState {
 }
 
 /// @nodoc
-abstract class $ModPostStateCopyWith<$Res> {
-  factory $ModPostStateCopyWith(
-          ModPostState value, $Res Function(ModPostState) then) =
-      _$ModPostStateCopyWithImpl<$Res, ModPostState>;
+abstract class $ModStateCopyWith<$Res> {
+  factory $ModStateCopyWith(ModState value, $Res Function(ModState) then) =
+      _$ModStateCopyWithImpl<$Res, ModState>;
 }
 
 /// @nodoc
-class _$ModPostStateCopyWithImpl<$Res, $Val extends ModPostState>
-    implements $ModPostStateCopyWith<$Res> {
-  _$ModPostStateCopyWithImpl(this._value, this._then);
+class _$ModStateCopyWithImpl<$Res, $Val extends ModState>
+    implements $ModStateCopyWith<$Res> {
+  _$ModStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -95,7 +94,7 @@ abstract class _$$_LoadingCopyWith<$Res> {
 
 /// @nodoc
 class __$$_LoadingCopyWithImpl<$Res>
-    extends _$ModPostStateCopyWithImpl<$Res, _$_Loading>
+    extends _$ModStateCopyWithImpl<$Res, _$_Loading>
     implements _$$_LoadingCopyWith<$Res> {
   __$$_LoadingCopyWithImpl(_$_Loading _value, $Res Function(_$_Loading) _then)
       : super(_value, _then);
@@ -108,7 +107,7 @@ class _$_Loading implements _Loading {
 
   @override
   String toString() {
-    return 'ModPostState.loading()';
+    return 'ModState.loading()';
   }
 
   @override
@@ -195,7 +194,7 @@ class _$_Loading implements _Loading {
   }
 }
 
-abstract class _Loading implements ModPostState {
+abstract class _Loading implements ModState {
   const factory _Loading() = _$_Loading;
 }
 
@@ -209,7 +208,7 @@ abstract class _$$_ErrorCopyWith<$Res> {
 
 /// @nodoc
 class __$$_ErrorCopyWithImpl<$Res>
-    extends _$ModPostStateCopyWithImpl<$Res, _$_Error>
+    extends _$ModStateCopyWithImpl<$Res, _$_Error>
     implements _$$_ErrorCopyWith<$Res> {
   __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
       : super(_value, _then);
@@ -238,7 +237,7 @@ class _$_Error implements _Error {
 
   @override
   String toString() {
-    return 'ModPostState.error(e: $e)';
+    return 'ModState.error(e: $e)';
   }
 
   @override
@@ -334,7 +333,7 @@ class _$_Error implements _Error {
   }
 }
 
-abstract class _Error implements ModPostState {
+abstract class _Error implements ModState {
   const factory _Error(final dynamic e) = _$_Error;
 
   dynamic get e;
@@ -351,7 +350,7 @@ abstract class _$$_EmptyCopyWith<$Res> {
 
 /// @nodoc
 class __$$_EmptyCopyWithImpl<$Res>
-    extends _$ModPostStateCopyWithImpl<$Res, _$_Empty>
+    extends _$ModStateCopyWithImpl<$Res, _$_Empty>
     implements _$$_EmptyCopyWith<$Res> {
   __$$_EmptyCopyWithImpl(_$_Empty _value, $Res Function(_$_Empty) _then)
       : super(_value, _then);
@@ -364,7 +363,7 @@ class _$_Empty implements _Empty {
 
   @override
   String toString() {
-    return 'ModPostState.empty()';
+    return 'ModState.empty()';
   }
 
   @override
@@ -451,7 +450,7 @@ class _$_Empty implements _Empty {
   }
 }
 
-abstract class _Empty implements ModPostState {
+abstract class _Empty implements ModState {
   const factory _Empty() = _$_Empty;
 }
 
@@ -466,7 +465,7 @@ abstract class _$$_NeutralCopyWith<$Res> {
 
 /// @nodoc
 class __$$_NeutralCopyWithImpl<$Res>
-    extends _$ModPostStateCopyWithImpl<$Res, _$_Neutral>
+    extends _$ModStateCopyWithImpl<$Res, _$_Neutral>
     implements _$$_NeutralCopyWith<$Res> {
   __$$_NeutralCopyWithImpl(_$_Neutral _value, $Res Function(_$_Neutral) _then)
       : super(_value, _then);
@@ -502,7 +501,7 @@ class _$_Neutral implements _Neutral {
 
   @override
   String toString() {
-    return 'ModPostState.neutral(report: $report, count: $count)';
+    return 'ModState.neutral(report: $report, count: $count)';
   }
 
   @override
@@ -598,7 +597,7 @@ class _$_Neutral implements _Neutral {
   }
 }
 
-abstract class _Neutral implements ModPostState {
+abstract class _Neutral implements ModState {
   const factory _Neutral(final Report report, final int count) = _$_Neutral;
 
   Report get report;

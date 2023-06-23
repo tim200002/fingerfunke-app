@@ -28,6 +28,7 @@ class DiscoverFeed extends StatelessWidget {
   Query<Post> _createBackwardQuery(Place userLocation, FeedFilter filters) {
     Query<Map<String, dynamic>> untypedQuery = _firestore
         .collection('posts')
+        .where('visibility', isEqualTo: PostVisibility.visible.name)
         .where('geohashesByRadius.${filters.locationRadius}',
             arrayContains: userLocation.geohash)
         .where('startTime',
@@ -45,6 +46,7 @@ class DiscoverFeed extends StatelessWidget {
   Query<Post> _createForwardQuery(Place userLocation, FeedFilter filters) {
     Query<Map<String, dynamic>> untypedQuery = _firestore
         .collection('posts')
+         .where('visibility', isEqualTo: PostVisibility.visible.name)
         .where('geohashesByRadius.${filters.locationRadius}',
             arrayContains: userLocation.geohash)
         .where('startTime',

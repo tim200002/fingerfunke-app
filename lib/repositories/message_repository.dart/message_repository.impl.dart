@@ -22,4 +22,14 @@ class MessageRepositoryImpl implements MessageRepository {
         .doc(message.id)
         .set(message.toJson());
   }
+
+  @override
+  Future<void> moderateMessage(
+      {required String fullPath, required bool shouldBeDeleted}) async {
+    return _firestore.doc(fullPath).update({
+      'visibility': shouldBeDeleted
+          ? MessageVisibility.deleted.name
+          : MessageVisibility.visible.name
+    });
+  }
 }
