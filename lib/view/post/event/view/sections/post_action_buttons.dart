@@ -70,7 +70,8 @@ class PostActionButtons extends StatelessWidget {
               return Stack(
                 children: <Widget>[
                   if (!post.isUserAuthor(loggedInUser) &&
-                      (isMember || !(post.asEvent?.isCompleted ?? false)))
+                      !isMember &&
+                      !post.asEvent!.isCompleted)
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: _mainFAB(
@@ -145,14 +146,15 @@ class _Edit extends StatelessWidget {
                 builder: (context) => Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                                                ListTile(
+                        ListTile(
                           leading: const Icon(Icons.videocam),
                           title: Text(l10n(context).lbl_selectVideo),
                           onTap: () async {
                             Navigator.pop(context);
-                            
+
                             // open video recorder page
-                             File? video = await Navigator.push<File?>(context, VideoRecorderPage.route());
+                            File? video = await Navigator.push<File?>(
+                                context, VideoRecorderPage.route());
                             if (video != null) {
                               cubit.addMediaFromFile(video);
                             }
@@ -176,8 +178,10 @@ class _Edit extends StatelessWidget {
                           title: Text(l10n(context).lbl_selectFile),
                           onTap: () async {
                             Navigator.pop(context);
-                            FilePickerResult? result =
-                                await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ["pdf"]);
+                            FilePickerResult? result = await FilePicker.platform
+                                .pickFiles(
+                                    type: FileType.custom,
+                                    allowedExtensions: ["pdf"]);
                             if (result != null) {
                               File file = File(result.files.single.path!);
                               cubit.addMediaFromFile(file);
@@ -218,7 +222,9 @@ class _Edit extends StatelessWidget {
           orElse: () => Container(),
           editing: (_, valid) =>
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Expanded(child: _addMediaButton(context, context.read<EventEditorCubit>())),
+                Expanded(
+                    child: _addMediaButton(
+                        context, context.read<EventEditorCubit>())),
                 _sendButton(context, false, valid: valid),
                 Spacer()
               ]),
