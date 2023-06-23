@@ -22,108 +22,113 @@ class HomeDrawer extends StatelessWidget {
     const borderShape =
         BorderRadius.only(topRight: _borderRadius, bottomRight: _borderRadius);
     return SafeArea(
+      top: true,
+      bottom: false,
       child: Drawer(
         shape: const RoundedRectangleBorder(borderRadius: borderShape),
         child: ClipRRect(
           borderRadius: borderShape,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: ListView(
-                  padding: EdgeInsets.zero,
-                  children: [
-                    const _ProfileSection(),
-                    //TODO: reenable once groups become available
-                    /*const SizedBox(height: 15),
-                    ListTile(
-                      leading: const Icon(FeatherIcons.users),
-                      title: Text(l10n(context).lbl_groups),
-                      enabled: false,
-                      onTap: () => DevTools.showToDoSnackbar(context),
-                    ),
-                    const SizedBox(height: 25),*/
-
-                    ListTile(
-                      leading: const Icon(FeatherIcons.bookmark),
-                      title: Text(l10n(context).lbl_saved),
-                      onTap: () =>
-                          Navigator.of(context).pushNamed(Routes.saved),
-                    ),
-                    const SizedBox(height: 25),
-                    ListTile(
-                      leading: const Icon(FeatherIcons.info),
-                      title: Text(l10n(context).lbl_information),
-                      onTap: () =>
-                          Navigator.of(context).pushNamed(Routes.about),
-                    ),
-                    ListTile(
-                        leading: const Icon(FeatherIcons.share2),
-                        title: Text(l10n(context).lbl_socialMedia),
-                        onTap: () => _showOurSocialMediaModal(context)),
-
-                    const SizedBox(height: 25),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 20),
-                      child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: BetaIndicator(message: "beta@Erlangen")),
-                    ),
-                    ClearanceBuilder(
-                      clearance: UserClearance.development,
-                      builder: (_, c) => ListTile(
-                        shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.horizontal(
-                                right: Radius.circular(15))),
-                        leading: const Icon(FeatherIcons.penTool),
-                        title: Text(l10n(context).lbl_devTools),
-                        tileColor: c.color.shade100,
-                        onTap: () =>
-                            Navigator.of(context).pushNamed(Routes.devtools),
+          child: SafeArea(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: ListView(
+                    padding: EdgeInsets.zero,
+                    children: [
+                      const _ProfileSection(),
+                      //TODO: reenable once groups become available
+                      /*const SizedBox(height: 15),
+                      ListTile(
+                        leading: const Icon(FeatherIcons.users),
+                        title: Text(l10n(context).lbl_groups),
+                        enabled: false,
+                        onTap: () => DevTools.showToDoSnackbar(context),
                       ),
-                    ),
-                    ClearanceBuilder(
-                      clearance: UserClearance.moderation,
-                      builder: (_, c) => ListTile(
-                        shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.horizontal(
-                                right: Radius.circular(15))),
-                        tileColor: c.color.shade100,
-                        leading: const Icon(FeatherIcons.shield),
-                        title: Text(l10n(context).lbl_moderation),
+                      const SizedBox(height: 25),*/
+          
+                      ListTile(
+                        leading: const Icon(FeatherIcons.bookmark),
+                        title: Text(l10n(context).lbl_saved),
                         onTap: () =>
-                            Navigator.of(context).pushNamed(Routes.moderation),
+                            Navigator.of(context).pushNamed(Routes.saved),
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 25),
+                      ListTile(
+                        leading: const Icon(FeatherIcons.info),
+                        title: Text(l10n(context).lbl_information),
+                        onTap: () =>
+                            Navigator.of(context).pushNamed(Routes.about),
+                      ),
+                      ListTile(
+                          leading: const Icon(FeatherIcons.share2),
+                          title: Text(l10n(context).lbl_socialMedia),
+                          onTap: () => _showOurSocialMediaModal(context)),
+          
+                      const SizedBox(height: 25),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 20),
+                        child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: BetaIndicator(message: "beta@Erlangen")),
+                      ),
+                      ClearanceBuilder(
+                        clearance: UserClearance.development,
+                        builder: (_, c) => ListTile(
+                          shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.horizontal(
+                                  right: Radius.circular(15))),
+                          leading: const Icon(FeatherIcons.penTool),
+                          title: Text(l10n(context).lbl_devTools),
+                          tileColor: c.color.shade100,
+                          onTap: () =>
+                              Navigator.of(context).pushNamed(Routes.devtools),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      ClearanceBuilder(
+                        clearance: UserClearance.moderation,
+                        builder: (_, c) => ListTile(
+                          shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.horizontal(
+                                  right: Radius.circular(15))),
+                          tileColor: c.color.shade100,
+                          leading: const Icon(FeatherIcons.shield),
+                          title: Text(l10n(context).lbl_moderation),
+                          onTap: () =>
+                              Navigator.of(context).pushNamed(Routes.moderation),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              ListView(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  padding: EdgeInsets.zero,
-                  children: [
-                    ListTile(
-                      leading: const Icon(FeatherIcons.settings),
-                      title: Text(l10n(context).lbl_settings),
-                      onTap: () => Navigator.of(context)
-                          .popAndPushNamed(Routes.settings),
-                    ),
-                    /*ListTile(
-                      leading: const Icon(FeatherIcons.logOut),
-                      title: Text(l10n(context).lbl_signOut),
-                      enabled: true,
-                      onTap: () =>
-                          BlocProvider.of<FirebaseAuthenticationCubitCubit>(
-                                  context)
-                              .logoutRequested()
-                              .catchError(
-                                (_) => Tools.showSnackbar(
-                                    context, l10n(context).msg_signOutFailed),
-                              ),
-                    ),*/
-                  ]),
-            ],
+                ListView(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    padding: EdgeInsets.zero,
+                    children: [
+                      ListTile(
+                        leading: const Icon(FeatherIcons.settings),
+                        title: Text(l10n(context).lbl_settings),
+                        onTap: () => Navigator.of(context)
+                            .popAndPushNamed(Routes.settings),
+                      ),
+                      /*ListTile(
+                        leading: const Icon(FeatherIcons.logOut),
+                        title: Text(l10n(context).lbl_signOut),
+                        enabled: true,
+                        onTap: () =>
+                            BlocProvider.of<FirebaseAuthenticationCubitCubit>(
+                                    context)
+                                .logoutRequested()
+                                .catchError(
+                                  (_) => Tools.showSnackbar(
+                                      context, l10n(context).msg_signOutFailed),
+                                ),
+                      ),*/
+                    ]),
+              ],
+            ),
           ),
         ),
       ),
