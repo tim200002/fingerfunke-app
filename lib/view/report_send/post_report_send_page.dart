@@ -144,7 +144,7 @@ class PostReportSendPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         _postCard(context),
-                        Text(l10n(context).lbl_reportReasons),
+                        Text(l10n(context).lbl_reportReasonsPost),
                         ChipChooser<ReportReason>(
                             selected: reasons,
                             onChanged: (r) =>

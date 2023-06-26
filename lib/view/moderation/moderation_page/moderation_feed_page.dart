@@ -10,21 +10,27 @@ import '../../illustration_view/illustration_view.dart';
 import '../cubit/mod_cubit.dart';
 
 class ModFeedPage extends StatelessWidget {
+  String titleText;
+  String approveText;
+  String rejectText;
   final ReportType reportType;
   final Future Function(Report) onReportAccepted;
   final Widget Function(Report) ReportView;
 
-  const ModFeedPage(
-      {required this.ReportView, required this.onReportAccepted, required this.reportType, super.key});
+  ModFeedPage(
+      {required this.ReportView, required this.onReportAccepted, required this.reportType, required this.approveText, required this.titleText, required this.rejectText, super.key});
 
   static Route route(
       {required Widget Function(Report) ReportView,
       required Future Function(Report) onReportAccepted,
+      required String titleText,
+      required String approveText,
+      required String rejectText,
       required ReportType reportType
       }) {
     return MaterialPageRoute(
         builder: (context) => ModFeedPage(
-            ReportView: ReportView, onReportAccepted: onReportAccepted, reportType: reportType));
+            ReportView: ReportView, onReportAccepted: onReportAccepted, reportType: reportType, approveText: approveText, titleText: titleText, rejectText: rejectText,));
   }
 
   void _performAction(BuildContext context, bool accept) {
@@ -60,7 +66,7 @@ class ModFeedPage extends StatelessWidget {
           reportType: reportType, onReportAccepted: onReportAccepted),
       child: Scaffold(
           appBar: ClearanceAppBar.widget(context, UserClearance.moderation,
-              title: l10n(context).lbl_modReportedPosts),
+              title: titleText),
           body: Padding(
             padding: const EdgeInsets.all(20),
             child: BlocBuilder<ModCubit, ModState>(
@@ -118,8 +124,7 @@ class ModFeedPage extends StatelessWidget {
                                               onPressed: () =>
                                                   _performAction(context, false),
                                               child: Text(
-                                                l10n(context)
-                                                    .lbl_modElementApprove,
+                                                approveText,
                                                 textAlign: TextAlign.center,
                                               )),
                                         ),
@@ -137,8 +142,7 @@ class ModFeedPage extends StatelessWidget {
                                               onPressed: () =>
                                                   _performAction(context, true),
                                               child: Text(
-                                                l10n(context)
-                                                    .lbl_modElementDelete,
+                                                rejectText, 
                                                 textAlign: TextAlign.center,
                                               )),
                                         )

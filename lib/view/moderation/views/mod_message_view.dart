@@ -9,7 +9,6 @@ import '../../../models/user/user.dart';
 import '../../../repositories/user_repository/user_repository.dart';
 import '../../../utils/tools.dart';
 import '../../../utils/util_widgets/future_text.dart';
-import '../../error/exception_view.dart';
 import '../../report_send/widgets/chip_chooser.dart';
 
 class ModMessageReportView extends StatelessWidget {

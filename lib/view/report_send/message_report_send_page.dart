@@ -105,7 +105,7 @@ class MessageReportSendPopup extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           _messageCard(context),
-                          Text(l10n(context).lbl_reportReasons),
+                          Text(l10n(context).lbl_reportReasonsMessage),
                           ChipChooser<ReportReason>(
                               selected: reasons,
                               onChanged: (r) =>

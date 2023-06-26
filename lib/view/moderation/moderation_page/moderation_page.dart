@@ -33,23 +33,33 @@ class ModerationPage extends StatelessWidget {
               subtitle: l10n(context).lbl_modReportedPostsDesc,
               trailing: const Icon(Icons.arrow_forward_ios),
               onPressed: (_) => Navigator.of(context).push(ModFeedPage.route(
-                  reportType: ReportType.post,
-                  ReportView: (report) => ModPostReportView(report: report),
-                  onReportAccepted: (report) => _postRepository.moderatePost(
-                      report.objectReference,
-                      shouldBeDeleted: true))),
+                reportType: ReportType.post,
+                ReportView: (report) => ModPostReportView(report: report),
+                onReportAccepted: (report) => _postRepository.moderatePost(
+                    report.objectReference,
+                    shouldBeDeleted: true),
+                titleText: l10n(context).lbl_modReportedPosts,
+                approveText: l10n(context).lbl_modElementApprovePost,
+                rejectText: l10n(context).lbl_modElementDeletePost,
+              )),
             ),
             SettingsTile(
-              title: "gemeldete Nachrichten",
-              subtitle: "gemeldtete Nachrichten",
+              title: l10n(context).lbl_modReportedMessages,
+              subtitle: l10n(context).lbl_modReportedMessagesDesc,
               trailing: const Icon(Icons.arrow_forward_ios),
-              onPressed: (_) => Navigator.of(context).push(ModFeedPage.route(
+              onPressed: (_) => Navigator.of(context).push(
+                ModFeedPage.route(
                   reportType: ReportType.message,
                   ReportView: (report) => ModMessageReportView(report: report),
                   onReportAccepted: (report) =>
                       _messageRepository.moderateMessage(
                           fullPath: report.objectReferenceFullPath,
-                          shouldBeDeleted: true))),
+                          shouldBeDeleted: true),
+                  titleText: l10n(context).lbl_modReportedPosts,
+                  approveText: l10n(context).lbl_modElementApproveMessage,
+                  rejectText: l10n(context).lbl_modElementDeleteMessage,
+                ),
+              ),
             )
           ],
         ),
