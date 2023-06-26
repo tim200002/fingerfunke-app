@@ -1,5 +1,17 @@
 # Changelog 
 
+## 0.7.0
+
+### Bug Fixes
+- remove "beigetreten" button when I am part of posts
+
+### Features
+- add possibility to report chat message
+
+### Miscellaneous
+
+
+
 ## 0.6.0
 
 ### Bug Fixes
