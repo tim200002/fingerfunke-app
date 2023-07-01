@@ -1,5 +1,17 @@
 # Changelog 
 
+## 0.8.0
+
+### Bug Fixes
+
+### Features
+- Implement new filters for feed. Users can now decide whether to filter by event date or by newest.
+- Implement first version of push notifications
+
+### Miscellaneous
+
+
+
 ## 0.7.0
 
 ### Bug Fixes
