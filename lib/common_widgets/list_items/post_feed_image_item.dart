@@ -73,43 +73,46 @@ class PostFeedImageItem extends StatelessWidget {
         event.id,
         (hasNotification) => Stack(
               children: [
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  constraints: const BoxConstraints(minWidth: 60),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white),
-                  child: event.startTime.isBefore(DateTime.now())
-                      ? Text(l10n(context).lbl_post_inPast,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                          ))
-                      : Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                                event.startTime.day
-                                    .toString(), //ToDo: Datamodel does not contain date
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 21,
-                                )),
-                            Text(event.startTime.monthAsAbbreviatedString,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 14,
-                                    color: Colors.grey))
-                          ],
-                        ),
+                Padding(
+                  padding: const EdgeInsets.all(3.3),
+                  child: Container(
+                    padding: const EdgeInsets.all(10),
+                    constraints: const BoxConstraints(minWidth: 60),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.white),
+                    child: event.startTime.isBefore(DateTime.now())
+                        ? Text(l10n(context).lbl_post_inPast,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ))
+                        : Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                  event.startTime.day
+                                      .toString(), //ToDo: Datamodel does not contain date
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 21,
+                                  )),
+                              Text(event.startTime.monthAsAbbreviatedString,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 14,
+                                      color: Colors.grey))
+                            ],
+                          ),
+                  ),
                 ),
                 if (hasNotification)
                   Positioned(
-                    top: 2,
-                    right: 2,
+                    top: 0,
+                    right: 0,
                     child: Container(
-                      width: 10,
-                      height: 10,
+                      width: 15,
+                      height: 15,
                       decoration: const BoxDecoration(
                         color: Colors.red,
                         shape: BoxShape.circle,
