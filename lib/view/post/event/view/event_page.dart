@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 
 import '../../../../cubits/better_pagination/cubit/better_pagination_cubit.dart';
 import '../../../../cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
+import '../../../../cubits/notification_tracker/notification_tracker.dart';
 import '../../../../models/message/message.dart';
 import '../../../../models/post/post.dart';
 import '../../../../utils/app_theme.dart';
@@ -76,9 +77,12 @@ class EventPage extends StatelessWidget {
     );
   }
 
-
   Widget _viewProviders(BuildContext context, Function(BuildContext) builder) {
     final postId = ModalRoute.of(context)!.settings.arguments as String;
+
+    // register opening of post to remove notification
+    context.read<NotificationTracker>().registerPostOpening(postId);
+
     return MultiBlocProvider(providers: [
       // To control page
       BlocProvider<PostCubit>(

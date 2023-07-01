@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
+import '../../cubits/notification_tracker/notification_tracker.dart';
 import '../../routes.dart';
 import '../../utils/tools.dart';
 import 'bottom_nav_item.dart';
@@ -44,12 +45,31 @@ class _MainViewState extends State<MainView> {
                 color: Theme.of(context).colorScheme.primary,
                 onPressed: () =>
                     Navigator.of(context).pushNamed(Routes.postEditor)),
-            BottomNavItem(
-                title: l10n(context).lbl_mine,
-                selected: _activePage == _MainViewPages.user,
-                icon: FeatherIcons.user,
-                onPressed: () =>
-                    setState(() => _activePage = _MainViewPages.user)),
+            NotificationTracker.anyPostBuilder(
+              (hasNotification) => Stack(
+                children: [
+                  BottomNavItem(
+                      title: l10n(context).lbl_mine,
+                      selected: _activePage == _MainViewPages.user,
+                      icon: FeatherIcons.user,
+                      onPressed: () =>
+                          setState(() => _activePage = _MainViewPages.user)),
+                  if (hasNotification)
+                    Positioned(
+                      top: 20,
+                      right: 37,
+                      child: Container(
+                        width: 10,
+                        height: 10,
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            )
           ],
         ),
       ),

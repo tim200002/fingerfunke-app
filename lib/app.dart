@@ -6,6 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
 import 'cubits/live_config_cubit/live_config_cubit.dart';
 import 'cubits/location_cubit/location_cubit.dart';
+import 'cubits/notification_tracker/notification_tracker.dart';
 import 'cubits/settings_cubit/app_settings_cubit.dart';
 import 'models/settings/app_settings.dart';
 import 'routes.dart';
@@ -41,8 +42,8 @@ class App extends StatelessWidget {
             // provided all relevant blocks that are necessary to fully use the app
             return MultiBlocProvider(providers: [
               BlocProvider(create: (_) => LiveConfigCubit()),
-              // BlocProvider(create: (_) => AppInfoCubit(packageInfo)),
-              BlocProvider(create: (_) => LocationCubit())
+              BlocProvider(create: (_) => LocationCubit()),
+              BlocProvider(create: (_) => NotificationTracker(user.id)),
             ], child: buildApp(const BaseView(), routes: routes));
           },
         ),
@@ -55,7 +56,8 @@ class App extends StatelessWidget {
           const <String, WidgetBuilder>{}}) {
     return BlocBuilder<AppSettingsCubit, AppSettings>(
       builder: (context, settings) => MaterialApp(
-        scaffoldMessengerKey: GetIt.I<GlobalsService>().rootScaffoldMessengerKey,
+        scaffoldMessengerKey:
+            GetIt.I<GlobalsService>().rootScaffoldMessengerKey,
         routes: routes,
         locale: settings.locale == "system"
             ? null

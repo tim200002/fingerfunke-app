@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../../../../cubits/better_pagination/cubit/better_pagination_cubit.dart';
 import '../../../../../cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
+import '../../../../../cubits/notification_tracker/notification_tracker.dart';
 import '../../../../../models/message/message.dart';
 import '../../../../../models/user/user.dart';
 import '../../../../../routes.dart';
@@ -101,7 +102,35 @@ class PostActionButtons extends StatelessWidget {
                           heroTag: "post_chat",
                           backgroundColor:
                               Theme.of(context).colorScheme.onBackground,
-                          child: const Icon(Icons.chat_bubble_outline_rounded),
+                          child: NotificationTracker.chatBuilder(
+                            post.id,
+                            (hasNotification) => Stack(
+                              children: [
+                                const Padding(
+                                  padding: EdgeInsets.all(4.0),
+                                  child:
+                                      Icon(Icons.chat_bubble_outline_rounded),
+                                ),
+                                if (hasNotification)
+                                  // red dot
+                                  Positioned(
+                                    top: 0,
+                                    right: 0,
+                                    child: Container(
+                                      padding: const EdgeInsets.all(1),
+                                      decoration: BoxDecoration(
+                                        color: Colors.red,
+                                        borderRadius: BorderRadius.circular(6),
+                                      ),
+                                      constraints: const BoxConstraints(
+                                        minWidth: 12,
+                                        minHeight: 12,
+                                      ),
+                                    ),
+                                  )
+                              ],
+                            ),
+                          ),
                           onPressed: () => Navigator.of(context).pushNamed(
                                 Routes.chat,
                                 arguments: ChatArguments(

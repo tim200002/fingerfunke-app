@@ -9,7 +9,7 @@ import '../error/exception_view.dart';
 /// A widget that shows a list of posts without pagination.
 /// 
 /// This widget can be used for use cases where the expected number of
-/// posts is small enough to be displayed in one page. THis is for example the case
+/// posts is small enough to be displayed in one page. This is for example the case
 /// for the "My Posts" view.
 class NonPaginatedCompactPostFeed extends StatelessWidget {
   final Stream<List<Post>> stream;

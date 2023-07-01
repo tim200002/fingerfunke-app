@@ -68,14 +68,6 @@ class FirebaseAuthenticationCubitCubit
       return emit(const FirebaseAuthenticationCubitState.unauthenticated());
     }
 
-    // User Logged in transition is only valid if the user was previously logged out
-    // bool previousStateIsLoggedOut =
-    //     state.maybeMap(unauthenticated: (_) => true, orElse: () => false);
-    // if (!previousStateIsLoggedOut) {
-    //   throw Exception(
-    //       'Invalid State Transition, please investigate how this could happen');
-    // }
-
     Tuple2<bool, user_models.User?> userExists =
         await _userDocumentExists(currentUser.uid);
     if (userExists.item1 == false) {

@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import '../../../common_widgets/paginated_list/paginated_list.dart';
 import '../../../cubits/better_pagination/cubit/better_pagination_cubit.dart';
 import '../../../cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
+import '../../../cubits/notification_tracker/notification_tracker.dart';
 import '../../../models/message/message.dart';
 import '../../../utils/tools.dart';
 import '../widgets/chat_message.dart';
@@ -31,6 +32,9 @@ class ChatPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final ChatArguments arguments =
         ModalRoute.of(context)!.settings.arguments as ChatArguments;
+
+    context.read<NotificationTracker>().registerChatOpening(arguments.postId);
+
     return Hero(
       tag: "post_chat",
       child: Scaffold(
@@ -54,36 +58,39 @@ class ChatPage extends StatelessWidget {
             child: Column(
               children: [
                 Expanded(
-                  child:  PaginatedList<Message>(
-                      cubit: arguments.chatMessagePaginationCubit,
-                      reverse: true,
-                      initialLoadIndicator: const Center(
-                          child: CircularProgressIndicator.adaptive()),
-                      itemBuilder: (message) {
-                        switch (message.type) {
-                          case MessageType.text:
-                            return ChatMessage(message: message as TextMessage, postId: arguments.postId,);
-                          default:
-                            return ExceptionView(
-                              exception: InvalidMessageTypeExcpetion(),
-                            );
-                        }
-                      },
-                      emptyListIndicator: Center(
-                          child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text("No messages",
-                            style: Theme.of(context).textTheme.labelMedium),
-                      )),
-                      endIndicator: Center(
-                          child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(l10n(context).lbl_chatNoMoreMessages,
-                            style: Theme.of(context).textTheme.labelMedium),
-                      )),
-                      nextItemsLoadingIndicator: const Center(
-                          child: CircularProgressIndicator.adaptive()),
-                    ),
+                  child: PaginatedList<Message>(
+                    cubit: arguments.chatMessagePaginationCubit,
+                    reverse: true,
+                    initialLoadIndicator: const Center(
+                        child: CircularProgressIndicator.adaptive()),
+                    itemBuilder: (message) {
+                      switch (message.type) {
+                        case MessageType.text:
+                          return ChatMessage(
+                            message: message as TextMessage,
+                            postId: arguments.postId,
+                          );
+                        default:
+                          return ExceptionView(
+                            exception: InvalidMessageTypeExcpetion(),
+                          );
+                      }
+                    },
+                    emptyListIndicator: Center(
+                        child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text("No messages",
+                          style: Theme.of(context).textTheme.labelMedium),
+                    )),
+                    endIndicator: Center(
+                        child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(l10n(context).lbl_chatNoMoreMessages,
+                          style: Theme.of(context).textTheme.labelMedium),
+                    )),
+                    nextItemsLoadingIndicator: const Center(
+                        child: CircularProgressIndicator.adaptive()),
+                  ),
                 ),
                 ChatEditor(
                     postId: arguments.postId,

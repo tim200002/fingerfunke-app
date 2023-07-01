@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../../common_widgets/video/view/video_playback_view.dart';
 import '../../../../../../models/asset/asset.dart';
@@ -9,6 +10,8 @@ import '../../../../../../utils/app_theme.dart';
 import '../../../../../../utils/extensions/date_time.dart';
 import '../../../../../../utils/tools.dart';
 import '../../../../../../utils/type_aliases.dart';
+import '../../cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
+import '../../cubits/notification_tracker/notification_tracker.dart';
 import '../../repositories/video_repository/video_repository.dart';
 import '../../utils/skeleton_view.dart';
 import '../image/mux_thumbnail_image/mux_thumbnail_image.dart';
@@ -66,35 +69,55 @@ class PostFeedImageItem extends StatelessWidget {
 
   Widget _eventDateWidget(BuildContext context) {
     final Event event = _post as Event;
-    return Container(
-      padding: const EdgeInsets.all(10),
-      constraints: const BoxConstraints(minWidth: 60),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10), color: Colors.white),
-      child: event.startTime.isBefore(DateTime.now())
-          ? Text(l10n(context).lbl_post_inPast,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-              ))
-          : Column(
-              mainAxisSize: MainAxisSize.min,
+    return NotificationTracker.postBuilder(
+        event.id,
+        (hasNotification) => Stack(
               children: [
-                Text(
-                    event.startTime.day
-                        .toString(), //ToDo: Datamodel does not contain date
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 21,
-                    )),
-                Text(event.startTime.monthAsAbbreviatedString,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14,
-                        color: Colors.grey))
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  constraints: const BoxConstraints(minWidth: 60),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white),
+                  child: event.startTime.isBefore(DateTime.now())
+                      ? Text(l10n(context).lbl_post_inPast,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ))
+                      : Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                                event.startTime.day
+                                    .toString(), //ToDo: Datamodel does not contain date
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 21,
+                                )),
+                            Text(event.startTime.monthAsAbbreviatedString,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14,
+                                    color: Colors.grey))
+                          ],
+                        ),
+                ),
+                if (hasNotification)
+                  Positioned(
+                    top: 2,
+                    right: 2,
+                    child: Container(
+                      width: 10,
+                      height: 10,
+                      decoration: const BoxDecoration(
+                        color: Colors.red,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  ),
               ],
-            ),
-    );
+            ));
   }
 
   Widget _contentSection(BuildContext context) {
