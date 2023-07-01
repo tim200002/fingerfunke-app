@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'models/settings/session_info.dart';
 import 'repositories/message_repository.dart/message_repository.impl.dart';
 import 'repositories/report_repository/report_repository.impl.dart';
 import 'repositories/message_repository.dart/message_repository.dart';
@@ -16,6 +17,7 @@ import 'repositories/user_repository/user_repository.dart';
 import 'repositories/video_repository/video_repository.dart';
 import 'services/app_info_service.dart';
 import 'services/globals_service.dart';
+import 'services/session_info_service.dart';
 
 final GetIt _getIt = GetIt.instance;
 
@@ -32,5 +34,6 @@ void setupGetIt() {
   _getIt.registerSingleton<VideoRepository>(VideoRepositoryImpl());
   _getIt.registerSingleton<ReportRepository>(ReportRepositoryImpl());
   _getIt.registerSingleton<MessageRepository>(MessageRepositoryImpl());
+  _getIt.registerSingleton<SessionInfoService>(SessionInfoService());
   //_getIt.registerSingleton<CacheManager>(DefaultCacheManager());
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../../../../cubits/settings_cubit/app_settings_cubit.dart';
 import '../../../../../services/session_info_service.dart';
@@ -29,7 +30,7 @@ class SettingsLanguage extends StatelessWidget {
                       : null,
                   onTap: () {
                     String newLocale = languages[index].keys.first;
-                    SessionInfoService.instance.setLocale(newLocale);
+                    GetIt.I<SessionInfoService>().setLocale(newLocale);
                     context.read<AppSettingsCubit>().set(context,
                         settings: settings.copyWith(locale: newLocale));
                   },

@@ -1,46 +1,80 @@
-import 'package:intl/intl.dart';
+import 'dart:io';
 
+import '../utils/tools.dart';
+import 'app_info_service.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+
+import '../models/settings/session_info.dart';
 import '../repositories/user_repository/user_repository.dart';
 import '../utils/type_aliases.dart';
 
 class SessionInfoService {
-  static SessionInfoService? _instance;
-  static SessionInfoService get instance =>
-      _instance ??
-      (throw Exception(
-          "the SessionInfoService has not been initiated before it was accessed."
-          "Make sure you call the .init method first!"));
+  SessionInfo? _session;
+  FirestoreId? _userId;
+  final UserRepository _userRepository = GetIt.I<UserRepository>();
 
-  static void init(FirestoreId userId) =>
-      _instance = SessionInfoService._(userId);
-
-  final UserRepository _userRepository = UserRepositoryImpl();
-  final FirestoreId userId;
-  SessionInfoService._(this.userId);
-
-  Future<void> _saveToFirestore(String key, dynamic value) async {
-    await _userRepository.setSessionInfo(userId, {key: value});
+  Future<void> init(FirestoreId userId) async {
+    _userId = userId;
+    _session = await _createSession();
+    await _saveToFirestore();
   }
 
-  void setLocale(String locale) {
-    _saveToFirestore(
-        "locale", (locale == "system" ? Intl.getCurrentLocale() : locale));
+  /// To be called on logout, so next user has fresh session info
+  void deinit() {
+    _session = null;
+    _userId = null;
   }
 
-  void setAppVersion(String version) {
-    _saveToFirestore("app_version", version);
+  Future<void> _saveToFirestore() async {
+    await _userRepository.setSessionInfo(userId, _session!);
   }
 
-  void setOperatingSystem(String operatingSystem) {
-    _saveToFirestore("operating_system", operatingSystem);
+  Future<void> setLocale(String locale) async {
+    _session = sessionInfo.copyWith(locale: locale);
+    await _saveToFirestore();
   }
 
+  Future<SessionInfo> _createSession() async {
+    final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 
-  // void setLocation(Place place) {
-  //   _saveToFirestore("location", place.geohash);
-  // }
+    // ToDo Is it ok to do this on every start?
+    NotificationSettings settings = await firebaseMessaging.requestPermission();
 
-  // void setLocationDistance(int kilometers) {
-  //   _saveToFirestore("locationDistance", kilometers);
-  // }
+    // To make messaging work
+    String? fcmToken;
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      fcmToken = await FirebaseMessaging.instance.getToken();
+    }
+
+    // get package info
+    final PackageInfo packageInfo = GetIt.I<AppInfoService>().packageInfo;
+    final DeviceInfo deviceInfo = GetIt.I<AppInfoService>().deviceInfo;
+
+    return SessionInfo(
+      // ToDo this requires better solution
+      locale: Intl.getCurrentLocale(),
+      version: "${packageInfo.version}+${packageInfo.buildNumber}",
+      operatingSystem: Platform.operatingSystem,
+      deviceId: deviceInfo.id,
+      fcmToken: fcmToken,
+      lastUsedAt: DateTime.now(),
+    );
+  }
+
+  SessionInfo get sessionInfo {
+    if (_session == null) {
+      throw Exception("SessionInfoService not initialized");
+    }
+    return _session!;
+  }
+
+  FirestoreId get userId {
+    if (_userId == null) {
+      throw Exception("SessionInfoService not initialized");
+    }
+    return _userId!;
+  }
 }

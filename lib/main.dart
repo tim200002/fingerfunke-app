@@ -10,7 +10,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
 import 'app.dart';
 import 'cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
@@ -20,15 +19,30 @@ import 'repositories/firebase_authentication_repository/firebase_authentication_
 import 'repositories/storage_repository/storage_repository.dart';
 import 'services/app_info_service.dart';
 import 'services/meta_info_service.dart';
-import 'services/notification_service.dart';
 import 'services/session_info_service.dart';
 import 'models/user/user.dart' as user_models;
-import 'firebase_options.dart';
+import 'firebase_options.dart' as production_options;
+
+FirebaseOptions getOptions(String environment) {
+  switch (environment) {
+    case 'local':
+      {
+        throw Exception('Local environment not supported');
+      }
+    case 'production':
+      {
+        return production_options.DefaultFirebaseOptions.currentPlatform;
+      }
+
+    default:
+      throw Exception('Unknown environment: $environment');
+  }
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
+    options: getOptions(const String.fromEnvironment("FIREBASE_ENVIRONMENT")),
   );
   setupGetIt();
 
@@ -46,7 +60,8 @@ void main() async {
       {
         _logger.i("Using local environment");
         Logger.level = Level.debug;
-        String emulatorIp = const String.fromEnvironment("EMULATOR_IP", defaultValue: "");
+        String emulatorIp =
+            const String.fromEnvironment("EMULATOR_IP", defaultValue: "");
         if (emulatorIp.isEmpty) {
           _logger.e("No IP for Emulator provided, falling back to localhost ");
           emulatorIp = "localhost";
@@ -70,29 +85,26 @@ void main() async {
       }
   }
 
-  runApp(AppInflater(
-   
-  ));
+  runApp(AppInflater());
 }
 
 class AppInflater extends StatelessWidget {
-
   AppInflater({Key? key}) : super(key: key);
 
   /// This function handles all the functions that must be executed
   /// on login for proper user management etc.
   // ignore: prefer_function_declarations_over_variables
   final Future<void> Function(user_models.User) logInHandler = (user) async {
-    // To make messaging work
-    final fcmToken = await FirebaseMessaging.instance.getToken();
-    await NotificationService.setFCMToken(user.id, fcmToken);
+    await GetIt.I<SessionInfoService>().init(user.id);
 
-    // To keep track of sessions
-    final PackageInfo packageInfo = GetIt.I<AppInfoService>().packageInfo;
-    SessionInfoService.init(user.id);
-    SessionInfoService.instance
-        .setAppVersion("${packageInfo.version}+${packageInfo.buildNumber}");
-    SessionInfoService.instance.setOperatingSystem(Platform.operatingSystem);
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print('Got a message whilst in the foreground!');
+
+      if (message.notification != null) {
+        print(
+            'Message also contained a notification: ${message.notification!.title}');
+      }
+    });
 
     // To keep track of logins
     MetaInfoService.registerAppOpening();

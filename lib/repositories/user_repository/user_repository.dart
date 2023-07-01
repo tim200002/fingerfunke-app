@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../cache/lru_cache/lru_cache.dart';
+import '../../models/settings/session_info.dart';
 import '../../models/user/user.dart';
 import '../../utils/type_aliases.dart';
 
@@ -23,7 +24,7 @@ abstract class UserRepository {
   Future<void> savePost(FirestoreId userId, FirestoreId postId);
   Future<void> unsavePost(FirestoreId userId, FirestoreId postId);
 
-  Future<void> setSessionInfo(FirestoreId userId, JsonMap infos);
+  Future<void> setSessionInfo(FirestoreId userId, SessionInfo info);
 
   Stream<User> getUserSubscription(String userId);
 }
