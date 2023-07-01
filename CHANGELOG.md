@@ -1,5 +1,16 @@
 # Changelog 
 
+## 0.9.0
+
+### Bug Fixes
+
+### Features
+- show Notifcation badges with unread messages and posts
+
+### Miscellaneous
+
+
+
 ## 0.8.0
 
 ### Bug Fixes
