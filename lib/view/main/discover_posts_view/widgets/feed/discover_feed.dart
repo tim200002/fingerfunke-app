@@ -46,23 +46,38 @@ class DiscoverFeed extends StatelessWidget {
   Query<Post> _createForwardQuery(Place userLocation, FeedFilter filters) {
     Query<Map<String, dynamic>> untypedQuery = _firestore
         .collection('posts')
-         .where('visibility', isEqualTo: PostVisibility.visible.name)
+        .where('visibility', isEqualTo: PostVisibility.visible.name)
         .where('geohashesByRadius.${filters.locationRadius}',
             arrayContains: userLocation.geohash)
         .where('startTime',
             isGreaterThanOrEqualTo: DateTime.now().millisecondsSinceEpoch);
 
-    if (filters.hideFarFuture) {
-      DateTime farFuture = DateTime.now();
-      farFuture = farFuture.add(const Duration(days: 30));
-      untypedQuery = untypedQuery.where('startTime',
-          isLessThanOrEqualTo: farFuture.millisecondsSinceEpoch);
-    }
+    switch (filters.sortBy) {
+      case FeedSortBy.eventDate:
+        {
+          untypedQuery = untypedQuery.orderBy('startTime', descending: false);
+          break;
+        }
+      case FeedSortBy.creationDate:
+        {
+          if (filters.hideFarFuture) {
+            DateTime farFuture = DateTime.now();
+            farFuture = farFuture.add(const Duration(days: 30));
+            untypedQuery = untypedQuery.where('startTime',
+                isLessThanOrEqualTo: farFuture.millisecondsSinceEpoch);
+          }
 
-    // ugly hack: Problem after inequality first order by must start with same field
-    untypedQuery = untypedQuery
-        .orderBy('startTime')
-        .orderBy('creationTime', descending: true);
+          // ugly hack: Problem after inequality first order by must start with same field
+          untypedQuery = untypedQuery
+              .orderBy('startTime')
+              .orderBy('creationTime', descending: true);
+          break;
+        }
+      default:
+        {
+          throw Exception('Unknown FeedSortBy: ${filters.sortBy}');
+        }
+    }
 
     Query<Post> typedQuery = untypedQuery.withConverter<Post>(
         fromFirestore: (snapshot, _) => Post.fromDoc(snapshot),

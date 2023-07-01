@@ -87,12 +87,28 @@ class LocationFilterView extends StatelessWidget {
                       }),
                       _sectionHeader(context, l10n(context).lbl_filterPosts),
                       const SizedBox(height: 12),
-                      SimpleToggle(
-                          label: l10n(context).lbl_filterOnlyNearFuture,
-                          enabled: state.hideFarFuture,
-                          onChanged: (v) => context
-                              .read<FeedFilterCubit>()
-                              .set(state.copyWith(hideFarFuture: v))),
+
+                      SimpleMultiValueToggle(
+                          labels: const ["Sort By Date", "Newest First"],
+                          selectedIndex: state.sortBy == FeedSortBy.eventDate ? 0 : 1,
+                          onChanged: (v) {
+                            context.read<FeedFilterCubit>().set(state.copyWith(
+                                sortBy: v == 0
+                                    ? FeedSortBy.eventDate
+                                    : FeedSortBy.creationDate));
+                          }),
+
+                      // show this when sorting by creation Date
+                      // when sorting by when the event really happends this does not make sense
+                      if (state.sortBy == FeedSortBy.creationDate)
+                        ...[
+                          const SizedBox(height: 12),
+                          SimpleToggle(
+                            label: l10n(context).lbl_filterOnlyNearFuture,
+                            enabled: state.hideFarFuture,
+                            onChanged: (v) => context
+                                .read<FeedFilterCubit>()
+                                .set(state.copyWith(hideFarFuture: v))),]
                     ],
                   ),
                 ])));

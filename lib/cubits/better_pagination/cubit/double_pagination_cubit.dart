@@ -129,9 +129,9 @@ class DoublePaginationCubit<T> extends Cubit<DoublePaginationState<T>> {
 
 
   @override
-  Future<void> close() {
-    _querySubscriptionForward?.cancel();
-    _querySubscriptionBackward?.cancel();
+  Future<void> close() async {
+    await _querySubscriptionForward?.cancel();
+    await _querySubscriptionBackward?.cancel();
     return super.close();
   }
 }
