@@ -1,5 +1,16 @@
 # Changelog 
 
+## 0.9.1
+
+### Bug Fixes
+- Nicer Design for Notification Bulb
+
+### Features
+
+### Miscellaneous
+
+
+
 ## 0.9.0
 
 ### Bug Fixes
