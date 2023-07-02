@@ -1,5 +1,16 @@
 # Changelog 
 
+## 0.9.3
+
+### Bug Fixes
+- Text Editing field in post editor now is completely visible when editing and not overlapped by action buttons
+
+### Features
+
+### Miscellaneous
+
+
+
 ## 0.9.2
 
 ### Bug Fixes
