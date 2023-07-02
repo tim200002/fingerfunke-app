@@ -22,7 +22,8 @@ import 'services/session_info_service.dart';
 final GetIt _getIt = GetIt.instance;
 
 void setupGetIt() {
-  _getIt.registerSingleton<FirebaseAuthenticationRepository>(FirebaseAuthenticationRepository());
+  _getIt.registerSingleton<FirebaseAuthenticationRepository>(
+      FirebaseAuthenticationRepository());
   _getIt.registerSingleton<FirebaseFirestore>(FirebaseFirestore.instance);
   _getIt.registerSingleton<FirebaseStorage>(FirebaseStorage.instance);
   _getIt.registerSingleton<LRUCache<User>>(LRUCache<User>(30));

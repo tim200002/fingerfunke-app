@@ -59,59 +59,53 @@ abstract class AbstractPostEditorCubit extends Cubit<PostEditorState> {
 
   void updateTitle(String title) {
     this.title = title;
-    _emitFieldUpdate();
+    emitFieldUpdate();
   }
 
   void updateDescription(String description) {
     this.description = description;
-    _emitFieldUpdate();
-  }
-
-  void updateMainVideoUploadCubit(BetterVideoUploadCubit? videoUploadCubit) {
-    mainVideoUploadCubit = videoUploadCubit;
-    _emitFieldUpdate();
-  }
-
-  void updateMediaUploadCubits(List<FileUploadCubit> mediaUploadCubits) {
-    this.mediaUploadCubits = mediaUploadCubits;
-    _emitFieldUpdate();
+    emitFieldUpdate();
   }
 
   void updatePlace(Place? place) {
     this.place = place;
     updateTracker = updateTracker.addUpdatePlace();
-    _emitFieldUpdate();
+    emitFieldUpdate();
   }
 
-  void addMainVideoUploadCubit(BetterVideoUploadCubit videoUploadCubit) {
+  void addMainVideoUploadCubit(File file) {
     assert(mainVideoUploadCubit == null,
         "There can only be one main video upload cubit");
-    mainVideoUploadCubit = videoUploadCubit;
-    _emitFieldUpdate();
+    mainVideoUploadCubit =
+        BetterVideoUploadCubit.fromFile(file, onVideoUploaded: emitFieldUpdate);
+    updateTracker = updateTracker.addUpdateMedia();
+    emitFieldUpdate();
   }
 
   void addMediaFromFile(File file) {
     AssetType assetType = Asset.inferAssetTypeFromFile(file);
     if (assetType == AssetType.video) {
-      BetterVideoUploadCubit videoUploadCubit =
-          BetterVideoUploadCubit.fromFile(file);
+      BetterVideoUploadCubit videoUploadCubit = BetterVideoUploadCubit.fromFile(
+          file,
+          onVideoUploaded: emitFieldUpdate);
       mediaUploadCubits.add(videoUploadCubit);
     } else if (assetType == AssetType.firebaseAsset) {
       FirebaseFileUploadCubit firebaseUploadCubit =
-          FirebaseFileUploadCubit.fromFile(file);
+          FirebaseFileUploadCubit.fromFile(file,
+              onFileUploaded: emitFieldUpdate);
       mediaUploadCubits.add(firebaseUploadCubit);
     } else {
       throw InvalidAssetTypeException();
     }
 
     updateTracker = updateTracker.addUpdateMedia();
-    _emitFieldUpdate();
+    emitFieldUpdate();
   }
 
   void removeMainVideoUploadCubit() {
     mainVideoUploadCubit?.close();
     mainVideoUploadCubit = null;
-    _emitFieldUpdate();
+    emitFieldUpdate();
   }
 
   void removeMediaUploadCubit(String cubitId) {
@@ -123,7 +117,7 @@ abstract class AbstractPostEditorCubit extends Cubit<PostEditorState> {
         mediaUploadCubits.where((cubit) => cubit.id != cubitId).toList();
 
     updateTracker = updateTracker.addUpdateMedia();
-    _emitFieldUpdate();
+    emitFieldUpdate();
   }
 
   Future<void> submit() =>
@@ -156,7 +150,7 @@ abstract class AbstractPostEditorCubit extends Cubit<PostEditorState> {
     return state.maybeWhen(editing: (_, __) => true, orElse: () => false);
   }
 
-  void _emitFieldUpdate() {
+  void emitFieldUpdate() {
     if (_canEmitUpdate()) {
       emit(PostEditorState.editing(updateTracker, validateInput()));
     }
@@ -176,13 +170,6 @@ abstract class AbstractPostEditorCubit extends Cubit<PostEditorState> {
         .toList();
   }
 
-  /// Given a list of [uploadCubits] clsoe all cubits so they can free their ressources
-  void _disposeVideoUploadCubits(List<BetterVideoUploadCubit> uploadCubits) {
-    for (var cubit in uploadCubits) {
-      cubit.close();
-    }
-  }
-
   /// Do necessary cleanup when cubit is closed
   /// Especially remove no longer used video upload cubits so they can free their memory
   @override
@@ -192,6 +179,7 @@ abstract class AbstractPostEditorCubit extends Cubit<PostEditorState> {
     // we must catch the time, when post editor has been closed before sending
     //_disposeVideoUploadCubits(videoUploadCubits);
     mainVideoUploadCubit?.close();
+    mediaUploadCubits.forEach((cubit) => cubit.close());
 
     return super.close();
   }

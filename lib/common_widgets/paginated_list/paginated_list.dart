@@ -34,6 +34,8 @@ class PaginatedList<T> extends StatelessWidget {
   /// If context cannot be used for reading the cubit, the cubit can be passed directly
   final BetterPaginationCubit<T>? cubit;
 
+  final ScrollViewKeyboardDismissBehavior keyboardDismissBehavior;
+
   const PaginatedList(
       {required this.itemBuilder,
       required this.endIndicator,
@@ -44,6 +46,7 @@ class PaginatedList<T> extends StatelessWidget {
       this.reverse = false,
       this.shouldShrinkWrap,
       this.cubit,
+      this.keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.manual,
       super.key});
 
   @override
@@ -67,6 +70,7 @@ class PaginatedList<T> extends StatelessWidget {
 
       // Show Normal List
       return ListView.builder(
+        keyboardDismissBehavior: keyboardDismissBehavior,
         scrollDirection: Axis.vertical,
         reverse: reverse,
         shrinkWrap: shouldShrinkWrap != null

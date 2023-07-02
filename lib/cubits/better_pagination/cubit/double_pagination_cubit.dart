@@ -9,10 +9,10 @@ import 'better_pagination_cubit.dart';
 part 'double_pagination_state.dart';
 
 class DoublePaginationCubit<T> extends Cubit<DoublePaginationState<T>> {
-   final Query<T> _baseQueryForward;
-   final Query<T> _baseQueryBackward;
+  final Query<T> _baseQueryForward;
+  final Query<T> _baseQueryBackward;
 
-   final int paginationDistance;
+  final int paginationDistance;
 
   int _pageCountForward = 0;
   int _pageCountBackward = 0;
@@ -20,10 +20,16 @@ class DoublePaginationCubit<T> extends Cubit<DoublePaginationState<T>> {
   StreamSubscription? _querySubscriptionForward;
   StreamSubscription? _querySubscriptionBackward;
 
-  DoublePaginationCubit(this._baseQueryForward, this._baseQueryBackward,  {this.paginationDistance = 20}) : super(DoublePaginationState<T>.initial()){
+  DoublePaginationCubit(this._baseQueryForward, this._baseQueryBackward,
+      {this.paginationDistance = 20})
+      : super(DoublePaginationState<T>.initial()) {
     // Start with fetching first page
-    _listenQuery(_baseQueryForward, _querySubscriptionForward, _pageCountForward, _getPaginationStateForward, _convertStateForward, nextPage: false);
-    _listenQuery(_baseQueryBackward, _querySubscriptionBackward, _pageCountBackward, _getPaginationStateBackward, _convertStateBackward, nextPage: false);
+    _listenQuery(_baseQueryForward, _querySubscriptionForward,
+        _pageCountForward, _getPaginationStateForward, _convertStateForward,
+        nextPage: false);
+    _listenQuery(_baseQueryBackward, _querySubscriptionBackward,
+        _pageCountBackward, _getPaginationStateBackward, _convertStateBackward,
+        nextPage: false);
   }
 
   void fetchNextPageForward() {
@@ -33,7 +39,9 @@ class DoublePaginationCubit<T> extends Cubit<DoublePaginationState<T>> {
     }
 
     _pageCountForward++;
-    _listenQuery(_baseQueryForward, _querySubscriptionForward, _pageCountForward, _getPaginationStateForward, _convertStateForward, nextPage: true);
+    _listenQuery(_baseQueryForward, _querySubscriptionForward,
+        _pageCountForward, _getPaginationStateForward, _convertStateForward,
+        nextPage: true);
   }
 
   void fetchNextPageBackward() {
@@ -43,10 +51,18 @@ class DoublePaginationCubit<T> extends Cubit<DoublePaginationState<T>> {
     }
 
     _pageCountBackward++;
-    _listenQuery(_baseQueryBackward, _querySubscriptionBackward, _pageCountBackward, _getPaginationStateBackward, _convertStateBackward, nextPage: true);
+    _listenQuery(_baseQueryBackward, _querySubscriptionBackward,
+        _pageCountBackward, _getPaginationStateBackward, _convertStateBackward,
+        nextPage: true);
   }
 
-  void _listenQuery(Query<T> baseQuery, StreamSubscription? querySubscription, int pageCount, BetterPaginationState<T> Function() getState, DoublePaginationState<T> Function(BetterPaginationState<T>) convertState, {bool nextPage = false}){
+  void _listenQuery(
+      Query<T> baseQuery,
+      StreamSubscription? querySubscription,
+      int pageCount,
+      BetterPaginationState<T> Function() getState,
+      DoublePaginationState<T> Function(BetterPaginationState<T>) convertState,
+      {bool nextPage = false}) {
     querySubscription?.cancel();
 
     BetterPaginationState<T> localState = getState();
@@ -57,7 +73,7 @@ class DoublePaginationCubit<T> extends Cubit<DoublePaginationState<T>> {
     } else {
       localState = localState.copyWith(isFetching: true);
     }
-    emit(convertState(localState));
+    saveEmit(convertState(localState));
 
     final expectedDocsCount = (pageCount + 1) * paginationDistance
 
@@ -69,7 +85,7 @@ class DoublePaginationCubit<T> extends Cubit<DoublePaginationState<T>> {
 
     final query = baseQuery.limit(expectedDocsCount);
 
-        querySubscription = query.snapshots().listen(
+    querySubscription = query.snapshots().listen(
       (event) {
         BetterPaginationState<T> localState = getState();
         if (nextPage) {
@@ -89,7 +105,7 @@ class DoublePaginationCubit<T> extends Cubit<DoublePaginationState<T>> {
           hasMore: event.size == expectedDocsCount,
           hasError: false,
         );
-        emit(convertState(localState));
+        saveEmit(convertState(localState));
       },
       onError: (Object error, StackTrace stackTrace) {
         BetterPaginationState<T> localState = getState();
@@ -105,28 +121,38 @@ class DoublePaginationCubit<T> extends Cubit<DoublePaginationState<T>> {
           hasMore: false,
         );
 
-        emit(convertState(localState));
+        saveEmit(convertState(localState));
       },
     );
-
   }
 
-  BetterPaginationState<T> _getPaginationStateForward (){
+  BetterPaginationState<T> _getPaginationStateForward() {
     return state.paginationStateForward;
   }
 
-  BetterPaginationState<T> _getPaginationStateBackward (){
+  BetterPaginationState<T> _getPaginationStateBackward() {
     return state.paginationStateBackward;
   }
 
-  DoublePaginationState<T> _convertStateForward(BetterPaginationState<T> localState){
+  DoublePaginationState<T> _convertStateForward(
+      BetterPaginationState<T> localState) {
     return state.copyWith(paginationStateForward: localState);
   }
 
-  DoublePaginationState<T> _convertStateBackward(BetterPaginationState<T> localState){
+  DoublePaginationState<T> _convertStateBackward(
+      BetterPaginationState<T> localState) {
     return state.copyWith(paginationStateBackward: localState);
   }
 
+  /// Emit state only if cubit is not closed
+  /// 
+  /// For some reasons this is necessary because otherwise strea subscription
+  /// can still fire even though the cubit is closed.
+  void saveEmit(DoublePaginationState<T> state) {
+    if (!isClosed) {
+      emit(state);
+    }
+  }
 
   @override
   Future<void> close() async {

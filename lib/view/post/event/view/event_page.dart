@@ -36,6 +36,7 @@ class EventPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: CustomScrollView(
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         slivers: [
           HeaderSection(editing, includeTitle: true),
           SliverToBoxAdapter(

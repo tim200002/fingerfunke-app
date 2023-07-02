@@ -69,7 +69,7 @@ class App extends StatelessWidget {
         //darkTheme: AppTheme.darkTheme,
         themeMode: settings.themeMode,
         debugShowCheckedModeBanner: false,
-        home: home,
+        home: GestureDetector(child: home),
       ),
     );
   }

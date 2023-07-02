@@ -65,8 +65,8 @@ class PostCubit extends Cubit<PostState> {
           .removePostMember(postId: post.id, userId: userId));
 
   @override
-  Future<void> close() {
-    _postSubscription.cancel();
+  Future<void> close() async{
+    await _postSubscription.cancel();
     return super.close();
   }
 }

@@ -59,6 +59,7 @@ class ChatPage extends StatelessWidget {
               children: [
                 Expanded(
                   child: PaginatedList<Message>(
+                    keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
                     cubit: arguments.chatMessagePaginationCubit,
                     reverse: true,
                     initialLoadIndicator: const Center(

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../../../../common_widgets/adaptive_confirm_dialog.dart';
 import '../../../../../common_widgets/image/mux_thumbnail_image/mux_thumbnail_image.dart';
@@ -15,10 +16,12 @@ import '../../../../../models/post/post.dart';
 import '../../../../../repositories/video_repository/video_repository.dart';
 import '../../../../../repositories/video_repository/video_repository.impl.dart';
 import '../../../../../utils/app_theme.dart';
+import '../../../../../utils/exceptions.dart';
 import '../../../../../utils/skeleton_view.dart';
 import '../../../../../utils/tools.dart';
 import '../../../../fullscreen_video/view/fullscreen_video_page.dart';
 import '../../../../video_recorder/view/video_recorder_page.dart';
+import '../../../cubits/abstract_post_editor_cubit/abstract_post_editor_cubit.dart';
 import '../../../cubits/post_viewer_cubit/post_cubit.dart';
 import '../../../shared_widgets/post_settings_modal_content.dart';
 import '../../cubit/event_editor_cubit.dart';
@@ -250,16 +253,15 @@ class HeaderSection extends StatelessWidget {
         child: PostAppBarButton(
             icon: editing ? Icons.close_rounded : Icons.arrow_back_ios_rounded,
             onPressed: () async {
-              if(!editing){
+              if (!editing) {
                 return Navigator.of(context).pop();
               }
-              
-                bool shouldPop = await _onEditingBackPress(context);
-                if(shouldPop){
-                  Navigator.of(context).pop();
-                }
-              
-            } ),
+
+              bool shouldPop = await _onEditingBackPress(context);
+              if (shouldPop) {
+                Navigator.of(context).pop();
+              }
+            }),
       ),
       actions: editing
           ? []
@@ -349,14 +351,12 @@ class HeaderSection extends StatelessWidget {
     );
   }
 
-
   Future<bool> _onEditingBackPress(BuildContext context) =>
       AdaptiveConfirmDialog.show(context,
           title: l10n(context).lbl_postEditGoBack,
           description: l10n(context).lbl_postEditGoBackText,
           okayBtnLabel: l10n(context).lbl_yes,
           cancelBtnLabel: l10n(context).lbl_no);
-
 }
 
 class _Edit extends StatelessWidget {
@@ -373,9 +373,7 @@ class _Edit extends StatelessWidget {
         BlocProvider.of<EventEditorCubit>(context);
     return Stack(
       children: [
-        SizedBox(
-            height: thumbnailHeight,
-            child: _Thumbnail(eventEditorCubit.mainVideoUploadCubit)),
+        SizedBox(height: thumbnailHeight, child: _BetterThumbnail()),
         if (!includeTitle)
           HeaderSection._titleCardHeader(
             context,
@@ -390,92 +388,76 @@ class _Edit extends StatelessWidget {
   }
 }
 
-class _Thumbnail extends StatefulWidget {
-  final BetterVideoUploadCubit? initialUploadCubit;
-  const _Thumbnail(this.initialUploadCubit);
+class _BetterThumbnail extends StatelessWidget {
+  _BetterThumbnail({super.key});
 
-  @override
-  State<_Thumbnail> createState() => __ThumbnailState();
-}
+  final VideoRepository _videoRep = GetIt.I<VideoRepository>();
 
-class __ThumbnailState extends State<_Thumbnail> {
-  final VideoRepository _videoRep = VideoRepositoryImpl();
-  late BetterVideoUploadCubit? uploadCubit;
-  @override
-  void initState() {
-    uploadCubit = widget.initialUploadCubit;
-    super.initState();
-  }
-
-  Future<void> _onTapFunction(BuildContext context) async {
+  Future<void> _onTapFunction(
+      BetterVideoUploadCubit? uploadCubit, BuildContext context) async {
     // if no upload cubit, push new upload cubit
     if (uploadCubit == null) {
       File? video =
           await Navigator.push<File?>(context, VideoRecorderPage.route());
       if (video != null) {
-        EventEditorCubit eventEditorCubit = context.read<EventEditorCubit>();
-
-        BetterVideoUploadCubit videoUploadCubit =
-            BetterVideoUploadCubit.fromFile(video,
-                onVideoUploaded: () => eventEditorCubit.validateInput());
-        setState(() {
-          uploadCubit = videoUploadCubit;
-        });
-
-        context
-            .read<EventEditorCubit>()
-            .addMainVideoUploadCubit(videoUploadCubit);
+        if (context.mounted) {
+          context.read<EventEditorCubit>().addMainVideoUploadCubit(video);
+        }
       }
-    }else{
-          // if upload cubit but state is not uploaded, do nothing
-    uploadCubit!.state.maybeWhen(
-        uploaded: (asset) => () => Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => FullscreenVideoPage(
-                url: _videoRep.createPlaybackUrl(asset as VideoAsset)))),
-        orElse: () => null);
+    } else {
+      // if upload cubit but state is not uploaded, do nothing
+      uploadCubit.state.maybeWhen(
+          uploaded: (asset) => () => Navigator.of(context).push(
+              MaterialPageRoute(
+                  builder: (context) => FullscreenVideoPage(
+                      url: _videoRep.createPlaybackUrl(asset as VideoAsset)))),
+          orElse: () => null);
     }
-
-
   }
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: const BorderRadius.vertical(
-        bottom: HeaderSection.imgBorderRadius,
-      ),
-      child: InkWell(
-        onTap: () => _onTapFunction(context),
-        child: (uploadCubit != null)
-            ? UploadTile(
-                cubit: uploadCubit!,
-                onDelete: (cubitId) {
-                  context.read<EventEditorCubit>().removeMainVideoUploadCubit();
-                  setState(() {
-                    uploadCubit = null;
-                  });
-                },
-                height: 210,
-              )
-            : Container(
-                height: 210,
-                decoration: BoxDecoration(
-                  color: Theme.of(context)
-                      .colorScheme
-                      .primaryContainer
-                      .withOpacity(0.6),
-                  borderRadius:
-                      const BorderRadius.vertical(bottom: Radius.circular(10)),
-                ),
-                child: Center(
-                  child: Icon(
-                    FeatherIcons.video,
-                    color: Theme.of(context).colorScheme.onPrimaryContainer,
-                    size: 40,
+    return BlocBuilder<EventEditorCubit, PostEditorState>(
+        //buildWhen: (prev,cur) => prev.,
+        builder: (context, state) {
+      final cubit = BlocProvider.of<EventEditorCubit>(context);
+      final BetterVideoUploadCubit? uploadCubit = cubit.mainVideoUploadCubit;
+      return ClipRRect(
+        borderRadius: const BorderRadius.vertical(
+          bottom: HeaderSection.imgBorderRadius,
+        ),
+        child: InkWell(
+          onTap: () => _onTapFunction(uploadCubit, context),
+          child: (uploadCubit != null)
+              ? UploadTile(
+                  cubit: uploadCubit,
+                  onDelete: (cubitId) {
+                    context
+                        .read<EventEditorCubit>()
+                        .removeMainVideoUploadCubit();
+                  },
+                  height: 210,
+                )
+              : Container(
+                  height: 210,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context)
+                        .colorScheme
+                        .primaryContainer
+                        .withOpacity(0.6),
+                    borderRadius: const BorderRadius.vertical(
+                        bottom: Radius.circular(10)),
+                  ),
+                  child: Center(
+                    child: Icon(
+                      FeatherIcons.video,
+                      color: Theme.of(context).colorScheme.onPrimaryContainer,
+                      size: 40,
+                    ),
                   ),
                 ),
-              ),
-      ),
-    );
+        ),
+      );
+    });
   }
 }

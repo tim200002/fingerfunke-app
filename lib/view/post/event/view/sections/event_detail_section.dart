@@ -135,31 +135,34 @@ class __DatePickerState extends State<_DatePicker> {
       icon: Icons.calendar_today_rounded,
       label: date.dateString,
       subLabel: l10n(context).lbl_postTime(date.timeString),
-      onTap: () => showDatePicker(
-        context: context,
-        initialDate: date,
-        firstDate: DateTime.now(),
-        lastDate: DateTime.now().add(
-          const Duration(days: 365),
-        ),
-      ).then(
-        (pickedDate) {
-          if (pickedDate != null) {
-            showTimePicker(
-                    context: context, initialTime: DateTime.now().timeOfDay)
-                .then((time) {
-              if (time != null) {
-                DateTime newDate = DateTime(pickedDate.year, pickedDate.month,
-                    pickedDate.day, time.hour, time.minute, 0, 0, 0);
-                setState(() {
-                  date = newDate;
-                });
-                context.read<EventEditorCubit>().updateStartTime(newDate);
-              }
-            });
-          }
-        },
-      ),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        showDatePicker(
+          context: context,
+          initialDate: date,
+          firstDate: DateTime.now(),
+          lastDate: DateTime.now().add(
+            const Duration(days: 365),
+          ),
+        ).then(
+          (pickedDate) {
+            if (pickedDate != null) {
+              showTimePicker(
+                      context: context, initialTime: DateTime.now().timeOfDay)
+                  .then((time) {
+                if (time != null) {
+                  DateTime newDate = DateTime(pickedDate.year, pickedDate.month,
+                      pickedDate.day, time.hour, time.minute, 0, 0, 0);
+                  setState(() {
+                    date = newDate;
+                  });
+                  context.read<EventEditorCubit>().updateStartTime(newDate);
+                }
+              });
+            }
+          },
+        );
+      },
     );
   }
 }
@@ -193,19 +196,22 @@ class __AdressPickerState extends State<_AdressPicker> {
           : place!.address.split(',').length < 2
               ? null
               : place!.address.split(',')[1],
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => MapsPlacePickerPage(
-            onPlacePicked: (pickResult) {
-              _onPlacePicked(pickResult);
-              Navigator.pop(context);
-            },
-            initialPosition: context.read<LocationCubit>().state.maybeWhen(
-                loaded: (location) => location.position, orElse: () => null),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MapsPlacePickerPage(
+              onPlacePicked: (pickResult) {
+                _onPlacePicked(pickResult);
+                Navigator.pop(context);
+              },
+              initialPosition: context.read<LocationCubit>().state.maybeWhen(
+                  loaded: (location) => location.position, orElse: () => null),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 

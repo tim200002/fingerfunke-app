@@ -77,6 +77,7 @@ class BetterVideoUploadCubit extends FileUploadCubit{
         emit(FileUploadState.uploaded(videoAsset));
 
         // call function if given
+        // wait for short time before calling
         _onVideoUploaded?.call();
       }
     } on DioError catch (err) {
