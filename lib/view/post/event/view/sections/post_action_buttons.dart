@@ -255,7 +255,7 @@ class _Edit extends StatelessWidget {
                     child: _addMediaButton(
                         context, context.read<EventEditorCubit>())),
                 _sendButton(context, false, valid: valid),
-                Spacer()
+                const Spacer()
               ]),
           submitting: () => _sendButton(context, true)),
     );

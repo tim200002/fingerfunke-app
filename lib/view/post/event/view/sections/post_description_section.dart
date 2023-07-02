@@ -43,6 +43,7 @@ class _Edit extends StatelessWidget {
       children: [
         // title field
         TextFormField(
+          scrollPadding: EdgeInsets.only(bottom: 80),
           initialValue: eventEditorCubit.description,
           maxLines: null,
           onChanged: (value) => eventEditorCubit.updateDescription(value),
