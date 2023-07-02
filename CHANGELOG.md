@@ -1,5 +1,18 @@
 # Changelog 
 
+## 0.9.2
+
+### Bug Fixes
+- fix keyboard hiding whend scrolling or changing field in editor
+- Trigger Update when VideoUploadCubit Finished uploading
+
+### Features
+
+### Miscellaneous
+- Refactor post editor
+
+
+
 ## 0.9.1
 
 ### Bug Fixes
