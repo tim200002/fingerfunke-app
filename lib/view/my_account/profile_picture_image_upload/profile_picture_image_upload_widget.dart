@@ -22,18 +22,18 @@ class ProfilePictureImageUploadWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           // check if device is ios
-          if (Platform.isIOS)
-            ListTile(
-              leading: const Icon(Icons.photo_camera),
-              title: Text(l10n(context).lbl_camera),
-              onTap: () async {
-                await uploadProfilePictureBase64Encoded(
-                    userId, ImageSource.camera, context);
-                if (context.mounted) {
-                  Navigator.of(context).pop();
-                }
-              },
-            ),
+          //if (Platform.isIOS)
+          ListTile(
+            leading: const Icon(Icons.photo_camera),
+            title: Text(l10n(context).lbl_camera),
+            onTap: () async {
+              await uploadProfilePictureBase64Encoded(
+                  userId, ImageSource.camera, context);
+              if (context.mounted) {
+                Navigator.of(context).pop();
+              }
+            },
+          ),
           ListTile(
             leading: const Icon(Icons.photo_library),
             title: Text(l10n(context).lbl_imageGallery),
