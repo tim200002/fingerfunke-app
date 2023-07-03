@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:uuid/uuid.dart';
 
 import '../../../common_widgets/image/user_image/user_image.dart';
@@ -19,27 +21,28 @@ class ProfilePictureImageUploadWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          ListTile(
-            leading: const Icon(Icons.photo_camera),
-            title: Text(l10n(context).lbl_camera),
-            onTap: () async {
-              await uploadProfilePictureBase64Encoded(
-                  userId, ImageSource.camera, context);
-                if(context.mounted){
+          // check if device is ios
+          if (Platform.isIOS)
+            ListTile(
+              leading: const Icon(Icons.photo_camera),
+              title: Text(l10n(context).lbl_camera),
+              onTap: () async {
+                await uploadProfilePictureBase64Encoded(
+                    userId, ImageSource.camera, context);
+                if (context.mounted) {
                   Navigator.of(context).pop();
                 }
-            },
-          ),
+              },
+            ),
           ListTile(
             leading: const Icon(Icons.photo_library),
             title: Text(l10n(context).lbl_imageGallery),
             onTap: () async {
               await uploadProfilePictureBase64Encoded(
                   userId, ImageSource.gallery, context);
-              if(context.mounted){
-                 Navigator.of(context).pop();
+              if (context.mounted) {
+                Navigator.of(context).pop();
               }
-             
             },
           ),
         ],
@@ -49,39 +52,38 @@ class ProfilePictureImageUploadWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FirebaseAuthenticationCubitCubit.userBuilder(
-          (user)  {
-          return InkWell(
-            onTap: () async {
-              selectImage(user.id, context);
-            },
-            child: SizedBox.square(
-              dimension: userImageSize,
-              child: Stack(
-                //fit: StackFit.passthrough,
-                children: [
-                  UserImage(
-                    user.picture,
-                    diameter: userImageSize.round().toDouble(),
-                    // Add key because otherwise will not update correctly
-                    // when given the picture is a good key, size should only update
-                    // if picture changes
-                    key: Key(user.picture ?? const Uuid().v4()),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: Container(
-                      padding: const EdgeInsets.all(6),
-                      decoration: BoxDecoration(
-                          color: Colors.white.withAlpha(200),
-                          borderRadius: BorderRadius.circular(20)),
-                      child: const Icon(Icons.edit, size: 20),
-                    ),
-                  )
-                ],
+    return FirebaseAuthenticationCubitCubit.userBuilder((user) {
+      return InkWell(
+        onTap: () async {
+          selectImage(user.id, context);
+        },
+        child: SizedBox.square(
+          dimension: userImageSize,
+          child: Stack(
+            //fit: StackFit.passthrough,
+            children: [
+              UserImage(
+                user.picture,
+                diameter: userImageSize.round().toDouble(),
+                // Add key because otherwise will not update correctly
+                // when given the picture is a good key, size should only update
+                // if picture changes
+                key: Key(user.picture ?? const Uuid().v4()),
               ),
-            ),
-          );
-        });
+              Align(
+                alignment: Alignment.bottomRight,
+                child: Container(
+                  padding: const EdgeInsets.all(6),
+                  decoration: BoxDecoration(
+                      color: Colors.white.withAlpha(200),
+                      borderRadius: BorderRadius.circular(20)),
+                  child: const Icon(Icons.edit, size: 20),
+                ),
+              )
+            ],
+          ),
+        ),
+      );
+    });
   }
 }

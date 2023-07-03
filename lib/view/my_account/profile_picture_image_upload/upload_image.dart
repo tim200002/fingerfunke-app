@@ -61,7 +61,7 @@ Future<void> uploadProfilePictureBase64Encoded(
           logger.e("Data URL to long to sucessfully transmit file to firebase");
           Tools.showSnackbar(
               "Your Image size is too large to be used as a profile picture");
-          Navigator.of(context).pop();
+          return Navigator.of(context).pop();
         }
 
         await userRepository.updateUser(userId, picture: dataUrl);
