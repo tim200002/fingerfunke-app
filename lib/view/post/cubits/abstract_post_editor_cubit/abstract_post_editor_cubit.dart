@@ -105,6 +105,7 @@ abstract class AbstractPostEditorCubit extends Cubit<PostEditorState> {
   void removeMainVideoUploadCubit() {
     mainVideoUploadCubit?.close();
     mainVideoUploadCubit = null;
+    updateTracker = updateTracker.addUpdateMedia();
     emitFieldUpdate();
   }
 

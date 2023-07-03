@@ -16,7 +16,6 @@ import '../../../../../models/post/post.dart';
 import '../../../../../repositories/video_repository/video_repository.dart';
 import '../../../../../repositories/video_repository/video_repository.impl.dart';
 import '../../../../../utils/app_theme.dart';
-import '../../../../../utils/exceptions.dart';
 import '../../../../../utils/skeleton_view.dart';
 import '../../../../../utils/tools.dart';
 import '../../../../fullscreen_video/view/fullscreen_video_page.dart';
@@ -259,6 +258,7 @@ class HeaderSection extends StatelessWidget {
 
               bool shouldPop = await _onEditingBackPress(context);
               if (shouldPop) {
+                // ignore: use_build_context_synchronously
                 Navigator.of(context).pop();
               }
             }),

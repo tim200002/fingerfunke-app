@@ -177,11 +177,14 @@ class _NoLocationWidget extends StatelessWidget {
         MaterialPageRoute(
           builder: (context) => MapsPlacePickerPage(
             onPlacePicked: (p) async {
+              final LocationCubit locationCubit = context.read<LocationCubit>();
               var location = p.geometry!.location;
               Place place = await GeoCodingRepository.placeFromCoordinate(
                   Coordinate(location.lat, location.lng));
-              context.read<LocationCubit>().setLocation(place);
-              Navigator.of(context).pop();
+              locationCubit.setLocation(place);
+              if (context.mounted) {
+                Navigator.of(context).pop();
+              }
             },
           ),
         ),

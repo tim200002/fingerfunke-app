@@ -27,55 +27,63 @@ class LocationFilterModal extends StatelessWidget {
             ], child: LocationFilterModal._(key: key)));
   }
 
-  Future<void> _onSensorPick(BuildContext context) async {
-    Navigator.of(context).pop();
+  Future<Place> _getDeviceLocationFromGps() async {
+    final Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.best);
+    final Place place = await GeoCodingRepository.placeFromCoordinate(
+        Coordinate(position.latitude, position.longitude));
+    return place;
+  }
 
+  Future<void> _onSensorPick(BuildContext context) async {
+    final LocationCubit locationCubit = context.read<LocationCubit>();
+    Navigator.of(context).pop();
     try {
       // Get current location
+      final PermissionState permissionState =
+          await PermissionState.loadPermissionState();
 
-      // Check whether we can access the location
-      LocationPermission permission = await Geolocator.checkPermission();
-      final bool locationServiceEnabled =
-          await Geolocator.isLocationServiceEnabled();
-
-      // Location services (i.e. GPS not enabled). Request user to enable
-      if (!locationServiceEnabled) {
-        return Tools.showSnackbar("Please activate location services");
-      }
-
-      // Permission denied forever. Request user to change
-      if (permission == LocationPermission.deniedForever) {
+      // case 1 permission denied forever
+      if (permissionState.locationPermission ==
+          LocationPermission.deniedForever) {
         return Tools.showSnackbar(
             "Please allow location permission in settings");
       }
 
-      // request new permission if denied
-      if (permission == LocationPermission.denied) {
-        permission = await Geolocator.requestPermission();
-        // If user declined tell hol
-        if (permission != LocationPermission.always ||
-            permission != LocationPermission.whileInUse) {
+      // Case 2 position denied but one can ask
+      if (permissionState.locationPermission == LocationPermission.denied ||
+          permissionState.locationPermission ==
+              LocationPermission.deniedForever) {
+        if (!permissionState.locationServiceEnabled) {
+          return Tools.showSnackbar("Please activate location services");
+        }
+        // If location services are enabled, then ask for permission
+        final LocationPermission permission =
+            await Geolocator.requestPermission();
+
+        // permission denied again
+        if (permission == LocationPermission.denied ||
+            permission == LocationPermission.deniedForever) {
           return Tools.showSnackbar(
               "You must accept location permission to access device location");
         }
+        final Place place = await _getDeviceLocationFromGps();
+        return locationCubit.setLocation(place);
       }
 
-      // permission is granted -> get location
-      final Position devicePosition = await Geolocator.getCurrentPosition();
-      final Place devicePlace = await GeoCodingRepository.placeFromCoordinate(
-          Coordinate(devicePosition.latitude, devicePosition.longitude));
-
-      context.read<LocationCubit>().setLocation(devicePlace);
+      // Case 3 permission granted
+      final Place place = await _getDeviceLocationFromGps();
+      return locationCubit.setLocation(place);
     } catch (e) {
       Tools.showSnackbar("Something went wrong");
     }
   }
 
-  Future<void> _setMapPickResult(BuildContext c, PickResult p) async {
+  Future<void> _setMapPickResult(LocationCubit cubit, PickResult p) async {
     var location = p.geometry!.location;
     Place place = await GeoCodingRepository.placeFromCoordinate(
         Coordinate(location.lat, location.lng));
-    c.read<LocationCubit>().setLocation(place);
+    cubit.setLocation(place);
   }
 
   void _onMapPick(BuildContext context) {
@@ -86,7 +94,7 @@ class LocationFilterModal extends StatelessWidget {
           value: filterCubit,
           child: MapsPlacePickerPage(
             onPlacePicked: (p) async {
-              await _setMapPickResult(context, p);
+              _setMapPickResult(context.read<LocationCubit>(), p);
               Navigator.of(context).pop();
             },
             // if position of user is known, set it as initial position for the map
@@ -119,10 +127,12 @@ class LocationFilterModal extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _button(context,
-            icon: FeatherIcons.mapPin,
-            label: l10n(context).lbl_filterLocationCurrent,
-            onPressed: _onSensorPick),
+        _button(
+          context,
+          icon: FeatherIcons.mapPin,
+          label: l10n(context).lbl_filterLocationCurrent,
+          onPressed: _onSensorPick,
+        ),
         _button(context,
             icon: FeatherIcons.map,
             label: l10n(context).lbl_filterLocationFromMap,

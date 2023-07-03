@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'models/settings/session_info.dart';
 import 'repositories/message_repository.dart/message_repository.impl.dart';
 import 'repositories/report_repository/report_repository.impl.dart';
 import 'repositories/message_repository.dart/message_repository.dart';

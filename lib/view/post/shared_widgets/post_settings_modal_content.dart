@@ -34,7 +34,9 @@ class PostSettingsModalContent extends StatelessWidget {
                 child: Center(child: CircularProgressIndicator.adaptive())),
             normal: (post, isMember) {
               bool isAuthor = post.isUserAuthor(
-                  BlocProvider.of<FirebaseAuthenticationCubitCubit>(context).getUser().toInfo());
+                  BlocProvider.of<FirebaseAuthenticationCubitCubit>(context)
+                      .getUser()
+                      .toInfo());
 
               return Column(
                 mainAxisSize: MainAxisSize.min,
@@ -57,8 +59,7 @@ class PostSettingsModalContent extends StatelessWidget {
                         Navigator.pop(context);
 
                         // pop current scree and replace with editor
-                        Navigator.of(context).popAndPushNamed(
-                            Routes.postEditor,
+                        Navigator.of(context).popAndPushNamed(Routes.postEditor,
                             arguments: post);
                       },
                     ),
@@ -80,11 +81,14 @@ class PostSettingsModalContent extends StatelessWidget {
                             color: Theme.of(context).colorScheme.error),
                       ),
                       onTap: () async {
+                        // must be accessed here because build context is invalid thereafter
+                        final PostCubit cubit = context.read<PostCubit>();
+                        final String message = l10n(context).msg_postDeleted;
+                        // close post first 
                         Navigator.of(context).pop();
-                        await context.read<PostCubit>().deletePost();
-                        Tools.showSnackbar(
-                            l10n(context).msg_postDeleted);
-                        Navigator.of(context).pop();
+                        // then delete it
+                        await cubit.deletePost();
+                        Tools.showSnackbar(message);
                       },
                     ),
                   if (!isAuthor)

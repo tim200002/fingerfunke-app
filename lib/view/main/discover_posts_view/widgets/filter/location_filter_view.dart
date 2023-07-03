@@ -89,7 +89,7 @@ class LocationFilterView extends StatelessWidget {
                       const SizedBox(height: 12),
 
                       SimpleMultiValueToggle(
-                          labels: const ["Sort By Date", "Newest First"],
+                          labels:  [l10n(context).lbl_postFeedSortByDate, l10n(context).lbl_postFeedSortByCreationDate],
                           selectedIndex: state.sortBy == FeedSortBy.eventDate ? 0 : 1,
                           onChanged: (v) {
                             context.read<FeedFilterCubit>().set(state.copyWith(

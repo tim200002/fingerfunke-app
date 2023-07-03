@@ -25,7 +25,9 @@ class ProfilePictureImageUploadWidget extends StatelessWidget {
             onTap: () async {
               await uploadProfilePictureBase64Encoded(
                   userId, ImageSource.camera, context);
-              Navigator.of(context).pop();
+                if(context.mounted){
+                  Navigator.of(context).pop();
+                }
             },
           ),
           ListTile(
@@ -34,7 +36,10 @@ class ProfilePictureImageUploadWidget extends StatelessWidget {
             onTap: () async {
               await uploadProfilePictureBase64Encoded(
                   userId, ImageSource.gallery, context);
-              Navigator.of(context).pop();
+              if(context.mounted){
+                 Navigator.of(context).pop();
+              }
+             
             },
           ),
         ],

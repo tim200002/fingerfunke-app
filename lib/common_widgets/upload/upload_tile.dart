@@ -29,7 +29,10 @@ class UploadTile extends StatelessWidget {
           padding: const EdgeInsets.all(20),
           child: IconButton(
             padding: const EdgeInsets.all(10),
-            onPressed: () => onDelete(cubit.id),
+            onPressed: () {
+              print("delete");
+              onDelete(cubit.id);
+            } ,
             icon: const Icon(
               FeatherIcons.trash2,
               color: Colors.black,
