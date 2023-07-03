@@ -1,5 +1,15 @@
 # Changelog 
 
+## 0.9.6
+
+### Bug Fixes
+
+### Features
+
+### Miscellaneous
+
+
+
 ## 0.9.5
 
 ### Bug Fixes
