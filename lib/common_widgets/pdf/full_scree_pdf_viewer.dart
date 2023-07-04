@@ -9,6 +9,9 @@ class FullscreenPdfViewer extends StatelessWidget {
   final String downloadUrl;
   const FullscreenPdfViewer({required this.downloadUrl, super.key});
 
+  static route(String downloadUrl) => MaterialPageRoute(
+      builder: (context) => FullscreenPdfViewer(downloadUrl: downloadUrl));
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

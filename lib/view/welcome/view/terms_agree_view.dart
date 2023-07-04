@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
+import '../../../common_widgets/pdf/full_scree_pdf_viewer.dart';
 import '../../../utils/illustration.dart';
 import '../../../utils/tools.dart';
 import '../../phone_login/view/phone_login_page.dart';
@@ -71,8 +72,8 @@ class _TermsAgreeViewState extends State<TermsAgreeView> {
                     text: policyName,
                     style: const TextStyle(color: Colors.blue),
                     recognizer: TapGestureRecognizer()
-                      ..onTap = () => launchUrlString(policyLink,
-                          mode: LaunchMode.inAppWebView)),
+                      ..onTap = () => Navigator.push(
+                          context, FullscreenPdfViewer.route(policyLink))),
                 TextSpan(text: labelParts[1]),
               ],
             ),
@@ -89,11 +90,11 @@ class _TermsAgreeViewState extends State<TermsAgreeView> {
           _policyItem(context,
               index: 0,
               policyName: l10n(context).lbl_termsTOC,
-              policyLink: "https://fingerfunke.app/TOC"),
+              policyLink: "https://firebasestorage.googleapis.com/v0/b/fingerfunke.appspot.com/o/misc%2Ffingerfunke_Nutzungsbedingungen_ENTWURF_04.07.2023.pdf?alt=media&token=16922303-4e59-4ef2-99c1-e499642ec952"),
           _policyItem(context,
               index: 1,
-              policyName: l10n(context).lbl_termsUP,
-              policyLink: "https://fingerfunke.app/UP")
+              policyName: l10n(context).lbl_termsPrivacy,
+              policyLink: "https://firebasestorage.googleapis.com/v0/b/fingerfunke.appspot.com/o/misc%2Ffingerfunke_Datenschutzerkla%CC%88rung_ENTWURF_04.07.2023.pdf?alt=media")
         ],
       ),
     );

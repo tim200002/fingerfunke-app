@@ -3,6 +3,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../common_widgets/pdf/full_scree_pdf_viewer.dart';
 import '../../routes.dart';
 import '../../utils/tools.dart';
 import '../../utils/util_widgets/page_screen.dart';
@@ -31,10 +32,19 @@ class AppInfoPage extends StatelessWidget {
                         onPressed: (context) =>
                             Navigator.of(context).pushNamed(Routes.tutorial)),
                     SettingsTile(
-                        title: l10n(context).lbl_privacy,
+                        title: l10n(context).lbl_termsTOC,
                         leading: const Icon(Icons.privacy_tip_outlined),
-                        onPressed: (context) => launchUrl(
-                            Uri.https("fingerfunke.app", "/privacy.html"))),
+                        onPressed: (context) => Navigator.push(
+                            context,
+                            FullscreenPdfViewer.route(
+                                "https://firebasestorage.googleapis.com/v0/b/fingerfunke.appspot.com/o/misc%2Ffingerfunke_Nutzungsbedingungen_ENTWURF_04.07.2023.pdf?alt=media&token=16922303-4e59-4ef2-99c1-e499642ec952"))),
+                    SettingsTile(
+                        title: l10n(context).lbl_termsPrivacy,
+                        leading: const Icon(Icons.privacy_tip_outlined),
+                        onPressed: (context) => Navigator.push(
+                            context,
+                            FullscreenPdfViewer.route(
+                                "https://firebasestorage.googleapis.com/v0/b/fingerfunke.appspot.com/o/misc%2Ffingerfunke_Datenschutzerkla%CC%88rung_ENTWURF_04.07.2023.pdf?alt=media"))),
                     SettingsTile(
                         title: l10n(context).lbl_imprint,
                         leading: const Icon(Icons.notes_rounded),
