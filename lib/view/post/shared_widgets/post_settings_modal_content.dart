@@ -26,15 +26,16 @@ class PostSettingsModalContent extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext outerContext) {
     return BlocBuilder<PostCubit, PostState>(
-        builder: (context, state) => state.when(
+        builder: (modalContext, state) => state.when(
             loading: (_) => const SizedBox(
                 height: 200,
                 child: Center(child: CircularProgressIndicator.adaptive())),
             normal: (post, isMember) {
               bool isAuthor = post.isUserAuthor(
-                  BlocProvider.of<FirebaseAuthenticationCubitCubit>(context)
+                  BlocProvider.of<FirebaseAuthenticationCubitCubit>(
+                          modalContext)
                       .getUser()
                       .toInfo());
 
@@ -43,49 +44,52 @@ class PostSettingsModalContent extends StatelessWidget {
                 children: [
                   ListTile(
                       leading: const Icon(FeatherIcons.users),
-                      title: Text(l10n(context).lbl_postMembers),
+                      title: Text(l10n(modalContext).lbl_postMembers),
                       onTap: () {
-                        Navigator.of(context).pop();
+                        Navigator.of(modalContext).pop();
                         PostParticipantsView.openAsModalBottomSheet(
-                            context, post);
+                            modalContext, post);
                       }),
                   if (isAuthor &&
                       (!post.isEvent || !(post as Event).isCompleted))
                     ListTile(
                       leading: const Icon(FeatherIcons.edit),
-                      title: Text(l10n(context).lbl_edit),
+                      title: Text(l10n(modalContext).lbl_edit),
                       onTap: () {
                         // pop the modal
-                        Navigator.pop(context);
+                        Navigator.pop(modalContext);
 
                         // pop current scree and replace with editor
-                        Navigator.of(context).popAndPushNamed(Routes.postEditor,
+                        Navigator.of(modalContext).popAndPushNamed(
+                            Routes.postEditor,
                             arguments: post);
                       },
                     ),
                   if (isMember && !isAuthor)
                     ListTile(
                       leading: const Icon(FeatherIcons.logOut),
-                      title: Text(l10n(context).lbl_leavePost),
-                      onTap: () => DevTools.showToDoSnackbar(context),
+                      title: Text(l10n(modalContext).lbl_leavePost),
+                      onTap: () => DevTools.showToDoSnackbar(modalContext),
                     ),
                   if (isAuthor)
                     ListTile(
                       leading: Icon(
                         Icons.delete_forever_rounded,
-                        color: Theme.of(context).colorScheme.error,
+                        color: Theme.of(modalContext).colorScheme.error,
                       ),
                       title: Text(
-                        l10n(context).lbl_delete,
+                        l10n(modalContext).lbl_delete,
                         style: TextStyle(
-                            color: Theme.of(context).colorScheme.error),
+                            color: Theme.of(modalContext).colorScheme.error),
                       ),
                       onTap: () async {
                         // must be accessed here because build context is invalid thereafter
-                        final PostCubit cubit = context.read<PostCubit>();
-                        final String message = l10n(context).msg_postDeleted;
-                        // close post first 
-                        Navigator.of(context).pop();
+                        final PostCubit cubit = modalContext.read<PostCubit>();
+                        final String message =
+                            l10n(modalContext).msg_postDeleted;
+                        // close popup and post first
+                        Navigator.of(modalContext)
+                            .popUntil((route) => route.isFirst);
                         // then delete it
                         await cubit.deletePost();
                         Tools.showSnackbar(message);
@@ -95,14 +99,14 @@ class PostSettingsModalContent extends StatelessWidget {
                     ListTile(
                       leading: Icon(
                         Icons.report_gmailerrorred_rounded,
-                        color: Theme.of(context).colorScheme.error,
+                        color: Theme.of(modalContext).colorScheme.error,
                       ),
-                      title: Text(l10n(context).lbl_report,
+                      title: Text(l10n(modalContext).lbl_report,
                           style: TextStyle(
-                              color: Theme.of(context).colorScheme.error)),
+                              color: Theme.of(modalContext).colorScheme.error)),
                       onTap: () {
-                        Navigator.pop(context);
-                        PostReportSendPage.navigate(context, post);
+                        Navigator.pop(modalContext);
+                        PostReportSendPage.navigate(modalContext, post);
                       },
                     )
                 ],
