@@ -4,7 +4,7 @@ import '../../common_widgets/video/view/video_playback_view.dart';
 import '../../utils/tools.dart';
 
 class TutorialPage extends StatelessWidget {
-  static const String tutorialPath = "assets/vid/tutorial_placeholder.mp4";
+  static const String tutorialPath = "https://stream.mux.com/hEOg81IvpDTxjrrdO01RBROjDd1EKzKMOslU7Btj6ntg.m3u8";
   const TutorialPage({super.key});
 
   @override
@@ -17,7 +17,7 @@ class TutorialPage extends StatelessWidget {
           margin: const EdgeInsets.all(10),
           child: VideoPlaybackView.simple(
             source: TutorialPage.tutorialPath,
-            sourceType: VideoSourceType.asset,
+            sourceType: VideoSourceType.network,
             showProgressBar: true,
             fit: BoxFit.cover,
             borderRadius: BorderRadius.circular(20),

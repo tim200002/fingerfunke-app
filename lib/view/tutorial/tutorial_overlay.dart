@@ -50,7 +50,7 @@ class TutorialOverlay extends StatelessWidget {
                           VideoPlaybackView.simple(
                               autoplay: false,
                               source: TutorialPage.tutorialPath,
-                              sourceType: VideoSourceType.asset,
+                              sourceType: VideoSourceType.network,
                               fit: BoxFit.cover,
                               borderRadius: BorderRadius.circular(7),
                               controls: false),

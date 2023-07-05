@@ -32,7 +32,7 @@ class App extends StatelessWidget {
         builder: (context, state) => state.when(
           unauthenticated: () => buildApp(const WelcomePage(
             useStaticTestphaseWall: true,
-            betaMessage: "beta@Erlangen",
+            betaMessage: "beta@Berlin",
           )),
           authenticatedWaitingForUserToBeFetched: (_) =>
               buildApp(const SplashPage()),
