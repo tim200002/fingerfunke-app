@@ -1,6 +1,31 @@
 # Fingerfunke Flutter App
 
-## Who are we
+## What is Fingerfunke
+The goal of fingerfunke was to create an App to better connect the deaf-language community in Germany. To achieve this we developed a platform to create events and form groups. Our main focus point was to prioritize the needs of deaf people. This for example meant to focus on video as the primary means of communicating, instead of text.
+
+Unfortunately, **as of September 2023, the project is paused and no further work will be completed for the foreseeable future**. Of course, if someone wants to take over this project, please feel free to contact Tim at tim.lindenau@outlook.de
+
+## Fingerfunke in Images
+
+**Main Feed**
+![IMG_1563](https://github.com/tim200002/fingerfunke-app/assets/48860268/0a455041-4d77-430d-98f1-e463cff461f3)
+
+**Event Details Page**
+![IMG_1564](https://github.com/tim200002/fingerfunke-app/assets/48860268/39d498a1-7575-4963-95ac-af241bd4a4f1)
+
+**Event Editor**
+![IMG_1565](https://github.com/tim200002/fingerfunke-app/assets/48860268/33aa4970-a8f7-4955-9451-c7506b1612e3)
+
+**Chat**
+![IMG_1566](https://github.com/tim200002/fingerfunke-app/assets/48860268/0eea7409-095c-4fa1-b31e-5c3ddae69523)
+
+**Push Notifications**
+![IMG_1568](https://github.com/tim200002/fingerfunke-app/assets/48860268/19016bc2-c95b-4e03-a82f-82b206db4336)
+
+
+
+
+
 
 ## Build Environment
 If you build the App, please make sure you are using the following build environment
