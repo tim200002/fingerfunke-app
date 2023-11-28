@@ -7,22 +7,42 @@ Unfortunately, **as of September 2023, the project is paused and no further work
 
 ## Fingerfunke in Images
 
-**Main Feed**
-![IMG_1563](https://github.com/tim200002/fingerfunke-app/assets/48860268/0a455041-4d77-430d-98f1-e463cff461f3)
-
-**Event Details Page**
-![IMG_1564](https://github.com/tim200002/fingerfunke-app/assets/48860268/39d498a1-7575-4963-95ac-af241bd4a4f1)
-
-**Event Editor**
-![IMG_1565](https://github.com/tim200002/fingerfunke-app/assets/48860268/33aa4970-a8f7-4955-9451-c7506b1612e3)
-
-**Chat**
-![IMG_1566](https://github.com/tim200002/fingerfunke-app/assets/48860268/0eea7409-095c-4fa1-b31e-5c3ddae69523)
-
-**Push Notifications**
-![IMG_1568](https://github.com/tim200002/fingerfunke-app/assets/48860268/19016bc2-c95b-4e03-a82f-82b206db4336)
-
-
+<table>
+  <tr>
+    <td>
+      <h3> Main Feed </h3>
+      <img src="https://github.com/tim200002/fingerfunke-app/assets/48860268/0a455041-4d77-430d-98f1-e463cff461f3" alt="Main Feed"/>
+      <p>A glimpse into the main feed, showcasing the latest events and updates.</p>
+    </td>
+    <td>
+      <h3> Event Details Page </h3>
+      <img src="https://github.com/tim200002/fingerfunke-app/assets/48860268/39d498a1-7575-4963-95ac-af241bd4a4f1" alt="Event Details Page"/>
+      <p>Detailed view of event information, including time, location, and attendees.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <h3> Event Editor </h3>
+      <img src="https://github.com/tim200002/fingerfunke-app/assets/48860268/33aa4970-a8f7-4955-9451-c7506b1612e3" alt="Event Editor"/>
+      <p>Interface for creating and editing event details.</p>
+    </td>
+    <td>
+      <h3> Chat </h3>
+      <img src="https://github.com/tim200002/fingerfunke-app/assets/48860268/0eea7409-095c-4fa1-b31e-5c3ddae69523" alt="Chat"/>
+      <p>A chat feature for real-time communication among users.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <h3> Push Notifications </h3>
+      <img src="https://github.com/tim200002/fingerfunke-app/assets/48860268/19016bc2-c95b-4e03-a82f-82b206db4336" alt="Push Notifications"/>
+      <p>Notification system to keep users informed about important updates.</p>
+    </td>
+    <td>
+      <!-- Placeholder for balancing the grid -->
+    </td>
+  </tr>
+</table>
 
 
 
