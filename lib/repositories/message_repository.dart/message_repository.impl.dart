@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fingerfunke_app/models/message/message.dart';
-import 'package:fingerfunke_app/repositories/message_repository.dart/message_repository.dart';
-import 'package:fingerfunke_app/utils/type_aliases.dart';
+
+import '../../models/message/message.dart';
+import '../../utils/type_aliases.dart';
+import 'message_repository.dart';
 
 class MessageRepositoryImpl implements MessageRepository {
   final FirebaseFirestore _firestore;
@@ -17,8 +18,18 @@ class MessageRepositoryImpl implements MessageRepository {
   Future<void> createMessage(FirestoreId postId, Message message) async {
     await _postCollection
         .doc(postId)
-        .collection('messages')
+        .collection('posts_messages')
         .doc(message.id)
         .set(message.toJson());
+  }
+
+  @override
+  Future<void> moderateMessage(
+      {required String fullPath, required bool shouldBeDeleted}) async {
+    return _firestore.doc(fullPath).update({
+      'visibility': shouldBeDeleted
+          ? MessageVisibility.deleted.name
+          : MessageVisibility.visible.name
+    });
   }
 }

@@ -1,6 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'live_config_cubit.dart';
 
@@ -11,58 +12,11 @@ part of 'live_config_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$LiveConfigStateTearOff {
-  const _$LiveConfigStateTearOff();
-
-  _Neutral neutral({required bool newFeedItems}) {
-    return _Neutral(
-      newFeedItems: newFeedItems,
-    );
-  }
-}
-
-/// @nodoc
-const $LiveConfigState = _$LiveConfigStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$LiveConfigState {
-  bool get newFeedItems => throw _privateConstructorUsedError;
-
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(bool newFeedItems) neutral,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(bool newFeedItems)? neutral,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(bool newFeedItems)? neutral,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Neutral value) neutral,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Neutral value)? neutral,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Neutral value)? neutral,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+  bool get hideFeedbackBtn => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $LiveConfigStateCopyWith<LiveConfigState> get copyWith =>
@@ -73,58 +27,59 @@ mixin _$LiveConfigState {
 abstract class $LiveConfigStateCopyWith<$Res> {
   factory $LiveConfigStateCopyWith(
           LiveConfigState value, $Res Function(LiveConfigState) then) =
-      _$LiveConfigStateCopyWithImpl<$Res>;
-  $Res call({bool newFeedItems});
+      _$LiveConfigStateCopyWithImpl<$Res, LiveConfigState>;
+  @useResult
+  $Res call({bool hideFeedbackBtn});
 }
 
 /// @nodoc
-class _$LiveConfigStateCopyWithImpl<$Res>
+class _$LiveConfigStateCopyWithImpl<$Res, $Val extends LiveConfigState>
     implements $LiveConfigStateCopyWith<$Res> {
   _$LiveConfigStateCopyWithImpl(this._value, this._then);
 
-  final LiveConfigState _value;
   // ignore: unused_field
-  final $Res Function(LiveConfigState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? newFeedItems = freezed,
+    Object? hideFeedbackBtn = null,
   }) {
     return _then(_value.copyWith(
-      newFeedItems: newFeedItems == freezed
-          ? _value.newFeedItems
-          : newFeedItems // ignore: cast_nullable_to_non_nullable
+      hideFeedbackBtn: null == hideFeedbackBtn
+          ? _value.hideFeedbackBtn
+          : hideFeedbackBtn // ignore: cast_nullable_to_non_nullable
               as bool,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$NeutralCopyWith<$Res>
-    implements $LiveConfigStateCopyWith<$Res> {
-  factory _$NeutralCopyWith(_Neutral value, $Res Function(_Neutral) then) =
-      __$NeutralCopyWithImpl<$Res>;
+abstract class _$$_SCopyWith<$Res> implements $LiveConfigStateCopyWith<$Res> {
+  factory _$$_SCopyWith(_$_S value, $Res Function(_$_S) then) =
+      __$$_SCopyWithImpl<$Res>;
   @override
-  $Res call({bool newFeedItems});
+  @useResult
+  $Res call({bool hideFeedbackBtn});
 }
 
 /// @nodoc
-class __$NeutralCopyWithImpl<$Res> extends _$LiveConfigStateCopyWithImpl<$Res>
-    implements _$NeutralCopyWith<$Res> {
-  __$NeutralCopyWithImpl(_Neutral _value, $Res Function(_Neutral) _then)
-      : super(_value, (v) => _then(v as _Neutral));
+class __$$_SCopyWithImpl<$Res> extends _$LiveConfigStateCopyWithImpl<$Res, _$_S>
+    implements _$$_SCopyWith<$Res> {
+  __$$_SCopyWithImpl(_$_S _value, $Res Function(_$_S) _then)
+      : super(_value, _then);
 
-  @override
-  _Neutral get _value => super._value as _Neutral;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? newFeedItems = freezed,
+    Object? hideFeedbackBtn = null,
   }) {
-    return _then(_Neutral(
-      newFeedItems: newFeedItems == freezed
-          ? _value.newFeedItems
-          : newFeedItems // ignore: cast_nullable_to_non_nullable
+    return _then(_$_S(
+      null == hideFeedbackBtn
+          ? _value.hideFeedbackBtn
+          : hideFeedbackBtn // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -132,98 +87,42 @@ class __$NeutralCopyWithImpl<$Res> extends _$LiveConfigStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Neutral implements _Neutral {
-  const _$_Neutral({required this.newFeedItems});
+class _$_S implements _S {
+  const _$_S(this.hideFeedbackBtn);
 
   @override
-  final bool newFeedItems;
+  final bool hideFeedbackBtn;
 
   @override
   String toString() {
-    return 'LiveConfigState.neutral(newFeedItems: $newFeedItems)';
+    return 'LiveConfigState(hideFeedbackBtn: $hideFeedbackBtn)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Neutral &&
-            (identical(other.newFeedItems, newFeedItems) ||
-                other.newFeedItems == newFeedItems));
+            other is _$_S &&
+            (identical(other.hideFeedbackBtn, hideFeedbackBtn) ||
+                other.hideFeedbackBtn == hideFeedbackBtn));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, newFeedItems);
+  int get hashCode => Object.hash(runtimeType, hideFeedbackBtn);
 
   @JsonKey(ignore: true)
   @override
-  _$NeutralCopyWith<_Neutral> get copyWith =>
-      __$NeutralCopyWithImpl<_Neutral>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(bool newFeedItems) neutral,
-  }) {
-    return neutral(newFeedItems);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(bool newFeedItems)? neutral,
-  }) {
-    return neutral?.call(newFeedItems);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(bool newFeedItems)? neutral,
-    required TResult orElse(),
-  }) {
-    if (neutral != null) {
-      return neutral(newFeedItems);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Neutral value) neutral,
-  }) {
-    return neutral(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Neutral value)? neutral,
-  }) {
-    return neutral?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Neutral value)? neutral,
-    required TResult orElse(),
-  }) {
-    if (neutral != null) {
-      return neutral(this);
-    }
-    return orElse();
-  }
+  @pragma('vm:prefer-inline')
+  _$$_SCopyWith<_$_S> get copyWith =>
+      __$$_SCopyWithImpl<_$_S>(this, _$identity);
 }
 
-abstract class _Neutral implements LiveConfigState {
-  const factory _Neutral({required bool newFeedItems}) = _$_Neutral;
+abstract class _S implements LiveConfigState {
+  const factory _S(final bool hideFeedbackBtn) = _$_S;
 
   @override
-  bool get newFeedItems;
+  bool get hideFeedbackBtn;
   @override
   @JsonKey(ignore: true)
-  _$NeutralCopyWith<_Neutral> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$_SCopyWith<_$_S> get copyWith => throw _privateConstructorUsedError;
 }

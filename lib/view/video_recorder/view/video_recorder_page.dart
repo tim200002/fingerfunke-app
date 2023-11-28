@@ -1,13 +1,15 @@
 import 'dart:io';
 
-import 'package:fingerfunke_app/view/error/exception_view.dart';
-import 'package:fingerfunke_app/view/video_recorder/view/cubit/video_recorder_cubit.dart';
-import 'package:fingerfunke_app/view/video_recorder/view/view/camera_view.dart';
-import 'package:fingerfunke_app/view/video_recorder/view/view/missing_camera_permission_view.dart';
-import 'package:fingerfunke_app/view/video_recorder/view/view/playback_view.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+
+import '../../../common_widgets/info_view.dart';
+import '../../../utils/tools.dart';
+import '../../error/exception_view.dart';
+import 'cubit/video_recorder_cubit.dart';
+import 'view/camera_view.dart';
+import 'view/playback_view.dart';
 
 /// This is the UI for recording video content within the App. The result will
 /// be passed back through the Navigator as a `File` object.
@@ -23,20 +25,6 @@ class VideoRecorderPage extends StatelessWidget {
         settings: const RouteSettings(name: "VideoEditor"));
   }
 
-  /*
-  static Widget fullScreenCameraPreview(
-      double aspectRatio, CameraController controller) {
-    var scale = aspectRatio * controller.value.aspectRatio;
-
-    return Transform.scale(
-      scale: scale < 1 ? 1 / scale : scale,
-      child: Center(
-        child: CameraPreview(controller),
-      ),
-    );
-
-  }
-   */
 
   @override
   Widget build(BuildContext context) {
@@ -48,11 +36,21 @@ class VideoRecorderPage extends StatelessWidget {
                 .appBarTheme
                 .copyWith(foregroundColor: Colors.white)),
         child: Scaffold(
+          backgroundColor: Colors.black,
           body: BlocBuilder<VideoRecorderCubit, VideoRecorderState>(
             builder: (context, state) => state.when(
-              missingPermission: () => const MissingCameraPermissionView(),
+              loading: () =>
+                  const Center(child: CircularProgressIndicator.adaptive()),
+              missingPermission: () => InfoView(
+                showBackButton: true,
+                text: l10n(context).lbl_cameraPermissionError,
+                icon: FeatherIcons.cameraOff,
+              ),
               error: ExceptionView.builder,
-              camera: () => CameraView(),
+              camera: (c, _) {
+                logger.d("emitted camera state");
+                return CameraView(camera: c, key: Key("${c.hashCode}"));
+              },
               viewing: (file) => PlaybackView(file),
             ),
           ),

@@ -1,7 +1,9 @@
-import 'package:fingerfunke_app/view/image_upload/cubit/image_upload_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../../../utils/tools.dart';
+import '../cubit/image_upload_cubit.dart';
 
 class ImageUploadModalContent extends StatelessWidget {
   const ImageUploadModalContent({Key? key}) : super(key: key);
@@ -33,7 +35,7 @@ class ImageUploadWidget extends StatelessWidget {
                     children: [
                       ListTile(
                         leading: const Icon(Icons.photo_camera),
-                        title: const Text('Camera'),
+                        title: Text(l10n(context).lbl_camera),
                         onTap: () {
                           BlocProvider.of<ImageUploadCubit>(context)
                               .pickImage(ImageSource.camera);
@@ -41,7 +43,7 @@ class ImageUploadWidget extends StatelessWidget {
                       ),
                       ListTile(
                         leading: const Icon(Icons.photo_library),
-                        title: const Text('Gallery'),
+                        title: Text(l10n(context).lbl_imageGallery),
                         onTap: () {
                           BlocProvider.of<ImageUploadCubit>(context)
                               .pickImage(ImageSource.gallery);
@@ -62,8 +64,7 @@ class ImageUploadWidget extends StatelessWidget {
                                 color: Colors.grey.withOpacity(0.2),
                                 spreadRadius: 5,
                                 blurRadius: 7,
-                                offset: const Offset(
-                                    0, 3),
+                                offset: const Offset(0, 3),
                               ),
                             ],
                           ),
@@ -94,7 +95,7 @@ class ImageUploadWidget extends StatelessWidget {
                                     .send();
                                 Navigator.of(context).pop();
                               },
-                              child: const Text('Sende Photo'),
+                              child: Text(l10n(context).lbl_imageUpload),
                             ),
                           ],
                         ),

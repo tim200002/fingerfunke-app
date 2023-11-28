@@ -1,10 +1,11 @@
-import 'package:fingerfunke_app/cubits/authentication_cubit/authentication_cubit.dart';
-import 'package:fingerfunke_app/utils/exceptions.dart';
-import 'package:fingerfunke_app/view/create_account/view/cubit/create_account_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
-class CreateAccountView extends StatelessWidget {
+import '../../../cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
+import '../../../utils/tools.dart';
+
+class CreateAccountView extends StatefulWidget {
   const CreateAccountView({Key? key}) : super(key: key);
 
   static Route route() {
@@ -12,60 +13,79 @@ class CreateAccountView extends StatelessWidget {
   }
 
   @override
+  State<CreateAccountView> createState() => _CreateAccountViewState();
+}
+
+class _CreateAccountViewState extends State<CreateAccountView> {
+  final TextEditingController _userNameController = TextEditingController();
+  bool _isSendButtonActive = true;
+
+  @override
   Widget build(BuildContext context) {
-    final authenticationCubit = BlocProvider.of<AuthenticationCubit>(context);
     return Scaffold(
-      appBar: AppBar(),
-      body: BlocProvider<CreateAccountCubit>(
-        create: (context) => CreateAccountCubit(
-            userId: authenticationCubit.state.maybeWhen(
-          signedInButNoUserDocumentCreated: (userId) => userId,
-          orElse: () => throw InvalidStateException(),
-        )),
-        child: Builder(
-          builder: (context) => Padding(
-            padding: const EdgeInsets.all(28.0),
+      backgroundColor: Theme.of(context).colorScheme.secondary.withOpacity(0.4),
+      body: Builder(
+        builder: (context) => Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+            //margin: EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.all(20),
+            decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
                   padding: const EdgeInsets.only(bottom: 8.0),
                   child: Text(
-                    "Hi",
-                    style: Theme.of(context).textTheme.headline2,
+                    l10n(context).lbl_welcome,
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
                 Text(
-                  "um zu starten brauchen wir deinen Namen.\nGerne darfst du auch ein Profilbild hochladen, damit andere dich besser erkennen",
-                  style: Theme.of(context).textTheme.headline6,
+                  l10n(context).lbl_newUserName,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
+                const SizedBox(height: 10),
                 TextField(
-                  onChanged: (value) =>
-                      BlocProvider.of<CreateAccountCubit>(context)
-                          .onUpdateUserName(value),
+                  controller: _userNameController,
+                  style: const TextStyle(
+                      fontSize: 30, fontWeight: FontWeight.w900),
+                  decoration: InputDecoration(
+                      hintStyle: const TextStyle(color: Colors.grey),
+                      hintText: l10n(context).lbl_loginNameHint,
+                      border: InputBorder.none),
                 ),
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: BlocBuilder<CreateAccountCubit, CreateAccountState>(
-                      builder: (context, state) => OutlinedButton(
-                        onPressed: state.inputValid
-                            ? () => BlocProvider.of<CreateAccountCubit>(context)
-                                .createUser()
-                                .then(
-                                    (_) => authenticationCubit.forceNewState())
-                            : null,
-                        child: const Text("Los gehts"),
-                      ),
-                    ),
-                  ),
-                )
+                const SizedBox(height: 60)
               ],
             ),
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(FeatherIcons.check),
+        onPressed: _isSendButtonActive
+            ? () async {
+                setState(() {
+                  _isSendButtonActive = false;
+                });
+                await BlocProvider.of<FirebaseAuthenticationCubitCubit>(context)
+                    .createUserDocument(name: _userNameController.text);
+                setState(() {
+                  _isSendButtonActive = true;
+                });
+              }
+            : null,
+      ),
     );
+  }
+
+  @override
+  void dispose() {
+    _userNameController.dispose();
+    super.dispose();
   }
 }

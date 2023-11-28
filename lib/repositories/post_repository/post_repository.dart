@@ -1,28 +1,42 @@
 import 'dart:async';
 
-import 'package:fingerfunke_app/models/asset/asset.dart';
-import 'package:fingerfunke_app/models/post/post.dart';
-import 'package:fingerfunke_app/utils/type_aliases.dart';
+import '../../models/asset/asset.dart';
+import '../../models/place.dart';
+import '../../models/post/post.dart';
+import '../../models/user/user.dart';
+import '../../utils/type_aliases.dart';
 
 abstract class PostRepository {
+  Future<List<UserInfo>> getPostMembers(Post post);
+
   Future<void> createPost(Post post);
 
-  Stream<Post> subscribeToPost(FirestoreId postId);
+  Stream<Post> observePost(FirestoreId postId);
+
+  Stream<List<Post>> observePosts(List<FirestoreId>? postIds);
+
+  Stream<List<Post>> observeAuthoredPosts(FirestoreId userId, {bool excludeDeleted=true});
+
+  Stream<List<Post>> observeJoinedPosts(FirestoreId userId, {bool excludeAuthored=false});
 
   Future<Post> getPost(FirestoreId postId);
 
   Future<void> deletePost(FirestoreId postId);
 
   Future<void> updatePost(FirestoreId postId,
-      {post_visibility? visibility,
+      {PostVisibility? visibility,
       String? title,
       String? description,
-      String? location,
+      Place? place,
+      Asset? mainAsset,
       List<Asset>? media,
       DateTime? startTime});
 
-  /// make current user member of post
-  Future<Post> joinPost({required FirestoreId postId});
+  Future<void> moderatePost(FirestoreId postId, {required bool shouldBeDeleted});
 
-  Future<Post> leavePost({required FirestoreId postId});
+  Future<void> addPostMember(
+      {required FirestoreId postId, required FirestoreId userId});
+
+  Future<void> removePostMember(
+      {required FirestoreId postId, required FirestoreId userId});
 }

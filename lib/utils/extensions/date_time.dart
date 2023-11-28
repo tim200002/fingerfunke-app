@@ -5,10 +5,10 @@ extension FDateTime on DateTime {
   static DateFormat dateFormat = DateFormat("dd.MM.yyyy");
   static DateFormat timeFormat = DateFormat("HH:mm");
 
-  DateTime copyTime(TimeOfDay time) =>
+  DateTime withTime(TimeOfDay time) =>
       DateTime(year, month, day, time.hour, time.minute, 0, 0, 0);
 
-  DateTime copyDate(DateTime date) =>
+  DateTime withDate(DateTime date) =>
       DateTime(date.year, date.month, date.day, hour, minute, 0, 0, 0);
 
   String get dateString => dateFormat.format(this);

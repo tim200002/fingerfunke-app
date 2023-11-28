@@ -1,5 +1,5 @@
-import 'package:fingerfunke_app/utils/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 class SplashPage extends StatelessWidget {
   static Route route() {
@@ -10,14 +10,15 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Color color = Theme.of(context).colorScheme.primary;
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: color,
       body: Center(
-          child: Image.asset(
-        "assets/img/brand/icon_trans.png",
-        height: 150,
-        color: Colors.white,
-      )),
+        child: Shimmer.fromColors(
+            child: Image.asset("assets/img/brand/icon_trans.png", height: 140),
+            baseColor: Colors.white,
+            highlightColor: Colors.white.withOpacity(0.4)),
+      ),
     );
   }
 }

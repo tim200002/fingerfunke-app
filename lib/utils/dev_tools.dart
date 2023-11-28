@@ -9,8 +9,11 @@ class DevTools {
         .showSnackBar(SnackBar(content: Text("ToDo $message")));
   }
 
-  static Widget placeholder(String message, {bool dark = false, Color? color}) {
+  static Widget placeholder(String message,
+      {bool dark = false, Color? color, double? height, double? width}) {
     return Container(
+      height: height,
+      width: width,
       color: color ?? (dark ? colorPlaceholderDark : colorPlaceholder),
       child: Center(
         child: Text("ToDo: $message"),

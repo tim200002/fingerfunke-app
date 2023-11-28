@@ -2,13 +2,44 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:flutter/widgets.dart';
+import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
+import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../services/globals_service.dart';
+
+AppLocalizations l10n(BuildContext context) => AppLocalizations.of(context)!;
+
+final Logger logger = Logger(
+    //filter: null, // Use the default LogFilter (-> only log in debug mode)
+    printer: PrettyPrinter(
+  methodCount: 0,
+  errorMethodCount: 5,
+  lineLength: 70,
+  colors: true,
+  printEmojis: true,
+  printTime: false,
+));
+
+attempt(Function f, {required Function(dynamic e) onError}) {
+  try {
+    return f.call();
+  } catch (e) {
+    onError.call(e);
+  }
+}
 
 class Tools {
-  static showSnackbar(BuildContext context, String message) {
-    ScaffoldMessenger.of(context)
+  static showSnackbar(String message) {
+    ScaffoldMessengerState? state =
+        GetIt.I<GlobalsService>().rootScaffoldMessengerKey.currentState;
+    if (state == null) {
+      throw Exception("ScaffoldMessengerState is null");
+    }
+
+    state
       ..hideCurrentSnackBar()
       ..showSnackBar(
         SnackBar(
@@ -82,5 +113,38 @@ class Tools {
         .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
 
     return file;
+  }
+
+  static void navigate(BuildContext context,
+      {required Widget Function(bool isDialog) builder, String? routeName}) {
+    MediaQuery.of(context).size.width > 700
+        ? showDialog<void>(
+            context: context,
+            //useSafeArea: false,
+            barrierDismissible: true, // user must tap button!
+            builder: (BuildContext context) {
+              var mediaQuery = MediaQuery.of(context);
+              return Material(
+                  type: MaterialType.transparency,
+                  child: AnimatedContainer(
+                      padding: mediaQuery.viewInsets,
+                      duration: const Duration(milliseconds: 300),
+                      child: Center(
+                          child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Container(
+                          color: Theme.of(context).colorScheme.background,
+                          constraints: const BoxConstraints(
+                              maxWidth: 500, maxHeight: 600),
+                          child: builder(true),
+                        ),
+                      ))));
+            })
+        : Navigator.push(
+            context,
+            MaterialPageRoute<void>(
+                builder: (_) =>
+                    Container(color: Colors.black, child: builder(false)),
+                settings: RouteSettings(name: routeName)));
   }
 }

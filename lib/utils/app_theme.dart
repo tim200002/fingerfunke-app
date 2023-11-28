@@ -1,14 +1,19 @@
-import 'dart:ui';
+// ignore_for_file: constant_identifier_names, deprecated_member_use
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+// color used for primary illustrations:   #FF6060
+// color used for secondary illustrations: #9BDDDA
+
 /// Contains customized Theme
 class AppTheme {
+  static const List<double> _textBodySizes = [13, 15, 17];
+
   static const Color _light_primary = Color(0xffFF6060);
   static const Color _light_primaryVariant = Color(0xffF0ACB0);
   static const Color _light_onPrimary = Color(0xffFFFFFF);
-  static const Color _light_secondary = Color(0xff048D86);
+  static const Color _light_secondary = Color(0xffFF6060);
   static const Color _light_secondaryVariant = Color(0xff95CCC9);
   static const Color _light_onSecondary = Color(0xffFFFFFF);
   static const Color _light_background = Color(0xffF1F1F1);
@@ -26,7 +31,8 @@ class AppTheme {
 
   static final ThemeData mainTheme = ThemeData(
     textTheme: _textTheme,
-    canvasColor: Color(0xffffffff),
+    primaryTextTheme: _textTheme.apply(bodyColor: Colors.white),
+    canvasColor: const Color(0xffffffff),
     colorScheme: const ColorScheme.light(
       primary: _light_primary,
       primaryVariant: _light_primaryVariant,
@@ -95,33 +101,48 @@ class AppTheme {
   static TextStyle textStyleCondensed({TextStyle? style}) =>
       GoogleFonts.robotoCondensed(textStyle: style);
 
-  // ignore: constant_identifier_names
   static const double PADDING_SIDE = 12;
 
-  static final TextTheme _textTheme = TextTheme(
-    headline1: GoogleFonts.roboto(
-        fontSize: 96, fontWeight: FontWeight.w300, letterSpacing: -1.5),
-    headline2: GoogleFonts.roboto(
-        fontSize: 60, fontWeight: FontWeight.w300, letterSpacing: -0.5),
-    headline3: GoogleFonts.roboto(fontSize: 48, fontWeight: FontWeight.w600),
-    headline4: GoogleFonts.roboto(
-        fontSize: 28, fontWeight: FontWeight.bold, letterSpacing: 0.25),
-    headline5: GoogleFonts.roboto(fontSize: 24, fontWeight: FontWeight.bold),
-    headline6: GoogleFonts.roboto(
-        fontSize: 20, fontWeight: FontWeight.w500, letterSpacing: 0.15),
-    subtitle1: GoogleFonts.roboto(
-        fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 0.15),
-    subtitle2: GoogleFonts.roboto(
-        fontSize: 14, fontWeight: FontWeight.w500, letterSpacing: 0.1),
-    bodyText1: GoogleFonts.roboto(
-        fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 0.5),
-    bodyText2: GoogleFonts.roboto(
-        fontSize: 14, fontWeight: FontWeight.w400, letterSpacing: 0.25),
-    button: GoogleFonts.roboto(
-        fontSize: 14, fontWeight: FontWeight.w500, letterSpacing: 1.25),
-    caption: GoogleFonts.roboto(
-        fontSize: 12, fontWeight: FontWeight.w400, letterSpacing: 0.4),
-    overline: GoogleFonts.roboto(
-        fontSize: 10, fontWeight: FontWeight.w400, letterSpacing: 1.5),
+  static final TextTheme _baseTheme = GoogleFonts.signikaTextTheme();
+  static final TextTheme _textTheme = _baseTheme.copyWith(
+    bodySmall: _baseTheme.bodySmall
+        ?.copyWith(fontSize: _textBodySizes[0], color: Colors.black),
+    bodyMedium: _baseTheme.bodyMedium?.copyWith(fontSize: _textBodySizes[1]),
+    bodyLarge: _baseTheme.bodyLarge?.copyWith(fontSize: _textBodySizes[2]),
+    labelSmall: _baseTheme.labelSmall
+        ?.copyWith(fontSize: _textBodySizes[0], fontWeight: FontWeight.bold),
+    labelMedium: _baseTheme.labelMedium
+        ?.copyWith(fontSize: _textBodySizes[1], fontWeight: FontWeight.bold),
+    labelLarge: _baseTheme.labelLarge
+        ?.copyWith(fontSize: _textBodySizes[2], fontWeight: FontWeight.bold),
   );
+
+  /*static final TextTheme _textTheme = TextTheme(
+    headline1: _font_primary.copyWith(
+        fontSize: 96, fontWeight: FontWeight.w300, letterSpacing: -1.5),
+    headline2: _font_primary.copyWith(
+        fontSize: 60, fontWeight: FontWeight.w300, letterSpacing: -0.5),
+    headline3:
+        _font_primary.copyWith(fontSize: 48, fontWeight: FontWeight.w600),
+    headline4: _font_primary.copyWith(
+        fontSize: 28, fontWeight: FontWeight.bold, letterSpacing: 0.25),
+    headline5:
+        _font_primary.copyWith(fontSize: 24, fontWeight: FontWeight.bold),
+    headline6: _font_primary.copyWith(
+        fontSize: 20, fontWeight: FontWeight.w500, letterSpacing: 0.15),
+    subtitle1: _font_primary.copyWith(
+        fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 0.15),
+    subtitle2: _font_primary.copyWith(
+        fontSize: 14, fontWeight: FontWeight.w500, letterSpacing: 0.1),
+    bodyText1: _font_primary.copyWith(
+        fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 0.5),
+    bodyText2: _font_primary.copyWith(
+        fontSize: 14, fontWeight: FontWeight.w400, letterSpacing: 0.25),
+    button: _font_primary.copyWith(
+        fontSize: 14, fontWeight: FontWeight.w500, letterSpacing: 1.25),
+    caption: _font_primary.copyWith(
+        fontSize: 12, fontWeight: FontWeight.w400, letterSpacing: 0.4),
+    overline: _font_primary.copyWith(
+        fontSize: 10, fontWeight: FontWeight.w400, letterSpacing: 1.5),
+  );*/
 }

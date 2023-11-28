@@ -1,24 +1,38 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fingerfunke_app/models/abstract_models/abstract_models.dart';
-import 'package:fingerfunke_app/models/asset/asset.dart';
-import 'package:fingerfunke_app/models/utils.dart';
-import 'package:fingerfunke_app/utils/type_aliases.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/material.dart';
 
-part 'user.g.dart';
+import '../../utils/json_tools.dart';
+import '../../utils/type_aliases.dart';
+import '../abstract_models/abstract_models.dart';
+import '../utils.dart';
 
-@JsonSerializable(explicitToJson: true)
 class UserInfo extends DatabaseDocument {
   final String name;
-  final ImageAsset? picture;
+  final String? picture;
 
-  const UserInfo({required FirestoreId id, required this.name, this.picture})
-      : super(id: id);
+  const UserInfo({
+    required FirestoreId id,
+    required this.name,
+    this.picture,
+  }) : super(id: id);
+
   @override
-  Map<String, dynamic> toJson() => _$UserInfoToJson(this);
+  int get hashCode => toJson().hashCode;
+  @override
+  bool operator ==(Object other) => super.hashCode == hashCode;
 
-  factory UserInfo.fromJson(Map<String, dynamic> map) =>
-      _$UserInfoFromJson(map);
+  @override
+  JsonMap toJson() => <String, dynamic>{
+        "id": id,
+        "name": name,
+        "picture": picture,
+      };
+
+  factory UserInfo.fromJson(JsonMap map) => UserInfo(
+        id: map['id'] as String,
+        name: map['name'] as String,
+        picture: map['picture'] as String?,
+      );
 
   factory UserInfo.fromDoc(DocumentSnapshot document) =>
       UserInfo.fromJson(documentSnaphsotToJson(document));
@@ -27,29 +41,98 @@ class UserInfo extends DatabaseDocument {
   List<Object?> get props => [id, name, picture];
 }
 
-enum GENDER { male, female, divers }
+enum UserClearance {
+  unauthenticated(0, "none", Colors.grey),
+  user(1, "user", Colors.blueGrey),
+  moderation(3, "mod", Colors.orange),
+  development(5, "dev", Colors.teal),
+  administrator(7, "admin", Colors.deepPurple);
 
-@JsonSerializable(explicitToJson: true)
+  final int level;
+  final String label;
+  final MaterialColor color;
+
+  const UserClearance(this.level, this.label, this.color);
+}
+
 class User extends UserInfo {
   final int? age;
-  final GENDER? gender;
+  final UserClearance? clearance;
+  final List<FirestoreId> savedPosts;
+  final String? fcmToken;
+  final Map<String, String> socialMedia;
+  final String? bio;
 
   const User(
       {required FirestoreId id,
       required String name,
-      ImageAsset? picture,
+      String? picture,
+      this.savedPosts = const [],
       this.age,
-      this.gender})
+      this.clearance = UserClearance.user,
+      this.socialMedia = const {},
+      this.bio,
+      this.fcmToken})
       : super(id: id, name: name, picture: picture);
 
-  @override
-  Map<String, dynamic> toJson() => _$UserToJson(this);
+  UserInfo toInfo() => UserInfo(id: id, name: name, picture: picture);
 
-  factory User.fromJson(Map<String, dynamic> map) => _$UserFromJson(map);
+  hasClearance(UserClearance c) {
+    return clearance != null ? clearance!.level >= c.level : false;
+  }
+
+  @override
+  JsonMap toJson() => <String, dynamic>{
+        'id': id,
+        'name': name,
+        'picture': picture,
+        'savedPosts': savedPosts,
+        'age': age,
+        'clearance': clearance?.level,
+        'socialMedia': socialMedia,
+        'fcmToken': fcmToken,
+        'bio': bio
+      };
+
+  factory User.fromJson(JsonMap map) => User(
+      id: map['id'] as String,
+      name: map['name'] as String,
+      picture: map['picture'] as String?,
+      savedPosts: map['savedPosts'] != null
+          ? (map['savedPosts'] as List<dynamic>)
+              .map((e) => e as String)
+              .toList()
+          : [],
+      age: JsonTools.nullable<int>(map, "age"),
+      socialMedia: JsonTools.nullable<Map<String, dynamic>>(map, "socialMedia")
+              ?.map<String, String>(
+                  (key, value) => MapEntry(key, value.toString())) ??
+          {},
+      clearance: UserClearance.values.firstWhere(
+          (e) => e.level >= (JsonTools.nullable<int>(map, "clearance") ?? 0)),
+      bio: JsonTools.nullable<String>(map, "bio"),
+      fcmToken: JsonTools.nullable<String>(map, "fcmToken"));
 
   factory User.fromDoc(DocumentSnapshot document) =>
       User.fromJson(documentSnaphsotToJson(document));
 
-  @override
-  List<Object?> get props => [id, name, picture, age, gender];
+  User copyWith(
+          {String? name,
+          String? picture,
+          int? age,
+          UserClearance? clearance,
+          List<FirestoreId>? savedPosts,
+          String? fcmToken,
+          Map<String, String>? socialMedia,
+          String? bio}) =>
+      User(
+          id: id,
+          name: name ?? this.name,
+          picture: picture ?? this.picture,
+          age: age ?? this.age,
+          clearance: clearance ?? this.clearance,
+          savedPosts: savedPosts ?? this.savedPosts,
+          fcmToken: fcmToken ?? this.fcmToken,
+          socialMedia: socialMedia ?? this.socialMedia,
+          bio: bio ?? this.bio);
 }

@@ -1,6 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'phone_login_cubit.dart';
 
@@ -11,77 +12,63 @@ part of 'phone_login_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$PhoneLoginStateTearOff {
-  const _$PhoneLoginStateTearOff();
-
-  _EnterPhoneNumber enterPhoneNumber({required bool isLoading}) {
-    return _EnterPhoneNumber(
-      isLoading: isLoading,
-    );
-  }
-
-  _EnterCode enterCode({required String verificationId, int? resendToken}) {
-    return _EnterCode(
-      verificationId: verificationId,
-      resendToken: resendToken,
-    );
-  }
-
-  _Authenticated authenticated() {
-    return const _Authenticated();
-  }
-}
-
-/// @nodoc
-const $PhoneLoginState = _$PhoneLoginStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$PhoneLoginState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(bool isLoading) enterPhoneNumber,
-    required TResult Function(String verificationId, int? resendToken)
+    required TResult Function(String? withErrorMessage) enterPhoneNumber,
+    required TResult Function() waitForCodeSent,
+    required TResult Function(
+            String verificationId, bool autoDetecting, String? withErrorMessage)
         enterCode,
-    required TResult Function() authenticated,
+    required TResult Function() waitForLogIn,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(bool isLoading)? enterPhoneNumber,
-    TResult Function(String verificationId, int? resendToken)? enterCode,
-    TResult Function()? authenticated,
+    TResult? Function(String? withErrorMessage)? enterPhoneNumber,
+    TResult? Function()? waitForCodeSent,
+    TResult? Function(String verificationId, bool autoDetecting,
+            String? withErrorMessage)?
+        enterCode,
+    TResult? Function()? waitForLogIn,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(bool isLoading)? enterPhoneNumber,
-    TResult Function(String verificationId, int? resendToken)? enterCode,
-    TResult Function()? authenticated,
+    TResult Function(String? withErrorMessage)? enterPhoneNumber,
+    TResult Function()? waitForCodeSent,
+    TResult Function(String verificationId, bool autoDetecting,
+            String? withErrorMessage)?
+        enterCode,
+    TResult Function()? waitForLogIn,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_EnterPhoneNumber value) enterPhoneNumber,
+    required TResult Function(_WaitForCodeSent value) waitForCodeSent,
     required TResult Function(_EnterCode value) enterCode,
-    required TResult Function(_Authenticated value) authenticated,
+    required TResult Function(_WaitForLogin value) waitForLogIn,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_EnterPhoneNumber value)? enterPhoneNumber,
-    TResult Function(_EnterCode value)? enterCode,
-    TResult Function(_Authenticated value)? authenticated,
+    TResult? Function(_EnterPhoneNumber value)? enterPhoneNumber,
+    TResult? Function(_WaitForCodeSent value)? waitForCodeSent,
+    TResult? Function(_EnterCode value)? enterCode,
+    TResult? Function(_WaitForLogin value)? waitForLogIn,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_EnterPhoneNumber value)? enterPhoneNumber,
+    TResult Function(_WaitForCodeSent value)? waitForCodeSent,
     TResult Function(_EnterCode value)? enterCode,
-    TResult Function(_Authenticated value)? authenticated,
+    TResult Function(_WaitForLogin value)? waitForLogIn,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -91,47 +78,47 @@ mixin _$PhoneLoginState {
 abstract class $PhoneLoginStateCopyWith<$Res> {
   factory $PhoneLoginStateCopyWith(
           PhoneLoginState value, $Res Function(PhoneLoginState) then) =
-      _$PhoneLoginStateCopyWithImpl<$Res>;
+      _$PhoneLoginStateCopyWithImpl<$Res, PhoneLoginState>;
 }
 
 /// @nodoc
-class _$PhoneLoginStateCopyWithImpl<$Res>
+class _$PhoneLoginStateCopyWithImpl<$Res, $Val extends PhoneLoginState>
     implements $PhoneLoginStateCopyWith<$Res> {
   _$PhoneLoginStateCopyWithImpl(this._value, this._then);
 
-  final PhoneLoginState _value;
   // ignore: unused_field
-  final $Res Function(PhoneLoginState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
-abstract class _$EnterPhoneNumberCopyWith<$Res> {
-  factory _$EnterPhoneNumberCopyWith(
-          _EnterPhoneNumber value, $Res Function(_EnterPhoneNumber) then) =
-      __$EnterPhoneNumberCopyWithImpl<$Res>;
-  $Res call({bool isLoading});
+abstract class _$$_EnterPhoneNumberCopyWith<$Res> {
+  factory _$$_EnterPhoneNumberCopyWith(
+          _$_EnterPhoneNumber value, $Res Function(_$_EnterPhoneNumber) then) =
+      __$$_EnterPhoneNumberCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String? withErrorMessage});
 }
 
 /// @nodoc
-class __$EnterPhoneNumberCopyWithImpl<$Res>
-    extends _$PhoneLoginStateCopyWithImpl<$Res>
-    implements _$EnterPhoneNumberCopyWith<$Res> {
-  __$EnterPhoneNumberCopyWithImpl(
-      _EnterPhoneNumber _value, $Res Function(_EnterPhoneNumber) _then)
-      : super(_value, (v) => _then(v as _EnterPhoneNumber));
+class __$$_EnterPhoneNumberCopyWithImpl<$Res>
+    extends _$PhoneLoginStateCopyWithImpl<$Res, _$_EnterPhoneNumber>
+    implements _$$_EnterPhoneNumberCopyWith<$Res> {
+  __$$_EnterPhoneNumberCopyWithImpl(
+      _$_EnterPhoneNumber _value, $Res Function(_$_EnterPhoneNumber) _then)
+      : super(_value, _then);
 
-  @override
-  _EnterPhoneNumber get _value => super._value as _EnterPhoneNumber;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isLoading = freezed,
+    Object? withErrorMessage = freezed,
   }) {
-    return _then(_EnterPhoneNumber(
-      isLoading: isLoading == freezed
-          ? _value.isLoading
-          : isLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
+    return _then(_$_EnterPhoneNumber(
+      withErrorMessage: freezed == withErrorMessage
+          ? _value.withErrorMessage
+          : withErrorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -139,64 +126,73 @@ class __$EnterPhoneNumberCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_EnterPhoneNumber implements _EnterPhoneNumber {
-  const _$_EnterPhoneNumber({required this.isLoading});
+  const _$_EnterPhoneNumber({this.withErrorMessage});
 
   @override
-  final bool isLoading;
+  final String? withErrorMessage;
 
   @override
   String toString() {
-    return 'PhoneLoginState.enterPhoneNumber(isLoading: $isLoading)';
+    return 'PhoneLoginState.enterPhoneNumber(withErrorMessage: $withErrorMessage)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _EnterPhoneNumber &&
-            (identical(other.isLoading, isLoading) ||
-                other.isLoading == isLoading));
+            other is _$_EnterPhoneNumber &&
+            (identical(other.withErrorMessage, withErrorMessage) ||
+                other.withErrorMessage == withErrorMessage));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isLoading);
+  int get hashCode => Object.hash(runtimeType, withErrorMessage);
 
   @JsonKey(ignore: true)
   @override
-  _$EnterPhoneNumberCopyWith<_EnterPhoneNumber> get copyWith =>
-      __$EnterPhoneNumberCopyWithImpl<_EnterPhoneNumber>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_EnterPhoneNumberCopyWith<_$_EnterPhoneNumber> get copyWith =>
+      __$$_EnterPhoneNumberCopyWithImpl<_$_EnterPhoneNumber>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(bool isLoading) enterPhoneNumber,
-    required TResult Function(String verificationId, int? resendToken)
+    required TResult Function(String? withErrorMessage) enterPhoneNumber,
+    required TResult Function() waitForCodeSent,
+    required TResult Function(
+            String verificationId, bool autoDetecting, String? withErrorMessage)
         enterCode,
-    required TResult Function() authenticated,
+    required TResult Function() waitForLogIn,
   }) {
-    return enterPhoneNumber(isLoading);
+    return enterPhoneNumber(withErrorMessage);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(bool isLoading)? enterPhoneNumber,
-    TResult Function(String verificationId, int? resendToken)? enterCode,
-    TResult Function()? authenticated,
+    TResult? Function(String? withErrorMessage)? enterPhoneNumber,
+    TResult? Function()? waitForCodeSent,
+    TResult? Function(String verificationId, bool autoDetecting,
+            String? withErrorMessage)?
+        enterCode,
+    TResult? Function()? waitForLogIn,
   }) {
-    return enterPhoneNumber?.call(isLoading);
+    return enterPhoneNumber?.call(withErrorMessage);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(bool isLoading)? enterPhoneNumber,
-    TResult Function(String verificationId, int? resendToken)? enterCode,
-    TResult Function()? authenticated,
+    TResult Function(String? withErrorMessage)? enterPhoneNumber,
+    TResult Function()? waitForCodeSent,
+    TResult Function(String verificationId, bool autoDetecting,
+            String? withErrorMessage)?
+        enterCode,
+    TResult Function()? waitForLogIn,
     required TResult orElse(),
   }) {
     if (enterPhoneNumber != null) {
-      return enterPhoneNumber(isLoading);
+      return enterPhoneNumber(withErrorMessage);
     }
     return orElse();
   }
@@ -205,8 +201,9 @@ class _$_EnterPhoneNumber implements _EnterPhoneNumber {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_EnterPhoneNumber value) enterPhoneNumber,
+    required TResult Function(_WaitForCodeSent value) waitForCodeSent,
     required TResult Function(_EnterCode value) enterCode,
-    required TResult Function(_Authenticated value) authenticated,
+    required TResult Function(_WaitForLogin value) waitForLogIn,
   }) {
     return enterPhoneNumber(this);
   }
@@ -214,9 +211,10 @@ class _$_EnterPhoneNumber implements _EnterPhoneNumber {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_EnterPhoneNumber value)? enterPhoneNumber,
-    TResult Function(_EnterCode value)? enterCode,
-    TResult Function(_Authenticated value)? authenticated,
+    TResult? Function(_EnterPhoneNumber value)? enterPhoneNumber,
+    TResult? Function(_WaitForCodeSent value)? waitForCodeSent,
+    TResult? Function(_EnterCode value)? enterCode,
+    TResult? Function(_WaitForLogin value)? waitForLogIn,
   }) {
     return enterPhoneNumber?.call(this);
   }
@@ -225,8 +223,9 @@ class _$_EnterPhoneNumber implements _EnterPhoneNumber {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_EnterPhoneNumber value)? enterPhoneNumber,
+    TResult Function(_WaitForCodeSent value)? waitForCodeSent,
     TResult Function(_EnterCode value)? enterCode,
-    TResult Function(_Authenticated value)? authenticated,
+    TResult Function(_WaitForLogin value)? waitForLogIn,
     required TResult orElse(),
   }) {
     if (enterPhoneNumber != null) {
@@ -237,115 +236,89 @@ class _$_EnterPhoneNumber implements _EnterPhoneNumber {
 }
 
 abstract class _EnterPhoneNumber implements PhoneLoginState {
-  const factory _EnterPhoneNumber({required bool isLoading}) =
+  const factory _EnterPhoneNumber({final String? withErrorMessage}) =
       _$_EnterPhoneNumber;
 
-  bool get isLoading;
+  String? get withErrorMessage;
   @JsonKey(ignore: true)
-  _$EnterPhoneNumberCopyWith<_EnterPhoneNumber> get copyWith =>
+  _$$_EnterPhoneNumberCopyWith<_$_EnterPhoneNumber> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$EnterCodeCopyWith<$Res> {
-  factory _$EnterCodeCopyWith(
-          _EnterCode value, $Res Function(_EnterCode) then) =
-      __$EnterCodeCopyWithImpl<$Res>;
-  $Res call({String verificationId, int? resendToken});
+abstract class _$$_WaitForCodeSentCopyWith<$Res> {
+  factory _$$_WaitForCodeSentCopyWith(
+          _$_WaitForCodeSent value, $Res Function(_$_WaitForCodeSent) then) =
+      __$$_WaitForCodeSentCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$EnterCodeCopyWithImpl<$Res> extends _$PhoneLoginStateCopyWithImpl<$Res>
-    implements _$EnterCodeCopyWith<$Res> {
-  __$EnterCodeCopyWithImpl(_EnterCode _value, $Res Function(_EnterCode) _then)
-      : super(_value, (v) => _then(v as _EnterCode));
-
-  @override
-  _EnterCode get _value => super._value as _EnterCode;
-
-  @override
-  $Res call({
-    Object? verificationId = freezed,
-    Object? resendToken = freezed,
-  }) {
-    return _then(_EnterCode(
-      verificationId: verificationId == freezed
-          ? _value.verificationId
-          : verificationId // ignore: cast_nullable_to_non_nullable
-              as String,
-      resendToken: resendToken == freezed
-          ? _value.resendToken
-          : resendToken // ignore: cast_nullable_to_non_nullable
-              as int?,
-    ));
-  }
+class __$$_WaitForCodeSentCopyWithImpl<$Res>
+    extends _$PhoneLoginStateCopyWithImpl<$Res, _$_WaitForCodeSent>
+    implements _$$_WaitForCodeSentCopyWith<$Res> {
+  __$$_WaitForCodeSentCopyWithImpl(
+      _$_WaitForCodeSent _value, $Res Function(_$_WaitForCodeSent) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_EnterCode implements _EnterCode {
-  const _$_EnterCode({required this.verificationId, this.resendToken});
-
-  @override
-  final String verificationId;
-  @override
-  final int? resendToken;
+class _$_WaitForCodeSent implements _WaitForCodeSent {
+  const _$_WaitForCodeSent();
 
   @override
   String toString() {
-    return 'PhoneLoginState.enterCode(verificationId: $verificationId, resendToken: $resendToken)';
+    return 'PhoneLoginState.waitForCodeSent()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _EnterCode &&
-            (identical(other.verificationId, verificationId) ||
-                other.verificationId == verificationId) &&
-            (identical(other.resendToken, resendToken) ||
-                other.resendToken == resendToken));
+        (other.runtimeType == runtimeType && other is _$_WaitForCodeSent);
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, verificationId, resendToken);
-
-  @JsonKey(ignore: true)
-  @override
-  _$EnterCodeCopyWith<_EnterCode> get copyWith =>
-      __$EnterCodeCopyWithImpl<_EnterCode>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(bool isLoading) enterPhoneNumber,
-    required TResult Function(String verificationId, int? resendToken)
+    required TResult Function(String? withErrorMessage) enterPhoneNumber,
+    required TResult Function() waitForCodeSent,
+    required TResult Function(
+            String verificationId, bool autoDetecting, String? withErrorMessage)
         enterCode,
-    required TResult Function() authenticated,
+    required TResult Function() waitForLogIn,
   }) {
-    return enterCode(verificationId, resendToken);
+    return waitForCodeSent();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(bool isLoading)? enterPhoneNumber,
-    TResult Function(String verificationId, int? resendToken)? enterCode,
-    TResult Function()? authenticated,
+    TResult? Function(String? withErrorMessage)? enterPhoneNumber,
+    TResult? Function()? waitForCodeSent,
+    TResult? Function(String verificationId, bool autoDetecting,
+            String? withErrorMessage)?
+        enterCode,
+    TResult? Function()? waitForLogIn,
   }) {
-    return enterCode?.call(verificationId, resendToken);
+    return waitForCodeSent?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(bool isLoading)? enterPhoneNumber,
-    TResult Function(String verificationId, int? resendToken)? enterCode,
-    TResult Function()? authenticated,
+    TResult Function(String? withErrorMessage)? enterPhoneNumber,
+    TResult Function()? waitForCodeSent,
+    TResult Function(String verificationId, bool autoDetecting,
+            String? withErrorMessage)?
+        enterCode,
+    TResult Function()? waitForLogIn,
     required TResult orElse(),
   }) {
-    if (enterCode != null) {
-      return enterCode(verificationId, resendToken);
+    if (waitForCodeSent != null) {
+      return waitForCodeSent();
     }
     return orElse();
   }
@@ -354,8 +327,179 @@ class _$_EnterCode implements _EnterCode {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_EnterPhoneNumber value) enterPhoneNumber,
+    required TResult Function(_WaitForCodeSent value) waitForCodeSent,
     required TResult Function(_EnterCode value) enterCode,
-    required TResult Function(_Authenticated value) authenticated,
+    required TResult Function(_WaitForLogin value) waitForLogIn,
+  }) {
+    return waitForCodeSent(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_EnterPhoneNumber value)? enterPhoneNumber,
+    TResult? Function(_WaitForCodeSent value)? waitForCodeSent,
+    TResult? Function(_EnterCode value)? enterCode,
+    TResult? Function(_WaitForLogin value)? waitForLogIn,
+  }) {
+    return waitForCodeSent?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_EnterPhoneNumber value)? enterPhoneNumber,
+    TResult Function(_WaitForCodeSent value)? waitForCodeSent,
+    TResult Function(_EnterCode value)? enterCode,
+    TResult Function(_WaitForLogin value)? waitForLogIn,
+    required TResult orElse(),
+  }) {
+    if (waitForCodeSent != null) {
+      return waitForCodeSent(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _WaitForCodeSent implements PhoneLoginState {
+  const factory _WaitForCodeSent() = _$_WaitForCodeSent;
+}
+
+/// @nodoc
+abstract class _$$_EnterCodeCopyWith<$Res> {
+  factory _$$_EnterCodeCopyWith(
+          _$_EnterCode value, $Res Function(_$_EnterCode) then) =
+      __$$_EnterCodeCopyWithImpl<$Res>;
+  @useResult
+  $Res call(
+      {String verificationId, bool autoDetecting, String? withErrorMessage});
+}
+
+/// @nodoc
+class __$$_EnterCodeCopyWithImpl<$Res>
+    extends _$PhoneLoginStateCopyWithImpl<$Res, _$_EnterCode>
+    implements _$$_EnterCodeCopyWith<$Res> {
+  __$$_EnterCodeCopyWithImpl(
+      _$_EnterCode _value, $Res Function(_$_EnterCode) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? verificationId = null,
+    Object? autoDetecting = null,
+    Object? withErrorMessage = freezed,
+  }) {
+    return _then(_$_EnterCode(
+      verificationId: null == verificationId
+          ? _value.verificationId
+          : verificationId // ignore: cast_nullable_to_non_nullable
+              as String,
+      autoDetecting: null == autoDetecting
+          ? _value.autoDetecting
+          : autoDetecting // ignore: cast_nullable_to_non_nullable
+              as bool,
+      withErrorMessage: freezed == withErrorMessage
+          ? _value.withErrorMessage
+          : withErrorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_EnterCode implements _EnterCode {
+  const _$_EnterCode(
+      {required this.verificationId,
+      required this.autoDetecting,
+      this.withErrorMessage});
+
+  @override
+  final String verificationId;
+  @override
+  final bool autoDetecting;
+  @override
+  final String? withErrorMessage;
+
+  @override
+  String toString() {
+    return 'PhoneLoginState.enterCode(verificationId: $verificationId, autoDetecting: $autoDetecting, withErrorMessage: $withErrorMessage)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_EnterCode &&
+            (identical(other.verificationId, verificationId) ||
+                other.verificationId == verificationId) &&
+            (identical(other.autoDetecting, autoDetecting) ||
+                other.autoDetecting == autoDetecting) &&
+            (identical(other.withErrorMessage, withErrorMessage) ||
+                other.withErrorMessage == withErrorMessage));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, verificationId, autoDetecting, withErrorMessage);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_EnterCodeCopyWith<_$_EnterCode> get copyWith =>
+      __$$_EnterCodeCopyWithImpl<_$_EnterCode>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String? withErrorMessage) enterPhoneNumber,
+    required TResult Function() waitForCodeSent,
+    required TResult Function(
+            String verificationId, bool autoDetecting, String? withErrorMessage)
+        enterCode,
+    required TResult Function() waitForLogIn,
+  }) {
+    return enterCode(verificationId, autoDetecting, withErrorMessage);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String? withErrorMessage)? enterPhoneNumber,
+    TResult? Function()? waitForCodeSent,
+    TResult? Function(String verificationId, bool autoDetecting,
+            String? withErrorMessage)?
+        enterCode,
+    TResult? Function()? waitForLogIn,
+  }) {
+    return enterCode?.call(verificationId, autoDetecting, withErrorMessage);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String? withErrorMessage)? enterPhoneNumber,
+    TResult Function()? waitForCodeSent,
+    TResult Function(String verificationId, bool autoDetecting,
+            String? withErrorMessage)?
+        enterCode,
+    TResult Function()? waitForLogIn,
+    required TResult orElse(),
+  }) {
+    if (enterCode != null) {
+      return enterCode(verificationId, autoDetecting, withErrorMessage);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_EnterPhoneNumber value) enterPhoneNumber,
+    required TResult Function(_WaitForCodeSent value) waitForCodeSent,
+    required TResult Function(_EnterCode value) enterCode,
+    required TResult Function(_WaitForLogin value) waitForLogIn,
   }) {
     return enterCode(this);
   }
@@ -363,9 +507,10 @@ class _$_EnterCode implements _EnterCode {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_EnterPhoneNumber value)? enterPhoneNumber,
-    TResult Function(_EnterCode value)? enterCode,
-    TResult Function(_Authenticated value)? authenticated,
+    TResult? Function(_EnterPhoneNumber value)? enterPhoneNumber,
+    TResult? Function(_WaitForCodeSent value)? waitForCodeSent,
+    TResult? Function(_EnterCode value)? enterCode,
+    TResult? Function(_WaitForLogin value)? waitForLogIn,
   }) {
     return enterCode?.call(this);
   }
@@ -374,8 +519,9 @@ class _$_EnterCode implements _EnterCode {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_EnterPhoneNumber value)? enterPhoneNumber,
+    TResult Function(_WaitForCodeSent value)? waitForCodeSent,
     TResult Function(_EnterCode value)? enterCode,
-    TResult Function(_Authenticated value)? authenticated,
+    TResult Function(_WaitForLogin value)? waitForLogIn,
     required TResult orElse(),
   }) {
     if (enterCode != null) {
@@ -386,49 +532,49 @@ class _$_EnterCode implements _EnterCode {
 }
 
 abstract class _EnterCode implements PhoneLoginState {
-  const factory _EnterCode({required String verificationId, int? resendToken}) =
-      _$_EnterCode;
+  const factory _EnterCode(
+      {required final String verificationId,
+      required final bool autoDetecting,
+      final String? withErrorMessage}) = _$_EnterCode;
 
   String get verificationId;
-  int? get resendToken;
+  bool get autoDetecting;
+  String? get withErrorMessage;
   @JsonKey(ignore: true)
-  _$EnterCodeCopyWith<_EnterCode> get copyWith =>
+  _$$_EnterCodeCopyWith<_$_EnterCode> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$AuthenticatedCopyWith<$Res> {
-  factory _$AuthenticatedCopyWith(
-          _Authenticated value, $Res Function(_Authenticated) then) =
-      __$AuthenticatedCopyWithImpl<$Res>;
+abstract class _$$_WaitForLoginCopyWith<$Res> {
+  factory _$$_WaitForLoginCopyWith(
+          _$_WaitForLogin value, $Res Function(_$_WaitForLogin) then) =
+      __$$_WaitForLoginCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$AuthenticatedCopyWithImpl<$Res>
-    extends _$PhoneLoginStateCopyWithImpl<$Res>
-    implements _$AuthenticatedCopyWith<$Res> {
-  __$AuthenticatedCopyWithImpl(
-      _Authenticated _value, $Res Function(_Authenticated) _then)
-      : super(_value, (v) => _then(v as _Authenticated));
-
-  @override
-  _Authenticated get _value => super._value as _Authenticated;
+class __$$_WaitForLoginCopyWithImpl<$Res>
+    extends _$PhoneLoginStateCopyWithImpl<$Res, _$_WaitForLogin>
+    implements _$$_WaitForLoginCopyWith<$Res> {
+  __$$_WaitForLoginCopyWithImpl(
+      _$_WaitForLogin _value, $Res Function(_$_WaitForLogin) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_Authenticated implements _Authenticated {
-  const _$_Authenticated();
+class _$_WaitForLogin implements _WaitForLogin {
+  const _$_WaitForLogin();
 
   @override
   String toString() {
-    return 'PhoneLoginState.authenticated()';
+    return 'PhoneLoginState.waitForLogIn()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Authenticated);
+        (other.runtimeType == runtimeType && other is _$_WaitForLogin);
   }
 
   @override
@@ -437,34 +583,42 @@ class _$_Authenticated implements _Authenticated {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(bool isLoading) enterPhoneNumber,
-    required TResult Function(String verificationId, int? resendToken)
+    required TResult Function(String? withErrorMessage) enterPhoneNumber,
+    required TResult Function() waitForCodeSent,
+    required TResult Function(
+            String verificationId, bool autoDetecting, String? withErrorMessage)
         enterCode,
-    required TResult Function() authenticated,
+    required TResult Function() waitForLogIn,
   }) {
-    return authenticated();
+    return waitForLogIn();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(bool isLoading)? enterPhoneNumber,
-    TResult Function(String verificationId, int? resendToken)? enterCode,
-    TResult Function()? authenticated,
+    TResult? Function(String? withErrorMessage)? enterPhoneNumber,
+    TResult? Function()? waitForCodeSent,
+    TResult? Function(String verificationId, bool autoDetecting,
+            String? withErrorMessage)?
+        enterCode,
+    TResult? Function()? waitForLogIn,
   }) {
-    return authenticated?.call();
+    return waitForLogIn?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(bool isLoading)? enterPhoneNumber,
-    TResult Function(String verificationId, int? resendToken)? enterCode,
-    TResult Function()? authenticated,
+    TResult Function(String? withErrorMessage)? enterPhoneNumber,
+    TResult Function()? waitForCodeSent,
+    TResult Function(String verificationId, bool autoDetecting,
+            String? withErrorMessage)?
+        enterCode,
+    TResult Function()? waitForLogIn,
     required TResult orElse(),
   }) {
-    if (authenticated != null) {
-      return authenticated();
+    if (waitForLogIn != null) {
+      return waitForLogIn();
     }
     return orElse();
   }
@@ -473,37 +627,40 @@ class _$_Authenticated implements _Authenticated {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_EnterPhoneNumber value) enterPhoneNumber,
+    required TResult Function(_WaitForCodeSent value) waitForCodeSent,
     required TResult Function(_EnterCode value) enterCode,
-    required TResult Function(_Authenticated value) authenticated,
+    required TResult Function(_WaitForLogin value) waitForLogIn,
   }) {
-    return authenticated(this);
+    return waitForLogIn(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_EnterPhoneNumber value)? enterPhoneNumber,
-    TResult Function(_EnterCode value)? enterCode,
-    TResult Function(_Authenticated value)? authenticated,
+    TResult? Function(_EnterPhoneNumber value)? enterPhoneNumber,
+    TResult? Function(_WaitForCodeSent value)? waitForCodeSent,
+    TResult? Function(_EnterCode value)? enterCode,
+    TResult? Function(_WaitForLogin value)? waitForLogIn,
   }) {
-    return authenticated?.call(this);
+    return waitForLogIn?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_EnterPhoneNumber value)? enterPhoneNumber,
+    TResult Function(_WaitForCodeSent value)? waitForCodeSent,
     TResult Function(_EnterCode value)? enterCode,
-    TResult Function(_Authenticated value)? authenticated,
+    TResult Function(_WaitForLogin value)? waitForLogIn,
     required TResult orElse(),
   }) {
-    if (authenticated != null) {
-      return authenticated(this);
+    if (waitForLogIn != null) {
+      return waitForLogIn(this);
     }
     return orElse();
   }
 }
 
-abstract class _Authenticated implements PhoneLoginState {
-  const factory _Authenticated() = _$_Authenticated;
+abstract class _WaitForLogin implements PhoneLoginState {
+  const factory _WaitForLogin() = _$_WaitForLogin;
 }

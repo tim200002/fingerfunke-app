@@ -1,6 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'image_upload_cubit.dart';
 
@@ -11,25 +12,7 @@ part of 'image_upload_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$ImageUploadStateTearOff {
-  const _$ImageUploadStateTearOff();
-
-  Initial initial() {
-    return const Initial();
-  }
-
-  Loaded loaded(File file) {
-    return Loaded(
-      file,
-    );
-  }
-}
-
-/// @nodoc
-const $ImageUploadState = _$ImageUploadStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$ImageUploadState {
@@ -41,8 +24,8 @@ mixin _$ImageUploadState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(File file)? loaded,
+    TResult? Function()? initial,
+    TResult? Function(File file)? loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -60,8 +43,8 @@ mixin _$ImageUploadState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
-    TResult Function(Loaded value)? loaded,
+    TResult? Function(Initial value)? initial,
+    TResult? Function(Loaded value)? loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -77,33 +60,32 @@ mixin _$ImageUploadState {
 abstract class $ImageUploadStateCopyWith<$Res> {
   factory $ImageUploadStateCopyWith(
           ImageUploadState value, $Res Function(ImageUploadState) then) =
-      _$ImageUploadStateCopyWithImpl<$Res>;
+      _$ImageUploadStateCopyWithImpl<$Res, ImageUploadState>;
 }
 
 /// @nodoc
-class _$ImageUploadStateCopyWithImpl<$Res>
+class _$ImageUploadStateCopyWithImpl<$Res, $Val extends ImageUploadState>
     implements $ImageUploadStateCopyWith<$Res> {
   _$ImageUploadStateCopyWithImpl(this._value, this._then);
 
-  final ImageUploadState _value;
   // ignore: unused_field
-  final $Res Function(ImageUploadState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
-abstract class $InitialCopyWith<$Res> {
-  factory $InitialCopyWith(Initial value, $Res Function(Initial) then) =
-      _$InitialCopyWithImpl<$Res>;
+abstract class _$$InitialCopyWith<$Res> {
+  factory _$$InitialCopyWith(_$Initial value, $Res Function(_$Initial) then) =
+      __$$InitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$InitialCopyWithImpl<$Res> extends _$ImageUploadStateCopyWithImpl<$Res>
-    implements $InitialCopyWith<$Res> {
-  _$InitialCopyWithImpl(Initial _value, $Res Function(Initial) _then)
-      : super(_value, (v) => _then(v as Initial));
-
-  @override
-  Initial get _value => super._value as Initial;
+class __$$InitialCopyWithImpl<$Res>
+    extends _$ImageUploadStateCopyWithImpl<$Res, _$Initial>
+    implements _$$InitialCopyWith<$Res> {
+  __$$InitialCopyWithImpl(_$Initial _value, $Res Function(_$Initial) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -119,7 +101,7 @@ class _$Initial implements Initial {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is Initial);
+        (other.runtimeType == runtimeType && other is _$Initial);
   }
 
   @override
@@ -137,8 +119,8 @@ class _$Initial implements Initial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(File file)? loaded,
+    TResult? Function()? initial,
+    TResult? Function(File file)? loaded,
   }) {
     return initial?.call();
   }
@@ -168,8 +150,8 @@ class _$Initial implements Initial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
-    TResult Function(Loaded value)? loaded,
+    TResult? Function(Initial value)? initial,
+    TResult? Function(Loaded value)? loaded,
   }) {
     return initial?.call(this);
   }
@@ -193,27 +175,27 @@ abstract class Initial implements ImageUploadState {
 }
 
 /// @nodoc
-abstract class $LoadedCopyWith<$Res> {
-  factory $LoadedCopyWith(Loaded value, $Res Function(Loaded) then) =
-      _$LoadedCopyWithImpl<$Res>;
+abstract class _$$LoadedCopyWith<$Res> {
+  factory _$$LoadedCopyWith(_$Loaded value, $Res Function(_$Loaded) then) =
+      __$$LoadedCopyWithImpl<$Res>;
+  @useResult
   $Res call({File file});
 }
 
 /// @nodoc
-class _$LoadedCopyWithImpl<$Res> extends _$ImageUploadStateCopyWithImpl<$Res>
-    implements $LoadedCopyWith<$Res> {
-  _$LoadedCopyWithImpl(Loaded _value, $Res Function(Loaded) _then)
-      : super(_value, (v) => _then(v as Loaded));
+class __$$LoadedCopyWithImpl<$Res>
+    extends _$ImageUploadStateCopyWithImpl<$Res, _$Loaded>
+    implements _$$LoadedCopyWith<$Res> {
+  __$$LoadedCopyWithImpl(_$Loaded _value, $Res Function(_$Loaded) _then)
+      : super(_value, _then);
 
-  @override
-  Loaded get _value => super._value as Loaded;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? file = freezed,
+    Object? file = null,
   }) {
-    return _then(Loaded(
-      file == freezed
+    return _then(_$Loaded(
+      null == file
           ? _value.file
           : file // ignore: cast_nullable_to_non_nullable
               as File,
@@ -238,7 +220,7 @@ class _$Loaded implements Loaded {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is Loaded &&
+            other is _$Loaded &&
             (identical(other.file, file) || other.file == file));
   }
 
@@ -247,8 +229,9 @@ class _$Loaded implements Loaded {
 
   @JsonKey(ignore: true)
   @override
-  $LoadedCopyWith<Loaded> get copyWith =>
-      _$LoadedCopyWithImpl<Loaded>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$LoadedCopyWith<_$Loaded> get copyWith =>
+      __$$LoadedCopyWithImpl<_$Loaded>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -262,8 +245,8 @@ class _$Loaded implements Loaded {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(File file)? loaded,
+    TResult? Function()? initial,
+    TResult? Function(File file)? loaded,
   }) {
     return loaded?.call(file);
   }
@@ -293,8 +276,8 @@ class _$Loaded implements Loaded {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Initial value)? initial,
-    TResult Function(Loaded value)? loaded,
+    TResult? Function(Initial value)? initial,
+    TResult? Function(Loaded value)? loaded,
   }) {
     return loaded?.call(this);
   }
@@ -314,9 +297,10 @@ class _$Loaded implements Loaded {
 }
 
 abstract class Loaded implements ImageUploadState {
-  const factory Loaded(File file) = _$Loaded;
+  const factory Loaded(final File file) = _$Loaded;
 
   File get file;
   @JsonKey(ignore: true)
-  $LoadedCopyWith<Loaded> get copyWith => throw _privateConstructorUsedError;
+  _$$LoadedCopyWith<_$Loaded> get copyWith =>
+      throw _privateConstructorUsedError;
 }

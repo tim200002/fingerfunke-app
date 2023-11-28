@@ -3,10 +3,12 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:fingerfunke_app/models/asset/asset.dart';
-import 'package:fingerfunke_app/repositories/video_repository/video_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:mime/mime.dart';
+
+import '../../models/asset/asset.dart';
+import '../../utils/type_aliases.dart';
+import 'video_repository.dart';
 
 class VideoRepositoryImpl implements VideoRepository {
   final FirebaseFunctions _functions;
@@ -23,7 +25,7 @@ class VideoRepositoryImpl implements VideoRepository {
   }
 
   @override
-  Future<Map<String, dynamic>> createVideoAsset() async {
+  Future<JsonMap> createVideoAsset() async {
     // ToDo Error Handling
     HttpsCallable callable = _functions.httpsCallable('mux-createMuxAsset');
     final results = await callable();
@@ -41,7 +43,7 @@ class VideoRepositoryImpl implements VideoRepository {
       'Connection': 'keep-alive',
     });
     final response = _dio.put(uploadUrl,
-        // ToDo find out if this stream is automatically closes when cancel token invoked
+        // ToDo find out if this stream is automatically closed when cancel token invoked
         data: file.openRead(),
         cancelToken: token,
         options: options,

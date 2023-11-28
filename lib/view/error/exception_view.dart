@@ -1,5 +1,7 @@
-import 'package:fingerfunke_app/utils/illustration.dart';
+import '../../utils/illustration.dart';
 import 'package:flutter/material.dart';
+
+import '../../utils/tools.dart';
 
 part 'widgets/technical_view.dart';
 
@@ -7,6 +9,12 @@ class ExceptionView extends StatelessWidget {
   final dynamic exception;
   final StackTrace? trace;
   final bool closable;
+
+  static ExceptionView fromError(dynamic e) => ExceptionView(exception: e);
+  static ExceptionView fromErrorClosable(dynamic e) => ExceptionView(
+        exception: e,
+        closable: true,
+      );
 
   /// This is a widget for displaying a general error to the user
   ///
@@ -40,49 +48,52 @@ class ExceptionView extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool showClose = closable && Navigator.of(context).canPop();
     return Scaffold(
-        appBar: AppBar(
-          //title: Text("😳"),
-          leading: showClose
-              ? IconButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  icon: const Icon(Icons.close_rounded))
-              : null,
-        ),
-        extendBodyBehindAppBar: true,
-        body: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: SingleChildScrollView(
-              child: Column(
-                //mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Padding(
-                      padding: const EdgeInsets.only(top: 140, bottom: 60),
-                      child: Center(
-                          child: Illustration(
-                        Illustrations.fixingBugs,
-                        height: 150,
-                      ))),
-                  Text("Oh no :/",
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headline4),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Text(
-                    "Ein unerwarteter Fehler ist aufgetreten.\n Wir haben den Fehler erfasst und machen uns gleich an die Arbeit",
-                    textAlign: TextAlign.center,
-                    //style: Theme.of(context).textTheme.headline3
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  _TechnicalExceptionView(
-                    exception: exception,
-                    trace: trace,
-                  ),
-                ],
+      appBar: AppBar(
+        //title: Text("😳"),
+        automaticallyImplyLeading: false,
+        leading: showClose
+            ? IconButton(
+                onPressed: () => Navigator.of(context).pop(),
+                icon: const Icon(Icons.close_rounded))
+            : null,
+      ),
+      extendBodyBehindAppBar: true,
+      body: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: SingleChildScrollView(
+          child: Column(
+            //mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                  padding: const EdgeInsets.only(top: 140, bottom: 60),
+                  child: Center(
+                      child: Illustration(
+                    Illustrations.fixingBugs,
+                    height: 150,
+                  ))),
+              Text(l10n(context).lbl_errorTitle,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headline4),
+              const SizedBox(
+                height: 10,
               ),
-            )));
+              Text(
+                l10n(context).lbl_errorAbout,
+                textAlign: TextAlign.center,
+                //style: Theme.of(context).textTheme.headline3
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              _TechnicalExceptionView(
+                exception: exception,
+                trace: trace,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

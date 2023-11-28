@@ -1,4 +1,4 @@
-import 'package:fingerfunke_app/common_widgets/video/video_playback_cubit/video_playback_cubit.dart';
+import '../video_playback_cubit/video_playback_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,8 +15,9 @@ class VideoPausedIndicator extends StatelessWidget {
             playing: (controller, _) => controller.value.isPlaying
                 ? Container()
                 : const Icon(
-                    Icons.play_arrow,
-                    size: 50,
+                    Icons.play_arrow_rounded,
+                    color: Colors.white,
+                    size: 80,
                   ),
             error: (_) => Container()),
       ),

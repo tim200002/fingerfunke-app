@@ -1,12 +1,14 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fingerfunke_app/cubits/authentication_cubit/authentication_cubit.dart';
-import 'package:fingerfunke_app/models/message/message.dart';
-import 'package:fingerfunke_app/view/chat/widgets/chat_message.dart';
-import 'package:fingerfunke_app/view/chat/widgets/chat_editor/chat_editor.dart';
-import 'package:fingerfunke_app/view/error/exception_view.dart';
-import 'package:fingerfunke_app/view/paginated_list/cubit/paginated_list_cubit.dart';
-import 'package:fingerfunke_app/view/paginated_list/view/paginated_list.dart';
-import 'package:fingerfunke_app/utils/type_aliases.dart';
+import '../../../common_widgets/paginated_list/paginated_list.dart';
+import '../../../cubits/better_pagination/cubit/better_pagination_cubit.dart';
+import '../../../cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
+import '../../../cubits/notification_tracker/notification_tracker.dart';
+import '../../../models/message/message.dart';
+import '../../../utils/tools.dart';
+import '../widgets/chat_message.dart';
+import '../widgets/chat_editor/chat_editor.dart';
+import '../../error/exception_view.dart';
+import '../../../utils/type_aliases.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,10 +16,13 @@ class InvalidMessageTypeExcpetion implements Exception {}
 
 class ChatArguments {
   final FirestoreId postId;
-  final PaginatedListCubit<Message> paginatedListCubit;
   final String? chatName;
+  final BetterPaginationCubit<Message> chatMessagePaginationCubit;
 
-  ChatArguments({required this.postId, required this.paginatedListCubit, this.chatName});
+  ChatArguments(
+      {required this.chatMessagePaginationCubit,
+      required this.postId,
+      this.chatName});
 }
 
 class ChatPage extends StatelessWidget {
@@ -27,37 +32,76 @@ class ChatPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final ChatArguments arguments =
         ModalRoute.of(context)!.settings.arguments as ChatArguments;
-    return Scaffold(
-      appBar: AppBar(
-        title: AutoSizeText(arguments.chatName ?? "", maxLines: 1, minFontSize: 12,),
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: BlocProvider.value(
-              value: arguments.paginatedListCubit,
-              child: PaginatedList<Message>(
-                reverse: true,
-                endMessage: "Keine weitere Nachrichten",
-                itemBuilder: (message) {
-                  switch (message.type) {
-                    case message_type.text:
-                      return ChatMessage(message as TextMessage);
-                    default:
-                      return ExceptionView(
-                        exception: InvalidMessageTypeException(),
-                      );
-                  }
-                },
-              ),
+
+    context.read<NotificationTracker>().registerChatOpening(arguments.postId);
+
+    return Hero(
+      tag: "post_chat",
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        appBar: AppBar(
+          foregroundColor: Colors.white,
+          backgroundColor: Colors.black,
+          leading: IconButton(
+              onPressed: () => Navigator.of(context).pop(),
+              icon: const Icon(Icons.close)),
+          title: AutoSizeText(
+            l10n(context).lbl_chat,
+            maxLines: 1,
+            minFontSize: 12,
+          ),
+        ),
+        body: ClipRRect(
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+          child: Container(
+            color: Colors.white,
+            child: Column(
+              children: [
+                Expanded(
+                  child: PaginatedList<Message>(
+                    keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                    cubit: arguments.chatMessagePaginationCubit,
+                    reverse: true,
+                    initialLoadIndicator: const Center(
+                        child: CircularProgressIndicator.adaptive()),
+                    itemBuilder: (message) {
+                      switch (message.type) {
+                        case MessageType.text:
+                          return ChatMessage(
+                            message: message as TextMessage,
+                            postId: arguments.postId,
+                          );
+                        default:
+                          return ExceptionView(
+                            exception: InvalidMessageTypeExcpetion(),
+                          );
+                      }
+                    },
+                    emptyListIndicator: Center(
+                        child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text("No messages",
+                          style: Theme.of(context).textTheme.labelMedium),
+                    )),
+                    endIndicator: Center(
+                        child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(l10n(context).lbl_chatNoMoreMessages,
+                          style: Theme.of(context).textTheme.labelMedium),
+                    )),
+                    nextItemsLoadingIndicator: const Center(
+                        child: CircularProgressIndicator.adaptive()),
+                  ),
+                ),
+                ChatEditor(
+                    postId: arguments.postId,
+                    author: BlocProvider.of<FirebaseAuthenticationCubitCubit>(
+                            context)
+                        .getUser()),
+              ],
             ),
           ),
-          BlocProvider.of<AuthenticationCubit>(context).state.maybeWhen(
-              signedIn: (user) =>
-                  ChatEditor(postId: arguments.postId, author: user),
-              orElse: () =>
-                  const Text("You must have an account ro participate in this chat"))
-        ],
+        ),
       ),
     );
   }

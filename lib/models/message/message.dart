@@ -1,32 +1,37 @@
 //! Please do not use JSON Annotator for these classes, since deserialization is to complex for it
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fingerfunke_app/models/abstract_models/abstract_models.dart';
-import 'package:fingerfunke_app/models/user/user.dart';
-import 'package:fingerfunke_app/models/utils.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:fingerfunke_app/utils/type_aliases.dart';
 import 'package:uuid/uuid.dart';
 
-enum message_type { video, text }
+import '../../utils/type_aliases.dart';
+import '../abstract_models/abstract_models.dart';
+import '../utils.dart';
+
+enum MessageType { video, text }
+
+enum MessageVisibility { visible, deleted }
+
 const _messageTypeEnumMap = {
-  message_type.video: 'video',
-  message_type.text: 'text',
+  MessageType.video: 'video',
+  MessageType.text: 'text',
 };
 
 class InvalidMessageTypeException implements Exception {}
 
 class Message extends UserGeneratedDocument {
-  final message_type type;
+  final MessageType type;
+  final MessageVisibility visibility;
 
   const Message({
     required FirestoreId id,
     required this.type,
-    required UserInfo author,
+    required this.visibility,
+    required FirestoreId authorId,
     required DateTime creationTime,
-  }) : super(author: author, id: id, creationTime: creationTime);
+  }) : super(authorId: authorId, id: id, creationTime: creationTime);
 
   @override
-  Map<String, dynamic> toJson() {
+  JsonMap toJson() {
     if (this is VideoMessage) {
       return (this as VideoMessage).toJson();
     } else if (this is TextMessage) {
@@ -36,13 +41,13 @@ class Message extends UserGeneratedDocument {
     }
   }
 
-  factory Message.fromJson(Map<String, dynamic> map) {
+  factory Message.fromJson(JsonMap map) {
     switch ($enumDecode(_messageTypeEnumMap, map['type'])) {
-      case message_type.video:
+      case MessageType.video:
         {
           return VideoMessage.fromJson(map);
         }
-      case message_type.text:
+      case MessageType.text:
         {
           return TextMessage.fromJson(map);
         }
@@ -57,7 +62,7 @@ class Message extends UserGeneratedDocument {
       Message.fromJson(documentSnaphsotToJson(document));
 
   @override
-  List<Object?> get props => [id, type, author, creationTime];
+  List<Object?> get props => [id, type, authorId, creationTime];
 }
 
 class VideoMessage extends Message {
@@ -65,34 +70,36 @@ class VideoMessage extends Message {
 
   const VideoMessage(
       {required FirestoreId id,
-      required UserInfo author,
+      required MessageVisibility visibility,
+      required FirestoreId authorId,
       required DateTime creationTime,
       required this.video})
       : super(
-            author: author,
+            authorId: authorId,
             id: id,
+            visibility: visibility,
             creationTime: creationTime,
-            type: message_type.video);
+            type: MessageType.video);
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'author': author.toJson(),
-      'creationTime': dateToJson(creationTime),
-      'type': _messageTypeEnumMap[message_type.video],
-      'video': video
-    };
-  }
+  JsonMap toJson() => {
+        'id': id,
+        'visibility': visibility.name,
+        'author': authorId,
+        'creationTime': dateToJson(creationTime),
+        'type': _messageTypeEnumMap[MessageType.video],
+        'video': video
+      };
 
-  factory VideoMessage.fromJson(Map<String, dynamic> map) {
+  factory VideoMessage.fromJson(JsonMap map) {
     return VideoMessage(
       id: map['id'] as String,
-      author: UserInfo.fromJson(
-        map['author'] as Map<String, dynamic>,
-      ),
+      authorId: map['authorId'],
       creationTime: dateFromJson(map['creationTime'] as int),
       video: map['video'] as String,
+      visibility: map['visibility'] != null
+          ? MessageVisibility.values.firstWhere((t) => t.name == map['visibility'])
+          : MessageVisibility.visible,
     );
   }
 
@@ -100,15 +107,16 @@ class VideoMessage extends Message {
       VideoMessage.fromJson(documentSnaphsotToJson(document));
 
   factory VideoMessage.createWithId(
-          {required UserInfo author, required Link video}) =>
+          {required FirestoreId authorId, required Link video}) =>
       VideoMessage(
           id: const Uuid().v4(),
-          author: author,
+          authorId: authorId,
+          visibility: MessageVisibility.visible,
           creationTime: DateTime.now(),
           video: video);
 
   @override
-  List<Object?> get props => [id, type, author, creationTime, video];
+  List<Object?> get props => [id, type, authorId, creationTime, video];
 }
 
 class TextMessage extends Message {
@@ -116,49 +124,50 @@ class TextMessage extends Message {
 
   const TextMessage(
       {required FirestoreId id,
-      required UserInfo author,
+      required FirestoreId authorId,
       required DateTime creationTime,
+      required MessageVisibility visibility,
       required this.text})
       : super(
-            author: author,
+            authorId: authorId,
             id: id,
+            visibility: visibility,
             creationTime: creationTime,
-            type: message_type.text);
+            type: MessageType.text);
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'author': author.toJson(),
-      'creationTime': dateToJson(creationTime),
-      'type': _messageTypeEnumMap[message_type.text],
-      'text': text
-    };
-  }
+  JsonMap toJson() => {
+        'id': id,
+        'authorId': authorId,
+        'creationTime': dateToJson(creationTime),
+        'type': _messageTypeEnumMap[MessageType.text],
+        'text': text,
+        'visibility': visibility.name
+      };
 
   @override
-  factory TextMessage.fromJson(Map<String, dynamic> map) {
-    return TextMessage(
-      id: map['id'] as String,
-      author: UserInfo.fromJson(
-        map['author'] as Map<String, dynamic>,
-      ),
-      creationTime: dateFromJson(map['creationTime'] as int),
-      text: map['text'] as String,
-    );
-  }
+  factory TextMessage.fromJson(JsonMap map) => TextMessage(
+        id: map['id'] as String,
+        authorId: map['authorId'],
+        creationTime: dateFromJson(map['creationTime'] as int),
+        text: map['text'] as String,
+        visibility: map['visibility'] != null
+            ? MessageVisibility.values.firstWhere((t) => t.name == map['visibility'])
+            : MessageVisibility.visible,
+      );
 
   factory TextMessage.fromDoc(DocumentSnapshot document) =>
       TextMessage.fromJson(documentSnaphsotToJson(document));
 
   factory TextMessage.createWithId(
-          {required UserInfo author, required String text}) =>
+          {required FirestoreId authorId, required String text}) =>
       TextMessage(
           id: const Uuid().v4(),
-          author: author,
+          authorId: authorId,
+          visibility: MessageVisibility.visible,
           creationTime: DateTime.now(),
           text: text);
 
   @override
-  List<Object?> get props => [id, type, author, creationTime, text];
+  List<Object?> get props => [id, type, authorId, creationTime, text];
 }

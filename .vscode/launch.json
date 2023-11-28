@@ -5,9 +5,22 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "run app",
+            "name": "run app | local configuration",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "toolArgs": [
+                "--dart-define-from-file",
+                "../config-files/flutter_app/config.local.json",
+            ],
+        },
+        {
+            "name": "run app | production configuration",
+            "request": "launch",
+            "type": "dart",
+            "toolArgs": [
+                "--dart-define-from-file",
+                "../config-files/flutter_app/config.production.json",
+            ],
         },
         {
             "name": "run app | profile",

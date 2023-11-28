@@ -1,63 +1,64 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fingerfunke_app/models/abstract_models/abstract_models.dart';
-import 'package:fingerfunke_app/models/asset/asset.dart';
-import 'package:fingerfunke_app/models/user/user.dart';
-import 'package:fingerfunke_app/models/utils.dart';
-import 'package:fingerfunke_app/utils/type_aliases.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:uuid/uuid.dart';
+
+import '../../utils/app_config.dart';
+import '../../utils/type_aliases.dart';
+import '../../utils/utility_classes/geohash.dart';
+import '../abstract_models/abstract_models.dart';
+import '../asset/asset.dart';
+import '../place.dart';
+import '../user/user.dart';
+import '../utils.dart';
 
 part 'event.dart';
 part 'group.dart';
 
-enum post_type { event, recurrent }
-const _postTypeEnumMap = {
-  post_type.event: 'event',
-  post_type.recurrent: 'recurrent',
-};
+enum PostType { event, recurrent }
 
-enum post_visibility { visible, hidden }
-const postVisibilityEnumMap = {
-  post_visibility.visible: 'visible',
-  post_visibility.hidden: 'hidden',
-};
+enum PostVisibility { visible, hidden, deleted }
 
 class InvalidPostTypeException implements Exception {}
 
 class Post extends UserGeneratedDocument {
-  final post_type type;
-
+  final PostType type;
   final String title;
   final String description;
+  final PostVisibility visibility;
+  final Place place;
+  final Map<String, List<String>> geohashesByRadius;
 
-  final post_visibility visibility;
-
-  final String location;
-  //final GeoHash postPlace;
-
-  //final List<FirestoreId> interstedUserIds;
+  final List<FirestoreId> members;
   //final List<UserInfo> interstedUsers;
 
+  final Asset mainAsset;
   final List<Asset> media;
 
-  final List<UserInfo> participants;
+  //final List<UserInfo> participants;
 
   const Post._(
       {required FirestoreId id,
       required this.type,
-      required UserInfo author,
+      required FirestoreId authorId,
       required this.title,
       required this.description,
       required DateTime creationTime,
       required this.visibility,
-      required this.location,
-      //required this.postPlace,
-      required this.media,
-      required this.participants})
-      : super(id: id, author: author, creationTime: creationTime);
+      required this.place,
+      required this.geohashesByRadius,
+      required this.mainAsset,
+      required this.members,
+      required this.media})
+      : super(id: id, authorId: authorId, creationTime: creationTime);
+
+  bool get isEvent => type == PostType.event;
+  bool get isGroup => type == PostType.recurrent;
+
+  Event? get asEvent => isEvent ? (this as Event) : null;
+  Group? get asGroup => isGroup ? (this as Group) : null;
 
   @override
-  Map<String, dynamic> toJson() {
+  JsonMap toJson() {
     if (this is Group) {
       return (this as Group).toJson();
     } else if (this is Event) {
@@ -67,34 +68,29 @@ class Post extends UserGeneratedDocument {
     }
   }
 
-  factory Post.fromJson(Map<String, dynamic> map) {
-    switch ($enumDecode(_postTypeEnumMap, map["type"])) {
-      case post_type.event:
-        {
-          return Event.fromJson(map);
-        }
-      case post_type.recurrent:
-        {
-          return Group.fromJson(map);
-        }
+  factory Post.fromJson(JsonMap map) {
+    switch (PostType.values.firstWhere((t) => t.name == map["type"])) {
+      case PostType.event:
+        return Event.fromJson(map);
+      case PostType.recurrent:
+        return Group.fromJson(map);
       default:
-        {
-          throw InvalidPostTypeException();
-        }
+        throw InvalidPostTypeException();
     }
-  }
-
-  bool isUserParticipant(UserInfo? participant) {
-    if (participant == null) return false;
-    return participants.firstWhereOrNull((user) => user.id == participant.id) !=
-            null
-        ? true
-        : false;
   }
 
   bool isUserAuthor(UserInfo? user) {
     if (user == null) return false;
-    return author.id == user.id;
+    return authorId == user.id;
+  }
+
+  bool isUserMember(UserInfo? user) {
+    if (user == null) return false;
+    return members.contains(user.id);
+  }
+
+  bool isAuthor(FirestoreId? userId) {
+    return authorId == userId;
   }
 
   factory Post.fromDoc(DocumentSnapshot document) =>
@@ -103,13 +99,14 @@ class Post extends UserGeneratedDocument {
   List<Object> get props => [
         id,
         type,
-        author,
+        authorId,
         title,
         description,
         creationTime,
         visibility,
-        location,
-        // postPlace,
+        place,
+        mainAsset,
+        members,
         media
       ];
 }

@@ -1,51 +1,61 @@
 import 'package:bloc/bloc.dart';
-import 'package:fingerfunke_app/repositories/authentication_repository/authetication_repository.dart';
-import 'package:fingerfunke_app/utils/loading_overlay.dart';
-import 'package:fingerfunke_app/utils/tools.dart';
+import '../../../repositories/firebase_authentication_repository/errors_and_exceptions.dart';
+import '../../../repositories/firebase_authentication_repository/firebase_authentication_repository.dart';
+import '../../../utils/loading_overlay.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:logger/logger.dart';
 
-part 'phone_login_state.dart';
 part 'phone_login_cubit.freezed.dart';
+part 'phone_login_state.dart';
 
 class PhoneLoginCubit extends Cubit<PhoneLoginState> {
-  final AutheticationRepository _authenticationRepository;
+  final FirebaseAuthenticationRepository _authenticationRepository;
   final Logger _logger = Logger();
 
-  PhoneLoginCubit({AutheticationRepository? authenticationRepository})
+  PhoneLoginCubit({FirebaseAuthenticationRepository? authenticationRepository})
       : _authenticationRepository =
-            authenticationRepository ?? AuthenticaionRepositoryImpl(),
-        super(const PhoneLoginState.enterPhoneNumber(isLoading: false));
+            authenticationRepository ?? FirebaseAuthenticationRepository(),
+        super(const PhoneLoginState.enterPhoneNumber());
 
   Future<void> sendSMSCode({required String phoneNumber}) async {
-    emit(const PhoneLoginState.enterPhoneNumber(isLoading: true));
+    emit(const PhoneLoginState.waitForCodeSent());
     await _authenticationRepository.sendSMSCode(
         phoneNumber: phoneNumber,
-        verificationCompleted: (phoneAuthCredentials) {
-          _authenticationRepository.signInUserWithPhoneCredentials(
-              phoneAuthCredential: phoneAuthCredentials);
+        verificationCompleted: (phoneAuthCredentials) async {
+          try {
+            emit(const PhoneLoginState.waitForLogIn());
+            await _authenticationRepository.signIn(phoneAuthCredentials);
+          } on FirebaseAuthException catch (exception) {
+            _logger
+                .e("Error Sending Code to Phone number: Error Code $exception");
+            final SignInWithCredentialFailure reasonForFailure =
+                SignInWithCredentialFailure.fromCode(exception);
+            emit(PhoneLoginState.enterPhoneNumber(
+                withErrorMessage: reasonForFailure.message));
+          }
         },
         verificationFailed: (exception) {
-          emit(const PhoneLoginState.enterPhoneNumber(isLoading: false));
-          //! One must be able to implement this in a prettier way
-          if (exception.message != null) {
-            if (exception.message!.contains(("Invalid format"))) {
-              _logger.e(
-                  "Phone verification failed, phone number is in wrong format");
-              // Todo implement snackbar
-              return;
-            }
-          }
-          _logger.e(
-              "Phone verification failed due to unknown error type\n\n${exception.message}");
+          final VerifyPhoneNumberFailure reasonForFailure =
+              VerifyPhoneNumberFailure.fromCode(exception.code);
+          _logger
+              .e("Error Sending Code to Phone number: Error Code $exception");
+          emit(PhoneLoginState.enterPhoneNumber(
+              withErrorMessage: reasonForFailure.message));
         },
-        codeSent: (verificationId, resendToken) {
+        codeSent: (verificationId, _) {
           emit(PhoneLoginState.enterCode(
-              verificationId: verificationId, resendToken: resendToken));
+              verificationId: verificationId, autoDetecting: true));
         },
-        codeAutoRetrievalTimeout: (verificationId) {});
+        // We could maybe use this timeout as the earlist time for which it is allowed to ask for new SMS
+        codeAutoRetrievalTimeout: (verificationId) {
+          state.mapOrNull(
+              enterCode: (state) =>
+                  isClosed ? null : emit(state.copyWith(autoDetecting: false)));
+          _logger
+              .i('CodeAutoRetrieval timeout called. This is irrelevant for us');
+        });
   }
 
   Future<void> signInWithCode(
@@ -56,37 +66,16 @@ class PhoneLoginCubit extends Cubit<PhoneLoginState> {
     // ToDo check if code has valid format
     showLoadingOverlay(context);
     try {
-      await _authenticationRepository.signInUserWithSMSCode(
+      final PhoneAuthCredential authCredential = PhoneAuthProvider.credential(
           verificationId: verificationId, smsCode: smsCode);
-      emit(const PhoneLoginState.authenticated());
+      await _authenticationRepository.signIn(authCredential);
     } on FirebaseAuthException catch (exception) {
-      if (onError != null) {
-        onError();
-      }
-      if (exception.message != null) {
-        // Code invalid
-        if (exception.message!.contains(
-            "The sms verification code used to create the phone auth credential is invalid")) {
-          _logger.e(
-              "Firebase Authentication Error invalid verification code \n\n${exception.message}");
-          Tools.showSnackbar(context, "Invalid pin Code");
-          return;
-        } else if (exception.message!.contains(
-            "The sms code has expired. Please re-send the verification code to try again")) {
-          Tools.showSnackbar(
-              context, "Vaerification Code has expired, please resend SMS");
-          emit(const PhoneLoginState.enterPhoneNumber(isLoading: false));
-        }
-      }
-      _logger.e("Unknonw Firebase Authenticatio Error\n\n${exception.message}");
-      //2 Firebase internal error
-    } catch (exception) {
-      _logger.e("Unknown exception loggin in with verification code");
-      if (onError != null) {
-        onError();
-      }
-    } finally {
-      Navigator.of(context).pop();
+      final SignInWithCredentialFailure reasonForFailure =
+          SignInWithCredentialFailure.fromCode(exception);
+      emit(PhoneLoginState.enterCode(
+          verificationId: verificationId,
+          autoDetecting: true,
+          withErrorMessage: reasonForFailure.message));
     }
   }
 }

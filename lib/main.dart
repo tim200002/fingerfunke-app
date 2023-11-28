@@ -2,37 +2,67 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:fingerfunke_app/app.dart';
-import 'package:fingerfunke_app/cubits/authentication_cubit/authentication_cubit.dart';
-import 'package:fingerfunke_app/cubits/settings_cubit/settings_cubit.dart';
-import 'package:fingerfunke_app/repositories/settings_repository/settings_repository.dart';
-import 'package:fingerfunke_app/routes.dart';
-import 'package:fingerfunke_app/services/authentication/authentication_service.dart';
-import 'package:fingerfunke_app/utils/app_theme.dart';
-import 'package:fingerfunke_app/view/create_account/view/create_account_view.dart';
-import 'package:fingerfunke_app/view/splash/view/splash_page.dart';
-import 'package:fingerfunke_app/view/unauthenticated/view/unauthenticated_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
+
+import 'app.dart';
+import 'cubits/firebase_authentication_cubit/firebase_authentication_cubit_cubit.dart';
+import 'cubits/settings_cubit/app_settings_cubit.dart';
+import 'locator.dart';
+import 'repositories/firebase_authentication_repository/firebase_authentication_repository.dart';
+import 'repositories/storage_repository/storage_repository.dart';
+import 'services/app_info_service.dart';
+import 'services/meta_info_service.dart';
+import 'services/session_info_service.dart';
+import 'models/user/user.dart' as user_models;
+import 'firebase_options.dart' as production_options;
+
+FirebaseOptions getOptions(String environment) {
+  switch (environment) {
+    case 'local':
+      {
+        throw Exception('Local environment not supported');
+      }
+    case 'production':
+      {
+        return production_options.DefaultFirebaseOptions.currentPlatform;
+      }
+
+    default:
+      throw Exception('Unknown environment: $environment');
+  }
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: ".env");
-  await Firebase.initializeApp();
-  final Logger _logger = Logger();
+  await Firebase.initializeApp(
+    options: getOptions(const String.fromEnvironment("FIREBASE_ENVIRONMENT")),
+  );
+  setupGetIt();
 
-  // choose envrionment
-  switch (dotenv.env['FIREBASE_ENVIRONMENT']) {
+  // storage must be initialized async, therefore reads are sync afterwards
+  await GetIt.I<StorageRepository>().init();
+  await GetIt.I<AppInfoService>().init();
+
+  final Logger _logger = Logger();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+
+  // choose environment
+  switch (const String.fromEnvironment("FIREBASE_ENVIRONMENT")) {
     case 'local':
       {
         _logger.i("Using local environment");
         Logger.level = Level.debug;
-        String? emulatorIp = dotenv.env['EMULATOR_IP'];
-        if (emulatorIp == null) {
+        String emulatorIp =
+            const String.fromEnvironment("EMULATOR_IP", defaultValue: "");
+        if (emulatorIp.isEmpty) {
           _logger.e("No IP for Emulator provided, falling back to localhost ");
           emulatorIp = "localhost";
         }
@@ -61,78 +91,36 @@ void main() async {
 class AppInflater extends StatelessWidget {
   AppInflater({Key? key}) : super(key: key);
 
-  final GlobalKey<NavigatorState> _navigator = GlobalKey<NavigatorState>();
+  /// This function handles all the functions that must be executed
+  /// on login for proper user management etc.
+  // ignore: prefer_function_declarations_over_variables
+  final Future<void> Function(user_models.User) logInHandler = (user) async {
+    await GetIt.I<SessionInfoService>().init(user.id);
 
-  void mapStateChangeToNavigationEvent(AuthenticationState state) {
-    state.whenOrNull(
-      unauthenticated: () {
-        _navigator.currentState!
-            .pushAndRemoveUntil(UnauthenticatedPage.route(), (_) => false);
-      },
-      signedInAnonymously: () {
-        _navigator.currentState!.pushAndRemoveUntil(App.route(), (_) => false);
-      },
-      signedIn: (_) => _navigator.currentState!
-          .pushAndRemoveUntil(App.route(), (_) => false),
-      signedInButNoUserDocumentCreated: (_) {
-        _navigator.currentState!
-            .pushAndRemoveUntil(CreateAccountView.route(), (_) => false);
-      },
-    );
-  }
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print('Got a message whilst in the foreground!');
+
+      if (message.notification != null) {
+        print(
+            'Message also contained a notification: ${message.notification!.title}');
+      }
+    });
+
+    // To keep track of logins
+    MetaInfoService.registerAppOpening();
+  };
 
   @override
   Widget build(BuildContext context) {
-    final AuthenticationService authService = AuthenticationService();
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) => AuthenticationCubit()
-            // here to keep the Authentication Service always up to date with the cubit
-            // cubit is always source of truth
-            ..connectListener((authState) =>
-                authService.onAuthenticationStateChanged(authState)),
-        ),
-        BlocProvider(
-          create: (context) => SettingsCubit(SettingsRepositoryImpl()),
-        ),
+        BlocProvider<FirebaseAuthenticationCubitCubit>(
+            lazy: false,
+            create: (_) => FirebaseAuthenticationCubitCubit(
+                GetIt.I<FirebaseAuthenticationRepository>(), logInHandler)),
+        BlocProvider(create: (_) => AppSettingsCubit()),
       ],
-      child:
-          BlocBuilder<SettingsCubit, SettingsState>(builder: (context, state) {
-        BlocProvider.of<SettingsCubit>(context).loadSettings();
-        return Builder(
-          builder: (context) {
-            BlocProvider.of<AuthenticationCubit>(context)
-                .connectListener(mapStateChangeToNavigationEvent);
-
-            return state.when(initial: () {
-              return AnimatedSwitcher(
-                duration: const Duration(milliseconds: 250),
-                //ToDo: select light mode by default, as dark mode has some testing issues
-                child: buildLoadedApp(
-                    context, _navigator, ThemeMode.light), //ThemeMode.system),
-              );
-            }, loaded: (settings) {
-              return AnimatedSwitcher(
-                duration: const Duration(milliseconds: 250),
-                child: buildLoadedApp(context, _navigator, settings.themeMode),
-              );
-            });
-          },
-        );
-      }),
+      child: const App(),
     );
   }
-}
-
-Widget buildLoadedApp(context, _navigator, themeMode) {
-  return MaterialApp(
-    routes: routes,
-    navigatorKey: _navigator,
-    theme: AppTheme.mainTheme,
-    darkTheme: AppTheme.darkTheme,
-    themeMode: ThemeMode.light, //TODO change back to themeMode
-    debugShowCheckedModeBanner: false,
-    onGenerateRoute: (_) => SplashPage.route(),
-  );
 }

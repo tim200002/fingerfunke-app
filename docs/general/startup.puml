@@ -1,0 +1,52 @@
+
+@startuml App Startup
+title App Startup
+
+actor User as U
+participant AuthenticationCubit as AuthCub 
+
+ 
+U -> AuthCub: Open App
+AuthCub -> AuthCub: emit(loading)
+AuthCub -> AuthCub: Is User Logged In?
+AuthCub -> AuthCub: Doese UserDocument Exist?
+
+group Login Configuration
+participant SessionService as SessionServ
+participant NotficationService as NotificationServ
+participant MetaInfoService as MetaServ
+
+AuthCub -> NotificationServ: Set FCM Token
+
+AuthCub -> SessionServ: Init
+AuthCub -> SessionServ: SetAppVersion()
+
+AuthCub -> MetaInfoService: registerAppOpening();
+
+SettingsCub -> SettingsCub: Load Settings();
+end
+
+AuthCub -> AuthCub: Create Subscription to \n continously update current user
+
+
+participant SettingsCubit as SettingsCub
+participant LocationCubit as LocationCub
+participant UsersCache as UCache
+
+
+
+
+alt has location permission
+LocationCub -> LocationCub: Fetch Location
+LocationCub -> LocationCub: emit(location_loaded())
+
+else previous location available from locat storage
+LocationCub -> LocationCub: Fetch Location from local storate
+LocationCub -> LocationCub: emit(location_loaded())
+else
+LocationCub -> LocationCub: emit(location_unavailable)
+end
+
+
+
+@enduml

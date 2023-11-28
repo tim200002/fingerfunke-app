@@ -1,8 +1,8 @@
-import 'package:fingerfunke_app/models/user/user.dart';
-import 'package:fingerfunke_app/utils/tools.dart';
-import 'package:fingerfunke_app/view/chat/widgets/chat_editor/cubit/chat_editor_cubit.dart';
+import '../../../../models/user/user.dart';
+import '../../../../utils/tools.dart';
+import 'cubit/chat_editor_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:fingerfunke_app/utils/type_aliases.dart';
+import '../../../../utils/type_aliases.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ChatEditor extends StatefulWidget {
@@ -27,49 +27,51 @@ class _ChatEditorState extends State<ChatEditor> {
         builder: (context) {
           final ChatEditorCubit chatEditorCubit =
               BlocProvider.of<ChatEditorCubit>(context);
-          return Padding(
-            padding: const EdgeInsets.only(left: 8.0, bottom: 8.0, top: 8.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade200,
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                    child: TextField(
-                      minLines: 1,
-                      maxLines: 6,
-                      textCapitalization: TextCapitalization.sentences,
-                      controller: _controller,
-                      decoration: const InputDecoration(
-                        contentPadding:
-                            EdgeInsets.symmetric(vertical: 9, horizontal: 25),
-                        border: InputBorder.none,
-                        hintText: "neue Nachricht",
+          return SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 8.0, top: 8.0, bottom: 8.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade200,
+                        borderRadius: BorderRadius.circular(25),
                       ),
-                      onChanged: (value) =>
-                          chatEditorCubit.validateMessage(value),
+                      child: TextField(
+                        minLines: 1,
+                        maxLines: 6,
+                        textCapitalization: TextCapitalization.sentences,
+                        controller: _controller,
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 9, horizontal: 25),
+                          border: InputBorder.none,
+                          hintText: l10n(context).lbl_chatNewMessage,
+                        ),
+                        onChanged: (value) =>
+                            chatEditorCubit.validateMessage(value),
+                      ),
                     ),
                   ),
-                ),
-                BlocBuilder<ChatEditorCubit, ChatEditorState>(
-                  builder: (context, state) => IconButton(
-                    onPressed: state.isValid
-                        ? () => chatEditorCubit
-                            .postMessage(_controller.text)
-                            .then((_) => _controller.clear())
-                            .onError((_, __) => Tools.showSnackbar(context,
-                                "Sorry wir konnten deine Nachricht leider nicht absenden"))
-                        : null,
-                    icon: Icon(
-                      Icons.send_rounded,
-                      color: Theme.of(context).colorScheme.primary,
+                  BlocBuilder<ChatEditorCubit, ChatEditorState>(
+                    builder: (context, state) => IconButton(
+                      onPressed: state.isValid
+                          ? () => chatEditorCubit
+                              .postMessage(_controller.text)
+                              .then((_) => _controller.clear())
+                              .onError((_, __) => Tools.showSnackbar(
+                                  l10n(context).msg_chatSendingFailed))
+                          : null,
+                      icon: const Icon(
+                        Icons.send_rounded,
+                        color: Colors.black,
+                      ),
                     ),
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
           );
         },

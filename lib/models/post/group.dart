@@ -3,85 +3,98 @@ part of 'post.dart';
 class Group extends Post {
   const Group({
     required FirestoreId id,
-    required UserInfo author,
+    required FirestoreId authorId,
     required String title,
     required String description,
     required DateTime creationTime,
-    required post_visibility visibility,
-    required String location,
-    //required this.postPlace,
+    required PostVisibility visibility,
+    required Place place,
+    required Map<String, List<String>> geohashesByRadius,
+    required Asset mainAsset,
     required List<Asset> media,
-    required List<UserInfo> participants,
+    required List<FirestoreId> members,
   }) : super._(
             id: id,
-            type: post_type.recurrent,
-            author: author,
+            type: PostType.recurrent,
+            authorId: authorId,
             title: title,
             description: description,
             creationTime: creationTime,
             visibility: visibility,
-            location: location,
+            place: place,
+            geohashesByRadius: geohashesByRadius,
+            mainAsset: mainAsset,
             media: media,
-            participants: participants);
+            members: members);
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      "id": id,
-      "creationTime": dateToJson(creationTime),
-      "author": author.toJson(),
-      "type": _postTypeEnumMap[type],
-      "title": title,
-      "description": description,
-      "visibility": postVisibilityEnumMap[visibility],
-      "location": location,
-      "media": media.map((e) => e.toJson()).toList(),
-      "participants": participants.map((user) => user.toJson()).toList(),
-    };
-  }
+  JsonMap toJson() => {
+        "id": id,
+        "creationTime": dateToJson(creationTime),
+        "author": authorId,
+        "type": PostType.recurrent,
+        "title": title,
+        "description": description,
+        "visibility": visibility.name,
+        "place": place.toJson(),
+        "geohashesByRadius": geohashesByRadius,
+        "mainAsset": mainAsset.toJson(),
+        "members": members,
+        "media": media.map((e) => e.toJson()).toList(),
+      };
 
-  factory Group.fromJson(Map<String, dynamic> map) {
-    return Group(
+  factory Group.fromJson(JsonMap map) => Group(
       id: map["id"] as String,
       creationTime: dateFromJson(map['creationTime'] as int),
-      author: UserInfo.fromJson(map["author"] as Map<String, dynamic>),
+      authorId: map["authorId"],
       title: map["title"] as String,
       description: map["description"] as String,
-      visibility: $enumDecode(postVisibilityEnumMap, map["visibility"]),
-      location: map["location"] as String,
-      media: (map['media'] as List<dynamic>)
-          .map((e) => Asset.fromJson(e as Map<String, dynamic>))
+      visibility:
+          PostVisibility.values.firstWhere((t) => t.name == map["visibility"]),
+      place: Place.fromJson(map["place"]),
+      geohashesByRadius: map["geohashesByRadius"],
+      mainAsset: Asset.fromJson(map["mainAsset"]),
+      media: (map["media"] as List<JsonMap>)
+          .map((e) => Asset.fromJson(e))
           .toList(),
-      participants: (map["participants"] as List<dynamic>)
-          .map((participant) =>
-              UserInfo.fromJson(participant as Map<String, dynamic>))
-          .toList(),
-    );
-  }
+      members: map["members"] as List<FirestoreId>);
 
   factory Group.fromDoc(DocumentSnapshot document) =>
       Group.fromJson(documentSnaphsotToJson(document));
 
   factory Group.createWithId({
-    required UserInfo author,
+    required FirestoreId authorId,
     required String title,
     required String description,
-    required post_visibility visibility,
-    required String location,
-    //required GeoHash postPlace,
+    required PostVisibility visibility,
+    required Place place,
+    required Asset mainAsset,
     required List<Asset> media,
-  }) =>
-      Group(
+    required List<FirestoreId> members,
+  }) {
+    final GeoHasher geoHasher = GeoHasher();
+    final Map<String, List<String>> geohashMap = {};
+    for (final int radius in AppConfig.locationQueryRadiusLevel) {
+      final List<String> geohashesForRadius =
+          geoHasher.getGeohashesWithinRadius(place.position.longitude,
+              place.position.latitude, (radius * 1000).toDouble(),
+              precision: AppConfig.defaultGeoHashPrecision);
+      geohashMap[radius.toString()] = geohashesForRadius;
+    }
+
+    return Group(
         id: const Uuid().v4(),
-        author: author,
+        authorId: authorId,
         title: title,
         description: description,
         creationTime: DateTime.now(),
         visibility: visibility,
-        location: location,
+        place: place,
+        geohashesByRadius: geohashMap,
+        mainAsset: mainAsset,
         media: media,
-        participants: [author],
-      );
+        members: members);
+  }
 
   @override
   List<Object> get props => [
