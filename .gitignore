@@ -53,4 +53,4 @@ config.json
 changes.txt
 release_notes.txt
 
-lib/firease_options.dart
+lib/firebase_options.dart
