@@ -5,6 +5,8 @@ The goal of fingerfunke was to create an App to better connect the deaf-language
 
 Unfortunately, **as of September 2023, the project is paused and no further work will be completed for the foreseeable future**. Of course, if someone wants to take over this project, please feel free to contact Tim at tim.lindenau@outlook.de
 
+This repository is only a mirror of the original one. The original code including all supporting repositories can be found in our [GitLab](https://gitlab.com/fingerfunke).
+
 ## Fingerfunke in Images
 
 <table>
